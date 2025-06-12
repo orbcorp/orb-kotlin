@@ -31,6 +31,11 @@ internal constructor(private val clientOptions: ClientOptions) : BalanceTransact
 
     override fun withRawResponse(): BalanceTransactionServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): BalanceTransactionServiceAsync =
+        BalanceTransactionServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: CustomerBalanceTransactionCreateParams,
         requestOptions: RequestOptions,
@@ -50,6 +55,13 @@ internal constructor(private val clientOptions: ClientOptions) : BalanceTransact
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): BalanceTransactionServiceAsync.WithRawResponse =
+            BalanceTransactionServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         private val createHandler: Handler<CustomerBalanceTransactionCreateResponse> =
             jsonHandler<CustomerBalanceTransactionCreateResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
@@ -64,6 +76,7 @@ internal constructor(private val clientOptions: ClientOptions) : BalanceTransact
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("customers", params._pathParam(0), "balance_transactions")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -95,6 +108,7 @@ internal constructor(private val clientOptions: ClientOptions) : BalanceTransact
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("customers", params._pathParam(0), "balance_transactions")
                     .build()
                     .prepareAsync(clientOptions, params)

@@ -45,6 +45,9 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
     override fun withRawResponse(): PriceServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PriceServiceAsync =
+        PriceServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun externalPriceId(): ExternalPriceIdServiceAsync = externalPriceId
 
     override suspend fun create(params: PriceCreateParams, requestOptions: RequestOptions): Price =
@@ -96,6 +99,13 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
             ExternalPriceIdServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): PriceServiceAsync.WithRawResponse =
+            PriceServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         override fun externalPriceId(): ExternalPriceIdServiceAsync.WithRawResponse =
             externalPriceId
 
@@ -109,6 +119,7 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("prices")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -139,6 +150,7 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("prices", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -167,6 +179,7 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("prices")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -204,6 +217,7 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("prices", params._pathParam(0), "evaluate")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -232,6 +246,7 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("prices", "evaluate")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -260,6 +275,7 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("prices", "evaluate_preview_events")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -290,6 +306,7 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("prices", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)

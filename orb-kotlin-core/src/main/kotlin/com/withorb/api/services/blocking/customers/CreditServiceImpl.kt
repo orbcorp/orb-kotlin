@@ -39,6 +39,9 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun withRawResponse(): CreditService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CreditService =
+        CreditServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun ledger(): LedgerService = ledger
 
     override fun topUps(): TopUpService = topUps
@@ -70,6 +73,11 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
             TopUpServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CreditService.WithRawResponse =
+            CreditServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
+
         override fun ledger(): LedgerService.WithRawResponse = ledger
 
         override fun topUps(): TopUpService.WithRawResponse = topUps
@@ -88,6 +96,7 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("customers", params._pathParam(0), "credits")
                     .build()
                     .prepare(clientOptions, params)
@@ -125,6 +134,7 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "customers",
                         "external_customer_id",

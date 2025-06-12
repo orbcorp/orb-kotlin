@@ -40,6 +40,9 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
 
     override fun withRawResponse(): TopUpService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): TopUpService =
+        TopUpServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: CustomerCreditTopUpCreateParams,
         requestOptions: RequestOptions,
@@ -86,6 +89,11 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): TopUpService.WithRawResponse =
+            TopUpServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
+
         private val createHandler: Handler<CustomerCreditTopUpCreateResponse> =
             jsonHandler<CustomerCreditTopUpCreateResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
@@ -100,6 +108,7 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("customers", params._pathParam(0), "credits", "top_ups")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -131,6 +140,7 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("customers", params._pathParam(0), "credits", "top_ups")
                     .build()
                     .prepare(clientOptions, params)
@@ -166,6 +176,7 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "customers",
                         params._pathParam(0),
@@ -196,6 +207,7 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "customers",
                         "external_customer_id",
@@ -232,6 +244,7 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "customers",
                         "external_customer_id",
@@ -263,6 +276,7 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "customers",
                         "external_customer_id",

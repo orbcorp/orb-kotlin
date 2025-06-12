@@ -42,6 +42,9 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
     override fun withRawResponse(): EventServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EventServiceAsync =
+        EventServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun backfills(): BackfillServiceAsync = backfills
 
     override fun volume(): VolumeServiceAsync = volume
@@ -87,6 +90,13 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
             VolumeServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): EventServiceAsync.WithRawResponse =
+            EventServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         override fun backfills(): BackfillServiceAsync.WithRawResponse = backfills
 
         override fun volume(): VolumeServiceAsync.WithRawResponse = volume
@@ -105,6 +115,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -136,6 +147,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", params._pathParam(0), "deprecate")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -164,6 +176,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("ingest")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -192,6 +205,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "search")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()

@@ -37,6 +37,9 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
 
     override fun withRawResponse(): AlertService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): AlertService =
+        AlertServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(params: AlertRetrieveParams, requestOptions: RequestOptions): Alert =
         // get /alerts/{alert_id}
         withRawResponse().retrieve(params, requestOptions).parse()
@@ -83,6 +86,11 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): AlertService.WithRawResponse =
+            AlertServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
+
         private val retrieveHandler: Handler<Alert> =
             jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
@@ -96,6 +104,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("alerts", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
@@ -125,6 +134,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("alerts", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -153,6 +163,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("alerts")
                     .build()
                     .prepare(clientOptions, params)
@@ -189,6 +200,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("alerts", "customer_id", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -219,6 +231,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("alerts", "external_customer_id", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -249,6 +262,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("alerts", "subscription_id", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -279,6 +293,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("alerts", params._pathParam(0), "disable")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -309,6 +324,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("alerts", params._pathParam(0), "enable")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()

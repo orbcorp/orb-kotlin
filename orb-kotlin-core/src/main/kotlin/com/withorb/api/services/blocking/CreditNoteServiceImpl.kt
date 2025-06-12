@@ -32,6 +32,9 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
 
     override fun withRawResponse(): CreditNoteService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CreditNoteService =
+        CreditNoteServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: CreditNoteCreateParams,
         requestOptions: RequestOptions,
@@ -55,6 +58,13 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CreditNoteService.WithRawResponse =
+            CreditNoteServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         private val createHandler: Handler<CreditNote> =
             jsonHandler<CreditNote>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
@@ -65,6 +75,7 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("credit_notes")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -93,6 +104,7 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("credit_notes")
                     .build()
                     .prepare(clientOptions, params)
@@ -129,6 +141,7 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("credit_notes", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)

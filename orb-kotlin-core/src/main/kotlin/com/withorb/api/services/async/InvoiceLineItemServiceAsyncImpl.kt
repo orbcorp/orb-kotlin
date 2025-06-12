@@ -27,6 +27,11 @@ internal constructor(private val clientOptions: ClientOptions) : InvoiceLineItem
 
     override fun withRawResponse(): InvoiceLineItemServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): InvoiceLineItemServiceAsync =
+        InvoiceLineItemServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: InvoiceLineItemCreateParams,
         requestOptions: RequestOptions,
@@ -39,6 +44,13 @@ internal constructor(private val clientOptions: ClientOptions) : InvoiceLineItem
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): InvoiceLineItemServiceAsync.WithRawResponse =
+            InvoiceLineItemServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         private val createHandler: Handler<InvoiceLineItemCreateResponse> =
             jsonHandler<InvoiceLineItemCreateResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
@@ -50,6 +62,7 @@ internal constructor(private val clientOptions: ClientOptions) : InvoiceLineItem
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("invoice_line_items")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()

@@ -29,6 +29,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPlanIdS
 
     override fun withRawResponse(): ExternalPlanIdServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): ExternalPlanIdServiceAsync =
+        ExternalPlanIdServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun update(
         params: PlanExternalPlanIdUpdateParams,
         requestOptions: RequestOptions,
@@ -48,6 +53,13 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPlanIdS
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ExternalPlanIdServiceAsync.WithRawResponse =
+            ExternalPlanIdServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         private val updateHandler: Handler<Plan> =
             jsonHandler<Plan>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
@@ -61,6 +73,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPlanIdS
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans", "external_plan_id", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -91,6 +104,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPlanIdS
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans", "external_plan_id", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)

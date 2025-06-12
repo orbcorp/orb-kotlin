@@ -39,6 +39,9 @@ class CreditServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
     override fun withRawResponse(): CreditServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CreditServiceAsync =
+        CreditServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun ledger(): LedgerServiceAsync = ledger
 
     override fun topUps(): TopUpServiceAsync = topUps
@@ -70,6 +73,13 @@ class CreditServiceAsyncImpl internal constructor(private val clientOptions: Cli
             TopUpServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CreditServiceAsync.WithRawResponse =
+            CreditServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         override fun ledger(): LedgerServiceAsync.WithRawResponse = ledger
 
         override fun topUps(): TopUpServiceAsync.WithRawResponse = topUps
@@ -88,6 +98,7 @@ class CreditServiceAsyncImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("customers", params._pathParam(0), "credits")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -125,6 +136,7 @@ class CreditServiceAsyncImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "customers",
                         "external_customer_id",

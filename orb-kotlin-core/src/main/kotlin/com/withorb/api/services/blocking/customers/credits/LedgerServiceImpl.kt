@@ -36,6 +36,9 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun withRawResponse(): LedgerService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): LedgerService =
+        LedgerServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun list(
         params: CustomerCreditLedgerListParams,
         requestOptions: RequestOptions,
@@ -69,6 +72,11 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): LedgerService.WithRawResponse =
+            LedgerServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
+
         private val listHandler: Handler<CustomerCreditLedgerListPageResponse> =
             jsonHandler<CustomerCreditLedgerListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
@@ -83,6 +91,7 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("customers", params._pathParam(0), "credits", "ledger")
                     .build()
                     .prepare(clientOptions, params)
@@ -120,6 +129,7 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("customers", params._pathParam(0), "credits", "ledger_entry")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -154,6 +164,7 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "customers",
                         "external_customer_id",
@@ -192,6 +203,7 @@ class LedgerServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "customers",
                         "external_customer_id",

@@ -37,6 +37,9 @@ class BackfillServiceAsyncImpl internal constructor(private val clientOptions: C
 
     override fun withRawResponse(): BackfillServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BackfillServiceAsync =
+        BackfillServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: EventBackfillCreateParams,
         requestOptions: RequestOptions,
@@ -77,6 +80,13 @@ class BackfillServiceAsyncImpl internal constructor(private val clientOptions: C
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): BackfillServiceAsync.WithRawResponse =
+            BackfillServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         private val createHandler: Handler<EventBackfillCreateResponse> =
             jsonHandler<EventBackfillCreateResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
@@ -88,6 +98,7 @@ class BackfillServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "backfills")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -116,6 +127,7 @@ class BackfillServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "backfills")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -153,6 +165,7 @@ class BackfillServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "backfills", params._pathParam(0), "close")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -184,6 +197,7 @@ class BackfillServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "backfills", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -214,6 +228,7 @@ class BackfillServiceAsyncImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "backfills", params._pathParam(0), "revert")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()

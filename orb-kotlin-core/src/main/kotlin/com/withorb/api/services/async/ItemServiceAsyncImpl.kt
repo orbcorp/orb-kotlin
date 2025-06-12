@@ -34,6 +34,9 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): ItemServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ItemServiceAsync =
+        ItemServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(params: ItemCreateParams, requestOptions: RequestOptions): Item =
         // post /items
         withRawResponse().create(params, requestOptions).parse()
@@ -62,6 +65,13 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ItemServiceAsync.WithRawResponse =
+            ItemServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         private val createHandler: Handler<Item> =
             jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
@@ -72,6 +82,7 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("items")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -102,6 +113,7 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("items", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -130,6 +142,7 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("items")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -166,6 +179,7 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("items", params._pathParam(0), "archive")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -196,6 +210,7 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("items", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)

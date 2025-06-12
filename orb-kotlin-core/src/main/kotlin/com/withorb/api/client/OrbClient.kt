@@ -2,6 +2,7 @@
 
 package com.withorb.api.client
 
+import com.withorb.api.core.ClientOptions
 import com.withorb.api.services.blocking.AlertService
 import com.withorb.api.services.blocking.BetaService
 import com.withorb.api.services.blocking.CouponService
@@ -48,6 +49,13 @@ interface OrbClient {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): OrbClient
 
     fun topLevel(): TopLevelService
 
@@ -98,6 +106,13 @@ interface OrbClient {
 
     /** A view of [OrbClient] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: (ClientOptions.Builder) -> Unit): OrbClient.WithRawResponse
 
         fun topLevel(): TopLevelService.WithRawResponse
 

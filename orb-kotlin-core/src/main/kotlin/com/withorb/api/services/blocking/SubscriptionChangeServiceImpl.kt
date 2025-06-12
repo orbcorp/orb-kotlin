@@ -32,6 +32,9 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
 
     override fun withRawResponse(): SubscriptionChangeService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): SubscriptionChangeService =
+        SubscriptionChangeServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(
         params: SubscriptionChangeRetrieveParams,
         requestOptions: RequestOptions,
@@ -58,6 +61,13 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): SubscriptionChangeService.WithRawResponse =
+            SubscriptionChangeServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         private val retrieveHandler: Handler<SubscriptionChangeRetrieveResponse> =
             jsonHandler<SubscriptionChangeRetrieveResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
@@ -72,6 +82,7 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("subscription_changes", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
@@ -102,6 +113,7 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("subscription_changes", params._pathParam(0), "apply")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -133,6 +145,7 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("subscription_changes", params._pathParam(0), "cancel")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()

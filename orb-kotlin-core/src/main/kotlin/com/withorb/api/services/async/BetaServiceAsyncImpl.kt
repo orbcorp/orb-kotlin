@@ -37,6 +37,9 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): BetaServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BetaServiceAsync =
+        BetaServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun externalPlanId(): ExternalPlanIdServiceAsync = externalPlanId
 
     override suspend fun createPlanVersion(
@@ -69,6 +72,13 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
             ExternalPlanIdServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): BetaServiceAsync.WithRawResponse =
+            BetaServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         override fun externalPlanId(): ExternalPlanIdServiceAsync.WithRawResponse = externalPlanId
 
         private val createPlanVersionHandler: Handler<PlanVersion> =
@@ -84,6 +94,7 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans", params._pathParam(0), "versions")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -114,6 +125,7 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "plans",
                         params._pathParam(0),
@@ -148,6 +160,7 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans", params._pathParam(0), "set_default_version")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()

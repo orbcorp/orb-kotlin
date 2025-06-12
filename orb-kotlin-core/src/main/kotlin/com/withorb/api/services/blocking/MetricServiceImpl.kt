@@ -33,6 +33,9 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun withRawResponse(): MetricService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): MetricService =
+        MetricServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: MetricCreateParams,
         requestOptions: RequestOptions,
@@ -60,6 +63,11 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): MetricService.WithRawResponse =
+            MetricServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
+
         private val createHandler: Handler<BillableMetric> =
             jsonHandler<BillableMetric>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
@@ -70,6 +78,7 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("metrics")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -100,6 +109,7 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("metrics", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -128,6 +138,7 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("metrics")
                     .build()
                     .prepare(clientOptions, params)
@@ -164,6 +175,7 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("metrics", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)

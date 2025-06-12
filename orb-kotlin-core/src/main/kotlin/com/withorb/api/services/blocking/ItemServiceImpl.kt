@@ -33,6 +33,9 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun withRawResponse(): ItemService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ItemService =
+        ItemServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(params: ItemCreateParams, requestOptions: RequestOptions): Item =
         // post /items
         withRawResponse().create(params, requestOptions).parse()
@@ -58,6 +61,11 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ItemService.WithRawResponse =
+            ItemServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
+
         private val createHandler: Handler<Item> =
             jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
@@ -68,6 +76,7 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("items")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -98,6 +107,7 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("items", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -126,6 +136,7 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("items")
                     .build()
                     .prepare(clientOptions, params)
@@ -162,6 +173,7 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("items", params._pathParam(0), "archive")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -192,6 +204,7 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("items", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)

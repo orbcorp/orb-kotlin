@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.0 (2025-06-12)
+
+Full Changelog: [v1.0.0...v1.1.0](https://github.com/orbcorp/orb-kotlin/compare/v1.0.0...v1.1.0)
+
+### Features
+
+* **client:** add a `withOptions` method ([69cec0e](https://github.com/orbcorp/orb-kotlin/commit/69cec0e8c4637232e6b6276b95592ecd6a6bed63))
+* **client:** implement per-endpoint base URL support ([150d8fc](https://github.com/orbcorp/orb-kotlin/commit/150d8fceee3bbb1351597c68b2d734ef7d4e4400))
+
 ## 1.0.0 (2025-06-09)
 
 Full Changelog: [v0.1.0-alpha.49...v1.0.0](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.49...v1.0.0)

@@ -3,6 +3,7 @@
 package com.withorb.api.services.blocking.prices
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Price
@@ -15,6 +16,13 @@ interface ExternalPriceIdService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ExternalPriceIdService
 
     /**
      * This endpoint allows you to update the `metadata` property on a price. If you pass null for
@@ -62,6 +70,15 @@ interface ExternalPriceIdService {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ExternalPriceIdService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `put /prices/external_price_id/{external_price_id}`, but

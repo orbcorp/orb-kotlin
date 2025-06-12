@@ -29,6 +29,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPriceId
 
     override fun withRawResponse(): ExternalPriceIdServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): ExternalPriceIdServiceAsync =
+        ExternalPriceIdServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun update(
         params: PriceExternalPriceIdUpdateParams,
         requestOptions: RequestOptions,
@@ -48,6 +53,13 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPriceId
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ExternalPriceIdServiceAsync.WithRawResponse =
+            ExternalPriceIdServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         private val updateHandler: Handler<Price> =
             jsonHandler<Price>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
@@ -61,6 +73,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPriceId
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("prices", "external_price_id", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -91,6 +104,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPriceId
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("prices", "external_price_id", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)

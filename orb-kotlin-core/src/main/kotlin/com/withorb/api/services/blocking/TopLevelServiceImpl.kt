@@ -26,6 +26,9 @@ class TopLevelServiceImpl internal constructor(private val clientOptions: Client
 
     override fun withRawResponse(): TopLevelService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): TopLevelService =
+        TopLevelServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun ping(
         params: TopLevelPingParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class TopLevelServiceImpl internal constructor(private val clientOptions: Client
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): TopLevelService.WithRawResponse =
+            TopLevelServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         private val pingHandler: Handler<TopLevelPingResponse> =
             jsonHandler<TopLevelPingResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
@@ -49,6 +59,7 @@ class TopLevelServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("ping")
                     .build()
                     .prepare(clientOptions, params)

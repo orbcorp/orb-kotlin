@@ -28,6 +28,9 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
 
     override fun withRawResponse(): SubscriptionServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): SubscriptionServiceAsync =
+        SubscriptionServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun list(
         params: CouponSubscriptionListParams,
         requestOptions: RequestOptions,
@@ -39,6 +42,13 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
         SubscriptionServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): SubscriptionServiceAsync.WithRawResponse =
+            SubscriptionServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<Subscriptions> =
             jsonHandler<Subscriptions>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
@@ -53,6 +63,7 @@ class SubscriptionServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("coupons", params._pathParam(0), "subscriptions")
                     .build()
                     .prepareAsync(clientOptions, params)

@@ -26,6 +26,9 @@ class VolumeServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
     override fun withRawResponse(): VolumeServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): VolumeServiceAsync =
+        VolumeServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun list(
         params: EventVolumeListParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class VolumeServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): VolumeServiceAsync.WithRawResponse =
+            VolumeServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         private val listHandler: Handler<EventVolumes> =
             jsonHandler<EventVolumes>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
@@ -48,6 +58,7 @@ class VolumeServiceAsyncImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "volume")
                     .build()
                     .prepareAsync(clientOptions, params)

@@ -39,6 +39,9 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): PlanServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PlanServiceAsync =
+        PlanServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun externalPlanId(): ExternalPlanIdServiceAsync = externalPlanId
 
     override suspend fun create(params: PlanCreateParams, requestOptions: RequestOptions): Plan =
@@ -69,6 +72,13 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             ExternalPlanIdServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): PlanServiceAsync.WithRawResponse =
+            PlanServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         override fun externalPlanId(): ExternalPlanIdServiceAsync.WithRawResponse = externalPlanId
 
         private val createHandler: Handler<Plan> =
@@ -81,6 +91,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -111,6 +122,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -139,6 +151,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -175,6 +188,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)

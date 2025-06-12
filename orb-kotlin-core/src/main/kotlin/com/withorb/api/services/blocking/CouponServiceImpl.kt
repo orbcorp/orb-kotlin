@@ -39,6 +39,9 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun withRawResponse(): CouponService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CouponService =
+        CouponServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun subscriptions(): SubscriptionService = subscriptions
 
     override fun create(params: CouponCreateParams, requestOptions: RequestOptions): Coupon =
@@ -66,6 +69,11 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
             SubscriptionServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CouponService.WithRawResponse =
+            CouponServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
+
         override fun subscriptions(): SubscriptionService.WithRawResponse = subscriptions
 
         private val createHandler: Handler<Coupon> =
@@ -78,6 +86,7 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("coupons")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -106,6 +115,7 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("coupons")
                     .build()
                     .prepare(clientOptions, params)
@@ -142,6 +152,7 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("coupons", params._pathParam(0), "archive")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -172,6 +183,7 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("coupons", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)

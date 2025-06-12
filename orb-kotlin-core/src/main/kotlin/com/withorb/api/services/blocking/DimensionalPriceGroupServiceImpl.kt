@@ -38,6 +38,11 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
 
     override fun withRawResponse(): DimensionalPriceGroupService.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): DimensionalPriceGroupService =
+        DimensionalPriceGroupServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun externalDimensionalPriceGroupId(): ExternalDimensionalPriceGroupIdService =
         externalDimensionalPriceGroupId
 
@@ -72,6 +77,13 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
             ExternalDimensionalPriceGroupIdServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): DimensionalPriceGroupService.WithRawResponse =
+            DimensionalPriceGroupServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         override fun externalDimensionalPriceGroupId():
             ExternalDimensionalPriceGroupIdService.WithRawResponse = externalDimensionalPriceGroupId
 
@@ -86,6 +98,7 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("dimensional_price_groups")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -117,6 +130,7 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("dimensional_price_groups", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
@@ -144,6 +158,7 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("dimensional_price_groups")
                     .build()
                     .prepare(clientOptions, params)

@@ -38,6 +38,9 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun withRawResponse(): PlanService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PlanService =
+        PlanServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun externalPlanId(): ExternalPlanIdService = externalPlanId
 
     override fun create(params: PlanCreateParams, requestOptions: RequestOptions): Plan =
@@ -65,6 +68,11 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             ExternalPlanIdServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): PlanService.WithRawResponse =
+            PlanServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
+
         override fun externalPlanId(): ExternalPlanIdService.WithRawResponse = externalPlanId
 
         private val createHandler: Handler<Plan> =
@@ -77,6 +85,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -107,6 +116,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -135,6 +145,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans")
                     .build()
                     .prepare(clientOptions, params)
@@ -171,6 +182,7 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("plans", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)

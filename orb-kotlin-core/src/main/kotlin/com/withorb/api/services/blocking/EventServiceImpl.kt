@@ -42,6 +42,9 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
 
     override fun withRawResponse(): EventService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EventService =
+        EventServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun backfills(): BackfillService = backfills
 
     override fun volume(): VolumeService = volume
@@ -87,6 +90,11 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
             VolumeServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): EventService.WithRawResponse =
+            EventServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
+
         override fun backfills(): BackfillService.WithRawResponse = backfills
 
         override fun volume(): VolumeService.WithRawResponse = volume
@@ -105,6 +113,7 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -136,6 +145,7 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", params._pathParam(0), "deprecate")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -164,6 +174,7 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("ingest")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -192,6 +203,7 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("events", "search")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()

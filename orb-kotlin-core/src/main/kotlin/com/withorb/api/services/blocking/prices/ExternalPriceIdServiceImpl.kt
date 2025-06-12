@@ -29,6 +29,9 @@ class ExternalPriceIdServiceImpl internal constructor(private val clientOptions:
 
     override fun withRawResponse(): ExternalPriceIdService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ExternalPriceIdService =
+        ExternalPriceIdServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun update(
         params: PriceExternalPriceIdUpdateParams,
         requestOptions: RequestOptions,
@@ -48,6 +51,13 @@ class ExternalPriceIdServiceImpl internal constructor(private val clientOptions:
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ExternalPriceIdService.WithRawResponse =
+            ExternalPriceIdServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         private val updateHandler: Handler<Price> =
             jsonHandler<Price>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
@@ -61,6 +71,7 @@ class ExternalPriceIdServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("prices", "external_price_id", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -91,6 +102,7 @@ class ExternalPriceIdServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("prices", "external_price_id", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)

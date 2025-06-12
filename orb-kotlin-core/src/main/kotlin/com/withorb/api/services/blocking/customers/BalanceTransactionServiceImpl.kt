@@ -31,6 +31,9 @@ class BalanceTransactionServiceImpl internal constructor(private val clientOptio
 
     override fun withRawResponse(): BalanceTransactionService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BalanceTransactionService =
+        BalanceTransactionServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: CustomerBalanceTransactionCreateParams,
         requestOptions: RequestOptions,
@@ -50,6 +53,13 @@ class BalanceTransactionServiceImpl internal constructor(private val clientOptio
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): BalanceTransactionService.WithRawResponse =
+            BalanceTransactionServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
+
         private val createHandler: Handler<CustomerBalanceTransactionCreateResponse> =
             jsonHandler<CustomerBalanceTransactionCreateResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
@@ -64,6 +74,7 @@ class BalanceTransactionServiceImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("customers", params._pathParam(0), "balance_transactions")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -95,6 +106,7 @@ class BalanceTransactionServiceImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("customers", params._pathParam(0), "balance_transactions")
                     .build()
                     .prepare(clientOptions, params)
