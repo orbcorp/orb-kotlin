@@ -31,6 +31,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPlanIdS
 
     override fun withRawResponse(): ExternalPlanIdServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): ExternalPlanIdServiceAsync =
+        ExternalPlanIdServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun createPlanVersion(
         params: BetaExternalPlanIdCreatePlanVersionParams,
         requestOptions: RequestOptions,
@@ -56,6 +61,13 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPlanIdS
         ExternalPlanIdServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ExternalPlanIdServiceAsync.WithRawResponse =
+            ExternalPlanIdServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createPlanVersionHandler: Handler<PlanVersion> =
             jsonHandler<PlanVersion>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

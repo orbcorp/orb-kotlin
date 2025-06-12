@@ -39,6 +39,9 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
 
     override fun withRawResponse(): InvoiceService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): InvoiceService =
+        InvoiceServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(params: InvoiceCreateParams, requestOptions: RequestOptions): Invoice =
         // post /invoices
         withRawResponse().create(params, requestOptions).parse()
@@ -82,6 +85,13 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
         InvoiceService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): InvoiceService.WithRawResponse =
+            InvoiceServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<Invoice> =
             jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

@@ -36,6 +36,9 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
     override fun withRawResponse(): LedgerServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): LedgerServiceAsync =
+        LedgerServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun list(
         params: CustomerCreditLedgerListParams,
         requestOptions: RequestOptions,
@@ -68,6 +71,13 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
         LedgerServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): LedgerServiceAsync.WithRawResponse =
+            LedgerServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<CustomerCreditLedgerListPageResponse> =
             jsonHandler<CustomerCreditLedgerListPageResponse>(clientOptions.jsonMapper)

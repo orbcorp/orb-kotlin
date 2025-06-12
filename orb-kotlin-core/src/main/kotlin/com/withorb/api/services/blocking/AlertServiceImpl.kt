@@ -37,6 +37,9 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
 
     override fun withRawResponse(): AlertService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): AlertService =
+        AlertServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(params: AlertRetrieveParams, requestOptions: RequestOptions): Alert =
         // get /alerts/{alert_id}
         withRawResponse().retrieve(params, requestOptions).parse()
@@ -82,6 +85,11 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
         AlertService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): AlertService.WithRawResponse =
+            AlertServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         private val retrieveHandler: Handler<Alert> =
             jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

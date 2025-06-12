@@ -32,6 +32,9 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
 
     override fun withRawResponse(): CreditNoteService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CreditNoteService =
+        CreditNoteServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: CreditNoteCreateParams,
         requestOptions: RequestOptions,
@@ -54,6 +57,13 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
         CreditNoteService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CreditNoteService.WithRawResponse =
+            CreditNoteServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<CreditNote> =
             jsonHandler<CreditNote>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

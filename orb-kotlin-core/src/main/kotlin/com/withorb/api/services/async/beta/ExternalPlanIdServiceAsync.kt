@@ -3,6 +3,7 @@
 package com.withorb.api.services.async.beta
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.BetaExternalPlanIdCreatePlanVersionParams
@@ -17,6 +18,13 @@ interface ExternalPlanIdServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ExternalPlanIdServiceAsync
 
     /**
      * This API endpoint is in beta and its interface may change. It is recommended for use only in
@@ -83,6 +91,15 @@ interface ExternalPlanIdServiceAsync {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ExternalPlanIdServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post

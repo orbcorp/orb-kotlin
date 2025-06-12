@@ -29,6 +29,9 @@ class CostServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): CostServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CostServiceAsync =
+        CostServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun list(
         params: CustomerCostListParams,
         requestOptions: RequestOptions,
@@ -47,6 +50,13 @@ class CostServiceAsyncImpl internal constructor(private val clientOptions: Clien
         CostServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CostServiceAsync.WithRawResponse =
+            CostServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<CustomerCostListResponse> =
             jsonHandler<CustomerCostListResponse>(clientOptions.jsonMapper)

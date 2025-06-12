@@ -29,6 +29,13 @@ internal constructor(private val clientOptions: ClientOptions) :
     override fun withRawResponse(): ExternalDimensionalPriceGroupIdService.WithRawResponse =
         withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): ExternalDimensionalPriceGroupIdService =
+        ExternalDimensionalPriceGroupIdServiceImpl(
+            clientOptions.toBuilder().apply(modifier).build()
+        )
+
     override fun retrieve(
         params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams,
         requestOptions: RequestOptions,
@@ -41,6 +48,13 @@ internal constructor(private val clientOptions: ClientOptions) :
         ExternalDimensionalPriceGroupIdService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ExternalDimensionalPriceGroupIdService.WithRawResponse =
+            ExternalDimensionalPriceGroupIdServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<DimensionalPriceGroup> =
             jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper)

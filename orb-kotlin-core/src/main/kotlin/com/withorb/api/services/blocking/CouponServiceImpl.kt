@@ -39,6 +39,9 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun withRawResponse(): CouponService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CouponService =
+        CouponServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun subscriptions(): SubscriptionService = subscriptions
 
     override fun create(params: CouponCreateParams, requestOptions: RequestOptions): Coupon =
@@ -65,6 +68,11 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
         private val subscriptions: SubscriptionService.WithRawResponse by lazy {
             SubscriptionServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CouponService.WithRawResponse =
+            CouponServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun subscriptions(): SubscriptionService.WithRawResponse = subscriptions
 

@@ -29,6 +29,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPriceId
 
     override fun withRawResponse(): ExternalPriceIdServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): ExternalPriceIdServiceAsync =
+        ExternalPriceIdServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun update(
         params: PriceExternalPriceIdUpdateParams,
         requestOptions: RequestOptions,
@@ -47,6 +52,13 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPriceId
         ExternalPriceIdServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ExternalPriceIdServiceAsync.WithRawResponse =
+            ExternalPriceIdServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val updateHandler: Handler<Price> =
             jsonHandler<Price>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
