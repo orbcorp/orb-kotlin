@@ -39,6 +39,9 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun withRawResponse(): CreditService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CreditService =
+        CreditServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun ledger(): LedgerService = ledger
 
     override fun topUps(): TopUpService = topUps
@@ -69,6 +72,11 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
         private val topUps: TopUpService.WithRawResponse by lazy {
             TopUpServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CreditService.WithRawResponse =
+            CreditServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun ledger(): LedgerService.WithRawResponse = ledger
 

@@ -33,6 +33,9 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun withRawResponse(): MetricService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): MetricService =
+        MetricServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: MetricCreateParams,
         requestOptions: RequestOptions,
@@ -59,6 +62,11 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
         MetricService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): MetricService.WithRawResponse =
+            MetricServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         private val createHandler: Handler<BillableMetric> =
             jsonHandler<BillableMetric>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

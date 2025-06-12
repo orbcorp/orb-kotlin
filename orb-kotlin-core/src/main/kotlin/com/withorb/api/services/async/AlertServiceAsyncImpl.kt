@@ -37,6 +37,9 @@ class AlertServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
     override fun withRawResponse(): AlertServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): AlertServiceAsync =
+        AlertServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: AlertRetrieveParams,
         requestOptions: RequestOptions,
@@ -91,6 +94,13 @@ class AlertServiceAsyncImpl internal constructor(private val clientOptions: Clie
         AlertServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): AlertServiceAsync.WithRawResponse =
+            AlertServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<Alert> =
             jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

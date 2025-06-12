@@ -33,6 +33,9 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun withRawResponse(): ItemService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ItemService =
+        ItemServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(params: ItemCreateParams, requestOptions: RequestOptions): Item =
         // post /items
         withRawResponse().create(params, requestOptions).parse()
@@ -57,6 +60,11 @@ class ItemServiceImpl internal constructor(private val clientOptions: ClientOpti
         ItemService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ItemService.WithRawResponse =
+            ItemServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         private val createHandler: Handler<Item> =
             jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

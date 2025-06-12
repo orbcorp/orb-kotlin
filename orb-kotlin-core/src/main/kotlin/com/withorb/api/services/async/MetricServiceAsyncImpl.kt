@@ -33,6 +33,9 @@ class MetricServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
     override fun withRawResponse(): MetricServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): MetricServiceAsync =
+        MetricServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: MetricCreateParams,
         requestOptions: RequestOptions,
@@ -65,6 +68,13 @@ class MetricServiceAsyncImpl internal constructor(private val clientOptions: Cli
         MetricServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): MetricServiceAsync.WithRawResponse =
+            MetricServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<BillableMetric> =
             jsonHandler<BillableMetric>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

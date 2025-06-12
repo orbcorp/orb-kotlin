@@ -42,6 +42,9 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
 
     override fun withRawResponse(): EventService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EventService =
+        EventServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun backfills(): BackfillService = backfills
 
     override fun volume(): VolumeService = volume
@@ -86,6 +89,11 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
         private val volume: VolumeService.WithRawResponse by lazy {
             VolumeServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): EventService.WithRawResponse =
+            EventServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun backfills(): BackfillService.WithRawResponse = backfills
 

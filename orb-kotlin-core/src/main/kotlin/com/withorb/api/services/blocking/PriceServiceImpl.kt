@@ -45,6 +45,9 @@ class PriceServiceImpl internal constructor(private val clientOptions: ClientOpt
 
     override fun withRawResponse(): PriceService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PriceService =
+        PriceServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun externalPriceId(): ExternalPriceIdService = externalPriceId
 
     override fun create(params: PriceCreateParams, requestOptions: RequestOptions): Price =
@@ -92,6 +95,11 @@ class PriceServiceImpl internal constructor(private val clientOptions: ClientOpt
         private val externalPriceId: ExternalPriceIdService.WithRawResponse by lazy {
             ExternalPriceIdServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): PriceService.WithRawResponse =
+            PriceServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun externalPriceId(): ExternalPriceIdService.WithRawResponse = externalPriceId
 

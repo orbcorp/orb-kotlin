@@ -32,6 +32,9 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
 
     override fun withRawResponse(): SubscriptionChangeService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): SubscriptionChangeService =
+        SubscriptionChangeServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(
         params: SubscriptionChangeRetrieveParams,
         requestOptions: RequestOptions,
@@ -57,6 +60,13 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
         SubscriptionChangeService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): SubscriptionChangeService.WithRawResponse =
+            SubscriptionChangeServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<SubscriptionChangeRetrieveResponse> =
             jsonHandler<SubscriptionChangeRetrieveResponse>(clientOptions.jsonMapper)

@@ -32,6 +32,11 @@ internal constructor(private val clientOptions: ClientOptions) : SubscriptionCha
 
     override fun withRawResponse(): SubscriptionChangeServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): SubscriptionChangeServiceAsync =
+        SubscriptionChangeServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: SubscriptionChangeRetrieveParams,
         requestOptions: RequestOptions,
@@ -57,6 +62,13 @@ internal constructor(private val clientOptions: ClientOptions) : SubscriptionCha
         SubscriptionChangeServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): SubscriptionChangeServiceAsync.WithRawResponse =
+            SubscriptionChangeServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<SubscriptionChangeRetrieveResponse> =
             jsonHandler<SubscriptionChangeRetrieveResponse>(clientOptions.jsonMapper)

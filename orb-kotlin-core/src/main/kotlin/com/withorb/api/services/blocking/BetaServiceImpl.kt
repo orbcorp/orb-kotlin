@@ -36,6 +36,9 @@ class BetaServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun withRawResponse(): BetaService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BetaService =
+        BetaServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun externalPlanId(): ExternalPlanIdService = externalPlanId
 
     override fun createPlanVersion(
@@ -67,6 +70,11 @@ class BetaServiceImpl internal constructor(private val clientOptions: ClientOpti
         private val externalPlanId: ExternalPlanIdService.WithRawResponse by lazy {
             ExternalPlanIdServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): BetaService.WithRawResponse =
+            BetaServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun externalPlanId(): ExternalPlanIdService.WithRawResponse = externalPlanId
 

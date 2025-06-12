@@ -40,6 +40,11 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
     override fun withRawResponse(): DimensionalPriceGroupServiceAsync.WithRawResponse =
         withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): DimensionalPriceGroupServiceAsync =
+        DimensionalPriceGroupServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun externalDimensionalPriceGroupId(): ExternalDimensionalPriceGroupIdServiceAsync =
         externalDimensionalPriceGroupId
 
@@ -73,6 +78,13 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
             ExternalDimensionalPriceGroupIdServiceAsync.WithRawResponse by lazy {
             ExternalDimensionalPriceGroupIdServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): DimensionalPriceGroupServiceAsync.WithRawResponse =
+            DimensionalPriceGroupServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun externalDimensionalPriceGroupId():
             ExternalDimensionalPriceGroupIdServiceAsync.WithRawResponse =

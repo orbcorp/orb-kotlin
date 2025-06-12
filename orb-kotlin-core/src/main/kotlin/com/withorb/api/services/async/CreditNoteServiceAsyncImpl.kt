@@ -32,6 +32,9 @@ class CreditNoteServiceAsyncImpl internal constructor(private val clientOptions:
 
     override fun withRawResponse(): CreditNoteServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CreditNoteServiceAsync =
+        CreditNoteServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: CreditNoteCreateParams,
         requestOptions: RequestOptions,
@@ -57,6 +60,13 @@ class CreditNoteServiceAsyncImpl internal constructor(private val clientOptions:
         CreditNoteServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CreditNoteServiceAsync.WithRawResponse =
+            CreditNoteServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<CreditNote> =
             jsonHandler<CreditNote>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

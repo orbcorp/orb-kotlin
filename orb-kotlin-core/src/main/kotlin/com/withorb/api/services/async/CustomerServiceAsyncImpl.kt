@@ -54,6 +54,9 @@ class CustomerServiceAsyncImpl internal constructor(private val clientOptions: C
 
     override fun withRawResponse(): CustomerServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CustomerServiceAsync =
+        CustomerServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun costs(): CostServiceAsync = costs
 
     override fun credits(): CreditServiceAsync = credits
@@ -140,6 +143,13 @@ class CustomerServiceAsyncImpl internal constructor(private val clientOptions: C
         private val balanceTransactions: BalanceTransactionServiceAsync.WithRawResponse by lazy {
             BalanceTransactionServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CustomerServiceAsync.WithRawResponse =
+            CustomerServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun costs(): CostServiceAsync.WithRawResponse = costs
 

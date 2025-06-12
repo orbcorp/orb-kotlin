@@ -31,6 +31,11 @@ internal constructor(private val clientOptions: ClientOptions) : BalanceTransact
 
     override fun withRawResponse(): BalanceTransactionServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): BalanceTransactionServiceAsync =
+        BalanceTransactionServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: CustomerBalanceTransactionCreateParams,
         requestOptions: RequestOptions,
@@ -49,6 +54,13 @@ internal constructor(private val clientOptions: ClientOptions) : BalanceTransact
         BalanceTransactionServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): BalanceTransactionServiceAsync.WithRawResponse =
+            BalanceTransactionServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<CustomerBalanceTransactionCreateResponse> =
             jsonHandler<CustomerBalanceTransactionCreateResponse>(clientOptions.jsonMapper)
