@@ -37,6 +37,9 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
 
     override fun withRawResponse(): BackfillService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BackfillService =
+        BackfillServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: EventBackfillCreateParams,
         requestOptions: RequestOptions,
@@ -76,6 +79,13 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
         BackfillService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): BackfillService.WithRawResponse =
+            BackfillServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<EventBackfillCreateResponse> =
             jsonHandler<EventBackfillCreateResponse>(clientOptions.jsonMapper)

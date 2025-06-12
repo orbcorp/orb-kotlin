@@ -37,6 +37,9 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): BetaServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BetaServiceAsync =
+        BetaServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun externalPlanId(): ExternalPlanIdServiceAsync = externalPlanId
 
     override suspend fun createPlanVersion(
@@ -68,6 +71,13 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
         private val externalPlanId: ExternalPlanIdServiceAsync.WithRawResponse by lazy {
             ExternalPlanIdServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): BetaServiceAsync.WithRawResponse =
+            BetaServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun externalPlanId(): ExternalPlanIdServiceAsync.WithRawResponse = externalPlanId
 

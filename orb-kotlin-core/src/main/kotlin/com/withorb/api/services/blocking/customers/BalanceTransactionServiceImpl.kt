@@ -31,6 +31,9 @@ class BalanceTransactionServiceImpl internal constructor(private val clientOptio
 
     override fun withRawResponse(): BalanceTransactionService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BalanceTransactionService =
+        BalanceTransactionServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: CustomerBalanceTransactionCreateParams,
         requestOptions: RequestOptions,
@@ -49,6 +52,13 @@ class BalanceTransactionServiceImpl internal constructor(private val clientOptio
         BalanceTransactionService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): BalanceTransactionService.WithRawResponse =
+            BalanceTransactionServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<CustomerBalanceTransactionCreateResponse> =
             jsonHandler<CustomerBalanceTransactionCreateResponse>(clientOptions.jsonMapper)

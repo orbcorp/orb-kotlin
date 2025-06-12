@@ -38,6 +38,9 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun withRawResponse(): PlanService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PlanService =
+        PlanServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun externalPlanId(): ExternalPlanIdService = externalPlanId
 
     override fun create(params: PlanCreateParams, requestOptions: RequestOptions): Plan =
@@ -64,6 +67,11 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
         private val externalPlanId: ExternalPlanIdService.WithRawResponse by lazy {
             ExternalPlanIdServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): PlanService.WithRawResponse =
+            PlanServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun externalPlanId(): ExternalPlanIdService.WithRawResponse = externalPlanId
 

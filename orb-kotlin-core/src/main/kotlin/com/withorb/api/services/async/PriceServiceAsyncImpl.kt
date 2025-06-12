@@ -45,6 +45,9 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
     override fun withRawResponse(): PriceServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PriceServiceAsync =
+        PriceServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun externalPriceId(): ExternalPriceIdServiceAsync = externalPriceId
 
     override suspend fun create(params: PriceCreateParams, requestOptions: RequestOptions): Price =
@@ -95,6 +98,13 @@ class PriceServiceAsyncImpl internal constructor(private val clientOptions: Clie
         private val externalPriceId: ExternalPriceIdServiceAsync.WithRawResponse by lazy {
             ExternalPriceIdServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): PriceServiceAsync.WithRawResponse =
+            PriceServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun externalPriceId(): ExternalPriceIdServiceAsync.WithRawResponse =
             externalPriceId

@@ -34,6 +34,9 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): ItemServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ItemServiceAsync =
+        ItemServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(params: ItemCreateParams, requestOptions: RequestOptions): Item =
         // post /items
         withRawResponse().create(params, requestOptions).parse()
@@ -61,6 +64,13 @@ class ItemServiceAsyncImpl internal constructor(private val clientOptions: Clien
         ItemServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ItemServiceAsync.WithRawResponse =
+            ItemServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<Item> =
             jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

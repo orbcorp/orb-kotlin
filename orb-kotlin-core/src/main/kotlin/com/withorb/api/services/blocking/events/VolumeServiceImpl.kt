@@ -26,6 +26,9 @@ class VolumeServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun withRawResponse(): VolumeService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): VolumeService =
+        VolumeServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun list(params: EventVolumeListParams, requestOptions: RequestOptions): EventVolumes =
         // get /events/volume
         withRawResponse().list(params, requestOptions).parse()
@@ -34,6 +37,11 @@ class VolumeServiceImpl internal constructor(private val clientOptions: ClientOp
         VolumeService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): VolumeService.WithRawResponse =
+            VolumeServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         private val listHandler: Handler<EventVolumes> =
             jsonHandler<EventVolumes>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

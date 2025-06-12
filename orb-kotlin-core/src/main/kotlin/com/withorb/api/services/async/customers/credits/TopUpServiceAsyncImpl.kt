@@ -40,6 +40,9 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
     override fun withRawResponse(): TopUpServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): TopUpServiceAsync =
+        TopUpServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: CustomerCreditTopUpCreateParams,
         requestOptions: RequestOptions,
@@ -88,6 +91,13 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
         TopUpServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): TopUpServiceAsync.WithRawResponse =
+            TopUpServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<CustomerCreditTopUpCreateResponse> =
             jsonHandler<CustomerCreditTopUpCreateResponse>(clientOptions.jsonMapper)

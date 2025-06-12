@@ -3,6 +3,7 @@
 package com.withorb.api.services.async.plans
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Plan
@@ -15,6 +16,13 @@ interface ExternalPlanIdServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ExternalPlanIdServiceAsync
 
     /**
      * This endpoint can be used to update the `external_plan_id`, and `metadata` of an existing
@@ -77,6 +85,15 @@ interface ExternalPlanIdServiceAsync {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ExternalPlanIdServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `put /plans/external_plan_id/{external_plan_id}`, but is

@@ -28,6 +28,9 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): SubscriptionService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): SubscriptionService =
+        SubscriptionServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun list(
         params: CouponSubscriptionListParams,
         requestOptions: RequestOptions,
@@ -39,6 +42,13 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
         SubscriptionService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): SubscriptionService.WithRawResponse =
+            SubscriptionServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<Subscriptions> =
             jsonHandler<Subscriptions>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

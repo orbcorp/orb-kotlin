@@ -40,6 +40,9 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
 
     override fun withRawResponse(): TopUpService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): TopUpService =
+        TopUpServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: CustomerCreditTopUpCreateParams,
         requestOptions: RequestOptions,
@@ -85,6 +88,11 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
         TopUpService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): TopUpService.WithRawResponse =
+            TopUpServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         private val createHandler: Handler<CustomerCreditTopUpCreateResponse> =
             jsonHandler<CustomerCreditTopUpCreateResponse>(clientOptions.jsonMapper)

@@ -39,6 +39,9 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): PlanServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PlanServiceAsync =
+        PlanServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun externalPlanId(): ExternalPlanIdServiceAsync = externalPlanId
 
     override suspend fun create(params: PlanCreateParams, requestOptions: RequestOptions): Plan =
@@ -68,6 +71,13 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
         private val externalPlanId: ExternalPlanIdServiceAsync.WithRawResponse by lazy {
             ExternalPlanIdServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): PlanServiceAsync.WithRawResponse =
+            PlanServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun externalPlanId(): ExternalPlanIdServiceAsync.WithRawResponse = externalPlanId
 

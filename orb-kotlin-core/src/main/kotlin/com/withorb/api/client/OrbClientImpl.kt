@@ -104,6 +104,9 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
 
     override fun withRawResponse(): OrbClient.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): OrbClient =
+        OrbClientImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun topLevel(): TopLevelService = topLevel
 
     override fun beta(): BetaService = beta
@@ -204,6 +207,11 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
         private val subscriptionChanges: SubscriptionChangeService.WithRawResponse by lazy {
             SubscriptionChangeServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): OrbClient.WithRawResponse =
+            OrbClientImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun topLevel(): TopLevelService.WithRawResponse = topLevel
 

@@ -54,6 +54,9 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
 
     override fun withRawResponse(): CustomerService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CustomerService =
+        CustomerServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun costs(): CostService = costs
 
     override fun credits(): CreditService = credits
@@ -131,6 +134,13 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
         private val balanceTransactions: BalanceTransactionService.WithRawResponse by lazy {
             BalanceTransactionServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CustomerService.WithRawResponse =
+            CustomerServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun costs(): CostService.WithRawResponse = costs
 

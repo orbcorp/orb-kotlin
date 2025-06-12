@@ -39,6 +39,9 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): InvoiceServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): InvoiceServiceAsync =
+        InvoiceServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: InvoiceCreateParams,
         requestOptions: RequestOptions,
@@ -100,6 +103,13 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
         InvoiceServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): InvoiceServiceAsync.WithRawResponse =
+            InvoiceServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<Invoice> =
             jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
