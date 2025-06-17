@@ -46,6 +46,7 @@ private constructor(
     private val invoiceGroupingKey: JsonField<String>,
     private val invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>,
     private val metadata: JsonField<Metadata>,
+    private val referenceId: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -93,6 +94,9 @@ private constructor(
         @ExcludeMissing
         invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration> = JsonMissing.of(),
         @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("reference_id")
+        @ExcludeMissing
+        referenceId: JsonField<String> = JsonMissing.of(),
     ) : this(
         cadence,
         groupedTieredPackageConfig,
@@ -111,6 +115,7 @@ private constructor(
         invoiceGroupingKey,
         invoicingCycleConfiguration,
         metadata,
+        referenceId,
         mutableMapOf(),
     )
 
@@ -255,6 +260,15 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+    /**
+     * A transient ID that can be used to reference this price when adding adjustments in the same
+     * API call.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun referenceId(): String? = referenceId.getNullable("reference_id")
 
     /**
      * Returns the raw JSON value of [cadence].
@@ -409,6 +423,15 @@ private constructor(
      */
     @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
+    /**
+     * Returns the raw JSON value of [referenceId].
+     *
+     * Unlike [referenceId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("reference_id")
+    @ExcludeMissing
+    fun _referenceId(): JsonField<String> = referenceId
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -462,6 +485,7 @@ private constructor(
         private var invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
             JsonMissing.of()
         private var metadata: JsonField<Metadata> = JsonMissing.of()
+        private var referenceId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(newPlanGroupedTieredPackagePrice: NewPlanGroupedTieredPackagePrice) =
@@ -487,6 +511,7 @@ private constructor(
                 invoicingCycleConfiguration =
                     newPlanGroupedTieredPackagePrice.invoicingCycleConfiguration
                 metadata = newPlanGroupedTieredPackagePrice.metadata
+                referenceId = newPlanGroupedTieredPackagePrice.referenceId
                 additionalProperties =
                     newPlanGroupedTieredPackagePrice.additionalProperties.toMutableMap()
             }
@@ -803,6 +828,21 @@ private constructor(
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
+        /**
+         * A transient ID that can be used to reference this price when adding adjustments in the
+         * same API call.
+         */
+        fun referenceId(referenceId: String?) = referenceId(JsonField.ofNullable(referenceId))
+
+        /**
+         * Sets [Builder.referenceId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.referenceId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun referenceId(referenceId: JsonField<String>) = apply { this.referenceId = referenceId }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -857,6 +897,7 @@ private constructor(
                 invoiceGroupingKey,
                 invoicingCycleConfiguration,
                 metadata,
+                referenceId,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -885,6 +926,7 @@ private constructor(
         invoiceGroupingKey()
         invoicingCycleConfiguration()?.validate()
         metadata()?.validate()
+        referenceId()
         validated = true
     }
 
@@ -918,7 +960,8 @@ private constructor(
             (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
             (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
             (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
-            (metadata.asKnown()?.validity() ?: 0)
+            (metadata.asKnown()?.validity() ?: 0) +
+            (if (referenceId.asKnown() == null) 0 else 1)
 
     /** The cadence to bill for this price on. */
     class Cadence @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -1572,15 +1615,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is NewPlanGroupedTieredPackagePrice && cadence == other.cadence && groupedTieredPackageConfig == other.groupedTieredPackageConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is NewPlanGroupedTieredPackagePrice && cadence == other.cadence && groupedTieredPackageConfig == other.groupedTieredPackageConfig && itemId == other.itemId && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && referenceId == other.referenceId && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(cadence, groupedTieredPackageConfig, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, conversionRateConfig, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(cadence, groupedTieredPackageConfig, itemId, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, conversionRateConfig, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, referenceId, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "NewPlanGroupedTieredPackagePrice{cadence=$cadence, groupedTieredPackageConfig=$groupedTieredPackageConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+        "NewPlanGroupedTieredPackagePrice{cadence=$cadence, groupedTieredPackageConfig=$groupedTieredPackageConfig, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 }

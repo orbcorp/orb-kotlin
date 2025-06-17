@@ -57,6 +57,7 @@ internal class NewPlanBulkWithProrationPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         assertThat(newPlanBulkWithProrationPrice.bulkWithProrationConfig())
@@ -117,6 +118,7 @@ internal class NewPlanBulkWithProrationPriceTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(newPlanBulkWithProrationPrice.referenceId()).isEqualTo("reference_id")
     }
 
     @Test
@@ -167,6 +169,7 @@ internal class NewPlanBulkWithProrationPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         val roundtrippedNewPlanBulkWithProrationPrice =

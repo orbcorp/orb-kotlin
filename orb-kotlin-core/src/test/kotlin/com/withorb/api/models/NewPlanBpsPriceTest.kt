@@ -53,6 +53,7 @@ internal class NewPlanBpsPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         assertThat(newPlanBpsPrice.bpsConfig())
@@ -107,6 +108,7 @@ internal class NewPlanBpsPriceTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(newPlanBpsPrice.referenceId()).isEqualTo("reference_id")
     }
 
     @Test
@@ -153,6 +155,7 @@ internal class NewPlanBpsPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         val roundtrippedNewPlanBpsPrice =

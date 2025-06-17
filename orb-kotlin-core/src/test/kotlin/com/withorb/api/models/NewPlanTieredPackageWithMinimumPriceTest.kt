@@ -59,6 +59,7 @@ internal class NewPlanTieredPackageWithMinimumPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         assertThat(newPlanTieredPackageWithMinimumPrice.cadence())
@@ -121,6 +122,7 @@ internal class NewPlanTieredPackageWithMinimumPriceTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(newPlanTieredPackageWithMinimumPrice.referenceId()).isEqualTo("reference_id")
     }
 
     @Test
@@ -173,6 +175,7 @@ internal class NewPlanTieredPackageWithMinimumPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         val roundtrippedNewPlanTieredPackageWithMinimumPrice =

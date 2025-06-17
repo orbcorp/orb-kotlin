@@ -60,6 +60,7 @@ internal class NewPlanGroupedWithProratedMinimumPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         assertThat(newPlanGroupedWithProratedMinimumPrice.cadence())
@@ -124,6 +125,7 @@ internal class NewPlanGroupedWithProratedMinimumPriceTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(newPlanGroupedWithProratedMinimumPrice.referenceId()).isEqualTo("reference_id")
     }
 
     @Test
@@ -177,6 +179,7 @@ internal class NewPlanGroupedWithProratedMinimumPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         val roundtrippedNewPlanGroupedWithProratedMinimumPrice =

@@ -57,6 +57,7 @@ internal class NewPlanGroupedTieredPackagePriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         assertThat(newPlanGroupedTieredPackagePrice.cadence())
@@ -119,6 +120,7 @@ internal class NewPlanGroupedTieredPackagePriceTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(newPlanGroupedTieredPackagePrice.referenceId()).isEqualTo("reference_id")
     }
 
     @Test
@@ -169,6 +171,7 @@ internal class NewPlanGroupedTieredPackagePriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         val roundtrippedNewPlanGroupedTieredPackagePrice =
