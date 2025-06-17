@@ -3955,10 +3955,12 @@ private constructor(
         fun creditsApplied(): String = creditsApplied.getRequired("credits_applied")
 
         /**
+         * This field is deprecated in favor of `adjustments`
+         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun discount(): Discount? = discount.getNullable("discount")
+        @Deprecated("deprecated") fun discount(): Discount? = discount.getNullable("discount")
 
         /**
          * The end date of the range of time applied for this line item's price.
@@ -4152,7 +4154,10 @@ private constructor(
          *
          * Unlike [discount], this method doesn't throw if the JSON field has an unexpected type.
          */
-        @JsonProperty("discount") @ExcludeMissing fun _discount(): JsonField<Discount> = discount
+        @Deprecated("deprecated")
+        @JsonProperty("discount")
+        @ExcludeMissing
+        fun _discount(): JsonField<Discount> = discount
 
         /**
          * Returns the raw JSON value of [endDate].
@@ -4511,6 +4516,8 @@ private constructor(
                 this.creditsApplied = creditsApplied
             }
 
+            /** This field is deprecated in favor of `adjustments` */
+            @Deprecated("deprecated")
             fun discount(discount: Discount?) = discount(JsonField.ofNullable(discount))
 
             /**
@@ -4520,9 +4527,11 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
+            @Deprecated("deprecated")
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             /** Alias for calling [discount] with `Discount.ofPercentage(percentage)`. */
+            @Deprecated("deprecated")
             fun discount(percentage: PercentageDiscount) =
                 discount(Discount.ofPercentage(percentage))
 
@@ -4535,6 +4544,7 @@ private constructor(
              *     .build()
              * ```
              */
+            @Deprecated("deprecated")
             fun percentageDiscount(percentageDiscount: Double) =
                 discount(
                     PercentageDiscount.builder()
@@ -4544,9 +4554,11 @@ private constructor(
                 )
 
             /** Alias for calling [discount] with `Discount.ofTrial(trial)`. */
+            @Deprecated("deprecated")
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
             /** Alias for calling [discount] with `Discount.ofUsage(usage)`. */
+            @Deprecated("deprecated")
             fun discount(usage: UsageDiscount) = discount(Discount.ofUsage(usage))
 
             /**
@@ -4558,6 +4570,7 @@ private constructor(
              *     .build()
              * ```
              */
+            @Deprecated("deprecated")
             fun usageDiscount(usageDiscount: Double) =
                 discount(
                     UsageDiscount.builder()
@@ -4567,6 +4580,7 @@ private constructor(
                 )
 
             /** Alias for calling [discount] with `Discount.ofAmount(amount)`. */
+            @Deprecated("deprecated")
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
 
             /**
@@ -4578,6 +4592,7 @@ private constructor(
              *     .build()
              * ```
              */
+            @Deprecated("deprecated")
             fun amountDiscount(amountDiscount: String) =
                 discount(
                     AmountDiscount.builder()
