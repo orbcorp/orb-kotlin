@@ -57,6 +57,7 @@ internal class NewPlanTierWithProrationPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         assertThat(newPlanTierWithProrationPrice.cadence())
@@ -117,6 +118,7 @@ internal class NewPlanTierWithProrationPriceTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(newPlanTierWithProrationPrice.referenceId()).isEqualTo("reference_id")
     }
 
     @Test
@@ -167,6 +169,7 @@ internal class NewPlanTierWithProrationPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         val roundtrippedNewPlanTierWithProrationPrice =

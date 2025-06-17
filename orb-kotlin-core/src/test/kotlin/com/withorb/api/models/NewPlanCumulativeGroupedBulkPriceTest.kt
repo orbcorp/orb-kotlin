@@ -57,6 +57,7 @@ internal class NewPlanCumulativeGroupedBulkPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         assertThat(newPlanCumulativeGroupedBulkPrice.cadence())
@@ -119,6 +120,7 @@ internal class NewPlanCumulativeGroupedBulkPriceTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(newPlanCumulativeGroupedBulkPrice.referenceId()).isEqualTo("reference_id")
     }
 
     @Test
@@ -169,6 +171,7 @@ internal class NewPlanCumulativeGroupedBulkPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         val roundtrippedNewPlanCumulativeGroupedBulkPrice =

@@ -63,6 +63,7 @@ internal class NewPlanBulkBpsPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         assertThat(newPlanBulkBpsPrice.bulkBpsConfig())
@@ -128,6 +129,7 @@ internal class NewPlanBulkBpsPriceTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(newPlanBulkBpsPrice.referenceId()).isEqualTo("reference_id")
     }
 
     @Test
@@ -184,6 +186,7 @@ internal class NewPlanBulkBpsPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         val roundtrippedNewPlanBulkBpsPrice =

@@ -63,6 +63,15 @@ private constructor(
     fun prices(): List<Price> = body.prices()
 
     /**
+     * Adjustments for this plan. If the plan has phases, this includes adjustments across all
+     * phases of the plan.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun adjustments(): List<Adjustment>? = body.adjustments()
+
+    /**
      * Free-form text which is available on the invoice PDF and the Orb invoice portal.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
@@ -96,6 +105,15 @@ private constructor(
     fun netTerms(): Long? = body.netTerms()
 
     /**
+     * Configuration of pre-defined phases, each with their own prices and adjustments. Leave
+     * unspecified for plans with a single phase.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun planPhases(): List<PlanPhase>? = body.planPhases()
+
+    /**
      * The status of the plan to create (either active or draft). If not specified, this defaults to
      * active.
      *
@@ -126,6 +144,13 @@ private constructor(
     fun _prices(): JsonField<List<Price>> = body._prices()
 
     /**
+     * Returns the raw JSON value of [adjustments].
+     *
+     * Unlike [adjustments], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _adjustments(): JsonField<List<Adjustment>> = body._adjustments()
+
+    /**
      * Returns the raw JSON value of [defaultInvoiceMemo].
      *
      * Unlike [defaultInvoiceMemo], this method doesn't throw if the JSON field has an unexpected
@@ -153,6 +178,13 @@ private constructor(
      * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _netTerms(): JsonField<Long> = body._netTerms()
+
+    /**
+     * Returns the raw JSON value of [planPhases].
+     *
+     * Unlike [planPhases], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _planPhases(): JsonField<List<PlanPhase>> = body._planPhases()
 
     /**
      * Returns the raw JSON value of [status].
@@ -205,8 +237,8 @@ private constructor(
          * - [currency]
          * - [name]
          * - [prices]
+         * - [adjustments]
          * - [defaultInvoiceMemo]
-         * - [externalPlanId]
          * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
@@ -254,160 +286,29 @@ private constructor(
          */
         fun addPrice(price: Price) = apply { body.addPrice(price) }
 
-        /** Alias for calling [addPrice] with `Price.ofUnit(unit)`. */
-        fun addPrice(unit: NewPlanUnitPrice) = apply { body.addPrice(unit) }
-
-        /** Alias for calling [addPrice] with `Price.ofPackage(package_)`. */
-        fun addPrice(package_: NewPlanPackagePrice) = apply { body.addPrice(package_) }
-
-        /** Alias for calling [addPrice] with `Price.ofMatrix(matrix)`. */
-        fun addPrice(matrix: NewPlanMatrixPrice) = apply { body.addPrice(matrix) }
-
-        /** Alias for calling [addPrice] with `Price.ofTiered(tiered)`. */
-        fun addPrice(tiered: NewPlanTieredPrice) = apply { body.addPrice(tiered) }
-
-        /** Alias for calling [addPrice] with `Price.ofTieredBps(tieredBps)`. */
-        fun addPrice(tieredBps: NewPlanTieredBpsPrice) = apply { body.addPrice(tieredBps) }
-
-        /** Alias for calling [addPrice] with `Price.ofBps(bps)`. */
-        fun addPrice(bps: NewPlanBpsPrice) = apply { body.addPrice(bps) }
-
-        /** Alias for calling [addPrice] with `Price.ofBulkBps(bulkBps)`. */
-        fun addPrice(bulkBps: NewPlanBulkBpsPrice) = apply { body.addPrice(bulkBps) }
-
-        /** Alias for calling [addPrice] with `Price.ofBulk(bulk)`. */
-        fun addPrice(bulk: NewPlanBulkPrice) = apply { body.addPrice(bulk) }
+        /**
+         * Adjustments for this plan. If the plan has phases, this includes adjustments across all
+         * phases of the plan.
+         */
+        fun adjustments(adjustments: List<Adjustment>?) = apply { body.adjustments(adjustments) }
 
         /**
-         * Alias for calling [addPrice] with `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
+         * Sets [Builder.adjustments] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.adjustments] with a well-typed `List<Adjustment>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun addPrice(thresholdTotalAmount: NewPlanThresholdTotalAmountPrice) = apply {
-            body.addPrice(thresholdTotalAmount)
-        }
-
-        /** Alias for calling [addPrice] with `Price.ofTieredPackage(tieredPackage)`. */
-        fun addPrice(tieredPackage: NewPlanTieredPackagePrice) = apply {
-            body.addPrice(tieredPackage)
-        }
-
-        /** Alias for calling [addPrice] with `Price.ofTieredWithMinimum(tieredWithMinimum)`. */
-        fun addPrice(tieredWithMinimum: NewPlanTieredWithMinimumPrice) = apply {
-            body.addPrice(tieredWithMinimum)
-        }
-
-        /** Alias for calling [addPrice] with `Price.ofUnitWithPercent(unitWithPercent)`. */
-        fun addPrice(unitWithPercent: NewPlanUnitWithPercentPrice) = apply {
-            body.addPrice(unitWithPercent)
+        fun adjustments(adjustments: JsonField<List<Adjustment>>) = apply {
+            body.adjustments(adjustments)
         }
 
         /**
-         * Alias for calling [addPrice] with `Price.ofPackageWithAllocation(packageWithAllocation)`.
+         * Adds a single [Adjustment] to [adjustments].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
          */
-        fun addPrice(packageWithAllocation: NewPlanPackageWithAllocationPrice) = apply {
-            body.addPrice(packageWithAllocation)
-        }
-
-        /** Alias for calling [addPrice] with `Price.ofTieredWithProration(tieredWithProration)`. */
-        fun addPrice(tieredWithProration: NewPlanTierWithProrationPrice) = apply {
-            body.addPrice(tieredWithProration)
-        }
-
-        /** Alias for calling [addPrice] with `Price.ofUnitWithProration(unitWithProration)`. */
-        fun addPrice(unitWithProration: NewPlanUnitWithProrationPrice) = apply {
-            body.addPrice(unitWithProration)
-        }
-
-        /** Alias for calling [addPrice] with `Price.ofGroupedAllocation(groupedAllocation)`. */
-        fun addPrice(groupedAllocation: NewPlanGroupedAllocationPrice) = apply {
-            body.addPrice(groupedAllocation)
-        }
-
-        /**
-         * Alias for calling [addPrice] with
-         * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
-         */
-        fun addPrice(groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice) = apply {
-            body.addPrice(groupedWithProratedMinimum)
-        }
-
-        /**
-         * Alias for calling [addPrice] with
-         * `Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum)`.
-         */
-        fun addPrice(groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice) = apply {
-            body.addPrice(groupedWithMeteredMinimum)
-        }
-
-        /**
-         * Alias for calling [addPrice] with `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
-         */
-        fun addPrice(matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice) = apply {
-            body.addPrice(matrixWithDisplayName)
-        }
-
-        /** Alias for calling [addPrice] with `Price.ofBulkWithProration(bulkWithProration)`. */
-        fun addPrice(bulkWithProration: NewPlanBulkWithProrationPrice) = apply {
-            body.addPrice(bulkWithProration)
-        }
-
-        /**
-         * Alias for calling [addPrice] with `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
-         */
-        fun addPrice(groupedTieredPackage: NewPlanGroupedTieredPackagePrice) = apply {
-            body.addPrice(groupedTieredPackage)
-        }
-
-        /**
-         * Alias for calling [addPrice] with `Price.ofMaxGroupTieredPackage(maxGroupTieredPackage)`.
-         */
-        fun addPrice(maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice) = apply {
-            body.addPrice(maxGroupTieredPackage)
-        }
-
-        /**
-         * Alias for calling [addPrice] with
-         * `Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)`.
-         */
-        fun addPrice(scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice) =
-            apply {
-                body.addPrice(scalableMatrixWithUnitPricing)
-            }
-
-        /**
-         * Alias for calling [addPrice] with
-         * `Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)`.
-         */
-        fun addPrice(scalableMatrixWithTieredPricing: NewPlanScalableMatrixWithTieredPricingPrice) =
-            apply {
-                body.addPrice(scalableMatrixWithTieredPricing)
-            }
-
-        /**
-         * Alias for calling [addPrice] with `Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk)`.
-         */
-        fun addPrice(cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice) = apply {
-            body.addPrice(cumulativeGroupedBulk)
-        }
-
-        /**
-         * Alias for calling [addPrice] with
-         * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
-         */
-        fun addPrice(tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice) = apply {
-            body.addPrice(tieredPackageWithMinimum)
-        }
-
-        /**
-         * Alias for calling [addPrice] with `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
-         */
-        fun addPrice(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) = apply {
-            body.addPrice(matrixWithAllocation)
-        }
-
-        /** Alias for calling [addPrice] with `Price.ofGroupedTiered(groupedTiered)`. */
-        fun addPrice(groupedTiered: NewPlanGroupedTieredPrice) = apply {
-            body.addPrice(groupedTiered)
-        }
+        fun addAdjustment(adjustment: Adjustment) = apply { body.addAdjustment(adjustment) }
 
         /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
         fun defaultInvoiceMemo(defaultInvoiceMemo: String?) = apply {
@@ -474,6 +375,30 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun netTerms(netTerms: JsonField<Long>) = apply { body.netTerms(netTerms) }
+
+        /**
+         * Configuration of pre-defined phases, each with their own prices and adjustments. Leave
+         * unspecified for plans with a single phase.
+         */
+        fun planPhases(planPhases: List<PlanPhase>?) = apply { body.planPhases(planPhases) }
+
+        /**
+         * Sets [Builder.planPhases] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.planPhases] with a well-typed `List<PlanPhase>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun planPhases(planPhases: JsonField<List<PlanPhase>>) = apply {
+            body.planPhases(planPhases)
+        }
+
+        /**
+         * Adds a single [PlanPhase] to [planPhases].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addPlanPhase(planPhase: PlanPhase) = apply { body.addPlanPhase(planPhase) }
 
         /**
          * The status of the plan to create (either active or draft). If not specified, this
@@ -635,10 +560,12 @@ private constructor(
         private val currency: JsonField<String>,
         private val name: JsonField<String>,
         private val prices: JsonField<List<Price>>,
+        private val adjustments: JsonField<List<Adjustment>>,
         private val defaultInvoiceMemo: JsonField<String>,
         private val externalPlanId: JsonField<String>,
         private val metadata: JsonField<Metadata>,
         private val netTerms: JsonField<Long>,
+        private val planPhases: JsonField<List<PlanPhase>>,
         private val status: JsonField<Status>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
@@ -652,6 +579,9 @@ private constructor(
             @JsonProperty("prices")
             @ExcludeMissing
             prices: JsonField<List<Price>> = JsonMissing.of(),
+            @JsonProperty("adjustments")
+            @ExcludeMissing
+            adjustments: JsonField<List<Adjustment>> = JsonMissing.of(),
             @JsonProperty("default_invoice_memo")
             @ExcludeMissing
             defaultInvoiceMemo: JsonField<String> = JsonMissing.of(),
@@ -662,15 +592,20 @@ private constructor(
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
             @JsonProperty("net_terms") @ExcludeMissing netTerms: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("plan_phases")
+            @ExcludeMissing
+            planPhases: JsonField<List<PlanPhase>> = JsonMissing.of(),
             @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
         ) : this(
             currency,
             name,
             prices,
+            adjustments,
             defaultInvoiceMemo,
             externalPlanId,
             metadata,
             netTerms,
+            planPhases,
             status,
             mutableMapOf(),
         )
@@ -697,6 +632,15 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun prices(): List<Price> = prices.getRequired("prices")
+
+        /**
+         * Adjustments for this plan. If the plan has phases, this includes adjustments across all
+         * phases of the plan.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun adjustments(): List<Adjustment>? = adjustments.getNullable("adjustments")
 
         /**
          * Free-form text which is available on the invoice PDF and the Orb invoice portal.
@@ -732,6 +676,15 @@ private constructor(
         fun netTerms(): Long? = netTerms.getNullable("net_terms")
 
         /**
+         * Configuration of pre-defined phases, each with their own prices and adjustments. Leave
+         * unspecified for plans with a single phase.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun planPhases(): List<PlanPhase>? = planPhases.getNullable("plan_phases")
+
+        /**
          * The status of the plan to create (either active or draft). If not specified, this
          * defaults to active.
          *
@@ -760,6 +713,15 @@ private constructor(
          * Unlike [prices], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("prices") @ExcludeMissing fun _prices(): JsonField<List<Price>> = prices
+
+        /**
+         * Returns the raw JSON value of [adjustments].
+         *
+         * Unlike [adjustments], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("adjustments")
+        @ExcludeMissing
+        fun _adjustments(): JsonField<List<Adjustment>> = adjustments
 
         /**
          * Returns the raw JSON value of [defaultInvoiceMemo].
@@ -794,6 +756,15 @@ private constructor(
          * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("net_terms") @ExcludeMissing fun _netTerms(): JsonField<Long> = netTerms
+
+        /**
+         * Returns the raw JSON value of [planPhases].
+         *
+         * Unlike [planPhases], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("plan_phases")
+        @ExcludeMissing
+        fun _planPhases(): JsonField<List<PlanPhase>> = planPhases
 
         /**
          * Returns the raw JSON value of [status].
@@ -835,10 +806,12 @@ private constructor(
             private var currency: JsonField<String>? = null
             private var name: JsonField<String>? = null
             private var prices: JsonField<MutableList<Price>>? = null
+            private var adjustments: JsonField<MutableList<Adjustment>>? = null
             private var defaultInvoiceMemo: JsonField<String> = JsonMissing.of()
             private var externalPlanId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var netTerms: JsonField<Long> = JsonMissing.of()
+            private var planPhases: JsonField<MutableList<PlanPhase>>? = null
             private var status: JsonField<Status> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -846,10 +819,12 @@ private constructor(
                 currency = body.currency
                 name = body.name
                 prices = body.prices.map { it.toMutableList() }
+                adjustments = body.adjustments.map { it.toMutableList() }
                 defaultInvoiceMemo = body.defaultInvoiceMemo
                 externalPlanId = body.externalPlanId
                 metadata = body.metadata
                 netTerms = body.netTerms
+                planPhases = body.planPhases.map { it.toMutableList() }
                 status = body.status
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
@@ -906,148 +881,35 @@ private constructor(
                     }
             }
 
-            /** Alias for calling [addPrice] with `Price.ofUnit(unit)`. */
-            fun addPrice(unit: NewPlanUnitPrice) = addPrice(Price.ofUnit(unit))
-
-            /** Alias for calling [addPrice] with `Price.ofPackage(package_)`. */
-            fun addPrice(package_: NewPlanPackagePrice) = addPrice(Price.ofPackage(package_))
-
-            /** Alias for calling [addPrice] with `Price.ofMatrix(matrix)`. */
-            fun addPrice(matrix: NewPlanMatrixPrice) = addPrice(Price.ofMatrix(matrix))
-
-            /** Alias for calling [addPrice] with `Price.ofTiered(tiered)`. */
-            fun addPrice(tiered: NewPlanTieredPrice) = addPrice(Price.ofTiered(tiered))
-
-            /** Alias for calling [addPrice] with `Price.ofTieredBps(tieredBps)`. */
-            fun addPrice(tieredBps: NewPlanTieredBpsPrice) = addPrice(Price.ofTieredBps(tieredBps))
-
-            /** Alias for calling [addPrice] with `Price.ofBps(bps)`. */
-            fun addPrice(bps: NewPlanBpsPrice) = addPrice(Price.ofBps(bps))
-
-            /** Alias for calling [addPrice] with `Price.ofBulkBps(bulkBps)`. */
-            fun addPrice(bulkBps: NewPlanBulkBpsPrice) = addPrice(Price.ofBulkBps(bulkBps))
-
-            /** Alias for calling [addPrice] with `Price.ofBulk(bulk)`. */
-            fun addPrice(bulk: NewPlanBulkPrice) = addPrice(Price.ofBulk(bulk))
+            /**
+             * Adjustments for this plan. If the plan has phases, this includes adjustments across
+             * all phases of the plan.
+             */
+            fun adjustments(adjustments: List<Adjustment>?) =
+                adjustments(JsonField.ofNullable(adjustments))
 
             /**
-             * Alias for calling [addPrice] with
-             * `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
+             * Sets [Builder.adjustments] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.adjustments] with a well-typed `List<Adjustment>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
-            fun addPrice(thresholdTotalAmount: NewPlanThresholdTotalAmountPrice) =
-                addPrice(Price.ofThresholdTotalAmount(thresholdTotalAmount))
-
-            /** Alias for calling [addPrice] with `Price.ofTieredPackage(tieredPackage)`. */
-            fun addPrice(tieredPackage: NewPlanTieredPackagePrice) =
-                addPrice(Price.ofTieredPackage(tieredPackage))
-
-            /** Alias for calling [addPrice] with `Price.ofTieredWithMinimum(tieredWithMinimum)`. */
-            fun addPrice(tieredWithMinimum: NewPlanTieredWithMinimumPrice) =
-                addPrice(Price.ofTieredWithMinimum(tieredWithMinimum))
-
-            /** Alias for calling [addPrice] with `Price.ofUnitWithPercent(unitWithPercent)`. */
-            fun addPrice(unitWithPercent: NewPlanUnitWithPercentPrice) =
-                addPrice(Price.ofUnitWithPercent(unitWithPercent))
+            fun adjustments(adjustments: JsonField<List<Adjustment>>) = apply {
+                this.adjustments = adjustments.map { it.toMutableList() }
+            }
 
             /**
-             * Alias for calling [addPrice] with
-             * `Price.ofPackageWithAllocation(packageWithAllocation)`.
+             * Adds a single [Adjustment] to [adjustments].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
              */
-            fun addPrice(packageWithAllocation: NewPlanPackageWithAllocationPrice) =
-                addPrice(Price.ofPackageWithAllocation(packageWithAllocation))
-
-            /**
-             * Alias for calling [addPrice] with `Price.ofTieredWithProration(tieredWithProration)`.
-             */
-            fun addPrice(tieredWithProration: NewPlanTierWithProrationPrice) =
-                addPrice(Price.ofTieredWithProration(tieredWithProration))
-
-            /** Alias for calling [addPrice] with `Price.ofUnitWithProration(unitWithProration)`. */
-            fun addPrice(unitWithProration: NewPlanUnitWithProrationPrice) =
-                addPrice(Price.ofUnitWithProration(unitWithProration))
-
-            /** Alias for calling [addPrice] with `Price.ofGroupedAllocation(groupedAllocation)`. */
-            fun addPrice(groupedAllocation: NewPlanGroupedAllocationPrice) =
-                addPrice(Price.ofGroupedAllocation(groupedAllocation))
-
-            /**
-             * Alias for calling [addPrice] with
-             * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
-             */
-            fun addPrice(groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice) =
-                addPrice(Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
-
-            /**
-             * Alias for calling [addPrice] with
-             * `Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum)`.
-             */
-            fun addPrice(groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice) =
-                addPrice(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
-
-            /**
-             * Alias for calling [addPrice] with
-             * `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
-             */
-            fun addPrice(matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice) =
-                addPrice(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
-
-            /** Alias for calling [addPrice] with `Price.ofBulkWithProration(bulkWithProration)`. */
-            fun addPrice(bulkWithProration: NewPlanBulkWithProrationPrice) =
-                addPrice(Price.ofBulkWithProration(bulkWithProration))
-
-            /**
-             * Alias for calling [addPrice] with
-             * `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
-             */
-            fun addPrice(groupedTieredPackage: NewPlanGroupedTieredPackagePrice) =
-                addPrice(Price.ofGroupedTieredPackage(groupedTieredPackage))
-
-            /**
-             * Alias for calling [addPrice] with
-             * `Price.ofMaxGroupTieredPackage(maxGroupTieredPackage)`.
-             */
-            fun addPrice(maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice) =
-                addPrice(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
-
-            /**
-             * Alias for calling [addPrice] with
-             * `Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)`.
-             */
-            fun addPrice(scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice) =
-                addPrice(Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing))
-
-            /**
-             * Alias for calling [addPrice] with
-             * `Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)`.
-             */
-            fun addPrice(
-                scalableMatrixWithTieredPricing: NewPlanScalableMatrixWithTieredPricingPrice
-            ) = addPrice(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
-
-            /**
-             * Alias for calling [addPrice] with
-             * `Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk)`.
-             */
-            fun addPrice(cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice) =
-                addPrice(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
-
-            /**
-             * Alias for calling [addPrice] with
-             * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
-             */
-            fun addPrice(tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice) =
-                addPrice(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
-
-            /**
-             * Alias for calling [addPrice] with
-             * `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
-             */
-            fun addPrice(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
-                addPrice(Price.ofMatrixWithAllocation(matrixWithAllocation))
-
-            /** Alias for calling [addPrice] with `Price.ofGroupedTiered(groupedTiered)`. */
-            fun addPrice(groupedTiered: NewPlanGroupedTieredPrice) =
-                addPrice(Price.ofGroupedTiered(groupedTiered))
+            fun addAdjustment(adjustment: Adjustment) = apply {
+                adjustments =
+                    (adjustments ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("adjustments", it).add(adjustment)
+                    }
+            }
 
             /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
             fun defaultInvoiceMemo(defaultInvoiceMemo: String?) =
@@ -1117,6 +979,36 @@ private constructor(
             fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
 
             /**
+             * Configuration of pre-defined phases, each with their own prices and adjustments.
+             * Leave unspecified for plans with a single phase.
+             */
+            fun planPhases(planPhases: List<PlanPhase>?) =
+                planPhases(JsonField.ofNullable(planPhases))
+
+            /**
+             * Sets [Builder.planPhases] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.planPhases] with a well-typed `List<PlanPhase>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun planPhases(planPhases: JsonField<List<PlanPhase>>) = apply {
+                this.planPhases = planPhases.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [PlanPhase] to [planPhases].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addPlanPhase(planPhase: PlanPhase) = apply {
+                planPhases =
+                    (planPhases ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("planPhases", it).add(planPhase)
+                    }
+            }
+
+            /**
              * The status of the plan to create (either active or draft). If not specified, this
              * defaults to active.
              */
@@ -1169,10 +1061,12 @@ private constructor(
                     checkRequired("currency", currency),
                     checkRequired("name", name),
                     checkRequired("prices", prices).map { it.toImmutable() },
+                    (adjustments ?: JsonMissing.of()).map { it.toImmutable() },
                     defaultInvoiceMemo,
                     externalPlanId,
                     metadata,
                     netTerms,
+                    (planPhases ?: JsonMissing.of()).map { it.toImmutable() },
                     status,
                     additionalProperties.toMutableMap(),
                 )
@@ -1188,10 +1082,12 @@ private constructor(
             currency()
             name()
             prices().forEach { it.validate() }
+            adjustments()?.forEach { it.validate() }
             defaultInvoiceMemo()
             externalPlanId()
             metadata()?.validate()
             netTerms()
+            planPhases()?.forEach { it.validate() }
             status()?.validate()
             validated = true
         }
@@ -1214,10 +1110,12 @@ private constructor(
             (if (currency.asKnown() == null) 0 else 1) +
                 (if (name.asKnown() == null) 0 else 1) +
                 (prices.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (adjustments.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (defaultInvoiceMemo.asKnown() == null) 0 else 1) +
                 (if (externalPlanId.asKnown() == null) 0 else 1) +
                 (metadata.asKnown()?.validity() ?: 0) +
                 (if (netTerms.asKnown() == null) 0 else 1) +
+                (planPhases.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (status.asKnown()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
@@ -1225,293 +1123,350 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && currency == other.currency && name == other.name && prices == other.prices && defaultInvoiceMemo == other.defaultInvoiceMemo && externalPlanId == other.externalPlanId && metadata == other.metadata && netTerms == other.netTerms && status == other.status && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && currency == other.currency && name == other.name && prices == other.prices && adjustments == other.adjustments && defaultInvoiceMemo == other.defaultInvoiceMemo && externalPlanId == other.externalPlanId && metadata == other.metadata && netTerms == other.netTerms && planPhases == other.planPhases && status == other.status && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(currency, name, prices, defaultInvoiceMemo, externalPlanId, metadata, netTerms, status, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(currency, name, prices, adjustments, defaultInvoiceMemo, externalPlanId, metadata, netTerms, planPhases, status, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{currency=$currency, name=$name, prices=$prices, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, metadata=$metadata, netTerms=$netTerms, status=$status, additionalProperties=$additionalProperties}"
+            "Body{currency=$currency, name=$name, prices=$prices, adjustments=$adjustments, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, metadata=$metadata, netTerms=$netTerms, planPhases=$planPhases, status=$status, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(using = Price.Deserializer::class)
-    @JsonSerialize(using = Price.Serializer::class)
     class Price
     private constructor(
-        private val unit: NewPlanUnitPrice? = null,
-        private val package_: NewPlanPackagePrice? = null,
-        private val matrix: NewPlanMatrixPrice? = null,
-        private val tiered: NewPlanTieredPrice? = null,
-        private val tieredBps: NewPlanTieredBpsPrice? = null,
-        private val bps: NewPlanBpsPrice? = null,
-        private val bulkBps: NewPlanBulkBpsPrice? = null,
-        private val bulk: NewPlanBulkPrice? = null,
-        private val thresholdTotalAmount: NewPlanThresholdTotalAmountPrice? = null,
-        private val tieredPackage: NewPlanTieredPackagePrice? = null,
-        private val tieredWithMinimum: NewPlanTieredWithMinimumPrice? = null,
-        private val unitWithPercent: NewPlanUnitWithPercentPrice? = null,
-        private val packageWithAllocation: NewPlanPackageWithAllocationPrice? = null,
-        private val tieredWithProration: NewPlanTierWithProrationPrice? = null,
-        private val unitWithProration: NewPlanUnitWithProrationPrice? = null,
-        private val groupedAllocation: NewPlanGroupedAllocationPrice? = null,
-        private val groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice? = null,
-        private val groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice? = null,
-        private val matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice? = null,
-        private val bulkWithProration: NewPlanBulkWithProrationPrice? = null,
-        private val groupedTieredPackage: NewPlanGroupedTieredPackagePrice? = null,
-        private val maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice? = null,
-        private val scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice? =
-            null,
-        private val scalableMatrixWithTieredPricing: NewPlanScalableMatrixWithTieredPricingPrice? =
-            null,
-        private val cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice? = null,
-        private val tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice? = null,
-        private val matrixWithAllocation: NewPlanMatrixWithAllocationPrice? = null,
-        private val groupedTiered: NewPlanGroupedTieredPrice? = null,
-        private val _json: JsonValue? = null,
+        private val allocationPrice: JsonField<NewAllocationPrice>,
+        private val planPhaseOrder: JsonField<Long>,
+        private val price: JsonField<InnerPrice>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
-        fun unit(): NewPlanUnitPrice? = unit
-
-        fun package_(): NewPlanPackagePrice? = package_
-
-        fun matrix(): NewPlanMatrixPrice? = matrix
-
-        fun tiered(): NewPlanTieredPrice? = tiered
-
-        fun tieredBps(): NewPlanTieredBpsPrice? = tieredBps
-
-        fun bps(): NewPlanBpsPrice? = bps
-
-        fun bulkBps(): NewPlanBulkBpsPrice? = bulkBps
-
-        fun bulk(): NewPlanBulkPrice? = bulk
-
-        fun thresholdTotalAmount(): NewPlanThresholdTotalAmountPrice? = thresholdTotalAmount
-
-        fun tieredPackage(): NewPlanTieredPackagePrice? = tieredPackage
-
-        fun tieredWithMinimum(): NewPlanTieredWithMinimumPrice? = tieredWithMinimum
-
-        fun unitWithPercent(): NewPlanUnitWithPercentPrice? = unitWithPercent
-
-        fun packageWithAllocation(): NewPlanPackageWithAllocationPrice? = packageWithAllocation
-
-        fun tieredWithProration(): NewPlanTierWithProrationPrice? = tieredWithProration
-
-        fun unitWithProration(): NewPlanUnitWithProrationPrice? = unitWithProration
-
-        fun groupedAllocation(): NewPlanGroupedAllocationPrice? = groupedAllocation
-
-        fun groupedWithProratedMinimum(): NewPlanGroupedWithProratedMinimumPrice? =
-            groupedWithProratedMinimum
-
-        fun groupedWithMeteredMinimum(): NewPlanGroupedWithMeteredMinimumPrice? =
-            groupedWithMeteredMinimum
-
-        fun matrixWithDisplayName(): NewPlanMatrixWithDisplayNamePrice? = matrixWithDisplayName
-
-        fun bulkWithProration(): NewPlanBulkWithProrationPrice? = bulkWithProration
-
-        fun groupedTieredPackage(): NewPlanGroupedTieredPackagePrice? = groupedTieredPackage
-
-        fun maxGroupTieredPackage(): NewPlanMaxGroupTieredPackagePrice? = maxGroupTieredPackage
-
-        fun scalableMatrixWithUnitPricing(): NewPlanScalableMatrixWithUnitPricingPrice? =
-            scalableMatrixWithUnitPricing
-
-        fun scalableMatrixWithTieredPricing(): NewPlanScalableMatrixWithTieredPricingPrice? =
-            scalableMatrixWithTieredPricing
-
-        fun cumulativeGroupedBulk(): NewPlanCumulativeGroupedBulkPrice? = cumulativeGroupedBulk
-
-        fun tieredPackageWithMinimum(): NewPlanTieredPackageWithMinimumPrice? =
-            tieredPackageWithMinimum
-
-        fun matrixWithAllocation(): NewPlanMatrixWithAllocationPrice? = matrixWithAllocation
-
-        fun groupedTiered(): NewPlanGroupedTieredPrice? = groupedTiered
-
-        fun isUnit(): Boolean = unit != null
-
-        fun isPackage(): Boolean = package_ != null
-
-        fun isMatrix(): Boolean = matrix != null
-
-        fun isTiered(): Boolean = tiered != null
-
-        fun isTieredBps(): Boolean = tieredBps != null
-
-        fun isBps(): Boolean = bps != null
-
-        fun isBulkBps(): Boolean = bulkBps != null
-
-        fun isBulk(): Boolean = bulk != null
-
-        fun isThresholdTotalAmount(): Boolean = thresholdTotalAmount != null
-
-        fun isTieredPackage(): Boolean = tieredPackage != null
-
-        fun isTieredWithMinimum(): Boolean = tieredWithMinimum != null
-
-        fun isUnitWithPercent(): Boolean = unitWithPercent != null
-
-        fun isPackageWithAllocation(): Boolean = packageWithAllocation != null
-
-        fun isTieredWithProration(): Boolean = tieredWithProration != null
-
-        fun isUnitWithProration(): Boolean = unitWithProration != null
-
-        fun isGroupedAllocation(): Boolean = groupedAllocation != null
-
-        fun isGroupedWithProratedMinimum(): Boolean = groupedWithProratedMinimum != null
-
-        fun isGroupedWithMeteredMinimum(): Boolean = groupedWithMeteredMinimum != null
-
-        fun isMatrixWithDisplayName(): Boolean = matrixWithDisplayName != null
-
-        fun isBulkWithProration(): Boolean = bulkWithProration != null
-
-        fun isGroupedTieredPackage(): Boolean = groupedTieredPackage != null
-
-        fun isMaxGroupTieredPackage(): Boolean = maxGroupTieredPackage != null
-
-        fun isScalableMatrixWithUnitPricing(): Boolean = scalableMatrixWithUnitPricing != null
-
-        fun isScalableMatrixWithTieredPricing(): Boolean = scalableMatrixWithTieredPricing != null
-
-        fun isCumulativeGroupedBulk(): Boolean = cumulativeGroupedBulk != null
-
-        fun isTieredPackageWithMinimum(): Boolean = tieredPackageWithMinimum != null
-
-        fun isMatrixWithAllocation(): Boolean = matrixWithAllocation != null
-
-        fun isGroupedTiered(): Boolean = groupedTiered != null
-
-        fun asUnit(): NewPlanUnitPrice = unit.getOrThrow("unit")
-
-        fun asPackage(): NewPlanPackagePrice = package_.getOrThrow("package_")
-
-        fun asMatrix(): NewPlanMatrixPrice = matrix.getOrThrow("matrix")
-
-        fun asTiered(): NewPlanTieredPrice = tiered.getOrThrow("tiered")
-
-        fun asTieredBps(): NewPlanTieredBpsPrice = tieredBps.getOrThrow("tieredBps")
-
-        fun asBps(): NewPlanBpsPrice = bps.getOrThrow("bps")
-
-        fun asBulkBps(): NewPlanBulkBpsPrice = bulkBps.getOrThrow("bulkBps")
-
-        fun asBulk(): NewPlanBulkPrice = bulk.getOrThrow("bulk")
-
-        fun asThresholdTotalAmount(): NewPlanThresholdTotalAmountPrice =
-            thresholdTotalAmount.getOrThrow("thresholdTotalAmount")
-
-        fun asTieredPackage(): NewPlanTieredPackagePrice = tieredPackage.getOrThrow("tieredPackage")
-
-        fun asTieredWithMinimum(): NewPlanTieredWithMinimumPrice =
-            tieredWithMinimum.getOrThrow("tieredWithMinimum")
-
-        fun asUnitWithPercent(): NewPlanUnitWithPercentPrice =
-            unitWithPercent.getOrThrow("unitWithPercent")
-
-        fun asPackageWithAllocation(): NewPlanPackageWithAllocationPrice =
-            packageWithAllocation.getOrThrow("packageWithAllocation")
-
-        fun asTieredWithProration(): NewPlanTierWithProrationPrice =
-            tieredWithProration.getOrThrow("tieredWithProration")
-
-        fun asUnitWithProration(): NewPlanUnitWithProrationPrice =
-            unitWithProration.getOrThrow("unitWithProration")
-
-        fun asGroupedAllocation(): NewPlanGroupedAllocationPrice =
-            groupedAllocation.getOrThrow("groupedAllocation")
-
-        fun asGroupedWithProratedMinimum(): NewPlanGroupedWithProratedMinimumPrice =
-            groupedWithProratedMinimum.getOrThrow("groupedWithProratedMinimum")
-
-        fun asGroupedWithMeteredMinimum(): NewPlanGroupedWithMeteredMinimumPrice =
-            groupedWithMeteredMinimum.getOrThrow("groupedWithMeteredMinimum")
-
-        fun asMatrixWithDisplayName(): NewPlanMatrixWithDisplayNamePrice =
-            matrixWithDisplayName.getOrThrow("matrixWithDisplayName")
-
-        fun asBulkWithProration(): NewPlanBulkWithProrationPrice =
-            bulkWithProration.getOrThrow("bulkWithProration")
-
-        fun asGroupedTieredPackage(): NewPlanGroupedTieredPackagePrice =
-            groupedTieredPackage.getOrThrow("groupedTieredPackage")
-
-        fun asMaxGroupTieredPackage(): NewPlanMaxGroupTieredPackagePrice =
-            maxGroupTieredPackage.getOrThrow("maxGroupTieredPackage")
-
-        fun asScalableMatrixWithUnitPricing(): NewPlanScalableMatrixWithUnitPricingPrice =
-            scalableMatrixWithUnitPricing.getOrThrow("scalableMatrixWithUnitPricing")
-
-        fun asScalableMatrixWithTieredPricing(): NewPlanScalableMatrixWithTieredPricingPrice =
-            scalableMatrixWithTieredPricing.getOrThrow("scalableMatrixWithTieredPricing")
-
-        fun asCumulativeGroupedBulk(): NewPlanCumulativeGroupedBulkPrice =
-            cumulativeGroupedBulk.getOrThrow("cumulativeGroupedBulk")
-
-        fun asTieredPackageWithMinimum(): NewPlanTieredPackageWithMinimumPrice =
-            tieredPackageWithMinimum.getOrThrow("tieredPackageWithMinimum")
-
-        fun asMatrixWithAllocation(): NewPlanMatrixWithAllocationPrice =
-            matrixWithAllocation.getOrThrow("matrixWithAllocation")
-
-        fun asGroupedTiered(): NewPlanGroupedTieredPrice = groupedTiered.getOrThrow("groupedTiered")
-
-        fun _json(): JsonValue? = _json
-
-        fun <T> accept(visitor: Visitor<T>): T =
-            when {
-                unit != null -> visitor.visitUnit(unit)
-                package_ != null -> visitor.visitPackage(package_)
-                matrix != null -> visitor.visitMatrix(matrix)
-                tiered != null -> visitor.visitTiered(tiered)
-                tieredBps != null -> visitor.visitTieredBps(tieredBps)
-                bps != null -> visitor.visitBps(bps)
-                bulkBps != null -> visitor.visitBulkBps(bulkBps)
-                bulk != null -> visitor.visitBulk(bulk)
-                thresholdTotalAmount != null ->
-                    visitor.visitThresholdTotalAmount(thresholdTotalAmount)
-                tieredPackage != null -> visitor.visitTieredPackage(tieredPackage)
-                tieredWithMinimum != null -> visitor.visitTieredWithMinimum(tieredWithMinimum)
-                unitWithPercent != null -> visitor.visitUnitWithPercent(unitWithPercent)
-                packageWithAllocation != null ->
-                    visitor.visitPackageWithAllocation(packageWithAllocation)
-                tieredWithProration != null -> visitor.visitTieredWithProration(tieredWithProration)
-                unitWithProration != null -> visitor.visitUnitWithProration(unitWithProration)
-                groupedAllocation != null -> visitor.visitGroupedAllocation(groupedAllocation)
-                groupedWithProratedMinimum != null ->
-                    visitor.visitGroupedWithProratedMinimum(groupedWithProratedMinimum)
-                groupedWithMeteredMinimum != null ->
-                    visitor.visitGroupedWithMeteredMinimum(groupedWithMeteredMinimum)
-                matrixWithDisplayName != null ->
-                    visitor.visitMatrixWithDisplayName(matrixWithDisplayName)
-                bulkWithProration != null -> visitor.visitBulkWithProration(bulkWithProration)
-                groupedTieredPackage != null ->
-                    visitor.visitGroupedTieredPackage(groupedTieredPackage)
-                maxGroupTieredPackage != null ->
-                    visitor.visitMaxGroupTieredPackage(maxGroupTieredPackage)
-                scalableMatrixWithUnitPricing != null ->
-                    visitor.visitScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)
-                scalableMatrixWithTieredPricing != null ->
-                    visitor.visitScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)
-                cumulativeGroupedBulk != null ->
-                    visitor.visitCumulativeGroupedBulk(cumulativeGroupedBulk)
-                tieredPackageWithMinimum != null ->
-                    visitor.visitTieredPackageWithMinimum(tieredPackageWithMinimum)
-                matrixWithAllocation != null ->
-                    visitor.visitMatrixWithAllocation(matrixWithAllocation)
-                groupedTiered != null -> visitor.visitGroupedTiered(groupedTiered)
-                else -> visitor.unknown(_json)
+        @JsonCreator
+        private constructor(
+            @JsonProperty("allocation_price")
+            @ExcludeMissing
+            allocationPrice: JsonField<NewAllocationPrice> = JsonMissing.of(),
+            @JsonProperty("plan_phase_order")
+            @ExcludeMissing
+            planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("price") @ExcludeMissing price: JsonField<InnerPrice> = JsonMissing.of(),
+        ) : this(allocationPrice, planPhaseOrder, price, mutableMapOf())
+
+        /**
+         * The allocation price to add to the plan.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun allocationPrice(): NewAllocationPrice? = allocationPrice.getNullable("allocation_price")
+
+        /**
+         * The phase to add this price to.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
+
+        /**
+         * The price to add to the plan
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun price(): InnerPrice? = price.getNullable("price")
+
+        /**
+         * Returns the raw JSON value of [allocationPrice].
+         *
+         * Unlike [allocationPrice], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("allocation_price")
+        @ExcludeMissing
+        fun _allocationPrice(): JsonField<NewAllocationPrice> = allocationPrice
+
+        /**
+         * Returns the raw JSON value of [planPhaseOrder].
+         *
+         * Unlike [planPhaseOrder], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        fun _planPhaseOrder(): JsonField<Long> = planPhaseOrder
+
+        /**
+         * Returns the raw JSON value of [price].
+         *
+         * Unlike [price], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("price") @ExcludeMissing fun _price(): JsonField<InnerPrice> = price
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Price]. */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Price]. */
+        class Builder internal constructor() {
+
+            private var allocationPrice: JsonField<NewAllocationPrice> = JsonMissing.of()
+            private var planPhaseOrder: JsonField<Long> = JsonMissing.of()
+            private var price: JsonField<InnerPrice> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(price: Price) = apply {
+                allocationPrice = price.allocationPrice
+                planPhaseOrder = price.planPhaseOrder
+                this.price = price.price
+                additionalProperties = price.additionalProperties.toMutableMap()
             }
+
+            /** The allocation price to add to the plan. */
+            fun allocationPrice(allocationPrice: NewAllocationPrice?) =
+                allocationPrice(JsonField.ofNullable(allocationPrice))
+
+            /**
+             * Sets [Builder.allocationPrice] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.allocationPrice] with a well-typed
+             * [NewAllocationPrice] value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
+             */
+            fun allocationPrice(allocationPrice: JsonField<NewAllocationPrice>) = apply {
+                this.allocationPrice = allocationPrice
+            }
+
+            /** The phase to add this price to. */
+            fun planPhaseOrder(planPhaseOrder: Long?) =
+                planPhaseOrder(JsonField.ofNullable(planPhaseOrder))
+
+            /**
+             * Alias for [Builder.planPhaseOrder].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(planPhaseOrder as Long?)
+
+            /**
+             * Sets [Builder.planPhaseOrder] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.planPhaseOrder] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
+                this.planPhaseOrder = planPhaseOrder
+            }
+
+            /** The price to add to the plan */
+            fun price(price: InnerPrice?) = price(JsonField.ofNullable(price))
+
+            /**
+             * Sets [Builder.price] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.price] with a well-typed [InnerPrice] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun price(price: JsonField<InnerPrice>) = apply { this.price = price }
+
+            /** Alias for calling [price] with `InnerPrice.ofUnit(unit)`. */
+            fun price(unit: NewPlanUnitPrice) = price(InnerPrice.ofUnit(unit))
+
+            /** Alias for calling [price] with `InnerPrice.ofPackage(package_)`. */
+            fun price(package_: NewPlanPackagePrice) = price(InnerPrice.ofPackage(package_))
+
+            /** Alias for calling [price] with `InnerPrice.ofMatrix(matrix)`. */
+            fun price(matrix: NewPlanMatrixPrice) = price(InnerPrice.ofMatrix(matrix))
+
+            /** Alias for calling [price] with `InnerPrice.ofTiered(tiered)`. */
+            fun price(tiered: NewPlanTieredPrice) = price(InnerPrice.ofTiered(tiered))
+
+            /** Alias for calling [price] with `InnerPrice.ofTieredBps(tieredBps)`. */
+            fun price(tieredBps: NewPlanTieredBpsPrice) = price(InnerPrice.ofTieredBps(tieredBps))
+
+            /** Alias for calling [price] with `InnerPrice.ofBps(bps)`. */
+            fun price(bps: NewPlanBpsPrice) = price(InnerPrice.ofBps(bps))
+
+            /** Alias for calling [price] with `InnerPrice.ofBulkBps(bulkBps)`. */
+            fun price(bulkBps: NewPlanBulkBpsPrice) = price(InnerPrice.ofBulkBps(bulkBps))
+
+            /** Alias for calling [price] with `InnerPrice.ofBulk(bulk)`. */
+            fun price(bulk: NewPlanBulkPrice) = price(InnerPrice.ofBulk(bulk))
+
+            /**
+             * Alias for calling [price] with
+             * `InnerPrice.ofThresholdTotalAmount(thresholdTotalAmount)`.
+             */
+            fun price(thresholdTotalAmount: NewPlanThresholdTotalAmountPrice) =
+                price(InnerPrice.ofThresholdTotalAmount(thresholdTotalAmount))
+
+            /** Alias for calling [price] with `InnerPrice.ofTieredPackage(tieredPackage)`. */
+            fun price(tieredPackage: NewPlanTieredPackagePrice) =
+                price(InnerPrice.ofTieredPackage(tieredPackage))
+
+            /**
+             * Alias for calling [price] with `InnerPrice.ofTieredWithMinimum(tieredWithMinimum)`.
+             */
+            fun price(tieredWithMinimum: NewPlanTieredWithMinimumPrice) =
+                price(InnerPrice.ofTieredWithMinimum(tieredWithMinimum))
+
+            /** Alias for calling [price] with `InnerPrice.ofUnitWithPercent(unitWithPercent)`. */
+            fun price(unitWithPercent: NewPlanUnitWithPercentPrice) =
+                price(InnerPrice.ofUnitWithPercent(unitWithPercent))
+
+            /**
+             * Alias for calling [price] with
+             * `InnerPrice.ofPackageWithAllocation(packageWithAllocation)`.
+             */
+            fun price(packageWithAllocation: NewPlanPackageWithAllocationPrice) =
+                price(InnerPrice.ofPackageWithAllocation(packageWithAllocation))
+
+            /**
+             * Alias for calling [price] with
+             * `InnerPrice.ofTieredWithProration(tieredWithProration)`.
+             */
+            fun price(tieredWithProration: NewPlanTierWithProrationPrice) =
+                price(InnerPrice.ofTieredWithProration(tieredWithProration))
+
+            /**
+             * Alias for calling [price] with `InnerPrice.ofUnitWithProration(unitWithProration)`.
+             */
+            fun price(unitWithProration: NewPlanUnitWithProrationPrice) =
+                price(InnerPrice.ofUnitWithProration(unitWithProration))
+
+            /**
+             * Alias for calling [price] with `InnerPrice.ofGroupedAllocation(groupedAllocation)`.
+             */
+            fun price(groupedAllocation: NewPlanGroupedAllocationPrice) =
+                price(InnerPrice.ofGroupedAllocation(groupedAllocation))
+
+            /**
+             * Alias for calling [price] with
+             * `InnerPrice.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
+             */
+            fun price(groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice) =
+                price(InnerPrice.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
+
+            /**
+             * Alias for calling [price] with
+             * `InnerPrice.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum)`.
+             */
+            fun price(groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice) =
+                price(InnerPrice.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
+
+            /**
+             * Alias for calling [price] with
+             * `InnerPrice.ofMatrixWithDisplayName(matrixWithDisplayName)`.
+             */
+            fun price(matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice) =
+                price(InnerPrice.ofMatrixWithDisplayName(matrixWithDisplayName))
+
+            /**
+             * Alias for calling [price] with `InnerPrice.ofBulkWithProration(bulkWithProration)`.
+             */
+            fun price(bulkWithProration: NewPlanBulkWithProrationPrice) =
+                price(InnerPrice.ofBulkWithProration(bulkWithProration))
+
+            /**
+             * Alias for calling [price] with
+             * `InnerPrice.ofGroupedTieredPackage(groupedTieredPackage)`.
+             */
+            fun price(groupedTieredPackage: NewPlanGroupedTieredPackagePrice) =
+                price(InnerPrice.ofGroupedTieredPackage(groupedTieredPackage))
+
+            /**
+             * Alias for calling [price] with
+             * `InnerPrice.ofMaxGroupTieredPackage(maxGroupTieredPackage)`.
+             */
+            fun price(maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice) =
+                price(InnerPrice.ofMaxGroupTieredPackage(maxGroupTieredPackage))
+
+            /**
+             * Alias for calling [price] with
+             * `InnerPrice.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)`.
+             */
+            fun price(scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice) =
+                price(InnerPrice.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing))
+
+            /**
+             * Alias for calling [price] with
+             * `InnerPrice.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)`.
+             */
+            fun price(
+                scalableMatrixWithTieredPricing: NewPlanScalableMatrixWithTieredPricingPrice
+            ) = price(InnerPrice.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
+
+            /**
+             * Alias for calling [price] with
+             * `InnerPrice.ofCumulativeGroupedBulk(cumulativeGroupedBulk)`.
+             */
+            fun price(cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice) =
+                price(InnerPrice.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
+
+            /**
+             * Alias for calling [price] with
+             * `InnerPrice.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
+             */
+            fun price(tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice) =
+                price(InnerPrice.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
+
+            /**
+             * Alias for calling [price] with
+             * `InnerPrice.ofMatrixWithAllocation(matrixWithAllocation)`.
+             */
+            fun price(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
+                price(InnerPrice.ofMatrixWithAllocation(matrixWithAllocation))
+
+            /** Alias for calling [price] with `InnerPrice.ofGroupedTiered(groupedTiered)`. */
+            fun price(groupedTiered: NewPlanGroupedTieredPrice) =
+                price(InnerPrice.ofGroupedTiered(groupedTiered))
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Price].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Price =
+                Price(allocationPrice, planPhaseOrder, price, additionalProperties.toMutableMap())
+        }
 
         private var validated: Boolean = false
 
@@ -1520,157 +1475,9 @@ private constructor(
                 return@apply
             }
 
-            accept(
-                object : Visitor<Unit> {
-                    override fun visitUnit(unit: NewPlanUnitPrice) {
-                        unit.validate()
-                    }
-
-                    override fun visitPackage(package_: NewPlanPackagePrice) {
-                        package_.validate()
-                    }
-
-                    override fun visitMatrix(matrix: NewPlanMatrixPrice) {
-                        matrix.validate()
-                    }
-
-                    override fun visitTiered(tiered: NewPlanTieredPrice) {
-                        tiered.validate()
-                    }
-
-                    override fun visitTieredBps(tieredBps: NewPlanTieredBpsPrice) {
-                        tieredBps.validate()
-                    }
-
-                    override fun visitBps(bps: NewPlanBpsPrice) {
-                        bps.validate()
-                    }
-
-                    override fun visitBulkBps(bulkBps: NewPlanBulkBpsPrice) {
-                        bulkBps.validate()
-                    }
-
-                    override fun visitBulk(bulk: NewPlanBulkPrice) {
-                        bulk.validate()
-                    }
-
-                    override fun visitThresholdTotalAmount(
-                        thresholdTotalAmount: NewPlanThresholdTotalAmountPrice
-                    ) {
-                        thresholdTotalAmount.validate()
-                    }
-
-                    override fun visitTieredPackage(tieredPackage: NewPlanTieredPackagePrice) {
-                        tieredPackage.validate()
-                    }
-
-                    override fun visitTieredWithMinimum(
-                        tieredWithMinimum: NewPlanTieredWithMinimumPrice
-                    ) {
-                        tieredWithMinimum.validate()
-                    }
-
-                    override fun visitUnitWithPercent(
-                        unitWithPercent: NewPlanUnitWithPercentPrice
-                    ) {
-                        unitWithPercent.validate()
-                    }
-
-                    override fun visitPackageWithAllocation(
-                        packageWithAllocation: NewPlanPackageWithAllocationPrice
-                    ) {
-                        packageWithAllocation.validate()
-                    }
-
-                    override fun visitTieredWithProration(
-                        tieredWithProration: NewPlanTierWithProrationPrice
-                    ) {
-                        tieredWithProration.validate()
-                    }
-
-                    override fun visitUnitWithProration(
-                        unitWithProration: NewPlanUnitWithProrationPrice
-                    ) {
-                        unitWithProration.validate()
-                    }
-
-                    override fun visitGroupedAllocation(
-                        groupedAllocation: NewPlanGroupedAllocationPrice
-                    ) {
-                        groupedAllocation.validate()
-                    }
-
-                    override fun visitGroupedWithProratedMinimum(
-                        groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
-                    ) {
-                        groupedWithProratedMinimum.validate()
-                    }
-
-                    override fun visitGroupedWithMeteredMinimum(
-                        groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice
-                    ) {
-                        groupedWithMeteredMinimum.validate()
-                    }
-
-                    override fun visitMatrixWithDisplayName(
-                        matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
-                    ) {
-                        matrixWithDisplayName.validate()
-                    }
-
-                    override fun visitBulkWithProration(
-                        bulkWithProration: NewPlanBulkWithProrationPrice
-                    ) {
-                        bulkWithProration.validate()
-                    }
-
-                    override fun visitGroupedTieredPackage(
-                        groupedTieredPackage: NewPlanGroupedTieredPackagePrice
-                    ) {
-                        groupedTieredPackage.validate()
-                    }
-
-                    override fun visitMaxGroupTieredPackage(
-                        maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice
-                    ) {
-                        maxGroupTieredPackage.validate()
-                    }
-
-                    override fun visitScalableMatrixWithUnitPricing(
-                        scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice
-                    ) {
-                        scalableMatrixWithUnitPricing.validate()
-                    }
-
-                    override fun visitScalableMatrixWithTieredPricing(
-                        scalableMatrixWithTieredPricing: NewPlanScalableMatrixWithTieredPricingPrice
-                    ) {
-                        scalableMatrixWithTieredPricing.validate()
-                    }
-
-                    override fun visitCumulativeGroupedBulk(
-                        cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
-                    ) {
-                        cumulativeGroupedBulk.validate()
-                    }
-
-                    override fun visitTieredPackageWithMinimum(
-                        tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
-                    ) {
-                        tieredPackageWithMinimum.validate()
-                    }
-
-                    override fun visitMatrixWithAllocation(
-                        matrixWithAllocation: NewPlanMatrixWithAllocationPrice
-                    ) {
-                        matrixWithAllocation.validate()
-                    }
-
-                    override fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) {
-                        groupedTiered.validate()
-                    }
-                }
-            )
+            allocationPrice()?.validate()
+            planPhaseOrder()
+            price()?.validate()
             validated = true
         }
 
@@ -1689,581 +1496,1669 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            accept(
-                object : Visitor<Int> {
-                    override fun visitUnit(unit: NewPlanUnitPrice) = unit.validity()
+            (allocationPrice.asKnown()?.validity() ?: 0) +
+                (if (planPhaseOrder.asKnown() == null) 0 else 1) +
+                (price.asKnown()?.validity() ?: 0)
 
-                    override fun visitPackage(package_: NewPlanPackagePrice) = package_.validity()
+        /** The price to add to the plan */
+        @JsonDeserialize(using = InnerPrice.Deserializer::class)
+        @JsonSerialize(using = InnerPrice.Serializer::class)
+        class InnerPrice
+        private constructor(
+            private val unit: NewPlanUnitPrice? = null,
+            private val package_: NewPlanPackagePrice? = null,
+            private val matrix: NewPlanMatrixPrice? = null,
+            private val tiered: NewPlanTieredPrice? = null,
+            private val tieredBps: NewPlanTieredBpsPrice? = null,
+            private val bps: NewPlanBpsPrice? = null,
+            private val bulkBps: NewPlanBulkBpsPrice? = null,
+            private val bulk: NewPlanBulkPrice? = null,
+            private val thresholdTotalAmount: NewPlanThresholdTotalAmountPrice? = null,
+            private val tieredPackage: NewPlanTieredPackagePrice? = null,
+            private val tieredWithMinimum: NewPlanTieredWithMinimumPrice? = null,
+            private val unitWithPercent: NewPlanUnitWithPercentPrice? = null,
+            private val packageWithAllocation: NewPlanPackageWithAllocationPrice? = null,
+            private val tieredWithProration: NewPlanTierWithProrationPrice? = null,
+            private val unitWithProration: NewPlanUnitWithProrationPrice? = null,
+            private val groupedAllocation: NewPlanGroupedAllocationPrice? = null,
+            private val groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice? = null,
+            private val groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice? = null,
+            private val matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice? = null,
+            private val bulkWithProration: NewPlanBulkWithProrationPrice? = null,
+            private val groupedTieredPackage: NewPlanGroupedTieredPackagePrice? = null,
+            private val maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice? = null,
+            private val scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice? =
+                null,
+            private val scalableMatrixWithTieredPricing:
+                NewPlanScalableMatrixWithTieredPricingPrice? =
+                null,
+            private val cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice? = null,
+            private val tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice? = null,
+            private val matrixWithAllocation: NewPlanMatrixWithAllocationPrice? = null,
+            private val groupedTiered: NewPlanGroupedTieredPrice? = null,
+            private val _json: JsonValue? = null,
+        ) {
 
-                    override fun visitMatrix(matrix: NewPlanMatrixPrice) = matrix.validity()
+            fun unit(): NewPlanUnitPrice? = unit
 
-                    override fun visitTiered(tiered: NewPlanTieredPrice) = tiered.validity()
+            fun package_(): NewPlanPackagePrice? = package_
 
-                    override fun visitTieredBps(tieredBps: NewPlanTieredBpsPrice) =
-                        tieredBps.validity()
+            fun matrix(): NewPlanMatrixPrice? = matrix
 
-                    override fun visitBps(bps: NewPlanBpsPrice) = bps.validity()
+            fun tiered(): NewPlanTieredPrice? = tiered
 
-                    override fun visitBulkBps(bulkBps: NewPlanBulkBpsPrice) = bulkBps.validity()
+            fun tieredBps(): NewPlanTieredBpsPrice? = tieredBps
 
-                    override fun visitBulk(bulk: NewPlanBulkPrice) = bulk.validity()
+            fun bps(): NewPlanBpsPrice? = bps
 
-                    override fun visitThresholdTotalAmount(
-                        thresholdTotalAmount: NewPlanThresholdTotalAmountPrice
-                    ) = thresholdTotalAmount.validity()
+            fun bulkBps(): NewPlanBulkBpsPrice? = bulkBps
 
-                    override fun visitTieredPackage(tieredPackage: NewPlanTieredPackagePrice) =
-                        tieredPackage.validity()
+            fun bulk(): NewPlanBulkPrice? = bulk
 
-                    override fun visitTieredWithMinimum(
-                        tieredWithMinimum: NewPlanTieredWithMinimumPrice
-                    ) = tieredWithMinimum.validity()
+            fun thresholdTotalAmount(): NewPlanThresholdTotalAmountPrice? = thresholdTotalAmount
 
-                    override fun visitUnitWithPercent(
-                        unitWithPercent: NewPlanUnitWithPercentPrice
-                    ) = unitWithPercent.validity()
+            fun tieredPackage(): NewPlanTieredPackagePrice? = tieredPackage
 
-                    override fun visitPackageWithAllocation(
-                        packageWithAllocation: NewPlanPackageWithAllocationPrice
-                    ) = packageWithAllocation.validity()
+            fun tieredWithMinimum(): NewPlanTieredWithMinimumPrice? = tieredWithMinimum
 
-                    override fun visitTieredWithProration(
-                        tieredWithProration: NewPlanTierWithProrationPrice
-                    ) = tieredWithProration.validity()
+            fun unitWithPercent(): NewPlanUnitWithPercentPrice? = unitWithPercent
 
-                    override fun visitUnitWithProration(
-                        unitWithProration: NewPlanUnitWithProrationPrice
-                    ) = unitWithProration.validity()
+            fun packageWithAllocation(): NewPlanPackageWithAllocationPrice? = packageWithAllocation
 
-                    override fun visitGroupedAllocation(
-                        groupedAllocation: NewPlanGroupedAllocationPrice
-                    ) = groupedAllocation.validity()
+            fun tieredWithProration(): NewPlanTierWithProrationPrice? = tieredWithProration
 
-                    override fun visitGroupedWithProratedMinimum(
-                        groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
-                    ) = groupedWithProratedMinimum.validity()
+            fun unitWithProration(): NewPlanUnitWithProrationPrice? = unitWithProration
 
-                    override fun visitGroupedWithMeteredMinimum(
-                        groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice
-                    ) = groupedWithMeteredMinimum.validity()
+            fun groupedAllocation(): NewPlanGroupedAllocationPrice? = groupedAllocation
 
-                    override fun visitMatrixWithDisplayName(
-                        matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
-                    ) = matrixWithDisplayName.validity()
+            fun groupedWithProratedMinimum(): NewPlanGroupedWithProratedMinimumPrice? =
+                groupedWithProratedMinimum
 
-                    override fun visitBulkWithProration(
-                        bulkWithProration: NewPlanBulkWithProrationPrice
-                    ) = bulkWithProration.validity()
+            fun groupedWithMeteredMinimum(): NewPlanGroupedWithMeteredMinimumPrice? =
+                groupedWithMeteredMinimum
 
-                    override fun visitGroupedTieredPackage(
-                        groupedTieredPackage: NewPlanGroupedTieredPackagePrice
-                    ) = groupedTieredPackage.validity()
+            fun matrixWithDisplayName(): NewPlanMatrixWithDisplayNamePrice? = matrixWithDisplayName
 
-                    override fun visitMaxGroupTieredPackage(
-                        maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice
-                    ) = maxGroupTieredPackage.validity()
+            fun bulkWithProration(): NewPlanBulkWithProrationPrice? = bulkWithProration
 
-                    override fun visitScalableMatrixWithUnitPricing(
-                        scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice
-                    ) = scalableMatrixWithUnitPricing.validity()
+            fun groupedTieredPackage(): NewPlanGroupedTieredPackagePrice? = groupedTieredPackage
 
-                    override fun visitScalableMatrixWithTieredPricing(
-                        scalableMatrixWithTieredPricing: NewPlanScalableMatrixWithTieredPricingPrice
-                    ) = scalableMatrixWithTieredPricing.validity()
+            fun maxGroupTieredPackage(): NewPlanMaxGroupTieredPackagePrice? = maxGroupTieredPackage
 
-                    override fun visitCumulativeGroupedBulk(
-                        cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
-                    ) = cumulativeGroupedBulk.validity()
+            fun scalableMatrixWithUnitPricing(): NewPlanScalableMatrixWithUnitPricingPrice? =
+                scalableMatrixWithUnitPricing
 
-                    override fun visitTieredPackageWithMinimum(
-                        tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
-                    ) = tieredPackageWithMinimum.validity()
+            fun scalableMatrixWithTieredPricing(): NewPlanScalableMatrixWithTieredPricingPrice? =
+                scalableMatrixWithTieredPricing
 
-                    override fun visitMatrixWithAllocation(
-                        matrixWithAllocation: NewPlanMatrixWithAllocationPrice
-                    ) = matrixWithAllocation.validity()
+            fun cumulativeGroupedBulk(): NewPlanCumulativeGroupedBulkPrice? = cumulativeGroupedBulk
 
-                    override fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) =
-                        groupedTiered.validity()
+            fun tieredPackageWithMinimum(): NewPlanTieredPackageWithMinimumPrice? =
+                tieredPackageWithMinimum
 
-                    override fun unknown(json: JsonValue?) = 0
+            fun matrixWithAllocation(): NewPlanMatrixWithAllocationPrice? = matrixWithAllocation
+
+            fun groupedTiered(): NewPlanGroupedTieredPrice? = groupedTiered
+
+            fun isUnit(): Boolean = unit != null
+
+            fun isPackage(): Boolean = package_ != null
+
+            fun isMatrix(): Boolean = matrix != null
+
+            fun isTiered(): Boolean = tiered != null
+
+            fun isTieredBps(): Boolean = tieredBps != null
+
+            fun isBps(): Boolean = bps != null
+
+            fun isBulkBps(): Boolean = bulkBps != null
+
+            fun isBulk(): Boolean = bulk != null
+
+            fun isThresholdTotalAmount(): Boolean = thresholdTotalAmount != null
+
+            fun isTieredPackage(): Boolean = tieredPackage != null
+
+            fun isTieredWithMinimum(): Boolean = tieredWithMinimum != null
+
+            fun isUnitWithPercent(): Boolean = unitWithPercent != null
+
+            fun isPackageWithAllocation(): Boolean = packageWithAllocation != null
+
+            fun isTieredWithProration(): Boolean = tieredWithProration != null
+
+            fun isUnitWithProration(): Boolean = unitWithProration != null
+
+            fun isGroupedAllocation(): Boolean = groupedAllocation != null
+
+            fun isGroupedWithProratedMinimum(): Boolean = groupedWithProratedMinimum != null
+
+            fun isGroupedWithMeteredMinimum(): Boolean = groupedWithMeteredMinimum != null
+
+            fun isMatrixWithDisplayName(): Boolean = matrixWithDisplayName != null
+
+            fun isBulkWithProration(): Boolean = bulkWithProration != null
+
+            fun isGroupedTieredPackage(): Boolean = groupedTieredPackage != null
+
+            fun isMaxGroupTieredPackage(): Boolean = maxGroupTieredPackage != null
+
+            fun isScalableMatrixWithUnitPricing(): Boolean = scalableMatrixWithUnitPricing != null
+
+            fun isScalableMatrixWithTieredPricing(): Boolean =
+                scalableMatrixWithTieredPricing != null
+
+            fun isCumulativeGroupedBulk(): Boolean = cumulativeGroupedBulk != null
+
+            fun isTieredPackageWithMinimum(): Boolean = tieredPackageWithMinimum != null
+
+            fun isMatrixWithAllocation(): Boolean = matrixWithAllocation != null
+
+            fun isGroupedTiered(): Boolean = groupedTiered != null
+
+            fun asUnit(): NewPlanUnitPrice = unit.getOrThrow("unit")
+
+            fun asPackage(): NewPlanPackagePrice = package_.getOrThrow("package_")
+
+            fun asMatrix(): NewPlanMatrixPrice = matrix.getOrThrow("matrix")
+
+            fun asTiered(): NewPlanTieredPrice = tiered.getOrThrow("tiered")
+
+            fun asTieredBps(): NewPlanTieredBpsPrice = tieredBps.getOrThrow("tieredBps")
+
+            fun asBps(): NewPlanBpsPrice = bps.getOrThrow("bps")
+
+            fun asBulkBps(): NewPlanBulkBpsPrice = bulkBps.getOrThrow("bulkBps")
+
+            fun asBulk(): NewPlanBulkPrice = bulk.getOrThrow("bulk")
+
+            fun asThresholdTotalAmount(): NewPlanThresholdTotalAmountPrice =
+                thresholdTotalAmount.getOrThrow("thresholdTotalAmount")
+
+            fun asTieredPackage(): NewPlanTieredPackagePrice =
+                tieredPackage.getOrThrow("tieredPackage")
+
+            fun asTieredWithMinimum(): NewPlanTieredWithMinimumPrice =
+                tieredWithMinimum.getOrThrow("tieredWithMinimum")
+
+            fun asUnitWithPercent(): NewPlanUnitWithPercentPrice =
+                unitWithPercent.getOrThrow("unitWithPercent")
+
+            fun asPackageWithAllocation(): NewPlanPackageWithAllocationPrice =
+                packageWithAllocation.getOrThrow("packageWithAllocation")
+
+            fun asTieredWithProration(): NewPlanTierWithProrationPrice =
+                tieredWithProration.getOrThrow("tieredWithProration")
+
+            fun asUnitWithProration(): NewPlanUnitWithProrationPrice =
+                unitWithProration.getOrThrow("unitWithProration")
+
+            fun asGroupedAllocation(): NewPlanGroupedAllocationPrice =
+                groupedAllocation.getOrThrow("groupedAllocation")
+
+            fun asGroupedWithProratedMinimum(): NewPlanGroupedWithProratedMinimumPrice =
+                groupedWithProratedMinimum.getOrThrow("groupedWithProratedMinimum")
+
+            fun asGroupedWithMeteredMinimum(): NewPlanGroupedWithMeteredMinimumPrice =
+                groupedWithMeteredMinimum.getOrThrow("groupedWithMeteredMinimum")
+
+            fun asMatrixWithDisplayName(): NewPlanMatrixWithDisplayNamePrice =
+                matrixWithDisplayName.getOrThrow("matrixWithDisplayName")
+
+            fun asBulkWithProration(): NewPlanBulkWithProrationPrice =
+                bulkWithProration.getOrThrow("bulkWithProration")
+
+            fun asGroupedTieredPackage(): NewPlanGroupedTieredPackagePrice =
+                groupedTieredPackage.getOrThrow("groupedTieredPackage")
+
+            fun asMaxGroupTieredPackage(): NewPlanMaxGroupTieredPackagePrice =
+                maxGroupTieredPackage.getOrThrow("maxGroupTieredPackage")
+
+            fun asScalableMatrixWithUnitPricing(): NewPlanScalableMatrixWithUnitPricingPrice =
+                scalableMatrixWithUnitPricing.getOrThrow("scalableMatrixWithUnitPricing")
+
+            fun asScalableMatrixWithTieredPricing(): NewPlanScalableMatrixWithTieredPricingPrice =
+                scalableMatrixWithTieredPricing.getOrThrow("scalableMatrixWithTieredPricing")
+
+            fun asCumulativeGroupedBulk(): NewPlanCumulativeGroupedBulkPrice =
+                cumulativeGroupedBulk.getOrThrow("cumulativeGroupedBulk")
+
+            fun asTieredPackageWithMinimum(): NewPlanTieredPackageWithMinimumPrice =
+                tieredPackageWithMinimum.getOrThrow("tieredPackageWithMinimum")
+
+            fun asMatrixWithAllocation(): NewPlanMatrixWithAllocationPrice =
+                matrixWithAllocation.getOrThrow("matrixWithAllocation")
+
+            fun asGroupedTiered(): NewPlanGroupedTieredPrice =
+                groupedTiered.getOrThrow("groupedTiered")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
+                when {
+                    unit != null -> visitor.visitUnit(unit)
+                    package_ != null -> visitor.visitPackage(package_)
+                    matrix != null -> visitor.visitMatrix(matrix)
+                    tiered != null -> visitor.visitTiered(tiered)
+                    tieredBps != null -> visitor.visitTieredBps(tieredBps)
+                    bps != null -> visitor.visitBps(bps)
+                    bulkBps != null -> visitor.visitBulkBps(bulkBps)
+                    bulk != null -> visitor.visitBulk(bulk)
+                    thresholdTotalAmount != null ->
+                        visitor.visitThresholdTotalAmount(thresholdTotalAmount)
+                    tieredPackage != null -> visitor.visitTieredPackage(tieredPackage)
+                    tieredWithMinimum != null -> visitor.visitTieredWithMinimum(tieredWithMinimum)
+                    unitWithPercent != null -> visitor.visitUnitWithPercent(unitWithPercent)
+                    packageWithAllocation != null ->
+                        visitor.visitPackageWithAllocation(packageWithAllocation)
+                    tieredWithProration != null ->
+                        visitor.visitTieredWithProration(tieredWithProration)
+                    unitWithProration != null -> visitor.visitUnitWithProration(unitWithProration)
+                    groupedAllocation != null -> visitor.visitGroupedAllocation(groupedAllocation)
+                    groupedWithProratedMinimum != null ->
+                        visitor.visitGroupedWithProratedMinimum(groupedWithProratedMinimum)
+                    groupedWithMeteredMinimum != null ->
+                        visitor.visitGroupedWithMeteredMinimum(groupedWithMeteredMinimum)
+                    matrixWithDisplayName != null ->
+                        visitor.visitMatrixWithDisplayName(matrixWithDisplayName)
+                    bulkWithProration != null -> visitor.visitBulkWithProration(bulkWithProration)
+                    groupedTieredPackage != null ->
+                        visitor.visitGroupedTieredPackage(groupedTieredPackage)
+                    maxGroupTieredPackage != null ->
+                        visitor.visitMaxGroupTieredPackage(maxGroupTieredPackage)
+                    scalableMatrixWithUnitPricing != null ->
+                        visitor.visitScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)
+                    scalableMatrixWithTieredPricing != null ->
+                        visitor.visitScalableMatrixWithTieredPricing(
+                            scalableMatrixWithTieredPricing
+                        )
+                    cumulativeGroupedBulk != null ->
+                        visitor.visitCumulativeGroupedBulk(cumulativeGroupedBulk)
+                    tieredPackageWithMinimum != null ->
+                        visitor.visitTieredPackageWithMinimum(tieredPackageWithMinimum)
+                    matrixWithAllocation != null ->
+                        visitor.visitMatrixWithAllocation(matrixWithAllocation)
+                    groupedTiered != null -> visitor.visitGroupedTiered(groupedTiered)
+                    else -> visitor.unknown(_json)
                 }
-            )
+
+            private var validated: Boolean = false
+
+            fun validate(): InnerPrice = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitUnit(unit: NewPlanUnitPrice) {
+                            unit.validate()
+                        }
+
+                        override fun visitPackage(package_: NewPlanPackagePrice) {
+                            package_.validate()
+                        }
+
+                        override fun visitMatrix(matrix: NewPlanMatrixPrice) {
+                            matrix.validate()
+                        }
+
+                        override fun visitTiered(tiered: NewPlanTieredPrice) {
+                            tiered.validate()
+                        }
+
+                        override fun visitTieredBps(tieredBps: NewPlanTieredBpsPrice) {
+                            tieredBps.validate()
+                        }
+
+                        override fun visitBps(bps: NewPlanBpsPrice) {
+                            bps.validate()
+                        }
+
+                        override fun visitBulkBps(bulkBps: NewPlanBulkBpsPrice) {
+                            bulkBps.validate()
+                        }
+
+                        override fun visitBulk(bulk: NewPlanBulkPrice) {
+                            bulk.validate()
+                        }
+
+                        override fun visitThresholdTotalAmount(
+                            thresholdTotalAmount: NewPlanThresholdTotalAmountPrice
+                        ) {
+                            thresholdTotalAmount.validate()
+                        }
+
+                        override fun visitTieredPackage(tieredPackage: NewPlanTieredPackagePrice) {
+                            tieredPackage.validate()
+                        }
+
+                        override fun visitTieredWithMinimum(
+                            tieredWithMinimum: NewPlanTieredWithMinimumPrice
+                        ) {
+                            tieredWithMinimum.validate()
+                        }
+
+                        override fun visitUnitWithPercent(
+                            unitWithPercent: NewPlanUnitWithPercentPrice
+                        ) {
+                            unitWithPercent.validate()
+                        }
+
+                        override fun visitPackageWithAllocation(
+                            packageWithAllocation: NewPlanPackageWithAllocationPrice
+                        ) {
+                            packageWithAllocation.validate()
+                        }
+
+                        override fun visitTieredWithProration(
+                            tieredWithProration: NewPlanTierWithProrationPrice
+                        ) {
+                            tieredWithProration.validate()
+                        }
+
+                        override fun visitUnitWithProration(
+                            unitWithProration: NewPlanUnitWithProrationPrice
+                        ) {
+                            unitWithProration.validate()
+                        }
+
+                        override fun visitGroupedAllocation(
+                            groupedAllocation: NewPlanGroupedAllocationPrice
+                        ) {
+                            groupedAllocation.validate()
+                        }
+
+                        override fun visitGroupedWithProratedMinimum(
+                            groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
+                        ) {
+                            groupedWithProratedMinimum.validate()
+                        }
+
+                        override fun visitGroupedWithMeteredMinimum(
+                            groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice
+                        ) {
+                            groupedWithMeteredMinimum.validate()
+                        }
+
+                        override fun visitMatrixWithDisplayName(
+                            matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
+                        ) {
+                            matrixWithDisplayName.validate()
+                        }
+
+                        override fun visitBulkWithProration(
+                            bulkWithProration: NewPlanBulkWithProrationPrice
+                        ) {
+                            bulkWithProration.validate()
+                        }
+
+                        override fun visitGroupedTieredPackage(
+                            groupedTieredPackage: NewPlanGroupedTieredPackagePrice
+                        ) {
+                            groupedTieredPackage.validate()
+                        }
+
+                        override fun visitMaxGroupTieredPackage(
+                            maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice
+                        ) {
+                            maxGroupTieredPackage.validate()
+                        }
+
+                        override fun visitScalableMatrixWithUnitPricing(
+                            scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice
+                        ) {
+                            scalableMatrixWithUnitPricing.validate()
+                        }
+
+                        override fun visitScalableMatrixWithTieredPricing(
+                            scalableMatrixWithTieredPricing:
+                                NewPlanScalableMatrixWithTieredPricingPrice
+                        ) {
+                            scalableMatrixWithTieredPricing.validate()
+                        }
+
+                        override fun visitCumulativeGroupedBulk(
+                            cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
+                        ) {
+                            cumulativeGroupedBulk.validate()
+                        }
+
+                        override fun visitTieredPackageWithMinimum(
+                            tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
+                        ) {
+                            tieredPackageWithMinimum.validate()
+                        }
+
+                        override fun visitMatrixWithAllocation(
+                            matrixWithAllocation: NewPlanMatrixWithAllocationPrice
+                        ) {
+                            matrixWithAllocation.validate()
+                        }
+
+                        override fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) {
+                            groupedTiered.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitUnit(unit: NewPlanUnitPrice) = unit.validity()
+
+                        override fun visitPackage(package_: NewPlanPackagePrice) =
+                            package_.validity()
+
+                        override fun visitMatrix(matrix: NewPlanMatrixPrice) = matrix.validity()
+
+                        override fun visitTiered(tiered: NewPlanTieredPrice) = tiered.validity()
+
+                        override fun visitTieredBps(tieredBps: NewPlanTieredBpsPrice) =
+                            tieredBps.validity()
+
+                        override fun visitBps(bps: NewPlanBpsPrice) = bps.validity()
+
+                        override fun visitBulkBps(bulkBps: NewPlanBulkBpsPrice) = bulkBps.validity()
+
+                        override fun visitBulk(bulk: NewPlanBulkPrice) = bulk.validity()
+
+                        override fun visitThresholdTotalAmount(
+                            thresholdTotalAmount: NewPlanThresholdTotalAmountPrice
+                        ) = thresholdTotalAmount.validity()
+
+                        override fun visitTieredPackage(tieredPackage: NewPlanTieredPackagePrice) =
+                            tieredPackage.validity()
+
+                        override fun visitTieredWithMinimum(
+                            tieredWithMinimum: NewPlanTieredWithMinimumPrice
+                        ) = tieredWithMinimum.validity()
+
+                        override fun visitUnitWithPercent(
+                            unitWithPercent: NewPlanUnitWithPercentPrice
+                        ) = unitWithPercent.validity()
+
+                        override fun visitPackageWithAllocation(
+                            packageWithAllocation: NewPlanPackageWithAllocationPrice
+                        ) = packageWithAllocation.validity()
+
+                        override fun visitTieredWithProration(
+                            tieredWithProration: NewPlanTierWithProrationPrice
+                        ) = tieredWithProration.validity()
+
+                        override fun visitUnitWithProration(
+                            unitWithProration: NewPlanUnitWithProrationPrice
+                        ) = unitWithProration.validity()
+
+                        override fun visitGroupedAllocation(
+                            groupedAllocation: NewPlanGroupedAllocationPrice
+                        ) = groupedAllocation.validity()
+
+                        override fun visitGroupedWithProratedMinimum(
+                            groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
+                        ) = groupedWithProratedMinimum.validity()
+
+                        override fun visitGroupedWithMeteredMinimum(
+                            groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice
+                        ) = groupedWithMeteredMinimum.validity()
+
+                        override fun visitMatrixWithDisplayName(
+                            matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
+                        ) = matrixWithDisplayName.validity()
+
+                        override fun visitBulkWithProration(
+                            bulkWithProration: NewPlanBulkWithProrationPrice
+                        ) = bulkWithProration.validity()
+
+                        override fun visitGroupedTieredPackage(
+                            groupedTieredPackage: NewPlanGroupedTieredPackagePrice
+                        ) = groupedTieredPackage.validity()
+
+                        override fun visitMaxGroupTieredPackage(
+                            maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice
+                        ) = maxGroupTieredPackage.validity()
+
+                        override fun visitScalableMatrixWithUnitPricing(
+                            scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice
+                        ) = scalableMatrixWithUnitPricing.validity()
+
+                        override fun visitScalableMatrixWithTieredPricing(
+                            scalableMatrixWithTieredPricing:
+                                NewPlanScalableMatrixWithTieredPricingPrice
+                        ) = scalableMatrixWithTieredPricing.validity()
+
+                        override fun visitCumulativeGroupedBulk(
+                            cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
+                        ) = cumulativeGroupedBulk.validity()
+
+                        override fun visitTieredPackageWithMinimum(
+                            tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
+                        ) = tieredPackageWithMinimum.validity()
+
+                        override fun visitMatrixWithAllocation(
+                            matrixWithAllocation: NewPlanMatrixWithAllocationPrice
+                        ) = matrixWithAllocation.validity()
+
+                        override fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) =
+                            groupedTiered.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is InnerPrice && unit == other.unit && package_ == other.package_ && matrix == other.matrix && tiered == other.tiered && tieredBps == other.tieredBps && bps == other.bps && bulkBps == other.bulkBps && bulk == other.bulk && thresholdTotalAmount == other.thresholdTotalAmount && tieredPackage == other.tieredPackage && tieredWithMinimum == other.tieredWithMinimum && unitWithPercent == other.unitWithPercent && packageWithAllocation == other.packageWithAllocation && tieredWithProration == other.tieredWithProration && unitWithProration == other.unitWithProration && groupedAllocation == other.groupedAllocation && groupedWithProratedMinimum == other.groupedWithProratedMinimum && groupedWithMeteredMinimum == other.groupedWithMeteredMinimum && matrixWithDisplayName == other.matrixWithDisplayName && bulkWithProration == other.bulkWithProration && groupedTieredPackage == other.groupedTieredPackage && maxGroupTieredPackage == other.maxGroupTieredPackage && scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing && scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing && cumulativeGroupedBulk == other.cumulativeGroupedBulk && tieredPackageWithMinimum == other.tieredPackageWithMinimum && matrixWithAllocation == other.matrixWithAllocation && groupedTiered == other.groupedTiered /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, package_, matrix, tiered, tieredBps, bps, bulkBps, bulk, thresholdTotalAmount, tieredPackage, tieredWithMinimum, unitWithPercent, packageWithAllocation, tieredWithProration, unitWithProration, groupedAllocation, groupedWithProratedMinimum, groupedWithMeteredMinimum, matrixWithDisplayName, bulkWithProration, groupedTieredPackage, maxGroupTieredPackage, scalableMatrixWithUnitPricing, scalableMatrixWithTieredPricing, cumulativeGroupedBulk, tieredPackageWithMinimum, matrixWithAllocation, groupedTiered) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    unit != null -> "InnerPrice{unit=$unit}"
+                    package_ != null -> "InnerPrice{package_=$package_}"
+                    matrix != null -> "InnerPrice{matrix=$matrix}"
+                    tiered != null -> "InnerPrice{tiered=$tiered}"
+                    tieredBps != null -> "InnerPrice{tieredBps=$tieredBps}"
+                    bps != null -> "InnerPrice{bps=$bps}"
+                    bulkBps != null -> "InnerPrice{bulkBps=$bulkBps}"
+                    bulk != null -> "InnerPrice{bulk=$bulk}"
+                    thresholdTotalAmount != null ->
+                        "InnerPrice{thresholdTotalAmount=$thresholdTotalAmount}"
+                    tieredPackage != null -> "InnerPrice{tieredPackage=$tieredPackage}"
+                    tieredWithMinimum != null -> "InnerPrice{tieredWithMinimum=$tieredWithMinimum}"
+                    unitWithPercent != null -> "InnerPrice{unitWithPercent=$unitWithPercent}"
+                    packageWithAllocation != null ->
+                        "InnerPrice{packageWithAllocation=$packageWithAllocation}"
+                    tieredWithProration != null ->
+                        "InnerPrice{tieredWithProration=$tieredWithProration}"
+                    unitWithProration != null -> "InnerPrice{unitWithProration=$unitWithProration}"
+                    groupedAllocation != null -> "InnerPrice{groupedAllocation=$groupedAllocation}"
+                    groupedWithProratedMinimum != null ->
+                        "InnerPrice{groupedWithProratedMinimum=$groupedWithProratedMinimum}"
+                    groupedWithMeteredMinimum != null ->
+                        "InnerPrice{groupedWithMeteredMinimum=$groupedWithMeteredMinimum}"
+                    matrixWithDisplayName != null ->
+                        "InnerPrice{matrixWithDisplayName=$matrixWithDisplayName}"
+                    bulkWithProration != null -> "InnerPrice{bulkWithProration=$bulkWithProration}"
+                    groupedTieredPackage != null ->
+                        "InnerPrice{groupedTieredPackage=$groupedTieredPackage}"
+                    maxGroupTieredPackage != null ->
+                        "InnerPrice{maxGroupTieredPackage=$maxGroupTieredPackage}"
+                    scalableMatrixWithUnitPricing != null ->
+                        "InnerPrice{scalableMatrixWithUnitPricing=$scalableMatrixWithUnitPricing}"
+                    scalableMatrixWithTieredPricing != null ->
+                        "InnerPrice{scalableMatrixWithTieredPricing=$scalableMatrixWithTieredPricing}"
+                    cumulativeGroupedBulk != null ->
+                        "InnerPrice{cumulativeGroupedBulk=$cumulativeGroupedBulk}"
+                    tieredPackageWithMinimum != null ->
+                        "InnerPrice{tieredPackageWithMinimum=$tieredPackageWithMinimum}"
+                    matrixWithAllocation != null ->
+                        "InnerPrice{matrixWithAllocation=$matrixWithAllocation}"
+                    groupedTiered != null -> "InnerPrice{groupedTiered=$groupedTiered}"
+                    _json != null -> "InnerPrice{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid InnerPrice")
+                }
+
+            companion object {
+
+                fun ofUnit(unit: NewPlanUnitPrice) = InnerPrice(unit = unit)
+
+                fun ofPackage(package_: NewPlanPackagePrice) = InnerPrice(package_ = package_)
+
+                fun ofMatrix(matrix: NewPlanMatrixPrice) = InnerPrice(matrix = matrix)
+
+                fun ofTiered(tiered: NewPlanTieredPrice) = InnerPrice(tiered = tiered)
+
+                fun ofTieredBps(tieredBps: NewPlanTieredBpsPrice) =
+                    InnerPrice(tieredBps = tieredBps)
+
+                fun ofBps(bps: NewPlanBpsPrice) = InnerPrice(bps = bps)
+
+                fun ofBulkBps(bulkBps: NewPlanBulkBpsPrice) = InnerPrice(bulkBps = bulkBps)
+
+                fun ofBulk(bulk: NewPlanBulkPrice) = InnerPrice(bulk = bulk)
+
+                fun ofThresholdTotalAmount(thresholdTotalAmount: NewPlanThresholdTotalAmountPrice) =
+                    InnerPrice(thresholdTotalAmount = thresholdTotalAmount)
+
+                fun ofTieredPackage(tieredPackage: NewPlanTieredPackagePrice) =
+                    InnerPrice(tieredPackage = tieredPackage)
+
+                fun ofTieredWithMinimum(tieredWithMinimum: NewPlanTieredWithMinimumPrice) =
+                    InnerPrice(tieredWithMinimum = tieredWithMinimum)
+
+                fun ofUnitWithPercent(unitWithPercent: NewPlanUnitWithPercentPrice) =
+                    InnerPrice(unitWithPercent = unitWithPercent)
+
+                fun ofPackageWithAllocation(
+                    packageWithAllocation: NewPlanPackageWithAllocationPrice
+                ) = InnerPrice(packageWithAllocation = packageWithAllocation)
+
+                fun ofTieredWithProration(tieredWithProration: NewPlanTierWithProrationPrice) =
+                    InnerPrice(tieredWithProration = tieredWithProration)
+
+                fun ofUnitWithProration(unitWithProration: NewPlanUnitWithProrationPrice) =
+                    InnerPrice(unitWithProration = unitWithProration)
+
+                fun ofGroupedAllocation(groupedAllocation: NewPlanGroupedAllocationPrice) =
+                    InnerPrice(groupedAllocation = groupedAllocation)
+
+                fun ofGroupedWithProratedMinimum(
+                    groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
+                ) = InnerPrice(groupedWithProratedMinimum = groupedWithProratedMinimum)
+
+                fun ofGroupedWithMeteredMinimum(
+                    groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice
+                ) = InnerPrice(groupedWithMeteredMinimum = groupedWithMeteredMinimum)
+
+                fun ofMatrixWithDisplayName(
+                    matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
+                ) = InnerPrice(matrixWithDisplayName = matrixWithDisplayName)
+
+                fun ofBulkWithProration(bulkWithProration: NewPlanBulkWithProrationPrice) =
+                    InnerPrice(bulkWithProration = bulkWithProration)
+
+                fun ofGroupedTieredPackage(groupedTieredPackage: NewPlanGroupedTieredPackagePrice) =
+                    InnerPrice(groupedTieredPackage = groupedTieredPackage)
+
+                fun ofMaxGroupTieredPackage(
+                    maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice
+                ) = InnerPrice(maxGroupTieredPackage = maxGroupTieredPackage)
+
+                fun ofScalableMatrixWithUnitPricing(
+                    scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice
+                ) = InnerPrice(scalableMatrixWithUnitPricing = scalableMatrixWithUnitPricing)
+
+                fun ofScalableMatrixWithTieredPricing(
+                    scalableMatrixWithTieredPricing: NewPlanScalableMatrixWithTieredPricingPrice
+                ) = InnerPrice(scalableMatrixWithTieredPricing = scalableMatrixWithTieredPricing)
+
+                fun ofCumulativeGroupedBulk(
+                    cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
+                ) = InnerPrice(cumulativeGroupedBulk = cumulativeGroupedBulk)
+
+                fun ofTieredPackageWithMinimum(
+                    tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
+                ) = InnerPrice(tieredPackageWithMinimum = tieredPackageWithMinimum)
+
+                fun ofMatrixWithAllocation(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
+                    InnerPrice(matrixWithAllocation = matrixWithAllocation)
+
+                fun ofGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) =
+                    InnerPrice(groupedTiered = groupedTiered)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [InnerPrice] to a value of type
+             * [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitUnit(unit: NewPlanUnitPrice): T
+
+                fun visitPackage(package_: NewPlanPackagePrice): T
+
+                fun visitMatrix(matrix: NewPlanMatrixPrice): T
+
+                fun visitTiered(tiered: NewPlanTieredPrice): T
+
+                fun visitTieredBps(tieredBps: NewPlanTieredBpsPrice): T
+
+                fun visitBps(bps: NewPlanBpsPrice): T
+
+                fun visitBulkBps(bulkBps: NewPlanBulkBpsPrice): T
+
+                fun visitBulk(bulk: NewPlanBulkPrice): T
+
+                fun visitThresholdTotalAmount(
+                    thresholdTotalAmount: NewPlanThresholdTotalAmountPrice
+                ): T
+
+                fun visitTieredPackage(tieredPackage: NewPlanTieredPackagePrice): T
+
+                fun visitTieredWithMinimum(tieredWithMinimum: NewPlanTieredWithMinimumPrice): T
+
+                fun visitUnitWithPercent(unitWithPercent: NewPlanUnitWithPercentPrice): T
+
+                fun visitPackageWithAllocation(
+                    packageWithAllocation: NewPlanPackageWithAllocationPrice
+                ): T
+
+                fun visitTieredWithProration(tieredWithProration: NewPlanTierWithProrationPrice): T
+
+                fun visitUnitWithProration(unitWithProration: NewPlanUnitWithProrationPrice): T
+
+                fun visitGroupedAllocation(groupedAllocation: NewPlanGroupedAllocationPrice): T
+
+                fun visitGroupedWithProratedMinimum(
+                    groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
+                ): T
+
+                fun visitGroupedWithMeteredMinimum(
+                    groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice
+                ): T
+
+                fun visitMatrixWithDisplayName(
+                    matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
+                ): T
+
+                fun visitBulkWithProration(bulkWithProration: NewPlanBulkWithProrationPrice): T
+
+                fun visitGroupedTieredPackage(
+                    groupedTieredPackage: NewPlanGroupedTieredPackagePrice
+                ): T
+
+                fun visitMaxGroupTieredPackage(
+                    maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice
+                ): T
+
+                fun visitScalableMatrixWithUnitPricing(
+                    scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice
+                ): T
+
+                fun visitScalableMatrixWithTieredPricing(
+                    scalableMatrixWithTieredPricing: NewPlanScalableMatrixWithTieredPricingPrice
+                ): T
+
+                fun visitCumulativeGroupedBulk(
+                    cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
+                ): T
+
+                fun visitTieredPackageWithMinimum(
+                    tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
+                ): T
+
+                fun visitMatrixWithAllocation(
+                    matrixWithAllocation: NewPlanMatrixWithAllocationPrice
+                ): T
+
+                fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice): T
+
+                /**
+                 * Maps an unknown variant of [InnerPrice] to a value of type [T].
+                 *
+                 * An instance of [InnerPrice] can contain an unknown variant if it was deserialized
+                 * from data that doesn't match any known variant. For example, if the SDK is on an
+                 * older version than the API, then the API may respond with new variants that the
+                 * SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown InnerPrice: $json")
+                }
+            }
+
+            internal class Deserializer : BaseDeserializer<InnerPrice>(InnerPrice::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): InnerPrice {
+                    val json = JsonValue.fromJsonNode(node)
+                    val modelType = json.asObject()?.get("model_type")?.asString()
+
+                    when (modelType) {
+                        "unit" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanUnitPrice>())?.let {
+                                InnerPrice(unit = it, _json = json)
+                            } ?: InnerPrice(_json = json)
+                        }
+                        "package" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanPackagePrice>())
+                                ?.let { InnerPrice(package_ = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "matrix" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanMatrixPrice>())?.let {
+                                InnerPrice(matrix = it, _json = json)
+                            } ?: InnerPrice(_json = json)
+                        }
+                        "tiered" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanTieredPrice>())?.let {
+                                InnerPrice(tiered = it, _json = json)
+                            } ?: InnerPrice(_json = json)
+                        }
+                        "tiered_bps" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanTieredBpsPrice>())
+                                ?.let { InnerPrice(tieredBps = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "bps" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanBpsPrice>())?.let {
+                                InnerPrice(bps = it, _json = json)
+                            } ?: InnerPrice(_json = json)
+                        }
+                        "bulk_bps" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanBulkBpsPrice>())
+                                ?.let { InnerPrice(bulkBps = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "bulk" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanBulkPrice>())?.let {
+                                InnerPrice(bulk = it, _json = json)
+                            } ?: InnerPrice(_json = json)
+                        }
+                        "threshold_total_amount" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanThresholdTotalAmountPrice>(),
+                                )
+                                ?.let { InnerPrice(thresholdTotalAmount = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "tiered_package" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanTieredPackagePrice>())
+                                ?.let { InnerPrice(tieredPackage = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "tiered_with_minimum" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanTieredWithMinimumPrice>(),
+                                )
+                                ?.let { InnerPrice(tieredWithMinimum = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "unit_with_percent" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanUnitWithPercentPrice>(),
+                                )
+                                ?.let { InnerPrice(unitWithPercent = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "package_with_allocation" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanPackageWithAllocationPrice>(),
+                                )
+                                ?.let { InnerPrice(packageWithAllocation = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "tiered_with_proration" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanTierWithProrationPrice>(),
+                                )
+                                ?.let { InnerPrice(tieredWithProration = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "unit_with_proration" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanUnitWithProrationPrice>(),
+                                )
+                                ?.let { InnerPrice(unitWithProration = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "grouped_allocation" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanGroupedAllocationPrice>(),
+                                )
+                                ?.let { InnerPrice(groupedAllocation = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "grouped_with_prorated_minimum" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanGroupedWithProratedMinimumPrice>(),
+                                )
+                                ?.let { InnerPrice(groupedWithProratedMinimum = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "grouped_with_metered_minimum" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanGroupedWithMeteredMinimumPrice>(),
+                                )
+                                ?.let { InnerPrice(groupedWithMeteredMinimum = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "matrix_with_display_name" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanMatrixWithDisplayNamePrice>(),
+                                )
+                                ?.let { InnerPrice(matrixWithDisplayName = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "bulk_with_proration" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanBulkWithProrationPrice>(),
+                                )
+                                ?.let { InnerPrice(bulkWithProration = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "grouped_tiered_package" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanGroupedTieredPackagePrice>(),
+                                )
+                                ?.let { InnerPrice(groupedTieredPackage = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "max_group_tiered_package" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanMaxGroupTieredPackagePrice>(),
+                                )
+                                ?.let { InnerPrice(maxGroupTieredPackage = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "scalable_matrix_with_unit_pricing" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanScalableMatrixWithUnitPricingPrice>(),
+                                )
+                                ?.let {
+                                    InnerPrice(scalableMatrixWithUnitPricing = it, _json = json)
+                                } ?: InnerPrice(_json = json)
+                        }
+                        "scalable_matrix_with_tiered_pricing" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanScalableMatrixWithTieredPricingPrice>(),
+                                )
+                                ?.let {
+                                    InnerPrice(scalableMatrixWithTieredPricing = it, _json = json)
+                                } ?: InnerPrice(_json = json)
+                        }
+                        "cumulative_grouped_bulk" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanCumulativeGroupedBulkPrice>(),
+                                )
+                                ?.let { InnerPrice(cumulativeGroupedBulk = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "tiered_package_with_minimum" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanTieredPackageWithMinimumPrice>(),
+                                )
+                                ?.let { InnerPrice(tieredPackageWithMinimum = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "matrix_with_allocation" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanMatrixWithAllocationPrice>(),
+                                )
+                                ?.let { InnerPrice(matrixWithAllocation = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                        "grouped_tiered" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanGroupedTieredPrice>())
+                                ?.let { InnerPrice(groupedTiered = it, _json = json) }
+                                ?: InnerPrice(_json = json)
+                        }
+                    }
+
+                    return InnerPrice(_json = json)
+                }
+            }
+
+            internal class Serializer : BaseSerializer<InnerPrice>(InnerPrice::class) {
+
+                override fun serialize(
+                    value: InnerPrice,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.unit != null -> generator.writeObject(value.unit)
+                        value.package_ != null -> generator.writeObject(value.package_)
+                        value.matrix != null -> generator.writeObject(value.matrix)
+                        value.tiered != null -> generator.writeObject(value.tiered)
+                        value.tieredBps != null -> generator.writeObject(value.tieredBps)
+                        value.bps != null -> generator.writeObject(value.bps)
+                        value.bulkBps != null -> generator.writeObject(value.bulkBps)
+                        value.bulk != null -> generator.writeObject(value.bulk)
+                        value.thresholdTotalAmount != null ->
+                            generator.writeObject(value.thresholdTotalAmount)
+                        value.tieredPackage != null -> generator.writeObject(value.tieredPackage)
+                        value.tieredWithMinimum != null ->
+                            generator.writeObject(value.tieredWithMinimum)
+                        value.unitWithPercent != null ->
+                            generator.writeObject(value.unitWithPercent)
+                        value.packageWithAllocation != null ->
+                            generator.writeObject(value.packageWithAllocation)
+                        value.tieredWithProration != null ->
+                            generator.writeObject(value.tieredWithProration)
+                        value.unitWithProration != null ->
+                            generator.writeObject(value.unitWithProration)
+                        value.groupedAllocation != null ->
+                            generator.writeObject(value.groupedAllocation)
+                        value.groupedWithProratedMinimum != null ->
+                            generator.writeObject(value.groupedWithProratedMinimum)
+                        value.groupedWithMeteredMinimum != null ->
+                            generator.writeObject(value.groupedWithMeteredMinimum)
+                        value.matrixWithDisplayName != null ->
+                            generator.writeObject(value.matrixWithDisplayName)
+                        value.bulkWithProration != null ->
+                            generator.writeObject(value.bulkWithProration)
+                        value.groupedTieredPackage != null ->
+                            generator.writeObject(value.groupedTieredPackage)
+                        value.maxGroupTieredPackage != null ->
+                            generator.writeObject(value.maxGroupTieredPackage)
+                        value.scalableMatrixWithUnitPricing != null ->
+                            generator.writeObject(value.scalableMatrixWithUnitPricing)
+                        value.scalableMatrixWithTieredPricing != null ->
+                            generator.writeObject(value.scalableMatrixWithTieredPricing)
+                        value.cumulativeGroupedBulk != null ->
+                            generator.writeObject(value.cumulativeGroupedBulk)
+                        value.tieredPackageWithMinimum != null ->
+                            generator.writeObject(value.tieredPackageWithMinimum)
+                        value.matrixWithAllocation != null ->
+                            generator.writeObject(value.matrixWithAllocation)
+                        value.groupedTiered != null -> generator.writeObject(value.groupedTiered)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid InnerPrice")
+                    }
+                }
+            }
+        }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is Price && unit == other.unit && package_ == other.package_ && matrix == other.matrix && tiered == other.tiered && tieredBps == other.tieredBps && bps == other.bps && bulkBps == other.bulkBps && bulk == other.bulk && thresholdTotalAmount == other.thresholdTotalAmount && tieredPackage == other.tieredPackage && tieredWithMinimum == other.tieredWithMinimum && unitWithPercent == other.unitWithPercent && packageWithAllocation == other.packageWithAllocation && tieredWithProration == other.tieredWithProration && unitWithProration == other.unitWithProration && groupedAllocation == other.groupedAllocation && groupedWithProratedMinimum == other.groupedWithProratedMinimum && groupedWithMeteredMinimum == other.groupedWithMeteredMinimum && matrixWithDisplayName == other.matrixWithDisplayName && bulkWithProration == other.bulkWithProration && groupedTieredPackage == other.groupedTieredPackage && maxGroupTieredPackage == other.maxGroupTieredPackage && scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing && scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing && cumulativeGroupedBulk == other.cumulativeGroupedBulk && tieredPackageWithMinimum == other.tieredPackageWithMinimum && matrixWithAllocation == other.matrixWithAllocation && groupedTiered == other.groupedTiered /* spotless:on */
+            return /* spotless:off */ other is Price && allocationPrice == other.allocationPrice && planPhaseOrder == other.planPhaseOrder && price == other.price && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, package_, matrix, tiered, tieredBps, bps, bulkBps, bulk, thresholdTotalAmount, tieredPackage, tieredWithMinimum, unitWithPercent, packageWithAllocation, tieredWithProration, unitWithProration, groupedAllocation, groupedWithProratedMinimum, groupedWithMeteredMinimum, matrixWithDisplayName, bulkWithProration, groupedTieredPackage, maxGroupTieredPackage, scalableMatrixWithUnitPricing, scalableMatrixWithTieredPricing, cumulativeGroupedBulk, tieredPackageWithMinimum, matrixWithAllocation, groupedTiered) /* spotless:on */
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(allocationPrice, planPhaseOrder, price, additionalProperties) }
+        /* spotless:on */
 
-        override fun toString(): String =
-            when {
-                unit != null -> "Price{unit=$unit}"
-                package_ != null -> "Price{package_=$package_}"
-                matrix != null -> "Price{matrix=$matrix}"
-                tiered != null -> "Price{tiered=$tiered}"
-                tieredBps != null -> "Price{tieredBps=$tieredBps}"
-                bps != null -> "Price{bps=$bps}"
-                bulkBps != null -> "Price{bulkBps=$bulkBps}"
-                bulk != null -> "Price{bulk=$bulk}"
-                thresholdTotalAmount != null -> "Price{thresholdTotalAmount=$thresholdTotalAmount}"
-                tieredPackage != null -> "Price{tieredPackage=$tieredPackage}"
-                tieredWithMinimum != null -> "Price{tieredWithMinimum=$tieredWithMinimum}"
-                unitWithPercent != null -> "Price{unitWithPercent=$unitWithPercent}"
-                packageWithAllocation != null ->
-                    "Price{packageWithAllocation=$packageWithAllocation}"
-                tieredWithProration != null -> "Price{tieredWithProration=$tieredWithProration}"
-                unitWithProration != null -> "Price{unitWithProration=$unitWithProration}"
-                groupedAllocation != null -> "Price{groupedAllocation=$groupedAllocation}"
-                groupedWithProratedMinimum != null ->
-                    "Price{groupedWithProratedMinimum=$groupedWithProratedMinimum}"
-                groupedWithMeteredMinimum != null ->
-                    "Price{groupedWithMeteredMinimum=$groupedWithMeteredMinimum}"
-                matrixWithDisplayName != null ->
-                    "Price{matrixWithDisplayName=$matrixWithDisplayName}"
-                bulkWithProration != null -> "Price{bulkWithProration=$bulkWithProration}"
-                groupedTieredPackage != null -> "Price{groupedTieredPackage=$groupedTieredPackage}"
-                maxGroupTieredPackage != null ->
-                    "Price{maxGroupTieredPackage=$maxGroupTieredPackage}"
-                scalableMatrixWithUnitPricing != null ->
-                    "Price{scalableMatrixWithUnitPricing=$scalableMatrixWithUnitPricing}"
-                scalableMatrixWithTieredPricing != null ->
-                    "Price{scalableMatrixWithTieredPricing=$scalableMatrixWithTieredPricing}"
-                cumulativeGroupedBulk != null ->
-                    "Price{cumulativeGroupedBulk=$cumulativeGroupedBulk}"
-                tieredPackageWithMinimum != null ->
-                    "Price{tieredPackageWithMinimum=$tieredPackageWithMinimum}"
-                matrixWithAllocation != null -> "Price{matrixWithAllocation=$matrixWithAllocation}"
-                groupedTiered != null -> "Price{groupedTiered=$groupedTiered}"
-                _json != null -> "Price{_unknown=$_json}"
-                else -> throw IllegalStateException("Invalid Price")
-            }
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Price{allocationPrice=$allocationPrice, planPhaseOrder=$planPhaseOrder, price=$price, additionalProperties=$additionalProperties}"
+    }
+
+    class Adjustment
+    private constructor(
+        private val adjustment: JsonField<InnerAdjustment>,
+        private val planPhaseOrder: JsonField<Long>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("adjustment")
+            @ExcludeMissing
+            adjustment: JsonField<InnerAdjustment> = JsonMissing.of(),
+            @JsonProperty("plan_phase_order")
+            @ExcludeMissing
+            planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        ) : this(adjustment, planPhaseOrder, mutableMapOf())
+
+        /**
+         * The definition of a new adjustment to create and add to the plan.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun adjustment(): InnerAdjustment = adjustment.getRequired("adjustment")
+
+        /**
+         * The phase to add this adjustment to.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
+
+        /**
+         * Returns the raw JSON value of [adjustment].
+         *
+         * Unlike [adjustment], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("adjustment")
+        @ExcludeMissing
+        fun _adjustment(): JsonField<InnerAdjustment> = adjustment
+
+        /**
+         * Returns the raw JSON value of [planPhaseOrder].
+         *
+         * Unlike [planPhaseOrder], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        fun _planPhaseOrder(): JsonField<Long> = planPhaseOrder
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
 
         companion object {
 
-            fun ofUnit(unit: NewPlanUnitPrice) = Price(unit = unit)
-
-            fun ofPackage(package_: NewPlanPackagePrice) = Price(package_ = package_)
-
-            fun ofMatrix(matrix: NewPlanMatrixPrice) = Price(matrix = matrix)
-
-            fun ofTiered(tiered: NewPlanTieredPrice) = Price(tiered = tiered)
-
-            fun ofTieredBps(tieredBps: NewPlanTieredBpsPrice) = Price(tieredBps = tieredBps)
-
-            fun ofBps(bps: NewPlanBpsPrice) = Price(bps = bps)
-
-            fun ofBulkBps(bulkBps: NewPlanBulkBpsPrice) = Price(bulkBps = bulkBps)
-
-            fun ofBulk(bulk: NewPlanBulkPrice) = Price(bulk = bulk)
-
-            fun ofThresholdTotalAmount(thresholdTotalAmount: NewPlanThresholdTotalAmountPrice) =
-                Price(thresholdTotalAmount = thresholdTotalAmount)
-
-            fun ofTieredPackage(tieredPackage: NewPlanTieredPackagePrice) =
-                Price(tieredPackage = tieredPackage)
-
-            fun ofTieredWithMinimum(tieredWithMinimum: NewPlanTieredWithMinimumPrice) =
-                Price(tieredWithMinimum = tieredWithMinimum)
-
-            fun ofUnitWithPercent(unitWithPercent: NewPlanUnitWithPercentPrice) =
-                Price(unitWithPercent = unitWithPercent)
-
-            fun ofPackageWithAllocation(packageWithAllocation: NewPlanPackageWithAllocationPrice) =
-                Price(packageWithAllocation = packageWithAllocation)
-
-            fun ofTieredWithProration(tieredWithProration: NewPlanTierWithProrationPrice) =
-                Price(tieredWithProration = tieredWithProration)
-
-            fun ofUnitWithProration(unitWithProration: NewPlanUnitWithProrationPrice) =
-                Price(unitWithProration = unitWithProration)
-
-            fun ofGroupedAllocation(groupedAllocation: NewPlanGroupedAllocationPrice) =
-                Price(groupedAllocation = groupedAllocation)
-
-            fun ofGroupedWithProratedMinimum(
-                groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
-            ) = Price(groupedWithProratedMinimum = groupedWithProratedMinimum)
-
-            fun ofGroupedWithMeteredMinimum(
-                groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice
-            ) = Price(groupedWithMeteredMinimum = groupedWithMeteredMinimum)
-
-            fun ofMatrixWithDisplayName(matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice) =
-                Price(matrixWithDisplayName = matrixWithDisplayName)
-
-            fun ofBulkWithProration(bulkWithProration: NewPlanBulkWithProrationPrice) =
-                Price(bulkWithProration = bulkWithProration)
-
-            fun ofGroupedTieredPackage(groupedTieredPackage: NewPlanGroupedTieredPackagePrice) =
-                Price(groupedTieredPackage = groupedTieredPackage)
-
-            fun ofMaxGroupTieredPackage(maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice) =
-                Price(maxGroupTieredPackage = maxGroupTieredPackage)
-
-            fun ofScalableMatrixWithUnitPricing(
-                scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice
-            ) = Price(scalableMatrixWithUnitPricing = scalableMatrixWithUnitPricing)
-
-            fun ofScalableMatrixWithTieredPricing(
-                scalableMatrixWithTieredPricing: NewPlanScalableMatrixWithTieredPricingPrice
-            ) = Price(scalableMatrixWithTieredPricing = scalableMatrixWithTieredPricing)
-
-            fun ofCumulativeGroupedBulk(cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice) =
-                Price(cumulativeGroupedBulk = cumulativeGroupedBulk)
-
-            fun ofTieredPackageWithMinimum(
-                tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
-            ) = Price(tieredPackageWithMinimum = tieredPackageWithMinimum)
-
-            fun ofMatrixWithAllocation(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
-                Price(matrixWithAllocation = matrixWithAllocation)
-
-            fun ofGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) =
-                Price(groupedTiered = groupedTiered)
+            /**
+             * Returns a mutable builder for constructing an instance of [Adjustment].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .adjustment()
+             * ```
+             */
+            fun builder() = Builder()
         }
 
-        /** An interface that defines how to map each variant of [Price] to a value of type [T]. */
-        interface Visitor<out T> {
+        /** A builder for [Adjustment]. */
+        class Builder internal constructor() {
 
-            fun visitUnit(unit: NewPlanUnitPrice): T
+            private var adjustment: JsonField<InnerAdjustment>? = null
+            private var planPhaseOrder: JsonField<Long> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            fun visitPackage(package_: NewPlanPackagePrice): T
+            internal fun from(adjustment: Adjustment) = apply {
+                this.adjustment = adjustment.adjustment
+                planPhaseOrder = adjustment.planPhaseOrder
+                additionalProperties = adjustment.additionalProperties.toMutableMap()
+            }
 
-            fun visitMatrix(matrix: NewPlanMatrixPrice): T
-
-            fun visitTiered(tiered: NewPlanTieredPrice): T
-
-            fun visitTieredBps(tieredBps: NewPlanTieredBpsPrice): T
-
-            fun visitBps(bps: NewPlanBpsPrice): T
-
-            fun visitBulkBps(bulkBps: NewPlanBulkBpsPrice): T
-
-            fun visitBulk(bulk: NewPlanBulkPrice): T
-
-            fun visitThresholdTotalAmount(thresholdTotalAmount: NewPlanThresholdTotalAmountPrice): T
-
-            fun visitTieredPackage(tieredPackage: NewPlanTieredPackagePrice): T
-
-            fun visitTieredWithMinimum(tieredWithMinimum: NewPlanTieredWithMinimumPrice): T
-
-            fun visitUnitWithPercent(unitWithPercent: NewPlanUnitWithPercentPrice): T
-
-            fun visitPackageWithAllocation(
-                packageWithAllocation: NewPlanPackageWithAllocationPrice
-            ): T
-
-            fun visitTieredWithProration(tieredWithProration: NewPlanTierWithProrationPrice): T
-
-            fun visitUnitWithProration(unitWithProration: NewPlanUnitWithProrationPrice): T
-
-            fun visitGroupedAllocation(groupedAllocation: NewPlanGroupedAllocationPrice): T
-
-            fun visitGroupedWithProratedMinimum(
-                groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
-            ): T
-
-            fun visitGroupedWithMeteredMinimum(
-                groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice
-            ): T
-
-            fun visitMatrixWithDisplayName(
-                matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
-            ): T
-
-            fun visitBulkWithProration(bulkWithProration: NewPlanBulkWithProrationPrice): T
-
-            fun visitGroupedTieredPackage(groupedTieredPackage: NewPlanGroupedTieredPackagePrice): T
-
-            fun visitMaxGroupTieredPackage(
-                maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice
-            ): T
-
-            fun visitScalableMatrixWithUnitPricing(
-                scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice
-            ): T
-
-            fun visitScalableMatrixWithTieredPricing(
-                scalableMatrixWithTieredPricing: NewPlanScalableMatrixWithTieredPricingPrice
-            ): T
-
-            fun visitCumulativeGroupedBulk(
-                cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
-            ): T
-
-            fun visitTieredPackageWithMinimum(
-                tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
-            ): T
-
-            fun visitMatrixWithAllocation(matrixWithAllocation: NewPlanMatrixWithAllocationPrice): T
-
-            fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice): T
+            /** The definition of a new adjustment to create and add to the plan. */
+            fun adjustment(adjustment: InnerAdjustment) = adjustment(JsonField.of(adjustment))
 
             /**
-             * Maps an unknown variant of [Price] to a value of type [T].
+             * Sets [Builder.adjustment] to an arbitrary JSON value.
              *
-             * An instance of [Price] can contain an unknown variant if it was deserialized from
-             * data that doesn't match any known variant. For example, if the SDK is on an older
-             * version than the API, then the API may respond with new variants that the SDK is
-             * unaware of.
-             *
-             * @throws OrbInvalidDataException in the default implementation.
+             * You should usually call [Builder.adjustment] with a well-typed [InnerAdjustment]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
-            fun unknown(json: JsonValue?): T {
-                throw OrbInvalidDataException("Unknown Price: $json")
+            fun adjustment(adjustment: JsonField<InnerAdjustment>) = apply {
+                this.adjustment = adjustment
             }
+
+            /**
+             * Alias for calling [adjustment] with
+             * `InnerAdjustment.ofPercentageDiscount(percentageDiscount)`.
+             */
+            fun adjustment(percentageDiscount: NewPercentageDiscount) =
+                adjustment(InnerAdjustment.ofPercentageDiscount(percentageDiscount))
+
+            /**
+             * Alias for calling [adjustment] with the following:
+             * ```kotlin
+             * NewPercentageDiscount.builder()
+             *     .adjustmentType(NewPercentageDiscount.AdjustmentType.PERCENTAGE_DISCOUNT)
+             *     .percentageDiscount(percentageDiscount)
+             *     .build()
+             * ```
+             */
+            fun percentageDiscountAdjustment(percentageDiscount: Double) =
+                adjustment(
+                    NewPercentageDiscount.builder()
+                        .adjustmentType(NewPercentageDiscount.AdjustmentType.PERCENTAGE_DISCOUNT)
+                        .percentageDiscount(percentageDiscount)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [adjustment] with `InnerAdjustment.ofUsageDiscount(usageDiscount)`.
+             */
+            fun adjustment(usageDiscount: NewUsageDiscount) =
+                adjustment(InnerAdjustment.ofUsageDiscount(usageDiscount))
+
+            /**
+             * Alias for calling [adjustment] with the following:
+             * ```kotlin
+             * NewUsageDiscount.builder()
+             *     .adjustmentType(NewUsageDiscount.AdjustmentType.USAGE_DISCOUNT)
+             *     .usageDiscount(usageDiscount)
+             *     .build()
+             * ```
+             */
+            fun usageDiscountAdjustment(usageDiscount: Double) =
+                adjustment(
+                    NewUsageDiscount.builder()
+                        .adjustmentType(NewUsageDiscount.AdjustmentType.USAGE_DISCOUNT)
+                        .usageDiscount(usageDiscount)
+                        .build()
+                )
+
+            /**
+             * Alias for calling [adjustment] with
+             * `InnerAdjustment.ofAmountDiscount(amountDiscount)`.
+             */
+            fun adjustment(amountDiscount: NewAmountDiscount) =
+                adjustment(InnerAdjustment.ofAmountDiscount(amountDiscount))
+
+            /**
+             * Alias for calling [adjustment] with the following:
+             * ```kotlin
+             * NewAmountDiscount.builder()
+             *     .adjustmentType(NewAmountDiscount.AdjustmentType.AMOUNT_DISCOUNT)
+             *     .amountDiscount(amountDiscount)
+             *     .build()
+             * ```
+             */
+            fun amountDiscountAdjustment(amountDiscount: String) =
+                adjustment(
+                    NewAmountDiscount.builder()
+                        .adjustmentType(NewAmountDiscount.AdjustmentType.AMOUNT_DISCOUNT)
+                        .amountDiscount(amountDiscount)
+                        .build()
+                )
+
+            /** Alias for calling [adjustment] with `InnerAdjustment.ofMinimum(minimum)`. */
+            fun adjustment(minimum: NewMinimum) = adjustment(InnerAdjustment.ofMinimum(minimum))
+
+            /** Alias for calling [adjustment] with `InnerAdjustment.ofMaximum(maximum)`. */
+            fun adjustment(maximum: NewMaximum) = adjustment(InnerAdjustment.ofMaximum(maximum))
+
+            /**
+             * Alias for calling [adjustment] with the following:
+             * ```kotlin
+             * NewMaximum.builder()
+             *     .adjustmentType(NewMaximum.AdjustmentType.MAXIMUM)
+             *     .maximumAmount(maximumAmount)
+             *     .build()
+             * ```
+             */
+            fun maximumAdjustment(maximumAmount: String) =
+                adjustment(
+                    NewMaximum.builder()
+                        .adjustmentType(NewMaximum.AdjustmentType.MAXIMUM)
+                        .maximumAmount(maximumAmount)
+                        .build()
+                )
+
+            /** The phase to add this adjustment to. */
+            fun planPhaseOrder(planPhaseOrder: Long?) =
+                planPhaseOrder(JsonField.ofNullable(planPhaseOrder))
+
+            /**
+             * Alias for [Builder.planPhaseOrder].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(planPhaseOrder as Long?)
+
+            /**
+             * Sets [Builder.planPhaseOrder] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.planPhaseOrder] with a well-typed [Long] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
+                this.planPhaseOrder = planPhaseOrder
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Adjustment].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .adjustment()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Adjustment =
+                Adjustment(
+                    checkRequired("adjustment", adjustment),
+                    planPhaseOrder,
+                    additionalProperties.toMutableMap(),
+                )
         }
 
-        internal class Deserializer : BaseDeserializer<Price>(Price::class) {
+        private var validated: Boolean = false
 
-            override fun ObjectCodec.deserialize(node: JsonNode): Price {
-                val json = JsonValue.fromJsonNode(node)
-                val modelType = json.asObject()?.get("model_type")?.asString()
-
-                when (modelType) {
-                    "unit" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanUnitPrice>())?.let {
-                            Price(unit = it, _json = json)
-                        } ?: Price(_json = json)
-                    }
-                    "package" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanPackagePrice>())?.let {
-                            Price(package_ = it, _json = json)
-                        } ?: Price(_json = json)
-                    }
-                    "matrix" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanMatrixPrice>())?.let {
-                            Price(matrix = it, _json = json)
-                        } ?: Price(_json = json)
-                    }
-                    "tiered" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanTieredPrice>())?.let {
-                            Price(tiered = it, _json = json)
-                        } ?: Price(_json = json)
-                    }
-                    "tiered_bps" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanTieredBpsPrice>())?.let {
-                            Price(tieredBps = it, _json = json)
-                        } ?: Price(_json = json)
-                    }
-                    "bps" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanBpsPrice>())?.let {
-                            Price(bps = it, _json = json)
-                        } ?: Price(_json = json)
-                    }
-                    "bulk_bps" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanBulkBpsPrice>())?.let {
-                            Price(bulkBps = it, _json = json)
-                        } ?: Price(_json = json)
-                    }
-                    "bulk" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanBulkPrice>())?.let {
-                            Price(bulk = it, _json = json)
-                        } ?: Price(_json = json)
-                    }
-                    "threshold_total_amount" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewPlanThresholdTotalAmountPrice>(),
-                            )
-                            ?.let { Price(thresholdTotalAmount = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "tiered_package" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanTieredPackagePrice>())
-                            ?.let { Price(tieredPackage = it, _json = json) } ?: Price(_json = json)
-                    }
-                    "tiered_with_minimum" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanTieredWithMinimumPrice>())
-                            ?.let { Price(tieredWithMinimum = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "unit_with_percent" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanUnitWithPercentPrice>())
-                            ?.let { Price(unitWithPercent = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "package_with_allocation" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewPlanPackageWithAllocationPrice>(),
-                            )
-                            ?.let { Price(packageWithAllocation = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "tiered_with_proration" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanTierWithProrationPrice>())
-                            ?.let { Price(tieredWithProration = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "unit_with_proration" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanUnitWithProrationPrice>())
-                            ?.let { Price(unitWithProration = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "grouped_allocation" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanGroupedAllocationPrice>())
-                            ?.let { Price(groupedAllocation = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "grouped_with_prorated_minimum" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewPlanGroupedWithProratedMinimumPrice>(),
-                            )
-                            ?.let { Price(groupedWithProratedMinimum = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "grouped_with_metered_minimum" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewPlanGroupedWithMeteredMinimumPrice>(),
-                            )
-                            ?.let { Price(groupedWithMeteredMinimum = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "matrix_with_display_name" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewPlanMatrixWithDisplayNamePrice>(),
-                            )
-                            ?.let { Price(matrixWithDisplayName = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "bulk_with_proration" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanBulkWithProrationPrice>())
-                            ?.let { Price(bulkWithProration = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "grouped_tiered_package" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewPlanGroupedTieredPackagePrice>(),
-                            )
-                            ?.let { Price(groupedTieredPackage = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "max_group_tiered_package" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewPlanMaxGroupTieredPackagePrice>(),
-                            )
-                            ?.let { Price(maxGroupTieredPackage = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "scalable_matrix_with_unit_pricing" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewPlanScalableMatrixWithUnitPricingPrice>(),
-                            )
-                            ?.let { Price(scalableMatrixWithUnitPricing = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "scalable_matrix_with_tiered_pricing" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewPlanScalableMatrixWithTieredPricingPrice>(),
-                            )
-                            ?.let { Price(scalableMatrixWithTieredPricing = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "cumulative_grouped_bulk" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewPlanCumulativeGroupedBulkPrice>(),
-                            )
-                            ?.let { Price(cumulativeGroupedBulk = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "tiered_package_with_minimum" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewPlanTieredPackageWithMinimumPrice>(),
-                            )
-                            ?.let { Price(tieredPackageWithMinimum = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "matrix_with_allocation" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewPlanMatrixWithAllocationPrice>(),
-                            )
-                            ?.let { Price(matrixWithAllocation = it, _json = json) }
-                            ?: Price(_json = json)
-                    }
-                    "grouped_tiered" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewPlanGroupedTieredPrice>())
-                            ?.let { Price(groupedTiered = it, _json = json) } ?: Price(_json = json)
-                    }
-                }
-
-                return Price(_json = json)
+        fun validate(): Adjustment = apply {
+            if (validated) {
+                return@apply
             }
+
+            adjustment().validate()
+            planPhaseOrder()
+            validated = true
         }
 
-        internal class Serializer : BaseSerializer<Price>(Price::class) {
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
 
-            override fun serialize(
-                value: Price,
-                generator: JsonGenerator,
-                provider: SerializerProvider,
-            ) {
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (adjustment.asKnown()?.validity() ?: 0) +
+                (if (planPhaseOrder.asKnown() == null) 0 else 1)
+
+        /** The definition of a new adjustment to create and add to the plan. */
+        @JsonDeserialize(using = InnerAdjustment.Deserializer::class)
+        @JsonSerialize(using = InnerAdjustment.Serializer::class)
+        class InnerAdjustment
+        private constructor(
+            private val percentageDiscount: NewPercentageDiscount? = null,
+            private val usageDiscount: NewUsageDiscount? = null,
+            private val amountDiscount: NewAmountDiscount? = null,
+            private val minimum: NewMinimum? = null,
+            private val maximum: NewMaximum? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            fun percentageDiscount(): NewPercentageDiscount? = percentageDiscount
+
+            fun usageDiscount(): NewUsageDiscount? = usageDiscount
+
+            fun amountDiscount(): NewAmountDiscount? = amountDiscount
+
+            fun minimum(): NewMinimum? = minimum
+
+            fun maximum(): NewMaximum? = maximum
+
+            fun isPercentageDiscount(): Boolean = percentageDiscount != null
+
+            fun isUsageDiscount(): Boolean = usageDiscount != null
+
+            fun isAmountDiscount(): Boolean = amountDiscount != null
+
+            fun isMinimum(): Boolean = minimum != null
+
+            fun isMaximum(): Boolean = maximum != null
+
+            fun asPercentageDiscount(): NewPercentageDiscount =
+                percentageDiscount.getOrThrow("percentageDiscount")
+
+            fun asUsageDiscount(): NewUsageDiscount = usageDiscount.getOrThrow("usageDiscount")
+
+            fun asAmountDiscount(): NewAmountDiscount = amountDiscount.getOrThrow("amountDiscount")
+
+            fun asMinimum(): NewMinimum = minimum.getOrThrow("minimum")
+
+            fun asMaximum(): NewMaximum = maximum.getOrThrow("maximum")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T =
                 when {
-                    value.unit != null -> generator.writeObject(value.unit)
-                    value.package_ != null -> generator.writeObject(value.package_)
-                    value.matrix != null -> generator.writeObject(value.matrix)
-                    value.tiered != null -> generator.writeObject(value.tiered)
-                    value.tieredBps != null -> generator.writeObject(value.tieredBps)
-                    value.bps != null -> generator.writeObject(value.bps)
-                    value.bulkBps != null -> generator.writeObject(value.bulkBps)
-                    value.bulk != null -> generator.writeObject(value.bulk)
-                    value.thresholdTotalAmount != null ->
-                        generator.writeObject(value.thresholdTotalAmount)
-                    value.tieredPackage != null -> generator.writeObject(value.tieredPackage)
-                    value.tieredWithMinimum != null ->
-                        generator.writeObject(value.tieredWithMinimum)
-                    value.unitWithPercent != null -> generator.writeObject(value.unitWithPercent)
-                    value.packageWithAllocation != null ->
-                        generator.writeObject(value.packageWithAllocation)
-                    value.tieredWithProration != null ->
-                        generator.writeObject(value.tieredWithProration)
-                    value.unitWithProration != null ->
-                        generator.writeObject(value.unitWithProration)
-                    value.groupedAllocation != null ->
-                        generator.writeObject(value.groupedAllocation)
-                    value.groupedWithProratedMinimum != null ->
-                        generator.writeObject(value.groupedWithProratedMinimum)
-                    value.groupedWithMeteredMinimum != null ->
-                        generator.writeObject(value.groupedWithMeteredMinimum)
-                    value.matrixWithDisplayName != null ->
-                        generator.writeObject(value.matrixWithDisplayName)
-                    value.bulkWithProration != null ->
-                        generator.writeObject(value.bulkWithProration)
-                    value.groupedTieredPackage != null ->
-                        generator.writeObject(value.groupedTieredPackage)
-                    value.maxGroupTieredPackage != null ->
-                        generator.writeObject(value.maxGroupTieredPackage)
-                    value.scalableMatrixWithUnitPricing != null ->
-                        generator.writeObject(value.scalableMatrixWithUnitPricing)
-                    value.scalableMatrixWithTieredPricing != null ->
-                        generator.writeObject(value.scalableMatrixWithTieredPricing)
-                    value.cumulativeGroupedBulk != null ->
-                        generator.writeObject(value.cumulativeGroupedBulk)
-                    value.tieredPackageWithMinimum != null ->
-                        generator.writeObject(value.tieredPackageWithMinimum)
-                    value.matrixWithAllocation != null ->
-                        generator.writeObject(value.matrixWithAllocation)
-                    value.groupedTiered != null -> generator.writeObject(value.groupedTiered)
-                    value._json != null -> generator.writeObject(value._json)
-                    else -> throw IllegalStateException("Invalid Price")
+                    percentageDiscount != null ->
+                        visitor.visitPercentageDiscount(percentageDiscount)
+                    usageDiscount != null -> visitor.visitUsageDiscount(usageDiscount)
+                    amountDiscount != null -> visitor.visitAmountDiscount(amountDiscount)
+                    minimum != null -> visitor.visitMinimum(minimum)
+                    maximum != null -> visitor.visitMaximum(maximum)
+                    else -> visitor.unknown(_json)
+                }
+
+            private var validated: Boolean = false
+
+            fun validate(): InnerAdjustment = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                accept(
+                    object : Visitor<Unit> {
+                        override fun visitPercentageDiscount(
+                            percentageDiscount: NewPercentageDiscount
+                        ) {
+                            percentageDiscount.validate()
+                        }
+
+                        override fun visitUsageDiscount(usageDiscount: NewUsageDiscount) {
+                            usageDiscount.validate()
+                        }
+
+                        override fun visitAmountDiscount(amountDiscount: NewAmountDiscount) {
+                            amountDiscount.validate()
+                        }
+
+                        override fun visitMinimum(minimum: NewMinimum) {
+                            minimum.validate()
+                        }
+
+                        override fun visitMaximum(maximum: NewMaximum) {
+                            maximum.validate()
+                        }
+                    }
+                )
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                accept(
+                    object : Visitor<Int> {
+                        override fun visitPercentageDiscount(
+                            percentageDiscount: NewPercentageDiscount
+                        ) = percentageDiscount.validity()
+
+                        override fun visitUsageDiscount(usageDiscount: NewUsageDiscount) =
+                            usageDiscount.validity()
+
+                        override fun visitAmountDiscount(amountDiscount: NewAmountDiscount) =
+                            amountDiscount.validity()
+
+                        override fun visitMinimum(minimum: NewMinimum) = minimum.validity()
+
+                        override fun visitMaximum(maximum: NewMaximum) = maximum.validity()
+
+                        override fun unknown(json: JsonValue?) = 0
+                    }
+                )
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is InnerAdjustment && percentageDiscount == other.percentageDiscount && usageDiscount == other.usageDiscount && amountDiscount == other.amountDiscount && minimum == other.minimum && maximum == other.maximum /* spotless:on */
+            }
+
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(percentageDiscount, usageDiscount, amountDiscount, minimum, maximum) /* spotless:on */
+
+            override fun toString(): String =
+                when {
+                    percentageDiscount != null ->
+                        "InnerAdjustment{percentageDiscount=$percentageDiscount}"
+                    usageDiscount != null -> "InnerAdjustment{usageDiscount=$usageDiscount}"
+                    amountDiscount != null -> "InnerAdjustment{amountDiscount=$amountDiscount}"
+                    minimum != null -> "InnerAdjustment{minimum=$minimum}"
+                    maximum != null -> "InnerAdjustment{maximum=$maximum}"
+                    _json != null -> "InnerAdjustment{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid InnerAdjustment")
+                }
+
+            companion object {
+
+                fun ofPercentageDiscount(percentageDiscount: NewPercentageDiscount) =
+                    InnerAdjustment(percentageDiscount = percentageDiscount)
+
+                fun ofUsageDiscount(usageDiscount: NewUsageDiscount) =
+                    InnerAdjustment(usageDiscount = usageDiscount)
+
+                fun ofAmountDiscount(amountDiscount: NewAmountDiscount) =
+                    InnerAdjustment(amountDiscount = amountDiscount)
+
+                fun ofMinimum(minimum: NewMinimum) = InnerAdjustment(minimum = minimum)
+
+                fun ofMaximum(maximum: NewMaximum) = InnerAdjustment(maximum = maximum)
+            }
+
+            /**
+             * An interface that defines how to map each variant of [InnerAdjustment] to a value of
+             * type [T].
+             */
+            interface Visitor<out T> {
+
+                fun visitPercentageDiscount(percentageDiscount: NewPercentageDiscount): T
+
+                fun visitUsageDiscount(usageDiscount: NewUsageDiscount): T
+
+                fun visitAmountDiscount(amountDiscount: NewAmountDiscount): T
+
+                fun visitMinimum(minimum: NewMinimum): T
+
+                fun visitMaximum(maximum: NewMaximum): T
+
+                /**
+                 * Maps an unknown variant of [InnerAdjustment] to a value of type [T].
+                 *
+                 * An instance of [InnerAdjustment] can contain an unknown variant if it was
+                 * deserialized from data that doesn't match any known variant. For example, if the
+                 * SDK is on an older version than the API, then the API may respond with new
+                 * variants that the SDK is unaware of.
+                 *
+                 * @throws OrbInvalidDataException in the default implementation.
+                 */
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown InnerAdjustment: $json")
+                }
+            }
+
+            internal class Deserializer :
+                BaseDeserializer<InnerAdjustment>(InnerAdjustment::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): InnerAdjustment {
+                    val json = JsonValue.fromJsonNode(node)
+                    val adjustmentType = json.asObject()?.get("adjustment_type")?.asString()
+
+                    when (adjustmentType) {
+                        "percentage_discount" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPercentageDiscount>())
+                                ?.let { InnerAdjustment(percentageDiscount = it, _json = json) }
+                                ?: InnerAdjustment(_json = json)
+                        }
+                        "usage_discount" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewUsageDiscount>())?.let {
+                                InnerAdjustment(usageDiscount = it, _json = json)
+                            } ?: InnerAdjustment(_json = json)
+                        }
+                        "amount_discount" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewAmountDiscount>())?.let {
+                                InnerAdjustment(amountDiscount = it, _json = json)
+                            } ?: InnerAdjustment(_json = json)
+                        }
+                        "minimum" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewMinimum>())?.let {
+                                InnerAdjustment(minimum = it, _json = json)
+                            } ?: InnerAdjustment(_json = json)
+                        }
+                        "maximum" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewMaximum>())?.let {
+                                InnerAdjustment(maximum = it, _json = json)
+                            } ?: InnerAdjustment(_json = json)
+                        }
+                    }
+
+                    return InnerAdjustment(_json = json)
+                }
+            }
+
+            internal class Serializer : BaseSerializer<InnerAdjustment>(InnerAdjustment::class) {
+
+                override fun serialize(
+                    value: InnerAdjustment,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider,
+                ) {
+                    when {
+                        value.percentageDiscount != null ->
+                            generator.writeObject(value.percentageDiscount)
+                        value.usageDiscount != null -> generator.writeObject(value.usageDiscount)
+                        value.amountDiscount != null -> generator.writeObject(value.amountDiscount)
+                        value.minimum != null -> generator.writeObject(value.minimum)
+                        value.maximum != null -> generator.writeObject(value.maximum)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid InnerAdjustment")
+                    }
                 }
             }
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Adjustment && adjustment == other.adjustment && planPhaseOrder == other.planPhaseOrder && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(adjustment, planPhaseOrder, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Adjustment{adjustment=$adjustment, planPhaseOrder=$planPhaseOrder, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -2368,6 +3263,447 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+    }
+
+    class PlanPhase
+    private constructor(
+        private val order: JsonField<Long>,
+        private val alignBillingWithPhaseStartDate: JsonField<Boolean>,
+        private val duration: JsonField<Long>,
+        private val durationUnit: JsonField<DurationUnit>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("order") @ExcludeMissing order: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("align_billing_with_phase_start_date")
+            @ExcludeMissing
+            alignBillingWithPhaseStartDate: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("duration") @ExcludeMissing duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+        ) : this(order, alignBillingWithPhaseStartDate, duration, durationUnit, mutableMapOf())
+
+        /**
+         * Determines the ordering of the phase in a plan's lifecycle. 1 = first phase.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun order(): Long = order.getRequired("order")
+
+        /**
+         * Align billing cycle day with phase start date.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun alignBillingWithPhaseStartDate(): Boolean? =
+            alignBillingWithPhaseStartDate.getNullable("align_billing_with_phase_start_date")
+
+        /**
+         * How many terms of length `duration_unit` this phase is active for. If null, this phase is
+         * evergreen and active indefinitely
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun duration(): Long? = duration.getNullable("duration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun durationUnit(): DurationUnit? = durationUnit.getNullable("duration_unit")
+
+        /**
+         * Returns the raw JSON value of [order].
+         *
+         * Unlike [order], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("order") @ExcludeMissing fun _order(): JsonField<Long> = order
+
+        /**
+         * Returns the raw JSON value of [alignBillingWithPhaseStartDate].
+         *
+         * Unlike [alignBillingWithPhaseStartDate], this method doesn't throw if the JSON field has
+         * an unexpected type.
+         */
+        @JsonProperty("align_billing_with_phase_start_date")
+        @ExcludeMissing
+        fun _alignBillingWithPhaseStartDate(): JsonField<Boolean> = alignBillingWithPhaseStartDate
+
+        /**
+         * Returns the raw JSON value of [duration].
+         *
+         * Unlike [duration], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("duration") @ExcludeMissing fun _duration(): JsonField<Long> = duration
+
+        /**
+         * Returns the raw JSON value of [durationUnit].
+         *
+         * Unlike [durationUnit], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("duration_unit")
+        @ExcludeMissing
+        fun _durationUnit(): JsonField<DurationUnit> = durationUnit
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [PlanPhase].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .order()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [PlanPhase]. */
+        class Builder internal constructor() {
+
+            private var order: JsonField<Long>? = null
+            private var alignBillingWithPhaseStartDate: JsonField<Boolean> = JsonMissing.of()
+            private var duration: JsonField<Long> = JsonMissing.of()
+            private var durationUnit: JsonField<DurationUnit> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(planPhase: PlanPhase) = apply {
+                order = planPhase.order
+                alignBillingWithPhaseStartDate = planPhase.alignBillingWithPhaseStartDate
+                duration = planPhase.duration
+                durationUnit = planPhase.durationUnit
+                additionalProperties = planPhase.additionalProperties.toMutableMap()
+            }
+
+            /** Determines the ordering of the phase in a plan's lifecycle. 1 = first phase. */
+            fun order(order: Long) = order(JsonField.of(order))
+
+            /**
+             * Sets [Builder.order] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.order] with a well-typed [Long] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun order(order: JsonField<Long>) = apply { this.order = order }
+
+            /** Align billing cycle day with phase start date. */
+            fun alignBillingWithPhaseStartDate(alignBillingWithPhaseStartDate: Boolean?) =
+                alignBillingWithPhaseStartDate(JsonField.ofNullable(alignBillingWithPhaseStartDate))
+
+            /**
+             * Alias for [Builder.alignBillingWithPhaseStartDate].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun alignBillingWithPhaseStartDate(alignBillingWithPhaseStartDate: Boolean) =
+                alignBillingWithPhaseStartDate(alignBillingWithPhaseStartDate as Boolean?)
+
+            /**
+             * Sets [Builder.alignBillingWithPhaseStartDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.alignBillingWithPhaseStartDate] with a well-typed
+             * [Boolean] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
+            fun alignBillingWithPhaseStartDate(alignBillingWithPhaseStartDate: JsonField<Boolean>) =
+                apply {
+                    this.alignBillingWithPhaseStartDate = alignBillingWithPhaseStartDate
+                }
+
+            /**
+             * How many terms of length `duration_unit` this phase is active for. If null, this
+             * phase is evergreen and active indefinitely
+             */
+            fun duration(duration: Long?) = duration(JsonField.ofNullable(duration))
+
+            /**
+             * Alias for [Builder.duration].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun duration(duration: Long) = duration(duration as Long?)
+
+            /**
+             * Sets [Builder.duration] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.duration] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
+
+            fun durationUnit(durationUnit: DurationUnit?) =
+                durationUnit(JsonField.ofNullable(durationUnit))
+
+            /**
+             * Sets [Builder.durationUnit] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.durationUnit] with a well-typed [DurationUnit] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
+                this.durationUnit = durationUnit
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [PlanPhase].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .order()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): PlanPhase =
+                PlanPhase(
+                    checkRequired("order", order),
+                    alignBillingWithPhaseStartDate,
+                    duration,
+                    durationUnit,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): PlanPhase = apply {
+            if (validated) {
+                return@apply
+            }
+
+            order()
+            alignBillingWithPhaseStartDate()
+            duration()
+            durationUnit()?.validate()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (order.asKnown() == null) 0 else 1) +
+                (if (alignBillingWithPhaseStartDate.asKnown() == null) 0 else 1) +
+                (if (duration.asKnown() == null) 0 else 1) +
+                (durationUnit.asKnown()?.validity() ?: 0)
+
+        class DurationUnit @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val DAILY = of("daily")
+
+                val MONTHLY = of("monthly")
+
+                val QUARTERLY = of("quarterly")
+
+                val SEMI_ANNUAL = of("semi_annual")
+
+                val ANNUAL = of("annual")
+
+                fun of(value: String) = DurationUnit(JsonField.of(value))
+            }
+
+            /** An enum containing [DurationUnit]'s known values. */
+            enum class Known {
+                DAILY,
+                MONTHLY,
+                QUARTERLY,
+                SEMI_ANNUAL,
+                ANNUAL,
+            }
+
+            /**
+             * An enum containing [DurationUnit]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [DurationUnit] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                DAILY,
+                MONTHLY,
+                QUARTERLY,
+                SEMI_ANNUAL,
+                ANNUAL,
+                /**
+                 * An enum member indicating that [DurationUnit] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    DAILY -> Value.DAILY
+                    MONTHLY -> Value.MONTHLY
+                    QUARTERLY -> Value.QUARTERLY
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
+                    ANNUAL -> Value.ANNUAL
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    DAILY -> Known.DAILY
+                    MONTHLY -> Known.MONTHLY
+                    QUARTERLY -> Known.QUARTERLY
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
+                    ANNUAL -> Known.ANNUAL
+                    else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): DurationUnit = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is PlanPhase && order == other.order && alignBillingWithPhaseStartDate == other.alignBillingWithPhaseStartDate && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(order, alignBillingWithPhaseStartDate, duration, durationUnit, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "PlanPhase{order=$order, alignBillingWithPhaseStartDate=$alignBillingWithPhaseStartDate, duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
     }
 
     /**

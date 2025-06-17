@@ -62,6 +62,7 @@ internal class NewPlanScalableMatrixWithTieredPricingPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         assertThat(newPlanScalableMatrixWithTieredPricingPrice.cadence())
@@ -130,6 +131,8 @@ internal class NewPlanScalableMatrixWithTieredPricingPriceTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(newPlanScalableMatrixWithTieredPricingPrice.referenceId())
+            .isEqualTo("reference_id")
     }
 
     @Test
@@ -185,6 +188,7 @@ internal class NewPlanScalableMatrixWithTieredPricingPriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         val roundtrippedNewPlanScalableMatrixWithTieredPricingPrice =
