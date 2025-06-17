@@ -57,6 +57,7 @@ internal class NewPlanMatrixWithDisplayNamePriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         assertThat(newPlanMatrixWithDisplayNamePrice.cadence())
@@ -119,6 +120,7 @@ internal class NewPlanMatrixWithDisplayNamePriceTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(newPlanMatrixWithDisplayNamePrice.referenceId()).isEqualTo("reference_id")
     }
 
     @Test
@@ -169,6 +171,7 @@ internal class NewPlanMatrixWithDisplayNamePriceTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .referenceId("reference_id")
                 .build()
 
         val roundtrippedNewPlanMatrixWithDisplayNamePrice =
