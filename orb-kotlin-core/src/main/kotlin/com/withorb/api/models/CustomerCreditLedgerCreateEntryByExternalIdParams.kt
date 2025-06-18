@@ -223,6 +223,17 @@ private constructor(
         fun body(expirationChange: Body.ExpirationChange) =
             body(Body.ofExpirationChange(expirationChange))
 
+        /**
+         * Alias for calling [body] with the following:
+         * ```kotlin
+         * Body.ExpirationChange.builder()
+         *     .targetExpiryDate(targetExpiryDate)
+         *     .build()
+         * ```
+         */
+        fun expirationChangeBody(targetExpiryDate: LocalDate) =
+            body(Body.ExpirationChange.builder().targetExpiryDate(targetExpiryDate).build())
+
         /** Alias for calling [body] with `Body.ofVoid(void)`. */
         fun body(void: Body.Void) = body(Body.ofVoid(void))
 
@@ -2001,12 +2012,12 @@ private constructor(
         class ExpirationChange
         private constructor(
             private val entryType: JsonValue,
-            private val expiryDate: JsonField<OffsetDateTime>,
             private val targetExpiryDate: JsonField<LocalDate>,
             private val amount: JsonField<Double>,
             private val blockId: JsonField<String>,
             private val currency: JsonField<String>,
             private val description: JsonField<String>,
+            private val expiryDate: JsonField<OffsetDateTime>,
             private val metadata: JsonField<Metadata>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
@@ -2014,9 +2025,6 @@ private constructor(
             @JsonCreator
             private constructor(
                 @JsonProperty("entry_type") @ExcludeMissing entryType: JsonValue = JsonMissing.of(),
-                @JsonProperty("expiry_date")
-                @ExcludeMissing
-                expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
                 @JsonProperty("target_expiry_date")
                 @ExcludeMissing
                 targetExpiryDate: JsonField<LocalDate> = JsonMissing.of(),
@@ -2032,17 +2040,20 @@ private constructor(
                 @JsonProperty("description")
                 @ExcludeMissing
                 description: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("expiry_date")
+                @ExcludeMissing
+                expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
                 @JsonProperty("metadata")
                 @ExcludeMissing
                 metadata: JsonField<Metadata> = JsonMissing.of(),
             ) : this(
                 entryType,
-                expiryDate,
                 targetExpiryDate,
                 amount,
                 blockId,
                 currency,
                 description,
+                expiryDate,
                 metadata,
                 mutableMapOf(),
             )
@@ -2057,14 +2068,6 @@ private constructor(
              * responded with an unexpected value).
              */
             @JsonProperty("entry_type") @ExcludeMissing fun _entryType(): JsonValue = entryType
-
-            /**
-             * An ISO 8601 format date that identifies the origination credit block to expire
-             *
-             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-             *   server responded with an unexpected value).
-             */
-            fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
 
             /**
              * A future date (specified in YYYY-MM-DD format) used for expiration change, denoting
@@ -2114,6 +2117,14 @@ private constructor(
             fun description(): String? = description.getNullable("description")
 
             /**
+             * An ISO 8601 format date that identifies the origination credit block to expire
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
+
+            /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
@@ -2122,16 +2133,6 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun metadata(): Metadata? = metadata.getNullable("metadata")
-
-            /**
-             * Returns the raw JSON value of [expiryDate].
-             *
-             * Unlike [expiryDate], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("expiry_date")
-            @ExcludeMissing
-            fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
 
             /**
              * Returns the raw JSON value of [targetExpiryDate].
@@ -2176,6 +2177,16 @@ private constructor(
             fun _description(): JsonField<String> = description
 
             /**
+             * Returns the raw JSON value of [expiryDate].
+             *
+             * Unlike [expiryDate], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("expiry_date")
+            @ExcludeMissing
+            fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
+
+            /**
              * Returns the raw JSON value of [metadata].
              *
              * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
@@ -2204,7 +2215,6 @@ private constructor(
                  *
                  * The following fields are required:
                  * ```kotlin
-                 * .expiryDate()
                  * .targetExpiryDate()
                  * ```
                  */
@@ -2215,23 +2225,23 @@ private constructor(
             class Builder internal constructor() {
 
                 private var entryType: JsonValue = JsonValue.from("expiration_change")
-                private var expiryDate: JsonField<OffsetDateTime>? = null
                 private var targetExpiryDate: JsonField<LocalDate>? = null
                 private var amount: JsonField<Double> = JsonMissing.of()
                 private var blockId: JsonField<String> = JsonMissing.of()
                 private var currency: JsonField<String> = JsonMissing.of()
                 private var description: JsonField<String> = JsonMissing.of()
+                private var expiryDate: JsonField<OffsetDateTime> = JsonMissing.of()
                 private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(expirationChange: ExpirationChange) = apply {
                     entryType = expirationChange.entryType
-                    expiryDate = expirationChange.expiryDate
                     targetExpiryDate = expirationChange.targetExpiryDate
                     amount = expirationChange.amount
                     blockId = expirationChange.blockId
                     currency = expirationChange.currency
                     description = expirationChange.description
+                    expiryDate = expirationChange.expiryDate
                     metadata = expirationChange.metadata
                     additionalProperties = expirationChange.additionalProperties.toMutableMap()
                 }
@@ -2249,23 +2259,6 @@ private constructor(
                  * supported value.
                  */
                 fun entryType(entryType: JsonValue) = apply { this.entryType = entryType }
-
-                /**
-                 * An ISO 8601 format date that identifies the origination credit block to expire
-                 */
-                fun expiryDate(expiryDate: OffsetDateTime?) =
-                    expiryDate(JsonField.ofNullable(expiryDate))
-
-                /**
-                 * Sets [Builder.expiryDate] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.expiryDate] with a well-typed [OffsetDateTime]
-                 * value instead. This method is primarily for setting the field to an undocumented
-                 * or not yet supported value.
-                 */
-                fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
-                    this.expiryDate = expiryDate
-                }
 
                 /**
                  * A future date (specified in YYYY-MM-DD format) used for expiration change,
@@ -2358,6 +2351,23 @@ private constructor(
                 }
 
                 /**
+                 * An ISO 8601 format date that identifies the origination credit block to expire
+                 */
+                fun expiryDate(expiryDate: OffsetDateTime?) =
+                    expiryDate(JsonField.ofNullable(expiryDate))
+
+                /**
+                 * Sets [Builder.expiryDate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.expiryDate] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
+                    this.expiryDate = expiryDate
+                }
+
+                /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
                  * by setting the value to `null`, and the entire metadata mapping can be cleared by
                  * setting `metadata` to `null`.
@@ -2402,7 +2412,6 @@ private constructor(
                  *
                  * The following fields are required:
                  * ```kotlin
-                 * .expiryDate()
                  * .targetExpiryDate()
                  * ```
                  *
@@ -2411,12 +2420,12 @@ private constructor(
                 fun build(): ExpirationChange =
                     ExpirationChange(
                         entryType,
-                        checkRequired("expiryDate", expiryDate),
                         checkRequired("targetExpiryDate", targetExpiryDate),
                         amount,
                         blockId,
                         currency,
                         description,
+                        expiryDate,
                         metadata,
                         additionalProperties.toMutableMap(),
                     )
@@ -2434,12 +2443,12 @@ private constructor(
                         throw OrbInvalidDataException("'entryType' is invalid, received $it")
                     }
                 }
-                expiryDate()
                 targetExpiryDate()
                 amount()
                 blockId()
                 currency()
                 description()
+                expiryDate()
                 metadata()?.validate()
                 validated = true
             }
@@ -2460,12 +2469,12 @@ private constructor(
              */
             internal fun validity(): Int =
                 entryType.let { if (it == JsonValue.from("expiration_change")) 1 else 0 } +
-                    (if (expiryDate.asKnown() == null) 0 else 1) +
                     (if (targetExpiryDate.asKnown() == null) 0 else 1) +
                     (if (amount.asKnown() == null) 0 else 1) +
                     (if (blockId.asKnown() == null) 0 else 1) +
                     (if (currency.asKnown() == null) 0 else 1) +
                     (if (description.asKnown() == null) 0 else 1) +
+                    (if (expiryDate.asKnown() == null) 0 else 1) +
                     (metadata.asKnown()?.validity() ?: 0)
 
             /**
@@ -2582,17 +2591,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is ExpirationChange && entryType == other.entryType && expiryDate == other.expiryDate && targetExpiryDate == other.targetExpiryDate && amount == other.amount && blockId == other.blockId && currency == other.currency && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is ExpirationChange && entryType == other.entryType && targetExpiryDate == other.targetExpiryDate && amount == other.amount && blockId == other.blockId && currency == other.currency && description == other.description && expiryDate == other.expiryDate && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(entryType, expiryDate, targetExpiryDate, amount, blockId, currency, description, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(entryType, targetExpiryDate, amount, blockId, currency, description, expiryDate, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "ExpirationChange{entryType=$entryType, expiryDate=$expiryDate, targetExpiryDate=$targetExpiryDate, amount=$amount, blockId=$blockId, currency=$currency, description=$description, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "ExpirationChange{entryType=$entryType, targetExpiryDate=$targetExpiryDate, amount=$amount, blockId=$blockId, currency=$currency, description=$description, expiryDate=$expiryDate, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
 
         class Void
