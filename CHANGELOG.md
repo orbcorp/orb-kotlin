@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.1.0 (2025-06-23)
+
+Full Changelog: [v1.0.0...v1.1.0](https://github.com/orbcorp/orb-kotlin/compare/v1.0.0...v1.1.0)
+
+### Features
+
+* **api:** api update ([1af4331](https://github.com/orbcorp/orb-kotlin/commit/1af43310398868018f4697c578b59db3ac0159d9))
+* **api:** api update ([1c73f2d](https://github.com/orbcorp/orb-kotlin/commit/1c73f2d6257e388e0b82ee01a732704acb50807d))
+* **api:** api update ([651160e](https://github.com/orbcorp/orb-kotlin/commit/651160e894268e3f843a79ec1621fc50fbaecb0e))
+* **client:** add a `withOptions` method ([69cec0e](https://github.com/orbcorp/orb-kotlin/commit/69cec0e8c4637232e6b6276b95592ecd6a6bed63))
+* **client:** implement per-endpoint base URL support ([150d8fc](https://github.com/orbcorp/orb-kotlin/commit/150d8fceee3bbb1351597c68b2d734ef7d4e4400))
+
+
+### Bug Fixes
+
+* **client:** bump max requests per host to max requests (5 -&gt; 64) ([6ab4bbc](https://github.com/orbcorp/orb-kotlin/commit/6ab4bbca2fc6814c7e731b10afdc601c91175545))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([4742d3a](https://github.com/orbcorp/orb-kotlin/commit/4742d3a8e36c89a75c1d4e16ab3aa81415663f89))
+
 ## 1.0.0 (2025-06-09)
 
 Full Changelog: [v0.1.0-alpha.49...v1.0.0](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.49...v1.0.0)
