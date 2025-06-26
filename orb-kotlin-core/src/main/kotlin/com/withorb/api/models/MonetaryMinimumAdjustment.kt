@@ -29,6 +29,7 @@ private constructor(
     private val itemId: JsonField<String>,
     private val minimumAmount: JsonField<String>,
     private val reason: JsonField<String>,
+    private val replacesAdjustmentId: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -53,6 +54,9 @@ private constructor(
         @ExcludeMissing
         minimumAmount: JsonField<String> = JsonMissing.of(),
         @JsonProperty("reason") @ExcludeMissing reason: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("replaces_adjustment_id")
+        @ExcludeMissing
+        replacesAdjustmentId: JsonField<String> = JsonMissing.of(),
     ) : this(
         id,
         adjustmentType,
@@ -63,6 +67,7 @@ private constructor(
         itemId,
         minimumAmount,
         reason,
+        replacesAdjustmentId,
         mutableMapOf(),
     )
 
@@ -136,6 +141,15 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun reason(): String? = reason.getNullable("reason")
+
+    /**
+     * The adjustment id this adjustment replaces. This adjustment will take the place of the
+     * replaced adjustment in plan version migrations.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun replacesAdjustmentId(): String? = replacesAdjustmentId.getNullable("replaces_adjustment_id")
 
     /**
      * Returns the raw JSON value of [id].
@@ -212,6 +226,16 @@ private constructor(
      */
     @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
+    /**
+     * Returns the raw JSON value of [replacesAdjustmentId].
+     *
+     * Unlike [replacesAdjustmentId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("replaces_adjustment_id")
+    @ExcludeMissing
+    fun _replacesAdjustmentId(): JsonField<String> = replacesAdjustmentId
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -240,6 +264,7 @@ private constructor(
          * .itemId()
          * .minimumAmount()
          * .reason()
+         * .replacesAdjustmentId()
          * ```
          */
         fun builder() = Builder()
@@ -257,6 +282,7 @@ private constructor(
         private var itemId: JsonField<String>? = null
         private var minimumAmount: JsonField<String>? = null
         private var reason: JsonField<String>? = null
+        private var replacesAdjustmentId: JsonField<String>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(monetaryMinimumAdjustment: MonetaryMinimumAdjustment) = apply {
@@ -270,6 +296,7 @@ private constructor(
             itemId = monetaryMinimumAdjustment.itemId
             minimumAmount = monetaryMinimumAdjustment.minimumAmount
             reason = monetaryMinimumAdjustment.reason
+            replacesAdjustmentId = monetaryMinimumAdjustment.replacesAdjustmentId
             additionalProperties = monetaryMinimumAdjustment.additionalProperties.toMutableMap()
         }
 
@@ -420,6 +447,24 @@ private constructor(
          */
         fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
+        /**
+         * The adjustment id this adjustment replaces. This adjustment will take the place of the
+         * replaced adjustment in plan version migrations.
+         */
+        fun replacesAdjustmentId(replacesAdjustmentId: String?) =
+            replacesAdjustmentId(JsonField.ofNullable(replacesAdjustmentId))
+
+        /**
+         * Sets [Builder.replacesAdjustmentId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.replacesAdjustmentId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun replacesAdjustmentId(replacesAdjustmentId: JsonField<String>) = apply {
+            this.replacesAdjustmentId = replacesAdjustmentId
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -455,6 +500,7 @@ private constructor(
          * .itemId()
          * .minimumAmount()
          * .reason()
+         * .replacesAdjustmentId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -470,6 +516,7 @@ private constructor(
                 checkRequired("itemId", itemId),
                 checkRequired("minimumAmount", minimumAmount),
                 checkRequired("reason", reason),
+                checkRequired("replacesAdjustmentId", replacesAdjustmentId),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -490,6 +537,7 @@ private constructor(
         itemId()
         minimumAmount()
         reason()
+        replacesAdjustmentId()
         validated = true
     }
 
@@ -515,7 +563,8 @@ private constructor(
             (if (isInvoiceLevel.asKnown() == null) 0 else 1) +
             (if (itemId.asKnown() == null) 0 else 1) +
             (if (minimumAmount.asKnown() == null) 0 else 1) +
-            (if (reason.asKnown() == null) 0 else 1)
+            (if (reason.asKnown() == null) 0 else 1) +
+            (if (replacesAdjustmentId.asKnown() == null) 0 else 1)
 
     class AdjustmentType @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -644,15 +693,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is MonetaryMinimumAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && isInvoiceLevel == other.isInvoiceLevel && itemId == other.itemId && minimumAmount == other.minimumAmount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is MonetaryMinimumAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && isInvoiceLevel == other.isInvoiceLevel && itemId == other.itemId && minimumAmount == other.minimumAmount && reason == other.reason && replacesAdjustmentId == other.replacesAdjustmentId && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, appliesToPriceIds, filters, isInvoiceLevel, itemId, minimumAmount, reason, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, appliesToPriceIds, filters, isInvoiceLevel, itemId, minimumAmount, reason, replacesAdjustmentId, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "MonetaryMinimumAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, filters=$filters, isInvoiceLevel=$isInvoiceLevel, itemId=$itemId, minimumAmount=$minimumAmount, reason=$reason, additionalProperties=$additionalProperties}"
+        "MonetaryMinimumAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, filters=$filters, isInvoiceLevel=$isInvoiceLevel, itemId=$itemId, minimumAmount=$minimumAmount, reason=$reason, replacesAdjustmentId=$replacesAdjustmentId, additionalProperties=$additionalProperties}"
 }

@@ -29,6 +29,7 @@ internal class PlanPhasePercentageDiscountAdjustmentTest {
                 .percentageDiscount(0.0)
                 .planPhaseOrder(0L)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         assertThat(planPhasePercentageDiscountAdjustment.id()).isEqualTo("id")
@@ -48,6 +49,8 @@ internal class PlanPhasePercentageDiscountAdjustmentTest {
         assertThat(planPhasePercentageDiscountAdjustment.percentageDiscount()).isEqualTo(0.0)
         assertThat(planPhasePercentageDiscountAdjustment.planPhaseOrder()).isEqualTo(0L)
         assertThat(planPhasePercentageDiscountAdjustment.reason()).isEqualTo("reason")
+        assertThat(planPhasePercentageDiscountAdjustment.replacesAdjustmentId())
+            .isEqualTo("replaces_adjustment_id")
     }
 
     @Test
@@ -71,6 +74,7 @@ internal class PlanPhasePercentageDiscountAdjustmentTest {
                 .percentageDiscount(0.0)
                 .planPhaseOrder(0L)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         val roundtrippedPlanPhasePercentageDiscountAdjustment =

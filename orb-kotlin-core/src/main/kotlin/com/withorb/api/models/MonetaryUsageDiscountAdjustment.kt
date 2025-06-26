@@ -27,6 +27,7 @@ private constructor(
     private val filters: JsonField<List<TransformPriceFilter>>,
     private val isInvoiceLevel: JsonField<Boolean>,
     private val reason: JsonField<String>,
+    private val replacesAdjustmentId: JsonField<String>,
     private val usageDiscount: JsonField<Double>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -48,6 +49,9 @@ private constructor(
         @ExcludeMissing
         isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("reason") @ExcludeMissing reason: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("replaces_adjustment_id")
+        @ExcludeMissing
+        replacesAdjustmentId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("usage_discount")
         @ExcludeMissing
         usageDiscount: JsonField<Double> = JsonMissing.of(),
@@ -59,6 +63,7 @@ private constructor(
         filters,
         isInvoiceLevel,
         reason,
+        replacesAdjustmentId,
         usageDiscount,
         mutableMapOf(),
     )
@@ -116,6 +121,15 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun reason(): String? = reason.getNullable("reason")
+
+    /**
+     * The adjustment id this adjustment replaces. This adjustment will take the place of the
+     * replaced adjustment in plan version migrations.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun replacesAdjustmentId(): String? = replacesAdjustmentId.getNullable("replaces_adjustment_id")
 
     /**
      * The number of usage units by which to discount the price this adjustment applies to in a
@@ -186,6 +200,16 @@ private constructor(
     @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
     /**
+     * Returns the raw JSON value of [replacesAdjustmentId].
+     *
+     * Unlike [replacesAdjustmentId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("replaces_adjustment_id")
+    @ExcludeMissing
+    fun _replacesAdjustmentId(): JsonField<String> = replacesAdjustmentId
+
+    /**
      * Returns the raw JSON value of [usageDiscount].
      *
      * Unlike [usageDiscount], this method doesn't throw if the JSON field has an unexpected type.
@@ -221,6 +245,7 @@ private constructor(
          * .filters()
          * .isInvoiceLevel()
          * .reason()
+         * .replacesAdjustmentId()
          * .usageDiscount()
          * ```
          */
@@ -237,6 +262,7 @@ private constructor(
         private var filters: JsonField<MutableList<TransformPriceFilter>>? = null
         private var isInvoiceLevel: JsonField<Boolean>? = null
         private var reason: JsonField<String>? = null
+        private var replacesAdjustmentId: JsonField<String>? = null
         private var usageDiscount: JsonField<Double>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -250,6 +276,7 @@ private constructor(
                 filters = monetaryUsageDiscountAdjustment.filters.map { it.toMutableList() }
                 isInvoiceLevel = monetaryUsageDiscountAdjustment.isInvoiceLevel
                 reason = monetaryUsageDiscountAdjustment.reason
+                replacesAdjustmentId = monetaryUsageDiscountAdjustment.replacesAdjustmentId
                 usageDiscount = monetaryUsageDiscountAdjustment.usageDiscount
                 additionalProperties =
                     monetaryUsageDiscountAdjustment.additionalProperties.toMutableMap()
@@ -375,6 +402,24 @@ private constructor(
         fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
         /**
+         * The adjustment id this adjustment replaces. This adjustment will take the place of the
+         * replaced adjustment in plan version migrations.
+         */
+        fun replacesAdjustmentId(replacesAdjustmentId: String?) =
+            replacesAdjustmentId(JsonField.ofNullable(replacesAdjustmentId))
+
+        /**
+         * Sets [Builder.replacesAdjustmentId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.replacesAdjustmentId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun replacesAdjustmentId(replacesAdjustmentId: JsonField<String>) = apply {
+            this.replacesAdjustmentId = replacesAdjustmentId
+        }
+
+        /**
          * The number of usage units by which to discount the price this adjustment applies to in a
          * given billing period.
          */
@@ -424,6 +469,7 @@ private constructor(
          * .filters()
          * .isInvoiceLevel()
          * .reason()
+         * .replacesAdjustmentId()
          * .usageDiscount()
          * ```
          *
@@ -438,6 +484,7 @@ private constructor(
                 checkRequired("filters", filters).map { it.toImmutable() },
                 checkRequired("isInvoiceLevel", isInvoiceLevel),
                 checkRequired("reason", reason),
+                checkRequired("replacesAdjustmentId", replacesAdjustmentId),
                 checkRequired("usageDiscount", usageDiscount),
                 additionalProperties.toMutableMap(),
             )
@@ -457,6 +504,7 @@ private constructor(
         filters().forEach { it.validate() }
         isInvoiceLevel()
         reason()
+        replacesAdjustmentId()
         usageDiscount()
         validated = true
     }
@@ -482,6 +530,7 @@ private constructor(
             (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (isInvoiceLevel.asKnown() == null) 0 else 1) +
             (if (reason.asKnown() == null) 0 else 1) +
+            (if (replacesAdjustmentId.asKnown() == null) 0 else 1) +
             (if (usageDiscount.asKnown() == null) 0 else 1)
 
     class AdjustmentType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -611,15 +660,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is MonetaryUsageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is MonetaryUsageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && amount == other.amount && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && isInvoiceLevel == other.isInvoiceLevel && reason == other.reason && replacesAdjustmentId == other.replacesAdjustmentId && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, appliesToPriceIds, filters, isInvoiceLevel, reason, usageDiscount, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amount, appliesToPriceIds, filters, isInvoiceLevel, reason, replacesAdjustmentId, usageDiscount, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "MonetaryUsageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, filters=$filters, isInvoiceLevel=$isInvoiceLevel, reason=$reason, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
+        "MonetaryUsageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amount=$amount, appliesToPriceIds=$appliesToPriceIds, filters=$filters, isInvoiceLevel=$isInvoiceLevel, reason=$reason, replacesAdjustmentId=$replacesAdjustmentId, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
 }
