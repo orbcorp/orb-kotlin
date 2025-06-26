@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.1 (2025-06-26)
+
+Full Changelog: [v1.2.0...v1.2.1](https://github.com/orbcorp/orb-kotlin/compare/v1.2.0...v1.2.1)
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([e5de47b](https://github.com/orbcorp/orb-kotlin/commit/e5de47bf868c41f1920cf53321f939ac61dc0b55))
+
 ## 1.2.0 (2025-06-26)
 
 Full Changelog: [v1.1.0...v1.2.0](https://github.com/orbcorp/orb-kotlin/compare/v1.1.0...v1.2.0)
