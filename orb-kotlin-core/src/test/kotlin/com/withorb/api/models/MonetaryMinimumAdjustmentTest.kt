@@ -28,6 +28,7 @@ internal class MonetaryMinimumAdjustmentTest {
                 .itemId("item_id")
                 .minimumAmount("minimum_amount")
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         assertThat(monetaryMinimumAdjustment.id()).isEqualTo("id")
@@ -47,6 +48,8 @@ internal class MonetaryMinimumAdjustmentTest {
         assertThat(monetaryMinimumAdjustment.itemId()).isEqualTo("item_id")
         assertThat(monetaryMinimumAdjustment.minimumAmount()).isEqualTo("minimum_amount")
         assertThat(monetaryMinimumAdjustment.reason()).isEqualTo("reason")
+        assertThat(monetaryMinimumAdjustment.replacesAdjustmentId())
+            .isEqualTo("replaces_adjustment_id")
     }
 
     @Test
@@ -69,6 +72,7 @@ internal class MonetaryMinimumAdjustmentTest {
                 .itemId("item_id")
                 .minimumAmount("minimum_amount")
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         val roundtrippedMonetaryMinimumAdjustment =

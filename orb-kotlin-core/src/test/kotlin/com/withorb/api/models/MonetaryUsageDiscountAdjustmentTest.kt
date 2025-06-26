@@ -26,6 +26,7 @@ internal class MonetaryUsageDiscountAdjustmentTest {
                 )
                 .isInvoiceLevel(true)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .usageDiscount(0.0)
                 .build()
 
@@ -44,6 +45,8 @@ internal class MonetaryUsageDiscountAdjustmentTest {
             )
         assertThat(monetaryUsageDiscountAdjustment.isInvoiceLevel()).isEqualTo(true)
         assertThat(monetaryUsageDiscountAdjustment.reason()).isEqualTo("reason")
+        assertThat(monetaryUsageDiscountAdjustment.replacesAdjustmentId())
+            .isEqualTo("replaces_adjustment_id")
         assertThat(monetaryUsageDiscountAdjustment.usageDiscount()).isEqualTo(0.0)
     }
 
@@ -65,6 +68,7 @@ internal class MonetaryUsageDiscountAdjustmentTest {
                 )
                 .isInvoiceLevel(true)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .usageDiscount(0.0)
                 .build()
 

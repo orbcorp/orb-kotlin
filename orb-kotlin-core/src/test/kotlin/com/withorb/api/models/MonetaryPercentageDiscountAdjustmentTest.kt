@@ -29,6 +29,7 @@ internal class MonetaryPercentageDiscountAdjustmentTest {
                 .isInvoiceLevel(true)
                 .percentageDiscount(0.0)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         assertThat(monetaryPercentageDiscountAdjustment.id()).isEqualTo("id")
@@ -48,6 +49,8 @@ internal class MonetaryPercentageDiscountAdjustmentTest {
         assertThat(monetaryPercentageDiscountAdjustment.isInvoiceLevel()).isEqualTo(true)
         assertThat(monetaryPercentageDiscountAdjustment.percentageDiscount()).isEqualTo(0.0)
         assertThat(monetaryPercentageDiscountAdjustment.reason()).isEqualTo("reason")
+        assertThat(monetaryPercentageDiscountAdjustment.replacesAdjustmentId())
+            .isEqualTo("replaces_adjustment_id")
     }
 
     @Test
@@ -71,6 +74,7 @@ internal class MonetaryPercentageDiscountAdjustmentTest {
                 .isInvoiceLevel(true)
                 .percentageDiscount(0.0)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         val roundtrippedMonetaryPercentageDiscountAdjustment =

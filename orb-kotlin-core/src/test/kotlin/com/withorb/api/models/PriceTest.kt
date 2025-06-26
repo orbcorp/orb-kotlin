@@ -107,6 +107,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.Unit.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
@@ -242,6 +243,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.Unit.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
@@ -353,6 +355,7 @@ internal class PriceTest {
                 )
                 .planPhaseOrder(0L)
                 .priceType(Price.Package.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -493,6 +496,7 @@ internal class PriceTest {
                     )
                     .planPhaseOrder(0L)
                     .priceType(Price.Package.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -612,6 +616,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.Matrix.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -758,6 +763,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.Matrix.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -865,6 +871,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.Tiered.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .tieredConfig(
                     TieredConfig.builder()
                         .addTier(
@@ -1010,6 +1017,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.Tiered.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .tieredConfig(
                         TieredConfig.builder()
                             .addTier(
@@ -1128,6 +1136,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.TieredBps.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .tieredBpsConfig(
                     TieredBpsConfig.builder()
                         .addTier(
@@ -1274,6 +1283,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.TieredBps.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .tieredBpsConfig(
                         TieredBpsConfig.builder()
                             .addTier(
@@ -1394,6 +1404,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.Bps.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -1531,6 +1542,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.Bps.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -1649,6 +1661,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.BulkBps.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -1794,6 +1807,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.BulkBps.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -1908,6 +1922,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.Bulk.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -2052,6 +2067,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.Bulk.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -2159,6 +2175,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.ThresholdTotalAmount.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .thresholdTotalAmountConfig(
                     Price.ThresholdTotalAmount.ThresholdTotalAmountConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -2298,6 +2315,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.ThresholdTotalAmount.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .thresholdTotalAmountConfig(
                         Price.ThresholdTotalAmount.ThresholdTotalAmountConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -2410,6 +2428,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.TieredPackage.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .tieredPackageConfig(
                     Price.TieredPackage.TieredPackageConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -2549,6 +2568,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.TieredPackage.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .tieredPackageConfig(
                         Price.TieredPackage.TieredPackageConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -2666,6 +2686,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.GroupedTiered.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -2805,6 +2826,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.GroupedTiered.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -2912,6 +2934,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.TieredWithMinimum.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .tieredWithMinimumConfig(
                     Price.TieredWithMinimum.TieredWithMinimumConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -3051,6 +3074,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.TieredWithMinimum.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .tieredWithMinimumConfig(
                         Price.TieredWithMinimum.TieredWithMinimumConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -3163,6 +3187,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.TieredPackageWithMinimum.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .tieredPackageWithMinimumConfig(
                     Price.TieredPackageWithMinimum.TieredPackageWithMinimumConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -3302,6 +3327,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.TieredPackageWithMinimum.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .tieredPackageWithMinimumConfig(
                         Price.TieredPackageWithMinimum.TieredPackageWithMinimumConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -3419,6 +3445,7 @@ internal class PriceTest {
                 )
                 .planPhaseOrder(0L)
                 .priceType(Price.PackageWithAllocation.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -3558,6 +3585,7 @@ internal class PriceTest {
                     )
                     .planPhaseOrder(0L)
                     .priceType(Price.PackageWithAllocation.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -3665,6 +3693,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.UnitWithPercent.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .unitWithPercentConfig(
                     Price.UnitWithPercent.UnitWithPercentConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -3804,6 +3833,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.UnitWithPercent.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .unitWithPercentConfig(
                         Price.UnitWithPercent.UnitWithPercentConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -3929,6 +3959,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.MatrixWithAllocation.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -4076,6 +4107,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.MatrixWithAllocation.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -4183,6 +4215,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.TieredWithProration.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .tieredWithProrationConfig(
                     Price.TieredWithProration.TieredWithProrationConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -4322,6 +4355,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.TieredWithProration.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .tieredWithProrationConfig(
                         Price.TieredWithProration.TieredWithProrationConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -4434,6 +4468,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.UnitWithProration.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .unitWithProrationConfig(
                     Price.UnitWithProration.UnitWithProrationConfig.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -4573,6 +4608,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.UnitWithProration.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .unitWithProrationConfig(
                         Price.UnitWithProration.UnitWithProrationConfig.builder()
                             .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -4690,6 +4726,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.GroupedAllocation.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -4829,6 +4866,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.GroupedAllocation.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -4941,6 +4979,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.GroupedWithProratedMinimum.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -5080,6 +5119,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.GroupedWithProratedMinimum.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -5192,6 +5232,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.GroupedWithMeteredMinimum.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -5331,6 +5372,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.GroupedWithMeteredMinimum.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -5443,6 +5485,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.MatrixWithDisplayName.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -5582,6 +5625,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.MatrixWithDisplayName.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -5694,6 +5738,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.BulkWithProration.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -5833,6 +5878,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.BulkWithProration.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -5945,6 +5991,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.GroupedTieredPackage.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -6084,6 +6131,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.GroupedTieredPackage.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -6196,6 +6244,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.MaxGroupTieredPackage.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -6335,6 +6384,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.MaxGroupTieredPackage.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
@@ -6442,6 +6492,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.ScalableMatrixWithUnitPricing.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .scalableMatrixWithUnitPricingConfig(
                     Price.ScalableMatrixWithUnitPricing.ScalableMatrixWithUnitPricingConfig
                         .builder()
@@ -6582,6 +6633,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.ScalableMatrixWithUnitPricing.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .scalableMatrixWithUnitPricingConfig(
                         Price.ScalableMatrixWithUnitPricing.ScalableMatrixWithUnitPricingConfig
                             .builder()
@@ -6695,6 +6747,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.ScalableMatrixWithTieredPricing.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .scalableMatrixWithTieredPricingConfig(
                     Price.ScalableMatrixWithTieredPricing.ScalableMatrixWithTieredPricingConfig
                         .builder()
@@ -6836,6 +6889,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.ScalableMatrixWithTieredPricing.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .scalableMatrixWithTieredPricingConfig(
                         Price.ScalableMatrixWithTieredPricing.ScalableMatrixWithTieredPricingConfig
                             .builder()
@@ -6954,6 +7008,7 @@ internal class PriceTest {
                 .name("name")
                 .planPhaseOrder(0L)
                 .priceType(Price.CumulativeGroupedBulk.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -7093,6 +7148,7 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.CumulativeGroupedBulk.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
                             .addDimensionValue("string")
