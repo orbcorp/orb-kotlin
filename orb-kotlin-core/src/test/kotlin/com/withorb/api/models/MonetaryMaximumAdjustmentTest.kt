@@ -27,6 +27,7 @@ internal class MonetaryMaximumAdjustmentTest {
                 .isInvoiceLevel(true)
                 .maximumAmount("maximum_amount")
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         assertThat(monetaryMaximumAdjustment.id()).isEqualTo("id")
@@ -45,6 +46,8 @@ internal class MonetaryMaximumAdjustmentTest {
         assertThat(monetaryMaximumAdjustment.isInvoiceLevel()).isEqualTo(true)
         assertThat(monetaryMaximumAdjustment.maximumAmount()).isEqualTo("maximum_amount")
         assertThat(monetaryMaximumAdjustment.reason()).isEqualTo("reason")
+        assertThat(monetaryMaximumAdjustment.replacesAdjustmentId())
+            .isEqualTo("replaces_adjustment_id")
     }
 
     @Test
@@ -66,6 +69,7 @@ internal class MonetaryMaximumAdjustmentTest {
                 .isInvoiceLevel(true)
                 .maximumAmount("maximum_amount")
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         val roundtrippedMonetaryMaximumAdjustment =

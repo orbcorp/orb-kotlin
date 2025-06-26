@@ -27,6 +27,7 @@ internal class PlanPhaseAmountDiscountAdjustmentTest {
                 .isInvoiceLevel(true)
                 .planPhaseOrder(0L)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         assertThat(planPhaseAmountDiscountAdjustment.id()).isEqualTo("id")
@@ -45,6 +46,8 @@ internal class PlanPhaseAmountDiscountAdjustmentTest {
         assertThat(planPhaseAmountDiscountAdjustment.isInvoiceLevel()).isEqualTo(true)
         assertThat(planPhaseAmountDiscountAdjustment.planPhaseOrder()).isEqualTo(0L)
         assertThat(planPhaseAmountDiscountAdjustment.reason()).isEqualTo("reason")
+        assertThat(planPhaseAmountDiscountAdjustment.replacesAdjustmentId())
+            .isEqualTo("replaces_adjustment_id")
     }
 
     @Test
@@ -66,6 +69,7 @@ internal class PlanPhaseAmountDiscountAdjustmentTest {
                 .isInvoiceLevel(true)
                 .planPhaseOrder(0L)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         val roundtrippedPlanPhaseAmountDiscountAdjustment =

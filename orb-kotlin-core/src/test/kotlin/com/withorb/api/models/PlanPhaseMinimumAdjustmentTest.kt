@@ -28,6 +28,7 @@ internal class PlanPhaseMinimumAdjustmentTest {
                 .minimumAmount("minimum_amount")
                 .planPhaseOrder(0L)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         assertThat(planPhaseMinimumAdjustment.id()).isEqualTo("id")
@@ -47,6 +48,8 @@ internal class PlanPhaseMinimumAdjustmentTest {
         assertThat(planPhaseMinimumAdjustment.minimumAmount()).isEqualTo("minimum_amount")
         assertThat(planPhaseMinimumAdjustment.planPhaseOrder()).isEqualTo(0L)
         assertThat(planPhaseMinimumAdjustment.reason()).isEqualTo("reason")
+        assertThat(planPhaseMinimumAdjustment.replacesAdjustmentId())
+            .isEqualTo("replaces_adjustment_id")
     }
 
     @Test
@@ -69,6 +72,7 @@ internal class PlanPhaseMinimumAdjustmentTest {
                 .minimumAmount("minimum_amount")
                 .planPhaseOrder(0L)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         val roundtrippedPlanPhaseMinimumAdjustment =

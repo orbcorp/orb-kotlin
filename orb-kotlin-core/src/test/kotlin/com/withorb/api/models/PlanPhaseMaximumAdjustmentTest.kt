@@ -27,6 +27,7 @@ internal class PlanPhaseMaximumAdjustmentTest {
                 .maximumAmount("maximum_amount")
                 .planPhaseOrder(0L)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         assertThat(planPhaseMaximumAdjustment.id()).isEqualTo("id")
@@ -45,6 +46,8 @@ internal class PlanPhaseMaximumAdjustmentTest {
         assertThat(planPhaseMaximumAdjustment.maximumAmount()).isEqualTo("maximum_amount")
         assertThat(planPhaseMaximumAdjustment.planPhaseOrder()).isEqualTo(0L)
         assertThat(planPhaseMaximumAdjustment.reason()).isEqualTo("reason")
+        assertThat(planPhaseMaximumAdjustment.replacesAdjustmentId())
+            .isEqualTo("replaces_adjustment_id")
     }
 
     @Test
@@ -66,6 +69,7 @@ internal class PlanPhaseMaximumAdjustmentTest {
                 .maximumAmount("maximum_amount")
                 .planPhaseOrder(0L)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .build()
 
         val roundtrippedPlanPhaseMaximumAdjustment =

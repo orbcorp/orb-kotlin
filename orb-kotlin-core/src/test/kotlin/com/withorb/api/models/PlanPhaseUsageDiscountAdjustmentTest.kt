@@ -26,6 +26,7 @@ internal class PlanPhaseUsageDiscountAdjustmentTest {
                 .isInvoiceLevel(true)
                 .planPhaseOrder(0L)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .usageDiscount(0.0)
                 .build()
 
@@ -44,6 +45,8 @@ internal class PlanPhaseUsageDiscountAdjustmentTest {
         assertThat(planPhaseUsageDiscountAdjustment.isInvoiceLevel()).isEqualTo(true)
         assertThat(planPhaseUsageDiscountAdjustment.planPhaseOrder()).isEqualTo(0L)
         assertThat(planPhaseUsageDiscountAdjustment.reason()).isEqualTo("reason")
+        assertThat(planPhaseUsageDiscountAdjustment.replacesAdjustmentId())
+            .isEqualTo("replaces_adjustment_id")
         assertThat(planPhaseUsageDiscountAdjustment.usageDiscount()).isEqualTo(0.0)
     }
 
@@ -65,6 +68,7 @@ internal class PlanPhaseUsageDiscountAdjustmentTest {
                 .isInvoiceLevel(true)
                 .planPhaseOrder(0L)
                 .reason("reason")
+                .replacesAdjustmentId("replaces_adjustment_id")
                 .usageDiscount(0.0)
                 .build()
 

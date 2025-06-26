@@ -28,6 +28,7 @@ private constructor(
     private val percentageDiscount: JsonField<Double>,
     private val planPhaseOrder: JsonField<Long>,
     private val reason: JsonField<String>,
+    private val replacesAdjustmentId: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -53,6 +54,9 @@ private constructor(
         @ExcludeMissing
         planPhaseOrder: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("reason") @ExcludeMissing reason: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("replaces_adjustment_id")
+        @ExcludeMissing
+        replacesAdjustmentId: JsonField<String> = JsonMissing.of(),
     ) : this(
         id,
         adjustmentType,
@@ -62,6 +66,7 @@ private constructor(
         percentageDiscount,
         planPhaseOrder,
         reason,
+        replacesAdjustmentId,
         mutableMapOf(),
     )
 
@@ -127,6 +132,15 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun reason(): String? = reason.getNullable("reason")
+
+    /**
+     * The adjustment id this adjustment replaces. This adjustment will take the place of the
+     * replaced adjustment in plan version migrations.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun replacesAdjustmentId(): String? = replacesAdjustmentId.getNullable("replaces_adjustment_id")
 
     /**
      * Returns the raw JSON value of [id].
@@ -199,6 +213,16 @@ private constructor(
      */
     @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
+    /**
+     * Returns the raw JSON value of [replacesAdjustmentId].
+     *
+     * Unlike [replacesAdjustmentId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("replaces_adjustment_id")
+    @ExcludeMissing
+    fun _replacesAdjustmentId(): JsonField<String> = replacesAdjustmentId
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -227,6 +251,7 @@ private constructor(
          * .percentageDiscount()
          * .planPhaseOrder()
          * .reason()
+         * .replacesAdjustmentId()
          * ```
          */
         fun builder() = Builder()
@@ -243,6 +268,7 @@ private constructor(
         private var percentageDiscount: JsonField<Double>? = null
         private var planPhaseOrder: JsonField<Long>? = null
         private var reason: JsonField<String>? = null
+        private var replacesAdjustmentId: JsonField<String>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
@@ -257,6 +283,7 @@ private constructor(
             percentageDiscount = planPhasePercentageDiscountAdjustment.percentageDiscount
             planPhaseOrder = planPhasePercentageDiscountAdjustment.planPhaseOrder
             reason = planPhasePercentageDiscountAdjustment.reason
+            replacesAdjustmentId = planPhasePercentageDiscountAdjustment.replacesAdjustmentId
             additionalProperties =
                 planPhasePercentageDiscountAdjustment.additionalProperties.toMutableMap()
         }
@@ -409,6 +436,24 @@ private constructor(
          */
         fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
+        /**
+         * The adjustment id this adjustment replaces. This adjustment will take the place of the
+         * replaced adjustment in plan version migrations.
+         */
+        fun replacesAdjustmentId(replacesAdjustmentId: String?) =
+            replacesAdjustmentId(JsonField.ofNullable(replacesAdjustmentId))
+
+        /**
+         * Sets [Builder.replacesAdjustmentId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.replacesAdjustmentId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun replacesAdjustmentId(replacesAdjustmentId: JsonField<String>) = apply {
+            this.replacesAdjustmentId = replacesAdjustmentId
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -443,6 +488,7 @@ private constructor(
          * .percentageDiscount()
          * .planPhaseOrder()
          * .reason()
+         * .replacesAdjustmentId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -457,6 +503,7 @@ private constructor(
                 checkRequired("percentageDiscount", percentageDiscount),
                 checkRequired("planPhaseOrder", planPhaseOrder),
                 checkRequired("reason", reason),
+                checkRequired("replacesAdjustmentId", replacesAdjustmentId),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -476,6 +523,7 @@ private constructor(
         percentageDiscount()
         planPhaseOrder()
         reason()
+        replacesAdjustmentId()
         validated = true
     }
 
@@ -500,7 +548,8 @@ private constructor(
             (if (isInvoiceLevel.asKnown() == null) 0 else 1) +
             (if (percentageDiscount.asKnown() == null) 0 else 1) +
             (if (planPhaseOrder.asKnown() == null) 0 else 1) +
-            (if (reason.asKnown() == null) 0 else 1)
+            (if (reason.asKnown() == null) 0 else 1) +
+            (if (replacesAdjustmentId.asKnown() == null) 0 else 1)
 
     class AdjustmentType @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -629,15 +678,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanPhasePercentageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && isInvoiceLevel == other.isInvoiceLevel && percentageDiscount == other.percentageDiscount && planPhaseOrder == other.planPhaseOrder && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is PlanPhasePercentageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && isInvoiceLevel == other.isInvoiceLevel && percentageDiscount == other.percentageDiscount && planPhaseOrder == other.planPhaseOrder && reason == other.reason && replacesAdjustmentId == other.replacesAdjustmentId && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, appliesToPriceIds, filters, isInvoiceLevel, percentageDiscount, planPhaseOrder, reason, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, appliesToPriceIds, filters, isInvoiceLevel, percentageDiscount, planPhaseOrder, reason, replacesAdjustmentId, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PlanPhasePercentageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, filters=$filters, isInvoiceLevel=$isInvoiceLevel, percentageDiscount=$percentageDiscount, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
+        "PlanPhasePercentageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, filters=$filters, isInvoiceLevel=$isInvoiceLevel, percentageDiscount=$percentageDiscount, planPhaseOrder=$planPhaseOrder, reason=$reason, replacesAdjustmentId=$replacesAdjustmentId, additionalProperties=$additionalProperties}"
 }
