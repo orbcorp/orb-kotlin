@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.2 (2025-06-29)
+
+Full Changelog: [v1.2.1...v1.2.2](https://github.com/orbcorp/orb-kotlin/compare/v1.2.1...v1.2.2)
+
+### Bug Fixes
+
+* **client:** don't close client on `withOptions` usage when original is gc'd ([c5407a8](https://github.com/orbcorp/orb-kotlin/commit/c5407a83e67696cf60f74bc5a0fc855df0755281))
+
+
+### Chores
+
+* **ci:** only run for pushes and fork pull requests ([ac1dcec](https://github.com/orbcorp/orb-kotlin/commit/ac1dcec36583dbce6daf3dfaa23075c835af8404))
+
 ## 1.2.1 (2025-06-26)
 
 Full Changelog: [v1.2.0...v1.2.1](https://github.com/orbcorp/orb-kotlin/compare/v1.2.0...v1.2.1)
