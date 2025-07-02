@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.3 (2025-06-30)
+
+Full Changelog: [v1.2.2...v1.2.3](https://github.com/orbcorp/orb-kotlin/compare/v1.2.2...v1.2.3)
+
+### Refactors
+
+* **internal:** minor `ClientOptionsTest` change ([58a615f](https://github.com/orbcorp/orb-kotlin/commit/58a615f66a49b56ae9ae6937eb6263107de09d2b))
+
 ## 1.2.2 (2025-06-29)
 
 Full Changelog: [v1.2.1...v1.2.2](https://github.com/orbcorp/orb-kotlin/compare/v1.2.1...v1.2.2)
