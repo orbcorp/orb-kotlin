@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
+import java.time.LocalDate
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -25,6 +26,7 @@ internal class CustomerCreditLedgerCreateEntryParamsTest {
                             .builder()
                             .autoCollection(true)
                             .netTerms(0L)
+                            .invoiceDate(LocalDate.parse("2019-12-27"))
                             .memo("memo")
                             .requireSuccessfulPayment(true)
                             .build()
@@ -70,6 +72,7 @@ internal class CustomerCreditLedgerCreateEntryParamsTest {
                                 .builder()
                                 .autoCollection(true)
                                 .netTerms(0L)
+                                .invoiceDate(LocalDate.parse("2019-12-27"))
                                 .memo("memo")
                                 .requireSuccessfulPayment(true)
                                 .build()
@@ -100,6 +103,7 @@ internal class CustomerCreditLedgerCreateEntryParamsTest {
                                 .builder()
                                 .autoCollection(true)
                                 .netTerms(0L)
+                                .invoiceDate(LocalDate.parse("2019-12-27"))
                                 .memo("memo")
                                 .requireSuccessfulPayment(true)
                                 .build()

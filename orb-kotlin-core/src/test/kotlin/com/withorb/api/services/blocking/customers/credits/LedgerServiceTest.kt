@@ -7,6 +7,7 @@ import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryByExternalIdParams
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryParams
+import java.time.LocalDate
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -53,6 +54,7 @@ internal class LedgerServiceTest {
                                     .builder()
                                     .autoCollection(true)
                                     .netTerms(0L)
+                                    .invoiceDate(LocalDate.parse("2019-12-27"))
                                     .memo("memo")
                                     .requireSuccessfulPayment(true)
                                     .build()
@@ -98,6 +100,7 @@ internal class LedgerServiceTest {
                                     .builder()
                                     .autoCollection(true)
                                     .netTerms(0L)
+                                    .invoiceDate(LocalDate.parse("2019-12-27"))
                                     .memo("memo")
                                     .requireSuccessfulPayment(true)
                                     .build()

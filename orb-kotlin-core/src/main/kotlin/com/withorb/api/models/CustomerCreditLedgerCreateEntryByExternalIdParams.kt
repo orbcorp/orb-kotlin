@@ -21,6 +21,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.Params
+import com.withorb.api.core.allMaxBy
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
@@ -1132,6 +1133,7 @@ private constructor(
             private constructor(
                 private val autoCollection: JsonField<Boolean>,
                 private val netTerms: JsonField<Long>,
+                private val invoiceDate: JsonField<InvoiceDate>,
                 private val memo: JsonField<String>,
                 private val requireSuccessfulPayment: JsonField<Boolean>,
                 private val additionalProperties: MutableMap<String, JsonValue>,
@@ -1145,13 +1147,23 @@ private constructor(
                     @JsonProperty("net_terms")
                     @ExcludeMissing
                     netTerms: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("invoice_date")
+                    @ExcludeMissing
+                    invoiceDate: JsonField<InvoiceDate> = JsonMissing.of(),
                     @JsonProperty("memo")
                     @ExcludeMissing
                     memo: JsonField<String> = JsonMissing.of(),
                     @JsonProperty("require_successful_payment")
                     @ExcludeMissing
                     requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of(),
-                ) : this(autoCollection, netTerms, memo, requireSuccessfulPayment, mutableMapOf())
+                ) : this(
+                    autoCollection,
+                    netTerms,
+                    invoiceDate,
+                    memo,
+                    requireSuccessfulPayment,
+                    mutableMapOf(),
+                )
 
                 /**
                  * Whether the credits purchase invoice should auto collect with the customer's
@@ -1173,6 +1185,16 @@ private constructor(
                  *   value).
                  */
                 fun netTerms(): Long = netTerms.getRequired("net_terms")
+
+                /**
+                 * An ISO 8601 format date that denotes when this invoice should be dated in the
+                 * customer's timezone. If not provided, the invoice date will default to the credit
+                 * block's effective date.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun invoiceDate(): InvoiceDate? = invoiceDate.getNullable("invoice_date")
 
                 /**
                  * An optional memo to display on the invoice.
@@ -1211,6 +1233,16 @@ private constructor(
                 @JsonProperty("net_terms")
                 @ExcludeMissing
                 fun _netTerms(): JsonField<Long> = netTerms
+
+                /**
+                 * Returns the raw JSON value of [invoiceDate].
+                 *
+                 * Unlike [invoiceDate], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("invoice_date")
+                @ExcludeMissing
+                fun _invoiceDate(): JsonField<InvoiceDate> = invoiceDate
 
                 /**
                  * Returns the raw JSON value of [memo].
@@ -1261,6 +1293,7 @@ private constructor(
 
                     private var autoCollection: JsonField<Boolean>? = null
                     private var netTerms: JsonField<Long>? = null
+                    private var invoiceDate: JsonField<InvoiceDate> = JsonMissing.of()
                     private var memo: JsonField<String> = JsonMissing.of()
                     private var requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -1268,6 +1301,7 @@ private constructor(
                     internal fun from(invoiceSettings: InvoiceSettings) = apply {
                         autoCollection = invoiceSettings.autoCollection
                         netTerms = invoiceSettings.netTerms
+                        invoiceDate = invoiceSettings.invoiceDate
                         memo = invoiceSettings.memo
                         requireSuccessfulPayment = invoiceSettings.requireSuccessfulPayment
                         additionalProperties = invoiceSettings.additionalProperties.toMutableMap()
@@ -1306,6 +1340,32 @@ private constructor(
                      * not yet supported value.
                      */
                     fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
+
+                    /**
+                     * An ISO 8601 format date that denotes when this invoice should be dated in the
+                     * customer's timezone. If not provided, the invoice date will default to the
+                     * credit block's effective date.
+                     */
+                    fun invoiceDate(invoiceDate: InvoiceDate?) =
+                        invoiceDate(JsonField.ofNullable(invoiceDate))
+
+                    /**
+                     * Sets [Builder.invoiceDate] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.invoiceDate] with a well-typed [InvoiceDate]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun invoiceDate(invoiceDate: JsonField<InvoiceDate>) = apply {
+                        this.invoiceDate = invoiceDate
+                    }
+
+                    /** Alias for calling [invoiceDate] with `InvoiceDate.ofDate(date)`. */
+                    fun invoiceDate(date: LocalDate) = invoiceDate(InvoiceDate.ofDate(date))
+
+                    /** Alias for calling [invoiceDate] with `InvoiceDate.ofDateTime(dateTime)`. */
+                    fun invoiceDate(dateTime: OffsetDateTime) =
+                        invoiceDate(InvoiceDate.ofDateTime(dateTime))
 
                     /** An optional memo to display on the invoice. */
                     fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
@@ -1377,6 +1437,7 @@ private constructor(
                         InvoiceSettings(
                             checkRequired("autoCollection", autoCollection),
                             checkRequired("netTerms", netTerms),
+                            invoiceDate,
                             memo,
                             requireSuccessfulPayment,
                             additionalProperties.toMutableMap(),
@@ -1392,6 +1453,7 @@ private constructor(
 
                     autoCollection()
                     netTerms()
+                    invoiceDate()?.validate()
                     memo()
                     requireSuccessfulPayment()
                     validated = true
@@ -1414,25 +1476,202 @@ private constructor(
                 internal fun validity(): Int =
                     (if (autoCollection.asKnown() == null) 0 else 1) +
                         (if (netTerms.asKnown() == null) 0 else 1) +
+                        (invoiceDate.asKnown()?.validity() ?: 0) +
                         (if (memo.asKnown() == null) 0 else 1) +
                         (if (requireSuccessfulPayment.asKnown() == null) 0 else 1)
+
+                /**
+                 * An ISO 8601 format date that denotes when this invoice should be dated in the
+                 * customer's timezone. If not provided, the invoice date will default to the credit
+                 * block's effective date.
+                 */
+                @JsonDeserialize(using = InvoiceDate.Deserializer::class)
+                @JsonSerialize(using = InvoiceDate.Serializer::class)
+                class InvoiceDate
+                private constructor(
+                    private val date: LocalDate? = null,
+                    private val dateTime: OffsetDateTime? = null,
+                    private val _json: JsonValue? = null,
+                ) {
+
+                    fun date(): LocalDate? = date
+
+                    fun dateTime(): OffsetDateTime? = dateTime
+
+                    fun isDate(): Boolean = date != null
+
+                    fun isDateTime(): Boolean = dateTime != null
+
+                    fun asDate(): LocalDate = date.getOrThrow("date")
+
+                    fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
+
+                    fun _json(): JsonValue? = _json
+
+                    fun <T> accept(visitor: Visitor<T>): T =
+                        when {
+                            date != null -> visitor.visitDate(date)
+                            dateTime != null -> visitor.visitDateTime(dateTime)
+                            else -> visitor.unknown(_json)
+                        }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): InvoiceDate = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        accept(
+                            object : Visitor<Unit> {
+                                override fun visitDate(date: LocalDate) {}
+
+                                override fun visitDateTime(dateTime: OffsetDateTime) {}
+                            }
+                        )
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        accept(
+                            object : Visitor<Int> {
+                                override fun visitDate(date: LocalDate) = 1
+
+                                override fun visitDateTime(dateTime: OffsetDateTime) = 1
+
+                                override fun unknown(json: JsonValue?) = 0
+                            }
+                        )
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is InvoiceDate && date == other.date && dateTime == other.dateTime /* spotless:on */
+                    }
+
+                    override fun hashCode(): Int = /* spotless:off */ Objects.hash(date, dateTime) /* spotless:on */
+
+                    override fun toString(): String =
+                        when {
+                            date != null -> "InvoiceDate{date=$date}"
+                            dateTime != null -> "InvoiceDate{dateTime=$dateTime}"
+                            _json != null -> "InvoiceDate{_unknown=$_json}"
+                            else -> throw IllegalStateException("Invalid InvoiceDate")
+                        }
+
+                    companion object {
+
+                        fun ofDate(date: LocalDate) = InvoiceDate(date = date)
+
+                        fun ofDateTime(dateTime: OffsetDateTime) = InvoiceDate(dateTime = dateTime)
+                    }
+
+                    /**
+                     * An interface that defines how to map each variant of [InvoiceDate] to a value
+                     * of type [T].
+                     */
+                    interface Visitor<out T> {
+
+                        fun visitDate(date: LocalDate): T
+
+                        fun visitDateTime(dateTime: OffsetDateTime): T
+
+                        /**
+                         * Maps an unknown variant of [InvoiceDate] to a value of type [T].
+                         *
+                         * An instance of [InvoiceDate] can contain an unknown variant if it was
+                         * deserialized from data that doesn't match any known variant. For example,
+                         * if the SDK is on an older version than the API, then the API may respond
+                         * with new variants that the SDK is unaware of.
+                         *
+                         * @throws OrbInvalidDataException in the default implementation.
+                         */
+                        fun unknown(json: JsonValue?): T {
+                            throw OrbInvalidDataException("Unknown InvoiceDate: $json")
+                        }
+                    }
+
+                    internal class Deserializer :
+                        BaseDeserializer<InvoiceDate>(InvoiceDate::class) {
+
+                        override fun ObjectCodec.deserialize(node: JsonNode): InvoiceDate {
+                            val json = JsonValue.fromJsonNode(node)
+
+                            val bestMatches =
+                                sequenceOf(
+                                        tryDeserialize(node, jacksonTypeRef<LocalDate>())?.let {
+                                            InvoiceDate(date = it, _json = json)
+                                        },
+                                        tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())
+                                            ?.let { InvoiceDate(dateTime = it, _json = json) },
+                                    )
+                                    .filterNotNull()
+                                    .allMaxBy { it.validity() }
+                                    .toList()
+                            return when (bestMatches.size) {
+                                // This can happen if what we're deserializing is completely
+                                // incompatible with all the possible variants (e.g. deserializing
+                                // from object).
+                                0 -> InvoiceDate(_json = json)
+                                1 -> bestMatches.single()
+                                // If there's more than one match with the highest validity, then
+                                // use the first completely valid match, or simply the first match
+                                // if none are completely valid.
+                                else ->
+                                    bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
+                            }
+                        }
+                    }
+
+                    internal class Serializer : BaseSerializer<InvoiceDate>(InvoiceDate::class) {
+
+                        override fun serialize(
+                            value: InvoiceDate,
+                            generator: JsonGenerator,
+                            provider: SerializerProvider,
+                        ) {
+                            when {
+                                value.date != null -> generator.writeObject(value.date)
+                                value.dateTime != null -> generator.writeObject(value.dateTime)
+                                value._json != null -> generator.writeObject(value._json)
+                                else -> throw IllegalStateException("Invalid InvoiceDate")
+                            }
+                        }
+                    }
+                }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
                     }
 
-                    return /* spotless:off */ other is InvoiceSettings && autoCollection == other.autoCollection && netTerms == other.netTerms && memo == other.memo && requireSuccessfulPayment == other.requireSuccessfulPayment && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is InvoiceSettings && autoCollection == other.autoCollection && netTerms == other.netTerms && invoiceDate == other.invoiceDate && memo == other.memo && requireSuccessfulPayment == other.requireSuccessfulPayment && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(autoCollection, netTerms, memo, requireSuccessfulPayment, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(autoCollection, netTerms, invoiceDate, memo, requireSuccessfulPayment, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
+                    "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, invoiceDate=$invoiceDate, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
             }
 
             /**
