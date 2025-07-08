@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.4.0 (2025-07-08)
+
+Full Changelog: [v1.3.0...v1.4.0](https://github.com/orbcorp/orb-kotlin/compare/v1.3.0...v1.4.0)
+
+### Features
+
+* **api:** api update ([832cd6b](https://github.com/orbcorp/orb-kotlin/commit/832cd6bc386aabe31cd42faf75f62d2684e0a2a3))
+
+
+### Chores
+
+* **ci:** ensure docs generation always succeeds ([74e2ba0](https://github.com/orbcorp/orb-kotlin/commit/74e2ba0dfa8b31fff997874b5efaeaf45efde33f))
+
 ## 1.3.0 (2025-07-04)
 
 Full Changelog: [v1.2.3...v1.3.0](https://github.com/orbcorp/orb-kotlin/compare/v1.2.3...v1.3.0)
