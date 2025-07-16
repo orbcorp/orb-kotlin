@@ -170,6 +170,7 @@ private constructor(
     private constructor(
         private val currency: JsonField<String>,
         private val priceGroups: JsonField<List<EvaluatePriceGroup>>,
+        private val externalPriceId: JsonField<String>,
         private val inlinePriceIndex: JsonField<Long>,
         private val priceId: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -183,11 +184,14 @@ private constructor(
             @JsonProperty("price_groups")
             @ExcludeMissing
             priceGroups: JsonField<List<EvaluatePriceGroup>> = JsonMissing.of(),
+            @JsonProperty("external_price_id")
+            @ExcludeMissing
+            externalPriceId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("inline_price_index")
             @ExcludeMissing
             inlinePriceIndex: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("price_id") @ExcludeMissing priceId: JsonField<String> = JsonMissing.of(),
-        ) : this(currency, priceGroups, inlinePriceIndex, priceId, mutableMapOf())
+        ) : this(currency, priceGroups, externalPriceId, inlinePriceIndex, priceId, mutableMapOf())
 
         /**
          * The currency of the price
@@ -204,6 +208,14 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun priceGroups(): List<EvaluatePriceGroup> = priceGroups.getRequired("price_groups")
+
+        /**
+         * The external ID of the price
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
 
         /**
          * The index of the inline price
@@ -236,6 +248,16 @@ private constructor(
         @JsonProperty("price_groups")
         @ExcludeMissing
         fun _priceGroups(): JsonField<List<EvaluatePriceGroup>> = priceGroups
+
+        /**
+         * Returns the raw JSON value of [externalPriceId].
+         *
+         * Unlike [externalPriceId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        fun _externalPriceId(): JsonField<String> = externalPriceId
 
         /**
          * Returns the raw JSON value of [inlinePriceIndex].
@@ -285,6 +307,7 @@ private constructor(
 
             private var currency: JsonField<String>? = null
             private var priceGroups: JsonField<MutableList<EvaluatePriceGroup>>? = null
+            private var externalPriceId: JsonField<String> = JsonMissing.of()
             private var inlinePriceIndex: JsonField<Long> = JsonMissing.of()
             private var priceId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -292,6 +315,7 @@ private constructor(
             internal fun from(data: Data) = apply {
                 currency = data.currency
                 priceGroups = data.priceGroups.map { it.toMutableList() }
+                externalPriceId = data.externalPriceId
                 inlinePriceIndex = data.inlinePriceIndex
                 priceId = data.priceId
                 additionalProperties = data.additionalProperties.toMutableMap()
@@ -334,6 +358,21 @@ private constructor(
                     (priceGroups ?: JsonField.of(mutableListOf())).also {
                         checkKnown("priceGroups", it).add(priceGroup)
                     }
+            }
+
+            /** The external ID of the price */
+            fun externalPriceId(externalPriceId: String?) =
+                externalPriceId(JsonField.ofNullable(externalPriceId))
+
+            /**
+             * Sets [Builder.externalPriceId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalPriceId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalPriceId(externalPriceId: JsonField<String>) = apply {
+                this.externalPriceId = externalPriceId
             }
 
             /** The index of the inline price */
@@ -407,6 +446,7 @@ private constructor(
                 Data(
                     checkRequired("currency", currency),
                     checkRequired("priceGroups", priceGroups).map { it.toImmutable() },
+                    externalPriceId,
                     inlinePriceIndex,
                     priceId,
                     additionalProperties.toMutableMap(),
@@ -422,6 +462,7 @@ private constructor(
 
             currency()
             priceGroups().forEach { it.validate() }
+            externalPriceId()
             inlinePriceIndex()
             priceId()
             validated = true
@@ -444,6 +485,7 @@ private constructor(
         internal fun validity(): Int =
             (if (currency.asKnown() == null) 0 else 1) +
                 (priceGroups.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (externalPriceId.asKnown() == null) 0 else 1) +
                 (if (inlinePriceIndex.asKnown() == null) 0 else 1) +
                 (if (priceId.asKnown() == null) 0 else 1)
 
@@ -452,17 +494,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Data && currency == other.currency && priceGroups == other.priceGroups && inlinePriceIndex == other.inlinePriceIndex && priceId == other.priceId && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Data && currency == other.currency && priceGroups == other.priceGroups && externalPriceId == other.externalPriceId && inlinePriceIndex == other.inlinePriceIndex && priceId == other.priceId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(currency, priceGroups, inlinePriceIndex, priceId, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(currency, priceGroups, externalPriceId, inlinePriceIndex, priceId, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Data{currency=$currency, priceGroups=$priceGroups, inlinePriceIndex=$inlinePriceIndex, priceId=$priceId, additionalProperties=$additionalProperties}"
+            "Data{currency=$currency, priceGroups=$priceGroups, externalPriceId=$externalPriceId, inlinePriceIndex=$inlinePriceIndex, priceId=$priceId, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

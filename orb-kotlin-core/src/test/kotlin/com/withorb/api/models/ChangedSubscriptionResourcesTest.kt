@@ -56,6 +56,10 @@ internal class ChangedSubscriptionResourcesTest {
                                         .reason("reason")
                                         .build()
                                 )
+                                .endTimeExclusive(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .startTimeInclusive(
+                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                )
                                 .build()
                         )
                         .maximumAmountAdjustment(
@@ -532,6 +536,10 @@ internal class ChangedSubscriptionResourcesTest {
                                         .amountDiscount("amount_discount")
                                         .reason("reason")
                                         .build()
+                                )
+                                .endTimeExclusive(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .startTimeInclusive(
+                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                 )
                                 .build()
                         )
@@ -1013,6 +1021,8 @@ internal class ChangedSubscriptionResourcesTest {
                                     .reason("reason")
                                     .build()
                             )
+                            .endTimeExclusive(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .startTimeInclusive(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
                     .maximumAmountAdjustment(
@@ -1479,6 +1489,8 @@ internal class ChangedSubscriptionResourcesTest {
                                     .reason("reason")
                                     .build()
                             )
+                            .endTimeExclusive(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .startTimeInclusive(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
                     .maximumAmountAdjustment(
@@ -1950,6 +1962,10 @@ internal class ChangedSubscriptionResourcesTest {
                                         .amountDiscount("amount_discount")
                                         .reason("reason")
                                         .build()
+                                )
+                                .endTimeExclusive(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .startTimeInclusive(
+                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                 )
                                 .build()
                         )
@@ -2427,6 +2443,10 @@ internal class ChangedSubscriptionResourcesTest {
                                         .amountDiscount("amount_discount")
                                         .reason("reason")
                                         .build()
+                                )
+                                .endTimeExclusive(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .startTimeInclusive(
+                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                 )
                                 .build()
                         )

@@ -1292,6 +1292,7 @@ private constructor(
 
     class PriceEvaluation
     private constructor(
+        private val externalPriceId: JsonField<String>,
         private val filter: JsonField<String>,
         private val groupingKeys: JsonField<List<String>>,
         private val price: JsonField<Price>,
@@ -1301,13 +1302,24 @@ private constructor(
 
         @JsonCreator
         private constructor(
+            @JsonProperty("external_price_id")
+            @ExcludeMissing
+            externalPriceId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("filter") @ExcludeMissing filter: JsonField<String> = JsonMissing.of(),
             @JsonProperty("grouping_keys")
             @ExcludeMissing
             groupingKeys: JsonField<List<String>> = JsonMissing.of(),
             @JsonProperty("price") @ExcludeMissing price: JsonField<Price> = JsonMissing.of(),
             @JsonProperty("price_id") @ExcludeMissing priceId: JsonField<String> = JsonMissing.of(),
-        ) : this(filter, groupingKeys, price, priceId, mutableMapOf())
+        ) : this(externalPriceId, filter, groupingKeys, price, priceId, mutableMapOf())
+
+        /**
+         * The external ID of a price to evaluate that exists in your Orb account.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
 
         /**
          * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
@@ -1344,6 +1356,16 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun priceId(): String? = priceId.getNullable("price_id")
+
+        /**
+         * Returns the raw JSON value of [externalPriceId].
+         *
+         * Unlike [externalPriceId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        fun _externalPriceId(): JsonField<String> = externalPriceId
 
         /**
          * Returns the raw JSON value of [filter].
@@ -1397,6 +1419,7 @@ private constructor(
         /** A builder for [PriceEvaluation]. */
         class Builder internal constructor() {
 
+            private var externalPriceId: JsonField<String> = JsonMissing.of()
             private var filter: JsonField<String> = JsonMissing.of()
             private var groupingKeys: JsonField<MutableList<String>>? = null
             private var price: JsonField<Price> = JsonMissing.of()
@@ -1404,11 +1427,27 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(priceEvaluation: PriceEvaluation) = apply {
+                externalPriceId = priceEvaluation.externalPriceId
                 filter = priceEvaluation.filter
                 groupingKeys = priceEvaluation.groupingKeys.map { it.toMutableList() }
                 price = priceEvaluation.price
                 priceId = priceEvaluation.priceId
                 additionalProperties = priceEvaluation.additionalProperties.toMutableMap()
+            }
+
+            /** The external ID of a price to evaluate that exists in your Orb account. */
+            fun externalPriceId(externalPriceId: String?) =
+                externalPriceId(JsonField.ofNullable(externalPriceId))
+
+            /**
+             * Sets [Builder.externalPriceId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalPriceId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalPriceId(externalPriceId: JsonField<String>) = apply {
+                this.externalPriceId = externalPriceId
             }
 
             /**
@@ -1650,6 +1689,7 @@ private constructor(
              */
             fun build(): PriceEvaluation =
                 PriceEvaluation(
+                    externalPriceId,
                     filter,
                     (groupingKeys ?: JsonMissing.of()).map { it.toImmutable() },
                     price,
@@ -1665,6 +1705,7 @@ private constructor(
                 return@apply
             }
 
+            externalPriceId()
             filter()
             groupingKeys()
             price()?.validate()
@@ -1687,7 +1728,8 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            (if (filter.asKnown() == null) 0 else 1) +
+            (if (externalPriceId.asKnown() == null) 0 else 1) +
+                (if (filter.asKnown() == null) 0 else 1) +
                 (groupingKeys.asKnown()?.size ?: 0) +
                 (price.asKnown()?.validity() ?: 0) +
                 (if (priceId.asKnown() == null) 0 else 1)
@@ -2798,17 +2840,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PriceEvaluation && filter == other.filter && groupingKeys == other.groupingKeys && price == other.price && priceId == other.priceId && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is PriceEvaluation && externalPriceId == other.externalPriceId && filter == other.filter && groupingKeys == other.groupingKeys && price == other.price && priceId == other.priceId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(filter, groupingKeys, price, priceId, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(externalPriceId, filter, groupingKeys, price, priceId, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PriceEvaluation{filter=$filter, groupingKeys=$groupingKeys, price=$price, priceId=$priceId, additionalProperties=$additionalProperties}"
+            "PriceEvaluation{externalPriceId=$externalPriceId, filter=$filter, groupingKeys=$groupingKeys, price=$price, priceId=$priceId, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
