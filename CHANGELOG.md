@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.5.0 (2025-07-16)
+
+Full Changelog: [v1.4.0...v1.5.0](https://github.com/orbcorp/orb-kotlin/compare/v1.4.0...v1.5.0)
+
+### Features
+
+* **api:** api update ([2876abe](https://github.com/orbcorp/orb-kotlin/commit/2876abe9f99907052b8ef602799dc6190c828213))
+
+
+### Chores
+
+* **ci:** bump `actions/setup-java` to v4 ([bbb2f4c](https://github.com/orbcorp/orb-kotlin/commit/bbb2f4cef1d3957a6cf7028dba174e3a4a497b03))
+
 ## 1.4.0 (2025-07-08)
 
 Full Changelog: [v1.3.0...v1.4.0](https://github.com/orbcorp/orb-kotlin/compare/v1.3.0...v1.4.0)
