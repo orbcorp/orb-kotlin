@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.7.0 (2025-07-16)
+
+Full Changelog: [v1.6.0...v1.7.0](https://github.com/orbcorp/orb-kotlin/compare/v1.6.0...v1.7.0)
+
+### Features
+
+* **api:** api update ([ba8031d](https://github.com/orbcorp/orb-kotlin/commit/ba8031d4f556a37a7c2ef2f7cb057200bdf7975f))
+
+
+### Chores
+
+* **internal:** allow running specific example from cli ([afad1bb](https://github.com/orbcorp/orb-kotlin/commit/afad1bb898585678543d1e63180ec301d9a2783f))
+
 ## 1.6.0 (2025-07-16)
 
 Full Changelog: [v1.5.0...v1.6.0](https://github.com/orbcorp/orb-kotlin/compare/v1.5.0...v1.6.0)
