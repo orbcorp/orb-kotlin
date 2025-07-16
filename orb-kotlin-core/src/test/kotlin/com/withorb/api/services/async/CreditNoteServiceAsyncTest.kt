@@ -5,6 +5,7 @@ package com.withorb.api.services.async
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.models.CreditNoteCreateParams
+import java.time.LocalDate
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -27,10 +28,14 @@ internal class CreditNoteServiceAsyncTest {
                         CreditNoteCreateParams.LineItem.builder()
                             .amount("amount")
                             .invoiceLineItemId("4khy3nwzktxv7")
+                            .endDate(LocalDate.parse("2023-09-22"))
+                            .startDate(LocalDate.parse("2023-09-22"))
                             .build()
                     )
                     .reason(CreditNoteCreateParams.Reason.DUPLICATE)
+                    .endDate(LocalDate.parse("2023-09-22"))
                     .memo("An optional memo for my credit note.")
+                    .startDate(LocalDate.parse("2023-09-22"))
                     .build()
             )
 

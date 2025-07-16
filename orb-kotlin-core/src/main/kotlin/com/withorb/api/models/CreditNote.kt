@@ -793,6 +793,8 @@ private constructor(
         private val subtotal: JsonField<String>,
         private val taxAmounts: JsonField<List<TaxAmount>>,
         private val discounts: JsonField<List<Discount>>,
+        private val endTimeExclusive: JsonField<OffsetDateTime>,
+        private val startTimeInclusive: JsonField<OffsetDateTime>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -814,6 +816,12 @@ private constructor(
             @JsonProperty("discounts")
             @ExcludeMissing
             discounts: JsonField<List<Discount>> = JsonMissing.of(),
+            @JsonProperty("end_time_exclusive")
+            @ExcludeMissing
+            endTimeExclusive: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("start_time_inclusive")
+            @ExcludeMissing
+            startTimeInclusive: JsonField<OffsetDateTime> = JsonMissing.of(),
         ) : this(
             id,
             amount,
@@ -823,6 +831,8 @@ private constructor(
             subtotal,
             taxAmounts,
             discounts,
+            endTimeExclusive,
+            startTimeInclusive,
             mutableMapOf(),
         )
 
@@ -891,6 +901,23 @@ private constructor(
         fun discounts(): List<Discount>? = discounts.getNullable("discounts")
 
         /**
+         * The end time of the service period for this credit note line item.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun endTimeExclusive(): OffsetDateTime? = endTimeExclusive.getNullable("end_time_exclusive")
+
+        /**
+         * The start time of the service period for this credit note line item.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun startTimeInclusive(): OffsetDateTime? =
+            startTimeInclusive.getNullable("start_time_inclusive")
+
+        /**
          * Returns the raw JSON value of [id].
          *
          * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
@@ -950,6 +977,26 @@ private constructor(
         @ExcludeMissing
         fun _discounts(): JsonField<List<Discount>> = discounts
 
+        /**
+         * Returns the raw JSON value of [endTimeExclusive].
+         *
+         * Unlike [endTimeExclusive], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("end_time_exclusive")
+        @ExcludeMissing
+        fun _endTimeExclusive(): JsonField<OffsetDateTime> = endTimeExclusive
+
+        /**
+         * Returns the raw JSON value of [startTimeInclusive].
+         *
+         * Unlike [startTimeInclusive], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("start_time_inclusive")
+        @ExcludeMissing
+        fun _startTimeInclusive(): JsonField<OffsetDateTime> = startTimeInclusive
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -992,6 +1039,8 @@ private constructor(
             private var subtotal: JsonField<String>? = null
             private var taxAmounts: JsonField<MutableList<TaxAmount>>? = null
             private var discounts: JsonField<MutableList<Discount>>? = null
+            private var endTimeExclusive: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var startTimeInclusive: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(lineItem: LineItem) = apply {
@@ -1003,6 +1052,8 @@ private constructor(
                 subtotal = lineItem.subtotal
                 taxAmounts = lineItem.taxAmounts.map { it.toMutableList() }
                 discounts = lineItem.discounts.map { it.toMutableList() }
+                endTimeExclusive = lineItem.endTimeExclusive
+                startTimeInclusive = lineItem.startTimeInclusive
                 additionalProperties = lineItem.additionalProperties.toMutableMap()
             }
 
@@ -1137,6 +1188,36 @@ private constructor(
                     }
             }
 
+            /** The end time of the service period for this credit note line item. */
+            fun endTimeExclusive(endTimeExclusive: OffsetDateTime?) =
+                endTimeExclusive(JsonField.ofNullable(endTimeExclusive))
+
+            /**
+             * Sets [Builder.endTimeExclusive] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.endTimeExclusive] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun endTimeExclusive(endTimeExclusive: JsonField<OffsetDateTime>) = apply {
+                this.endTimeExclusive = endTimeExclusive
+            }
+
+            /** The start time of the service period for this credit note line item. */
+            fun startTimeInclusive(startTimeInclusive: OffsetDateTime?) =
+                startTimeInclusive(JsonField.ofNullable(startTimeInclusive))
+
+            /**
+             * Sets [Builder.startTimeInclusive] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.startTimeInclusive] with a well-typed
+             * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
+            fun startTimeInclusive(startTimeInclusive: JsonField<OffsetDateTime>) = apply {
+                this.startTimeInclusive = startTimeInclusive
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -1184,6 +1265,8 @@ private constructor(
                     checkRequired("subtotal", subtotal),
                     checkRequired("taxAmounts", taxAmounts).map { it.toImmutable() },
                     (discounts ?: JsonMissing.of()).map { it.toImmutable() },
+                    endTimeExclusive,
+                    startTimeInclusive,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1203,6 +1286,8 @@ private constructor(
             subtotal()
             taxAmounts().forEach { it.validate() }
             discounts()?.forEach { it.validate() }
+            endTimeExclusive()
+            startTimeInclusive()
             validated = true
         }
 
@@ -1228,7 +1313,9 @@ private constructor(
                 (if (quantity.asKnown() == null) 0 else 1) +
                 (if (subtotal.asKnown() == null) 0 else 1) +
                 (taxAmounts.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
-                (discounts.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+                (discounts.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (endTimeExclusive.asKnown() == null) 0 else 1) +
+                (if (startTimeInclusive.asKnown() == null) 0 else 1)
 
         class Discount
         private constructor(
@@ -1787,17 +1874,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItem && id == other.id && amount == other.amount && itemId == other.itemId && name == other.name && quantity == other.quantity && subtotal == other.subtotal && taxAmounts == other.taxAmounts && discounts == other.discounts && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LineItem && id == other.id && amount == other.amount && itemId == other.itemId && name == other.name && quantity == other.quantity && subtotal == other.subtotal && taxAmounts == other.taxAmounts && discounts == other.discounts && endTimeExclusive == other.endTimeExclusive && startTimeInclusive == other.startTimeInclusive && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, amount, itemId, name, quantity, subtotal, taxAmounts, discounts, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, amount, itemId, name, quantity, subtotal, taxAmounts, discounts, endTimeExclusive, startTimeInclusive, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LineItem{id=$id, amount=$amount, itemId=$itemId, name=$name, quantity=$quantity, subtotal=$subtotal, taxAmounts=$taxAmounts, discounts=$discounts, additionalProperties=$additionalProperties}"
+            "LineItem{id=$id, amount=$amount, itemId=$itemId, name=$name, quantity=$quantity, subtotal=$subtotal, taxAmounts=$taxAmounts, discounts=$discounts, endTimeExclusive=$endTimeExclusive, startTimeInclusive=$startTimeInclusive, additionalProperties=$additionalProperties}"
     }
 
     /** The maximum amount applied on the original invoice */
