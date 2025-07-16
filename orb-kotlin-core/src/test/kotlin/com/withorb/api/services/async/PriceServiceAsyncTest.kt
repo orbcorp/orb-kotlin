@@ -166,6 +166,7 @@ internal class PriceServiceAsyncTest {
                     .externalCustomerId("external_customer_id")
                     .addPriceEvaluation(
                         PriceEvaluateMultipleParams.PriceEvaluation.builder()
+                            .externalPriceId("external_price_id")
                             .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
                             .addGroupingKey(
                                 "case when my_event_type = 'foo' then true else false end"
@@ -263,6 +264,7 @@ internal class PriceServiceAsyncTest {
                     .externalCustomerId("external_customer_id")
                     .addPriceEvaluation(
                         PriceEvaluatePreviewEventsParams.PriceEvaluation.builder()
+                            .externalPriceId("external_price_id")
                             .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
                             .addGroupingKey(
                                 "case when my_event_type = 'foo' then true else false end"

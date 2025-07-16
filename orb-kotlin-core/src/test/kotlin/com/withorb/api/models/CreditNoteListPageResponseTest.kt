@@ -55,6 +55,10 @@ internal class CreditNoteListPageResponseTest {
                                         .reason("reason")
                                         .build()
                                 )
+                                .endTimeExclusive(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .startTimeInclusive(
+                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                )
                                 .build()
                         )
                         .maximumAmountAdjustment(
@@ -143,6 +147,8 @@ internal class CreditNoteListPageResponseTest {
                                     .reason("reason")
                                     .build()
                             )
+                            .endTimeExclusive(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .startTimeInclusive(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
                     .maximumAmountAdjustment(
@@ -233,6 +239,10 @@ internal class CreditNoteListPageResponseTest {
                                         .amountDiscount("amount_discount")
                                         .reason("reason")
                                         .build()
+                                )
+                                .endTimeExclusive(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .startTimeInclusive(
+                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                 )
                                 .build()
                         )
