@@ -8,5 +8,12 @@ dependencies {
 }
 
 application {
-    mainClass = "com.withorb.api.example.MainKt"
+    // Use `./gradlew :orb-kotlin-example:run` to run `Main`
+    // Use `./gradlew :orb-kotlin-example:run -Dexample=Something` to run `SomethingExample`
+    mainClass = "com.withorb.api.example.${
+        if (project.hasProperty("example"))
+            "${project.property("example")}ExampleKt"
+        else
+            "MainKt"
+    }"
 }
