@@ -3,14 +3,14 @@
 package com.withorb.api.services.blocking.customers
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
-import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.parseable
@@ -48,7 +48,8 @@ class CostServiceImpl internal constructor(private val clientOptions: ClientOpti
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         CostService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
@@ -57,7 +58,6 @@ class CostServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         private val listHandler: Handler<CustomerCostListResponse> =
             jsonHandler<CustomerCostListResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: CustomerCostListParams,
@@ -75,7 +75,7 @@ class CostServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -88,7 +88,6 @@ class CostServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         private val listByExternalIdHandler: Handler<CustomerCostListByExternalIdResponse> =
             jsonHandler<CustomerCostListByExternalIdResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun listByExternalId(
             params: CustomerCostListByExternalIdParams,
@@ -111,7 +110,7 @@ class CostServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listByExternalIdHandler.handle(it) }
                     .also {

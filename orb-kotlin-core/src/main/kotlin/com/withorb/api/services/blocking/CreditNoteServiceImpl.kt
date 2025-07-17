@@ -3,14 +3,14 @@
 package com.withorb.api.services.blocking
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
-import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.json
@@ -56,7 +56,8 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         CreditNoteService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
@@ -66,7 +67,7 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
             )
 
         private val createHandler: Handler<CreditNote> =
-            jsonHandler<CreditNote>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<CreditNote>(clientOptions.jsonMapper)
 
         override fun create(
             params: CreditNoteCreateParams,
@@ -82,7 +83,7 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -95,7 +96,6 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
 
         private val listHandler: Handler<CreditNoteListPageResponse> =
             jsonHandler<CreditNoteListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: CreditNoteListParams,
@@ -110,7 +110,7 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -129,7 +129,7 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
         }
 
         private val fetchHandler: Handler<CreditNote> =
-            jsonHandler<CreditNote>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<CreditNote>(clientOptions.jsonMapper)
 
         override fun fetch(
             params: CreditNoteFetchParams,
@@ -147,7 +147,7 @@ class CreditNoteServiceImpl internal constructor(private val clientOptions: Clie
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { fetchHandler.handle(it) }
                     .also {

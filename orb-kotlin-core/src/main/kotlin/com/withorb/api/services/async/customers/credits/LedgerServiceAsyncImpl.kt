@@ -3,14 +3,14 @@
 package com.withorb.api.services.async.customers.credits
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
-import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.json
@@ -70,7 +70,8 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         LedgerServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
@@ -81,7 +82,6 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
         private val listHandler: Handler<CustomerCreditLedgerListPageResponse> =
             jsonHandler<CustomerCreditLedgerListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun list(
             params: CustomerCreditLedgerListParams,
@@ -99,7 +99,7 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -119,7 +119,6 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
 
         private val createEntryHandler: Handler<CustomerCreditLedgerCreateEntryResponse> =
             jsonHandler<CustomerCreditLedgerCreateEntryResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun createEntry(
             params: CustomerCreditLedgerCreateEntryParams,
@@ -138,7 +137,7 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createEntryHandler.handle(it) }
                     .also {
@@ -152,9 +151,8 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
         private val createEntryByExternalIdHandler:
             Handler<CustomerCreditLedgerCreateEntryByExternalIdResponse> =
             jsonHandler<CustomerCreditLedgerCreateEntryByExternalIdResponse>(
-                    clientOptions.jsonMapper
-                )
-                .withErrorHandler(errorHandler)
+                clientOptions.jsonMapper
+            )
 
         override suspend fun createEntryByExternalId(
             params: CustomerCreditLedgerCreateEntryByExternalIdParams,
@@ -179,7 +177,7 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createEntryByExternalIdHandler.handle(it) }
                     .also {
@@ -193,7 +191,6 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
         private val listByExternalIdHandler:
             Handler<CustomerCreditLedgerListByExternalIdPageResponse> =
             jsonHandler<CustomerCreditLedgerListByExternalIdPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun listByExternalId(
             params: CustomerCreditLedgerListByExternalIdParams,
@@ -217,7 +214,7 @@ class LedgerServiceAsyncImpl internal constructor(private val clientOptions: Cli
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listByExternalIdHandler.handle(it) }
                     .also {

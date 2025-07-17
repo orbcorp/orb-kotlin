@@ -3,14 +3,14 @@
 package com.withorb.api.services.blocking.events
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
-import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.json
@@ -78,7 +78,8 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         BackfillService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
@@ -89,7 +90,6 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
 
         private val createHandler: Handler<EventBackfillCreateResponse> =
             jsonHandler<EventBackfillCreateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: EventBackfillCreateParams,
@@ -105,7 +105,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -118,7 +118,6 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
 
         private val listHandler: Handler<EventBackfillListPageResponse> =
             jsonHandler<EventBackfillListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: EventBackfillListParams,
@@ -133,7 +132,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -153,7 +152,6 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
 
         private val closeHandler: Handler<EventBackfillCloseResponse> =
             jsonHandler<EventBackfillCloseResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun close(
             params: EventBackfillCloseParams,
@@ -172,7 +170,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { closeHandler.handle(it) }
                     .also {
@@ -185,7 +183,6 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
 
         private val fetchHandler: Handler<EventBackfillFetchResponse> =
             jsonHandler<EventBackfillFetchResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun fetch(
             params: EventBackfillFetchParams,
@@ -203,7 +200,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { fetchHandler.handle(it) }
                     .also {
@@ -216,7 +213,6 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
 
         private val revertHandler: Handler<EventBackfillRevertResponse> =
             jsonHandler<EventBackfillRevertResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun revert(
             params: EventBackfillRevertParams,
@@ -235,7 +231,7 @@ class BackfillServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { revertHandler.handle(it) }
                     .also {

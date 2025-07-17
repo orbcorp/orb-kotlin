@@ -3,14 +3,14 @@
 package com.withorb.api.services.blocking
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
-import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.json
@@ -59,7 +59,8 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         SubscriptionChangeService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
@@ -70,7 +71,6 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
 
         private val retrieveHandler: Handler<SubscriptionChangeRetrieveResponse> =
             jsonHandler<SubscriptionChangeRetrieveResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: SubscriptionChangeRetrieveParams,
@@ -88,7 +88,7 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -101,7 +101,6 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
 
         private val applyHandler: Handler<SubscriptionChangeApplyResponse> =
             jsonHandler<SubscriptionChangeApplyResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun apply(
             params: SubscriptionChangeApplyParams,
@@ -120,7 +119,7 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { applyHandler.handle(it) }
                     .also {
@@ -133,7 +132,6 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
 
         private val cancelHandler: Handler<SubscriptionChangeCancelResponse> =
             jsonHandler<SubscriptionChangeCancelResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun cancel(
             params: SubscriptionChangeCancelParams,
@@ -152,7 +150,7 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { cancelHandler.handle(it) }
                     .also {

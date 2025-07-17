@@ -3,13 +3,12 @@
 package com.withorb.api.services.async.customers.credits
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.handlers.emptyHandler
+import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
-import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse
@@ -90,7 +89,8 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         TopUpServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
@@ -101,7 +101,6 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
         private val createHandler: Handler<CustomerCreditTopUpCreateResponse> =
             jsonHandler<CustomerCreditTopUpCreateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun create(
             params: CustomerCreditTopUpCreateParams,
@@ -120,7 +119,7 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -133,7 +132,6 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
         private val listHandler: Handler<CustomerCreditTopUpListPageResponse> =
             jsonHandler<CustomerCreditTopUpListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun list(
             params: CustomerCreditTopUpListParams,
@@ -151,7 +149,7 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -169,7 +167,7 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val deleteHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<Void?> = emptyHandler()
 
         override suspend fun delete(
             params: CustomerCreditTopUpDeleteParams,
@@ -194,13 +192,14 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable { response.use { deleteHandler.handle(it) } }
+            return errorHandler.handle(response).parseable {
+                response.use { deleteHandler.handle(it) }
+            }
         }
 
         private val createByExternalIdHandler:
             Handler<CustomerCreditTopUpCreateByExternalIdResponse> =
             jsonHandler<CustomerCreditTopUpCreateByExternalIdResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun createByExternalId(
             params: CustomerCreditTopUpCreateByExternalIdParams,
@@ -225,7 +224,7 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createByExternalIdHandler.handle(it) }
                     .also {
@@ -236,8 +235,7 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
             }
         }
 
-        private val deleteByExternalIdHandler: Handler<Void?> =
-            emptyHandler().withErrorHandler(errorHandler)
+        private val deleteByExternalIdHandler: Handler<Void?> = emptyHandler()
 
         override suspend fun deleteByExternalId(
             params: CustomerCreditTopUpDeleteByExternalIdParams,
@@ -263,13 +261,14 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable { response.use { deleteByExternalIdHandler.handle(it) } }
+            return errorHandler.handle(response).parseable {
+                response.use { deleteByExternalIdHandler.handle(it) }
+            }
         }
 
         private val listByExternalIdHandler:
             Handler<CustomerCreditTopUpListByExternalIdPageResponse> =
             jsonHandler<CustomerCreditTopUpListByExternalIdPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun listByExternalId(
             params: CustomerCreditTopUpListByExternalIdParams,
@@ -293,7 +292,7 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listByExternalIdHandler.handle(it) }
                     .also {

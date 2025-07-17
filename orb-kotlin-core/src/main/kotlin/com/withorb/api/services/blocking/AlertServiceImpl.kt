@@ -3,14 +3,14 @@
 package com.withorb.api.services.blocking
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
-import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.json
@@ -84,15 +84,15 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         AlertService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): AlertService.WithRawResponse =
             AlertServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
-        private val retrieveHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<Alert> = jsonHandler<Alert>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: AlertRetrieveParams,
@@ -110,7 +110,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -121,8 +121,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val updateHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Alert> = jsonHandler<Alert>(clientOptions.jsonMapper)
 
         override fun update(
             params: AlertUpdateParams,
@@ -141,7 +140,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -154,7 +153,6 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
 
         private val listHandler: Handler<AlertListPageResponse> =
             jsonHandler<AlertListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: AlertListParams,
@@ -169,7 +167,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -188,7 +186,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
         }
 
         private val createForCustomerHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Alert>(clientOptions.jsonMapper)
 
         override fun createForCustomer(
             params: AlertCreateForCustomerParams,
@@ -207,7 +205,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createForCustomerHandler.handle(it) }
                     .also {
@@ -219,7 +217,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
         }
 
         private val createForExternalCustomerHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Alert>(clientOptions.jsonMapper)
 
         override fun createForExternalCustomer(
             params: AlertCreateForExternalCustomerParams,
@@ -238,7 +236,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createForExternalCustomerHandler.handle(it) }
                     .also {
@@ -250,7 +248,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
         }
 
         private val createForSubscriptionHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Alert>(clientOptions.jsonMapper)
 
         override fun createForSubscription(
             params: AlertCreateForSubscriptionParams,
@@ -269,7 +267,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createForSubscriptionHandler.handle(it) }
                     .also {
@@ -280,8 +278,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val disableHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val disableHandler: Handler<Alert> = jsonHandler<Alert>(clientOptions.jsonMapper)
 
         override fun disable(
             params: AlertDisableParams,
@@ -300,7 +297,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { disableHandler.handle(it) }
                     .also {
@@ -311,8 +308,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
             }
         }
 
-        private val enableHandler: Handler<Alert> =
-            jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val enableHandler: Handler<Alert> = jsonHandler<Alert>(clientOptions.jsonMapper)
 
         override fun enable(
             params: AlertEnableParams,
@@ -331,7 +327,7 @@ class AlertServiceImpl internal constructor(private val clientOptions: ClientOpt
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { enableHandler.handle(it) }
                     .also {

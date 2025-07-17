@@ -3,14 +3,14 @@
 package com.withorb.api.services.async
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
-import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.json
@@ -66,7 +66,8 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         BetaServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val externalPlanId: ExternalPlanIdServiceAsync.WithRawResponse by lazy {
             ExternalPlanIdServiceAsyncImpl.WithRawResponseImpl(clientOptions)
@@ -82,7 +83,7 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
         override fun externalPlanId(): ExternalPlanIdServiceAsync.WithRawResponse = externalPlanId
 
         private val createPlanVersionHandler: Handler<PlanVersion> =
-            jsonHandler<PlanVersion>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PlanVersion>(clientOptions.jsonMapper)
 
         override suspend fun createPlanVersion(
             params: BetaCreatePlanVersionParams,
@@ -101,7 +102,7 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createPlanVersionHandler.handle(it) }
                     .also {
@@ -113,7 +114,7 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
         }
 
         private val fetchPlanVersionHandler: Handler<PlanVersion> =
-            jsonHandler<PlanVersion>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PlanVersion>(clientOptions.jsonMapper)
 
         override suspend fun fetchPlanVersion(
             params: BetaFetchPlanVersionParams,
@@ -136,7 +137,7 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { fetchPlanVersionHandler.handle(it) }
                     .also {
@@ -148,7 +149,7 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
         }
 
         private val setDefaultPlanVersionHandler: Handler<Plan> =
-            jsonHandler<Plan>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Plan>(clientOptions.jsonMapper)
 
         override suspend fun setDefaultPlanVersion(
             params: BetaSetDefaultPlanVersionParams,
@@ -167,7 +168,7 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { setDefaultPlanVersionHandler.handle(it) }
                     .also {

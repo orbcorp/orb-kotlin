@@ -3,14 +3,14 @@
 package com.withorb.api.services.async
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
-import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.json
@@ -66,7 +66,8 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         PlanServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val externalPlanId: ExternalPlanIdServiceAsync.WithRawResponse by lazy {
             ExternalPlanIdServiceAsyncImpl.WithRawResponseImpl(clientOptions)
@@ -81,8 +82,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
         override fun externalPlanId(): ExternalPlanIdServiceAsync.WithRawResponse = externalPlanId
 
-        private val createHandler: Handler<Plan> =
-            jsonHandler<Plan>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<Plan> = jsonHandler<Plan>(clientOptions.jsonMapper)
 
         override suspend fun create(
             params: PlanCreateParams,
@@ -98,7 +98,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -109,8 +109,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val updateHandler: Handler<Plan> =
-            jsonHandler<Plan>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Plan> = jsonHandler<Plan>(clientOptions.jsonMapper)
 
         override suspend fun update(
             params: PlanUpdateParams,
@@ -129,7 +128,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -142,7 +141,6 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
         private val listHandler: Handler<PlanListPageResponse> =
             jsonHandler<PlanListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun list(
             params: PlanListParams,
@@ -157,7 +155,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -175,8 +173,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val fetchHandler: Handler<Plan> =
-            jsonHandler<Plan>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<Plan> = jsonHandler<Plan>(clientOptions.jsonMapper)
 
         override suspend fun fetch(
             params: PlanFetchParams,
@@ -194,7 +191,7 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { fetchHandler.handle(it) }
                     .also {
