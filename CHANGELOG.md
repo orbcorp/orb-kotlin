@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.7.1 (2025-07-17)
+
+Full Changelog: [v1.7.0...v1.7.1](https://github.com/orbcorp/orb-kotlin/compare/v1.7.0...v1.7.1)
+
+### Bug Fixes
+
+* **client:** ensure error handling always occurs ([54cb075](https://github.com/orbcorp/orb-kotlin/commit/54cb0752dafe8c70083b0721cf7eba07fcc7f337))
+
 ## 1.7.0 (2025-07-16)
 
 Full Changelog: [v1.6.0...v1.7.0](https://github.com/orbcorp/orb-kotlin/compare/v1.6.0...v1.7.0)
