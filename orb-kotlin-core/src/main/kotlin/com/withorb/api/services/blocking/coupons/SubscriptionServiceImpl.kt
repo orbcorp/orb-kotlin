@@ -3,14 +3,14 @@
 package com.withorb.api.services.blocking.coupons
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
-import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.parseable
@@ -41,7 +41,8 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         SubscriptionService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
@@ -51,7 +52,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             )
 
         private val listHandler: Handler<Subscriptions> =
-            jsonHandler<Subscriptions>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Subscriptions>(clientOptions.jsonMapper)
 
         override fun list(
             params: CouponSubscriptionListParams,
@@ -69,7 +70,7 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {

@@ -3,13 +3,12 @@
 package com.withorb.api.services.blocking
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.handlers.emptyHandler
+import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
-import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse
@@ -121,7 +120,8 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         CustomerService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val costs: CostService.WithRawResponse by lazy {
             CostServiceImpl.WithRawResponseImpl(clientOptions)
@@ -150,7 +150,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             balanceTransactions
 
         private val createHandler: Handler<Customer> =
-            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Customer>(clientOptions.jsonMapper)
 
         override fun create(
             params: CustomerCreateParams,
@@ -166,7 +166,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -178,7 +178,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
         }
 
         private val updateHandler: Handler<Customer> =
-            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Customer>(clientOptions.jsonMapper)
 
         override fun update(
             params: CustomerUpdateParams,
@@ -197,7 +197,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -210,7 +210,6 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
 
         private val listHandler: Handler<CustomerListPageResponse> =
             jsonHandler<CustomerListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: CustomerListParams,
@@ -225,7 +224,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -243,7 +242,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val deleteHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<Void?> = emptyHandler()
 
         override fun delete(
             params: CustomerDeleteParams,
@@ -262,11 +261,13 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable { response.use { deleteHandler.handle(it) } }
+            return errorHandler.handle(response).parseable {
+                response.use { deleteHandler.handle(it) }
+            }
         }
 
         private val fetchHandler: Handler<Customer> =
-            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Customer>(clientOptions.jsonMapper)
 
         override fun fetch(
             params: CustomerFetchParams,
@@ -284,7 +285,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { fetchHandler.handle(it) }
                     .also {
@@ -296,7 +297,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
         }
 
         private val fetchByExternalIdHandler: Handler<Customer> =
-            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Customer>(clientOptions.jsonMapper)
 
         override fun fetchByExternalId(
             params: CustomerFetchByExternalIdParams,
@@ -314,7 +315,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { fetchByExternalIdHandler.handle(it) }
                     .also {
@@ -325,8 +326,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             }
         }
 
-        private val syncPaymentMethodsFromGatewayHandler: Handler<Void?> =
-            emptyHandler().withErrorHandler(errorHandler)
+        private val syncPaymentMethodsFromGatewayHandler: Handler<Void?> = emptyHandler()
 
         override fun syncPaymentMethodsFromGateway(
             params: CustomerSyncPaymentMethodsFromGatewayParams,
@@ -349,13 +349,13 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response.use { syncPaymentMethodsFromGatewayHandler.handle(it) }
             }
         }
 
         private val syncPaymentMethodsFromGatewayByExternalCustomerIdHandler: Handler<Void?> =
-            emptyHandler().withErrorHandler(errorHandler)
+            emptyHandler()
 
         override fun syncPaymentMethodsFromGatewayByExternalCustomerId(
             params: CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams,
@@ -379,13 +379,13 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response.use { syncPaymentMethodsFromGatewayByExternalCustomerIdHandler.handle(it) }
             }
         }
 
         private val updateByExternalIdHandler: Handler<Customer> =
-            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Customer>(clientOptions.jsonMapper)
 
         override fun updateByExternalId(
             params: CustomerUpdateByExternalIdParams,
@@ -404,7 +404,7 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateByExternalIdHandler.handle(it) }
                     .also {
