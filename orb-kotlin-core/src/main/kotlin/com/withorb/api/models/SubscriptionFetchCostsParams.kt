@@ -37,7 +37,7 @@ private constructor(
 
     fun subscriptionId(): String? = subscriptionId
 
-    /** The currency or custom pricing unit to use. */
+    /** The currency to use. */
     fun currency(): String? = currency
 
     /** Costs returned are exclusive of `timeframe_end`. */
@@ -92,7 +92,7 @@ private constructor(
 
         fun subscriptionId(subscriptionId: String?) = apply { this.subscriptionId = subscriptionId }
 
-        /** The currency or custom pricing unit to use. */
+        /** The currency to use. */
         fun currency(currency: String?) = apply { this.currency = currency }
 
         /** Costs returned are exclusive of `timeframe_end`. */
