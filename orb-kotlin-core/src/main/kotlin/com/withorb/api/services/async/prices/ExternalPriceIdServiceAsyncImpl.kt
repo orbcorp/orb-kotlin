@@ -3,14 +3,14 @@
 package com.withorb.api.services.async.prices
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
-import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.json
@@ -51,7 +51,8 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPriceId
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         ExternalPriceIdServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
@@ -60,8 +61,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPriceId
                 clientOptions.toBuilder().apply(modifier).build()
             )
 
-        private val updateHandler: Handler<Price> =
-            jsonHandler<Price>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Price> = jsonHandler<Price>(clientOptions.jsonMapper)
 
         override suspend fun update(
             params: PriceExternalPriceIdUpdateParams,
@@ -80,7 +80,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPriceId
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -91,8 +91,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPriceId
             }
         }
 
-        private val fetchHandler: Handler<Price> =
-            jsonHandler<Price>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<Price> = jsonHandler<Price>(clientOptions.jsonMapper)
 
         override suspend fun fetch(
             params: PriceExternalPriceIdFetchParams,
@@ -110,7 +109,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPriceId
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { fetchHandler.handle(it) }
                     .also {

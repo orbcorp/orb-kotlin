@@ -3,14 +3,14 @@
 package com.withorb.api.services.async
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
-import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.json
@@ -102,7 +102,8 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         InvoiceServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
@@ -111,8 +112,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 clientOptions.toBuilder().apply(modifier).build()
             )
 
-        private val createHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper)
 
         override suspend fun create(
             params: InvoiceCreateParams,
@@ -128,7 +128,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -139,8 +139,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val updateHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper)
 
         override suspend fun update(
             params: InvoiceUpdateParams,
@@ -159,7 +158,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -172,7 +171,6 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val listHandler: Handler<InvoiceListPageResponse> =
             jsonHandler<InvoiceListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun list(
             params: InvoiceListParams,
@@ -187,7 +185,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -205,8 +203,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val fetchHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val fetchHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper)
 
         override suspend fun fetch(
             params: InvoiceFetchParams,
@@ -224,7 +221,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { fetchHandler.handle(it) }
                     .also {
@@ -237,7 +234,6 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val fetchUpcomingHandler: Handler<InvoiceFetchUpcomingResponse> =
             jsonHandler<InvoiceFetchUpcomingResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun fetchUpcoming(
             params: InvoiceFetchUpcomingParams,
@@ -252,7 +248,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { fetchUpcomingHandler.handle(it) }
                     .also {
@@ -263,8 +259,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val issueHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val issueHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper)
 
         override suspend fun issue(
             params: InvoiceIssueParams,
@@ -283,7 +278,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { issueHandler.handle(it) }
                     .also {
@@ -295,7 +290,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val markPaidHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Invoice>(clientOptions.jsonMapper)
 
         override suspend fun markPaid(
             params: InvoiceMarkPaidParams,
@@ -314,7 +309,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { markPaidHandler.handle(it) }
                     .also {
@@ -325,8 +320,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val payHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val payHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper)
 
         override suspend fun pay(
             params: InvoicePayParams,
@@ -345,7 +339,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { payHandler.handle(it) }
                     .also {
@@ -356,8 +350,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val voidHandler: Handler<Invoice> =
-            jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val voidHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper)
 
         override suspend fun void(
             params: InvoiceVoidParams,
@@ -376,7 +369,7 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { voidHandler.handle(it) }
                     .also {
