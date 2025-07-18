@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/1.8.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/1.9.0)
 
 <!-- x-release-please-end -->
 
@@ -19,7 +19,7 @@ The REST API documentation can be found on [docs.withorb.com](https://docs.witho
 ### Gradle
 
 ```kotlin
-implementation("com.withorb.api:orb-kotlin:1.8.0")
+implementation("com.withorb.api:orb-kotlin:1.9.0")
 ```
 
 ### Maven
@@ -28,7 +28,7 @@ implementation("com.withorb.api:orb-kotlin:1.8.0")
 <dependency>
   <groupId>com.withorb.api</groupId>
   <artifactId>orb-kotlin</artifactId>
-  <version>1.8.0</version>
+  <version>1.9.0</version>
 </dependency>
 ```
 
@@ -388,6 +388,27 @@ val client: OrbClient = OrbOkHttpClient.builder()
         "https://example.com", 8080
       )
     ))
+    .build()
+```
+
+### HTTPS
+
+> [!NOTE]
+> Most applications should not call these methods, and instead use the system defaults. The defaults include
+> special optimizations that can be lost if the implementations are modified.
+
+To configure how HTTPS connections are secured, configure the client using the `sslSocketFactory`, `trustManager`, and `hostnameVerifier` methods:
+
+```kotlin
+import com.withorb.api.client.OrbClient
+import com.withorb.api.client.okhttp.OrbOkHttpClient
+
+val client: OrbClient = OrbOkHttpClient.builder()
+    .fromEnv()
+    // If `sslSocketFactory` is set, then `trustManager` must be set, and vice versa.
+    .sslSocketFactory(yourSSLSocketFactory)
+    .trustManager(yourTrustManager)
+    .hostnameVerifier(yourHostnameVerifier)
     .build()
 ```
 
