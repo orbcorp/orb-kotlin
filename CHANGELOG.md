@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.9.0 (2025-07-18)
+
+Full Changelog: [v1.8.0...v1.9.0](https://github.com/orbcorp/orb-kotlin/compare/v1.8.0...v1.9.0)
+
+### Features
+
+* **client:** add https config options ([f1b310c](https://github.com/orbcorp/orb-kotlin/commit/f1b310c79d4acf0f22b579b8293339ca7bd771da))
+
+
+### Chores
+
+* **internal:** refactor delegating from client to options ([0ac1964](https://github.com/orbcorp/orb-kotlin/commit/0ac1964dee6cc9e7adec77db69c398a3f0ca019c))
+
 ## 1.8.0 (2025-07-17)
 
 Full Changelog: [v1.7.1...v1.8.0](https://github.com/orbcorp/orb-kotlin/compare/v1.7.1...v1.8.0)
