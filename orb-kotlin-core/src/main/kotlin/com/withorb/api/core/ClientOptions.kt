@@ -219,9 +219,13 @@ private constructor(
         fun timeout(): Timeout = timeout
 
         fun fromEnv() = apply {
-            System.getenv("ORB_BASE_URL")?.let { baseUrl(it) }
-            System.getenv("ORB_API_KEY")?.let { apiKey(it) }
-            System.getenv("ORB_WEBHOOK_SECRET")?.let { webhookSecret(it) }
+            (System.getProperty("orb.baseUrl") ?: System.getenv("ORB_BASE_URL"))?.let {
+                baseUrl(it)
+            }
+            (System.getProperty("orb.apiKey") ?: System.getenv("ORB_API_KEY"))?.let { apiKey(it) }
+            (System.getProperty("orb.webhookSecret") ?: System.getenv("ORB_WEBHOOK_SECRET"))?.let {
+                webhookSecret(it)
+            }
         }
 
         /**
