@@ -55,16 +55,6 @@ private constructor(
     fun lineItems(): List<LineItem> = body.lineItems()
 
     /**
-     * Determines the difference between the invoice issue date for subscription invoices as the
-     * date that they are due. A value of '0' here represents that the invoice is due on issue,
-     * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
-     *
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun netTerms(): Long = body.netTerms()
-
-    /**
      * The id of the `Customer` to create this invoice for. One of `customer_id` and
      * `external_customer_id` are required.
      *
@@ -109,6 +99,16 @@ private constructor(
     fun metadata(): Metadata? = body.metadata()
 
     /**
+     * Determines the difference between the invoice issue date for subscription invoices as the
+     * date that they are due. A value of '0' here represents that the invoice is due on issue,
+     * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun netTerms(): Long? = body.netTerms()
+
+    /**
      * When true, this invoice will be submitted for issuance upon creation. When false, the
      * resulting invoice will require manual review to issue. Defaulted to false.
      *
@@ -137,13 +137,6 @@ private constructor(
      * Unlike [lineItems], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _lineItems(): JsonField<List<LineItem>> = body._lineItems()
-
-    /**
-     * Returns the raw JSON value of [netTerms].
-     *
-     * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _netTerms(): JsonField<Long> = body._netTerms()
 
     /**
      * Returns the raw JSON value of [customerId].
@@ -182,6 +175,13 @@ private constructor(
     fun _metadata(): JsonField<Metadata> = body._metadata()
 
     /**
+     * Returns the raw JSON value of [netTerms].
+     *
+     * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _netTerms(): JsonField<Long> = body._netTerms()
+
+    /**
      * Returns the raw JSON value of [willAutoIssue].
      *
      * Unlike [willAutoIssue], this method doesn't throw if the JSON field has an unexpected type.
@@ -206,7 +206,6 @@ private constructor(
          * .currency()
          * .invoiceDate()
          * .lineItems()
-         * .netTerms()
          * ```
          */
         fun builder() = Builder()
@@ -233,8 +232,8 @@ private constructor(
          * - [currency]
          * - [invoiceDate]
          * - [lineItems]
-         * - [netTerms]
          * - [customerId]
+         * - [discount]
          * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
@@ -286,21 +285,6 @@ private constructor(
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addLineItem(lineItem: LineItem) = apply { body.addLineItem(lineItem) }
-
-        /**
-         * Determines the difference between the invoice issue date for subscription invoices as the
-         * date that they are due. A value of '0' here represents that the invoice is due on issue,
-         * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
-         */
-        fun netTerms(netTerms: Long) = apply { body.netTerms(netTerms) }
-
-        /**
-         * Sets [Builder.netTerms] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.netTerms] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun netTerms(netTerms: JsonField<Long>) = apply { body.netTerms(netTerms) }
 
         /**
          * The id of the `Customer` to create this invoice for. One of `customer_id` and
@@ -421,6 +405,28 @@ private constructor(
          * value.
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
+
+        /**
+         * Determines the difference between the invoice issue date for subscription invoices as the
+         * date that they are due. A value of '0' here represents that the invoice is due on issue,
+         * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
+         */
+        fun netTerms(netTerms: Long?) = apply { body.netTerms(netTerms) }
+
+        /**
+         * Alias for [Builder.netTerms].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
+
+        /**
+         * Sets [Builder.netTerms] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.netTerms] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun netTerms(netTerms: JsonField<Long>) = apply { body.netTerms(netTerms) }
 
         /**
          * When true, this invoice will be submitted for issuance upon creation. When false, the
@@ -566,7 +572,6 @@ private constructor(
          * .currency()
          * .invoiceDate()
          * .lineItems()
-         * .netTerms()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -590,12 +595,12 @@ private constructor(
         private val currency: JsonField<String>,
         private val invoiceDate: JsonField<OffsetDateTime>,
         private val lineItems: JsonField<List<LineItem>>,
-        private val netTerms: JsonField<Long>,
         private val customerId: JsonField<String>,
         private val discount: JsonField<Discount>,
         private val externalCustomerId: JsonField<String>,
         private val memo: JsonField<String>,
         private val metadata: JsonField<Metadata>,
+        private val netTerms: JsonField<Long>,
         private val willAutoIssue: JsonField<Boolean>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
@@ -611,7 +616,6 @@ private constructor(
             @JsonProperty("line_items")
             @ExcludeMissing
             lineItems: JsonField<List<LineItem>> = JsonMissing.of(),
-            @JsonProperty("net_terms") @ExcludeMissing netTerms: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("customer_id")
             @ExcludeMissing
             customerId: JsonField<String> = JsonMissing.of(),
@@ -625,6 +629,7 @@ private constructor(
             @JsonProperty("metadata")
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
+            @JsonProperty("net_terms") @ExcludeMissing netTerms: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("will_auto_issue")
             @ExcludeMissing
             willAutoIssue: JsonField<Boolean> = JsonMissing.of(),
@@ -632,12 +637,12 @@ private constructor(
             currency,
             invoiceDate,
             lineItems,
-            netTerms,
             customerId,
             discount,
             externalCustomerId,
             memo,
             metadata,
+            netTerms,
             willAutoIssue,
             mutableMapOf(),
         )
@@ -664,16 +669,6 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun lineItems(): List<LineItem> = lineItems.getRequired("line_items")
-
-        /**
-         * Determines the difference between the invoice issue date for subscription invoices as the
-         * date that they are due. A value of '0' here represents that the invoice is due on issue,
-         * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun netTerms(): Long = netTerms.getRequired("net_terms")
 
         /**
          * The id of the `Customer` to create this invoice for. One of `customer_id` and
@@ -720,6 +715,16 @@ private constructor(
         fun metadata(): Metadata? = metadata.getNullable("metadata")
 
         /**
+         * Determines the difference between the invoice issue date for subscription invoices as the
+         * date that they are due. A value of '0' here represents that the invoice is due on issue,
+         * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun netTerms(): Long? = netTerms.getNullable("net_terms")
+
+        /**
          * When true, this invoice will be submitted for issuance upon creation. When false, the
          * resulting invoice will require manual review to issue. Defaulted to false.
          *
@@ -752,13 +757,6 @@ private constructor(
         @JsonProperty("line_items")
         @ExcludeMissing
         fun _lineItems(): JsonField<List<LineItem>> = lineItems
-
-        /**
-         * Returns the raw JSON value of [netTerms].
-         *
-         * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("net_terms") @ExcludeMissing fun _netTerms(): JsonField<Long> = netTerms
 
         /**
          * Returns the raw JSON value of [customerId].
@@ -801,6 +799,13 @@ private constructor(
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
         /**
+         * Returns the raw JSON value of [netTerms].
+         *
+         * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("net_terms") @ExcludeMissing fun _netTerms(): JsonField<Long> = netTerms
+
+        /**
          * Returns the raw JSON value of [willAutoIssue].
          *
          * Unlike [willAutoIssue], this method doesn't throw if the JSON field has an unexpected
@@ -832,7 +837,6 @@ private constructor(
              * .currency()
              * .invoiceDate()
              * .lineItems()
-             * .netTerms()
              * ```
              */
             fun builder() = Builder()
@@ -844,12 +848,12 @@ private constructor(
             private var currency: JsonField<String>? = null
             private var invoiceDate: JsonField<OffsetDateTime>? = null
             private var lineItems: JsonField<MutableList<LineItem>>? = null
-            private var netTerms: JsonField<Long>? = null
             private var customerId: JsonField<String> = JsonMissing.of()
             private var discount: JsonField<Discount> = JsonMissing.of()
             private var externalCustomerId: JsonField<String> = JsonMissing.of()
             private var memo: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var netTerms: JsonField<Long> = JsonMissing.of()
             private var willAutoIssue: JsonField<Boolean> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -857,12 +861,12 @@ private constructor(
                 currency = body.currency
                 invoiceDate = body.invoiceDate
                 lineItems = body.lineItems.map { it.toMutableList() }
-                netTerms = body.netTerms
                 customerId = body.customerId
                 discount = body.discount
                 externalCustomerId = body.externalCustomerId
                 memo = body.memo
                 metadata = body.metadata
+                netTerms = body.netTerms
                 willAutoIssue = body.willAutoIssue
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
@@ -923,23 +927,6 @@ private constructor(
                         checkKnown("lineItems", it).add(lineItem)
                     }
             }
-
-            /**
-             * Determines the difference between the invoice issue date for subscription invoices as
-             * the date that they are due. A value of '0' here represents that the invoice is due on
-             * issue, whereas a value of 30 represents that the customer has 30 days to pay the
-             * invoice.
-             */
-            fun netTerms(netTerms: Long) = netTerms(JsonField.of(netTerms))
-
-            /**
-             * Sets [Builder.netTerms] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.netTerms] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
 
             /**
              * The id of the `Customer` to create this invoice for. One of `customer_id` and
@@ -1079,6 +1066,30 @@ private constructor(
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             /**
+             * Determines the difference between the invoice issue date for subscription invoices as
+             * the date that they are due. A value of '0' here represents that the invoice is due on
+             * issue, whereas a value of 30 represents that the customer has 30 days to pay the
+             * invoice.
+             */
+            fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
+
+            /**
+             * Alias for [Builder.netTerms].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
+
+            /**
+             * Sets [Builder.netTerms] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.netTerms] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
+
+            /**
              * When true, this invoice will be submitted for issuance upon creation. When false, the
              * resulting invoice will require manual review to issue. Defaulted to false.
              */
@@ -1124,7 +1135,6 @@ private constructor(
              * .currency()
              * .invoiceDate()
              * .lineItems()
-             * .netTerms()
              * ```
              *
              * @throws IllegalStateException if any required field is unset.
@@ -1134,12 +1144,12 @@ private constructor(
                     checkRequired("currency", currency),
                     checkRequired("invoiceDate", invoiceDate),
                     checkRequired("lineItems", lineItems).map { it.toImmutable() },
-                    checkRequired("netTerms", netTerms),
                     customerId,
                     discount,
                     externalCustomerId,
                     memo,
                     metadata,
+                    netTerms,
                     willAutoIssue,
                     additionalProperties.toMutableMap(),
                 )
@@ -1155,12 +1165,12 @@ private constructor(
             currency()
             invoiceDate()
             lineItems().forEach { it.validate() }
-            netTerms()
             customerId()
             discount()?.validate()
             externalCustomerId()
             memo()
             metadata()?.validate()
+            netTerms()
             willAutoIssue()
             validated = true
         }
@@ -1183,12 +1193,12 @@ private constructor(
             (if (currency.asKnown() == null) 0 else 1) +
                 (if (invoiceDate.asKnown() == null) 0 else 1) +
                 (lineItems.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
-                (if (netTerms.asKnown() == null) 0 else 1) +
                 (if (customerId.asKnown() == null) 0 else 1) +
                 (discount.asKnown()?.validity() ?: 0) +
                 (if (externalCustomerId.asKnown() == null) 0 else 1) +
                 (if (memo.asKnown() == null) 0 else 1) +
                 (metadata.asKnown()?.validity() ?: 0) +
+                (if (netTerms.asKnown() == null) 0 else 1) +
                 (if (willAutoIssue.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
@@ -1196,17 +1206,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && currency == other.currency && invoiceDate == other.invoiceDate && lineItems == other.lineItems && netTerms == other.netTerms && customerId == other.customerId && discount == other.discount && externalCustomerId == other.externalCustomerId && memo == other.memo && metadata == other.metadata && willAutoIssue == other.willAutoIssue && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && currency == other.currency && invoiceDate == other.invoiceDate && lineItems == other.lineItems && customerId == other.customerId && discount == other.discount && externalCustomerId == other.externalCustomerId && memo == other.memo && metadata == other.metadata && netTerms == other.netTerms && willAutoIssue == other.willAutoIssue && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(currency, invoiceDate, lineItems, netTerms, customerId, discount, externalCustomerId, memo, metadata, willAutoIssue, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(currency, invoiceDate, lineItems, customerId, discount, externalCustomerId, memo, metadata, netTerms, willAutoIssue, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, netTerms=$netTerms, customerId=$customerId, discount=$discount, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
+            "Body{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, customerId=$customerId, discount=$discount, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, netTerms=$netTerms, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
     }
 
     class LineItem

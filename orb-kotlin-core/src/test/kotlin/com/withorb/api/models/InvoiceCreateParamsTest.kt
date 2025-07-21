@@ -26,7 +26,6 @@ internal class InvoiceCreateParamsTest {
                     .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                     .build()
             )
-            .netTerms(0L)
             .customerId("4khy3nwzktxv7")
             .discount(
                 PercentageDiscount.builder()
@@ -51,6 +50,7 @@ internal class InvoiceCreateParamsTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+            .netTerms(0L)
             .willAutoIssue(false)
             .build()
     }
@@ -72,7 +72,6 @@ internal class InvoiceCreateParamsTest {
                         .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                         .build()
                 )
-                .netTerms(0L)
                 .customerId("4khy3nwzktxv7")
                 .discount(
                     PercentageDiscount.builder()
@@ -97,6 +96,7 @@ internal class InvoiceCreateParamsTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .netTerms(0L)
                 .willAutoIssue(false)
                 .build()
 
@@ -116,7 +116,6 @@ internal class InvoiceCreateParamsTest {
                     .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                     .build()
             )
-        assertThat(body.netTerms()).isEqualTo(0L)
         assertThat(body.customerId()).isEqualTo("4khy3nwzktxv7")
         assertThat(body.discount())
             .isEqualTo(
@@ -145,6 +144,7 @@ internal class InvoiceCreateParamsTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(body.netTerms()).isEqualTo(0L)
         assertThat(body.willAutoIssue()).isEqualTo(false)
     }
 
@@ -165,7 +165,6 @@ internal class InvoiceCreateParamsTest {
                         .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                         .build()
                 )
-                .netTerms(0L)
                 .build()
 
         val body = params._body()
@@ -184,6 +183,5 @@ internal class InvoiceCreateParamsTest {
                     .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                     .build()
             )
-        assertThat(body.netTerms()).isEqualTo(0L)
     }
 }
