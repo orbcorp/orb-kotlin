@@ -46,7 +46,8 @@ import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
 
-// Configures using the `ORB_API_KEY`, `ORB_WEBHOOK_SECRET` and `ORB_BASE_URL` environment variables
+// Configures using the `orb.apiKey`, `orb.webhookSecret` and `orb.baseUrl` system properties
+// Or configures using the `ORB_API_KEY`, `ORB_WEBHOOK_SECRET` and `ORB_BASE_URL` environment variables
 val client: OrbClient = OrbOkHttpClient.fromEnv()
 
 val params: CustomerCreateParams = CustomerCreateParams.builder()
@@ -58,13 +59,14 @@ val customer: Customer = client.customers().create(params)
 
 ## Client configuration
 
-Configure the client using environment variables:
+Configure the client using system properties or environment variables:
 
 ```kotlin
 import com.withorb.api.client.OrbClient
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 
-// Configures using the `ORB_API_KEY`, `ORB_WEBHOOK_SECRET` and `ORB_BASE_URL` environment variables
+// Configures using the `orb.apiKey`, `orb.webhookSecret` and `orb.baseUrl` system properties
+// Or configures using the `ORB_API_KEY`, `ORB_WEBHOOK_SECRET` and `ORB_BASE_URL` environment variables
 val client: OrbClient = OrbOkHttpClient.fromEnv()
 ```
 
@@ -86,7 +88,8 @@ import com.withorb.api.client.OrbClient
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 
 val client: OrbClient = OrbOkHttpClient.builder()
-    // Configures using the `ORB_API_KEY`, `ORB_WEBHOOK_SECRET` and `ORB_BASE_URL` environment variables
+    // Configures using the `orb.apiKey`, `orb.webhookSecret` and `orb.baseUrl` system properties
+    Or configures using the `ORB_API_KEY`, `ORB_WEBHOOK_SECRET` and `ORB_BASE_URL` environment variables
     .fromEnv()
     .apiKey("My API Key")
     .build()
@@ -94,11 +97,13 @@ val client: OrbClient = OrbOkHttpClient.builder()
 
 See this table for the available options:
 
-| Setter          | Environment variable | Required | Default value                  |
-| --------------- | -------------------- | -------- | ------------------------------ |
-| `apiKey`        | `ORB_API_KEY`        | true     | -                              |
-| `webhookSecret` | `ORB_WEBHOOK_SECRET` | false    | -                              |
-| `baseUrl`       | `ORB_BASE_URL`       | true     | `"https://api.withorb.com/v1"` |
+| Setter          | System property     | Environment variable | Required | Default value                  |
+| --------------- | ------------------- | -------------------- | -------- | ------------------------------ |
+| `apiKey`        | `orb.apiKey`        | `ORB_API_KEY`        | true     | -                              |
+| `webhookSecret` | `orb.webhookSecret` | `ORB_WEBHOOK_SECRET` | false    | -                              |
+| `baseUrl`       | `orb.baseUrl`       | `ORB_BASE_URL`       | true     | `"https://api.withorb.com/v1"` |
+
+System properties take precedence over environment variables.
 
 > [!TIP]
 > Don't create more than one client in the same application. Each client has a connection pool and
@@ -143,7 +148,8 @@ import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
 
-// Configures using the `ORB_API_KEY`, `ORB_WEBHOOK_SECRET` and `ORB_BASE_URL` environment variables
+// Configures using the `orb.apiKey`, `orb.webhookSecret` and `orb.baseUrl` system properties
+// Or configures using the `ORB_API_KEY`, `ORB_WEBHOOK_SECRET` and `ORB_BASE_URL` environment variables
 val client: OrbClient = OrbOkHttpClient.fromEnv()
 
 val params: CustomerCreateParams = CustomerCreateParams.builder()
@@ -161,7 +167,8 @@ import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
 
-// Configures using the `ORB_API_KEY`, `ORB_WEBHOOK_SECRET` and `ORB_BASE_URL` environment variables
+// Configures using the `orb.apiKey`, `orb.webhookSecret` and `orb.baseUrl` system properties
+// Or configures using the `ORB_API_KEY`, `ORB_WEBHOOK_SECRET` and `ORB_BASE_URL` environment variables
 val client: OrbClientAsync = OrbOkHttpClientAsync.fromEnv()
 
 val params: CustomerCreateParams = CustomerCreateParams.builder()
