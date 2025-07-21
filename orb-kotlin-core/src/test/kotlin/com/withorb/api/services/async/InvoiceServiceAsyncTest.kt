@@ -46,7 +46,6 @@ internal class InvoiceServiceAsyncTest {
                             .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                             .build()
                     )
-                    .netTerms(0L)
                     .customerId("4khy3nwzktxv7")
                     .discount(
                         PercentageDiscount.builder()
@@ -71,6 +70,7 @@ internal class InvoiceServiceAsyncTest {
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
+                    .netTerms(0L)
                     .willAutoIssue(false)
                     .build()
             )
