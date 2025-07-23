@@ -89,7 +89,7 @@ import com.withorb.api.client.okhttp.OrbOkHttpClient
 
 val client: OrbClient = OrbOkHttpClient.builder()
     // Configures using the `orb.apiKey`, `orb.webhookSecret` and `orb.baseUrl` system properties
-    Or configures using the `ORB_API_KEY`, `ORB_WEBHOOK_SECRET` and `ORB_BASE_URL` environment variables
+    // Or configures using the `ORB_API_KEY`, `ORB_WEBHOOK_SECRET` and `ORB_BASE_URL` environment variables
     .fromEnv()
     .apiKey("My API Key")
     .build()
