@@ -1182,11 +1182,10 @@ private constructor(
                  * date for the invoice. If you intend the invoice to be due on issue, set this
                  * to 0.
                  *
-                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
-                 *   value).
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
                  */
-                fun netTerms(): Long = netTerms.getRequired("net_terms")
+                fun netTerms(): Long? = netTerms.getNullable("net_terms")
 
                 /**
                  * An ISO 8601 format date that denotes when this invoice should be dated in the
@@ -1332,7 +1331,14 @@ private constructor(
                      * issue date for the invoice. If you intend the invoice to be due on issue, set
                      * this to 0.
                      */
-                    fun netTerms(netTerms: Long) = netTerms(JsonField.of(netTerms))
+                    fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
+
+                    /**
+                     * Alias for [Builder.netTerms].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
 
                     /**
                      * Sets [Builder.netTerms] to an arbitrary JSON value.
