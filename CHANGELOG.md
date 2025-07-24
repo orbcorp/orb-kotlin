@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.10.0 (2025-07-24)
+
+Full Changelog: [v1.9.0...v1.10.0](https://github.com/orbcorp/orb-kotlin/compare/v1.9.0...v1.10.0)
+
+### Features
+
+* **api:** api update ([3ec6fe0](https://github.com/orbcorp/orb-kotlin/commit/3ec6fe0c542f0a935beb02b238c4173e61eaf0c4))
+* **client:** add `{QueryParams,Headers}#put(String, JsonValue)` methods ([cf9cff1](https://github.com/orbcorp/orb-kotlin/commit/cf9cff1a8d9b51e7a155ad0a0ffb64ae3116d0fd))
+
+
+### Chores
+
+* **internal:** remove unnecessary `[...]` in `[@see](https://github.com/see)` ([b6dcd6c](https://github.com/orbcorp/orb-kotlin/commit/b6dcd6c0dc7dd8564225b802daf845dc9f8ee16f))
+
+
+### Documentation
+
+* fix missing readme comment ([68d1fd2](https://github.com/orbcorp/orb-kotlin/commit/68d1fd23c4539caa33fddb726681121b4f4a02d7))
+* more code comments ([ba71290](https://github.com/orbcorp/orb-kotlin/commit/ba71290382eef96c8d7a0892be31c2935b810cfb))
+
 ## 1.9.0 (2025-07-21)
 
 Full Changelog: [v1.8.0...v1.9.0](https://github.com/orbcorp/orb-kotlin/compare/v1.8.0...v1.9.0)
