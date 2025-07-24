@@ -82,7 +82,7 @@ interface EventService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventUpdateResponse = update(params.toBuilder().eventId(eventId).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: EventUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -131,13 +131,13 @@ interface EventService {
     ): EventDeprecateResponse =
         deprecate(params.toBuilder().eventId(eventId).build(), requestOptions)
 
-    /** @see [deprecate] */
+    /** @see deprecate */
     fun deprecate(
         params: EventDeprecateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventDeprecateResponse
 
-    /** @see [deprecate] */
+    /** @see deprecate */
     fun deprecate(eventId: String, requestOptions: RequestOptions): EventDeprecateResponse =
         deprecate(eventId, EventDeprecateParams.none(), requestOptions)
 
@@ -384,7 +384,7 @@ interface EventService {
         ): HttpResponseFor<EventUpdateResponse> =
             update(params.toBuilder().eventId(eventId).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: EventUpdateParams,
@@ -403,14 +403,14 @@ interface EventService {
         ): HttpResponseFor<EventDeprecateResponse> =
             deprecate(params.toBuilder().eventId(eventId).build(), requestOptions)
 
-        /** @see [deprecate] */
+        /** @see deprecate */
         @MustBeClosed
         fun deprecate(
             params: EventDeprecateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventDeprecateResponse>
 
-        /** @see [deprecate] */
+        /** @see deprecate */
         @MustBeClosed
         fun deprecate(
             eventId: String,

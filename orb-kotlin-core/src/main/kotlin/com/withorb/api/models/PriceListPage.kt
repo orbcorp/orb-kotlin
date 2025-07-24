@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.PriceService
 import java.util.Objects
 
-/** @see [PriceService.list] */
+/** @see PriceService.list */
 class PriceListPage
 private constructor(
     private val service: PriceService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [PriceListPageResponse], but gracefully handles missing data.
      *
-     * @see [PriceListPageResponse.data]
+     * @see PriceListPageResponse.data
      */
     fun data(): List<Price> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [PriceListPageResponse], but gracefully handles missing data.
      *
-     * @see [PriceListPageResponse.paginationMetadata]
+     * @see PriceListPageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

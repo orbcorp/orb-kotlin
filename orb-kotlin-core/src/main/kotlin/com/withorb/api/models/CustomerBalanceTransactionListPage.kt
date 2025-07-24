@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.customers.BalanceTransactionService
 import java.util.Objects
 
-/** @see [BalanceTransactionService.list] */
+/** @see BalanceTransactionService.list */
 class CustomerBalanceTransactionListPage
 private constructor(
     private val service: BalanceTransactionService,
@@ -20,7 +20,7 @@ private constructor(
      * Delegates to [CustomerBalanceTransactionListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [CustomerBalanceTransactionListPageResponse.data]
+     * @see CustomerBalanceTransactionListPageResponse.data
      */
     fun data(): List<CustomerBalanceTransactionListResponse> =
         response._data().getNullable("data") ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
      * Delegates to [CustomerBalanceTransactionListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [CustomerBalanceTransactionListPageResponse.paginationMetadata]
+     * @see CustomerBalanceTransactionListPageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

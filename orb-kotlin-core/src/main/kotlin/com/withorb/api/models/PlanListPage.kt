@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.PlanService
 import java.util.Objects
 
-/** @see [PlanService.list] */
+/** @see PlanService.list */
 class PlanListPage
 private constructor(
     private val service: PlanService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [PlanListPageResponse], but gracefully handles missing data.
      *
-     * @see [PlanListPageResponse.data]
+     * @see PlanListPageResponse.data
      */
     fun data(): List<Plan> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [PlanListPageResponse], but gracefully handles missing data.
      *
-     * @see [PlanListPageResponse.paginationMetadata]
+     * @see PlanListPageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

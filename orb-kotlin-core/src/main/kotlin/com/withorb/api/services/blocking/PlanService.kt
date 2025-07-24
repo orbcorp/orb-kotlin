@@ -48,13 +48,13 @@ interface PlanService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan = update(params.toBuilder().planId(planId).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PlanUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 
-    /** @see [update] */
+    /** @see update */
     fun update(planId: String, requestOptions: RequestOptions): Plan =
         update(planId, PlanUpdateParams.none(), requestOptions)
 
@@ -69,7 +69,7 @@ interface PlanService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): PlanListPage =
         list(PlanListParams.none(), requestOptions)
 
@@ -97,10 +97,10 @@ interface PlanService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan = fetch(params.toBuilder().planId(planId).build(), requestOptions)
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(params: PlanFetchParams, requestOptions: RequestOptions = RequestOptions.none()): Plan
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(planId: String, requestOptions: RequestOptions): Plan =
         fetch(planId, PlanFetchParams.none(), requestOptions)
 
@@ -137,14 +137,14 @@ interface PlanService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Plan> = update(params.toBuilder().planId(planId).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: PlanUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Plan>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(planId: String, requestOptions: RequestOptions): HttpResponseFor<Plan> =
             update(planId, PlanUpdateParams.none(), requestOptions)
@@ -159,7 +159,7 @@ interface PlanService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PlanListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PlanListPage> =
             list(PlanListParams.none(), requestOptions)
@@ -175,14 +175,14 @@ interface PlanService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Plan> = fetch(params.toBuilder().planId(planId).build(), requestOptions)
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(
             params: PlanFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Plan>
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(planId: String, requestOptions: RequestOptions): HttpResponseFor<Plan> =
             fetch(planId, PlanFetchParams.none(), requestOptions)

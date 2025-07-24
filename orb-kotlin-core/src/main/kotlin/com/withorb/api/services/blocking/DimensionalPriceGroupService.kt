@@ -54,13 +54,13 @@ interface DimensionalPriceGroupService {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: DimensionalPriceGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroup
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         dimensionalPriceGroupId: String,
         requestOptions: RequestOptions,
@@ -77,7 +77,7 @@ interface DimensionalPriceGroupService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroupListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): DimensionalPriceGroupListPage =
         list(DimensionalPriceGroupListParams.none(), requestOptions)
 
@@ -126,14 +126,14 @@ interface DimensionalPriceGroupService {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: DimensionalPriceGroupRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DimensionalPriceGroup>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             dimensionalPriceGroupId: String,
@@ -155,7 +155,7 @@ interface DimensionalPriceGroupService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DimensionalPriceGroupListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<DimensionalPriceGroupListPage> =
             list(DimensionalPriceGroupListParams.none(), requestOptions)

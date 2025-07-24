@@ -79,7 +79,7 @@ interface BackfillServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventBackfillListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): EventBackfillListPageAsync =
         list(EventBackfillListParams.none(), requestOptions)
 
@@ -95,13 +95,13 @@ interface BackfillServiceAsync {
     ): EventBackfillCloseResponse =
         close(params.toBuilder().backfillId(backfillId).build(), requestOptions)
 
-    /** @see [close] */
+    /** @see close */
     suspend fun close(
         params: EventBackfillCloseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventBackfillCloseResponse
 
-    /** @see [close] */
+    /** @see close */
     suspend fun close(
         backfillId: String,
         requestOptions: RequestOptions,
@@ -116,13 +116,13 @@ interface BackfillServiceAsync {
     ): EventBackfillFetchResponse =
         fetch(params.toBuilder().backfillId(backfillId).build(), requestOptions)
 
-    /** @see [fetch] */
+    /** @see fetch */
     suspend fun fetch(
         params: EventBackfillFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventBackfillFetchResponse
 
-    /** @see [fetch] */
+    /** @see fetch */
     suspend fun fetch(
         backfillId: String,
         requestOptions: RequestOptions,
@@ -144,13 +144,13 @@ interface BackfillServiceAsync {
     ): EventBackfillRevertResponse =
         revert(params.toBuilder().backfillId(backfillId).build(), requestOptions)
 
-    /** @see [revert] */
+    /** @see revert */
     suspend fun revert(
         params: EventBackfillRevertParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventBackfillRevertResponse
 
-    /** @see [revert] */
+    /** @see revert */
     suspend fun revert(
         backfillId: String,
         requestOptions: RequestOptions,
@@ -191,7 +191,7 @@ interface BackfillServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventBackfillListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions
@@ -210,14 +210,14 @@ interface BackfillServiceAsync {
         ): HttpResponseFor<EventBackfillCloseResponse> =
             close(params.toBuilder().backfillId(backfillId).build(), requestOptions)
 
-        /** @see [close] */
+        /** @see close */
         @MustBeClosed
         suspend fun close(
             params: EventBackfillCloseParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventBackfillCloseResponse>
 
-        /** @see [close] */
+        /** @see close */
         @MustBeClosed
         suspend fun close(
             backfillId: String,
@@ -237,14 +237,14 @@ interface BackfillServiceAsync {
         ): HttpResponseFor<EventBackfillFetchResponse> =
             fetch(params.toBuilder().backfillId(backfillId).build(), requestOptions)
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         suspend fun fetch(
             params: EventBackfillFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventBackfillFetchResponse>
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         suspend fun fetch(
             backfillId: String,
@@ -264,14 +264,14 @@ interface BackfillServiceAsync {
         ): HttpResponseFor<EventBackfillRevertResponse> =
             revert(params.toBuilder().backfillId(backfillId).build(), requestOptions)
 
-        /** @see [revert] */
+        /** @see revert */
         @MustBeClosed
         suspend fun revert(
             params: EventBackfillRevertParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventBackfillRevertResponse>
 
-        /** @see [revert] */
+        /** @see revert */
         @MustBeClosed
         suspend fun revert(
             backfillId: String,

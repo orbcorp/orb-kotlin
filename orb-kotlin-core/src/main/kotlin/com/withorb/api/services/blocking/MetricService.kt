@@ -47,13 +47,13 @@ interface MetricService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillableMetric = update(params.toBuilder().metricId(metricId).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: MetricUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillableMetric
 
-    /** @see [update] */
+    /** @see update */
     fun update(metricId: String, requestOptions: RequestOptions): BillableMetric =
         update(metricId, MetricUpdateParams.none(), requestOptions)
 
@@ -67,7 +67,7 @@ interface MetricService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MetricListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): MetricListPage =
         list(MetricListParams.none(), requestOptions)
 
@@ -81,13 +81,13 @@ interface MetricService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillableMetric = fetch(params.toBuilder().metricId(metricId).build(), requestOptions)
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(
         params: MetricFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillableMetric
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(metricId: String, requestOptions: RequestOptions): BillableMetric =
         fetch(metricId, MetricFetchParams.none(), requestOptions)
 
@@ -123,14 +123,14 @@ interface MetricService {
         ): HttpResponseFor<BillableMetric> =
             update(params.toBuilder().metricId(metricId).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: MetricUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillableMetric>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             metricId: String,
@@ -148,7 +148,7 @@ interface MetricService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<MetricListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<MetricListPage> =
             list(MetricListParams.none(), requestOptions)
@@ -165,14 +165,14 @@ interface MetricService {
         ): HttpResponseFor<BillableMetric> =
             fetch(params.toBuilder().metricId(metricId).build(), requestOptions)
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(
             params: MetricFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillableMetric>
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(
             metricId: String,

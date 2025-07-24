@@ -41,7 +41,7 @@ interface BetaServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanVersion = createPlanVersion(params.toBuilder().planId(planId).build(), requestOptions)
 
-    /** @see [createPlanVersion] */
+    /** @see createPlanVersion */
     suspend fun createPlanVersion(
         params: BetaCreatePlanVersionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -60,7 +60,7 @@ interface BetaServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanVersion = fetchPlanVersion(params.toBuilder().version(version).build(), requestOptions)
 
-    /** @see [fetchPlanVersion] */
+    /** @see fetchPlanVersion */
     suspend fun fetchPlanVersion(
         params: BetaFetchPlanVersionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -78,7 +78,7 @@ interface BetaServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan = setDefaultPlanVersion(params.toBuilder().planId(planId).build(), requestOptions)
 
-    /** @see [setDefaultPlanVersion] */
+    /** @see setDefaultPlanVersion */
     suspend fun setDefaultPlanVersion(
         params: BetaSetDefaultPlanVersionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -108,7 +108,7 @@ interface BetaServiceAsync {
         ): HttpResponseFor<PlanVersion> =
             createPlanVersion(params.toBuilder().planId(planId).build(), requestOptions)
 
-        /** @see [createPlanVersion] */
+        /** @see createPlanVersion */
         @MustBeClosed
         suspend fun createPlanVersion(
             params: BetaCreatePlanVersionParams,
@@ -127,7 +127,7 @@ interface BetaServiceAsync {
         ): HttpResponseFor<PlanVersion> =
             fetchPlanVersion(params.toBuilder().version(version).build(), requestOptions)
 
-        /** @see [fetchPlanVersion] */
+        /** @see fetchPlanVersion */
         @MustBeClosed
         suspend fun fetchPlanVersion(
             params: BetaFetchPlanVersionParams,
@@ -146,7 +146,7 @@ interface BetaServiceAsync {
         ): HttpResponseFor<Plan> =
             setDefaultPlanVersion(params.toBuilder().planId(planId).build(), requestOptions)
 
-        /** @see [setDefaultPlanVersion] */
+        /** @see setDefaultPlanVersion */
         @MustBeClosed
         suspend fun setDefaultPlanVersion(
             params: BetaSetDefaultPlanVersionParams,

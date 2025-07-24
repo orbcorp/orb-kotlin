@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.ItemServiceAsync
 import java.util.Objects
 
-/** @see [ItemServiceAsync.list] */
+/** @see ItemServiceAsync.list */
 class ItemListPageAsync
 private constructor(
     private val service: ItemServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [ItemListPageResponse], but gracefully handles missing data.
      *
-     * @see [ItemListPageResponse.data]
+     * @see ItemListPageResponse.data
      */
     fun data(): List<Item> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [ItemListPageResponse], but gracefully handles missing data.
      *
-     * @see [ItemListPageResponse.paginationMetadata]
+     * @see ItemListPageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

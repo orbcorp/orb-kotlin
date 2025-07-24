@@ -34,13 +34,13 @@ interface ExternalPriceIdServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price = update(params.toBuilder().externalPriceId(externalPriceId).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         params: PriceExternalPriceIdUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(externalPriceId: String, requestOptions: RequestOptions): Price =
         update(externalPriceId, PriceExternalPriceIdUpdateParams.none(), requestOptions)
 
@@ -55,13 +55,13 @@ interface ExternalPriceIdServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price = fetch(params.toBuilder().externalPriceId(externalPriceId).build(), requestOptions)
 
-    /** @see [fetch] */
+    /** @see fetch */
     suspend fun fetch(
         params: PriceExternalPriceIdFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 
-    /** @see [fetch] */
+    /** @see fetch */
     suspend fun fetch(externalPriceId: String, requestOptions: RequestOptions): Price =
         fetch(externalPriceId, PriceExternalPriceIdFetchParams.none(), requestOptions)
 
@@ -92,14 +92,14 @@ interface ExternalPriceIdServiceAsync {
         ): HttpResponseFor<Price> =
             update(params.toBuilder().externalPriceId(externalPriceId).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             params: PriceExternalPriceIdUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Price>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             externalPriceId: String,
@@ -119,14 +119,14 @@ interface ExternalPriceIdServiceAsync {
         ): HttpResponseFor<Price> =
             fetch(params.toBuilder().externalPriceId(externalPriceId).build(), requestOptions)
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         suspend fun fetch(
             params: PriceExternalPriceIdFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Price>
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         suspend fun fetch(
             externalPriceId: String,

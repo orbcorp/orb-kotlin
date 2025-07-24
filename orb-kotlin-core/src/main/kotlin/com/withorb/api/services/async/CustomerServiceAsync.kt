@@ -72,13 +72,13 @@ interface CustomerServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Customer = update(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         params: CustomerUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Customer
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(customerId: String, requestOptions: RequestOptions): Customer =
         update(customerId, CustomerUpdateParams.none(), requestOptions)
 
@@ -94,7 +94,7 @@ interface CustomerServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): CustomerListPageAsync =
         list(CustomerListParams.none(), requestOptions)
 
@@ -116,13 +116,13 @@ interface CustomerServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ) = delete(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     suspend fun delete(
         params: CustomerDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [delete] */
+    /** @see delete */
     suspend fun delete(customerId: String, requestOptions: RequestOptions) =
         delete(customerId, CustomerDeleteParams.none(), requestOptions)
 
@@ -139,13 +139,13 @@ interface CustomerServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Customer = fetch(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-    /** @see [fetch] */
+    /** @see fetch */
     suspend fun fetch(
         params: CustomerFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Customer
 
-    /** @see [fetch] */
+    /** @see fetch */
     suspend fun fetch(customerId: String, requestOptions: RequestOptions): Customer =
         fetch(customerId, CustomerFetchParams.none(), requestOptions)
 
@@ -166,13 +166,13 @@ interface CustomerServiceAsync {
             requestOptions,
         )
 
-    /** @see [fetchByExternalId] */
+    /** @see fetchByExternalId */
     suspend fun fetchByExternalId(
         params: CustomerFetchByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Customer
 
-    /** @see [fetchByExternalId] */
+    /** @see fetchByExternalId */
     suspend fun fetchByExternalId(
         externalCustomerId: String,
         requestOptions: RequestOptions,
@@ -202,13 +202,13 @@ interface CustomerServiceAsync {
             requestOptions,
         )
 
-    /** @see [syncPaymentMethodsFromGateway] */
+    /** @see syncPaymentMethodsFromGateway */
     suspend fun syncPaymentMethodsFromGateway(
         params: CustomerSyncPaymentMethodsFromGatewayParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [syncPaymentMethodsFromGateway] */
+    /** @see syncPaymentMethodsFromGateway */
     suspend fun syncPaymentMethodsFromGateway(customerId: String, requestOptions: RequestOptions) =
         syncPaymentMethodsFromGateway(
             customerId,
@@ -235,13 +235,13 @@ interface CustomerServiceAsync {
             requestOptions,
         )
 
-    /** @see [syncPaymentMethodsFromGatewayByExternalCustomerId] */
+    /** @see syncPaymentMethodsFromGatewayByExternalCustomerId */
     suspend fun syncPaymentMethodsFromGatewayByExternalCustomerId(
         params: CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [syncPaymentMethodsFromGatewayByExternalCustomerId] */
+    /** @see syncPaymentMethodsFromGatewayByExternalCustomerId */
     suspend fun syncPaymentMethodsFromGatewayByExternalCustomerId(
         externalCustomerId: String,
         requestOptions: RequestOptions,
@@ -263,13 +263,13 @@ interface CustomerServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Customer = updateByExternalId(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [updateByExternalId] */
+    /** @see updateByExternalId */
     suspend fun updateByExternalId(
         params: CustomerUpdateByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Customer
 
-    /** @see [updateByExternalId] */
+    /** @see updateByExternalId */
     suspend fun updateByExternalId(id: String, requestOptions: RequestOptions): Customer =
         updateByExternalId(id, CustomerUpdateByExternalIdParams.none(), requestOptions)
 
@@ -315,14 +315,14 @@ interface CustomerServiceAsync {
         ): HttpResponseFor<Customer> =
             update(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             params: CustomerUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Customer>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             customerId: String,
@@ -340,7 +340,7 @@ interface CustomerServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<CustomerListPageAsync> =
             list(CustomerListParams.none(), requestOptions)
@@ -356,14 +356,14 @@ interface CustomerServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse = delete(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         suspend fun delete(
             params: CustomerDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         suspend fun delete(customerId: String, requestOptions: RequestOptions): HttpResponse =
             delete(customerId, CustomerDeleteParams.none(), requestOptions)
@@ -380,14 +380,14 @@ interface CustomerServiceAsync {
         ): HttpResponseFor<Customer> =
             fetch(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         suspend fun fetch(
             params: CustomerFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Customer>
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         suspend fun fetch(
             customerId: String,
@@ -410,14 +410,14 @@ interface CustomerServiceAsync {
                 requestOptions,
             )
 
-        /** @see [fetchByExternalId] */
+        /** @see fetchByExternalId */
         @MustBeClosed
         suspend fun fetchByExternalId(
             params: CustomerFetchByExternalIdParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Customer>
 
-        /** @see [fetchByExternalId] */
+        /** @see fetchByExternalId */
         @MustBeClosed
         suspend fun fetchByExternalId(
             externalCustomerId: String,
@@ -446,14 +446,14 @@ interface CustomerServiceAsync {
                 requestOptions,
             )
 
-        /** @see [syncPaymentMethodsFromGateway] */
+        /** @see syncPaymentMethodsFromGateway */
         @MustBeClosed
         suspend fun syncPaymentMethodsFromGateway(
             params: CustomerSyncPaymentMethodsFromGatewayParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [syncPaymentMethodsFromGateway] */
+        /** @see syncPaymentMethodsFromGateway */
         @MustBeClosed
         suspend fun syncPaymentMethodsFromGateway(
             customerId: String,
@@ -483,14 +483,14 @@ interface CustomerServiceAsync {
                 requestOptions,
             )
 
-        /** @see [syncPaymentMethodsFromGatewayByExternalCustomerId] */
+        /** @see syncPaymentMethodsFromGatewayByExternalCustomerId */
         @MustBeClosed
         suspend fun syncPaymentMethodsFromGatewayByExternalCustomerId(
             params: CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [syncPaymentMethodsFromGatewayByExternalCustomerId] */
+        /** @see syncPaymentMethodsFromGatewayByExternalCustomerId */
         @MustBeClosed
         suspend fun syncPaymentMethodsFromGatewayByExternalCustomerId(
             externalCustomerId: String,
@@ -515,14 +515,14 @@ interface CustomerServiceAsync {
         ): HttpResponseFor<Customer> =
             updateByExternalId(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [updateByExternalId] */
+        /** @see updateByExternalId */
         @MustBeClosed
         suspend fun updateByExternalId(
             params: CustomerUpdateByExternalIdParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Customer>
 
-        /** @see [updateByExternalId] */
+        /** @see updateByExternalId */
         @MustBeClosed
         suspend fun updateByExternalId(
             id: String,

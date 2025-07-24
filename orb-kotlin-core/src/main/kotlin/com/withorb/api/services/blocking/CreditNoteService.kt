@@ -64,7 +64,7 @@ interface CreditNoteService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditNoteListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CreditNoteListPage =
         list(CreditNoteListParams.none(), requestOptions)
 
@@ -78,13 +78,13 @@ interface CreditNoteService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditNote = fetch(params.toBuilder().creditNoteId(creditNoteId).build(), requestOptions)
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(
         params: CreditNoteFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditNote
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(creditNoteId: String, requestOptions: RequestOptions): CreditNote =
         fetch(creditNoteId, CreditNoteFetchParams.none(), requestOptions)
 
@@ -120,7 +120,7 @@ interface CreditNoteService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CreditNoteListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<CreditNoteListPage> =
             list(CreditNoteListParams.none(), requestOptions)
@@ -137,14 +137,14 @@ interface CreditNoteService {
         ): HttpResponseFor<CreditNote> =
             fetch(params.toBuilder().creditNoteId(creditNoteId).build(), requestOptions)
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(
             params: CreditNoteFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CreditNote>
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(
             creditNoteId: String,
