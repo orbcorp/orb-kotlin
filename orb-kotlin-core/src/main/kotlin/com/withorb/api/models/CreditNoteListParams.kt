@@ -43,8 +43,10 @@ private constructor(
     /** The number of items to fetch. Defaults to 20. */
     fun limit(): Long? = limit
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
