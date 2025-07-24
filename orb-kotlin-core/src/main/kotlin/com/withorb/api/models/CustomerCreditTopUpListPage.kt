@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.customers.credits.TopUpService
 import java.util.Objects
 
-/** @see [TopUpService.list] */
+/** @see TopUpService.list */
 class CustomerCreditTopUpListPage
 private constructor(
     private val service: TopUpService,
@@ -19,7 +19,7 @@ private constructor(
     /**
      * Delegates to [CustomerCreditTopUpListPageResponse], but gracefully handles missing data.
      *
-     * @see [CustomerCreditTopUpListPageResponse.data]
+     * @see CustomerCreditTopUpListPageResponse.data
      */
     fun data(): List<CustomerCreditTopUpListResponse> =
         response._data().getNullable("data") ?: emptyList()
@@ -27,7 +27,7 @@ private constructor(
     /**
      * Delegates to [CustomerCreditTopUpListPageResponse], but gracefully handles missing data.
      *
-     * @see [CustomerCreditTopUpListPageResponse.paginationMetadata]
+     * @see CustomerCreditTopUpListPageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

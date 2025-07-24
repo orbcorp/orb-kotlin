@@ -47,13 +47,13 @@ interface CreditServiceAsync {
     ): CustomerCreditListPageAsync =
         list(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: CustomerCreditListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         customerId: String,
         requestOptions: RequestOptions,
@@ -79,13 +79,13 @@ interface CreditServiceAsync {
             requestOptions,
         )
 
-    /** @see [listByExternalId] */
+    /** @see listByExternalId */
     suspend fun listByExternalId(
         params: CustomerCreditListByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditListByExternalIdPageAsync
 
-    /** @see [listByExternalId] */
+    /** @see listByExternalId */
     suspend fun listByExternalId(
         externalCustomerId: String,
         requestOptions: RequestOptions,
@@ -126,14 +126,14 @@ interface CreditServiceAsync {
         ): HttpResponseFor<CustomerCreditListPageAsync> =
             list(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: CustomerCreditListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerCreditListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             customerId: String,
@@ -158,14 +158,14 @@ interface CreditServiceAsync {
                 requestOptions,
             )
 
-        /** @see [listByExternalId] */
+        /** @see listByExternalId */
         @MustBeClosed
         suspend fun listByExternalId(
             params: CustomerCreditListByExternalIdParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerCreditListByExternalIdPageAsync>
 
-        /** @see [listByExternalId] */
+        /** @see listByExternalId */
         @MustBeClosed
         suspend fun listByExternalId(
             externalCustomerId: String,

@@ -36,7 +36,7 @@ interface TopLevelServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TopLevelPingResponse
 
-    /** @see [ping] */
+    /** @see ping */
     suspend fun ping(requestOptions: RequestOptions): TopLevelPingResponse =
         ping(TopLevelPingParams.none(), requestOptions)
 
@@ -64,7 +64,7 @@ interface TopLevelServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TopLevelPingResponse>
 
-        /** @see [ping] */
+        /** @see ping */
         @MustBeClosed
         suspend fun ping(requestOptions: RequestOptions): HttpResponseFor<TopLevelPingResponse> =
             ping(TopLevelPingParams.none(), requestOptions)

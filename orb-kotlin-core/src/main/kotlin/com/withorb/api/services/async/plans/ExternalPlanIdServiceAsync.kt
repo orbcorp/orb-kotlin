@@ -37,13 +37,13 @@ interface ExternalPlanIdServiceAsync {
     ): Plan =
         update(params.toBuilder().otherExternalPlanId(otherExternalPlanId).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         params: PlanExternalPlanIdUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(otherExternalPlanId: String, requestOptions: RequestOptions): Plan =
         update(otherExternalPlanId, PlanExternalPlanIdUpdateParams.none(), requestOptions)
 
@@ -70,13 +70,13 @@ interface ExternalPlanIdServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan = fetch(params.toBuilder().externalPlanId(externalPlanId).build(), requestOptions)
 
-    /** @see [fetch] */
+    /** @see fetch */
     suspend fun fetch(
         params: PlanExternalPlanIdFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 
-    /** @see [fetch] */
+    /** @see fetch */
     suspend fun fetch(externalPlanId: String, requestOptions: RequestOptions): Plan =
         fetch(externalPlanId, PlanExternalPlanIdFetchParams.none(), requestOptions)
 
@@ -110,14 +110,14 @@ interface ExternalPlanIdServiceAsync {
                 requestOptions,
             )
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             params: PlanExternalPlanIdUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Plan>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             otherExternalPlanId: String,
@@ -137,14 +137,14 @@ interface ExternalPlanIdServiceAsync {
         ): HttpResponseFor<Plan> =
             fetch(params.toBuilder().externalPlanId(externalPlanId).build(), requestOptions)
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         suspend fun fetch(
             params: PlanExternalPlanIdFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Plan>
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         suspend fun fetch(
             externalPlanId: String,

@@ -34,13 +34,13 @@ interface ExternalPriceIdService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price = update(params.toBuilder().externalPriceId(externalPriceId).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PriceExternalPriceIdUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 
-    /** @see [update] */
+    /** @see update */
     fun update(externalPriceId: String, requestOptions: RequestOptions): Price =
         update(externalPriceId, PriceExternalPriceIdUpdateParams.none(), requestOptions)
 
@@ -55,13 +55,13 @@ interface ExternalPriceIdService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price = fetch(params.toBuilder().externalPriceId(externalPriceId).build(), requestOptions)
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(
         params: PriceExternalPriceIdFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(externalPriceId: String, requestOptions: RequestOptions): Price =
         fetch(externalPriceId, PriceExternalPriceIdFetchParams.none(), requestOptions)
 
@@ -92,14 +92,14 @@ interface ExternalPriceIdService {
         ): HttpResponseFor<Price> =
             update(params.toBuilder().externalPriceId(externalPriceId).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: PriceExternalPriceIdUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Price>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             externalPriceId: String,
@@ -119,14 +119,14 @@ interface ExternalPriceIdService {
         ): HttpResponseFor<Price> =
             fetch(params.toBuilder().externalPriceId(externalPriceId).build(), requestOptions)
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(
             params: PriceExternalPriceIdFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Price>
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(externalPriceId: String, requestOptions: RequestOptions): HttpResponseFor<Price> =
             fetch(externalPriceId, PriceExternalPriceIdFetchParams.none(), requestOptions)

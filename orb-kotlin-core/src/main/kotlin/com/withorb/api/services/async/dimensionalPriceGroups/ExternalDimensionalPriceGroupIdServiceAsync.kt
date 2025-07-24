@@ -40,13 +40,13 @@ interface ExternalDimensionalPriceGroupIdServiceAsync {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroup
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         externalDimensionalPriceGroupId: String,
         requestOptions: RequestOptions,
@@ -92,14 +92,14 @@ interface ExternalDimensionalPriceGroupIdServiceAsync {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DimensionalPriceGroup>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             externalDimensionalPriceGroupId: String,

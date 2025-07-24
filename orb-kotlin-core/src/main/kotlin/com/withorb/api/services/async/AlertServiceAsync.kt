@@ -38,13 +38,13 @@ interface AlertServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert = retrieve(params.toBuilder().alertId(alertId).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: AlertRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(alertId: String, requestOptions: RequestOptions): Alert =
         retrieve(alertId, AlertRetrieveParams.none(), requestOptions)
 
@@ -59,7 +59,7 @@ interface AlertServiceAsync {
             requestOptions,
         )
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         params: AlertUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -81,7 +81,7 @@ interface AlertServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AlertListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): AlertListPageAsync =
         list(AlertListParams.none(), requestOptions)
 
@@ -99,7 +99,7 @@ interface AlertServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert = createForCustomer(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-    /** @see [createForCustomer] */
+    /** @see createForCustomer */
     suspend fun createForCustomer(
         params: AlertCreateForCustomerParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -123,7 +123,7 @@ interface AlertServiceAsync {
             requestOptions,
         )
 
-    /** @see [createForExternalCustomer] */
+    /** @see createForExternalCustomer */
     suspend fun createForExternalCustomer(
         params: AlertCreateForExternalCustomerParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -151,7 +151,7 @@ interface AlertServiceAsync {
             requestOptions,
         )
 
-    /** @see [createForSubscription] */
+    /** @see createForSubscription */
     suspend fun createForSubscription(
         params: AlertCreateForSubscriptionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -172,13 +172,13 @@ interface AlertServiceAsync {
             requestOptions,
         )
 
-    /** @see [disable] */
+    /** @see disable */
     suspend fun disable(
         params: AlertDisableParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
-    /** @see [disable] */
+    /** @see disable */
     suspend fun disable(alertConfigurationId: String, requestOptions: RequestOptions): Alert =
         disable(alertConfigurationId, AlertDisableParams.none(), requestOptions)
 
@@ -197,13 +197,13 @@ interface AlertServiceAsync {
             requestOptions,
         )
 
-    /** @see [enable] */
+    /** @see enable */
     suspend fun enable(
         params: AlertEnableParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
-    /** @see [enable] */
+    /** @see enable */
     suspend fun enable(alertConfigurationId: String, requestOptions: RequestOptions): Alert =
         enable(alertConfigurationId, AlertEnableParams.none(), requestOptions)
 
@@ -231,14 +231,14 @@ interface AlertServiceAsync {
         ): HttpResponseFor<Alert> =
             retrieve(params.toBuilder().alertId(alertId).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: AlertRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Alert>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             alertId: String,
@@ -260,7 +260,7 @@ interface AlertServiceAsync {
                 requestOptions,
             )
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             params: AlertUpdateParams,
@@ -277,7 +277,7 @@ interface AlertServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AlertListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<AlertListPageAsync> =
             list(AlertListParams.none(), requestOptions)
@@ -294,7 +294,7 @@ interface AlertServiceAsync {
         ): HttpResponseFor<Alert> =
             createForCustomer(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-        /** @see [createForCustomer] */
+        /** @see createForCustomer */
         @MustBeClosed
         suspend fun createForCustomer(
             params: AlertCreateForCustomerParams,
@@ -317,7 +317,7 @@ interface AlertServiceAsync {
                 requestOptions,
             )
 
-        /** @see [createForExternalCustomer] */
+        /** @see createForExternalCustomer */
         @MustBeClosed
         suspend fun createForExternalCustomer(
             params: AlertCreateForExternalCustomerParams,
@@ -339,7 +339,7 @@ interface AlertServiceAsync {
                 requestOptions,
             )
 
-        /** @see [createForSubscription] */
+        /** @see createForSubscription */
         @MustBeClosed
         suspend fun createForSubscription(
             params: AlertCreateForSubscriptionParams,
@@ -361,14 +361,14 @@ interface AlertServiceAsync {
                 requestOptions,
             )
 
-        /** @see [disable] */
+        /** @see disable */
         @MustBeClosed
         suspend fun disable(
             params: AlertDisableParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Alert>
 
-        /** @see [disable] */
+        /** @see disable */
         @MustBeClosed
         suspend fun disable(
             alertConfigurationId: String,
@@ -391,14 +391,14 @@ interface AlertServiceAsync {
                 requestOptions,
             )
 
-        /** @see [enable] */
+        /** @see enable */
         @MustBeClosed
         suspend fun enable(
             params: AlertEnableParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Alert>
 
-        /** @see [enable] */
+        /** @see enable */
         @MustBeClosed
         suspend fun enable(
             alertConfigurationId: String,

@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.customers.CreditServiceAsync
 import java.util.Objects
 
-/** @see [CreditServiceAsync.list] */
+/** @see CreditServiceAsync.list */
 class CustomerCreditListPageAsync
 private constructor(
     private val service: CreditServiceAsync,
@@ -19,7 +19,7 @@ private constructor(
     /**
      * Delegates to [CustomerCreditListPageResponse], but gracefully handles missing data.
      *
-     * @see [CustomerCreditListPageResponse.data]
+     * @see CustomerCreditListPageResponse.data
      */
     fun data(): List<CustomerCreditListResponse> =
         response._data().getNullable("data") ?: emptyList()
@@ -27,7 +27,7 @@ private constructor(
     /**
      * Delegates to [CustomerCreditListPageResponse], but gracefully handles missing data.
      *
-     * @see [CustomerCreditListPageResponse.paginationMetadata]
+     * @see CustomerCreditListPageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

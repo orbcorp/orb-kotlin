@@ -37,13 +37,13 @@ interface ExternalPlanIdService {
     ): Plan =
         update(params.toBuilder().otherExternalPlanId(otherExternalPlanId).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PlanExternalPlanIdUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 
-    /** @see [update] */
+    /** @see update */
     fun update(otherExternalPlanId: String, requestOptions: RequestOptions): Plan =
         update(otherExternalPlanId, PlanExternalPlanIdUpdateParams.none(), requestOptions)
 
@@ -70,13 +70,13 @@ interface ExternalPlanIdService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan = fetch(params.toBuilder().externalPlanId(externalPlanId).build(), requestOptions)
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(
         params: PlanExternalPlanIdFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(externalPlanId: String, requestOptions: RequestOptions): Plan =
         fetch(externalPlanId, PlanExternalPlanIdFetchParams.none(), requestOptions)
 
@@ -109,14 +109,14 @@ interface ExternalPlanIdService {
                 requestOptions,
             )
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: PlanExternalPlanIdUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Plan>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             otherExternalPlanId: String,
@@ -136,14 +136,14 @@ interface ExternalPlanIdService {
         ): HttpResponseFor<Plan> =
             fetch(params.toBuilder().externalPlanId(externalPlanId).build(), requestOptions)
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(
             params: PlanExternalPlanIdFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Plan>
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(externalPlanId: String, requestOptions: RequestOptions): HttpResponseFor<Plan> =
             fetch(externalPlanId, PlanExternalPlanIdFetchParams.none(), requestOptions)

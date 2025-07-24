@@ -115,13 +115,13 @@ interface LedgerServiceAsync {
     ): CustomerCreditLedgerListPageAsync =
         list(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: CustomerCreditLedgerListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditLedgerListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         customerId: String,
         requestOptions: RequestOptions,
@@ -238,7 +238,7 @@ interface LedgerServiceAsync {
     ): CustomerCreditLedgerCreateEntryResponse =
         createEntry(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-    /** @see [createEntry] */
+    /** @see createEntry */
     suspend fun createEntry(
         params: CustomerCreditLedgerCreateEntryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -357,7 +357,7 @@ interface LedgerServiceAsync {
             requestOptions,
         )
 
-    /** @see [createEntryByExternalId] */
+    /** @see createEntryByExternalId */
     suspend fun createEntryByExternalId(
         params: CustomerCreditLedgerCreateEntryByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -453,13 +453,13 @@ interface LedgerServiceAsync {
             requestOptions,
         )
 
-    /** @see [listByExternalId] */
+    /** @see listByExternalId */
     suspend fun listByExternalId(
         params: CustomerCreditLedgerListByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditLedgerListByExternalIdPageAsync
 
-    /** @see [listByExternalId] */
+    /** @see listByExternalId */
     suspend fun listByExternalId(
         externalCustomerId: String,
         requestOptions: RequestOptions,
@@ -496,14 +496,14 @@ interface LedgerServiceAsync {
         ): HttpResponseFor<CustomerCreditLedgerListPageAsync> =
             list(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: CustomerCreditLedgerListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerCreditLedgerListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             customerId: String,
@@ -523,7 +523,7 @@ interface LedgerServiceAsync {
         ): HttpResponseFor<CustomerCreditLedgerCreateEntryResponse> =
             createEntry(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-        /** @see [createEntry] */
+        /** @see createEntry */
         @MustBeClosed
         suspend fun createEntry(
             params: CustomerCreditLedgerCreateEntryParams,
@@ -546,7 +546,7 @@ interface LedgerServiceAsync {
                 requestOptions,
             )
 
-        /** @see [createEntryByExternalId] */
+        /** @see createEntryByExternalId */
         @MustBeClosed
         suspend fun createEntryByExternalId(
             params: CustomerCreditLedgerCreateEntryByExternalIdParams,
@@ -570,14 +570,14 @@ interface LedgerServiceAsync {
                 requestOptions,
             )
 
-        /** @see [listByExternalId] */
+        /** @see listByExternalId */
         @MustBeClosed
         suspend fun listByExternalId(
             params: CustomerCreditLedgerListByExternalIdParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerCreditLedgerListByExternalIdPageAsync>
 
-        /** @see [listByExternalId] */
+        /** @see listByExternalId */
         @MustBeClosed
         suspend fun listByExternalId(
             externalCustomerId: String,

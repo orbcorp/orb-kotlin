@@ -39,7 +39,7 @@ interface ExternalPlanIdService {
     ): PlanVersion =
         createPlanVersion(params.toBuilder().externalPlanId(externalPlanId).build(), requestOptions)
 
-    /** @see [createPlanVersion] */
+    /** @see createPlanVersion */
     fun createPlanVersion(
         params: BetaExternalPlanIdCreatePlanVersionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -58,7 +58,7 @@ interface ExternalPlanIdService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanVersion = fetchPlanVersion(params.toBuilder().version(version).build(), requestOptions)
 
-    /** @see [fetchPlanVersion] */
+    /** @see fetchPlanVersion */
     fun fetchPlanVersion(
         params: BetaExternalPlanIdFetchPlanVersionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -80,7 +80,7 @@ interface ExternalPlanIdService {
             requestOptions,
         )
 
-    /** @see [setDefaultPlanVersion] */
+    /** @see setDefaultPlanVersion */
     fun setDefaultPlanVersion(
         params: BetaExternalPlanIdSetDefaultPlanVersionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -116,7 +116,7 @@ interface ExternalPlanIdService {
                 requestOptions,
             )
 
-        /** @see [createPlanVersion] */
+        /** @see createPlanVersion */
         @MustBeClosed
         fun createPlanVersion(
             params: BetaExternalPlanIdCreatePlanVersionParams,
@@ -136,7 +136,7 @@ interface ExternalPlanIdService {
         ): HttpResponseFor<PlanVersion> =
             fetchPlanVersion(params.toBuilder().version(version).build(), requestOptions)
 
-        /** @see [fetchPlanVersion] */
+        /** @see fetchPlanVersion */
         @MustBeClosed
         fun fetchPlanVersion(
             params: BetaExternalPlanIdFetchPlanVersionParams,
@@ -159,7 +159,7 @@ interface ExternalPlanIdService {
                 requestOptions,
             )
 
-        /** @see [setDefaultPlanVersion] */
+        /** @see setDefaultPlanVersion */
         @MustBeClosed
         fun setDefaultPlanVersion(
             params: BetaExternalPlanIdSetDefaultPlanVersionParams,

@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.InvoiceService
 import java.util.Objects
 
-/** @see [InvoiceService.list] */
+/** @see InvoiceService.list */
 class InvoiceListPage
 private constructor(
     private val service: InvoiceService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [InvoiceListPageResponse], but gracefully handles missing data.
      *
-     * @see [InvoiceListPageResponse.data]
+     * @see InvoiceListPageResponse.data
      */
     fun data(): List<Invoice> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [InvoiceListPageResponse], but gracefully handles missing data.
      *
-     * @see [InvoiceListPageResponse.paginationMetadata]
+     * @see InvoiceListPageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

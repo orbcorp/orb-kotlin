@@ -41,13 +41,13 @@ interface ItemService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item = update(params.toBuilder().itemId(itemId).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: ItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item
 
-    /** @see [update] */
+    /** @see update */
     fun update(itemId: String, requestOptions: RequestOptions): Item =
         update(itemId, ItemUpdateParams.none(), requestOptions)
 
@@ -57,7 +57,7 @@ interface ItemService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ItemListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): ItemListPage =
         list(ItemListParams.none(), requestOptions)
 
@@ -68,13 +68,13 @@ interface ItemService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item = archive(params.toBuilder().itemId(itemId).build(), requestOptions)
 
-    /** @see [archive] */
+    /** @see archive */
     fun archive(
         params: ItemArchiveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item
 
-    /** @see [archive] */
+    /** @see archive */
     fun archive(itemId: String, requestOptions: RequestOptions): Item =
         archive(itemId, ItemArchiveParams.none(), requestOptions)
 
@@ -85,10 +85,10 @@ interface ItemService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item = fetch(params.toBuilder().itemId(itemId).build(), requestOptions)
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(params: ItemFetchParams, requestOptions: RequestOptions = RequestOptions.none()): Item
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(itemId: String, requestOptions: RequestOptions): Item =
         fetch(itemId, ItemFetchParams.none(), requestOptions)
 
@@ -123,14 +123,14 @@ interface ItemService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item> = update(params.toBuilder().itemId(itemId).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: ItemUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(itemId: String, requestOptions: RequestOptions): HttpResponseFor<Item> =
             update(itemId, ItemUpdateParams.none(), requestOptions)
@@ -145,7 +145,7 @@ interface ItemService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ItemListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ItemListPage> =
             list(ItemListParams.none(), requestOptions)
@@ -162,14 +162,14 @@ interface ItemService {
         ): HttpResponseFor<Item> =
             archive(params.toBuilder().itemId(itemId).build(), requestOptions)
 
-        /** @see [archive] */
+        /** @see archive */
         @MustBeClosed
         fun archive(
             params: ItemArchiveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item>
 
-        /** @see [archive] */
+        /** @see archive */
         @MustBeClosed
         fun archive(itemId: String, requestOptions: RequestOptions): HttpResponseFor<Item> =
             archive(itemId, ItemArchiveParams.none(), requestOptions)
@@ -185,14 +185,14 @@ interface ItemService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item> = fetch(params.toBuilder().itemId(itemId).build(), requestOptions)
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(
             params: ItemFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item>
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(itemId: String, requestOptions: RequestOptions): HttpResponseFor<Item> =
             fetch(itemId, ItemFetchParams.none(), requestOptions)

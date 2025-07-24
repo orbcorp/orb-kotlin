@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.customers.credits.LedgerServiceAsync
 import java.util.Objects
 
-/** @see [LedgerServiceAsync.list] */
+/** @see LedgerServiceAsync.list */
 class CustomerCreditLedgerListPageAsync
 private constructor(
     private val service: LedgerServiceAsync,
@@ -19,7 +19,7 @@ private constructor(
     /**
      * Delegates to [CustomerCreditLedgerListPageResponse], but gracefully handles missing data.
      *
-     * @see [CustomerCreditLedgerListPageResponse.data]
+     * @see CustomerCreditLedgerListPageResponse.data
      */
     fun data(): List<CustomerCreditLedgerListResponse> =
         response._data().getNullable("data") ?: emptyList()
@@ -27,7 +27,7 @@ private constructor(
     /**
      * Delegates to [CustomerCreditLedgerListPageResponse], but gracefully handles missing data.
      *
-     * @see [CustomerCreditLedgerListPageResponse.paginationMetadata]
+     * @see CustomerCreditLedgerListPageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

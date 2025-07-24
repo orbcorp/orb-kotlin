@@ -54,13 +54,13 @@ interface DimensionalPriceGroupServiceAsync {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: DimensionalPriceGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroup
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         dimensionalPriceGroupId: String,
         requestOptions: RequestOptions,
@@ -77,7 +77,7 @@ interface DimensionalPriceGroupServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroupListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): DimensionalPriceGroupListPageAsync =
         list(DimensionalPriceGroupListParams.none(), requestOptions)
 
@@ -126,14 +126,14 @@ interface DimensionalPriceGroupServiceAsync {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: DimensionalPriceGroupRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DimensionalPriceGroup>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             dimensionalPriceGroupId: String,
@@ -155,7 +155,7 @@ interface DimensionalPriceGroupServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DimensionalPriceGroupListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions
