@@ -52,7 +52,7 @@ interface CouponService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CouponListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CouponListPage =
         list(CouponListParams.none(), requestOptions)
 
@@ -67,13 +67,13 @@ interface CouponService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Coupon = archive(params.toBuilder().couponId(couponId).build(), requestOptions)
 
-    /** @see [archive] */
+    /** @see archive */
     fun archive(
         params: CouponArchiveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Coupon
 
-    /** @see [archive] */
+    /** @see archive */
     fun archive(couponId: String, requestOptions: RequestOptions): Coupon =
         archive(couponId, CouponArchiveParams.none(), requestOptions)
 
@@ -87,13 +87,13 @@ interface CouponService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Coupon = fetch(params.toBuilder().couponId(couponId).build(), requestOptions)
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(
         params: CouponFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Coupon
 
-    /** @see [fetch] */
+    /** @see fetch */
     fun fetch(couponId: String, requestOptions: RequestOptions): Coupon =
         fetch(couponId, CouponFetchParams.none(), requestOptions)
 
@@ -129,7 +129,7 @@ interface CouponService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CouponListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<CouponListPage> =
             list(CouponListParams.none(), requestOptions)
@@ -146,14 +146,14 @@ interface CouponService {
         ): HttpResponseFor<Coupon> =
             archive(params.toBuilder().couponId(couponId).build(), requestOptions)
 
-        /** @see [archive] */
+        /** @see archive */
         @MustBeClosed
         fun archive(
             params: CouponArchiveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Coupon>
 
-        /** @see [archive] */
+        /** @see archive */
         @MustBeClosed
         fun archive(couponId: String, requestOptions: RequestOptions): HttpResponseFor<Coupon> =
             archive(couponId, CouponArchiveParams.none(), requestOptions)
@@ -170,14 +170,14 @@ interface CouponService {
         ): HttpResponseFor<Coupon> =
             fetch(params.toBuilder().couponId(couponId).build(), requestOptions)
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(
             params: CouponFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Coupon>
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         fun fetch(couponId: String, requestOptions: RequestOptions): HttpResponseFor<Coupon> =
             fetch(couponId, CouponFetchParams.none(), requestOptions)

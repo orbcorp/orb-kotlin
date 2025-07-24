@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.events.BackfillService
 import java.util.Objects
 
-/** @see [BackfillService.list] */
+/** @see BackfillService.list */
 class EventBackfillListPage
 private constructor(
     private val service: BackfillService,
@@ -19,7 +19,7 @@ private constructor(
     /**
      * Delegates to [EventBackfillListPageResponse], but gracefully handles missing data.
      *
-     * @see [EventBackfillListPageResponse.data]
+     * @see EventBackfillListPageResponse.data
      */
     fun data(): List<EventBackfillListResponse> =
         response._data().getNullable("data") ?: emptyList()
@@ -27,7 +27,7 @@ private constructor(
     /**
      * Delegates to [EventBackfillListPageResponse], but gracefully handles missing data.
      *
-     * @see [EventBackfillListPageResponse.paginationMetadata]
+     * @see EventBackfillListPageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

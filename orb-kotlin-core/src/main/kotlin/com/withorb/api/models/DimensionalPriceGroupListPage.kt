@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.DimensionalPriceGroupService
 import java.util.Objects
 
-/** @see [DimensionalPriceGroupService.list] */
+/** @see DimensionalPriceGroupService.list */
 class DimensionalPriceGroupListPage
 private constructor(
     private val service: DimensionalPriceGroupService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [DimensionalPriceGroups], but gracefully handles missing data.
      *
-     * @see [DimensionalPriceGroups.data]
+     * @see DimensionalPriceGroups.data
      */
     fun data(): List<DimensionalPriceGroup> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [DimensionalPriceGroups], but gracefully handles missing data.
      *
-     * @see [DimensionalPriceGroups.paginationMetadata]
+     * @see DimensionalPriceGroups.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.AlertService
 import java.util.Objects
 
-/** @see [AlertService.list] */
+/** @see AlertService.list */
 class AlertListPage
 private constructor(
     private val service: AlertService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [AlertListPageResponse], but gracefully handles missing data.
      *
-     * @see [AlertListPageResponse.data]
+     * @see AlertListPageResponse.data
      */
     fun data(): List<Alert> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [AlertListPageResponse], but gracefully handles missing data.
      *
-     * @see [AlertListPageResponse.paginationMetadata]
+     * @see AlertListPageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

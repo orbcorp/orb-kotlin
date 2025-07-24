@@ -39,7 +39,7 @@ interface ExternalPlanIdServiceAsync {
     ): PlanVersion =
         createPlanVersion(params.toBuilder().externalPlanId(externalPlanId).build(), requestOptions)
 
-    /** @see [createPlanVersion] */
+    /** @see createPlanVersion */
     suspend fun createPlanVersion(
         params: BetaExternalPlanIdCreatePlanVersionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -58,7 +58,7 @@ interface ExternalPlanIdServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanVersion = fetchPlanVersion(params.toBuilder().version(version).build(), requestOptions)
 
-    /** @see [fetchPlanVersion] */
+    /** @see fetchPlanVersion */
     suspend fun fetchPlanVersion(
         params: BetaExternalPlanIdFetchPlanVersionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -80,7 +80,7 @@ interface ExternalPlanIdServiceAsync {
             requestOptions,
         )
 
-    /** @see [setDefaultPlanVersion] */
+    /** @see setDefaultPlanVersion */
     suspend fun setDefaultPlanVersion(
         params: BetaExternalPlanIdSetDefaultPlanVersionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -117,7 +117,7 @@ interface ExternalPlanIdServiceAsync {
                 requestOptions,
             )
 
-        /** @see [createPlanVersion] */
+        /** @see createPlanVersion */
         @MustBeClosed
         suspend fun createPlanVersion(
             params: BetaExternalPlanIdCreatePlanVersionParams,
@@ -137,7 +137,7 @@ interface ExternalPlanIdServiceAsync {
         ): HttpResponseFor<PlanVersion> =
             fetchPlanVersion(params.toBuilder().version(version).build(), requestOptions)
 
-        /** @see [fetchPlanVersion] */
+        /** @see fetchPlanVersion */
         @MustBeClosed
         suspend fun fetchPlanVersion(
             params: BetaExternalPlanIdFetchPlanVersionParams,
@@ -160,7 +160,7 @@ interface ExternalPlanIdServiceAsync {
                 requestOptions,
             )
 
-        /** @see [setDefaultPlanVersion] */
+        /** @see setDefaultPlanVersion */
         @MustBeClosed
         suspend fun setDefaultPlanVersion(
             params: BetaExternalPlanIdSetDefaultPlanVersionParams,

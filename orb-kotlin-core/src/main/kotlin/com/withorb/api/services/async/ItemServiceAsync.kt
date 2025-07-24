@@ -41,13 +41,13 @@ interface ItemServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item = update(params.toBuilder().itemId(itemId).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         params: ItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(itemId: String, requestOptions: RequestOptions): Item =
         update(itemId, ItemUpdateParams.none(), requestOptions)
 
@@ -57,7 +57,7 @@ interface ItemServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ItemListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): ItemListPageAsync =
         list(ItemListParams.none(), requestOptions)
 
@@ -68,13 +68,13 @@ interface ItemServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item = archive(params.toBuilder().itemId(itemId).build(), requestOptions)
 
-    /** @see [archive] */
+    /** @see archive */
     suspend fun archive(
         params: ItemArchiveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item
 
-    /** @see [archive] */
+    /** @see archive */
     suspend fun archive(itemId: String, requestOptions: RequestOptions): Item =
         archive(itemId, ItemArchiveParams.none(), requestOptions)
 
@@ -85,13 +85,13 @@ interface ItemServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item = fetch(params.toBuilder().itemId(itemId).build(), requestOptions)
 
-    /** @see [fetch] */
+    /** @see fetch */
     suspend fun fetch(
         params: ItemFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Item
 
-    /** @see [fetch] */
+    /** @see fetch */
     suspend fun fetch(itemId: String, requestOptions: RequestOptions): Item =
         fetch(itemId, ItemFetchParams.none(), requestOptions)
 
@@ -126,14 +126,14 @@ interface ItemServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item> = update(params.toBuilder().itemId(itemId).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             params: ItemUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(itemId: String, requestOptions: RequestOptions): HttpResponseFor<Item> =
             update(itemId, ItemUpdateParams.none(), requestOptions)
@@ -148,7 +148,7 @@ interface ItemServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ItemListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<ItemListPageAsync> =
             list(ItemListParams.none(), requestOptions)
@@ -165,14 +165,14 @@ interface ItemServiceAsync {
         ): HttpResponseFor<Item> =
             archive(params.toBuilder().itemId(itemId).build(), requestOptions)
 
-        /** @see [archive] */
+        /** @see archive */
         @MustBeClosed
         suspend fun archive(
             params: ItemArchiveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item>
 
-        /** @see [archive] */
+        /** @see archive */
         @MustBeClosed
         suspend fun archive(itemId: String, requestOptions: RequestOptions): HttpResponseFor<Item> =
             archive(itemId, ItemArchiveParams.none(), requestOptions)
@@ -188,14 +188,14 @@ interface ItemServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item> = fetch(params.toBuilder().itemId(itemId).build(), requestOptions)
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         suspend fun fetch(
             params: ItemFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Item>
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         suspend fun fetch(itemId: String, requestOptions: RequestOptions): HttpResponseFor<Item> =
             fetch(itemId, ItemFetchParams.none(), requestOptions)

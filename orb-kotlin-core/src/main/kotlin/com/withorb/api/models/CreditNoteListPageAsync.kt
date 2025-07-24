@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.CreditNoteServiceAsync
 import java.util.Objects
 
-/** @see [CreditNoteServiceAsync.list] */
+/** @see CreditNoteServiceAsync.list */
 class CreditNoteListPageAsync
 private constructor(
     private val service: CreditNoteServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [CreditNoteListPageResponse], but gracefully handles missing data.
      *
-     * @see [CreditNoteListPageResponse.data]
+     * @see CreditNoteListPageResponse.data
      */
     fun data(): List<CreditNote> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [CreditNoteListPageResponse], but gracefully handles missing data.
      *
-     * @see [CreditNoteListPageResponse.paginationMetadata]
+     * @see CreditNoteListPageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

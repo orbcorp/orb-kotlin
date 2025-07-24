@@ -36,7 +36,7 @@ interface BalanceTransactionService {
     ): CustomerBalanceTransactionCreateResponse =
         create(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: CustomerBalanceTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -70,13 +70,13 @@ interface BalanceTransactionService {
     ): CustomerBalanceTransactionListPage =
         list(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CustomerBalanceTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerBalanceTransactionListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         customerId: String,
         requestOptions: RequestOptions,
@@ -110,7 +110,7 @@ interface BalanceTransactionService {
         ): HttpResponseFor<CustomerBalanceTransactionCreateResponse> =
             create(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: CustomerBalanceTransactionCreateParams,
@@ -130,14 +130,14 @@ interface BalanceTransactionService {
         ): HttpResponseFor<CustomerBalanceTransactionListPage> =
             list(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CustomerBalanceTransactionListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerBalanceTransactionListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             customerId: String,

@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.CouponService
 import java.util.Objects
 
-/** @see [CouponService.list] */
+/** @see CouponService.list */
 class CouponListPage
 private constructor(
     private val service: CouponService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [CouponListPageResponse], but gracefully handles missing data.
      *
-     * @see [CouponListPageResponse.data]
+     * @see CouponListPageResponse.data
      */
     fun data(): List<Coupon> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [CouponListPageResponse], but gracefully handles missing data.
      *
-     * @see [CouponListPageResponse.paginationMetadata]
+     * @see CouponListPageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

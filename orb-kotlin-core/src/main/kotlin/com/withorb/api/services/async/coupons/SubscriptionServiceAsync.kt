@@ -36,13 +36,13 @@ interface SubscriptionServiceAsync {
     ): CouponSubscriptionListPageAsync =
         list(params.toBuilder().couponId(couponId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: CouponSubscriptionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CouponSubscriptionListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         couponId: String,
         requestOptions: RequestOptions,
@@ -76,14 +76,14 @@ interface SubscriptionServiceAsync {
         ): HttpResponseFor<CouponSubscriptionListPageAsync> =
             list(params.toBuilder().couponId(couponId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: CouponSubscriptionListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CouponSubscriptionListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             couponId: String,

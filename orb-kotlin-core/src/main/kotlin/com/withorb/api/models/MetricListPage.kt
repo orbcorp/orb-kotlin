@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.MetricService
 import java.util.Objects
 
-/** @see [MetricService.list] */
+/** @see MetricService.list */
 class MetricListPage
 private constructor(
     private val service: MetricService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [MetricListPageResponse], but gracefully handles missing data.
      *
-     * @see [MetricListPageResponse.data]
+     * @see MetricListPageResponse.data
      */
     fun data(): List<BillableMetric> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [MetricListPageResponse], but gracefully handles missing data.
      *
-     * @see [MetricListPageResponse.paginationMetadata]
+     * @see MetricListPageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

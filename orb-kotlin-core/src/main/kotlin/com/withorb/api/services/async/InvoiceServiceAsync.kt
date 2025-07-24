@@ -51,13 +51,13 @@ interface InvoiceServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice = update(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         params: InvoiceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(invoiceId: String, requestOptions: RequestOptions): Invoice =
         update(invoiceId, InvoiceUpdateParams.none(), requestOptions)
 
@@ -80,7 +80,7 @@ interface InvoiceServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvoiceListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): InvoiceListPageAsync =
         list(InvoiceListParams.none(), requestOptions)
 
@@ -93,13 +93,13 @@ interface InvoiceServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice = fetch(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-    /** @see [fetch] */
+    /** @see fetch */
     suspend fun fetch(
         params: InvoiceFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
-    /** @see [fetch] */
+    /** @see fetch */
     suspend fun fetch(invoiceId: String, requestOptions: RequestOptions): Invoice =
         fetch(invoiceId, InvoiceFetchParams.none(), requestOptions)
 
@@ -125,13 +125,13 @@ interface InvoiceServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice = issue(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-    /** @see [issue] */
+    /** @see issue */
     suspend fun issue(
         params: InvoiceIssueParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
-    /** @see [issue] */
+    /** @see issue */
     suspend fun issue(invoiceId: String, requestOptions: RequestOptions): Invoice =
         issue(invoiceId, InvoiceIssueParams.none(), requestOptions)
 
@@ -145,7 +145,7 @@ interface InvoiceServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice = markPaid(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-    /** @see [markPaid] */
+    /** @see markPaid */
     suspend fun markPaid(
         params: InvoiceMarkPaidParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -161,13 +161,13 @@ interface InvoiceServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice = pay(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-    /** @see [pay] */
+    /** @see pay */
     suspend fun pay(
         params: InvoicePayParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
-    /** @see [pay] */
+    /** @see pay */
     suspend fun pay(invoiceId: String, requestOptions: RequestOptions): Invoice =
         pay(invoiceId, InvoicePayParams.none(), requestOptions)
 
@@ -189,13 +189,13 @@ interface InvoiceServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice = void(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-    /** @see [void] */
+    /** @see void */
     suspend fun void(
         params: InvoiceVoidParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
-    /** @see [void] */
+    /** @see void */
     suspend fun void(invoiceId: String, requestOptions: RequestOptions): Invoice =
         void(invoiceId, InvoiceVoidParams.none(), requestOptions)
 
@@ -235,14 +235,14 @@ interface InvoiceServiceAsync {
         ): HttpResponseFor<Invoice> =
             update(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             params: InvoiceUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             invoiceId: String,
@@ -259,7 +259,7 @@ interface InvoiceServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InvoiceListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<InvoiceListPageAsync> =
             list(InvoiceListParams.none(), requestOptions)
@@ -276,14 +276,14 @@ interface InvoiceServiceAsync {
         ): HttpResponseFor<Invoice> =
             fetch(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         suspend fun fetch(
             params: InvoiceFetchParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
 
-        /** @see [fetch] */
+        /** @see fetch */
         @MustBeClosed
         suspend fun fetch(
             invoiceId: String,
@@ -312,14 +312,14 @@ interface InvoiceServiceAsync {
         ): HttpResponseFor<Invoice> =
             issue(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-        /** @see [issue] */
+        /** @see issue */
         @MustBeClosed
         suspend fun issue(
             params: InvoiceIssueParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
 
-        /** @see [issue] */
+        /** @see issue */
         @MustBeClosed
         suspend fun issue(
             invoiceId: String,
@@ -338,7 +338,7 @@ interface InvoiceServiceAsync {
         ): HttpResponseFor<Invoice> =
             markPaid(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-        /** @see [markPaid] */
+        /** @see markPaid */
         @MustBeClosed
         suspend fun markPaid(
             params: InvoiceMarkPaidParams,
@@ -357,14 +357,14 @@ interface InvoiceServiceAsync {
         ): HttpResponseFor<Invoice> =
             pay(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-        /** @see [pay] */
+        /** @see pay */
         @MustBeClosed
         suspend fun pay(
             params: InvoicePayParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
 
-        /** @see [pay] */
+        /** @see pay */
         @MustBeClosed
         suspend fun pay(
             invoiceId: String,
@@ -383,14 +383,14 @@ interface InvoiceServiceAsync {
         ): HttpResponseFor<Invoice> =
             void(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
-        /** @see [void] */
+        /** @see void */
         @MustBeClosed
         suspend fun void(
             params: InvoiceVoidParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
 
-        /** @see [void] */
+        /** @see void */
         @MustBeClosed
         suspend fun void(
             invoiceId: String,

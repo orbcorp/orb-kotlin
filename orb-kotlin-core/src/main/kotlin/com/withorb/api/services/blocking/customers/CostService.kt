@@ -142,13 +142,13 @@ interface CostService {
     ): CustomerCostListResponse =
         list(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CustomerCostListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCostListResponse
 
-    /** @see [list] */
+    /** @see list */
     fun list(customerId: String, requestOptions: RequestOptions): CustomerCostListResponse =
         list(customerId, CustomerCostListParams.none(), requestOptions)
 
@@ -272,13 +272,13 @@ interface CostService {
             requestOptions,
         )
 
-    /** @see [listByExternalId] */
+    /** @see listByExternalId */
     fun listByExternalId(
         params: CustomerCostListByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCostListByExternalIdResponse
 
-    /** @see [listByExternalId] */
+    /** @see listByExternalId */
     fun listByExternalId(
         externalCustomerId: String,
         requestOptions: RequestOptions,
@@ -311,14 +311,14 @@ interface CostService {
         ): HttpResponseFor<CustomerCostListResponse> =
             list(params.toBuilder().customerId(customerId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CustomerCostListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerCostListResponse>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             customerId: String,
@@ -342,14 +342,14 @@ interface CostService {
                 requestOptions,
             )
 
-        /** @see [listByExternalId] */
+        /** @see listByExternalId */
         @MustBeClosed
         fun listByExternalId(
             params: CustomerCostListByExternalIdParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomerCostListByExternalIdResponse>
 
-        /** @see [listByExternalId] */
+        /** @see listByExternalId */
         @MustBeClosed
         fun listByExternalId(
             externalCustomerId: String,

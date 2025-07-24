@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.blocking.SubscriptionService
 import java.util.Objects
 
-/** @see [SubscriptionService.fetchSchedule] */
+/** @see SubscriptionService.fetchSchedule */
 class SubscriptionFetchSchedulePage
 private constructor(
     private val service: SubscriptionService,
@@ -19,7 +19,7 @@ private constructor(
     /**
      * Delegates to [SubscriptionFetchSchedulePageResponse], but gracefully handles missing data.
      *
-     * @see [SubscriptionFetchSchedulePageResponse.data]
+     * @see SubscriptionFetchSchedulePageResponse.data
      */
     fun data(): List<SubscriptionFetchScheduleResponse> =
         response._data().getNullable("data") ?: emptyList()
@@ -27,7 +27,7 @@ private constructor(
     /**
      * Delegates to [SubscriptionFetchSchedulePageResponse], but gracefully handles missing data.
      *
-     * @see [SubscriptionFetchSchedulePageResponse.paginationMetadata]
+     * @see SubscriptionFetchSchedulePageResponse.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

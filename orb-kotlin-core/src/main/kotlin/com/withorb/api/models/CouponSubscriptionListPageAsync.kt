@@ -8,7 +8,7 @@ import com.withorb.api.core.checkRequired
 import com.withorb.api.services.async.coupons.SubscriptionServiceAsync
 import java.util.Objects
 
-/** @see [SubscriptionServiceAsync.list] */
+/** @see SubscriptionServiceAsync.list */
 class CouponSubscriptionListPageAsync
 private constructor(
     private val service: SubscriptionServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [Subscriptions], but gracefully handles missing data.
      *
-     * @see [Subscriptions.data]
+     * @see Subscriptions.data
      */
     fun data(): List<Subscription> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [Subscriptions], but gracefully handles missing data.
      *
-     * @see [Subscriptions.paginationMetadata]
+     * @see Subscriptions.paginationMetadata
      */
     fun paginationMetadata(): PaginationMetadata? =
         response._paginationMetadata().getNullable("pagination_metadata")

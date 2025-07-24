@@ -36,13 +36,13 @@ interface SubscriptionService {
     ): CouponSubscriptionListPage =
         list(params.toBuilder().couponId(couponId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CouponSubscriptionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CouponSubscriptionListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(couponId: String, requestOptions: RequestOptions): CouponSubscriptionListPage =
         list(couponId, CouponSubscriptionListParams.none(), requestOptions)
 
@@ -72,14 +72,14 @@ interface SubscriptionService {
         ): HttpResponseFor<CouponSubscriptionListPage> =
             list(params.toBuilder().couponId(couponId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CouponSubscriptionListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CouponSubscriptionListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             couponId: String,
