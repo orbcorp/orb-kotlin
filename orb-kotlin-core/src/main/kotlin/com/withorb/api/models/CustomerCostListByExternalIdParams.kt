@@ -134,7 +134,7 @@ private constructor(
 
     fun externalCustomerId(): String? = externalCustomerId
 
-    /** The currency to use. */
+    /** The currency or custom pricing unit to use. */
     fun currency(): String? = currency
 
     /** Costs returned are exclusive of `timeframe_end`. */
@@ -196,7 +196,7 @@ private constructor(
             this.externalCustomerId = externalCustomerId
         }
 
-        /** The currency to use. */
+        /** The currency or custom pricing unit to use. */
         fun currency(currency: String?) = apply { this.currency = currency }
 
         /** Costs returned are exclusive of `timeframe_end`. */
