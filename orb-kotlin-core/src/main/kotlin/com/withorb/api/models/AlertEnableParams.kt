@@ -28,10 +28,13 @@ private constructor(
     /** Used to update the status of a plan alert scoped to this subscription_id */
     fun subscriptionId(): String? = subscriptionId
 
+    /** Additional body properties to send with the request. */
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)

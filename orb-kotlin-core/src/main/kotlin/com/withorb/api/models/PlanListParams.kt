@@ -52,8 +52,10 @@ private constructor(
     /** The plan status to filter to ('active', 'archived', or 'draft'). */
     fun status(): Status? = status
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
