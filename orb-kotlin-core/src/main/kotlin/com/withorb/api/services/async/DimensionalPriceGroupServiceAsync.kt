@@ -11,6 +11,7 @@ import com.withorb.api.models.DimensionalPriceGroupCreateParams
 import com.withorb.api.models.DimensionalPriceGroupListPageAsync
 import com.withorb.api.models.DimensionalPriceGroupListParams
 import com.withorb.api.models.DimensionalPriceGroupRetrieveParams
+import com.withorb.api.models.DimensionalPriceGroupUpdateParams
 import com.withorb.api.services.async.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdServiceAsync
 
 interface DimensionalPriceGroupServiceAsync {
@@ -70,6 +71,34 @@ interface DimensionalPriceGroupServiceAsync {
             DimensionalPriceGroupRetrieveParams.none(),
             requestOptions,
         )
+
+    /**
+     * This endpoint can be used to update the `external_dimensional_price_group_id` and `metadata`
+     * of an existing dimensional price group. Other fields on a dimensional price group are
+     * currently immutable.
+     */
+    suspend fun update(
+        dimensionalPriceGroupId: String,
+        params: DimensionalPriceGroupUpdateParams = DimensionalPriceGroupUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DimensionalPriceGroup =
+        update(
+            params.toBuilder().dimensionalPriceGroupId(dimensionalPriceGroupId).build(),
+            requestOptions,
+        )
+
+    /** @see update */
+    suspend fun update(
+        params: DimensionalPriceGroupUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DimensionalPriceGroup
+
+    /** @see update */
+    suspend fun update(
+        dimensionalPriceGroupId: String,
+        requestOptions: RequestOptions,
+    ): DimensionalPriceGroup =
+        update(dimensionalPriceGroupId, DimensionalPriceGroupUpdateParams.none(), requestOptions)
 
     /** List dimensional price groups */
     suspend fun list(
@@ -142,6 +171,41 @@ interface DimensionalPriceGroupServiceAsync {
             retrieve(
                 dimensionalPriceGroupId,
                 DimensionalPriceGroupRetrieveParams.none(),
+                requestOptions,
+            )
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /dimensional_price_groups/{dimensional_price_group_id}`, but is otherwise the same as
+         * [DimensionalPriceGroupServiceAsync.update].
+         */
+        @MustBeClosed
+        suspend fun update(
+            dimensionalPriceGroupId: String,
+            params: DimensionalPriceGroupUpdateParams = DimensionalPriceGroupUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DimensionalPriceGroup> =
+            update(
+                params.toBuilder().dimensionalPriceGroupId(dimensionalPriceGroupId).build(),
+                requestOptions,
+            )
+
+        /** @see update */
+        @MustBeClosed
+        suspend fun update(
+            params: DimensionalPriceGroupUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DimensionalPriceGroup>
+
+        /** @see update */
+        @MustBeClosed
+        suspend fun update(
+            dimensionalPriceGroupId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DimensionalPriceGroup> =
+            update(
+                dimensionalPriceGroupId,
+                DimensionalPriceGroupUpdateParams.none(),
                 requestOptions,
             )
 

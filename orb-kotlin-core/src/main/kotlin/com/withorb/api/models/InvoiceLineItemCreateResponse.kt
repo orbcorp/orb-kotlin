@@ -1076,6 +1076,13 @@ private constructor(
         fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulk) =
             price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
+        /**
+         * Alias for calling [price] with
+         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         */
+        fun price(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
+            price(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+
         /** Either the fixed fee quantity or the usage during the service period. */
         fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
