@@ -600,6 +600,13 @@ private constructor(
             price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
         /**
+         * Alias for calling [price] with
+         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         */
+        fun price(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
+            price(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+
+        /**
          * The start date of the price interval. This is the date that Orb starts billing for this
          * price.
          */

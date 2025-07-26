@@ -292,6 +292,13 @@ private constructor(
         fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulk) =
             price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
+        /**
+         * Alias for calling [price] with
+         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         */
+        fun price(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
+            price(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+
         /** The price the cost is associated with */
         fun priceId(priceId: String) = priceId(JsonField.of(priceId))
 

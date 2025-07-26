@@ -8,6 +8,7 @@ import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.DimensionalPriceGroup
 import com.withorb.api.models.DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams
+import com.withorb.api.models.DimensionalPriceGroupExternalDimensionalPriceGroupIdUpdateParams
 
 interface ExternalDimensionalPriceGroupIdService {
 
@@ -54,6 +55,42 @@ interface ExternalDimensionalPriceGroupIdService {
         retrieve(
             externalDimensionalPriceGroupId,
             DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.none(),
+            requestOptions,
+        )
+
+    /**
+     * This endpoint can be used to update the `external_dimensional_price_group_id` and `metadata`
+     * of an existing dimensional price group. Other fields on a dimensional price group are
+     * currently immutable.
+     */
+    fun update(
+        pathExternalDimensionalPriceGroupId: String,
+        params: DimensionalPriceGroupExternalDimensionalPriceGroupIdUpdateParams =
+            DimensionalPriceGroupExternalDimensionalPriceGroupIdUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DimensionalPriceGroup =
+        update(
+            params
+                .toBuilder()
+                .pathExternalDimensionalPriceGroupId(pathExternalDimensionalPriceGroupId)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see update */
+    fun update(
+        params: DimensionalPriceGroupExternalDimensionalPriceGroupIdUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DimensionalPriceGroup
+
+    /** @see update */
+    fun update(
+        pathExternalDimensionalPriceGroupId: String,
+        requestOptions: RequestOptions,
+    ): DimensionalPriceGroup =
+        update(
+            pathExternalDimensionalPriceGroupId,
+            DimensionalPriceGroupExternalDimensionalPriceGroupIdUpdateParams.none(),
             requestOptions,
         )
 
@@ -108,6 +145,45 @@ interface ExternalDimensionalPriceGroupIdService {
             retrieve(
                 externalDimensionalPriceGroupId,
                 DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.none(),
+                requestOptions,
+            )
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /dimensional_price_groups/external_dimensional_price_group_id/{external_dimensional_price_group_id}`,
+         * but is otherwise the same as [ExternalDimensionalPriceGroupIdService.update].
+         */
+        @MustBeClosed
+        fun update(
+            pathExternalDimensionalPriceGroupId: String,
+            params: DimensionalPriceGroupExternalDimensionalPriceGroupIdUpdateParams =
+                DimensionalPriceGroupExternalDimensionalPriceGroupIdUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DimensionalPriceGroup> =
+            update(
+                params
+                    .toBuilder()
+                    .pathExternalDimensionalPriceGroupId(pathExternalDimensionalPriceGroupId)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see update */
+        @MustBeClosed
+        fun update(
+            params: DimensionalPriceGroupExternalDimensionalPriceGroupIdUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DimensionalPriceGroup>
+
+        /** @see update */
+        @MustBeClosed
+        fun update(
+            pathExternalDimensionalPriceGroupId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DimensionalPriceGroup> =
+            update(
+                pathExternalDimensionalPriceGroupId,
+                DimensionalPriceGroupExternalDimensionalPriceGroupIdUpdateParams.none(),
                 requestOptions,
             )
     }
