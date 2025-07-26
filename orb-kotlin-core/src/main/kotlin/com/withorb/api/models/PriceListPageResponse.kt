@@ -259,6 +259,13 @@ private constructor(
         fun addData(cumulativeGroupedBulk: Price.CumulativeGroupedBulk) =
             addData(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
+        /**
+         * Alias for calling [addData] with
+         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         */
+        fun addData(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
+            addData(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+
         fun paginationMetadata(paginationMetadata: PaginationMetadata) =
             paginationMetadata(JsonField.of(paginationMetadata))
 
