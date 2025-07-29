@@ -229,6 +229,8 @@ The SDK throws custom unchecked exception types:
 
 - [`OrbIoException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/OrbIoException.kt): I/O networking errors.
 
+- [`OrbRetryableException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/OrbRetryableException.kt): Generic error indicating a failure that could be retried by the client.
+
 - [`OrbInvalidDataException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/OrbInvalidDataException.kt): Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
 
 - [`OrbException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/OrbException.kt): Base class for all exceptions. Most errors will result in one of the previously mentioned ones, but completely generic errors may be thrown using the base class.
