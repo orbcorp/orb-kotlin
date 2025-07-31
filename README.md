@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/1.11.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/1.12.0)
 
 <!-- x-release-please-end -->
 
@@ -19,7 +19,7 @@ The REST API documentation can be found on [docs.withorb.com](https://docs.witho
 ### Gradle
 
 ```kotlin
-implementation("com.withorb.api:orb-kotlin:1.11.0")
+implementation("com.withorb.api:orb-kotlin:1.12.0")
 ```
 
 ### Maven
@@ -28,7 +28,7 @@ implementation("com.withorb.api:orb-kotlin:1.11.0")
 <dependency>
   <groupId>com.withorb.api</groupId>
   <artifactId>orb-kotlin</artifactId>
-  <version>1.11.0</version>
+  <version>1.12.0</version>
 </dependency>
 ```
 
@@ -229,6 +229,8 @@ The SDK throws custom unchecked exception types:
 
 - [`OrbIoException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/OrbIoException.kt): I/O networking errors.
 
+- [`OrbRetryableException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/OrbRetryableException.kt): Generic error indicating a failure that could be retried by the client.
+
 - [`OrbInvalidDataException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/OrbInvalidDataException.kt): Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
 
 - [`OrbException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/OrbException.kt): Base class for all exceptions. Most errors will result in one of the previously mentioned ones, but completely generic errors may be thrown using the base class.
@@ -311,6 +313,12 @@ both of which will raise an error if the signature is invalid.
 
 Note that the `body` parameter must be the raw JSON string sent from the server (do not parse it first).
 The `.unwrap()` method can parse this JSON for you.
+
+## ProGuard and R8
+
+Although the SDK uses reflection, it is still usable with [ProGuard](https://github.com/Guardsquare/proguard) and [R8](https://developer.android.com/topic/performance/app-optimization/enable-app-optimization) because `orb-kotlin-core` is published with a [configuration file](orb-kotlin-core/src/main/resources/META-INF/proguard/orb-kotlin-core.pro) containing [keep rules](https://www.guardsquare.com/manual/configuration/usage).
+
+ProGuard and R8 should automatically detect and use the published rules, but you can also manually copy the keep rules if necessary.
 
 ## Jackson
 
