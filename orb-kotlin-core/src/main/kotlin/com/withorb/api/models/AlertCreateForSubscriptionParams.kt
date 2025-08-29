@@ -572,12 +572,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && thresholds == other.thresholds && type == other.type && metricId == other.metricId && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                thresholds == other.thresholds &&
+                type == other.type &&
+                metricId == other.metricId &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(thresholds, type, metricId, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(thresholds, type, metricId, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -702,7 +706,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -715,10 +719,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AlertCreateForSubscriptionParams && subscriptionId == other.subscriptionId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is AlertCreateForSubscriptionParams &&
+            subscriptionId == other.subscriptionId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(subscriptionId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "AlertCreateForSubscriptionParams{subscriptionId=$subscriptionId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -577,7 +577,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExpiresAfterUnit && value == other.value /* spotless:on */
+            return other is ExpiresAfterUnit && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -590,12 +590,31 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditTopUpListResponse && id == other.id && amount == other.amount && currency == other.currency && invoiceSettings == other.invoiceSettings && perUnitCostBasis == other.perUnitCostBasis && threshold == other.threshold && expiresAfter == other.expiresAfter && expiresAfterUnit == other.expiresAfterUnit && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CustomerCreditTopUpListResponse &&
+            id == other.id &&
+            amount == other.amount &&
+            currency == other.currency &&
+            invoiceSettings == other.invoiceSettings &&
+            perUnitCostBasis == other.perUnitCostBasis &&
+            threshold == other.threshold &&
+            expiresAfter == other.expiresAfter &&
+            expiresAfterUnit == other.expiresAfterUnit &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, amount, currency, invoiceSettings, perUnitCostBasis, threshold, expiresAfter, expiresAfterUnit, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            amount,
+            currency,
+            invoiceSettings,
+            perUnitCostBasis,
+            threshold,
+            expiresAfter,
+            expiresAfterUnit,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

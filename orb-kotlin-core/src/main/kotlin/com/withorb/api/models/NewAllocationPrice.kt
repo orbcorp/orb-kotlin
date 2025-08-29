@@ -459,7 +459,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Cadence && value == other.value /* spotless:on */
+            return other is Cadence && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -472,12 +472,25 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is NewAllocationPrice && amount == other.amount && cadence == other.cadence && currency == other.currency && customExpiration == other.customExpiration && expiresAtEndOfCadence == other.expiresAtEndOfCadence && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is NewAllocationPrice &&
+            amount == other.amount &&
+            cadence == other.cadence &&
+            currency == other.currency &&
+            customExpiration == other.customExpiration &&
+            expiresAtEndOfCadence == other.expiresAtEndOfCadence &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(amount, cadence, currency, customExpiration, expiresAtEndOfCadence, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            amount,
+            cadence,
+            currency,
+            customExpiration,
+            expiresAtEndOfCadence,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

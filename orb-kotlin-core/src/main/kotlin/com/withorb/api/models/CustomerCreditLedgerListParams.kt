@@ -495,7 +495,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
+            return other is EntryStatus && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -651,7 +651,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
+            return other is EntryType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -664,10 +664,38 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditLedgerListParams && customerId == other.customerId && createdAtGt == other.createdAtGt && createdAtGte == other.createdAtGte && createdAtLt == other.createdAtLt && createdAtLte == other.createdAtLte && currency == other.currency && cursor == other.cursor && entryStatus == other.entryStatus && entryType == other.entryType && limit == other.limit && minimumAmount == other.minimumAmount && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CustomerCreditLedgerListParams &&
+            customerId == other.customerId &&
+            createdAtGt == other.createdAtGt &&
+            createdAtGte == other.createdAtGte &&
+            createdAtLt == other.createdAtLt &&
+            createdAtLte == other.createdAtLte &&
+            currency == other.currency &&
+            cursor == other.cursor &&
+            entryStatus == other.entryStatus &&
+            entryType == other.entryType &&
+            limit == other.limit &&
+            minimumAmount == other.minimumAmount &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, createdAtGt, createdAtGte, createdAtLt, createdAtLte, currency, cursor, entryStatus, entryType, limit, minimumAmount, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            customerId,
+            createdAtGt,
+            createdAtGte,
+            createdAtLt,
+            createdAtLte,
+            currency,
+            cursor,
+            entryStatus,
+            entryType,
+            limit,
+            minimumAmount,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "CustomerCreditLedgerListParams{customerId=$customerId, createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, currency=$currency, cursor=$cursor, entryStatus=$entryStatus, entryType=$entryType, limit=$limit, minimumAmount=$minimumAmount, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

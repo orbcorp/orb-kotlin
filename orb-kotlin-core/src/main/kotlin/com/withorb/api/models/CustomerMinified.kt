@@ -195,12 +195,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerMinified && id == other.id && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CustomerMinified &&
+            id == other.id &&
+            externalCustomerId == other.externalCustomerId &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(id, externalCustomerId, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

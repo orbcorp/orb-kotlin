@@ -496,12 +496,25 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Data && currency == other.currency && priceGroups == other.priceGroups && externalPriceId == other.externalPriceId && inlinePriceIndex == other.inlinePriceIndex && priceId == other.priceId && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Data &&
+                currency == other.currency &&
+                priceGroups == other.priceGroups &&
+                externalPriceId == other.externalPriceId &&
+                inlinePriceIndex == other.inlinePriceIndex &&
+                priceId == other.priceId &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(currency, priceGroups, externalPriceId, inlinePriceIndex, priceId, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                currency,
+                priceGroups,
+                externalPriceId,
+                inlinePriceIndex,
+                priceId,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -514,12 +527,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PriceEvaluatePreviewEventsResponse && data == other.data && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PriceEvaluatePreviewEventsResponse &&
+            data == other.data &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(data, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

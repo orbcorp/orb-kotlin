@@ -473,7 +473,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ViewMode && value == other.value /* spotless:on */
+            return other is ViewMode && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -486,10 +486,26 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCostListByExternalIdParams && externalCustomerId == other.externalCustomerId && currency == other.currency && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && viewMode == other.viewMode && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CustomerCostListByExternalIdParams &&
+            externalCustomerId == other.externalCustomerId &&
+            currency == other.currency &&
+            timeframeEnd == other.timeframeEnd &&
+            timeframeStart == other.timeframeStart &&
+            viewMode == other.viewMode &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, currency, timeframeEnd, timeframeStart, viewMode, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            externalCustomerId,
+            currency,
+            timeframeEnd,
+            timeframeStart,
+            viewMode,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "CustomerCostListByExternalIdParams{externalCustomerId=$externalCustomerId, currency=$currency, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

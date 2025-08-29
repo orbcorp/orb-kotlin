@@ -145,7 +145,7 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
 
     override fun subscriptionChanges(): SubscriptionChangeService = subscriptionChanges
 
-    override fun close() = clientOptions.httpClient.close()
+    override fun close() = clientOptions.close()
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         OrbClient.WithRawResponse {

@@ -1535,12 +1535,13 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Hierarchy && children == other.children && parent == other.parent && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Hierarchy &&
+                children == other.children &&
+                parent == other.parent &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(children, parent, additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1640,12 +1641,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1794,7 +1793,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PaymentProvider && value == other.value /* spotless:on */
+            return other is PaymentProvider && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2315,7 +2314,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is ProviderType && value == other.value /* spotless:on */
+                    return other is ProviderType && value == other.value
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -2328,12 +2327,15 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AccountingProvider && externalProviderId == other.externalProviderId && providerType == other.providerType && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is AccountingProvider &&
+                    externalProviderId == other.externalProviderId &&
+                    providerType == other.providerType &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(externalProviderId, providerType, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(externalProviderId, providerType, additionalProperties)
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -2346,12 +2348,15 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountingSyncConfiguration && accountingProviders == other.accountingProviders && excluded == other.excluded && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is AccountingSyncConfiguration &&
+                accountingProviders == other.accountingProviders &&
+                excluded == other.excluded &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountingProviders, excluded, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(accountingProviders, excluded, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2500,12 +2505,12 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ReportingConfiguration && exempt == other.exempt && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is ReportingConfiguration &&
+                exempt == other.exempt &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(exempt, additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2518,12 +2523,59 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Customer && id == other.id && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && balance == other.balance && billingAddress == other.billingAddress && createdAt == other.createdAt && currency == other.currency && email == other.email && emailDelivery == other.emailDelivery && exemptFromAutomatedTax == other.exemptFromAutomatedTax && externalCustomerId == other.externalCustomerId && hierarchy == other.hierarchy && metadata == other.metadata && name == other.name && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && portalUrl == other.portalUrl && shippingAddress == other.shippingAddress && taxId == other.taxId && timezone == other.timezone && accountingSyncConfiguration == other.accountingSyncConfiguration && reportingConfiguration == other.reportingConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is Customer &&
+            id == other.id &&
+            additionalEmails == other.additionalEmails &&
+            autoCollection == other.autoCollection &&
+            balance == other.balance &&
+            billingAddress == other.billingAddress &&
+            createdAt == other.createdAt &&
+            currency == other.currency &&
+            email == other.email &&
+            emailDelivery == other.emailDelivery &&
+            exemptFromAutomatedTax == other.exemptFromAutomatedTax &&
+            externalCustomerId == other.externalCustomerId &&
+            hierarchy == other.hierarchy &&
+            metadata == other.metadata &&
+            name == other.name &&
+            paymentProvider == other.paymentProvider &&
+            paymentProviderId == other.paymentProviderId &&
+            portalUrl == other.portalUrl &&
+            shippingAddress == other.shippingAddress &&
+            taxId == other.taxId &&
+            timezone == other.timezone &&
+            accountingSyncConfiguration == other.accountingSyncConfiguration &&
+            reportingConfiguration == other.reportingConfiguration &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, additionalEmails, autoCollection, balance, billingAddress, createdAt, currency, email, emailDelivery, exemptFromAutomatedTax, externalCustomerId, hierarchy, metadata, name, paymentProvider, paymentProviderId, portalUrl, shippingAddress, taxId, timezone, accountingSyncConfiguration, reportingConfiguration, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            additionalEmails,
+            autoCollection,
+            balance,
+            billingAddress,
+            createdAt,
+            currency,
+            email,
+            emailDelivery,
+            exemptFromAutomatedTax,
+            externalCustomerId,
+            hierarchy,
+            metadata,
+            name,
+            paymentProvider,
+            paymentProviderId,
+            portalUrl,
+            shippingAddress,
+            taxId,
+            timezone,
+            accountingSyncConfiguration,
+            reportingConfiguration,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

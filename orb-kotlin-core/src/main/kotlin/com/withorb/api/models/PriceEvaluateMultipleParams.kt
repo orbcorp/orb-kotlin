@@ -758,12 +758,25 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && customerId == other.customerId && externalCustomerId == other.externalCustomerId && priceEvaluations == other.priceEvaluations && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                timeframeEnd == other.timeframeEnd &&
+                timeframeStart == other.timeframeStart &&
+                customerId == other.customerId &&
+                externalCustomerId == other.externalCustomerId &&
+                priceEvaluations == other.priceEvaluations &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(timeframeEnd, timeframeStart, customerId, externalCustomerId, priceEvaluations, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                timeframeEnd,
+                timeframeStart,
+                customerId,
+                externalCustomerId,
+                priceEvaluations,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1803,10 +1816,68 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Price && unit == other.unit && package_ == other.package_ && matrix == other.matrix && matrixWithAllocation == other.matrixWithAllocation && tiered == other.tiered && tieredBps == other.tieredBps && bps == other.bps && bulkBps == other.bulkBps && bulk == other.bulk && thresholdTotalAmount == other.thresholdTotalAmount && tieredPackage == other.tieredPackage && groupedTiered == other.groupedTiered && maxGroupTieredPackage == other.maxGroupTieredPackage && tieredWithMinimum == other.tieredWithMinimum && packageWithAllocation == other.packageWithAllocation && tieredPackageWithMinimum == other.tieredPackageWithMinimum && unitWithPercent == other.unitWithPercent && tieredWithProration == other.tieredWithProration && unitWithProration == other.unitWithProration && groupedAllocation == other.groupedAllocation && groupedWithProratedMinimum == other.groupedWithProratedMinimum && groupedWithMeteredMinimum == other.groupedWithMeteredMinimum && matrixWithDisplayName == other.matrixWithDisplayName && bulkWithProration == other.bulkWithProration && groupedTieredPackage == other.groupedTieredPackage && scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing && scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing && cumulativeGroupedBulk == other.cumulativeGroupedBulk /* spotless:on */
+                return other is Price &&
+                    unit == other.unit &&
+                    package_ == other.package_ &&
+                    matrix == other.matrix &&
+                    matrixWithAllocation == other.matrixWithAllocation &&
+                    tiered == other.tiered &&
+                    tieredBps == other.tieredBps &&
+                    bps == other.bps &&
+                    bulkBps == other.bulkBps &&
+                    bulk == other.bulk &&
+                    thresholdTotalAmount == other.thresholdTotalAmount &&
+                    tieredPackage == other.tieredPackage &&
+                    groupedTiered == other.groupedTiered &&
+                    maxGroupTieredPackage == other.maxGroupTieredPackage &&
+                    tieredWithMinimum == other.tieredWithMinimum &&
+                    packageWithAllocation == other.packageWithAllocation &&
+                    tieredPackageWithMinimum == other.tieredPackageWithMinimum &&
+                    unitWithPercent == other.unitWithPercent &&
+                    tieredWithProration == other.tieredWithProration &&
+                    unitWithProration == other.unitWithProration &&
+                    groupedAllocation == other.groupedAllocation &&
+                    groupedWithProratedMinimum == other.groupedWithProratedMinimum &&
+                    groupedWithMeteredMinimum == other.groupedWithMeteredMinimum &&
+                    matrixWithDisplayName == other.matrixWithDisplayName &&
+                    bulkWithProration == other.bulkWithProration &&
+                    groupedTieredPackage == other.groupedTieredPackage &&
+                    scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing &&
+                    scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing &&
+                    cumulativeGroupedBulk == other.cumulativeGroupedBulk
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, package_, matrix, matrixWithAllocation, tiered, tieredBps, bps, bulkBps, bulk, thresholdTotalAmount, tieredPackage, groupedTiered, maxGroupTieredPackage, tieredWithMinimum, packageWithAllocation, tieredPackageWithMinimum, unitWithPercent, tieredWithProration, unitWithProration, groupedAllocation, groupedWithProratedMinimum, groupedWithMeteredMinimum, matrixWithDisplayName, bulkWithProration, groupedTieredPackage, scalableMatrixWithUnitPricing, scalableMatrixWithTieredPricing, cumulativeGroupedBulk) /* spotless:on */
+            override fun hashCode(): Int =
+                Objects.hash(
+                    unit,
+                    package_,
+                    matrix,
+                    matrixWithAllocation,
+                    tiered,
+                    tieredBps,
+                    bps,
+                    bulkBps,
+                    bulk,
+                    thresholdTotalAmount,
+                    tieredPackage,
+                    groupedTiered,
+                    maxGroupTieredPackage,
+                    tieredWithMinimum,
+                    packageWithAllocation,
+                    tieredPackageWithMinimum,
+                    unitWithPercent,
+                    tieredWithProration,
+                    unitWithProration,
+                    groupedAllocation,
+                    groupedWithProratedMinimum,
+                    groupedWithMeteredMinimum,
+                    matrixWithDisplayName,
+                    bulkWithProration,
+                    groupedTieredPackage,
+                    scalableMatrixWithUnitPricing,
+                    scalableMatrixWithTieredPricing,
+                    cumulativeGroupedBulk,
+                )
 
             override fun toString(): String =
                 when {
@@ -2321,12 +2392,25 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PriceEvaluation && externalPriceId == other.externalPriceId && filter == other.filter && groupingKeys == other.groupingKeys && price == other.price && priceId == other.priceId && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is PriceEvaluation &&
+                externalPriceId == other.externalPriceId &&
+                filter == other.filter &&
+                groupingKeys == other.groupingKeys &&
+                price == other.price &&
+                priceId == other.priceId &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(externalPriceId, filter, groupingKeys, price, priceId, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                externalPriceId,
+                filter,
+                groupingKeys,
+                price,
+                priceId,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2339,10 +2423,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PriceEvaluateMultipleParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is PriceEvaluateMultipleParams &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "PriceEvaluateMultipleParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -215,12 +215,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerHierarchyConfig && childCustomerIds == other.childCustomerIds && parentCustomerId == other.parentCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CustomerHierarchyConfig &&
+            childCustomerIds == other.childCustomerIds &&
+            parentCustomerId == other.parentCustomerId &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(childCustomerIds, parentCustomerId, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(childCustomerIds, parentCustomerId, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

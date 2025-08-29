@@ -427,7 +427,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -440,10 +440,34 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionListParams && createdAtGt == other.createdAtGt && createdAtGte == other.createdAtGte && createdAtLt == other.createdAtLt && createdAtLte == other.createdAtLte && cursor == other.cursor && customerId == other.customerId && externalCustomerId == other.externalCustomerId && limit == other.limit && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is SubscriptionListParams &&
+            createdAtGt == other.createdAtGt &&
+            createdAtGte == other.createdAtGte &&
+            createdAtLt == other.createdAtLt &&
+            createdAtLte == other.createdAtLte &&
+            cursor == other.cursor &&
+            customerId == other.customerId &&
+            externalCustomerId == other.externalCustomerId &&
+            limit == other.limit &&
+            status == other.status &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(createdAtGt, createdAtGte, createdAtLt, createdAtLte, cursor, customerId, externalCustomerId, limit, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            createdAtGt,
+            createdAtGte,
+            createdAtLt,
+            createdAtLte,
+            cursor,
+            customerId,
+            externalCustomerId,
+            limit,
+            status,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "SubscriptionListParams{createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, cursor=$cursor, customerId=$customerId, externalCustomerId=$externalCustomerId, limit=$limit, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
