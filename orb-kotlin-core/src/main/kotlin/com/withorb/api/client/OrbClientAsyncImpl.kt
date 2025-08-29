@@ -152,7 +152,7 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
 
     override fun subscriptionChanges(): SubscriptionChangeServiceAsync = subscriptionChanges
 
-    override fun close() = clientOptions.httpClient.close()
+    override fun close() = clientOptions.close()
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         OrbClientAsync.WithRawResponse {

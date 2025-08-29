@@ -670,7 +670,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Action && value == other.value /* spotless:on */
+            return other is Action && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -794,7 +794,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -807,12 +807,35 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerBalanceTransactionCreateResponse && id == other.id && action == other.action && amount == other.amount && createdAt == other.createdAt && creditNote == other.creditNote && description == other.description && endingBalance == other.endingBalance && invoice == other.invoice && startingBalance == other.startingBalance && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CustomerBalanceTransactionCreateResponse &&
+            id == other.id &&
+            action == other.action &&
+            amount == other.amount &&
+            createdAt == other.createdAt &&
+            creditNote == other.creditNote &&
+            description == other.description &&
+            endingBalance == other.endingBalance &&
+            invoice == other.invoice &&
+            startingBalance == other.startingBalance &&
+            type == other.type &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, action, amount, createdAt, creditNote, description, endingBalance, invoice, startingBalance, type, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            action,
+            amount,
+            createdAt,
+            creditNote,
+            description,
+            endingBalance,
+            invoice,
+            startingBalance,
+            type,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

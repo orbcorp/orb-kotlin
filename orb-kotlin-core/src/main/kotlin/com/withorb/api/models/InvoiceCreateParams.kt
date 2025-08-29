@@ -1208,12 +1208,35 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && currency == other.currency && invoiceDate == other.invoiceDate && lineItems == other.lineItems && customerId == other.customerId && discount == other.discount && externalCustomerId == other.externalCustomerId && memo == other.memo && metadata == other.metadata && netTerms == other.netTerms && willAutoIssue == other.willAutoIssue && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                currency == other.currency &&
+                invoiceDate == other.invoiceDate &&
+                lineItems == other.lineItems &&
+                customerId == other.customerId &&
+                discount == other.discount &&
+                externalCustomerId == other.externalCustomerId &&
+                memo == other.memo &&
+                metadata == other.metadata &&
+                netTerms == other.netTerms &&
+                willAutoIssue == other.willAutoIssue &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(currency, invoiceDate, lineItems, customerId, discount, externalCustomerId, memo, metadata, netTerms, willAutoIssue, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                currency,
+                invoiceDate,
+                lineItems,
+                customerId,
+                discount,
+                externalCustomerId,
+                memo,
+                metadata,
+                netTerms,
+                willAutoIssue,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1701,7 +1724,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is ModelType && value == other.value /* spotless:on */
+                return other is ModelType && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1714,12 +1737,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItem && endDate == other.endDate && itemId == other.itemId && modelType == other.modelType && name == other.name && quantity == other.quantity && startDate == other.startDate && unitConfig == other.unitConfig && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is LineItem &&
+                endDate == other.endDate &&
+                itemId == other.itemId &&
+                modelType == other.modelType &&
+                name == other.name &&
+                quantity == other.quantity &&
+                startDate == other.startDate &&
+                unitConfig == other.unitConfig &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(endDate, itemId, modelType, name, quantity, startDate, unitConfig, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                endDate,
+                itemId,
+                modelType,
+                name,
+                quantity,
+                startDate,
+                unitConfig,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1819,12 +1859,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1836,10 +1874,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is InvoiceCreateParams &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "InvoiceCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

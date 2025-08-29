@@ -154,12 +154,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is NewReportingConfiguration && exempt == other.exempt && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is NewReportingConfiguration &&
+            exempt == other.exempt &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(exempt, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

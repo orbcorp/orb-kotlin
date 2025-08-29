@@ -237,12 +237,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Tier && firstUnit == other.firstUnit && unitAmount == other.unitAmount && lastUnit == other.lastUnit && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is Tier &&
+            firstUnit == other.firstUnit &&
+            unitAmount == other.unitAmount &&
+            lastUnit == other.lastUnit &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(firstUnit, unitAmount, lastUnit, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(firstUnit, unitAmount, lastUnit, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

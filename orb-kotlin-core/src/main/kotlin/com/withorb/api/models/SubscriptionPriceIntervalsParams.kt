@@ -860,12 +860,25 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && add == other.add && addAdjustments == other.addAdjustments && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && edit == other.edit && editAdjustments == other.editAdjustments && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                add == other.add &&
+                addAdjustments == other.addAdjustments &&
+                allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid &&
+                edit == other.edit &&
+                editAdjustments == other.editAdjustments &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(add, addAdjustments, allowInvoiceCreditOrVoid, edit, editAdjustments, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                add,
+                addAdjustments,
+                allowInvoiceCreditOrVoid,
+                edit,
+                editAdjustments,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1852,10 +1865,12 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is StartDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
+                return other is StartDate &&
+                    dateTime == other.dateTime &&
+                    billingCycleRelative == other.billingCycleRelative
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
+            override fun hashCode(): Int = Objects.hash(dateTime, billingCycleRelative)
 
             override fun toString(): String =
                 when {
@@ -2041,10 +2056,13 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Discount && amount == other.amount && percentage == other.percentage && usage == other.usage /* spotless:on */
+                return other is Discount &&
+                    amount == other.amount &&
+                    percentage == other.percentage &&
+                    usage == other.usage
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, percentage, usage) /* spotless:on */
+            override fun hashCode(): Int = Objects.hash(amount, percentage, usage)
 
             override fun toString(): String =
                 when {
@@ -2335,12 +2353,15 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Amount && amountDiscount == other.amountDiscount && discountType == other.discountType && additionalProperties == other.additionalProperties /* spotless:on */
+                    return other is Amount &&
+                        amountDiscount == other.amountDiscount &&
+                        discountType == other.discountType &&
+                        additionalProperties == other.additionalProperties
                 }
 
-                /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(amountDiscount, discountType, additionalProperties) }
-                /* spotless:on */
+                private val hashCode: Int by lazy {
+                    Objects.hash(amountDiscount, discountType, additionalProperties)
+                }
 
                 override fun hashCode(): Int = hashCode
 
@@ -2552,12 +2573,15 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Percentage && discountType == other.discountType && percentageDiscount == other.percentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return other is Percentage &&
+                        discountType == other.discountType &&
+                        percentageDiscount == other.percentageDiscount &&
+                        additionalProperties == other.additionalProperties
                 }
 
-                /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(discountType, percentageDiscount, additionalProperties) }
-                /* spotless:on */
+                private val hashCode: Int by lazy {
+                    Objects.hash(discountType, percentageDiscount, additionalProperties)
+                }
 
                 override fun hashCode(): Int = hashCode
 
@@ -2768,12 +2792,15 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Usage && discountType == other.discountType && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return other is Usage &&
+                        discountType == other.discountType &&
+                        usageDiscount == other.usageDiscount &&
+                        additionalProperties == other.additionalProperties
                 }
 
-                /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(discountType, usageDiscount, additionalProperties) }
-                /* spotless:on */
+                private val hashCode: Int by lazy {
+                    Objects.hash(discountType, usageDiscount, additionalProperties)
+                }
 
                 override fun hashCode(): Int = hashCode
 
@@ -2871,10 +2898,12 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EndDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
+                return other is EndDate &&
+                    dateTime == other.dateTime &&
+                    billingCycleRelative == other.billingCycleRelative
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
+            override fun hashCode(): Int = Objects.hash(dateTime, billingCycleRelative)
 
             override fun toString(): String =
                 when {
@@ -3164,12 +3193,15 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is FixedFeeQuantityTransition && effectiveDate == other.effectiveDate && quantity == other.quantity && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is FixedFeeQuantityTransition &&
+                    effectiveDate == other.effectiveDate &&
+                    quantity == other.quantity &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(effectiveDate, quantity, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(effectiveDate, quantity, additionalProperties)
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -3762,10 +3794,68 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Price && unit == other.unit && package_ == other.package_ && matrix == other.matrix && matrixWithAllocation == other.matrixWithAllocation && tiered == other.tiered && tieredBps == other.tieredBps && bps == other.bps && bulkBps == other.bulkBps && bulk == other.bulk && thresholdTotalAmount == other.thresholdTotalAmount && tieredPackage == other.tieredPackage && groupedTiered == other.groupedTiered && maxGroupTieredPackage == other.maxGroupTieredPackage && tieredWithMinimum == other.tieredWithMinimum && packageWithAllocation == other.packageWithAllocation && tieredPackageWithMinimum == other.tieredPackageWithMinimum && unitWithPercent == other.unitWithPercent && tieredWithProration == other.tieredWithProration && unitWithProration == other.unitWithProration && groupedAllocation == other.groupedAllocation && groupedWithProratedMinimum == other.groupedWithProratedMinimum && groupedWithMeteredMinimum == other.groupedWithMeteredMinimum && matrixWithDisplayName == other.matrixWithDisplayName && bulkWithProration == other.bulkWithProration && groupedTieredPackage == other.groupedTieredPackage && scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing && scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing && cumulativeGroupedBulk == other.cumulativeGroupedBulk /* spotless:on */
+                return other is Price &&
+                    unit == other.unit &&
+                    package_ == other.package_ &&
+                    matrix == other.matrix &&
+                    matrixWithAllocation == other.matrixWithAllocation &&
+                    tiered == other.tiered &&
+                    tieredBps == other.tieredBps &&
+                    bps == other.bps &&
+                    bulkBps == other.bulkBps &&
+                    bulk == other.bulk &&
+                    thresholdTotalAmount == other.thresholdTotalAmount &&
+                    tieredPackage == other.tieredPackage &&
+                    groupedTiered == other.groupedTiered &&
+                    maxGroupTieredPackage == other.maxGroupTieredPackage &&
+                    tieredWithMinimum == other.tieredWithMinimum &&
+                    packageWithAllocation == other.packageWithAllocation &&
+                    tieredPackageWithMinimum == other.tieredPackageWithMinimum &&
+                    unitWithPercent == other.unitWithPercent &&
+                    tieredWithProration == other.tieredWithProration &&
+                    unitWithProration == other.unitWithProration &&
+                    groupedAllocation == other.groupedAllocation &&
+                    groupedWithProratedMinimum == other.groupedWithProratedMinimum &&
+                    groupedWithMeteredMinimum == other.groupedWithMeteredMinimum &&
+                    matrixWithDisplayName == other.matrixWithDisplayName &&
+                    bulkWithProration == other.bulkWithProration &&
+                    groupedTieredPackage == other.groupedTieredPackage &&
+                    scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing &&
+                    scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing &&
+                    cumulativeGroupedBulk == other.cumulativeGroupedBulk
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, package_, matrix, matrixWithAllocation, tiered, tieredBps, bps, bulkBps, bulk, thresholdTotalAmount, tieredPackage, groupedTiered, maxGroupTieredPackage, tieredWithMinimum, packageWithAllocation, tieredPackageWithMinimum, unitWithPercent, tieredWithProration, unitWithProration, groupedAllocation, groupedWithProratedMinimum, groupedWithMeteredMinimum, matrixWithDisplayName, bulkWithProration, groupedTieredPackage, scalableMatrixWithUnitPricing, scalableMatrixWithTieredPricing, cumulativeGroupedBulk) /* spotless:on */
+            override fun hashCode(): Int =
+                Objects.hash(
+                    unit,
+                    package_,
+                    matrix,
+                    matrixWithAllocation,
+                    tiered,
+                    tieredBps,
+                    bps,
+                    bulkBps,
+                    bulk,
+                    thresholdTotalAmount,
+                    tieredPackage,
+                    groupedTiered,
+                    maxGroupTieredPackage,
+                    tieredWithMinimum,
+                    packageWithAllocation,
+                    tieredPackageWithMinimum,
+                    unitWithPercent,
+                    tieredWithProration,
+                    unitWithProration,
+                    groupedAllocation,
+                    groupedWithProratedMinimum,
+                    groupedWithMeteredMinimum,
+                    matrixWithDisplayName,
+                    bulkWithProration,
+                    groupedTieredPackage,
+                    scalableMatrixWithUnitPricing,
+                    scalableMatrixWithTieredPricing,
+                    cumulativeGroupedBulk,
+                )
 
             override fun toString(): String =
                 when {
@@ -4280,12 +4370,39 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Add && startDate == other.startDate && allocationPrice == other.allocationPrice && discounts == other.discounts && endDate == other.endDate && externalPriceId == other.externalPriceId && filter == other.filter && fixedFeeQuantityTransitions == other.fixedFeeQuantityTransitions && maximumAmount == other.maximumAmount && minimumAmount == other.minimumAmount && price == other.price && priceId == other.priceId && usageCustomerIds == other.usageCustomerIds && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Add &&
+                startDate == other.startDate &&
+                allocationPrice == other.allocationPrice &&
+                discounts == other.discounts &&
+                endDate == other.endDate &&
+                externalPriceId == other.externalPriceId &&
+                filter == other.filter &&
+                fixedFeeQuantityTransitions == other.fixedFeeQuantityTransitions &&
+                maximumAmount == other.maximumAmount &&
+                minimumAmount == other.minimumAmount &&
+                price == other.price &&
+                priceId == other.priceId &&
+                usageCustomerIds == other.usageCustomerIds &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(startDate, allocationPrice, discounts, endDate, externalPriceId, filter, fixedFeeQuantityTransitions, maximumAmount, minimumAmount, price, priceId, usageCustomerIds, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                startDate,
+                allocationPrice,
+                discounts,
+                endDate,
+                externalPriceId,
+                filter,
+                fixedFeeQuantityTransitions,
+                maximumAmount,
+                minimumAmount,
+                price,
+                priceId,
+                usageCustomerIds,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -4772,10 +4889,16 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Adjustment && percentageDiscount == other.percentageDiscount && usageDiscount == other.usageDiscount && amountDiscount == other.amountDiscount && minimum == other.minimum && maximum == other.maximum /* spotless:on */
+                return other is Adjustment &&
+                    percentageDiscount == other.percentageDiscount &&
+                    usageDiscount == other.usageDiscount &&
+                    amountDiscount == other.amountDiscount &&
+                    minimum == other.minimum &&
+                    maximum == other.maximum
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(percentageDiscount, usageDiscount, amountDiscount, minimum, maximum) /* spotless:on */
+            override fun hashCode(): Int =
+                Objects.hash(percentageDiscount, usageDiscount, amountDiscount, minimum, maximum)
 
             override fun toString(): String =
                 when {
@@ -4986,10 +5109,12 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is StartDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
+                return other is StartDate &&
+                    dateTime == other.dateTime &&
+                    billingCycleRelative == other.billingCycleRelative
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
+            override fun hashCode(): Int = Objects.hash(dateTime, billingCycleRelative)
 
             override fun toString(): String =
                 when {
@@ -5171,10 +5296,12 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EndDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
+                return other is EndDate &&
+                    dateTime == other.dateTime &&
+                    billingCycleRelative == other.billingCycleRelative
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
+            override fun hashCode(): Int = Objects.hash(dateTime, billingCycleRelative)
 
             override fun toString(): String =
                 when {
@@ -5270,12 +5397,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AddAdjustment && adjustment == other.adjustment && startDate == other.startDate && endDate == other.endDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is AddAdjustment &&
+                adjustment == other.adjustment &&
+                startDate == other.startDate &&
+                endDate == other.endDate &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(adjustment, startDate, endDate, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(adjustment, startDate, endDate, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -5863,10 +5994,12 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EndDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
+                return other is EndDate &&
+                    dateTime == other.dateTime &&
+                    billingCycleRelative == other.billingCycleRelative
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
+            override fun hashCode(): Int = Objects.hash(dateTime, billingCycleRelative)
 
             override fun toString(): String =
                 when {
@@ -6156,12 +6289,15 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is FixedFeeQuantityTransition && effectiveDate == other.effectiveDate && quantity == other.quantity && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is FixedFeeQuantityTransition &&
+                    effectiveDate == other.effectiveDate &&
+                    quantity == other.quantity &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(effectiveDate, quantity, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(effectiveDate, quantity, additionalProperties)
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -6258,10 +6394,12 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is StartDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
+                return other is StartDate &&
+                    dateTime == other.dateTime &&
+                    billingCycleRelative == other.billingCycleRelative
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
+            override fun hashCode(): Int = Objects.hash(dateTime, billingCycleRelative)
 
             override fun toString(): String =
                 when {
@@ -6357,12 +6495,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Edit && priceIntervalId == other.priceIntervalId && billingCycleDay == other.billingCycleDay && endDate == other.endDate && filter == other.filter && fixedFeeQuantityTransitions == other.fixedFeeQuantityTransitions && startDate == other.startDate && usageCustomerIds == other.usageCustomerIds && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Edit &&
+                priceIntervalId == other.priceIntervalId &&
+                billingCycleDay == other.billingCycleDay &&
+                endDate == other.endDate &&
+                filter == other.filter &&
+                fixedFeeQuantityTransitions == other.fixedFeeQuantityTransitions &&
+                startDate == other.startDate &&
+                usageCustomerIds == other.usageCustomerIds &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(priceIntervalId, billingCycleDay, endDate, filter, fixedFeeQuantityTransitions, startDate, usageCustomerIds, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                priceIntervalId,
+                billingCycleDay,
+                endDate,
+                filter,
+                fixedFeeQuantityTransitions,
+                startDate,
+                usageCustomerIds,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -6710,10 +6865,12 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EndDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
+                return other is EndDate &&
+                    dateTime == other.dateTime &&
+                    billingCycleRelative == other.billingCycleRelative
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
+            override fun hashCode(): Int = Objects.hash(dateTime, billingCycleRelative)
 
             override fun toString(): String =
                 when {
@@ -6893,10 +7050,12 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is StartDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
+                return other is StartDate &&
+                    dateTime == other.dateTime &&
+                    billingCycleRelative == other.billingCycleRelative
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
+            override fun hashCode(): Int = Objects.hash(dateTime, billingCycleRelative)
 
             override fun toString(): String =
                 when {
@@ -6992,12 +7151,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EditAdjustment && adjustmentIntervalId == other.adjustmentIntervalId && endDate == other.endDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is EditAdjustment &&
+                adjustmentIntervalId == other.adjustmentIntervalId &&
+                endDate == other.endDate &&
+                startDate == other.startDate &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(adjustmentIntervalId, endDate, startDate, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(adjustmentIntervalId, endDate, startDate, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -7010,10 +7173,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionPriceIntervalsParams && subscriptionId == other.subscriptionId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is SubscriptionPriceIntervalsParams &&
+            subscriptionId == other.subscriptionId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(subscriptionId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "SubscriptionPriceIntervalsParams{subscriptionId=$subscriptionId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

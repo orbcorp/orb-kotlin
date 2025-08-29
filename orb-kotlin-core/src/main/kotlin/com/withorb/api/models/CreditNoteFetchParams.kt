@@ -177,10 +177,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CreditNoteFetchParams && creditNoteId == other.creditNoteId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CreditNoteFetchParams &&
+            creditNoteId == other.creditNoteId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(creditNoteId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(creditNoteId, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CreditNoteFetchParams{creditNoteId=$creditNoteId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

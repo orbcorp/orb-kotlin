@@ -293,10 +293,30 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerBalanceTransactionListParams && customerId == other.customerId && cursor == other.cursor && limit == other.limit && operationTimeGt == other.operationTimeGt && operationTimeGte == other.operationTimeGte && operationTimeLt == other.operationTimeLt && operationTimeLte == other.operationTimeLte && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CustomerBalanceTransactionListParams &&
+            customerId == other.customerId &&
+            cursor == other.cursor &&
+            limit == other.limit &&
+            operationTimeGt == other.operationTimeGt &&
+            operationTimeGte == other.operationTimeGte &&
+            operationTimeLt == other.operationTimeLt &&
+            operationTimeLte == other.operationTimeLte &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, cursor, limit, operationTimeGt, operationTimeGte, operationTimeLt, operationTimeLte, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            customerId,
+            cursor,
+            limit,
+            operationTimeGt,
+            operationTimeGte,
+            operationTimeLt,
+            operationTimeLte,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "CustomerBalanceTransactionListParams{customerId=$customerId, cursor=$cursor, limit=$limit, operationTimeGt=$operationTimeGt, operationTimeGte=$operationTimeGte, operationTimeLt=$operationTimeLt, operationTimeLte=$operationTimeLte, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

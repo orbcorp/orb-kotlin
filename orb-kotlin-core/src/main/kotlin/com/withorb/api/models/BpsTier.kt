@@ -282,12 +282,17 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BpsTier && bps == other.bps && minimumAmount == other.minimumAmount && maximumAmount == other.maximumAmount && perUnitMaximum == other.perUnitMaximum && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is BpsTier &&
+            bps == other.bps &&
+            minimumAmount == other.minimumAmount &&
+            maximumAmount == other.maximumAmount &&
+            perUnitMaximum == other.perUnitMaximum &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(bps, minimumAmount, maximumAmount, perUnitMaximum, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(bps, minimumAmount, maximumAmount, perUnitMaximum, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

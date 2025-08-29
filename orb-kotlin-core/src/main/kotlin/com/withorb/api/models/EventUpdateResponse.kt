@@ -157,12 +157,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventUpdateResponse && amended == other.amended && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is EventUpdateResponse &&
+            amended == other.amended &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(amended, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

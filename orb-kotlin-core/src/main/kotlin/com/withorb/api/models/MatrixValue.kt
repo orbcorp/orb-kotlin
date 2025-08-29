@@ -224,12 +224,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is MatrixValue && dimensionValues == other.dimensionValues && unitAmount == other.unitAmount && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is MatrixValue &&
+            dimensionValues == other.dimensionValues &&
+            unitAmount == other.unitAmount &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(dimensionValues, unitAmount, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(dimensionValues, unitAmount, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

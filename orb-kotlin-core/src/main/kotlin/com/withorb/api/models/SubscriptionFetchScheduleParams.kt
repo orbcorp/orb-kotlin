@@ -269,10 +269,30 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionFetchScheduleParams && subscriptionId == other.subscriptionId && cursor == other.cursor && limit == other.limit && startDateGt == other.startDateGt && startDateGte == other.startDateGte && startDateLt == other.startDateLt && startDateLte == other.startDateLte && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is SubscriptionFetchScheduleParams &&
+            subscriptionId == other.subscriptionId &&
+            cursor == other.cursor &&
+            limit == other.limit &&
+            startDateGt == other.startDateGt &&
+            startDateGte == other.startDateGte &&
+            startDateLt == other.startDateLt &&
+            startDateLte == other.startDateLte &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, cursor, limit, startDateGt, startDateGte, startDateLt, startDateLte, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            subscriptionId,
+            cursor,
+            limit,
+            startDateGt,
+            startDateGte,
+            startDateLt,
+            startDateLte,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "SubscriptionFetchScheduleParams{subscriptionId=$subscriptionId, cursor=$cursor, limit=$limit, startDateGt=$startDateGt, startDateGte=$startDateGte, startDateLt=$startDateLt, startDateLte=$startDateLte, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

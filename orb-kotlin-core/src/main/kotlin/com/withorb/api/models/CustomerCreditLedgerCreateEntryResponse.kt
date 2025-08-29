@@ -178,10 +178,26 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditLedgerCreateEntryResponse && increment == other.increment && decrement == other.decrement && expirationChange == other.expirationChange && creditBlockExpiry == other.creditBlockExpiry && void == other.void && voidInitiated == other.voidInitiated && amendment == other.amendment /* spotless:on */
+        return other is CustomerCreditLedgerCreateEntryResponse &&
+            increment == other.increment &&
+            decrement == other.decrement &&
+            expirationChange == other.expirationChange &&
+            creditBlockExpiry == other.creditBlockExpiry &&
+            void == other.void &&
+            voidInitiated == other.voidInitiated &&
+            amendment == other.amendment
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(increment, decrement, expirationChange, creditBlockExpiry, void, voidInitiated, amendment) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            increment,
+            decrement,
+            expirationChange,
+            creditBlockExpiry,
+            void,
+            voidInitiated,
+            amendment,
+        )
 
     override fun toString(): String =
         when {

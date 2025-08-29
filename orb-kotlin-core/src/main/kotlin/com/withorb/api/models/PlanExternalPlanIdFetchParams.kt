@@ -192,10 +192,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanExternalPlanIdFetchParams && externalPlanId == other.externalPlanId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is PlanExternalPlanIdFetchParams &&
+            externalPlanId == other.externalPlanId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalPlanId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(externalPlanId, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "PlanExternalPlanIdFetchParams{externalPlanId=$externalPlanId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

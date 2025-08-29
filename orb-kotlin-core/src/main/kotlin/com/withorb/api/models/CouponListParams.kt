@@ -237,10 +237,24 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CouponListParams && cursor == other.cursor && limit == other.limit && redemptionCode == other.redemptionCode && showArchived == other.showArchived && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CouponListParams &&
+            cursor == other.cursor &&
+            limit == other.limit &&
+            redemptionCode == other.redemptionCode &&
+            showArchived == other.showArchived &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cursor, limit, redemptionCode, showArchived, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            cursor,
+            limit,
+            redemptionCode,
+            showArchived,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "CouponListParams{cursor=$cursor, limit=$limit, redemptionCode=$redemptionCode, showArchived=$showArchived, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

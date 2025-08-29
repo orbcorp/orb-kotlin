@@ -678,12 +678,10 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Properties && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Properties && additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
             private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-            /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
@@ -695,12 +693,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Data && id == other.id && customerId == other.customerId && deprecated == other.deprecated && eventName == other.eventName && externalCustomerId == other.externalCustomerId && properties == other.properties && timestamp == other.timestamp && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Data &&
+                id == other.id &&
+                customerId == other.customerId &&
+                deprecated == other.deprecated &&
+                eventName == other.eventName &&
+                externalCustomerId == other.externalCustomerId &&
+                properties == other.properties &&
+                timestamp == other.timestamp &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, customerId, deprecated, eventName, externalCustomerId, properties, timestamp, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                customerId,
+                deprecated,
+                eventName,
+                externalCustomerId,
+                properties,
+                timestamp,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -713,12 +728,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventSearchResponse && data == other.data && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is EventSearchResponse &&
+            data == other.data &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(data, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

@@ -632,12 +632,12 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && events == other.events && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                events == other.events &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(events, additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1114,12 +1114,10 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Properties && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Properties && additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
             private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-            /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
@@ -1131,12 +1129,27 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Event && eventName == other.eventName && idempotencyKey == other.idempotencyKey && properties == other.properties && timestamp == other.timestamp && customerId == other.customerId && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Event &&
+                eventName == other.eventName &&
+                idempotencyKey == other.idempotencyKey &&
+                properties == other.properties &&
+                timestamp == other.timestamp &&
+                customerId == other.customerId &&
+                externalCustomerId == other.externalCustomerId &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(eventName, idempotencyKey, properties, timestamp, customerId, externalCustomerId, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                eventName,
+                idempotencyKey,
+                properties,
+                timestamp,
+                customerId,
+                externalCustomerId,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1149,10 +1162,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventIngestParams && backfillId == other.backfillId && debug == other.debug && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is EventIngestParams &&
+            backfillId == other.backfillId &&
+            debug == other.debug &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(backfillId, debug, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(backfillId, debug, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "EventIngestParams{backfillId=$backfillId, debug=$debug, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

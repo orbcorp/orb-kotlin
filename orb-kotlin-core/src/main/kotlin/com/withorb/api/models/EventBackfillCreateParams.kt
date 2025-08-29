@@ -940,12 +940,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && closeTime == other.closeTime && customerId == other.customerId && deprecationFilter == other.deprecationFilter && externalCustomerId == other.externalCustomerId && replaceExistingEvents == other.replaceExistingEvents && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                timeframeEnd == other.timeframeEnd &&
+                timeframeStart == other.timeframeStart &&
+                closeTime == other.closeTime &&
+                customerId == other.customerId &&
+                deprecationFilter == other.deprecationFilter &&
+                externalCustomerId == other.externalCustomerId &&
+                replaceExistingEvents == other.replaceExistingEvents &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(timeframeEnd, timeframeStart, closeTime, customerId, deprecationFilter, externalCustomerId, replaceExistingEvents, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                timeframeEnd,
+                timeframeStart,
+                closeTime,
+                customerId,
+                deprecationFilter,
+                externalCustomerId,
+                replaceExistingEvents,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -958,10 +975,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventBackfillCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is EventBackfillCreateParams &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "EventBackfillCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

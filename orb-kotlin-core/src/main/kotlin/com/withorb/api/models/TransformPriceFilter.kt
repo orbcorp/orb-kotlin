@@ -377,7 +377,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Field && value == other.value /* spotless:on */
+            return other is Field && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -502,7 +502,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Operator && value == other.value /* spotless:on */
+            return other is Operator && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -515,12 +515,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is TransformPriceFilter && field == other.field && operator == other.operator && values == other.values && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is TransformPriceFilter &&
+            field == other.field &&
+            operator == other.operator &&
+            values == other.values &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(field, operator, values, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(field, operator, values, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

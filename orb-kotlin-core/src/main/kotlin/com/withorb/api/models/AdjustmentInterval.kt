@@ -501,10 +501,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Adjustment && usageDiscount == other.usageDiscount && amountDiscount == other.amountDiscount && percentageDiscount == other.percentageDiscount && minimum == other.minimum && maximum == other.maximum /* spotless:on */
+            return other is Adjustment &&
+                usageDiscount == other.usageDiscount &&
+                amountDiscount == other.amountDiscount &&
+                percentageDiscount == other.percentageDiscount &&
+                minimum == other.minimum &&
+                maximum == other.maximum
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum) /* spotless:on */
+        override fun hashCode(): Int =
+            Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum)
 
         override fun toString(): String =
             when {
@@ -638,12 +644,25 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AdjustmentInterval && id == other.id && adjustment == other.adjustment && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && endDate == other.endDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AdjustmentInterval &&
+            id == other.id &&
+            adjustment == other.adjustment &&
+            appliesToPriceIntervalIds == other.appliesToPriceIntervalIds &&
+            endDate == other.endDate &&
+            startDate == other.startDate &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, adjustment, appliesToPriceIntervalIds, endDate, startDate, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            adjustment,
+            appliesToPriceIntervalIds,
+            endDate,
+            startDate,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

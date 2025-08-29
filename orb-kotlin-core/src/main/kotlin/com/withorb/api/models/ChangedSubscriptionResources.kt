@@ -351,12 +351,23 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ChangedSubscriptionResources && createdCreditNotes == other.createdCreditNotes && createdInvoices == other.createdInvoices && voidedCreditNotes == other.voidedCreditNotes && voidedInvoices == other.voidedInvoices && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is ChangedSubscriptionResources &&
+            createdCreditNotes == other.createdCreditNotes &&
+            createdInvoices == other.createdInvoices &&
+            voidedCreditNotes == other.voidedCreditNotes &&
+            voidedInvoices == other.voidedInvoices &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(createdCreditNotes, createdInvoices, voidedCreditNotes, voidedInvoices, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            createdCreditNotes,
+            createdInvoices,
+            voidedCreditNotes,
+            voidedInvoices,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

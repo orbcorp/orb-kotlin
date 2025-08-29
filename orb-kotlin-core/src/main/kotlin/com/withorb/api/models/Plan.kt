@@ -1522,10 +1522,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Adjustment && usageDiscount == other.usageDiscount && amountDiscount == other.amountDiscount && percentageDiscount == other.percentageDiscount && minimum == other.minimum && maximum == other.maximum /* spotless:on */
+            return other is Adjustment &&
+                usageDiscount == other.usageDiscount &&
+                amountDiscount == other.amountDiscount &&
+                percentageDiscount == other.percentageDiscount &&
+                minimum == other.minimum &&
+                maximum == other.maximum
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum) /* spotless:on */
+        override fun hashCode(): Int =
+            Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum)
 
         override fun toString(): String =
             when {
@@ -1879,12 +1885,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BasePlan && id == other.id && externalPlanId == other.externalPlanId && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is BasePlan &&
+                id == other.id &&
+                externalPlanId == other.externalPlanId &&
+                name == other.name &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, externalPlanId, name, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(id, externalPlanId, name, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1984,12 +1994,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2728,7 +2736,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+                return other is DurationUnit && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -2741,12 +2749,37 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PlanPhase && id == other.id && description == other.description && discount == other.discount && duration == other.duration && durationUnit == other.durationUnit && maximum == other.maximum && maximumAmount == other.maximumAmount && minimum == other.minimum && minimumAmount == other.minimumAmount && name == other.name && order == other.order && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is PlanPhase &&
+                id == other.id &&
+                description == other.description &&
+                discount == other.discount &&
+                duration == other.duration &&
+                durationUnit == other.durationUnit &&
+                maximum == other.maximum &&
+                maximumAmount == other.maximumAmount &&
+                minimum == other.minimum &&
+                minimumAmount == other.minimumAmount &&
+                name == other.name &&
+                order == other.order &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, description, discount, duration, durationUnit, maximum, maximumAmount, minimum, minimumAmount, name, order, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                description,
+                discount,
+                duration,
+                durationUnit,
+                maximum,
+                maximumAmount,
+                minimum,
+                minimumAmount,
+                name,
+                order,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2968,12 +3001,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Product && id == other.id && createdAt == other.createdAt && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Product &&
+                id == other.id &&
+                createdAt == other.createdAt &&
+                name == other.name &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, createdAt, name, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(id, createdAt, name, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -3103,7 +3140,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -3416,7 +3453,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is TrialPeriodUnit && value == other.value /* spotless:on */
+                return other is TrialPeriodUnit && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -3429,12 +3466,15 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TrialConfig && trialPeriod == other.trialPeriod && trialPeriodUnit == other.trialPeriodUnit && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is TrialConfig &&
+                trialPeriod == other.trialPeriod &&
+                trialPeriodUnit == other.trialPeriodUnit &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(trialPeriod, trialPeriodUnit, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(trialPeriod, trialPeriodUnit, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -3447,12 +3487,63 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Plan && id == other.id && adjustments == other.adjustments && basePlan == other.basePlan && basePlanId == other.basePlanId && createdAt == other.createdAt && currency == other.currency && defaultInvoiceMemo == other.defaultInvoiceMemo && description == other.description && discount == other.discount && externalPlanId == other.externalPlanId && invoicingCurrency == other.invoicingCurrency && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && name == other.name && netTerms == other.netTerms && planPhases == other.planPhases && prices == other.prices && product == other.product && status == other.status && trialConfig == other.trialConfig && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is Plan &&
+            id == other.id &&
+            adjustments == other.adjustments &&
+            basePlan == other.basePlan &&
+            basePlanId == other.basePlanId &&
+            createdAt == other.createdAt &&
+            currency == other.currency &&
+            defaultInvoiceMemo == other.defaultInvoiceMemo &&
+            description == other.description &&
+            discount == other.discount &&
+            externalPlanId == other.externalPlanId &&
+            invoicingCurrency == other.invoicingCurrency &&
+            maximum == other.maximum &&
+            maximumAmount == other.maximumAmount &&
+            metadata == other.metadata &&
+            minimum == other.minimum &&
+            minimumAmount == other.minimumAmount &&
+            name == other.name &&
+            netTerms == other.netTerms &&
+            planPhases == other.planPhases &&
+            prices == other.prices &&
+            product == other.product &&
+            status == other.status &&
+            trialConfig == other.trialConfig &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, adjustments, basePlan, basePlanId, createdAt, currency, defaultInvoiceMemo, description, discount, externalPlanId, invoicingCurrency, maximum, maximumAmount, metadata, minimum, minimumAmount, name, netTerms, planPhases, prices, product, status, trialConfig, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            adjustments,
+            basePlan,
+            basePlanId,
+            createdAt,
+            currency,
+            defaultInvoiceMemo,
+            description,
+            discount,
+            externalPlanId,
+            invoicingCurrency,
+            maximum,
+            maximumAmount,
+            metadata,
+            minimum,
+            minimumAmount,
+            name,
+            netTerms,
+            planPhases,
+            prices,
+            product,
+            status,
+            trialConfig,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

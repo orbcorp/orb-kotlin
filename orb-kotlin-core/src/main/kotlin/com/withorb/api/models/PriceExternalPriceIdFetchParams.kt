@@ -185,10 +185,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PriceExternalPriceIdFetchParams && externalPriceId == other.externalPriceId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is PriceExternalPriceIdFetchParams &&
+            externalPriceId == other.externalPriceId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalPriceId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(externalPriceId, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "PriceExternalPriceIdFetchParams{externalPriceId=$externalPriceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -735,12 +735,27 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && amount == other.amount && endDate == other.endDate && invoiceId == other.invoiceId && name == other.name && quantity == other.quantity && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                amount == other.amount &&
+                endDate == other.endDate &&
+                invoiceId == other.invoiceId &&
+                name == other.name &&
+                quantity == other.quantity &&
+                startDate == other.startDate &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, endDate, invoiceId, name, quantity, startDate, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                amount,
+                endDate,
+                invoiceId,
+                name,
+                quantity,
+                startDate,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -753,10 +768,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceLineItemCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is InvoiceLineItemCreateParams &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "InvoiceLineItemCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

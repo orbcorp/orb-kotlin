@@ -259,10 +259,26 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditListParams && customerId == other.customerId && currency == other.currency && cursor == other.cursor && includeAllBlocks == other.includeAllBlocks && limit == other.limit && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CustomerCreditListParams &&
+            customerId == other.customerId &&
+            currency == other.currency &&
+            cursor == other.cursor &&
+            includeAllBlocks == other.includeAllBlocks &&
+            limit == other.limit &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, currency, cursor, includeAllBlocks, limit, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            customerId,
+            currency,
+            cursor,
+            includeAllBlocks,
+            limit,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "CustomerCreditListParams{customerId=$customerId, currency=$currency, cursor=$cursor, includeAllBlocks=$includeAllBlocks, limit=$limit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

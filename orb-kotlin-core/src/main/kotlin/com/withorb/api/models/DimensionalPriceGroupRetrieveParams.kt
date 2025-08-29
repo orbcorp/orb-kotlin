@@ -182,10 +182,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DimensionalPriceGroupRetrieveParams && dimensionalPriceGroupId == other.dimensionalPriceGroupId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is DimensionalPriceGroupRetrieveParams &&
+            dimensionalPriceGroupId == other.dimensionalPriceGroupId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(dimensionalPriceGroupId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(dimensionalPriceGroupId, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "DimensionalPriceGroupRetrieveParams{dimensionalPriceGroupId=$dimensionalPriceGroupId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

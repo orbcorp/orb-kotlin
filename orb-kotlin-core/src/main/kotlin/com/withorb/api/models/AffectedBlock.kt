@@ -236,12 +236,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AffectedBlock && id == other.id && expiryDate == other.expiryDate && perUnitCostBasis == other.perUnitCostBasis && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AffectedBlock &&
+            id == other.id &&
+            expiryDate == other.expiryDate &&
+            perUnitCostBasis == other.perUnitCostBasis &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, expiryDate, perUnitCostBasis, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(id, expiryDate, perUnitCostBasis, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

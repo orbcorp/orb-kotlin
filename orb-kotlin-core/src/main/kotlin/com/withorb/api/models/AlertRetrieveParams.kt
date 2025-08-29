@@ -170,10 +170,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AlertRetrieveParams && alertId == other.alertId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is AlertRetrieveParams &&
+            alertId == other.alertId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(alertId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(alertId, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "AlertRetrieveParams{alertId=$alertId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

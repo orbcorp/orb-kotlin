@@ -228,12 +228,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is FixedFeeQuantityTransition && effectiveDate == other.effectiveDate && priceId == other.priceId && quantity == other.quantity && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is FixedFeeQuantityTransition &&
+            effectiveDate == other.effectiveDate &&
+            priceId == other.priceId &&
+            quantity == other.quantity &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(effectiveDate, priceId, quantity, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(effectiveDate, priceId, quantity, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

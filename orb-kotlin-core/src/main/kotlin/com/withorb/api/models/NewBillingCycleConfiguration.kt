@@ -315,7 +315,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+            return other is DurationUnit && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -328,12 +328,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is NewBillingCycleConfiguration && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is NewBillingCycleConfiguration &&
+            duration == other.duration &&
+            durationUnit == other.durationUnit &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(duration, durationUnit, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

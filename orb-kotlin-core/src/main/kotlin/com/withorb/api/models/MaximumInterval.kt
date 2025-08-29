@@ -364,12 +364,25 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is MaximumInterval && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && endDate == other.endDate && filters == other.filters && maximumAmount == other.maximumAmount && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is MaximumInterval &&
+            appliesToPriceIntervalIds == other.appliesToPriceIntervalIds &&
+            endDate == other.endDate &&
+            filters == other.filters &&
+            maximumAmount == other.maximumAmount &&
+            startDate == other.startDate &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(appliesToPriceIntervalIds, endDate, filters, maximumAmount, startDate, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            appliesToPriceIntervalIds,
+            endDate,
+            filters,
+            maximumAmount,
+            startDate,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

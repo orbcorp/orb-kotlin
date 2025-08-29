@@ -759,12 +759,35 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PriceInterval && id == other.id && billingCycleDay == other.billingCycleDay && currentBillingPeriodEndDate == other.currentBillingPeriodEndDate && currentBillingPeriodStartDate == other.currentBillingPeriodStartDate && endDate == other.endDate && filter == other.filter && fixedFeeQuantityTransitions == other.fixedFeeQuantityTransitions && price == other.price && startDate == other.startDate && usageCustomerIds == other.usageCustomerIds && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PriceInterval &&
+            id == other.id &&
+            billingCycleDay == other.billingCycleDay &&
+            currentBillingPeriodEndDate == other.currentBillingPeriodEndDate &&
+            currentBillingPeriodStartDate == other.currentBillingPeriodStartDate &&
+            endDate == other.endDate &&
+            filter == other.filter &&
+            fixedFeeQuantityTransitions == other.fixedFeeQuantityTransitions &&
+            price == other.price &&
+            startDate == other.startDate &&
+            usageCustomerIds == other.usageCustomerIds &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, billingCycleDay, currentBillingPeriodEndDate, currentBillingPeriodStartDate, endDate, filter, fixedFeeQuantityTransitions, price, startDate, usageCustomerIds, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            billingCycleDay,
+            currentBillingPeriodEndDate,
+            currentBillingPeriodStartDate,
+            endDate,
+            filter,
+            fixedFeeQuantityTransitions,
+            price,
+            startDate,
+            usageCustomerIds,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

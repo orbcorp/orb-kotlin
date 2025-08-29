@@ -223,10 +223,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditTopUpListByExternalIdParams && externalCustomerId == other.externalCustomerId && cursor == other.cursor && limit == other.limit && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CustomerCreditTopUpListByExternalIdParams &&
+            externalCustomerId == other.externalCustomerId &&
+            cursor == other.cursor &&
+            limit == other.limit &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, cursor, limit, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(externalCustomerId, cursor, limit, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CustomerCreditTopUpListByExternalIdParams{externalCustomerId=$externalCustomerId, cursor=$cursor, limit=$limit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

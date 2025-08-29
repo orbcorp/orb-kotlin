@@ -722,12 +722,23 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && discount == other.discount && redemptionCode == other.redemptionCode && durationInMonths == other.durationInMonths && maxRedemptions == other.maxRedemptions && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                discount == other.discount &&
+                redemptionCode == other.redemptionCode &&
+                durationInMonths == other.durationInMonths &&
+                maxRedemptions == other.maxRedemptions &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(discount, redemptionCode, durationInMonths, maxRedemptions, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                discount,
+                redemptionCode,
+                durationInMonths,
+                maxRedemptions,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -816,10 +827,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Discount && percentage == other.percentage && amount == other.amount /* spotless:on */
+            return other is Discount && percentage == other.percentage && amount == other.amount
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(percentage, amount) /* spotless:on */
+        override fun hashCode(): Int = Objects.hash(percentage, amount)
 
         override fun toString(): String =
             when {
@@ -1095,12 +1106,15 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Percentage && discountType == other.discountType && percentageDiscount == other.percentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Percentage &&
+                    discountType == other.discountType &&
+                    percentageDiscount == other.percentageDiscount &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(discountType, percentageDiscount, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(discountType, percentageDiscount, additionalProperties)
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -1304,12 +1318,15 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Amount && amountDiscount == other.amountDiscount && discountType == other.discountType && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Amount &&
+                    amountDiscount == other.amountDiscount &&
+                    discountType == other.discountType &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(amountDiscount, discountType, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(amountDiscount, discountType, additionalProperties)
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -1323,10 +1340,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CouponCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CouponCreateParams &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CouponCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

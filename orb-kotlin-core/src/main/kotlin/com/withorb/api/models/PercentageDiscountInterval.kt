@@ -518,7 +518,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
+            return other is DiscountType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -531,12 +531,27 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PercentageDiscountInterval && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && discountType == other.discountType && endDate == other.endDate && filters == other.filters && percentageDiscount == other.percentageDiscount && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PercentageDiscountInterval &&
+            appliesToPriceIntervalIds == other.appliesToPriceIntervalIds &&
+            discountType == other.discountType &&
+            endDate == other.endDate &&
+            filters == other.filters &&
+            percentageDiscount == other.percentageDiscount &&
+            startDate == other.startDate &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(appliesToPriceIntervalIds, discountType, endDate, filters, percentageDiscount, startDate, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            appliesToPriceIntervalIds,
+            discountType,
+            endDate,
+            filters,
+            percentageDiscount,
+            startDate,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

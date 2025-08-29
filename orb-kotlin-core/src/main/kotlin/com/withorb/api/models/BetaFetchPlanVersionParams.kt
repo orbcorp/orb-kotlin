@@ -202,10 +202,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BetaFetchPlanVersionParams && planId == other.planId && version == other.version && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BetaFetchPlanVersionParams &&
+            planId == other.planId &&
+            version == other.version &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(planId, version, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(planId, version, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "BetaFetchPlanVersionParams{planId=$planId, version=$version, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

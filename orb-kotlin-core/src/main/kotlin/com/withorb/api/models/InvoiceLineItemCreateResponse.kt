@@ -1500,10 +1500,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Adjustment && usageDiscount == other.usageDiscount && amountDiscount == other.amountDiscount && percentageDiscount == other.percentageDiscount && minimum == other.minimum && maximum == other.maximum /* spotless:on */
+            return other is Adjustment &&
+                usageDiscount == other.usageDiscount &&
+                amountDiscount == other.amountDiscount &&
+                percentageDiscount == other.percentageDiscount &&
+                minimum == other.minimum &&
+                maximum == other.maximum
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum) /* spotless:on */
+        override fun hashCode(): Int =
+            Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum)
 
         override fun toString(): String =
             when {
@@ -1725,10 +1731,13 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubLineItem && matrix == other.matrix && tier == other.tier && null_ == other.null_ /* spotless:on */
+            return other is SubLineItem &&
+                matrix == other.matrix &&
+                tier == other.tier &&
+                null_ == other.null_
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(matrix, tier, null_) /* spotless:on */
+        override fun hashCode(): Int = Objects.hash(matrix, tier, null_)
 
         override fun toString(): String =
             when {
@@ -1826,12 +1835,59 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceLineItemCreateResponse && id == other.id && adjustedSubtotal == other.adjustedSubtotal && adjustments == other.adjustments && amount == other.amount && creditsApplied == other.creditsApplied && discount == other.discount && endDate == other.endDate && filter == other.filter && grouping == other.grouping && maximum == other.maximum && maximumAmount == other.maximumAmount && minimum == other.minimum && minimumAmount == other.minimumAmount && name == other.name && partiallyInvoicedAmount == other.partiallyInvoicedAmount && price == other.price && quantity == other.quantity && startDate == other.startDate && subLineItems == other.subLineItems && subtotal == other.subtotal && taxAmounts == other.taxAmounts && usageCustomerIds == other.usageCustomerIds && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is InvoiceLineItemCreateResponse &&
+            id == other.id &&
+            adjustedSubtotal == other.adjustedSubtotal &&
+            adjustments == other.adjustments &&
+            amount == other.amount &&
+            creditsApplied == other.creditsApplied &&
+            discount == other.discount &&
+            endDate == other.endDate &&
+            filter == other.filter &&
+            grouping == other.grouping &&
+            maximum == other.maximum &&
+            maximumAmount == other.maximumAmount &&
+            minimum == other.minimum &&
+            minimumAmount == other.minimumAmount &&
+            name == other.name &&
+            partiallyInvoicedAmount == other.partiallyInvoicedAmount &&
+            price == other.price &&
+            quantity == other.quantity &&
+            startDate == other.startDate &&
+            subLineItems == other.subLineItems &&
+            subtotal == other.subtotal &&
+            taxAmounts == other.taxAmounts &&
+            usageCustomerIds == other.usageCustomerIds &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, adjustedSubtotal, adjustments, amount, creditsApplied, discount, endDate, filter, grouping, maximum, maximumAmount, minimum, minimumAmount, name, partiallyInvoicedAmount, price, quantity, startDate, subLineItems, subtotal, taxAmounts, usageCustomerIds, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            adjustedSubtotal,
+            adjustments,
+            amount,
+            creditsApplied,
+            discount,
+            endDate,
+            filter,
+            grouping,
+            maximum,
+            maximumAmount,
+            minimum,
+            minimumAmount,
+            name,
+            partiallyInvoicedAmount,
+            price,
+            quantity,
+            startDate,
+            subLineItems,
+            subtotal,
+            taxAmounts,
+            usageCustomerIds,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 
