@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.12.0 (2025-08-29)
+
+Full Changelog: [v1.11.0...v1.12.0](https://github.com/orbcorp/orb-kotlin/compare/v1.11.0...v1.12.0)
+
+### Features
+
+* add retryable exception ([6bf3387](https://github.com/orbcorp/orb-kotlin/commit/6bf3387e9efe151b2db48c51a454f4ac9abb03e1))
+* **client:** ensure compat with proguard ([a21fc50](https://github.com/orbcorp/orb-kotlin/commit/a21fc50739926011c56bb30b47999d83bf7462e1))
+
+
+### Bug Fixes
+
+* **client:** r8 support ([4d46e62](https://github.com/orbcorp/orb-kotlin/commit/4d46e6201e6bf0a1963f05e3982ecc97bcb9519c))
+
+
+### Chores
+
+* **internal:** bump ci test timeout ([c9b431a](https://github.com/orbcorp/orb-kotlin/commit/c9b431af1e09f27dd08de5d1b247b72f70d160ae))
+* **internal:** codegen related update ([d06f656](https://github.com/orbcorp/orb-kotlin/commit/d06f6564fcaeaf124295a7cc5db061e7092e4771))
+* **internal:** reduce proguard ci logging ([ba337ee](https://github.com/orbcorp/orb-kotlin/commit/ba337ee683dea8296441855e1c5583c86bfa7f04))
+
 ## 1.11.0 (2025-07-26)
 
 Full Changelog: [v1.10.0...v1.11.0](https://github.com/orbcorp/orb-kotlin/compare/v1.10.0...v1.11.0)
