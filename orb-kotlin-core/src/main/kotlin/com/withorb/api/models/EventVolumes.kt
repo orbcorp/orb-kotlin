@@ -397,12 +397,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Data && count == other.count && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Data &&
+                count == other.count &&
+                timeframeEnd == other.timeframeEnd &&
+                timeframeStart == other.timeframeStart &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(count, timeframeEnd, timeframeStart, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(count, timeframeEnd, timeframeStart, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -415,12 +419,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventVolumes && data == other.data && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is EventVolumes &&
+            data == other.data &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(data, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

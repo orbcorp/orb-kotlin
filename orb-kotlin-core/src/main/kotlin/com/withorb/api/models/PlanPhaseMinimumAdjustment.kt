@@ -695,7 +695,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AdjustmentType && value == other.value /* spotless:on */
+            return other is AdjustmentType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -708,12 +708,35 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanPhaseMinimumAdjustment && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && isInvoiceLevel == other.isInvoiceLevel && itemId == other.itemId && minimumAmount == other.minimumAmount && planPhaseOrder == other.planPhaseOrder && reason == other.reason && replacesAdjustmentId == other.replacesAdjustmentId && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PlanPhaseMinimumAdjustment &&
+            id == other.id &&
+            adjustmentType == other.adjustmentType &&
+            appliesToPriceIds == other.appliesToPriceIds &&
+            filters == other.filters &&
+            isInvoiceLevel == other.isInvoiceLevel &&
+            itemId == other.itemId &&
+            minimumAmount == other.minimumAmount &&
+            planPhaseOrder == other.planPhaseOrder &&
+            reason == other.reason &&
+            replacesAdjustmentId == other.replacesAdjustmentId &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, appliesToPriceIds, filters, isInvoiceLevel, itemId, minimumAmount, planPhaseOrder, reason, replacesAdjustmentId, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            adjustmentType,
+            appliesToPriceIds,
+            filters,
+            isInvoiceLevel,
+            itemId,
+            minimumAmount,
+            planPhaseOrder,
+            reason,
+            replacesAdjustmentId,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -173,10 +173,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is MetricFetchParams && metricId == other.metricId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is MetricFetchParams &&
+            metricId == other.metricId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(metricId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(metricId, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "MetricFetchParams{metricId=$metricId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -724,12 +724,12 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metric && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metric &&
+                id == other.id &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(id, additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1001,12 +1001,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Plan && id == other.id && externalPlanId == other.externalPlanId && name == other.name && planVersion == other.planVersion && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Plan &&
+                id == other.id &&
+                externalPlanId == other.externalPlanId &&
+                name == other.name &&
+                planVersion == other.planVersion &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, externalPlanId, name, planVersion, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(id, externalPlanId, name, planVersion, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1149,7 +1154,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1349,12 +1354,15 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BalanceAlertStatus && inAlert == other.inAlert && thresholdValue == other.thresholdValue && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is BalanceAlertStatus &&
+                inAlert == other.inAlert &&
+                thresholdValue == other.thresholdValue &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(inAlert, thresholdValue, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(inAlert, thresholdValue, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1367,12 +1375,37 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Alert && id == other.id && createdAt == other.createdAt && currency == other.currency && customer == other.customer && enabled == other.enabled && metric == other.metric && plan == other.plan && subscription == other.subscription && thresholds == other.thresholds && type == other.type && balanceAlertStatus == other.balanceAlertStatus && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is Alert &&
+            id == other.id &&
+            createdAt == other.createdAt &&
+            currency == other.currency &&
+            customer == other.customer &&
+            enabled == other.enabled &&
+            metric == other.metric &&
+            plan == other.plan &&
+            subscription == other.subscription &&
+            thresholds == other.thresholds &&
+            type == other.type &&
+            balanceAlertStatus == other.balanceAlertStatus &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, createdAt, currency, customer, enabled, metric, plan, subscription, thresholds, type, balanceAlertStatus, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            createdAt,
+            currency,
+            customer,
+            enabled,
+            metric,
+            plan,
+            subscription,
+            thresholds,
+            type,
+            balanceAlertStatus,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

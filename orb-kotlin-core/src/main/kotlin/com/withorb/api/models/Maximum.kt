@@ -286,12 +286,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Maximum && appliesToPriceIds == other.appliesToPriceIds && filters == other.filters && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is Maximum &&
+            appliesToPriceIds == other.appliesToPriceIds &&
+            filters == other.filters &&
+            maximumAmount == other.maximumAmount &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, filters, maximumAmount, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(appliesToPriceIds, filters, maximumAmount, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

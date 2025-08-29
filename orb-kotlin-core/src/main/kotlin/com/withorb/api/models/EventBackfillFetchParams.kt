@@ -174,10 +174,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventBackfillFetchParams && backfillId == other.backfillId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is EventBackfillFetchParams &&
+            backfillId == other.backfillId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(backfillId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(backfillId, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "EventBackfillFetchParams{backfillId=$backfillId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -2424,12 +2424,51 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && email == other.email && name == other.name && accountingSyncConfiguration == other.accountingSyncConfiguration && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && billingAddress == other.billingAddress && currency == other.currency && emailDelivery == other.emailDelivery && externalCustomerId == other.externalCustomerId && hierarchy == other.hierarchy && metadata == other.metadata && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && reportingConfiguration == other.reportingConfiguration && shippingAddress == other.shippingAddress && taxConfiguration == other.taxConfiguration && taxId == other.taxId && timezone == other.timezone && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                email == other.email &&
+                name == other.name &&
+                accountingSyncConfiguration == other.accountingSyncConfiguration &&
+                additionalEmails == other.additionalEmails &&
+                autoCollection == other.autoCollection &&
+                billingAddress == other.billingAddress &&
+                currency == other.currency &&
+                emailDelivery == other.emailDelivery &&
+                externalCustomerId == other.externalCustomerId &&
+                hierarchy == other.hierarchy &&
+                metadata == other.metadata &&
+                paymentProvider == other.paymentProvider &&
+                paymentProviderId == other.paymentProviderId &&
+                reportingConfiguration == other.reportingConfiguration &&
+                shippingAddress == other.shippingAddress &&
+                taxConfiguration == other.taxConfiguration &&
+                taxId == other.taxId &&
+                timezone == other.timezone &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(email, name, accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, emailDelivery, externalCustomerId, hierarchy, metadata, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, timezone, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                email,
+                name,
+                accountingSyncConfiguration,
+                additionalEmails,
+                autoCollection,
+                billingAddress,
+                currency,
+                emailDelivery,
+                externalCustomerId,
+                hierarchy,
+                metadata,
+                paymentProvider,
+                paymentProviderId,
+                reportingConfiguration,
+                shippingAddress,
+                taxConfiguration,
+                taxId,
+                timezone,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2529,12 +2568,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2683,7 +2720,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PaymentProvider && value == other.value /* spotless:on */
+            return other is PaymentProvider && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2787,10 +2824,13 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TaxConfiguration && avalara == other.avalara && taxjar == other.taxjar && sphere == other.sphere /* spotless:on */
+            return other is TaxConfiguration &&
+                avalara == other.avalara &&
+                taxjar == other.taxjar &&
+                sphere == other.sphere
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(avalara, taxjar, sphere) /* spotless:on */
+        override fun hashCode(): Int = Objects.hash(avalara, taxjar, sphere)
 
         override fun toString(): String =
             when {
@@ -2888,10 +2928,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CustomerCreateParams &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CustomerCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

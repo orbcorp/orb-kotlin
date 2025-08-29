@@ -256,12 +256,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillingCycleAnchorConfiguration && day == other.day && month == other.month && year == other.year && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is BillingCycleAnchorConfiguration &&
+            day == other.day &&
+            month == other.month &&
+            year == other.year &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(day, month, year, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

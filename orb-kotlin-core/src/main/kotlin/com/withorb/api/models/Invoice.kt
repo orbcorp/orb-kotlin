@@ -2543,12 +2543,23 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AutoCollection && enabled == other.enabled && nextAttemptAt == other.nextAttemptAt && numAttempts == other.numAttempts && previouslyAttemptedAt == other.previouslyAttemptedAt && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is AutoCollection &&
+                enabled == other.enabled &&
+                nextAttemptAt == other.nextAttemptAt &&
+                numAttempts == other.numAttempts &&
+                previouslyAttemptedAt == other.previouslyAttemptedAt &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(enabled, nextAttemptAt, numAttempts, previouslyAttemptedAt, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                enabled,
+                nextAttemptAt,
+                numAttempts,
+                previouslyAttemptedAt,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2918,12 +2929,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CreditNote && id == other.id && creditNoteNumber == other.creditNoteNumber && memo == other.memo && reason == other.reason && total == other.total && type == other.type && voidedAt == other.voidedAt && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CreditNote &&
+                id == other.id &&
+                creditNoteNumber == other.creditNoteNumber &&
+                memo == other.memo &&
+                reason == other.reason &&
+                total == other.total &&
+                type == other.type &&
+                voidedAt == other.voidedAt &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, creditNoteNumber, memo, reason, total, type, voidedAt, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                creditNoteNumber,
+                memo,
+                reason,
+                total,
+                type,
+                voidedAt,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -3602,7 +3630,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Action && value == other.value /* spotless:on */
+                return other is Action && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -3727,7 +3755,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                return other is Type && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -3740,12 +3768,35 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomerBalanceTransaction && id == other.id && action == other.action && amount == other.amount && createdAt == other.createdAt && creditNote == other.creditNote && description == other.description && endingBalance == other.endingBalance && invoice == other.invoice && startingBalance == other.startingBalance && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomerBalanceTransaction &&
+                id == other.id &&
+                action == other.action &&
+                amount == other.amount &&
+                createdAt == other.createdAt &&
+                creditNote == other.creditNote &&
+                description == other.description &&
+                endingBalance == other.endingBalance &&
+                invoice == other.invoice &&
+                startingBalance == other.startingBalance &&
+                type == other.type &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, action, amount, createdAt, creditNote, description, endingBalance, invoice, startingBalance, type, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                action,
+                amount,
+                createdAt,
+                creditNote,
+                description,
+                endingBalance,
+                invoice,
+                startingBalance,
+                type,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -3879,7 +3930,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is InvoiceSource && value == other.value /* spotless:on */
+            return other is InvoiceSource && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -5408,10 +5459,16 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Adjustment && usageDiscount == other.usageDiscount && amountDiscount == other.amountDiscount && percentageDiscount == other.percentageDiscount && minimum == other.minimum && maximum == other.maximum /* spotless:on */
+                return other is Adjustment &&
+                    usageDiscount == other.usageDiscount &&
+                    amountDiscount == other.amountDiscount &&
+                    percentageDiscount == other.percentageDiscount &&
+                    minimum == other.minimum &&
+                    maximum == other.maximum
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum) /* spotless:on */
+            override fun hashCode(): Int =
+                Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum)
 
             override fun toString(): String =
                 when {
@@ -5637,10 +5694,13 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is SubLineItem && matrix == other.matrix && tier == other.tier && null_ == other.null_ /* spotless:on */
+                return other is SubLineItem &&
+                    matrix == other.matrix &&
+                    tier == other.tier &&
+                    null_ == other.null_
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(matrix, tier, null_) /* spotless:on */
+            override fun hashCode(): Int = Objects.hash(matrix, tier, null_)
 
             override fun toString(): String =
                 when {
@@ -5738,12 +5798,59 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItem && id == other.id && adjustedSubtotal == other.adjustedSubtotal && adjustments == other.adjustments && amount == other.amount && creditsApplied == other.creditsApplied && discount == other.discount && endDate == other.endDate && filter == other.filter && grouping == other.grouping && maximum == other.maximum && maximumAmount == other.maximumAmount && minimum == other.minimum && minimumAmount == other.minimumAmount && name == other.name && partiallyInvoicedAmount == other.partiallyInvoicedAmount && price == other.price && quantity == other.quantity && startDate == other.startDate && subLineItems == other.subLineItems && subtotal == other.subtotal && taxAmounts == other.taxAmounts && usageCustomerIds == other.usageCustomerIds && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is LineItem &&
+                id == other.id &&
+                adjustedSubtotal == other.adjustedSubtotal &&
+                adjustments == other.adjustments &&
+                amount == other.amount &&
+                creditsApplied == other.creditsApplied &&
+                discount == other.discount &&
+                endDate == other.endDate &&
+                filter == other.filter &&
+                grouping == other.grouping &&
+                maximum == other.maximum &&
+                maximumAmount == other.maximumAmount &&
+                minimum == other.minimum &&
+                minimumAmount == other.minimumAmount &&
+                name == other.name &&
+                partiallyInvoicedAmount == other.partiallyInvoicedAmount &&
+                price == other.price &&
+                quantity == other.quantity &&
+                startDate == other.startDate &&
+                subLineItems == other.subLineItems &&
+                subtotal == other.subtotal &&
+                taxAmounts == other.taxAmounts &&
+                usageCustomerIds == other.usageCustomerIds &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, adjustedSubtotal, adjustments, amount, creditsApplied, discount, endDate, filter, grouping, maximum, maximumAmount, minimum, minimumAmount, name, partiallyInvoicedAmount, price, quantity, startDate, subLineItems, subtotal, taxAmounts, usageCustomerIds, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                adjustedSubtotal,
+                adjustments,
+                amount,
+                creditsApplied,
+                discount,
+                endDate,
+                filter,
+                grouping,
+                maximum,
+                maximumAmount,
+                minimum,
+                minimumAmount,
+                name,
+                partiallyInvoicedAmount,
+                price,
+                quantity,
+                startDate,
+                subLineItems,
+                subtotal,
+                taxAmounts,
+                usageCustomerIds,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -5843,12 +5950,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -6324,7 +6429,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is PaymentProvider && value == other.value /* spotless:on */
+                return other is PaymentProvider && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -6337,12 +6442,27 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PaymentAttempt && id == other.id && amount == other.amount && createdAt == other.createdAt && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && succeeded == other.succeeded && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is PaymentAttempt &&
+                id == other.id &&
+                amount == other.amount &&
+                createdAt == other.createdAt &&
+                paymentProvider == other.paymentProvider &&
+                paymentProviderId == other.paymentProviderId &&
+                succeeded == other.succeeded &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, amount, createdAt, paymentProvider, paymentProviderId, succeeded, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                amount,
+                createdAt,
+                paymentProvider,
+                paymentProviderId,
+                succeeded,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -6484,7 +6604,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -6497,12 +6617,97 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Invoice && id == other.id && amountDue == other.amountDue && autoCollection == other.autoCollection && billingAddress == other.billingAddress && createdAt == other.createdAt && creditNotes == other.creditNotes && currency == other.currency && customer == other.customer && customerBalanceTransactions == other.customerBalanceTransactions && customerTaxId == other.customerTaxId && discount == other.discount && discounts == other.discounts && dueDate == other.dueDate && eligibleToIssueAt == other.eligibleToIssueAt && hostedInvoiceUrl == other.hostedInvoiceUrl && invoiceDate == other.invoiceDate && invoiceNumber == other.invoiceNumber && invoicePdf == other.invoicePdf && invoiceSource == other.invoiceSource && issueFailedAt == other.issueFailedAt && issuedAt == other.issuedAt && lineItems == other.lineItems && maximum == other.maximum && maximumAmount == other.maximumAmount && memo == other.memo && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && paidAt == other.paidAt && paymentAttempts == other.paymentAttempts && paymentFailedAt == other.paymentFailedAt && paymentStartedAt == other.paymentStartedAt && scheduledIssueAt == other.scheduledIssueAt && shippingAddress == other.shippingAddress && status == other.status && subscription == other.subscription && subtotal == other.subtotal && syncFailedAt == other.syncFailedAt && total == other.total && voidedAt == other.voidedAt && willAutoIssue == other.willAutoIssue && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is Invoice &&
+            id == other.id &&
+            amountDue == other.amountDue &&
+            autoCollection == other.autoCollection &&
+            billingAddress == other.billingAddress &&
+            createdAt == other.createdAt &&
+            creditNotes == other.creditNotes &&
+            currency == other.currency &&
+            customer == other.customer &&
+            customerBalanceTransactions == other.customerBalanceTransactions &&
+            customerTaxId == other.customerTaxId &&
+            discount == other.discount &&
+            discounts == other.discounts &&
+            dueDate == other.dueDate &&
+            eligibleToIssueAt == other.eligibleToIssueAt &&
+            hostedInvoiceUrl == other.hostedInvoiceUrl &&
+            invoiceDate == other.invoiceDate &&
+            invoiceNumber == other.invoiceNumber &&
+            invoicePdf == other.invoicePdf &&
+            invoiceSource == other.invoiceSource &&
+            issueFailedAt == other.issueFailedAt &&
+            issuedAt == other.issuedAt &&
+            lineItems == other.lineItems &&
+            maximum == other.maximum &&
+            maximumAmount == other.maximumAmount &&
+            memo == other.memo &&
+            metadata == other.metadata &&
+            minimum == other.minimum &&
+            minimumAmount == other.minimumAmount &&
+            paidAt == other.paidAt &&
+            paymentAttempts == other.paymentAttempts &&
+            paymentFailedAt == other.paymentFailedAt &&
+            paymentStartedAt == other.paymentStartedAt &&
+            scheduledIssueAt == other.scheduledIssueAt &&
+            shippingAddress == other.shippingAddress &&
+            status == other.status &&
+            subscription == other.subscription &&
+            subtotal == other.subtotal &&
+            syncFailedAt == other.syncFailedAt &&
+            total == other.total &&
+            voidedAt == other.voidedAt &&
+            willAutoIssue == other.willAutoIssue &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, amountDue, autoCollection, billingAddress, createdAt, creditNotes, currency, customer, customerBalanceTransactions, customerTaxId, discount, discounts, dueDate, eligibleToIssueAt, hostedInvoiceUrl, invoiceDate, invoiceNumber, invoicePdf, invoiceSource, issueFailedAt, issuedAt, lineItems, maximum, maximumAmount, memo, metadata, minimum, minimumAmount, paidAt, paymentAttempts, paymentFailedAt, paymentStartedAt, scheduledIssueAt, shippingAddress, status, subscription, subtotal, syncFailedAt, total, voidedAt, willAutoIssue, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            amountDue,
+            autoCollection,
+            billingAddress,
+            createdAt,
+            creditNotes,
+            currency,
+            customer,
+            customerBalanceTransactions,
+            customerTaxId,
+            discount,
+            discounts,
+            dueDate,
+            eligibleToIssueAt,
+            hostedInvoiceUrl,
+            invoiceDate,
+            invoiceNumber,
+            invoicePdf,
+            invoiceSource,
+            issueFailedAt,
+            issuedAt,
+            lineItems,
+            maximum,
+            maximumAmount,
+            memo,
+            metadata,
+            minimum,
+            minimumAmount,
+            paidAt,
+            paymentAttempts,
+            paymentFailedAt,
+            paymentStartedAt,
+            scheduledIssueAt,
+            shippingAddress,
+            status,
+            subscription,
+            subtotal,
+            syncFailedAt,
+            total,
+            voidedAt,
+            willAutoIssue,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

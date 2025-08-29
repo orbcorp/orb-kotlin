@@ -1595,10 +1595,13 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DiscountInterval && amount == other.amount && percentage == other.percentage && usage == other.usage /* spotless:on */
+            return other is DiscountInterval &&
+                amount == other.amount &&
+                percentage == other.percentage &&
+                usage == other.usage
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, percentage, usage) /* spotless:on */
+        override fun hashCode(): Int = Objects.hash(amount, percentage, usage)
 
         override fun toString(): String =
             when {
@@ -1784,12 +1787,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1918,7 +1919,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1931,12 +1932,69 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Subscription && id == other.id && activePlanPhaseOrder == other.activePlanPhaseOrder && adjustmentIntervals == other.adjustmentIntervals && autoCollection == other.autoCollection && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && billingCycleDay == other.billingCycleDay && createdAt == other.createdAt && currentBillingPeriodEndDate == other.currentBillingPeriodEndDate && currentBillingPeriodStartDate == other.currentBillingPeriodStartDate && customer == other.customer && defaultInvoiceMemo == other.defaultInvoiceMemo && discountIntervals == other.discountIntervals && endDate == other.endDate && fixedFeeQuantitySchedule == other.fixedFeeQuantitySchedule && invoicingThreshold == other.invoicingThreshold && maximumIntervals == other.maximumIntervals && metadata == other.metadata && minimumIntervals == other.minimumIntervals && name == other.name && netTerms == other.netTerms && pendingSubscriptionChange == other.pendingSubscriptionChange && plan == other.plan && priceIntervals == other.priceIntervals && redeemedCoupon == other.redeemedCoupon && startDate == other.startDate && status == other.status && trialInfo == other.trialInfo && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is Subscription &&
+            id == other.id &&
+            activePlanPhaseOrder == other.activePlanPhaseOrder &&
+            adjustmentIntervals == other.adjustmentIntervals &&
+            autoCollection == other.autoCollection &&
+            billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration &&
+            billingCycleDay == other.billingCycleDay &&
+            createdAt == other.createdAt &&
+            currentBillingPeriodEndDate == other.currentBillingPeriodEndDate &&
+            currentBillingPeriodStartDate == other.currentBillingPeriodStartDate &&
+            customer == other.customer &&
+            defaultInvoiceMemo == other.defaultInvoiceMemo &&
+            discountIntervals == other.discountIntervals &&
+            endDate == other.endDate &&
+            fixedFeeQuantitySchedule == other.fixedFeeQuantitySchedule &&
+            invoicingThreshold == other.invoicingThreshold &&
+            maximumIntervals == other.maximumIntervals &&
+            metadata == other.metadata &&
+            minimumIntervals == other.minimumIntervals &&
+            name == other.name &&
+            netTerms == other.netTerms &&
+            pendingSubscriptionChange == other.pendingSubscriptionChange &&
+            plan == other.plan &&
+            priceIntervals == other.priceIntervals &&
+            redeemedCoupon == other.redeemedCoupon &&
+            startDate == other.startDate &&
+            status == other.status &&
+            trialInfo == other.trialInfo &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, activePlanPhaseOrder, adjustmentIntervals, autoCollection, billingCycleAnchorConfiguration, billingCycleDay, createdAt, currentBillingPeriodEndDate, currentBillingPeriodStartDate, customer, defaultInvoiceMemo, discountIntervals, endDate, fixedFeeQuantitySchedule, invoicingThreshold, maximumIntervals, metadata, minimumIntervals, name, netTerms, pendingSubscriptionChange, plan, priceIntervals, redeemedCoupon, startDate, status, trialInfo, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            activePlanPhaseOrder,
+            adjustmentIntervals,
+            autoCollection,
+            billingCycleAnchorConfiguration,
+            billingCycleDay,
+            createdAt,
+            currentBillingPeriodEndDate,
+            currentBillingPeriodStartDate,
+            customer,
+            defaultInvoiceMemo,
+            discountIntervals,
+            endDate,
+            fixedFeeQuantitySchedule,
+            invoicingThreshold,
+            maximumIntervals,
+            metadata,
+            minimumIntervals,
+            name,
+            netTerms,
+            pendingSubscriptionChange,
+            plan,
+            priceIntervals,
+            redeemedCoupon,
+            startDate,
+            status,
+            trialInfo,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

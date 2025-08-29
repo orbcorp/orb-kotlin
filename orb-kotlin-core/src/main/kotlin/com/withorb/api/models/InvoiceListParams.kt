@@ -529,7 +529,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DateType && value == other.value /* spotless:on */
+            return other is DateType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -671,7 +671,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -684,10 +684,54 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceListParams && amount == other.amount && amountGt == other.amountGt && amountLt == other.amountLt && cursor == other.cursor && customerId == other.customerId && dateType == other.dateType && dueDate == other.dueDate && dueDateWindow == other.dueDateWindow && dueDateGt == other.dueDateGt && dueDateLt == other.dueDateLt && externalCustomerId == other.externalCustomerId && invoiceDateGt == other.invoiceDateGt && invoiceDateGte == other.invoiceDateGte && invoiceDateLt == other.invoiceDateLt && invoiceDateLte == other.invoiceDateLte && isRecurring == other.isRecurring && limit == other.limit && status == other.status && subscriptionId == other.subscriptionId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is InvoiceListParams &&
+            amount == other.amount &&
+            amountGt == other.amountGt &&
+            amountLt == other.amountLt &&
+            cursor == other.cursor &&
+            customerId == other.customerId &&
+            dateType == other.dateType &&
+            dueDate == other.dueDate &&
+            dueDateWindow == other.dueDateWindow &&
+            dueDateGt == other.dueDateGt &&
+            dueDateLt == other.dueDateLt &&
+            externalCustomerId == other.externalCustomerId &&
+            invoiceDateGt == other.invoiceDateGt &&
+            invoiceDateGte == other.invoiceDateGte &&
+            invoiceDateLt == other.invoiceDateLt &&
+            invoiceDateLte == other.invoiceDateLte &&
+            isRecurring == other.isRecurring &&
+            limit == other.limit &&
+            status == other.status &&
+            subscriptionId == other.subscriptionId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, amountGt, amountLt, cursor, customerId, dateType, dueDate, dueDateWindow, dueDateGt, dueDateLt, externalCustomerId, invoiceDateGt, invoiceDateGte, invoiceDateLt, invoiceDateLte, isRecurring, limit, status, subscriptionId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            amount,
+            amountGt,
+            amountLt,
+            cursor,
+            customerId,
+            dateType,
+            dueDate,
+            dueDateWindow,
+            dueDateGt,
+            dueDateLt,
+            externalCustomerId,
+            invoiceDateGt,
+            invoiceDateGte,
+            invoiceDateLt,
+            invoiceDateLte,
+            isRecurring,
+            limit,
+            status,
+            subscriptionId,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "InvoiceListParams{amount=$amount, amountGt=$amountGt, amountLt=$amountLt, cursor=$cursor, customerId=$customerId, dateType=$dateType, dueDate=$dueDate, dueDateWindow=$dueDateWindow, dueDateGt=$dueDateGt, dueDateLt=$dueDateLt, externalCustomerId=$externalCustomerId, invoiceDateGt=$invoiceDateGt, invoiceDateGte=$invoiceDateGte, invoiceDateLt=$invoiceDateLt, invoiceDateLte=$invoiceDateLte, isRecurring=$isRecurring, limit=$limit, status=$status, subscriptionId=$subscriptionId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

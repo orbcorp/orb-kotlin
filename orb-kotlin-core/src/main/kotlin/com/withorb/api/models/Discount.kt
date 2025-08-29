@@ -124,10 +124,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Discount && percentage == other.percentage && trial == other.trial && usage == other.usage && amount == other.amount /* spotless:on */
+        return other is Discount &&
+            percentage == other.percentage &&
+            trial == other.trial &&
+            usage == other.usage &&
+            amount == other.amount
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(percentage, trial, usage, amount) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(percentage, trial, usage, amount)
 
     override fun toString(): String =
         when {
