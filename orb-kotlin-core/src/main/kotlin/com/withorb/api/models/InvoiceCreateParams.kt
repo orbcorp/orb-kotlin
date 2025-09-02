@@ -6,14 +6,25 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.Params
+import com.withorb.api.core.allMaxBy
 import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
@@ -72,6 +83,15 @@ private constructor(
     fun discount(): Discount? = body.discount()
 
     /**
+     * An optional custom due date for the invoice. If not set, the due date will be calculated
+     * based on the `net_terms` value.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun dueDate(): DueDate? = body.dueDate()
+
+    /**
      * The `external_customer_id` of the `Customer` to create this invoice for. One of `customer_id`
      * and `external_customer_id` are required.
      *
@@ -81,7 +101,8 @@ private constructor(
     fun externalCustomerId(): String? = body.externalCustomerId()
 
     /**
-     * An optional memo to attach to the invoice.
+     * An optional memo to attach to the invoice. If no memo is provided, we will attach the default
+     * memo
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -99,9 +120,11 @@ private constructor(
     fun metadata(): Metadata? = body.metadata()
 
     /**
-     * Determines the difference between the invoice issue date for subscription invoices as the
-     * date that they are due. A value of '0' here represents that the invoice is due on issue,
-     * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
+     * The net terms determines the due date of the invoice. Due date is calculated based on the
+     * invoice or issuance date, depending on the account's configured due date calculation method.
+     * A value of '0' here represents that the invoice is due on issue, whereas a value of '30'
+     * represents that the customer has 30 days to pay the invoice. Do not set this field if you
+     * want to set a custom due date.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -151,6 +174,13 @@ private constructor(
      * Unlike [discount], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _discount(): JsonField<Discount> = body._discount()
+
+    /**
+     * Returns the raw JSON value of [dueDate].
+     *
+     * Unlike [dueDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _dueDate(): JsonField<DueDate> = body._dueDate()
 
     /**
      * Returns the raw JSON value of [externalCustomerId].
@@ -363,6 +393,26 @@ private constructor(
         fun amountDiscount(amountDiscount: String) = apply { body.amountDiscount(amountDiscount) }
 
         /**
+         * An optional custom due date for the invoice. If not set, the due date will be calculated
+         * based on the `net_terms` value.
+         */
+        fun dueDate(dueDate: DueDate?) = apply { body.dueDate(dueDate) }
+
+        /**
+         * Sets [Builder.dueDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dueDate] with a well-typed [DueDate] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun dueDate(dueDate: JsonField<DueDate>) = apply { body.dueDate(dueDate) }
+
+        /** Alias for calling [dueDate] with `DueDate.ofDate(date)`. */
+        fun dueDate(date: LocalDate) = apply { body.dueDate(date) }
+
+        /** Alias for calling [dueDate] with `DueDate.ofDateTime(dateTime)`. */
+        fun dueDate(dateTime: OffsetDateTime) = apply { body.dueDate(dateTime) }
+
+        /**
          * The `external_customer_id` of the `Customer` to create this invoice for. One of
          * `customer_id` and `external_customer_id` are required.
          */
@@ -381,7 +431,10 @@ private constructor(
             body.externalCustomerId(externalCustomerId)
         }
 
-        /** An optional memo to attach to the invoice. */
+        /**
+         * An optional memo to attach to the invoice. If no memo is provided, we will attach the
+         * default memo
+         */
         fun memo(memo: String?) = apply { body.memo(memo) }
 
         /**
@@ -409,9 +462,11 @@ private constructor(
         fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
 
         /**
-         * Determines the difference between the invoice issue date for subscription invoices as the
-         * date that they are due. A value of '0' here represents that the invoice is due on issue,
-         * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
+         * The net terms determines the due date of the invoice. Due date is calculated based on the
+         * invoice or issuance date, depending on the account's configured due date calculation
+         * method. A value of '0' here represents that the invoice is due on issue, whereas a value
+         * of '30' represents that the customer has 30 days to pay the invoice. Do not set this
+         * field if you want to set a custom due date.
          */
         fun netTerms(netTerms: Long?) = apply { body.netTerms(netTerms) }
 
@@ -599,6 +654,7 @@ private constructor(
         private val lineItems: JsonField<List<LineItem>>,
         private val customerId: JsonField<String>,
         private val discount: JsonField<Discount>,
+        private val dueDate: JsonField<DueDate>,
         private val externalCustomerId: JsonField<String>,
         private val memo: JsonField<String>,
         private val metadata: JsonField<Metadata>,
@@ -624,6 +680,9 @@ private constructor(
             @JsonProperty("discount")
             @ExcludeMissing
             discount: JsonField<Discount> = JsonMissing.of(),
+            @JsonProperty("due_date")
+            @ExcludeMissing
+            dueDate: JsonField<DueDate> = JsonMissing.of(),
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             externalCustomerId: JsonField<String> = JsonMissing.of(),
@@ -641,6 +700,7 @@ private constructor(
             lineItems,
             customerId,
             discount,
+            dueDate,
             externalCustomerId,
             memo,
             metadata,
@@ -690,6 +750,15 @@ private constructor(
         fun discount(): Discount? = discount.getNullable("discount")
 
         /**
+         * An optional custom due date for the invoice. If not set, the due date will be calculated
+         * based on the `net_terms` value.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun dueDate(): DueDate? = dueDate.getNullable("due_date")
+
+        /**
          * The `external_customer_id` of the `Customer` to create this invoice for. One of
          * `customer_id` and `external_customer_id` are required.
          *
@@ -699,7 +768,8 @@ private constructor(
         fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
 
         /**
-         * An optional memo to attach to the invoice.
+         * An optional memo to attach to the invoice. If no memo is provided, we will attach the
+         * default memo
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -717,9 +787,11 @@ private constructor(
         fun metadata(): Metadata? = metadata.getNullable("metadata")
 
         /**
-         * Determines the difference between the invoice issue date for subscription invoices as the
-         * date that they are due. A value of '0' here represents that the invoice is due on issue,
-         * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
+         * The net terms determines the due date of the invoice. Due date is calculated based on the
+         * invoice or issuance date, depending on the account's configured due date calculation
+         * method. A value of '0' here represents that the invoice is due on issue, whereas a value
+         * of '30' represents that the customer has 30 days to pay the invoice. Do not set this
+         * field if you want to set a custom due date.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -775,6 +847,13 @@ private constructor(
          * Unlike [discount], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("discount") @ExcludeMissing fun _discount(): JsonField<Discount> = discount
+
+        /**
+         * Returns the raw JSON value of [dueDate].
+         *
+         * Unlike [dueDate], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("due_date") @ExcludeMissing fun _dueDate(): JsonField<DueDate> = dueDate
 
         /**
          * Returns the raw JSON value of [externalCustomerId].
@@ -852,6 +931,7 @@ private constructor(
             private var lineItems: JsonField<MutableList<LineItem>>? = null
             private var customerId: JsonField<String> = JsonMissing.of()
             private var discount: JsonField<Discount> = JsonMissing.of()
+            private var dueDate: JsonField<DueDate> = JsonMissing.of()
             private var externalCustomerId: JsonField<String> = JsonMissing.of()
             private var memo: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
@@ -865,6 +945,7 @@ private constructor(
                 lineItems = body.lineItems.map { it.toMutableList() }
                 customerId = body.customerId
                 discount = body.discount
+                dueDate = body.dueDate
                 externalCustomerId = body.externalCustomerId
                 memo = body.memo
                 metadata = body.metadata
@@ -1022,6 +1103,27 @@ private constructor(
                 )
 
             /**
+             * An optional custom due date for the invoice. If not set, the due date will be
+             * calculated based on the `net_terms` value.
+             */
+            fun dueDate(dueDate: DueDate?) = dueDate(JsonField.ofNullable(dueDate))
+
+            /**
+             * Sets [Builder.dueDate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.dueDate] with a well-typed [DueDate] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun dueDate(dueDate: JsonField<DueDate>) = apply { this.dueDate = dueDate }
+
+            /** Alias for calling [dueDate] with `DueDate.ofDate(date)`. */
+            fun dueDate(date: LocalDate) = dueDate(DueDate.ofDate(date))
+
+            /** Alias for calling [dueDate] with `DueDate.ofDateTime(dateTime)`. */
+            fun dueDate(dateTime: OffsetDateTime) = dueDate(DueDate.ofDateTime(dateTime))
+
+            /**
              * The `external_customer_id` of the `Customer` to create this invoice for. One of
              * `customer_id` and `external_customer_id` are required.
              */
@@ -1039,7 +1141,10 @@ private constructor(
                 this.externalCustomerId = externalCustomerId
             }
 
-            /** An optional memo to attach to the invoice. */
+            /**
+             * An optional memo to attach to the invoice. If no memo is provided, we will attach the
+             * default memo
+             */
             fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
 
             /**
@@ -1068,10 +1173,11 @@ private constructor(
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             /**
-             * Determines the difference between the invoice issue date for subscription invoices as
-             * the date that they are due. A value of '0' here represents that the invoice is due on
-             * issue, whereas a value of 30 represents that the customer has 30 days to pay the
-             * invoice.
+             * The net terms determines the due date of the invoice. Due date is calculated based on
+             * the invoice or issuance date, depending on the account's configured due date
+             * calculation method. A value of '0' here represents that the invoice is due on issue,
+             * whereas a value of '30' represents that the customer has 30 days to pay the invoice.
+             * Do not set this field if you want to set a custom due date.
              */
             fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
 
@@ -1148,6 +1254,7 @@ private constructor(
                     checkRequired("lineItems", lineItems).map { it.toImmutable() },
                     customerId,
                     discount,
+                    dueDate,
                     externalCustomerId,
                     memo,
                     metadata,
@@ -1169,6 +1276,7 @@ private constructor(
             lineItems().forEach { it.validate() }
             customerId()
             discount()?.validate()
+            dueDate()?.validate()
             externalCustomerId()
             memo()
             metadata()?.validate()
@@ -1197,6 +1305,7 @@ private constructor(
                 (lineItems.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (customerId.asKnown() == null) 0 else 1) +
                 (discount.asKnown()?.validity() ?: 0) +
+                (dueDate.asKnown()?.validity() ?: 0) +
                 (if (externalCustomerId.asKnown() == null) 0 else 1) +
                 (if (memo.asKnown() == null) 0 else 1) +
                 (metadata.asKnown()?.validity() ?: 0) +
@@ -1214,6 +1323,7 @@ private constructor(
                 lineItems == other.lineItems &&
                 customerId == other.customerId &&
                 discount == other.discount &&
+                dueDate == other.dueDate &&
                 externalCustomerId == other.externalCustomerId &&
                 memo == other.memo &&
                 metadata == other.metadata &&
@@ -1229,6 +1339,7 @@ private constructor(
                 lineItems,
                 customerId,
                 discount,
+                dueDate,
                 externalCustomerId,
                 memo,
                 metadata,
@@ -1241,7 +1352,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, customerId=$customerId, discount=$discount, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, netTerms=$netTerms, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
+            "Body{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, customerId=$customerId, discount=$discount, dueDate=$dueDate, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, netTerms=$netTerms, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
     }
 
     class LineItem
@@ -1765,6 +1876,178 @@ private constructor(
 
         override fun toString() =
             "LineItem{endDate=$endDate, itemId=$itemId, modelType=$modelType, name=$name, quantity=$quantity, startDate=$startDate, unitConfig=$unitConfig, additionalProperties=$additionalProperties}"
+    }
+
+    /**
+     * An optional custom due date for the invoice. If not set, the due date will be calculated
+     * based on the `net_terms` value.
+     */
+    @JsonDeserialize(using = DueDate.Deserializer::class)
+    @JsonSerialize(using = DueDate.Serializer::class)
+    class DueDate
+    private constructor(
+        private val date: LocalDate? = null,
+        private val dateTime: OffsetDateTime? = null,
+        private val _json: JsonValue? = null,
+    ) {
+
+        fun date(): LocalDate? = date
+
+        fun dateTime(): OffsetDateTime? = dateTime
+
+        fun isDate(): Boolean = date != null
+
+        fun isDateTime(): Boolean = dateTime != null
+
+        fun asDate(): LocalDate = date.getOrThrow("date")
+
+        fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
+
+        fun _json(): JsonValue? = _json
+
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
+                date != null -> visitor.visitDate(date)
+                dateTime != null -> visitor.visitDateTime(dateTime)
+                else -> visitor.unknown(_json)
+            }
+
+        private var validated: Boolean = false
+
+        fun validate(): DueDate = apply {
+            if (validated) {
+                return@apply
+            }
+
+            accept(
+                object : Visitor<Unit> {
+                    override fun visitDate(date: LocalDate) {}
+
+                    override fun visitDateTime(dateTime: OffsetDateTime) {}
+                }
+            )
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            accept(
+                object : Visitor<Int> {
+                    override fun visitDate(date: LocalDate) = 1
+
+                    override fun visitDateTime(dateTime: OffsetDateTime) = 1
+
+                    override fun unknown(json: JsonValue?) = 0
+                }
+            )
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is DueDate && date == other.date && dateTime == other.dateTime
+        }
+
+        override fun hashCode(): Int = Objects.hash(date, dateTime)
+
+        override fun toString(): String =
+            when {
+                date != null -> "DueDate{date=$date}"
+                dateTime != null -> "DueDate{dateTime=$dateTime}"
+                _json != null -> "DueDate{_unknown=$_json}"
+                else -> throw IllegalStateException("Invalid DueDate")
+            }
+
+        companion object {
+
+            fun ofDate(date: LocalDate) = DueDate(date = date)
+
+            fun ofDateTime(dateTime: OffsetDateTime) = DueDate(dateTime = dateTime)
+        }
+
+        /**
+         * An interface that defines how to map each variant of [DueDate] to a value of type [T].
+         */
+        interface Visitor<out T> {
+
+            fun visitDate(date: LocalDate): T
+
+            fun visitDateTime(dateTime: OffsetDateTime): T
+
+            /**
+             * Maps an unknown variant of [DueDate] to a value of type [T].
+             *
+             * An instance of [DueDate] can contain an unknown variant if it was deserialized from
+             * data that doesn't match any known variant. For example, if the SDK is on an older
+             * version than the API, then the API may respond with new variants that the SDK is
+             * unaware of.
+             *
+             * @throws OrbInvalidDataException in the default implementation.
+             */
+            fun unknown(json: JsonValue?): T {
+                throw OrbInvalidDataException("Unknown DueDate: $json")
+            }
+        }
+
+        internal class Deserializer : BaseDeserializer<DueDate>(DueDate::class) {
+
+            override fun ObjectCodec.deserialize(node: JsonNode): DueDate {
+                val json = JsonValue.fromJsonNode(node)
+
+                val bestMatches =
+                    sequenceOf(
+                            tryDeserialize(node, jacksonTypeRef<LocalDate>())?.let {
+                                DueDate(date = it, _json = json)
+                            },
+                            tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
+                                DueDate(dateTime = it, _json = json)
+                            },
+                        )
+                        .filterNotNull()
+                        .allMaxBy { it.validity() }
+                        .toList()
+                return when (bestMatches.size) {
+                    // This can happen if what we're deserializing is completely incompatible with
+                    // all the possible variants (e.g. deserializing from object).
+                    0 -> DueDate(_json = json)
+                    1 -> bestMatches.single()
+                    // If there's more than one match with the highest validity, then use the first
+                    // completely valid match, or simply the first match if none are completely
+                    // valid.
+                    else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
+                }
+            }
+        }
+
+        internal class Serializer : BaseSerializer<DueDate>(DueDate::class) {
+
+            override fun serialize(
+                value: DueDate,
+                generator: JsonGenerator,
+                provider: SerializerProvider,
+            ) {
+                when {
+                    value.date != null -> generator.writeObject(value.date)
+                    value.dateTime != null -> generator.writeObject(value.dateTime)
+                    value._json != null -> generator.writeObject(value._json)
+                    else -> throw IllegalStateException("Invalid DueDate")
+                }
+            }
+        }
     }
 
     /**

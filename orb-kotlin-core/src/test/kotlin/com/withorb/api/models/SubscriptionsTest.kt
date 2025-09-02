@@ -70,6 +70,7 @@ internal class SubscriptionsTest {
                                 .id("id")
                                 .addAdditionalEmail("string")
                                 .autoCollection(true)
+                                .autoIssuance(true)
                                 .balance("balance")
                                 .billingAddress(
                                     Address.builder()
@@ -386,6 +387,13 @@ internal class SubscriptionsTest {
                                                 .build()
                                         )
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
+                                        .addCompositePriceFilter(
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .conversionRate(0.0)
                                         .unitConversionRateConfig(
                                             ConversionRateUnitConfig.builder()
@@ -549,6 +557,13 @@ internal class SubscriptionsTest {
                                                 .build()
                                         )
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
+                                        .addCompositePriceFilter(
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .conversionRate(0.0)
                                         .unitConversionRateConfig(
                                             ConversionRateUnitConfig.builder()
@@ -732,6 +747,7 @@ internal class SubscriptionsTest {
                             .id("id")
                             .addAdditionalEmail("string")
                             .autoCollection(true)
+                            .autoIssuance(true)
                             .balance("balance")
                             .billingAddress(
                                 Address.builder()
@@ -1046,6 +1062,13 @@ internal class SubscriptionsTest {
                                             .build()
                                     )
                                     .cadence(Price.Unit.Cadence.ONE_TIME)
+                                    .addCompositePriceFilter(
+                                        TransformPriceFilter.builder()
+                                            .field(TransformPriceFilter.Field.PRICE_ID)
+                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .conversionRate(0.0)
                                     .unitConversionRateConfig(
                                         ConversionRateUnitConfig.builder()
@@ -1198,6 +1221,13 @@ internal class SubscriptionsTest {
                                             .build()
                                     )
                                     .cadence(Price.Unit.Cadence.ONE_TIME)
+                                    .addCompositePriceFilter(
+                                        TransformPriceFilter.builder()
+                                            .field(TransformPriceFilter.Field.PRICE_ID)
+                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .conversionRate(0.0)
                                     .unitConversionRateConfig(
                                         ConversionRateUnitConfig.builder()
@@ -1385,6 +1415,7 @@ internal class SubscriptionsTest {
                                 .id("id")
                                 .addAdditionalEmail("string")
                                 .autoCollection(true)
+                                .autoIssuance(true)
                                 .balance("balance")
                                 .billingAddress(
                                     Address.builder()
@@ -1701,6 +1732,13 @@ internal class SubscriptionsTest {
                                                 .build()
                                         )
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
+                                        .addCompositePriceFilter(
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .conversionRate(0.0)
                                         .unitConversionRateConfig(
                                             ConversionRateUnitConfig.builder()
@@ -1864,6 +1902,13 @@ internal class SubscriptionsTest {
                                                 .build()
                                         )
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
+                                        .addCompositePriceFilter(
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .conversionRate(0.0)
                                         .unitConversionRateConfig(
                                             ConversionRateUnitConfig.builder()

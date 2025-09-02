@@ -298,7 +298,7 @@ private constructor(
     fun subLineItems(): List<SubLineItem> = subLineItems.getRequired("sub_line_items")
 
     /**
-     * The line amount before before any adjustments.
+     * The line amount before any adjustments.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -963,15 +963,6 @@ private constructor(
         /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
         fun price(tiered: Price.Tiered) = price(Price.ofTiered(tiered))
 
-        /** Alias for calling [price] with `Price.ofTieredBps(tieredBps)`. */
-        fun price(tieredBps: Price.TieredBps) = price(Price.ofTieredBps(tieredBps))
-
-        /** Alias for calling [price] with `Price.ofBps(bps)`. */
-        fun price(bps: Price.Bps) = price(Price.ofBps(bps))
-
-        /** Alias for calling [price] with `Price.ofBulkBps(bulkBps)`. */
-        fun price(bulkBps: Price.BulkBps) = price(Price.ofBulkBps(bulkBps))
-
         /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
         fun price(bulk: Price.Bulk) = price(Price.ofBulk(bulk))
 
@@ -1083,6 +1074,9 @@ private constructor(
         fun price(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
             price(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
 
+        /** Alias for calling [price] with `Price.ofMinimum(minimum)`. */
+        fun price(minimum: Price.Minimum) = price(Price.ofMinimum(minimum))
+
         /** Either the fixed fee quantity or the usage during the service period. */
         fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
@@ -1144,7 +1138,7 @@ private constructor(
         /** Alias for calling [addSubLineItem] with `SubLineItem.ofNull(null_)`. */
         fun addSubLineItem(null_: OtherSubLineItem) = addSubLineItem(SubLineItem.ofNull(null_))
 
-        /** The line amount before before any adjustments. */
+        /** The line amount before any adjustments. */
         fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
 
         /**

@@ -59,6 +59,7 @@ internal class MutatedSubscriptionTest {
                         .id("id")
                         .addAdditionalEmail("string")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .balance("balance")
                         .billingAddress(
                             Address.builder()
@@ -359,6 +360,13 @@ internal class MutatedSubscriptionTest {
                                         .build()
                                 )
                                 .cadence(Price.Unit.Cadence.ONE_TIME)
+                                .addCompositePriceFilter(
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .conversionRate(0.0)
                                 .unitConversionRateConfig(
                                     ConversionRateUnitConfig.builder()
@@ -497,6 +505,13 @@ internal class MutatedSubscriptionTest {
                                         .build()
                                 )
                                 .cadence(Price.Unit.Cadence.ONE_TIME)
+                                .addCompositePriceFilter(
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .conversionRate(0.0)
                                 .unitConversionRateConfig(
                                     ConversionRateUnitConfig.builder()
@@ -903,6 +918,15 @@ internal class MutatedSubscriptionTest {
                                                         .build()
                                                 )
                                                 .cadence(Price.Unit.Cadence.ONE_TIME)
+                                                .addCompositePriceFilter(
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                        .operator(
+                                                            TransformPriceFilter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .conversionRate(0.0)
                                                 .unitConversionRateConfig(
                                                     ConversionRateUnitConfig.builder()
@@ -1112,6 +1136,9 @@ internal class MutatedSubscriptionTest {
                                             Invoice.PaymentAttempt.PaymentProvider.STRIPE
                                         )
                                         .paymentProviderId("payment_provider_id")
+                                        .receiptPdf(
+                                            "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                                        )
                                         .succeeded(true)
                                         .build()
                                 )
@@ -1434,6 +1461,15 @@ internal class MutatedSubscriptionTest {
                                                         .build()
                                                 )
                                                 .cadence(Price.Unit.Cadence.ONE_TIME)
+                                                .addCompositePriceFilter(
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                        .operator(
+                                                            TransformPriceFilter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .conversionRate(0.0)
                                                 .unitConversionRateConfig(
                                                     ConversionRateUnitConfig.builder()
@@ -1643,6 +1679,9 @@ internal class MutatedSubscriptionTest {
                                             Invoice.PaymentAttempt.PaymentProvider.STRIPE
                                         )
                                         .paymentProviderId("payment_provider_id")
+                                        .receiptPdf(
+                                            "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                                        )
                                         .succeeded(true)
                                         .build()
                                 )
@@ -1722,6 +1761,7 @@ internal class MutatedSubscriptionTest {
                     .id("id")
                     .addAdditionalEmail("string")
                     .autoCollection(true)
+                    .autoIssuance(true)
                     .balance("balance")
                     .billingAddress(
                         Address.builder()
@@ -2031,6 +2071,13 @@ internal class MutatedSubscriptionTest {
                                     .build()
                             )
                             .cadence(Price.Unit.Cadence.ONE_TIME)
+                            .addCompositePriceFilter(
+                                TransformPriceFilter.builder()
+                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .conversionRate(0.0)
                             .unitConversionRateConfig(
                                 ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -2164,6 +2211,13 @@ internal class MutatedSubscriptionTest {
                                     .build()
                             )
                             .cadence(Price.Unit.Cadence.ONE_TIME)
+                            .addCompositePriceFilter(
+                                TransformPriceFilter.builder()
+                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .conversionRate(0.0)
                             .unitConversionRateConfig(
                                 ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -2561,6 +2615,15 @@ internal class MutatedSubscriptionTest {
                                                     .build()
                                             )
                                             .cadence(Price.Unit.Cadence.ONE_TIME)
+                                            .addCompositePriceFilter(
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    .operator(
+                                                        TransformPriceFilter.Operator.INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .conversionRate(0.0)
                                             .unitConversionRateConfig(
                                                 ConversionRateUnitConfig.builder()
@@ -2758,6 +2821,9 @@ internal class MutatedSubscriptionTest {
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .paymentProvider(Invoice.PaymentAttempt.PaymentProvider.STRIPE)
                                     .paymentProviderId("payment_provider_id")
+                                    .receiptPdf(
+                                        "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                                    )
                                     .succeeded(true)
                                     .build()
                             )
@@ -3069,6 +3135,15 @@ internal class MutatedSubscriptionTest {
                                                     .build()
                                             )
                                             .cadence(Price.Unit.Cadence.ONE_TIME)
+                                            .addCompositePriceFilter(
+                                                TransformPriceFilter.builder()
+                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    .operator(
+                                                        TransformPriceFilter.Operator.INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .conversionRate(0.0)
                                             .unitConversionRateConfig(
                                                 ConversionRateUnitConfig.builder()
@@ -3266,6 +3341,9 @@ internal class MutatedSubscriptionTest {
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .paymentProvider(Invoice.PaymentAttempt.PaymentProvider.STRIPE)
                                     .paymentProviderId("payment_provider_id")
+                                    .receiptPdf(
+                                        "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                                    )
                                     .succeeded(true)
                                     .build()
                             )
@@ -3346,6 +3424,7 @@ internal class MutatedSubscriptionTest {
                         .id("id")
                         .addAdditionalEmail("string")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .balance("balance")
                         .billingAddress(
                             Address.builder()
@@ -3646,6 +3725,13 @@ internal class MutatedSubscriptionTest {
                                         .build()
                                 )
                                 .cadence(Price.Unit.Cadence.ONE_TIME)
+                                .addCompositePriceFilter(
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .conversionRate(0.0)
                                 .unitConversionRateConfig(
                                     ConversionRateUnitConfig.builder()
@@ -3784,6 +3870,13 @@ internal class MutatedSubscriptionTest {
                                         .build()
                                 )
                                 .cadence(Price.Unit.Cadence.ONE_TIME)
+                                .addCompositePriceFilter(
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .conversionRate(0.0)
                                 .unitConversionRateConfig(
                                     ConversionRateUnitConfig.builder()
@@ -4190,6 +4283,15 @@ internal class MutatedSubscriptionTest {
                                                         .build()
                                                 )
                                                 .cadence(Price.Unit.Cadence.ONE_TIME)
+                                                .addCompositePriceFilter(
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                        .operator(
+                                                            TransformPriceFilter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .conversionRate(0.0)
                                                 .unitConversionRateConfig(
                                                     ConversionRateUnitConfig.builder()
@@ -4399,6 +4501,9 @@ internal class MutatedSubscriptionTest {
                                             Invoice.PaymentAttempt.PaymentProvider.STRIPE
                                         )
                                         .paymentProviderId("payment_provider_id")
+                                        .receiptPdf(
+                                            "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                                        )
                                         .succeeded(true)
                                         .build()
                                 )
@@ -4721,6 +4826,15 @@ internal class MutatedSubscriptionTest {
                                                         .build()
                                                 )
                                                 .cadence(Price.Unit.Cadence.ONE_TIME)
+                                                .addCompositePriceFilter(
+                                                    TransformPriceFilter.builder()
+                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                        .operator(
+                                                            TransformPriceFilter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .conversionRate(0.0)
                                                 .unitConversionRateConfig(
                                                     ConversionRateUnitConfig.builder()
@@ -4930,6 +5044,9 @@ internal class MutatedSubscriptionTest {
                                             Invoice.PaymentAttempt.PaymentProvider.STRIPE
                                         )
                                         .paymentProviderId("payment_provider_id")
+                                        .receiptPdf(
+                                            "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                                        )
                                         .succeeded(true)
                                         .build()
                                 )

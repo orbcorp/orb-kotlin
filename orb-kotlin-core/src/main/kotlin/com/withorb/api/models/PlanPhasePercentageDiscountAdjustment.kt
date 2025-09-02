@@ -100,7 +100,7 @@ private constructor(
     fun filters(): List<TransformPriceFilter> = filters.getRequired("filters")
 
     /**
-     * True for adjustments that apply to an entire invocice, false for adjustments that apply to
+     * True for adjustments that apply to an entire invoice, false for adjustments that apply to
      * only one price.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -369,8 +369,8 @@ private constructor(
         }
 
         /**
-         * True for adjustments that apply to an entire invocice, false for adjustments that apply
-         * to only one price.
+         * True for adjustments that apply to an entire invoice, false for adjustments that apply to
+         * only one price.
          */
         fun isInvoiceLevel(isInvoiceLevel: Boolean) = isInvoiceLevel(JsonField.of(isInvoiceLevel))
 

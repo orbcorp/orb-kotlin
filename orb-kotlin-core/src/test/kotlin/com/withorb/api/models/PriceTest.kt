@@ -28,6 +28,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.Unit.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -123,9 +130,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -148,6 +152,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -165,6 +170,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.Unit.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -274,6 +286,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.Package.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -371,9 +390,6 @@ internal class PriceTest {
         assertThat(price.package_()).isEqualTo(package_)
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -396,6 +412,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -413,6 +430,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.Package.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -527,6 +551,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.Matrix.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -633,9 +664,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isEqualTo(matrix)
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -658,6 +686,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -675,6 +704,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.Matrix.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -795,6 +831,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.Tiered.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -900,9 +943,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isEqualTo(tiered)
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -925,6 +965,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -942,6 +983,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.Tiered.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -1049,788 +1097,6 @@ internal class PriceTest {
     }
 
     @Test
-    fun ofTieredBps() {
-        val tieredBps =
-            Price.TieredBps.builder()
-                .id("id")
-                .billableMetric(BillableMetricTiny.builder().id("id").build())
-                .billingCycleConfiguration(
-                    BillingCycleConfiguration.builder()
-                        .duration(0L)
-                        .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
-                        .build()
-                )
-                .cadence(Price.TieredBps.Cadence.ONE_TIME)
-                .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
-                )
-                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .creditAllocation(
-                    Allocation.builder()
-                        .allowsRollover(true)
-                        .currency("currency")
-                        .customExpiration(
-                            CustomExpiration.builder()
-                                .duration(0L)
-                                .durationUnit(CustomExpiration.DurationUnit.DAY)
-                                .build()
-                        )
-                        .build()
-                )
-                .currency("currency")
-                .discount(
-                    PercentageDiscount.builder()
-                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                        .percentageDiscount(0.15)
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                        .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
-                                .addValue("string")
-                                .build()
-                        )
-                        .reason("reason")
-                        .build()
-                )
-                .externalPriceId("external_price_id")
-                .fixedPriceQuantity(0.0)
-                .invoicingCycleConfiguration(
-                    BillingCycleConfiguration.builder()
-                        .duration(0L)
-                        .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
-                        .build()
-                )
-                .item(ItemSlim.builder().id("id").name("name").build())
-                .maximum(
-                    Maximum.builder()
-                        .addAppliesToPriceId("string")
-                        .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
-                                .addValue("string")
-                                .build()
-                        )
-                        .maximumAmount("maximum_amount")
-                        .build()
-                )
-                .maximumAmount("maximum_amount")
-                .metadata(
-                    Price.TieredBps.Metadata.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("string"))
-                        .build()
-                )
-                .minimum(
-                    Minimum.builder()
-                        .addAppliesToPriceId("string")
-                        .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
-                                .addValue("string")
-                                .build()
-                        )
-                        .minimumAmount("minimum_amount")
-                        .build()
-                )
-                .minimumAmount("minimum_amount")
-                .name("name")
-                .planPhaseOrder(0L)
-                .priceType(Price.TieredBps.PriceType.USAGE_PRICE)
-                .replacesPriceId("replaces_price_id")
-                .tieredBpsConfig(
-                    TieredBpsConfig.builder()
-                        .addTier(
-                            BpsTier.builder()
-                                .bps(0.0)
-                                .minimumAmount("minimum_amount")
-                                .maximumAmount("maximum_amount")
-                                .perUnitMaximum("per_unit_maximum")
-                                .build()
-                        )
-                        .build()
-                )
-                .dimensionalPriceConfiguration(
-                    DimensionalPriceConfiguration.builder()
-                        .addDimensionValue("string")
-                        .dimensionalPriceGroupId("dimensional_price_group_id")
-                        .build()
-                )
-                .build()
-
-        val price = Price.ofTieredBps(tieredBps)
-
-        assertThat(price.unit()).isNull()
-        assertThat(price.package_()).isNull()
-        assertThat(price.matrix()).isNull()
-        assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isEqualTo(tieredBps)
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
-        assertThat(price.bulk()).isNull()
-        assertThat(price.thresholdTotalAmount()).isNull()
-        assertThat(price.tieredPackage()).isNull()
-        assertThat(price.groupedTiered()).isNull()
-        assertThat(price.tieredWithMinimum()).isNull()
-        assertThat(price.tieredPackageWithMinimum()).isNull()
-        assertThat(price.packageWithAllocation()).isNull()
-        assertThat(price.unitWithPercent()).isNull()
-        assertThat(price.matrixWithAllocation()).isNull()
-        assertThat(price.tieredWithProration()).isNull()
-        assertThat(price.unitWithProration()).isNull()
-        assertThat(price.groupedAllocation()).isNull()
-        assertThat(price.groupedWithProratedMinimum()).isNull()
-        assertThat(price.groupedWithMeteredMinimum()).isNull()
-        assertThat(price.matrixWithDisplayName()).isNull()
-        assertThat(price.bulkWithProration()).isNull()
-        assertThat(price.groupedTieredPackage()).isNull()
-        assertThat(price.maxGroupTieredPackage()).isNull()
-        assertThat(price.scalableMatrixWithUnitPricing()).isNull()
-        assertThat(price.scalableMatrixWithTieredPricing()).isNull()
-        assertThat(price.cumulativeGroupedBulk()).isNull()
-        assertThat(price.groupedWithMinMaxThresholds()).isNull()
-    }
-
-    @Test
-    fun ofTieredBpsRoundtrip() {
-        val jsonMapper = jsonMapper()
-        val price =
-            Price.ofTieredBps(
-                Price.TieredBps.builder()
-                    .id("id")
-                    .billableMetric(BillableMetricTiny.builder().id("id").build())
-                    .billingCycleConfiguration(
-                        BillingCycleConfiguration.builder()
-                            .duration(0L)
-                            .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
-                            .build()
-                    )
-                    .cadence(Price.TieredBps.Cadence.ONE_TIME)
-                    .conversionRate(0.0)
-                    .unitConversionRateConfig(
-                        ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
-                    )
-                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .creditAllocation(
-                        Allocation.builder()
-                            .allowsRollover(true)
-                            .currency("currency")
-                            .customExpiration(
-                                CustomExpiration.builder()
-                                    .duration(0L)
-                                    .durationUnit(CustomExpiration.DurationUnit.DAY)
-                                    .build()
-                            )
-                            .build()
-                    )
-                    .currency("currency")
-                    .discount(
-                        PercentageDiscount.builder()
-                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                            .percentageDiscount(0.15)
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                            .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
-                                    .addValue("string")
-                                    .build()
-                            )
-                            .reason("reason")
-                            .build()
-                    )
-                    .externalPriceId("external_price_id")
-                    .fixedPriceQuantity(0.0)
-                    .invoicingCycleConfiguration(
-                        BillingCycleConfiguration.builder()
-                            .duration(0L)
-                            .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
-                            .build()
-                    )
-                    .item(ItemSlim.builder().id("id").name("name").build())
-                    .maximum(
-                        Maximum.builder()
-                            .addAppliesToPriceId("string")
-                            .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
-                                    .addValue("string")
-                                    .build()
-                            )
-                            .maximumAmount("maximum_amount")
-                            .build()
-                    )
-                    .maximumAmount("maximum_amount")
-                    .metadata(
-                        Price.TieredBps.Metadata.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("string"))
-                            .build()
-                    )
-                    .minimum(
-                        Minimum.builder()
-                            .addAppliesToPriceId("string")
-                            .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
-                                    .addValue("string")
-                                    .build()
-                            )
-                            .minimumAmount("minimum_amount")
-                            .build()
-                    )
-                    .minimumAmount("minimum_amount")
-                    .name("name")
-                    .planPhaseOrder(0L)
-                    .priceType(Price.TieredBps.PriceType.USAGE_PRICE)
-                    .replacesPriceId("replaces_price_id")
-                    .tieredBpsConfig(
-                        TieredBpsConfig.builder()
-                            .addTier(
-                                BpsTier.builder()
-                                    .bps(0.0)
-                                    .minimumAmount("minimum_amount")
-                                    .maximumAmount("maximum_amount")
-                                    .perUnitMaximum("per_unit_maximum")
-                                    .build()
-                            )
-                            .build()
-                    )
-                    .dimensionalPriceConfiguration(
-                        DimensionalPriceConfiguration.builder()
-                            .addDimensionValue("string")
-                            .dimensionalPriceGroupId("dimensional_price_group_id")
-                            .build()
-                    )
-                    .build()
-            )
-
-        val roundtrippedPrice =
-            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
-
-        assertThat(roundtrippedPrice).isEqualTo(price)
-    }
-
-    @Test
-    fun ofBps() {
-        val bps =
-            Price.Bps.builder()
-                .id("id")
-                .billableMetric(BillableMetricTiny.builder().id("id").build())
-                .billingCycleConfiguration(
-                    BillingCycleConfiguration.builder()
-                        .duration(0L)
-                        .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
-                        .build()
-                )
-                .bpsConfig(BpsConfig.builder().bps(0.0).perUnitMaximum("per_unit_maximum").build())
-                .cadence(Price.Bps.Cadence.ONE_TIME)
-                .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
-                )
-                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .creditAllocation(
-                    Allocation.builder()
-                        .allowsRollover(true)
-                        .currency("currency")
-                        .customExpiration(
-                            CustomExpiration.builder()
-                                .duration(0L)
-                                .durationUnit(CustomExpiration.DurationUnit.DAY)
-                                .build()
-                        )
-                        .build()
-                )
-                .currency("currency")
-                .discount(
-                    PercentageDiscount.builder()
-                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                        .percentageDiscount(0.15)
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                        .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
-                                .addValue("string")
-                                .build()
-                        )
-                        .reason("reason")
-                        .build()
-                )
-                .externalPriceId("external_price_id")
-                .fixedPriceQuantity(0.0)
-                .invoicingCycleConfiguration(
-                    BillingCycleConfiguration.builder()
-                        .duration(0L)
-                        .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
-                        .build()
-                )
-                .item(ItemSlim.builder().id("id").name("name").build())
-                .maximum(
-                    Maximum.builder()
-                        .addAppliesToPriceId("string")
-                        .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
-                                .addValue("string")
-                                .build()
-                        )
-                        .maximumAmount("maximum_amount")
-                        .build()
-                )
-                .maximumAmount("maximum_amount")
-                .metadata(
-                    Price.Bps.Metadata.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("string"))
-                        .build()
-                )
-                .minimum(
-                    Minimum.builder()
-                        .addAppliesToPriceId("string")
-                        .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
-                                .addValue("string")
-                                .build()
-                        )
-                        .minimumAmount("minimum_amount")
-                        .build()
-                )
-                .minimumAmount("minimum_amount")
-                .name("name")
-                .planPhaseOrder(0L)
-                .priceType(Price.Bps.PriceType.USAGE_PRICE)
-                .replacesPriceId("replaces_price_id")
-                .dimensionalPriceConfiguration(
-                    DimensionalPriceConfiguration.builder()
-                        .addDimensionValue("string")
-                        .dimensionalPriceGroupId("dimensional_price_group_id")
-                        .build()
-                )
-                .build()
-
-        val price = Price.ofBps(bps)
-
-        assertThat(price.unit()).isNull()
-        assertThat(price.package_()).isNull()
-        assertThat(price.matrix()).isNull()
-        assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isEqualTo(bps)
-        assertThat(price.bulkBps()).isNull()
-        assertThat(price.bulk()).isNull()
-        assertThat(price.thresholdTotalAmount()).isNull()
-        assertThat(price.tieredPackage()).isNull()
-        assertThat(price.groupedTiered()).isNull()
-        assertThat(price.tieredWithMinimum()).isNull()
-        assertThat(price.tieredPackageWithMinimum()).isNull()
-        assertThat(price.packageWithAllocation()).isNull()
-        assertThat(price.unitWithPercent()).isNull()
-        assertThat(price.matrixWithAllocation()).isNull()
-        assertThat(price.tieredWithProration()).isNull()
-        assertThat(price.unitWithProration()).isNull()
-        assertThat(price.groupedAllocation()).isNull()
-        assertThat(price.groupedWithProratedMinimum()).isNull()
-        assertThat(price.groupedWithMeteredMinimum()).isNull()
-        assertThat(price.matrixWithDisplayName()).isNull()
-        assertThat(price.bulkWithProration()).isNull()
-        assertThat(price.groupedTieredPackage()).isNull()
-        assertThat(price.maxGroupTieredPackage()).isNull()
-        assertThat(price.scalableMatrixWithUnitPricing()).isNull()
-        assertThat(price.scalableMatrixWithTieredPricing()).isNull()
-        assertThat(price.cumulativeGroupedBulk()).isNull()
-        assertThat(price.groupedWithMinMaxThresholds()).isNull()
-    }
-
-    @Test
-    fun ofBpsRoundtrip() {
-        val jsonMapper = jsonMapper()
-        val price =
-            Price.ofBps(
-                Price.Bps.builder()
-                    .id("id")
-                    .billableMetric(BillableMetricTiny.builder().id("id").build())
-                    .billingCycleConfiguration(
-                        BillingCycleConfiguration.builder()
-                            .duration(0L)
-                            .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
-                            .build()
-                    )
-                    .bpsConfig(
-                        BpsConfig.builder().bps(0.0).perUnitMaximum("per_unit_maximum").build()
-                    )
-                    .cadence(Price.Bps.Cadence.ONE_TIME)
-                    .conversionRate(0.0)
-                    .unitConversionRateConfig(
-                        ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
-                    )
-                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .creditAllocation(
-                        Allocation.builder()
-                            .allowsRollover(true)
-                            .currency("currency")
-                            .customExpiration(
-                                CustomExpiration.builder()
-                                    .duration(0L)
-                                    .durationUnit(CustomExpiration.DurationUnit.DAY)
-                                    .build()
-                            )
-                            .build()
-                    )
-                    .currency("currency")
-                    .discount(
-                        PercentageDiscount.builder()
-                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                            .percentageDiscount(0.15)
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                            .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
-                                    .addValue("string")
-                                    .build()
-                            )
-                            .reason("reason")
-                            .build()
-                    )
-                    .externalPriceId("external_price_id")
-                    .fixedPriceQuantity(0.0)
-                    .invoicingCycleConfiguration(
-                        BillingCycleConfiguration.builder()
-                            .duration(0L)
-                            .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
-                            .build()
-                    )
-                    .item(ItemSlim.builder().id("id").name("name").build())
-                    .maximum(
-                        Maximum.builder()
-                            .addAppliesToPriceId("string")
-                            .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
-                                    .addValue("string")
-                                    .build()
-                            )
-                            .maximumAmount("maximum_amount")
-                            .build()
-                    )
-                    .maximumAmount("maximum_amount")
-                    .metadata(
-                        Price.Bps.Metadata.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("string"))
-                            .build()
-                    )
-                    .minimum(
-                        Minimum.builder()
-                            .addAppliesToPriceId("string")
-                            .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
-                                    .addValue("string")
-                                    .build()
-                            )
-                            .minimumAmount("minimum_amount")
-                            .build()
-                    )
-                    .minimumAmount("minimum_amount")
-                    .name("name")
-                    .planPhaseOrder(0L)
-                    .priceType(Price.Bps.PriceType.USAGE_PRICE)
-                    .replacesPriceId("replaces_price_id")
-                    .dimensionalPriceConfiguration(
-                        DimensionalPriceConfiguration.builder()
-                            .addDimensionValue("string")
-                            .dimensionalPriceGroupId("dimensional_price_group_id")
-                            .build()
-                    )
-                    .build()
-            )
-
-        val roundtrippedPrice =
-            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
-
-        assertThat(roundtrippedPrice).isEqualTo(price)
-    }
-
-    @Test
-    fun ofBulkBps() {
-        val bulkBps =
-            Price.BulkBps.builder()
-                .id("id")
-                .billableMetric(BillableMetricTiny.builder().id("id").build())
-                .billingCycleConfiguration(
-                    BillingCycleConfiguration.builder()
-                        .duration(0L)
-                        .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
-                        .build()
-                )
-                .bulkBpsConfig(
-                    BulkBpsConfig.builder()
-                        .addTier(
-                            BulkBpsTier.builder()
-                                .bps(0.0)
-                                .maximumAmount("maximum_amount")
-                                .perUnitMaximum("per_unit_maximum")
-                                .build()
-                        )
-                        .build()
-                )
-                .cadence(Price.BulkBps.Cadence.ONE_TIME)
-                .conversionRate(0.0)
-                .unitConversionRateConfig(
-                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
-                )
-                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .creditAllocation(
-                    Allocation.builder()
-                        .allowsRollover(true)
-                        .currency("currency")
-                        .customExpiration(
-                            CustomExpiration.builder()
-                                .duration(0L)
-                                .durationUnit(CustomExpiration.DurationUnit.DAY)
-                                .build()
-                        )
-                        .build()
-                )
-                .currency("currency")
-                .discount(
-                    PercentageDiscount.builder()
-                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                        .percentageDiscount(0.15)
-                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                        .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
-                                .addValue("string")
-                                .build()
-                        )
-                        .reason("reason")
-                        .build()
-                )
-                .externalPriceId("external_price_id")
-                .fixedPriceQuantity(0.0)
-                .invoicingCycleConfiguration(
-                    BillingCycleConfiguration.builder()
-                        .duration(0L)
-                        .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
-                        .build()
-                )
-                .item(ItemSlim.builder().id("id").name("name").build())
-                .maximum(
-                    Maximum.builder()
-                        .addAppliesToPriceId("string")
-                        .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
-                                .addValue("string")
-                                .build()
-                        )
-                        .maximumAmount("maximum_amount")
-                        .build()
-                )
-                .maximumAmount("maximum_amount")
-                .metadata(
-                    Price.BulkBps.Metadata.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("string"))
-                        .build()
-                )
-                .minimum(
-                    Minimum.builder()
-                        .addAppliesToPriceId("string")
-                        .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
-                                .addValue("string")
-                                .build()
-                        )
-                        .minimumAmount("minimum_amount")
-                        .build()
-                )
-                .minimumAmount("minimum_amount")
-                .name("name")
-                .planPhaseOrder(0L)
-                .priceType(Price.BulkBps.PriceType.USAGE_PRICE)
-                .replacesPriceId("replaces_price_id")
-                .dimensionalPriceConfiguration(
-                    DimensionalPriceConfiguration.builder()
-                        .addDimensionValue("string")
-                        .dimensionalPriceGroupId("dimensional_price_group_id")
-                        .build()
-                )
-                .build()
-
-        val price = Price.ofBulkBps(bulkBps)
-
-        assertThat(price.unit()).isNull()
-        assertThat(price.package_()).isNull()
-        assertThat(price.matrix()).isNull()
-        assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isEqualTo(bulkBps)
-        assertThat(price.bulk()).isNull()
-        assertThat(price.thresholdTotalAmount()).isNull()
-        assertThat(price.tieredPackage()).isNull()
-        assertThat(price.groupedTiered()).isNull()
-        assertThat(price.tieredWithMinimum()).isNull()
-        assertThat(price.tieredPackageWithMinimum()).isNull()
-        assertThat(price.packageWithAllocation()).isNull()
-        assertThat(price.unitWithPercent()).isNull()
-        assertThat(price.matrixWithAllocation()).isNull()
-        assertThat(price.tieredWithProration()).isNull()
-        assertThat(price.unitWithProration()).isNull()
-        assertThat(price.groupedAllocation()).isNull()
-        assertThat(price.groupedWithProratedMinimum()).isNull()
-        assertThat(price.groupedWithMeteredMinimum()).isNull()
-        assertThat(price.matrixWithDisplayName()).isNull()
-        assertThat(price.bulkWithProration()).isNull()
-        assertThat(price.groupedTieredPackage()).isNull()
-        assertThat(price.maxGroupTieredPackage()).isNull()
-        assertThat(price.scalableMatrixWithUnitPricing()).isNull()
-        assertThat(price.scalableMatrixWithTieredPricing()).isNull()
-        assertThat(price.cumulativeGroupedBulk()).isNull()
-        assertThat(price.groupedWithMinMaxThresholds()).isNull()
-    }
-
-    @Test
-    fun ofBulkBpsRoundtrip() {
-        val jsonMapper = jsonMapper()
-        val price =
-            Price.ofBulkBps(
-                Price.BulkBps.builder()
-                    .id("id")
-                    .billableMetric(BillableMetricTiny.builder().id("id").build())
-                    .billingCycleConfiguration(
-                        BillingCycleConfiguration.builder()
-                            .duration(0L)
-                            .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
-                            .build()
-                    )
-                    .bulkBpsConfig(
-                        BulkBpsConfig.builder()
-                            .addTier(
-                                BulkBpsTier.builder()
-                                    .bps(0.0)
-                                    .maximumAmount("maximum_amount")
-                                    .perUnitMaximum("per_unit_maximum")
-                                    .build()
-                            )
-                            .build()
-                    )
-                    .cadence(Price.BulkBps.Cadence.ONE_TIME)
-                    .conversionRate(0.0)
-                    .unitConversionRateConfig(
-                        ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
-                    )
-                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .creditAllocation(
-                        Allocation.builder()
-                            .allowsRollover(true)
-                            .currency("currency")
-                            .customExpiration(
-                                CustomExpiration.builder()
-                                    .duration(0L)
-                                    .durationUnit(CustomExpiration.DurationUnit.DAY)
-                                    .build()
-                            )
-                            .build()
-                    )
-                    .currency("currency")
-                    .discount(
-                        PercentageDiscount.builder()
-                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                            .percentageDiscount(0.15)
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                            .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
-                                    .addValue("string")
-                                    .build()
-                            )
-                            .reason("reason")
-                            .build()
-                    )
-                    .externalPriceId("external_price_id")
-                    .fixedPriceQuantity(0.0)
-                    .invoicingCycleConfiguration(
-                        BillingCycleConfiguration.builder()
-                            .duration(0L)
-                            .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
-                            .build()
-                    )
-                    .item(ItemSlim.builder().id("id").name("name").build())
-                    .maximum(
-                        Maximum.builder()
-                            .addAppliesToPriceId("string")
-                            .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
-                                    .addValue("string")
-                                    .build()
-                            )
-                            .maximumAmount("maximum_amount")
-                            .build()
-                    )
-                    .maximumAmount("maximum_amount")
-                    .metadata(
-                        Price.BulkBps.Metadata.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("string"))
-                            .build()
-                    )
-                    .minimum(
-                        Minimum.builder()
-                            .addAppliesToPriceId("string")
-                            .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
-                                    .addValue("string")
-                                    .build()
-                            )
-                            .minimumAmount("minimum_amount")
-                            .build()
-                    )
-                    .minimumAmount("minimum_amount")
-                    .name("name")
-                    .planPhaseOrder(0L)
-                    .priceType(Price.BulkBps.PriceType.USAGE_PRICE)
-                    .replacesPriceId("replaces_price_id")
-                    .dimensionalPriceConfiguration(
-                        DimensionalPriceConfiguration.builder()
-                            .addDimensionValue("string")
-                            .dimensionalPriceGroupId("dimensional_price_group_id")
-                            .build()
-                    )
-                    .build()
-            )
-
-        val roundtrippedPrice =
-            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
-
-        assertThat(roundtrippedPrice).isEqualTo(price)
-    }
-
-    @Test
     fun ofBulk() {
         val bulk =
             Price.Bulk.builder()
@@ -1850,6 +1116,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.Bulk.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -1944,9 +1217,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isEqualTo(bulk)
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -1969,6 +1239,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -1996,6 +1267,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.Bulk.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -2104,6 +1382,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.ThresholdTotalAmount.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -2203,9 +1488,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isEqualTo(thresholdTotalAmount)
         assertThat(price.tieredPackage()).isNull()
@@ -2228,6 +1510,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -2245,6 +1528,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.ThresholdTotalAmount.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -2358,6 +1648,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.TieredPackage.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -2457,9 +1754,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isEqualTo(tieredPackage)
@@ -2482,6 +1776,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -2499,6 +1794,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.TieredPackage.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -2612,6 +1914,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.GroupedTiered.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -2711,9 +2020,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -2736,6 +2042,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -2753,6 +2060,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.GroupedTiered.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -2866,6 +2180,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.TieredWithMinimum.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -2965,9 +2286,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -2990,6 +2308,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -3007,6 +2326,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.TieredWithMinimum.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -3120,6 +2446,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.TieredPackageWithMinimum.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -3219,9 +2552,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -3244,6 +2574,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -3261,6 +2592,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.TieredPackageWithMinimum.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -3374,6 +2712,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.PackageWithAllocation.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -3473,9 +2818,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -3498,6 +2840,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -3515,6 +2858,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.PackageWithAllocation.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -3628,6 +2978,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.UnitWithPercent.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -3727,9 +3084,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -3752,6 +3106,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -3769,6 +3124,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.UnitWithPercent.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -3882,6 +3244,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.MatrixWithAllocation.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -3989,9 +3358,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -4014,6 +3380,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -4031,6 +3398,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.MatrixWithAllocation.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -4152,6 +3526,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.TieredWithProration.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -4251,9 +3632,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -4276,6 +3654,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -4293,6 +3672,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.TieredWithProration.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -4406,6 +3792,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.UnitWithProration.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -4505,9 +3898,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -4530,6 +3920,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -4547,6 +3938,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.UnitWithProration.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -4660,6 +4058,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.GroupedAllocation.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -4759,9 +4164,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -4784,6 +4186,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -4801,6 +4204,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.GroupedAllocation.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -4914,6 +4324,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.GroupedWithProratedMinimum.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -5013,9 +4430,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -5038,6 +4452,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -5055,6 +4470,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.GroupedWithProratedMinimum.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -5168,6 +4590,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.GroupedWithMeteredMinimum.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -5267,9 +4696,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -5292,6 +4718,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -5309,6 +4736,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.GroupedWithMeteredMinimum.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -5422,6 +4856,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.MatrixWithDisplayName.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -5521,9 +4962,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -5546,6 +4984,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -5563,6 +5002,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.MatrixWithDisplayName.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -5681,6 +5127,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.BulkWithProration.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -5775,9 +5228,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -5800,6 +5250,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -5822,6 +5273,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.BulkWithProration.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -5930,6 +5388,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.GroupedTieredPackage.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -6029,9 +5494,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -6054,6 +5516,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -6071,6 +5534,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.GroupedTieredPackage.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -6184,6 +5654,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.MaxGroupTieredPackage.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -6283,9 +5760,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -6308,6 +5782,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -6325,6 +5800,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.MaxGroupTieredPackage.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -6438,6 +5920,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.ScalableMatrixWithUnitPricing.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -6538,9 +6027,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -6563,6 +6049,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -6580,6 +6067,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.ScalableMatrixWithUnitPricing.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -6694,6 +6188,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.ScalableMatrixWithTieredPricing.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -6794,9 +6295,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -6820,6 +6318,7 @@ internal class PriceTest {
             .isEqualTo(scalableMatrixWithTieredPricing)
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -6837,6 +6336,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.ScalableMatrixWithTieredPricing.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -6951,6 +6457,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.CumulativeGroupedBulk.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -7050,9 +6563,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -7075,6 +6585,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isEqualTo(cumulativeGroupedBulk)
         assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -7092,6 +6603,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.CumulativeGroupedBulk.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -7205,6 +6723,13 @@ internal class PriceTest {
                         .build()
                 )
                 .cadence(Price.GroupedWithMinMaxThresholds.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .conversionRate(0.0)
                 .unitConversionRateConfig(
                     ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -7304,9 +6829,6 @@ internal class PriceTest {
         assertThat(price.package_()).isNull()
         assertThat(price.matrix()).isNull()
         assertThat(price.tiered()).isNull()
-        assertThat(price.tieredBps()).isNull()
-        assertThat(price.bps()).isNull()
-        assertThat(price.bulkBps()).isNull()
         assertThat(price.bulk()).isNull()
         assertThat(price.thresholdTotalAmount()).isNull()
         assertThat(price.tieredPackage()).isNull()
@@ -7329,6 +6851,7 @@ internal class PriceTest {
         assertThat(price.scalableMatrixWithTieredPricing()).isNull()
         assertThat(price.cumulativeGroupedBulk()).isNull()
         assertThat(price.groupedWithMinMaxThresholds()).isEqualTo(groupedWithMinMaxThresholds)
+        assertThat(price.minimum()).isNull()
     }
 
     @Test
@@ -7346,6 +6869,13 @@ internal class PriceTest {
                             .build()
                     )
                     .cadence(Price.GroupedWithMinMaxThresholds.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .conversionRate(0.0)
                     .unitConversionRateConfig(
                         ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -7431,6 +6961,274 @@ internal class PriceTest {
                     .name("name")
                     .planPhaseOrder(0L)
                     .priceType(Price.GroupedWithMinMaxThresholds.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
+                    .dimensionalPriceConfiguration(
+                        DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
+    fun ofMinimum() {
+        val minimum =
+            Price.Minimum.builder()
+                .id("id")
+                .billableMetric(BillableMetricTiny.builder().id("id").build())
+                .billingCycleConfiguration(
+                    BillingCycleConfiguration.builder()
+                        .duration(0L)
+                        .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
+                        .build()
+                )
+                .cadence(Price.Minimum.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    TransformPriceFilter.builder()
+                        .field(TransformPriceFilter.Field.PRICE_ID)
+                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
+                .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
+                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .creditAllocation(
+                    Allocation.builder()
+                        .allowsRollover(true)
+                        .currency("currency")
+                        .customExpiration(
+                            CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                .build()
+                        )
+                        .build()
+                )
+                .currency("currency")
+                .discount(
+                    PercentageDiscount.builder()
+                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                        .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                        .addFilter(
+                            TransformPriceFilter.builder()
+                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
+                        .reason("reason")
+                        .build()
+                )
+                .externalPriceId("external_price_id")
+                .fixedPriceQuantity(0.0)
+                .invoicingCycleConfiguration(
+                    BillingCycleConfiguration.builder()
+                        .duration(0L)
+                        .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
+                        .build()
+                )
+                .item(ItemSlim.builder().id("id").name("name").build())
+                .maximum(
+                    Maximum.builder()
+                        .addAppliesToPriceId("string")
+                        .addFilter(
+                            TransformPriceFilter.builder()
+                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
+                        .maximumAmount("maximum_amount")
+                        .build()
+                )
+                .maximumAmount("maximum_amount")
+                .metadata(
+                    Price.Minimum.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
+                .minimum(
+                    Minimum.builder()
+                        .addAppliesToPriceId("string")
+                        .addFilter(
+                            TransformPriceFilter.builder()
+                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
+                        .minimumAmount("minimum_amount")
+                        .build()
+                )
+                .minimumAmount("minimum_amount")
+                .minimumConfig(
+                    Price.Minimum.MinimumConfig.builder()
+                        .minimumAmount("minimum_amount")
+                        .prorated(true)
+                        .build()
+                )
+                .name("name")
+                .planPhaseOrder(0L)
+                .priceType(Price.Minimum.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
+                .dimensionalPriceConfiguration(
+                    DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
+                .build()
+
+        val price = Price.ofMinimum(minimum)
+
+        assertThat(price.unit()).isNull()
+        assertThat(price.package_()).isNull()
+        assertThat(price.matrix()).isNull()
+        assertThat(price.tiered()).isNull()
+        assertThat(price.bulk()).isNull()
+        assertThat(price.thresholdTotalAmount()).isNull()
+        assertThat(price.tieredPackage()).isNull()
+        assertThat(price.groupedTiered()).isNull()
+        assertThat(price.tieredWithMinimum()).isNull()
+        assertThat(price.tieredPackageWithMinimum()).isNull()
+        assertThat(price.packageWithAllocation()).isNull()
+        assertThat(price.unitWithPercent()).isNull()
+        assertThat(price.matrixWithAllocation()).isNull()
+        assertThat(price.tieredWithProration()).isNull()
+        assertThat(price.unitWithProration()).isNull()
+        assertThat(price.groupedAllocation()).isNull()
+        assertThat(price.groupedWithProratedMinimum()).isNull()
+        assertThat(price.groupedWithMeteredMinimum()).isNull()
+        assertThat(price.matrixWithDisplayName()).isNull()
+        assertThat(price.bulkWithProration()).isNull()
+        assertThat(price.groupedTieredPackage()).isNull()
+        assertThat(price.maxGroupTieredPackage()).isNull()
+        assertThat(price.scalableMatrixWithUnitPricing()).isNull()
+        assertThat(price.scalableMatrixWithTieredPricing()).isNull()
+        assertThat(price.cumulativeGroupedBulk()).isNull()
+        assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.minimum()).isEqualTo(minimum)
+    }
+
+    @Test
+    fun ofMinimumRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofMinimum(
+                Price.Minimum.builder()
+                    .id("id")
+                    .billableMetric(BillableMetricTiny.builder().id("id").build())
+                    .billingCycleConfiguration(
+                        BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
+                            .build()
+                    )
+                    .cadence(Price.Minimum.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        TransformPriceFilter.builder()
+                            .field(TransformPriceFilter.Field.PRICE_ID)
+                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
+                    .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                    )
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Allocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .customExpiration(
+                                CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .addFilter(
+                                TransformPriceFilter.builder()
+                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoicingCycleConfiguration(
+                        BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
+                            .build()
+                    )
+                    .item(ItemSlim.builder().id("id").name("name").build())
+                    .maximum(
+                        Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .addFilter(
+                                TransformPriceFilter.builder()
+                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.Minimum.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .addFilter(
+                                TransformPriceFilter.builder()
+                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .minimumConfig(
+                        Price.Minimum.MinimumConfig.builder()
+                            .minimumAmount("minimum_amount")
+                            .prorated(true)
+                            .build()
+                    )
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.Minimum.PriceType.USAGE_PRICE)
                     .replacesPriceId("replaces_price_id")
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()

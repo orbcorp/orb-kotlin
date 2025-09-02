@@ -64,6 +64,7 @@ internal class ServiceParamsTest {
                 )
                 .addAdditionalEmail("dev@stainless.com")
                 .autoCollection(true)
+                .autoIssuance(true)
                 .billingAddress(
                     AddressInput.builder()
                         .city("city")

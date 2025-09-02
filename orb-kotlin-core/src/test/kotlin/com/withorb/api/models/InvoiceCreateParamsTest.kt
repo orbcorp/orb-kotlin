@@ -43,6 +43,7 @@ internal class InvoiceCreateParamsTest {
                     .reason("reason")
                     .build()
             )
+            .dueDate(LocalDate.parse("2023-09-22"))
             .externalCustomerId("external-customer-id")
             .memo("An optional memo for my invoice.")
             .metadata(
@@ -89,6 +90,7 @@ internal class InvoiceCreateParamsTest {
                         .reason("reason")
                         .build()
                 )
+                .dueDate(LocalDate.parse("2023-09-22"))
                 .externalCustomerId("external-customer-id")
                 .memo("An optional memo for my invoice.")
                 .metadata(
@@ -136,6 +138,8 @@ internal class InvoiceCreateParamsTest {
                         .build()
                 )
             )
+        assertThat(body.dueDate())
+            .isEqualTo(InvoiceCreateParams.DueDate.ofDate(LocalDate.parse("2023-09-22")))
         assertThat(body.externalCustomerId()).isEqualTo("external-customer-id")
         assertThat(body.memo()).isEqualTo("An optional memo for my invoice.")
         assertThat(body.metadata())

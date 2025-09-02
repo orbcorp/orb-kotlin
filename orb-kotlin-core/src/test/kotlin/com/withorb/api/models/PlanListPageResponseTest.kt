@@ -169,6 +169,13 @@ internal class PlanListPageResponseTest {
                                         .build()
                                 )
                                 .cadence(Price.Unit.Cadence.ONE_TIME)
+                                .addCompositePriceFilter(
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .conversionRate(0.0)
                                 .unitConversionRateConfig(
                                     ConversionRateUnitConfig.builder()
@@ -437,6 +444,13 @@ internal class PlanListPageResponseTest {
                                     .build()
                             )
                             .cadence(Price.Unit.Cadence.ONE_TIME)
+                            .addCompositePriceFilter(
+                                TransformPriceFilter.builder()
+                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .conversionRate(0.0)
                             .unitConversionRateConfig(
                                 ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -706,6 +720,13 @@ internal class PlanListPageResponseTest {
                                         .build()
                                 )
                                 .cadence(Price.Unit.Cadence.ONE_TIME)
+                                .addCompositePriceFilter(
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .conversionRate(0.0)
                                 .unitConversionRateConfig(
                                     ConversionRateUnitConfig.builder()

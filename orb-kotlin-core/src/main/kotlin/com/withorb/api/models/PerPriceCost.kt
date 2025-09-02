@@ -179,15 +179,6 @@ private constructor(
         /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
         fun price(tiered: Price.Tiered) = price(Price.ofTiered(tiered))
 
-        /** Alias for calling [price] with `Price.ofTieredBps(tieredBps)`. */
-        fun price(tieredBps: Price.TieredBps) = price(Price.ofTieredBps(tieredBps))
-
-        /** Alias for calling [price] with `Price.ofBps(bps)`. */
-        fun price(bps: Price.Bps) = price(Price.ofBps(bps))
-
-        /** Alias for calling [price] with `Price.ofBulkBps(bulkBps)`. */
-        fun price(bulkBps: Price.BulkBps) = price(Price.ofBulkBps(bulkBps))
-
         /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
         fun price(bulk: Price.Bulk) = price(Price.ofBulk(bulk))
 
@@ -298,6 +289,9 @@ private constructor(
          */
         fun price(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
             price(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+
+        /** Alias for calling [price] with `Price.ofMinimum(minimum)`. */
+        fun price(minimum: Price.Minimum) = price(Price.ofMinimum(minimum))
 
         /** The price the cost is associated with */
         fun priceId(priceId: String) = priceId(JsonField.of(priceId))

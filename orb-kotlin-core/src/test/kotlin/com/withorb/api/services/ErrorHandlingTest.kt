@@ -94,6 +94,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -186,6 +187,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -278,6 +280,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -370,6 +373,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -462,6 +466,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -554,6 +559,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -646,6 +652,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -738,6 +745,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -830,6 +838,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -922,6 +931,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1014,6 +1024,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1106,6 +1117,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1198,6 +1210,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1290,6 +1303,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1382,6 +1396,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1474,6 +1489,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1564,6 +1580,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
