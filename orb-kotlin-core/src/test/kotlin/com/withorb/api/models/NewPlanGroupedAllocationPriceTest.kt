@@ -84,7 +84,7 @@ internal class NewPlanGroupedAllocationPriceTest {
         assertThat(newPlanGroupedAllocationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanGroupedAllocationPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanGroupedAllocationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

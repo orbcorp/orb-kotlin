@@ -85,7 +85,7 @@ internal class NewPlanPackageWithAllocationPriceTest {
         assertThat(newPlanPackageWithAllocationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanPackageWithAllocationPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanPackageWithAllocationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

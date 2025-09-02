@@ -98,7 +98,7 @@ internal class NewFloatingMatrixPriceTest {
         assertThat(newFloatingMatrixPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newFloatingMatrixPrice.conversionRateConfig())
             .isEqualTo(
-                NewFloatingMatrixPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

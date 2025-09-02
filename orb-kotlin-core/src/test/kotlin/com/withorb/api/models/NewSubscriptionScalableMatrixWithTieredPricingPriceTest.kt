@@ -102,7 +102,7 @@ internal class NewSubscriptionScalableMatrixWithTieredPricingPriceTest {
             .isEqualTo(0.0)
         assertThat(newSubscriptionScalableMatrixWithTieredPricingPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionScalableMatrixWithTieredPricingPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

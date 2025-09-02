@@ -80,7 +80,7 @@ internal class NewFloatingPackagePriceTest {
         assertThat(newFloatingPackagePrice.conversionRate()).isEqualTo(0.0)
         assertThat(newFloatingPackagePrice.conversionRateConfig())
             .isEqualTo(
-                NewFloatingPackagePrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

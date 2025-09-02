@@ -85,7 +85,7 @@ internal class NewSubscriptionTierWithProrationPriceTest {
         assertThat(newSubscriptionTierWithProrationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionTierWithProrationPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionTierWithProrationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

@@ -90,7 +90,7 @@ internal class NewPlanGroupedWithProratedMinimumPriceTest {
         assertThat(newPlanGroupedWithProratedMinimumPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanGroupedWithProratedMinimumPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanGroupedWithProratedMinimumPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

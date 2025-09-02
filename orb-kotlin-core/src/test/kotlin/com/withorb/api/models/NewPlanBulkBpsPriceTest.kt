@@ -95,7 +95,7 @@ internal class NewPlanBulkBpsPriceTest {
         assertThat(newPlanBulkBpsPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanBulkBpsPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanBulkBpsPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

@@ -99,7 +99,7 @@ internal class NewFloatingScalableMatrixWithTieredPricingPriceTest {
         assertThat(newFloatingScalableMatrixWithTieredPricingPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newFloatingScalableMatrixWithTieredPricingPrice.conversionRateConfig())
             .isEqualTo(
-                NewFloatingScalableMatrixWithTieredPricingPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

@@ -92,7 +92,7 @@ internal class NewSubscriptionGroupedWithMeteredMinimumPriceTest {
         assertThat(newSubscriptionGroupedWithMeteredMinimumPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionGroupedWithMeteredMinimumPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionGroupedWithMeteredMinimumPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

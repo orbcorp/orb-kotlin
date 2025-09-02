@@ -74,7 +74,7 @@ internal class NewFloatingBpsPriceTest {
         assertThat(newFloatingBpsPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newFloatingBpsPrice.conversionRateConfig())
             .isEqualTo(
-                NewFloatingBpsPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

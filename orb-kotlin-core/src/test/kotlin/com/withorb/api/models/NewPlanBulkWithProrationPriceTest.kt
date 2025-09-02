@@ -84,7 +84,7 @@ internal class NewPlanBulkWithProrationPriceTest {
         assertThat(newPlanBulkWithProrationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanBulkWithProrationPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanBulkWithProrationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

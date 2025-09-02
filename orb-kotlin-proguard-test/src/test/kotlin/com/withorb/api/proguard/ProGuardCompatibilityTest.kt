@@ -7,9 +7,9 @@ import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.jsonMapper
 import com.withorb.api.models.AccountingProviderConfig
 import com.withorb.api.models.BillingCycleRelativeDate
-import com.withorb.api.models.Discount
-import com.withorb.api.models.PercentageDiscount
-import com.withorb.api.models.TransformPriceFilter
+import com.withorb.api.models.ConversionRateConfig
+import com.withorb.api.models.ConversionRateUnitConfig
+import com.withorb.api.models.UnitConversionRateConfig
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.jvm.javaMethod
 import org.assertj.core.api.Assertions.assertThat
@@ -88,33 +88,25 @@ internal class ProGuardCompatibilityTest {
     }
 
     @Test
-    fun discountRoundtrip() {
+    fun conversionRateConfigRoundtrip() {
         val jsonMapper = jsonMapper()
-        val discount =
-            Discount.ofPercentage(
-                PercentageDiscount.builder()
-                    .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                    .percentageDiscount(0.15)
-                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                    .addFilter(
-                        TransformPriceFilter.builder()
-                            .field(TransformPriceFilter.Field.PRICE_ID)
-                            .operator(TransformPriceFilter.Operator.INCLUDES)
-                            .addValue("string")
-                            .build()
+        val conversionRateConfig =
+            ConversionRateConfig.ofUnit(
+                UnitConversionRateConfig.builder()
+                    .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                    .unitConfig(
+                        ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
                     )
-                    .reason("reason")
                     .build()
             )
 
-        val roundtrippedDiscount =
+        val roundtrippedConversionRateConfig =
             jsonMapper.readValue(
-                jsonMapper.writeValueAsString(discount),
-                jacksonTypeRef<Discount>(),
+                jsonMapper.writeValueAsString(conversionRateConfig),
+                jacksonTypeRef<ConversionRateConfig>(),
             )
 
-        assertThat(roundtrippedDiscount).isEqualTo(discount)
+        assertThat(roundtrippedConversionRateConfig).isEqualTo(conversionRateConfig)
     }
 
     @Test
