@@ -96,7 +96,7 @@ internal class NewPlanMatrixPriceTest {
         assertThat(newPlanMatrixPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanMatrixPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanMatrixPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

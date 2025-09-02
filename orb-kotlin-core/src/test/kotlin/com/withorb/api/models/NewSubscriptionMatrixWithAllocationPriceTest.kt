@@ -103,7 +103,7 @@ internal class NewSubscriptionMatrixWithAllocationPriceTest {
         assertThat(newSubscriptionMatrixWithAllocationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionMatrixWithAllocationPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionMatrixWithAllocationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

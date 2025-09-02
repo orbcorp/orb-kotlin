@@ -93,7 +93,7 @@ internal class NewPlanScalableMatrixWithUnitPricingPriceTest {
         assertThat(newPlanScalableMatrixWithUnitPricingPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanScalableMatrixWithUnitPricingPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanScalableMatrixWithUnitPricingPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

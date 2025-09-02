@@ -94,7 +94,7 @@ internal class NewPlanTieredPriceTest {
         assertThat(newPlanTieredPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanTieredPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanTieredPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

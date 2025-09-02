@@ -85,7 +85,7 @@ internal class NewFloatingPackageWithAllocationPriceTest {
         assertThat(newFloatingPackageWithAllocationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newFloatingPackageWithAllocationPrice.conversionRateConfig())
             .isEqualTo(
-                NewFloatingPackageWithAllocationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

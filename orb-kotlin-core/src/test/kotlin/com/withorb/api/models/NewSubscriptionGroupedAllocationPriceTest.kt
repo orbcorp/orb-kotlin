@@ -85,7 +85,7 @@ internal class NewSubscriptionGroupedAllocationPriceTest {
         assertThat(newSubscriptionGroupedAllocationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionGroupedAllocationPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionGroupedAllocationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

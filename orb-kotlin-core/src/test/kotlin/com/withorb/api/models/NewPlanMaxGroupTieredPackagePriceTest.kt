@@ -85,7 +85,7 @@ internal class NewPlanMaxGroupTieredPackagePriceTest {
         assertThat(newPlanMaxGroupTieredPackagePrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanMaxGroupTieredPackagePrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanMaxGroupTieredPackagePrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

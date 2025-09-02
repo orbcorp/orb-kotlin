@@ -87,7 +87,7 @@ internal class NewSubscriptionThresholdTotalAmountPriceTest {
         assertThat(newSubscriptionThresholdTotalAmountPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionThresholdTotalAmountPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionThresholdTotalAmountPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

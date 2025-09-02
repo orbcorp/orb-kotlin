@@ -85,7 +85,7 @@ internal class NewSubscriptionTieredPackagePriceTest {
         assertThat(newSubscriptionTieredPackagePrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionTieredPackagePrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionTieredPackagePrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

@@ -85,7 +85,7 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
         assertThat(newFloatingThresholdTotalAmountPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newFloatingThresholdTotalAmountPrice.conversionRateConfig())
             .isEqualTo(
-                NewFloatingThresholdTotalAmountPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

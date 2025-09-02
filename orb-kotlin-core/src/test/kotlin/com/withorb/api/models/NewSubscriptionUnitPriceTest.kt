@@ -76,7 +76,7 @@ internal class NewSubscriptionUnitPriceTest {
         assertThat(newSubscriptionUnitPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionUnitPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionUnitPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
