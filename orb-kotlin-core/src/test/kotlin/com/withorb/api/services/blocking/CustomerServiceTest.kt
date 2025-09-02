@@ -48,6 +48,7 @@ internal class CustomerServiceTest {
                     )
                     .addAdditionalEmail("dev@stainless.com")
                     .autoCollection(true)
+                    .autoIssuance(true)
                     .billingAddress(
                         AddressInput.builder()
                             .city("city")
@@ -134,6 +135,7 @@ internal class CustomerServiceTest {
                     )
                     .addAdditionalEmail("string")
                     .autoCollection(true)
+                    .autoIssuance(true)
                     .billingAddress(
                         AddressInput.builder()
                             .city("city")
@@ -299,6 +301,7 @@ internal class CustomerServiceTest {
                     )
                     .addAdditionalEmail("string")
                     .autoCollection(true)
+                    .autoIssuance(true)
                     .billingAddress(
                         AddressInput.builder()
                             .city("city")

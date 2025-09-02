@@ -1136,6 +1136,7 @@ private constructor(
             private constructor(
                 private val autoCollection: JsonField<Boolean>,
                 private val netTerms: JsonField<Long>,
+                private val customDueDate: JsonField<CustomDueDate>,
                 private val invoiceDate: JsonField<InvoiceDate>,
                 private val memo: JsonField<String>,
                 private val requireSuccessfulPayment: JsonField<Boolean>,
@@ -1150,6 +1151,9 @@ private constructor(
                     @JsonProperty("net_terms")
                     @ExcludeMissing
                     netTerms: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("custom_due_date")
+                    @ExcludeMissing
+                    customDueDate: JsonField<CustomDueDate> = JsonMissing.of(),
                     @JsonProperty("invoice_date")
                     @ExcludeMissing
                     invoiceDate: JsonField<InvoiceDate> = JsonMissing.of(),
@@ -1162,6 +1166,7 @@ private constructor(
                 ) : this(
                     autoCollection,
                     netTerms,
+                    customDueDate,
                     invoiceDate,
                     memo,
                     requireSuccessfulPayment,
@@ -1179,14 +1184,25 @@ private constructor(
                 fun autoCollection(): Boolean = autoCollection.getRequired("auto_collection")
 
                 /**
-                 * The net terms determines the difference between the invoice date and the issue
-                 * date for the invoice. If you intend the invoice to be due on issue, set this
-                 * to 0.
+                 * The net terms determines the due date of the invoice. Due date is calculated
+                 * based on the invoice or issuance date, depending on the account's configured due
+                 * date calculation method. A value of '0' here represents that the invoice is due
+                 * on issue, whereas a value of '30' represents that the customer has 30 days to pay
+                 * the invoice. Do not set this field if you want to set a custom due date.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
                  */
                 fun netTerms(): Long? = netTerms.getNullable("net_terms")
+
+                /**
+                 * An optional custom due date for the invoice. If not set, the due date will be
+                 * calculated based on the `net_terms` value.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun customDueDate(): CustomDueDate? = customDueDate.getNullable("custom_due_date")
 
                 /**
                  * An ISO 8601 format date that denotes when this invoice should be dated in the
@@ -1235,6 +1251,16 @@ private constructor(
                 @JsonProperty("net_terms")
                 @ExcludeMissing
                 fun _netTerms(): JsonField<Long> = netTerms
+
+                /**
+                 * Returns the raw JSON value of [customDueDate].
+                 *
+                 * Unlike [customDueDate], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("custom_due_date")
+                @ExcludeMissing
+                fun _customDueDate(): JsonField<CustomDueDate> = customDueDate
 
                 /**
                  * Returns the raw JSON value of [invoiceDate].
@@ -1295,6 +1321,7 @@ private constructor(
 
                     private var autoCollection: JsonField<Boolean>? = null
                     private var netTerms: JsonField<Long>? = null
+                    private var customDueDate: JsonField<CustomDueDate> = JsonMissing.of()
                     private var invoiceDate: JsonField<InvoiceDate> = JsonMissing.of()
                     private var memo: JsonField<String> = JsonMissing.of()
                     private var requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of()
@@ -1303,6 +1330,7 @@ private constructor(
                     internal fun from(invoiceSettings: InvoiceSettings) = apply {
                         autoCollection = invoiceSettings.autoCollection
                         netTerms = invoiceSettings.netTerms
+                        customDueDate = invoiceSettings.customDueDate
                         invoiceDate = invoiceSettings.invoiceDate
                         memo = invoiceSettings.memo
                         requireSuccessfulPayment = invoiceSettings.requireSuccessfulPayment
@@ -1328,9 +1356,12 @@ private constructor(
                     }
 
                     /**
-                     * The net terms determines the difference between the invoice date and the
-                     * issue date for the invoice. If you intend the invoice to be due on issue, set
-                     * this to 0.
+                     * The net terms determines the due date of the invoice. Due date is calculated
+                     * based on the invoice or issuance date, depending on the account's configured
+                     * due date calculation method. A value of '0' here represents that the invoice
+                     * is due on issue, whereas a value of '30' represents that the customer has 30
+                     * days to pay the invoice. Do not set this field if you want to set a custom
+                     * due date.
                      */
                     fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
 
@@ -1349,6 +1380,33 @@ private constructor(
                      * not yet supported value.
                      */
                     fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
+
+                    /**
+                     * An optional custom due date for the invoice. If not set, the due date will be
+                     * calculated based on the `net_terms` value.
+                     */
+                    fun customDueDate(customDueDate: CustomDueDate?) =
+                        customDueDate(JsonField.ofNullable(customDueDate))
+
+                    /**
+                     * Sets [Builder.customDueDate] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.customDueDate] with a well-typed
+                     * [CustomDueDate] value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
+                     */
+                    fun customDueDate(customDueDate: JsonField<CustomDueDate>) = apply {
+                        this.customDueDate = customDueDate
+                    }
+
+                    /** Alias for calling [customDueDate] with `CustomDueDate.ofDate(date)`. */
+                    fun customDueDate(date: LocalDate) = customDueDate(CustomDueDate.ofDate(date))
+
+                    /**
+                     * Alias for calling [customDueDate] with `CustomDueDate.ofDateTime(dateTime)`.
+                     */
+                    fun customDueDate(dateTime: OffsetDateTime) =
+                        customDueDate(CustomDueDate.ofDateTime(dateTime))
 
                     /**
                      * An ISO 8601 format date that denotes when this invoice should be dated in the
@@ -1446,6 +1504,7 @@ private constructor(
                         InvoiceSettings(
                             checkRequired("autoCollection", autoCollection),
                             checkRequired("netTerms", netTerms),
+                            customDueDate,
                             invoiceDate,
                             memo,
                             requireSuccessfulPayment,
@@ -1462,6 +1521,7 @@ private constructor(
 
                     autoCollection()
                     netTerms()
+                    customDueDate()?.validate()
                     invoiceDate()?.validate()
                     memo()
                     requireSuccessfulPayment()
@@ -1485,9 +1545,189 @@ private constructor(
                 internal fun validity(): Int =
                     (if (autoCollection.asKnown() == null) 0 else 1) +
                         (if (netTerms.asKnown() == null) 0 else 1) +
+                        (customDueDate.asKnown()?.validity() ?: 0) +
                         (invoiceDate.asKnown()?.validity() ?: 0) +
                         (if (memo.asKnown() == null) 0 else 1) +
                         (if (requireSuccessfulPayment.asKnown() == null) 0 else 1)
+
+                /**
+                 * An optional custom due date for the invoice. If not set, the due date will be
+                 * calculated based on the `net_terms` value.
+                 */
+                @JsonDeserialize(using = CustomDueDate.Deserializer::class)
+                @JsonSerialize(using = CustomDueDate.Serializer::class)
+                class CustomDueDate
+                private constructor(
+                    private val date: LocalDate? = null,
+                    private val dateTime: OffsetDateTime? = null,
+                    private val _json: JsonValue? = null,
+                ) {
+
+                    fun date(): LocalDate? = date
+
+                    fun dateTime(): OffsetDateTime? = dateTime
+
+                    fun isDate(): Boolean = date != null
+
+                    fun isDateTime(): Boolean = dateTime != null
+
+                    fun asDate(): LocalDate = date.getOrThrow("date")
+
+                    fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
+
+                    fun _json(): JsonValue? = _json
+
+                    fun <T> accept(visitor: Visitor<T>): T =
+                        when {
+                            date != null -> visitor.visitDate(date)
+                            dateTime != null -> visitor.visitDateTime(dateTime)
+                            else -> visitor.unknown(_json)
+                        }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): CustomDueDate = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        accept(
+                            object : Visitor<Unit> {
+                                override fun visitDate(date: LocalDate) {}
+
+                                override fun visitDateTime(dateTime: OffsetDateTime) {}
+                            }
+                        )
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        accept(
+                            object : Visitor<Int> {
+                                override fun visitDate(date: LocalDate) = 1
+
+                                override fun visitDateTime(dateTime: OffsetDateTime) = 1
+
+                                override fun unknown(json: JsonValue?) = 0
+                            }
+                        )
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is CustomDueDate &&
+                            date == other.date &&
+                            dateTime == other.dateTime
+                    }
+
+                    override fun hashCode(): Int = Objects.hash(date, dateTime)
+
+                    override fun toString(): String =
+                        when {
+                            date != null -> "CustomDueDate{date=$date}"
+                            dateTime != null -> "CustomDueDate{dateTime=$dateTime}"
+                            _json != null -> "CustomDueDate{_unknown=$_json}"
+                            else -> throw IllegalStateException("Invalid CustomDueDate")
+                        }
+
+                    companion object {
+
+                        fun ofDate(date: LocalDate) = CustomDueDate(date = date)
+
+                        fun ofDateTime(dateTime: OffsetDateTime) =
+                            CustomDueDate(dateTime = dateTime)
+                    }
+
+                    /**
+                     * An interface that defines how to map each variant of [CustomDueDate] to a
+                     * value of type [T].
+                     */
+                    interface Visitor<out T> {
+
+                        fun visitDate(date: LocalDate): T
+
+                        fun visitDateTime(dateTime: OffsetDateTime): T
+
+                        /**
+                         * Maps an unknown variant of [CustomDueDate] to a value of type [T].
+                         *
+                         * An instance of [CustomDueDate] can contain an unknown variant if it was
+                         * deserialized from data that doesn't match any known variant. For example,
+                         * if the SDK is on an older version than the API, then the API may respond
+                         * with new variants that the SDK is unaware of.
+                         *
+                         * @throws OrbInvalidDataException in the default implementation.
+                         */
+                        fun unknown(json: JsonValue?): T {
+                            throw OrbInvalidDataException("Unknown CustomDueDate: $json")
+                        }
+                    }
+
+                    internal class Deserializer :
+                        BaseDeserializer<CustomDueDate>(CustomDueDate::class) {
+
+                        override fun ObjectCodec.deserialize(node: JsonNode): CustomDueDate {
+                            val json = JsonValue.fromJsonNode(node)
+
+                            val bestMatches =
+                                sequenceOf(
+                                        tryDeserialize(node, jacksonTypeRef<LocalDate>())?.let {
+                                            CustomDueDate(date = it, _json = json)
+                                        },
+                                        tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())
+                                            ?.let { CustomDueDate(dateTime = it, _json = json) },
+                                    )
+                                    .filterNotNull()
+                                    .allMaxBy { it.validity() }
+                                    .toList()
+                            return when (bestMatches.size) {
+                                // This can happen if what we're deserializing is completely
+                                // incompatible with all the possible variants (e.g. deserializing
+                                // from object).
+                                0 -> CustomDueDate(_json = json)
+                                1 -> bestMatches.single()
+                                // If there's more than one match with the highest validity, then
+                                // use the first completely valid match, or simply the first match
+                                // if none are completely valid.
+                                else ->
+                                    bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
+                            }
+                        }
+                    }
+
+                    internal class Serializer :
+                        BaseSerializer<CustomDueDate>(CustomDueDate::class) {
+
+                        override fun serialize(
+                            value: CustomDueDate,
+                            generator: JsonGenerator,
+                            provider: SerializerProvider,
+                        ) {
+                            when {
+                                value.date != null -> generator.writeObject(value.date)
+                                value.dateTime != null -> generator.writeObject(value.dateTime)
+                                value._json != null -> generator.writeObject(value._json)
+                                else -> throw IllegalStateException("Invalid CustomDueDate")
+                            }
+                        }
+                    }
+                }
 
                 /**
                  * An ISO 8601 format date that denotes when this invoice should be dated in the
@@ -1675,6 +1915,7 @@ private constructor(
                     return other is InvoiceSettings &&
                         autoCollection == other.autoCollection &&
                         netTerms == other.netTerms &&
+                        customDueDate == other.customDueDate &&
                         invoiceDate == other.invoiceDate &&
                         memo == other.memo &&
                         requireSuccessfulPayment == other.requireSuccessfulPayment &&
@@ -1685,6 +1926,7 @@ private constructor(
                     Objects.hash(
                         autoCollection,
                         netTerms,
+                        customDueDate,
                         invoiceDate,
                         memo,
                         requireSuccessfulPayment,
@@ -1695,7 +1937,7 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, invoiceDate=$invoiceDate, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
+                    "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, customDueDate=$customDueDate, invoiceDate=$invoiceDate, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
             }
 
             /**

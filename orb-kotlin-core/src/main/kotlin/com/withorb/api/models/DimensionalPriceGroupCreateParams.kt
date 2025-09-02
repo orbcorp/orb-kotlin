@@ -22,7 +22,7 @@ import java.util.Objects
 
 /**
  * A dimensional price group is used to partition the result of a billable metric by a set of
- * dimensions. Prices in a price group must specify the parition used to derive their usage.
+ * dimensions. Prices in a price group must specify the partition used to derive their usage.
  *
  * For example, suppose we have a billable metric that measures the number of widgets used and we
  * want to charge differently depending on the color of the widget. We can create a price group with

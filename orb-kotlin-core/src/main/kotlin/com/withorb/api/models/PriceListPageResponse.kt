@@ -138,15 +138,6 @@ private constructor(
         /** Alias for calling [addData] with `Price.ofTiered(tiered)`. */
         fun addData(tiered: Price.Tiered) = addData(Price.ofTiered(tiered))
 
-        /** Alias for calling [addData] with `Price.ofTieredBps(tieredBps)`. */
-        fun addData(tieredBps: Price.TieredBps) = addData(Price.ofTieredBps(tieredBps))
-
-        /** Alias for calling [addData] with `Price.ofBps(bps)`. */
-        fun addData(bps: Price.Bps) = addData(Price.ofBps(bps))
-
-        /** Alias for calling [addData] with `Price.ofBulkBps(bulkBps)`. */
-        fun addData(bulkBps: Price.BulkBps) = addData(Price.ofBulkBps(bulkBps))
-
         /** Alias for calling [addData] with `Price.ofBulk(bulk)`. */
         fun addData(bulk: Price.Bulk) = addData(Price.ofBulk(bulk))
 
@@ -265,6 +256,9 @@ private constructor(
          */
         fun addData(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
             addData(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+
+        /** Alias for calling [addData] with `Price.ofMinimum(minimum)`. */
+        fun addData(minimum: Price.Minimum) = addData(Price.ofMinimum(minimum))
 
         fun paginationMetadata(paginationMetadata: PaginationMetadata) =
             paginationMetadata(JsonField.of(paginationMetadata))

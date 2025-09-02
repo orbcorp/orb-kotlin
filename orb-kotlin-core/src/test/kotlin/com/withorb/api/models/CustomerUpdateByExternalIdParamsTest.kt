@@ -25,6 +25,7 @@ internal class CustomerUpdateByExternalIdParamsTest {
             )
             .addAdditionalEmail("string")
             .autoCollection(true)
+            .autoIssuance(true)
             .billingAddress(
                 AddressInput.builder()
                     .city("city")
@@ -108,6 +109,7 @@ internal class CustomerUpdateByExternalIdParamsTest {
                 )
                 .addAdditionalEmail("string")
                 .autoCollection(true)
+                .autoIssuance(true)
                 .billingAddress(
                     AddressInput.builder()
                         .city("city")
@@ -179,6 +181,7 @@ internal class CustomerUpdateByExternalIdParamsTest {
             )
         assertThat(body.additionalEmails()).containsExactly("string")
         assertThat(body.autoCollection()).isEqualTo(true)
+        assertThat(body.autoIssuance()).isEqualTo(true)
         assertThat(body.billingAddress())
             .isEqualTo(
                 AddressInput.builder()

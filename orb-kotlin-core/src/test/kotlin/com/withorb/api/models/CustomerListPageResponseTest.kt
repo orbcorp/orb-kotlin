@@ -20,6 +20,7 @@ internal class CustomerListPageResponseTest {
                         .id("id")
                         .addAdditionalEmail("string")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .balance("balance")
                         .billingAddress(
                             Address.builder()
@@ -112,6 +113,7 @@ internal class CustomerListPageResponseTest {
                     .id("id")
                     .addAdditionalEmail("string")
                     .autoCollection(true)
+                    .autoIssuance(true)
                     .balance("balance")
                     .billingAddress(
                         Address.builder()
@@ -206,6 +208,7 @@ internal class CustomerListPageResponseTest {
                         .id("id")
                         .addAdditionalEmail("string")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .balance("balance")
                         .billingAddress(
                             Address.builder()

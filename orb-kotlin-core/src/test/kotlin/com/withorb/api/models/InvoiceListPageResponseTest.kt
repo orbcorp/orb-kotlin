@@ -201,6 +201,13 @@ internal class InvoiceListPageResponseTest {
                                                 .build()
                                         )
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
+                                        .addCompositePriceFilter(
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .conversionRate(0.0)
                                         .unitConversionRateConfig(
                                             ConversionRateUnitConfig.builder()
@@ -385,6 +392,9 @@ internal class InvoiceListPageResponseTest {
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .paymentProvider(Invoice.PaymentAttempt.PaymentProvider.STRIPE)
                                 .paymentProviderId("payment_provider_id")
+                                .receiptPdf(
+                                    "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                                )
                                 .succeeded(true)
                                 .build()
                         )
@@ -596,6 +606,13 @@ internal class InvoiceListPageResponseTest {
                                             .build()
                                     )
                                     .cadence(Price.Unit.Cadence.ONE_TIME)
+                                    .addCompositePriceFilter(
+                                        TransformPriceFilter.builder()
+                                            .field(TransformPriceFilter.Field.PRICE_ID)
+                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .conversionRate(0.0)
                                     .unitConversionRateConfig(
                                         ConversionRateUnitConfig.builder()
@@ -773,6 +790,9 @@ internal class InvoiceListPageResponseTest {
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .paymentProvider(Invoice.PaymentAttempt.PaymentProvider.STRIPE)
                             .paymentProviderId("payment_provider_id")
+                            .receiptPdf(
+                                "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                            )
                             .succeeded(true)
                             .build()
                     )
@@ -993,6 +1013,13 @@ internal class InvoiceListPageResponseTest {
                                                 .build()
                                         )
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
+                                        .addCompositePriceFilter(
+                                            TransformPriceFilter.builder()
+                                                .field(TransformPriceFilter.Field.PRICE_ID)
+                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .conversionRate(0.0)
                                         .unitConversionRateConfig(
                                             ConversionRateUnitConfig.builder()
@@ -1177,6 +1204,9 @@ internal class InvoiceListPageResponseTest {
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .paymentProvider(Invoice.PaymentAttempt.PaymentProvider.STRIPE)
                                 .paymentProviderId("payment_provider_id")
+                                .receiptPdf(
+                                    "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                                )
                                 .succeeded(true)
                                 .build()
                         )

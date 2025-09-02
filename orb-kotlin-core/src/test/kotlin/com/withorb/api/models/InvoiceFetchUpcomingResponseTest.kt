@@ -192,6 +192,13 @@ internal class InvoiceFetchUpcomingResponseTest {
                                         .build()
                                 )
                                 .cadence(Price.Unit.Cadence.ONE_TIME)
+                                .addCompositePriceFilter(
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .conversionRate(0.0)
                                 .unitConversionRateConfig(
                                     ConversionRateUnitConfig.builder()
@@ -359,6 +366,9 @@ internal class InvoiceFetchUpcomingResponseTest {
                             InvoiceFetchUpcomingResponse.PaymentAttempt.PaymentProvider.STRIPE
                         )
                         .paymentProviderId("payment_provider_id")
+                        .receiptPdf(
+                            "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                        )
                         .succeeded(true)
                         .build()
                 )
@@ -578,6 +588,13 @@ internal class InvoiceFetchUpcomingResponseTest {
                                     .build()
                             )
                             .cadence(Price.Unit.Cadence.ONE_TIME)
+                            .addCompositePriceFilter(
+                                TransformPriceFilter.builder()
+                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .conversionRate(0.0)
                             .unitConversionRateConfig(
                                 ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
@@ -745,6 +762,9 @@ internal class InvoiceFetchUpcomingResponseTest {
                         InvoiceFetchUpcomingResponse.PaymentAttempt.PaymentProvider.STRIPE
                     )
                     .paymentProviderId("payment_provider_id")
+                    .receiptPdf(
+                        "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                    )
                     .succeeded(true)
                     .build()
             )
@@ -962,6 +982,13 @@ internal class InvoiceFetchUpcomingResponseTest {
                                         .build()
                                 )
                                 .cadence(Price.Unit.Cadence.ONE_TIME)
+                                .addCompositePriceFilter(
+                                    TransformPriceFilter.builder()
+                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        .addValue("string")
+                                        .build()
+                                )
                                 .conversionRate(0.0)
                                 .unitConversionRateConfig(
                                     ConversionRateUnitConfig.builder()
@@ -1129,6 +1156,9 @@ internal class InvoiceFetchUpcomingResponseTest {
                             InvoiceFetchUpcomingResponse.PaymentAttempt.PaymentProvider.STRIPE
                         )
                         .paymentProviderId("payment_provider_id")
+                        .receiptPdf(
+                            "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                        )
                         .succeeded(true)
                         .build()
                 )

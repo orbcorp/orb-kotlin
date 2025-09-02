@@ -94,6 +94,17 @@ private constructor(
     fun autoCollection(): Boolean? = body.autoCollection()
 
     /**
+     * Used to determine if invoices for this customer will be automatically issued. If true,
+     * invoices will be automatically issued. If false, invoices will require manual approval. If
+     * `null` is specified, the customer's auto issuance setting will be inherited from the
+     * account-level setting.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun autoIssuance(): Boolean? = body.autoIssuance()
+
+    /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
@@ -377,6 +388,13 @@ private constructor(
     fun _autoCollection(): JsonField<Boolean> = body._autoCollection()
 
     /**
+     * Returns the raw JSON value of [autoIssuance].
+     *
+     * Unlike [autoIssuance], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _autoIssuance(): JsonField<Boolean> = body._autoIssuance()
+
+    /**
      * Returns the raw JSON value of [billingAddress].
      *
      * Unlike [billingAddress], this method doesn't throw if the JSON field has an unexpected type.
@@ -614,6 +632,32 @@ private constructor(
          */
         fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
             body.autoCollection(autoCollection)
+        }
+
+        /**
+         * Used to determine if invoices for this customer will be automatically issued. If true,
+         * invoices will be automatically issued. If false, invoices will require manual approval.
+         * If `null` is specified, the customer's auto issuance setting will be inherited from the
+         * account-level setting.
+         */
+        fun autoIssuance(autoIssuance: Boolean?) = apply { body.autoIssuance(autoIssuance) }
+
+        /**
+         * Alias for [Builder.autoIssuance].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun autoIssuance(autoIssuance: Boolean) = autoIssuance(autoIssuance as Boolean?)
+
+        /**
+         * Sets [Builder.autoIssuance] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.autoIssuance] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun autoIssuance(autoIssuance: JsonField<Boolean>) = apply {
+            body.autoIssuance(autoIssuance)
         }
 
         fun billingAddress(billingAddress: AddressInput?) = apply {
@@ -1175,6 +1219,7 @@ private constructor(
         private val accountingSyncConfiguration: JsonField<NewAccountingSyncConfiguration>,
         private val additionalEmails: JsonField<List<String>>,
         private val autoCollection: JsonField<Boolean>,
+        private val autoIssuance: JsonField<Boolean>,
         private val billingAddress: JsonField<AddressInput>,
         private val currency: JsonField<String>,
         private val emailDelivery: JsonField<Boolean>,
@@ -1205,6 +1250,9 @@ private constructor(
             @JsonProperty("auto_collection")
             @ExcludeMissing
             autoCollection: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("auto_issuance")
+            @ExcludeMissing
+            autoIssuance: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("billing_address")
             @ExcludeMissing
             billingAddress: JsonField<AddressInput> = JsonMissing.of(),
@@ -1248,6 +1296,7 @@ private constructor(
             accountingSyncConfiguration,
             additionalEmails,
             autoCollection,
+            autoIssuance,
             billingAddress,
             currency,
             emailDelivery,
@@ -1306,6 +1355,17 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun autoCollection(): Boolean? = autoCollection.getNullable("auto_collection")
+
+        /**
+         * Used to determine if invoices for this customer will be automatically issued. If true,
+         * invoices will be automatically issued. If false, invoices will require manual approval.
+         * If `null` is specified, the customer's auto issuance setting will be inherited from the
+         * account-level setting.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun autoIssuance(): Boolean? = autoIssuance.getNullable("auto_issuance")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1600,6 +1660,16 @@ private constructor(
         fun _autoCollection(): JsonField<Boolean> = autoCollection
 
         /**
+         * Returns the raw JSON value of [autoIssuance].
+         *
+         * Unlike [autoIssuance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("auto_issuance")
+        @ExcludeMissing
+        fun _autoIssuance(): JsonField<Boolean> = autoIssuance
+
+        /**
          * Returns the raw JSON value of [billingAddress].
          *
          * Unlike [billingAddress], this method doesn't throw if the JSON field has an unexpected
@@ -1751,6 +1821,7 @@ private constructor(
                 JsonMissing.of()
             private var additionalEmails: JsonField<MutableList<String>>? = null
             private var autoCollection: JsonField<Boolean> = JsonMissing.of()
+            private var autoIssuance: JsonField<Boolean> = JsonMissing.of()
             private var billingAddress: JsonField<AddressInput> = JsonMissing.of()
             private var currency: JsonField<String> = JsonMissing.of()
             private var emailDelivery: JsonField<Boolean> = JsonMissing.of()
@@ -1773,6 +1844,7 @@ private constructor(
                 accountingSyncConfiguration = body.accountingSyncConfiguration
                 additionalEmails = body.additionalEmails.map { it.toMutableList() }
                 autoCollection = body.autoCollection
+                autoIssuance = body.autoIssuance
                 billingAddress = body.billingAddress
                 currency = body.currency
                 emailDelivery = body.emailDelivery
@@ -1886,6 +1958,33 @@ private constructor(
              */
             fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
                 this.autoCollection = autoCollection
+            }
+
+            /**
+             * Used to determine if invoices for this customer will be automatically issued. If
+             * true, invoices will be automatically issued. If false, invoices will require manual
+             * approval. If `null` is specified, the customer's auto issuance setting will be
+             * inherited from the account-level setting.
+             */
+            fun autoIssuance(autoIssuance: Boolean?) =
+                autoIssuance(JsonField.ofNullable(autoIssuance))
+
+            /**
+             * Alias for [Builder.autoIssuance].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun autoIssuance(autoIssuance: Boolean) = autoIssuance(autoIssuance as Boolean?)
+
+            /**
+             * Sets [Builder.autoIssuance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.autoIssuance] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun autoIssuance(autoIssuance: JsonField<Boolean>) = apply {
+                this.autoIssuance = autoIssuance
             }
 
             fun billingAddress(billingAddress: AddressInput?) =
@@ -2340,6 +2439,7 @@ private constructor(
                     accountingSyncConfiguration,
                     (additionalEmails ?: JsonMissing.of()).map { it.toImmutable() },
                     autoCollection,
+                    autoIssuance,
                     billingAddress,
                     currency,
                     emailDelivery,
@@ -2369,6 +2469,7 @@ private constructor(
             accountingSyncConfiguration()?.validate()
             additionalEmails()
             autoCollection()
+            autoIssuance()
             billingAddress()?.validate()
             currency()
             emailDelivery()
@@ -2405,6 +2506,7 @@ private constructor(
                 (accountingSyncConfiguration.asKnown()?.validity() ?: 0) +
                 (additionalEmails.asKnown()?.size ?: 0) +
                 (if (autoCollection.asKnown() == null) 0 else 1) +
+                (if (autoIssuance.asKnown() == null) 0 else 1) +
                 (billingAddress.asKnown()?.validity() ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
                 (if (emailDelivery.asKnown() == null) 0 else 1) +
@@ -2430,6 +2532,7 @@ private constructor(
                 accountingSyncConfiguration == other.accountingSyncConfiguration &&
                 additionalEmails == other.additionalEmails &&
                 autoCollection == other.autoCollection &&
+                autoIssuance == other.autoIssuance &&
                 billingAddress == other.billingAddress &&
                 currency == other.currency &&
                 emailDelivery == other.emailDelivery &&
@@ -2453,6 +2556,7 @@ private constructor(
                 accountingSyncConfiguration,
                 additionalEmails,
                 autoCollection,
+                autoIssuance,
                 billingAddress,
                 currency,
                 emailDelivery,
@@ -2473,7 +2577,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{email=$email, name=$name, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, hierarchy=$hierarchy, metadata=$metadata, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, timezone=$timezone, additionalProperties=$additionalProperties}"
+            "Body{email=$email, name=$name, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, autoIssuance=$autoIssuance, billingAddress=$billingAddress, currency=$currency, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, hierarchy=$hierarchy, metadata=$metadata, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, timezone=$timezone, additionalProperties=$additionalProperties}"
     }
 
     /**

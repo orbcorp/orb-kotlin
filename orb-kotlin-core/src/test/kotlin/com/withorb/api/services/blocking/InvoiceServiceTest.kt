@@ -63,6 +63,7 @@ internal class InvoiceServiceTest {
                             .reason("reason")
                             .build()
                     )
+                    .dueDate(LocalDate.parse("2023-09-22"))
                     .externalCustomerId("external-customer-id")
                     .memo("An optional memo for my invoice.")
                     .metadata(
@@ -91,11 +92,13 @@ internal class InvoiceServiceTest {
             invoiceService.update(
                 InvoiceUpdateParams.builder()
                     .invoiceId("invoice_id")
+                    .dueDate(LocalDate.parse("2023-09-22"))
                     .metadata(
                         InvoiceUpdateParams.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
+                    .netTerms(0L)
                     .build()
             )
 

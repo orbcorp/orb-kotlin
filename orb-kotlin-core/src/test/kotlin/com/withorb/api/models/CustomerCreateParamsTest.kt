@@ -26,6 +26,7 @@ internal class CustomerCreateParamsTest {
             )
             .addAdditionalEmail("dev@stainless.com")
             .autoCollection(true)
+            .autoIssuance(true)
             .billingAddress(
                 AddressInput.builder()
                     .city("city")
@@ -100,6 +101,7 @@ internal class CustomerCreateParamsTest {
                 )
                 .addAdditionalEmail("dev@stainless.com")
                 .autoCollection(true)
+                .autoIssuance(true)
                 .billingAddress(
                     AddressInput.builder()
                         .city("city")
@@ -172,6 +174,7 @@ internal class CustomerCreateParamsTest {
             )
         assertThat(body.additionalEmails()).containsExactly("dev@stainless.com")
         assertThat(body.autoCollection()).isEqualTo(true)
+        assertThat(body.autoIssuance()).isEqualTo(true)
         assertThat(body.billingAddress())
             .isEqualTo(
                 AddressInput.builder()

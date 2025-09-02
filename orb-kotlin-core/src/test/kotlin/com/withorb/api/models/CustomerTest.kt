@@ -18,6 +18,7 @@ internal class CustomerTest {
                 .id("id")
                 .addAdditionalEmail("string")
                 .autoCollection(true)
+                .autoIssuance(true)
                 .balance("balance")
                 .billingAddress(
                     Address.builder()
@@ -101,6 +102,7 @@ internal class CustomerTest {
         assertThat(customer.id()).isEqualTo("id")
         assertThat(customer.additionalEmails()).containsExactly("string")
         assertThat(customer.autoCollection()).isEqualTo(true)
+        assertThat(customer.autoIssuance()).isEqualTo(true)
         assertThat(customer.balance()).isEqualTo("balance")
         assertThat(customer.billingAddress())
             .isEqualTo(
@@ -193,6 +195,7 @@ internal class CustomerTest {
                 .id("id")
                 .addAdditionalEmail("string")
                 .autoCollection(true)
+                .autoIssuance(true)
                 .balance("balance")
                 .billingAddress(
                     Address.builder()
