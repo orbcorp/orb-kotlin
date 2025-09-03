@@ -20,7 +20,23 @@ internal class NewPlanThresholdTotalAmountPriceTest {
                 .name("Annual fee")
                 .thresholdTotalAmountConfig(
                     NewPlanThresholdTotalAmountPrice.ThresholdTotalAmountConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addConsumptionTable(
+                            NewPlanThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                                .ConsumptionTable
+                                .builder()
+                                .threshold("threshold")
+                                .totalAmount("total_amount")
+                                .build()
+                        )
+                        .addConsumptionTable(
+                            NewPlanThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                                .ConsumptionTable
+                                .builder()
+                                .threshold("threshold")
+                                .totalAmount("total_amount")
+                                .build()
+                        )
+                        .prorate(true)
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -69,7 +85,21 @@ internal class NewPlanThresholdTotalAmountPriceTest {
         assertThat(newPlanThresholdTotalAmountPrice.thresholdTotalAmountConfig())
             .isEqualTo(
                 NewPlanThresholdTotalAmountPrice.ThresholdTotalAmountConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .addConsumptionTable(
+                        NewPlanThresholdTotalAmountPrice.ThresholdTotalAmountConfig.ConsumptionTable
+                            .builder()
+                            .threshold("threshold")
+                            .totalAmount("total_amount")
+                            .build()
+                    )
+                    .addConsumptionTable(
+                        NewPlanThresholdTotalAmountPrice.ThresholdTotalAmountConfig.ConsumptionTable
+                            .builder()
+                            .threshold("threshold")
+                            .totalAmount("total_amount")
+                            .build()
+                    )
+                    .prorate(true)
                     .build()
             )
         assertThat(newPlanThresholdTotalAmountPrice.billableMetricId())
@@ -134,7 +164,23 @@ internal class NewPlanThresholdTotalAmountPriceTest {
                 .name("Annual fee")
                 .thresholdTotalAmountConfig(
                     NewPlanThresholdTotalAmountPrice.ThresholdTotalAmountConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addConsumptionTable(
+                            NewPlanThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                                .ConsumptionTable
+                                .builder()
+                                .threshold("threshold")
+                                .totalAmount("total_amount")
+                                .build()
+                        )
+                        .addConsumptionTable(
+                            NewPlanThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                                .ConsumptionTable
+                                .builder()
+                                .threshold("threshold")
+                                .totalAmount("total_amount")
+                                .build()
+                        )
+                        .prorate(true)
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

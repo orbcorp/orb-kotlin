@@ -11,6 +11,7 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -121,6 +122,8 @@ private constructor(
     fun currency(): String = currency.getRequired("currency")
 
     /**
+     * Configuration for grouped_tiered_package pricing
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -136,6 +139,8 @@ private constructor(
     fun itemId(): String = itemId.getRequired("item_id")
 
     /**
+     * The pricing model type
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -504,6 +509,7 @@ private constructor(
          */
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+        /** Configuration for grouped_tiered_package pricing */
         fun groupedTieredPackageConfig(groupedTieredPackageConfig: GroupedTieredPackageConfig) =
             groupedTieredPackageConfig(JsonField.of(groupedTieredPackageConfig))
 
@@ -529,6 +535,7 @@ private constructor(
          */
         fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
+        /** The pricing model type */
         fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
         /**
@@ -1058,16 +1065,85 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Configuration for grouped_tiered_package pricing */
     class GroupedTieredPackageConfig
-    @JsonCreator
     private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+        private val groupingKey: JsonField<String>,
+        private val packageSize: JsonField<String>,
+        private val tiers: JsonField<List<Tier>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("grouping_key")
+            @ExcludeMissing
+            groupingKey: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("package_size")
+            @ExcludeMissing
+            packageSize: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("tiers") @ExcludeMissing tiers: JsonField<List<Tier>> = JsonMissing.of(),
+        ) : this(groupingKey, packageSize, tiers, mutableMapOf())
+
+        /**
+         * The event property used to group before tiering
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun groupingKey(): String = groupingKey.getRequired("grouping_key")
+
+        /**
+         * Package size
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun packageSize(): String = packageSize.getRequired("package_size")
+
+        /**
+         * Apply tiered pricing after rounding up the quantity to the package size. Tiers are
+         * defined using exclusive lower bounds.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun tiers(): List<Tier> = tiers.getRequired("tiers")
+
+        /**
+         * Returns the raw JSON value of [groupingKey].
+         *
+         * Unlike [groupingKey], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("grouping_key")
+        @ExcludeMissing
+        fun _groupingKey(): JsonField<String> = groupingKey
+
+        /**
+         * Returns the raw JSON value of [packageSize].
+         *
+         * Unlike [packageSize], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("package_size")
+        @ExcludeMissing
+        fun _packageSize(): JsonField<String> = packageSize
+
+        /**
+         * Returns the raw JSON value of [tiers].
+         *
+         * Unlike [tiers], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("tiers") @ExcludeMissing fun _tiers(): JsonField<List<Tier>> = tiers
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1076,6 +1152,13 @@ private constructor(
             /**
              * Returns a mutable builder for constructing an instance of
              * [GroupedTieredPackageConfig].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .groupingKey()
+             * .packageSize()
+             * .tiers()
+             * ```
              */
             fun builder() = Builder()
         }
@@ -1083,11 +1166,74 @@ private constructor(
         /** A builder for [GroupedTieredPackageConfig]. */
         class Builder internal constructor() {
 
+            private var groupingKey: JsonField<String>? = null
+            private var packageSize: JsonField<String>? = null
+            private var tiers: JsonField<MutableList<Tier>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(groupedTieredPackageConfig: GroupedTieredPackageConfig) = apply {
+                groupingKey = groupedTieredPackageConfig.groupingKey
+                packageSize = groupedTieredPackageConfig.packageSize
+                tiers = groupedTieredPackageConfig.tiers.map { it.toMutableList() }
                 additionalProperties =
                     groupedTieredPackageConfig.additionalProperties.toMutableMap()
+            }
+
+            /** The event property used to group before tiering */
+            fun groupingKey(groupingKey: String) = groupingKey(JsonField.of(groupingKey))
+
+            /**
+             * Sets [Builder.groupingKey] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.groupingKey] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun groupingKey(groupingKey: JsonField<String>) = apply {
+                this.groupingKey = groupingKey
+            }
+
+            /** Package size */
+            fun packageSize(packageSize: String) = packageSize(JsonField.of(packageSize))
+
+            /**
+             * Sets [Builder.packageSize] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.packageSize] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun packageSize(packageSize: JsonField<String>) = apply {
+                this.packageSize = packageSize
+            }
+
+            /**
+             * Apply tiered pricing after rounding up the quantity to the package size. Tiers are
+             * defined using exclusive lower bounds.
+             */
+            fun tiers(tiers: List<Tier>) = tiers(JsonField.of(tiers))
+
+            /**
+             * Sets [Builder.tiers] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.tiers] with a well-typed `List<Tier>` value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun tiers(tiers: JsonField<List<Tier>>) = apply {
+                this.tiers = tiers.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Tier] to [tiers].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addTier(tier: Tier) = apply {
+                tiers =
+                    (tiers ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("tiers", it).add(tier)
+                    }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1113,9 +1259,23 @@ private constructor(
              * Returns an immutable instance of [GroupedTieredPackageConfig].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .groupingKey()
+             * .packageSize()
+             * .tiers()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): GroupedTieredPackageConfig =
-                GroupedTieredPackageConfig(additionalProperties.toImmutable())
+                GroupedTieredPackageConfig(
+                    checkRequired("groupingKey", groupingKey),
+                    checkRequired("packageSize", packageSize),
+                    checkRequired("tiers", tiers).map { it.toImmutable() },
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1125,6 +1285,9 @@ private constructor(
                 return@apply
             }
 
+            groupingKey()
+            packageSize()
+            tiers().forEach { it.validate() }
             validated = true
         }
 
@@ -1143,7 +1306,222 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+            (if (groupingKey.asKnown() == null) 0 else 1) +
+                (if (packageSize.asKnown() == null) 0 else 1) +
+                (tiers.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+
+        /** Configuration for a single tier */
+        class Tier
+        private constructor(
+            private val perUnit: JsonField<String>,
+            private val tierLowerBound: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("per_unit")
+                @ExcludeMissing
+                perUnit: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("tier_lower_bound")
+                @ExcludeMissing
+                tierLowerBound: JsonField<String> = JsonMissing.of(),
+            ) : this(perUnit, tierLowerBound, mutableMapOf())
+
+            /**
+             * Price per package
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun perUnit(): String = perUnit.getRequired("per_unit")
+
+            /**
+             * Tier lower bound
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun tierLowerBound(): String = tierLowerBound.getRequired("tier_lower_bound")
+
+            /**
+             * Returns the raw JSON value of [perUnit].
+             *
+             * Unlike [perUnit], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("per_unit") @ExcludeMissing fun _perUnit(): JsonField<String> = perUnit
+
+            /**
+             * Returns the raw JSON value of [tierLowerBound].
+             *
+             * Unlike [tierLowerBound], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("tier_lower_bound")
+            @ExcludeMissing
+            fun _tierLowerBound(): JsonField<String> = tierLowerBound
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [Tier].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .perUnit()
+                 * .tierLowerBound()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Tier]. */
+            class Builder internal constructor() {
+
+                private var perUnit: JsonField<String>? = null
+                private var tierLowerBound: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(tier: Tier) = apply {
+                    perUnit = tier.perUnit
+                    tierLowerBound = tier.tierLowerBound
+                    additionalProperties = tier.additionalProperties.toMutableMap()
+                }
+
+                /** Price per package */
+                fun perUnit(perUnit: String) = perUnit(JsonField.of(perUnit))
+
+                /**
+                 * Sets [Builder.perUnit] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.perUnit] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun perUnit(perUnit: JsonField<String>) = apply { this.perUnit = perUnit }
+
+                /** Tier lower bound */
+                fun tierLowerBound(tierLowerBound: String) =
+                    tierLowerBound(JsonField.of(tierLowerBound))
+
+                /**
+                 * Sets [Builder.tierLowerBound] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.tierLowerBound] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun tierLowerBound(tierLowerBound: JsonField<String>) = apply {
+                    this.tierLowerBound = tierLowerBound
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [Tier].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .perUnit()
+                 * .tierLowerBound()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): Tier =
+                    Tier(
+                        checkRequired("perUnit", perUnit),
+                        checkRequired("tierLowerBound", tierLowerBound),
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Tier = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                perUnit()
+                tierLowerBound()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (perUnit.asKnown() == null) 0 else 1) +
+                    (if (tierLowerBound.asKnown() == null) 0 else 1)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Tier &&
+                    perUnit == other.perUnit &&
+                    tierLowerBound == other.tierLowerBound &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(perUnit, tierLowerBound, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "Tier{perUnit=$perUnit, tierLowerBound=$tierLowerBound, additionalProperties=$additionalProperties}"
+        }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1151,17 +1529,23 @@ private constructor(
             }
 
             return other is GroupedTieredPackageConfig &&
+                groupingKey == other.groupingKey &&
+                packageSize == other.packageSize &&
+                tiers == other.tiers &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        private val hashCode: Int by lazy {
+            Objects.hash(groupingKey, packageSize, tiers, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedTieredPackageConfig{additionalProperties=$additionalProperties}"
+            "GroupedTieredPackageConfig{groupingKey=$groupingKey, packageSize=$packageSize, tiers=$tiers, additionalProperties=$additionalProperties}"
     }
 
+    /** The pricing model type */
     class ModelType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**

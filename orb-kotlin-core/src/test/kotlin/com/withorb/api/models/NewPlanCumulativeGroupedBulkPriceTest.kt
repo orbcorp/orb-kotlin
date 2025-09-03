@@ -17,7 +17,16 @@ internal class NewPlanCumulativeGroupedBulkPriceTest {
                 .cadence(NewPlanCumulativeGroupedBulkPrice.Cadence.ANNUAL)
                 .cumulativeGroupedBulkConfig(
                     NewPlanCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addDimensionValue(
+                            NewPlanCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig
+                                .DimensionValue
+                                .builder()
+                                .groupingKey("x")
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .group("group")
                         .build()
                 )
                 .itemId("item_id")
@@ -65,7 +74,15 @@ internal class NewPlanCumulativeGroupedBulkPriceTest {
         assertThat(newPlanCumulativeGroupedBulkPrice.cumulativeGroupedBulkConfig())
             .isEqualTo(
                 NewPlanCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .addDimensionValue(
+                        NewPlanCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.DimensionValue
+                            .builder()
+                            .groupingKey("x")
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .group("group")
                     .build()
             )
         assertThat(newPlanCumulativeGroupedBulkPrice.itemId()).isEqualTo("item_id")
@@ -131,7 +148,16 @@ internal class NewPlanCumulativeGroupedBulkPriceTest {
                 .cadence(NewPlanCumulativeGroupedBulkPrice.Cadence.ANNUAL)
                 .cumulativeGroupedBulkConfig(
                     NewPlanCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addDimensionValue(
+                            NewPlanCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig
+                                .DimensionValue
+                                .builder()
+                                .groupingKey("x")
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .group("group")
                         .build()
                 )
                 .itemId("item_id")

@@ -19,7 +19,28 @@ internal class NewFloatingGroupedWithMeteredMinimumPriceTest {
                 .groupedWithMeteredMinimumConfig(
                     NewFloatingGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .minimumUnitAmount("minimum_unit_amount")
+                        .pricingKey("pricing_key")
+                        .addScalingFactor(
+                            NewFloatingGroupedWithMeteredMinimumPrice
+                                .GroupedWithMeteredMinimumConfig
+                                .ScalingFactor
+                                .builder()
+                                .scalingFactor("scaling_factor")
+                                .scalingValue("scaling_value")
+                                .build()
+                        )
+                        .scalingKey("scaling_key")
+                        .addUnitAmount(
+                            NewFloatingGroupedWithMeteredMinimumPrice
+                                .GroupedWithMeteredMinimumConfig
+                                .UnitAmount
+                                .builder()
+                                .pricingValue("pricing_value")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .itemId("item_id")
@@ -68,7 +89,26 @@ internal class NewFloatingGroupedWithMeteredMinimumPriceTest {
         assertThat(newFloatingGroupedWithMeteredMinimumPrice.groupedWithMeteredMinimumConfig())
             .isEqualTo(
                 NewFloatingGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .groupingKey("x")
+                    .minimumUnitAmount("minimum_unit_amount")
+                    .pricingKey("pricing_key")
+                    .addScalingFactor(
+                        NewFloatingGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
+                            .ScalingFactor
+                            .builder()
+                            .scalingFactor("scaling_factor")
+                            .scalingValue("scaling_value")
+                            .build()
+                    )
+                    .scalingKey("scaling_key")
+                    .addUnitAmount(
+                        NewFloatingGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
+                            .UnitAmount
+                            .builder()
+                            .pricingValue("pricing_value")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newFloatingGroupedWithMeteredMinimumPrice.itemId()).isEqualTo("item_id")
@@ -136,7 +176,28 @@ internal class NewFloatingGroupedWithMeteredMinimumPriceTest {
                 .groupedWithMeteredMinimumConfig(
                     NewFloatingGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .minimumUnitAmount("minimum_unit_amount")
+                        .pricingKey("pricing_key")
+                        .addScalingFactor(
+                            NewFloatingGroupedWithMeteredMinimumPrice
+                                .GroupedWithMeteredMinimumConfig
+                                .ScalingFactor
+                                .builder()
+                                .scalingFactor("scaling_factor")
+                                .scalingValue("scaling_value")
+                                .build()
+                        )
+                        .scalingKey("scaling_key")
+                        .addUnitAmount(
+                            NewFloatingGroupedWithMeteredMinimumPrice
+                                .GroupedWithMeteredMinimumConfig
+                                .UnitAmount
+                                .builder()
+                                .pricingValue("pricing_value")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .itemId("item_id")

@@ -22,7 +22,23 @@ internal class NewSubscriptionThresholdTotalAmountPriceTest {
                 .name("Annual fee")
                 .thresholdTotalAmountConfig(
                     NewSubscriptionThresholdTotalAmountPrice.ThresholdTotalAmountConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addConsumptionTable(
+                            NewSubscriptionThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                                .ConsumptionTable
+                                .builder()
+                                .threshold("threshold")
+                                .totalAmount("total_amount")
+                                .build()
+                        )
+                        .addConsumptionTable(
+                            NewSubscriptionThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                                .ConsumptionTable
+                                .builder()
+                                .threshold("threshold")
+                                .totalAmount("total_amount")
+                                .build()
+                        )
+                        .prorate(true)
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -71,7 +87,23 @@ internal class NewSubscriptionThresholdTotalAmountPriceTest {
         assertThat(newSubscriptionThresholdTotalAmountPrice.thresholdTotalAmountConfig())
             .isEqualTo(
                 NewSubscriptionThresholdTotalAmountPrice.ThresholdTotalAmountConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .addConsumptionTable(
+                        NewSubscriptionThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                            .ConsumptionTable
+                            .builder()
+                            .threshold("threshold")
+                            .totalAmount("total_amount")
+                            .build()
+                    )
+                    .addConsumptionTable(
+                        NewSubscriptionThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                            .ConsumptionTable
+                            .builder()
+                            .threshold("threshold")
+                            .totalAmount("total_amount")
+                            .build()
+                    )
+                    .prorate(true)
                     .build()
             )
         assertThat(newSubscriptionThresholdTotalAmountPrice.billableMetricId())
@@ -138,7 +170,23 @@ internal class NewSubscriptionThresholdTotalAmountPriceTest {
                 .name("Annual fee")
                 .thresholdTotalAmountConfig(
                     NewSubscriptionThresholdTotalAmountPrice.ThresholdTotalAmountConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addConsumptionTable(
+                            NewSubscriptionThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                                .ConsumptionTable
+                                .builder()
+                                .threshold("threshold")
+                                .totalAmount("total_amount")
+                                .build()
+                        )
+                        .addConsumptionTable(
+                            NewSubscriptionThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                                .ConsumptionTable
+                                .builder()
+                                .threshold("threshold")
+                                .totalAmount("total_amount")
+                                .build()
+                        )
+                        .prorate(true)
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

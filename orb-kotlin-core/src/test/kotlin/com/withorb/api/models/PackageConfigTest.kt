@@ -12,17 +12,17 @@ internal class PackageConfigTest {
     @Test
     fun create() {
         val packageConfig =
-            PackageConfig.builder().packageAmount("package_amount").packageSize(0L).build()
+            PackageConfig.builder().packageAmount("package_amount").packageSize(1L).build()
 
         assertThat(packageConfig.packageAmount()).isEqualTo("package_amount")
-        assertThat(packageConfig.packageSize()).isEqualTo(0L)
+        assertThat(packageConfig.packageSize()).isEqualTo(1L)
     }
 
     @Test
     fun roundtrip() {
         val jsonMapper = jsonMapper()
         val packageConfig =
-            PackageConfig.builder().packageAmount("package_amount").packageSize(0L).build()
+            PackageConfig.builder().packageAmount("package_amount").packageSize(1L).build()
 
         val roundtrippedPackageConfig =
             jsonMapper.readValue(

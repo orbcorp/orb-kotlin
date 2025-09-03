@@ -60,7 +60,10 @@ internal class PlanServiceTest {
                                     .modelType(NewPlanUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
                                     .unitConfig(
-                                        UnitConfig.builder().unitAmount("unit_amount").build()
+                                        UnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .scalingFactor(0.0)
+                                            .build()
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)

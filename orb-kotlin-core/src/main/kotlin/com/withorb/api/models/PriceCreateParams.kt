@@ -49,6 +49,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
+    /** New floating price request body params. */
     fun body(): Body = body
 
     /** Additional headers to send with the request. */
@@ -85,26 +86,23 @@ private constructor(
             additionalQueryParams = priceCreateParams.additionalQueryParams.toBuilder()
         }
 
+        /** New floating price request body params. */
         fun body(body: Body) = apply { this.body = body }
 
         /** Alias for calling [body] with `Body.ofUnit(unit)`. */
         fun body(unit: NewFloatingUnitPrice) = body(Body.ofUnit(unit))
-
-        /** Alias for calling [body] with `Body.ofPackage(package_)`. */
-        fun body(package_: NewFloatingPackagePrice) = body(Body.ofPackage(package_))
-
-        /** Alias for calling [body] with `Body.ofMatrix(matrix)`. */
-        fun body(matrix: NewFloatingMatrixPrice) = body(Body.ofMatrix(matrix))
-
-        /** Alias for calling [body] with `Body.ofMatrixWithAllocation(matrixWithAllocation)`. */
-        fun body(matrixWithAllocation: NewFloatingMatrixWithAllocationPrice) =
-            body(Body.ofMatrixWithAllocation(matrixWithAllocation))
 
         /** Alias for calling [body] with `Body.ofTiered(tiered)`. */
         fun body(tiered: NewFloatingTieredPrice) = body(Body.ofTiered(tiered))
 
         /** Alias for calling [body] with `Body.ofBulk(bulk)`. */
         fun body(bulk: NewFloatingBulkPrice) = body(Body.ofBulk(bulk))
+
+        /** Alias for calling [body] with `Body.ofPackage(package_)`. */
+        fun body(package_: NewFloatingPackagePrice) = body(Body.ofPackage(package_))
+
+        /** Alias for calling [body] with `Body.ofMatrix(matrix)`. */
+        fun body(matrix: NewFloatingMatrixPrice) = body(Body.ofMatrix(matrix))
 
         /** Alias for calling [body] with `Body.ofThresholdTotalAmount(thresholdTotalAmount)`. */
         fun body(thresholdTotalAmount: NewFloatingThresholdTotalAmountPrice) =
@@ -114,21 +112,13 @@ private constructor(
         fun body(tieredPackage: NewFloatingTieredPackagePrice) =
             body(Body.ofTieredPackage(tieredPackage))
 
-        /** Alias for calling [body] with `Body.ofGroupedTiered(groupedTiered)`. */
-        fun body(groupedTiered: NewFloatingGroupedTieredPrice) =
-            body(Body.ofGroupedTiered(groupedTiered))
-
-        /** Alias for calling [body] with `Body.ofMaxGroupTieredPackage(maxGroupTieredPackage)`. */
-        fun body(maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice) =
-            body(Body.ofMaxGroupTieredPackage(maxGroupTieredPackage))
-
         /** Alias for calling [body] with `Body.ofTieredWithMinimum(tieredWithMinimum)`. */
         fun body(tieredWithMinimum: NewFloatingTieredWithMinimumPrice) =
             body(Body.ofTieredWithMinimum(tieredWithMinimum))
 
-        /** Alias for calling [body] with `Body.ofPackageWithAllocation(packageWithAllocation)`. */
-        fun body(packageWithAllocation: NewFloatingPackageWithAllocationPrice) =
-            body(Body.ofPackageWithAllocation(packageWithAllocation))
+        /** Alias for calling [body] with `Body.ofGroupedTiered(groupedTiered)`. */
+        fun body(groupedTiered: NewFloatingGroupedTieredPrice) =
+            body(Body.ofGroupedTiered(groupedTiered))
 
         /**
          * Alias for calling [body] with
@@ -137,9 +127,17 @@ private constructor(
         fun body(tieredPackageWithMinimum: NewFloatingTieredPackageWithMinimumPrice) =
             body(Body.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
 
+        /** Alias for calling [body] with `Body.ofPackageWithAllocation(packageWithAllocation)`. */
+        fun body(packageWithAllocation: NewFloatingPackageWithAllocationPrice) =
+            body(Body.ofPackageWithAllocation(packageWithAllocation))
+
         /** Alias for calling [body] with `Body.ofUnitWithPercent(unitWithPercent)`. */
         fun body(unitWithPercent: NewFloatingUnitWithPercentPrice) =
             body(Body.ofUnitWithPercent(unitWithPercent))
+
+        /** Alias for calling [body] with `Body.ofMatrixWithAllocation(matrixWithAllocation)`. */
+        fun body(matrixWithAllocation: NewFloatingMatrixWithAllocationPrice) =
+            body(Body.ofMatrixWithAllocation(matrixWithAllocation))
 
         /** Alias for calling [body] with `Body.ofTieredWithProration(tieredWithProration)`. */
         fun body(tieredWithProration: NewFloatingTieredWithProrationPrice) =
@@ -152,6 +150,10 @@ private constructor(
         /** Alias for calling [body] with `Body.ofGroupedAllocation(groupedAllocation)`. */
         fun body(groupedAllocation: NewFloatingGroupedAllocationPrice) =
             body(Body.ofGroupedAllocation(groupedAllocation))
+
+        /** Alias for calling [body] with `Body.ofBulkWithProration(bulkWithProration)`. */
+        fun body(bulkWithProration: NewFloatingBulkWithProrationPrice) =
+            body(Body.ofBulkWithProration(bulkWithProration))
 
         /**
          * Alias for calling [body] with
@@ -167,17 +169,24 @@ private constructor(
         fun body(groupedWithMeteredMinimum: NewFloatingGroupedWithMeteredMinimumPrice) =
             body(Body.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
+        /**
+         * Alias for calling [body] with
+         * `Body.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         */
+        fun body(groupedWithMinMaxThresholds: Body.GroupedWithMinMaxThresholds) =
+            body(Body.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+
         /** Alias for calling [body] with `Body.ofMatrixWithDisplayName(matrixWithDisplayName)`. */
         fun body(matrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice) =
             body(Body.ofMatrixWithDisplayName(matrixWithDisplayName))
 
-        /** Alias for calling [body] with `Body.ofBulkWithProration(bulkWithProration)`. */
-        fun body(bulkWithProration: NewFloatingBulkWithProrationPrice) =
-            body(Body.ofBulkWithProration(bulkWithProration))
-
         /** Alias for calling [body] with `Body.ofGroupedTieredPackage(groupedTieredPackage)`. */
         fun body(groupedTieredPackage: NewFloatingGroupedTieredPackagePrice) =
             body(Body.ofGroupedTieredPackage(groupedTieredPackage))
+
+        /** Alias for calling [body] with `Body.ofMaxGroupTieredPackage(maxGroupTieredPackage)`. */
+        fun body(maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice) =
+            body(Body.ofMaxGroupTieredPackage(maxGroupTieredPackage))
 
         /**
          * Alias for calling [body] with
@@ -196,13 +205,6 @@ private constructor(
         /** Alias for calling [body] with `Body.ofCumulativeGroupedBulk(cumulativeGroupedBulk)`. */
         fun body(cumulativeGroupedBulk: NewFloatingCumulativeGroupedBulkPrice) =
             body(Body.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
-
-        /**
-         * Alias for calling [body] with
-         * `Body.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
-         */
-        fun body(groupedWithMinMaxThresholds: Body.GroupedWithMinMaxThresholds) =
-            body(Body.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
 
         /** Alias for calling [body] with `Body.ofMinimum(minimum)`. */
         fun body(minimum: NewFloatingMinimumCompositePrice) = body(Body.ofMinimum(minimum))
@@ -331,71 +333,70 @@ private constructor(
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
+    /** New floating price request body params. */
     @JsonDeserialize(using = Body.Deserializer::class)
     @JsonSerialize(using = Body.Serializer::class)
     class Body
     private constructor(
         private val unit: NewFloatingUnitPrice? = null,
-        private val package_: NewFloatingPackagePrice? = null,
-        private val matrix: NewFloatingMatrixPrice? = null,
-        private val matrixWithAllocation: NewFloatingMatrixWithAllocationPrice? = null,
         private val tiered: NewFloatingTieredPrice? = null,
         private val bulk: NewFloatingBulkPrice? = null,
+        private val package_: NewFloatingPackagePrice? = null,
+        private val matrix: NewFloatingMatrixPrice? = null,
         private val thresholdTotalAmount: NewFloatingThresholdTotalAmountPrice? = null,
         private val tieredPackage: NewFloatingTieredPackagePrice? = null,
-        private val groupedTiered: NewFloatingGroupedTieredPrice? = null,
-        private val maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice? = null,
         private val tieredWithMinimum: NewFloatingTieredWithMinimumPrice? = null,
-        private val packageWithAllocation: NewFloatingPackageWithAllocationPrice? = null,
+        private val groupedTiered: NewFloatingGroupedTieredPrice? = null,
         private val tieredPackageWithMinimum: NewFloatingTieredPackageWithMinimumPrice? = null,
+        private val packageWithAllocation: NewFloatingPackageWithAllocationPrice? = null,
         private val unitWithPercent: NewFloatingUnitWithPercentPrice? = null,
+        private val matrixWithAllocation: NewFloatingMatrixWithAllocationPrice? = null,
         private val tieredWithProration: NewFloatingTieredWithProrationPrice? = null,
         private val unitWithProration: NewFloatingUnitWithProrationPrice? = null,
         private val groupedAllocation: NewFloatingGroupedAllocationPrice? = null,
+        private val bulkWithProration: NewFloatingBulkWithProrationPrice? = null,
         private val groupedWithProratedMinimum: NewFloatingGroupedWithProratedMinimumPrice? = null,
         private val groupedWithMeteredMinimum: NewFloatingGroupedWithMeteredMinimumPrice? = null,
+        private val groupedWithMinMaxThresholds: GroupedWithMinMaxThresholds? = null,
         private val matrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice? = null,
-        private val bulkWithProration: NewFloatingBulkWithProrationPrice? = null,
         private val groupedTieredPackage: NewFloatingGroupedTieredPackagePrice? = null,
+        private val maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice? = null,
         private val scalableMatrixWithUnitPricing: NewFloatingScalableMatrixWithUnitPricingPrice? =
             null,
         private val scalableMatrixWithTieredPricing:
             NewFloatingScalableMatrixWithTieredPricingPrice? =
             null,
         private val cumulativeGroupedBulk: NewFloatingCumulativeGroupedBulkPrice? = null,
-        private val groupedWithMinMaxThresholds: GroupedWithMinMaxThresholds? = null,
         private val minimum: NewFloatingMinimumCompositePrice? = null,
         private val _json: JsonValue? = null,
     ) {
 
         fun unit(): NewFloatingUnitPrice? = unit
 
-        fun package_(): NewFloatingPackagePrice? = package_
-
-        fun matrix(): NewFloatingMatrixPrice? = matrix
-
-        fun matrixWithAllocation(): NewFloatingMatrixWithAllocationPrice? = matrixWithAllocation
-
         fun tiered(): NewFloatingTieredPrice? = tiered
 
         fun bulk(): NewFloatingBulkPrice? = bulk
+
+        fun package_(): NewFloatingPackagePrice? = package_
+
+        fun matrix(): NewFloatingMatrixPrice? = matrix
 
         fun thresholdTotalAmount(): NewFloatingThresholdTotalAmountPrice? = thresholdTotalAmount
 
         fun tieredPackage(): NewFloatingTieredPackagePrice? = tieredPackage
 
-        fun groupedTiered(): NewFloatingGroupedTieredPrice? = groupedTiered
-
-        fun maxGroupTieredPackage(): NewFloatingMaxGroupTieredPackagePrice? = maxGroupTieredPackage
-
         fun tieredWithMinimum(): NewFloatingTieredWithMinimumPrice? = tieredWithMinimum
 
-        fun packageWithAllocation(): NewFloatingPackageWithAllocationPrice? = packageWithAllocation
+        fun groupedTiered(): NewFloatingGroupedTieredPrice? = groupedTiered
 
         fun tieredPackageWithMinimum(): NewFloatingTieredPackageWithMinimumPrice? =
             tieredPackageWithMinimum
 
+        fun packageWithAllocation(): NewFloatingPackageWithAllocationPrice? = packageWithAllocation
+
         fun unitWithPercent(): NewFloatingUnitWithPercentPrice? = unitWithPercent
+
+        fun matrixWithAllocation(): NewFloatingMatrixWithAllocationPrice? = matrixWithAllocation
 
         fun tieredWithProration(): NewFloatingTieredWithProrationPrice? = tieredWithProration
 
@@ -403,17 +404,22 @@ private constructor(
 
         fun groupedAllocation(): NewFloatingGroupedAllocationPrice? = groupedAllocation
 
+        fun bulkWithProration(): NewFloatingBulkWithProrationPrice? = bulkWithProration
+
         fun groupedWithProratedMinimum(): NewFloatingGroupedWithProratedMinimumPrice? =
             groupedWithProratedMinimum
 
         fun groupedWithMeteredMinimum(): NewFloatingGroupedWithMeteredMinimumPrice? =
             groupedWithMeteredMinimum
 
+        fun groupedWithMinMaxThresholds(): GroupedWithMinMaxThresholds? =
+            groupedWithMinMaxThresholds
+
         fun matrixWithDisplayName(): NewFloatingMatrixWithDisplayNamePrice? = matrixWithDisplayName
 
-        fun bulkWithProration(): NewFloatingBulkWithProrationPrice? = bulkWithProration
-
         fun groupedTieredPackage(): NewFloatingGroupedTieredPackagePrice? = groupedTieredPackage
+
+        fun maxGroupTieredPackage(): NewFloatingMaxGroupTieredPackagePrice? = maxGroupTieredPackage
 
         fun scalableMatrixWithUnitPricing(): NewFloatingScalableMatrixWithUnitPricingPrice? =
             scalableMatrixWithUnitPricing
@@ -423,38 +429,33 @@ private constructor(
 
         fun cumulativeGroupedBulk(): NewFloatingCumulativeGroupedBulkPrice? = cumulativeGroupedBulk
 
-        fun groupedWithMinMaxThresholds(): GroupedWithMinMaxThresholds? =
-            groupedWithMinMaxThresholds
-
         fun minimum(): NewFloatingMinimumCompositePrice? = minimum
 
         fun isUnit(): Boolean = unit != null
-
-        fun isPackage(): Boolean = package_ != null
-
-        fun isMatrix(): Boolean = matrix != null
-
-        fun isMatrixWithAllocation(): Boolean = matrixWithAllocation != null
 
         fun isTiered(): Boolean = tiered != null
 
         fun isBulk(): Boolean = bulk != null
 
+        fun isPackage(): Boolean = package_ != null
+
+        fun isMatrix(): Boolean = matrix != null
+
         fun isThresholdTotalAmount(): Boolean = thresholdTotalAmount != null
 
         fun isTieredPackage(): Boolean = tieredPackage != null
 
-        fun isGroupedTiered(): Boolean = groupedTiered != null
-
-        fun isMaxGroupTieredPackage(): Boolean = maxGroupTieredPackage != null
-
         fun isTieredWithMinimum(): Boolean = tieredWithMinimum != null
 
-        fun isPackageWithAllocation(): Boolean = packageWithAllocation != null
+        fun isGroupedTiered(): Boolean = groupedTiered != null
 
         fun isTieredPackageWithMinimum(): Boolean = tieredPackageWithMinimum != null
 
+        fun isPackageWithAllocation(): Boolean = packageWithAllocation != null
+
         fun isUnitWithPercent(): Boolean = unitWithPercent != null
+
+        fun isMatrixWithAllocation(): Boolean = matrixWithAllocation != null
 
         fun isTieredWithProration(): Boolean = tieredWithProration != null
 
@@ -462,15 +463,19 @@ private constructor(
 
         fun isGroupedAllocation(): Boolean = groupedAllocation != null
 
+        fun isBulkWithProration(): Boolean = bulkWithProration != null
+
         fun isGroupedWithProratedMinimum(): Boolean = groupedWithProratedMinimum != null
 
         fun isGroupedWithMeteredMinimum(): Boolean = groupedWithMeteredMinimum != null
 
+        fun isGroupedWithMinMaxThresholds(): Boolean = groupedWithMinMaxThresholds != null
+
         fun isMatrixWithDisplayName(): Boolean = matrixWithDisplayName != null
 
-        fun isBulkWithProration(): Boolean = bulkWithProration != null
-
         fun isGroupedTieredPackage(): Boolean = groupedTieredPackage != null
+
+        fun isMaxGroupTieredPackage(): Boolean = maxGroupTieredPackage != null
 
         fun isScalableMatrixWithUnitPricing(): Boolean = scalableMatrixWithUnitPricing != null
 
@@ -478,22 +483,17 @@ private constructor(
 
         fun isCumulativeGroupedBulk(): Boolean = cumulativeGroupedBulk != null
 
-        fun isGroupedWithMinMaxThresholds(): Boolean = groupedWithMinMaxThresholds != null
-
         fun isMinimum(): Boolean = minimum != null
 
         fun asUnit(): NewFloatingUnitPrice = unit.getOrThrow("unit")
 
-        fun asPackage(): NewFloatingPackagePrice = package_.getOrThrow("package_")
-
-        fun asMatrix(): NewFloatingMatrixPrice = matrix.getOrThrow("matrix")
-
-        fun asMatrixWithAllocation(): NewFloatingMatrixWithAllocationPrice =
-            matrixWithAllocation.getOrThrow("matrixWithAllocation")
-
         fun asTiered(): NewFloatingTieredPrice = tiered.getOrThrow("tiered")
 
         fun asBulk(): NewFloatingBulkPrice = bulk.getOrThrow("bulk")
+
+        fun asPackage(): NewFloatingPackagePrice = package_.getOrThrow("package_")
+
+        fun asMatrix(): NewFloatingMatrixPrice = matrix.getOrThrow("matrix")
 
         fun asThresholdTotalAmount(): NewFloatingThresholdTotalAmountPrice =
             thresholdTotalAmount.getOrThrow("thresholdTotalAmount")
@@ -501,23 +501,23 @@ private constructor(
         fun asTieredPackage(): NewFloatingTieredPackagePrice =
             tieredPackage.getOrThrow("tieredPackage")
 
-        fun asGroupedTiered(): NewFloatingGroupedTieredPrice =
-            groupedTiered.getOrThrow("groupedTiered")
-
-        fun asMaxGroupTieredPackage(): NewFloatingMaxGroupTieredPackagePrice =
-            maxGroupTieredPackage.getOrThrow("maxGroupTieredPackage")
-
         fun asTieredWithMinimum(): NewFloatingTieredWithMinimumPrice =
             tieredWithMinimum.getOrThrow("tieredWithMinimum")
 
-        fun asPackageWithAllocation(): NewFloatingPackageWithAllocationPrice =
-            packageWithAllocation.getOrThrow("packageWithAllocation")
+        fun asGroupedTiered(): NewFloatingGroupedTieredPrice =
+            groupedTiered.getOrThrow("groupedTiered")
 
         fun asTieredPackageWithMinimum(): NewFloatingTieredPackageWithMinimumPrice =
             tieredPackageWithMinimum.getOrThrow("tieredPackageWithMinimum")
 
+        fun asPackageWithAllocation(): NewFloatingPackageWithAllocationPrice =
+            packageWithAllocation.getOrThrow("packageWithAllocation")
+
         fun asUnitWithPercent(): NewFloatingUnitWithPercentPrice =
             unitWithPercent.getOrThrow("unitWithPercent")
+
+        fun asMatrixWithAllocation(): NewFloatingMatrixWithAllocationPrice =
+            matrixWithAllocation.getOrThrow("matrixWithAllocation")
 
         fun asTieredWithProration(): NewFloatingTieredWithProrationPrice =
             tieredWithProration.getOrThrow("tieredWithProration")
@@ -528,20 +528,26 @@ private constructor(
         fun asGroupedAllocation(): NewFloatingGroupedAllocationPrice =
             groupedAllocation.getOrThrow("groupedAllocation")
 
+        fun asBulkWithProration(): NewFloatingBulkWithProrationPrice =
+            bulkWithProration.getOrThrow("bulkWithProration")
+
         fun asGroupedWithProratedMinimum(): NewFloatingGroupedWithProratedMinimumPrice =
             groupedWithProratedMinimum.getOrThrow("groupedWithProratedMinimum")
 
         fun asGroupedWithMeteredMinimum(): NewFloatingGroupedWithMeteredMinimumPrice =
             groupedWithMeteredMinimum.getOrThrow("groupedWithMeteredMinimum")
 
+        fun asGroupedWithMinMaxThresholds(): GroupedWithMinMaxThresholds =
+            groupedWithMinMaxThresholds.getOrThrow("groupedWithMinMaxThresholds")
+
         fun asMatrixWithDisplayName(): NewFloatingMatrixWithDisplayNamePrice =
             matrixWithDisplayName.getOrThrow("matrixWithDisplayName")
 
-        fun asBulkWithProration(): NewFloatingBulkWithProrationPrice =
-            bulkWithProration.getOrThrow("bulkWithProration")
-
         fun asGroupedTieredPackage(): NewFloatingGroupedTieredPackagePrice =
             groupedTieredPackage.getOrThrow("groupedTieredPackage")
+
+        fun asMaxGroupTieredPackage(): NewFloatingMaxGroupTieredPackagePrice =
+            maxGroupTieredPackage.getOrThrow("maxGroupTieredPackage")
 
         fun asScalableMatrixWithUnitPricing(): NewFloatingScalableMatrixWithUnitPricingPrice =
             scalableMatrixWithUnitPricing.getOrThrow("scalableMatrixWithUnitPricing")
@@ -552,9 +558,6 @@ private constructor(
         fun asCumulativeGroupedBulk(): NewFloatingCumulativeGroupedBulkPrice =
             cumulativeGroupedBulk.getOrThrow("cumulativeGroupedBulk")
 
-        fun asGroupedWithMinMaxThresholds(): GroupedWithMinMaxThresholds =
-            groupedWithMinMaxThresholds.getOrThrow("groupedWithMinMaxThresholds")
-
         fun asMinimum(): NewFloatingMinimumCompositePrice = minimum.getOrThrow("minimum")
 
         fun _json(): JsonValue? = _json
@@ -562,44 +565,44 @@ private constructor(
         fun <T> accept(visitor: Visitor<T>): T =
             when {
                 unit != null -> visitor.visitUnit(unit)
-                package_ != null -> visitor.visitPackage(package_)
-                matrix != null -> visitor.visitMatrix(matrix)
-                matrixWithAllocation != null ->
-                    visitor.visitMatrixWithAllocation(matrixWithAllocation)
                 tiered != null -> visitor.visitTiered(tiered)
                 bulk != null -> visitor.visitBulk(bulk)
+                package_ != null -> visitor.visitPackage(package_)
+                matrix != null -> visitor.visitMatrix(matrix)
                 thresholdTotalAmount != null ->
                     visitor.visitThresholdTotalAmount(thresholdTotalAmount)
                 tieredPackage != null -> visitor.visitTieredPackage(tieredPackage)
-                groupedTiered != null -> visitor.visitGroupedTiered(groupedTiered)
-                maxGroupTieredPackage != null ->
-                    visitor.visitMaxGroupTieredPackage(maxGroupTieredPackage)
                 tieredWithMinimum != null -> visitor.visitTieredWithMinimum(tieredWithMinimum)
-                packageWithAllocation != null ->
-                    visitor.visitPackageWithAllocation(packageWithAllocation)
+                groupedTiered != null -> visitor.visitGroupedTiered(groupedTiered)
                 tieredPackageWithMinimum != null ->
                     visitor.visitTieredPackageWithMinimum(tieredPackageWithMinimum)
+                packageWithAllocation != null ->
+                    visitor.visitPackageWithAllocation(packageWithAllocation)
                 unitWithPercent != null -> visitor.visitUnitWithPercent(unitWithPercent)
+                matrixWithAllocation != null ->
+                    visitor.visitMatrixWithAllocation(matrixWithAllocation)
                 tieredWithProration != null -> visitor.visitTieredWithProration(tieredWithProration)
                 unitWithProration != null -> visitor.visitUnitWithProration(unitWithProration)
                 groupedAllocation != null -> visitor.visitGroupedAllocation(groupedAllocation)
+                bulkWithProration != null -> visitor.visitBulkWithProration(bulkWithProration)
                 groupedWithProratedMinimum != null ->
                     visitor.visitGroupedWithProratedMinimum(groupedWithProratedMinimum)
                 groupedWithMeteredMinimum != null ->
                     visitor.visitGroupedWithMeteredMinimum(groupedWithMeteredMinimum)
+                groupedWithMinMaxThresholds != null ->
+                    visitor.visitGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)
                 matrixWithDisplayName != null ->
                     visitor.visitMatrixWithDisplayName(matrixWithDisplayName)
-                bulkWithProration != null -> visitor.visitBulkWithProration(bulkWithProration)
                 groupedTieredPackage != null ->
                     visitor.visitGroupedTieredPackage(groupedTieredPackage)
+                maxGroupTieredPackage != null ->
+                    visitor.visitMaxGroupTieredPackage(maxGroupTieredPackage)
                 scalableMatrixWithUnitPricing != null ->
                     visitor.visitScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)
                 scalableMatrixWithTieredPricing != null ->
                     visitor.visitScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)
                 cumulativeGroupedBulk != null ->
                     visitor.visitCumulativeGroupedBulk(cumulativeGroupedBulk)
-                groupedWithMinMaxThresholds != null ->
-                    visitor.visitGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)
                 minimum != null -> visitor.visitMinimum(minimum)
                 else -> visitor.unknown(_json)
             }
@@ -617,26 +620,20 @@ private constructor(
                         unit.validate()
                     }
 
-                    override fun visitPackage(package_: NewFloatingPackagePrice) {
-                        package_.validate()
-                    }
-
-                    override fun visitMatrix(matrix: NewFloatingMatrixPrice) {
-                        matrix.validate()
-                    }
-
-                    override fun visitMatrixWithAllocation(
-                        matrixWithAllocation: NewFloatingMatrixWithAllocationPrice
-                    ) {
-                        matrixWithAllocation.validate()
-                    }
-
                     override fun visitTiered(tiered: NewFloatingTieredPrice) {
                         tiered.validate()
                     }
 
                     override fun visitBulk(bulk: NewFloatingBulkPrice) {
                         bulk.validate()
+                    }
+
+                    override fun visitPackage(package_: NewFloatingPackagePrice) {
+                        package_.validate()
+                    }
+
+                    override fun visitMatrix(matrix: NewFloatingMatrixPrice) {
+                        matrix.validate()
                     }
 
                     override fun visitThresholdTotalAmount(
@@ -649,26 +646,14 @@ private constructor(
                         tieredPackage.validate()
                     }
 
-                    override fun visitGroupedTiered(groupedTiered: NewFloatingGroupedTieredPrice) {
-                        groupedTiered.validate()
-                    }
-
-                    override fun visitMaxGroupTieredPackage(
-                        maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
-                    ) {
-                        maxGroupTieredPackage.validate()
-                    }
-
                     override fun visitTieredWithMinimum(
                         tieredWithMinimum: NewFloatingTieredWithMinimumPrice
                     ) {
                         tieredWithMinimum.validate()
                     }
 
-                    override fun visitPackageWithAllocation(
-                        packageWithAllocation: NewFloatingPackageWithAllocationPrice
-                    ) {
-                        packageWithAllocation.validate()
+                    override fun visitGroupedTiered(groupedTiered: NewFloatingGroupedTieredPrice) {
+                        groupedTiered.validate()
                     }
 
                     override fun visitTieredPackageWithMinimum(
@@ -677,10 +662,22 @@ private constructor(
                         tieredPackageWithMinimum.validate()
                     }
 
+                    override fun visitPackageWithAllocation(
+                        packageWithAllocation: NewFloatingPackageWithAllocationPrice
+                    ) {
+                        packageWithAllocation.validate()
+                    }
+
                     override fun visitUnitWithPercent(
                         unitWithPercent: NewFloatingUnitWithPercentPrice
                     ) {
                         unitWithPercent.validate()
+                    }
+
+                    override fun visitMatrixWithAllocation(
+                        matrixWithAllocation: NewFloatingMatrixWithAllocationPrice
+                    ) {
+                        matrixWithAllocation.validate()
                     }
 
                     override fun visitTieredWithProration(
@@ -701,6 +698,12 @@ private constructor(
                         groupedAllocation.validate()
                     }
 
+                    override fun visitBulkWithProration(
+                        bulkWithProration: NewFloatingBulkWithProrationPrice
+                    ) {
+                        bulkWithProration.validate()
+                    }
+
                     override fun visitGroupedWithProratedMinimum(
                         groupedWithProratedMinimum: NewFloatingGroupedWithProratedMinimumPrice
                     ) {
@@ -713,22 +716,28 @@ private constructor(
                         groupedWithMeteredMinimum.validate()
                     }
 
+                    override fun visitGroupedWithMinMaxThresholds(
+                        groupedWithMinMaxThresholds: GroupedWithMinMaxThresholds
+                    ) {
+                        groupedWithMinMaxThresholds.validate()
+                    }
+
                     override fun visitMatrixWithDisplayName(
                         matrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice
                     ) {
                         matrixWithDisplayName.validate()
                     }
 
-                    override fun visitBulkWithProration(
-                        bulkWithProration: NewFloatingBulkWithProrationPrice
-                    ) {
-                        bulkWithProration.validate()
-                    }
-
                     override fun visitGroupedTieredPackage(
                         groupedTieredPackage: NewFloatingGroupedTieredPackagePrice
                     ) {
                         groupedTieredPackage.validate()
+                    }
+
+                    override fun visitMaxGroupTieredPackage(
+                        maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
+                    ) {
+                        maxGroupTieredPackage.validate()
                     }
 
                     override fun visitScalableMatrixWithUnitPricing(
@@ -748,12 +757,6 @@ private constructor(
                         cumulativeGroupedBulk: NewFloatingCumulativeGroupedBulkPrice
                     ) {
                         cumulativeGroupedBulk.validate()
-                    }
-
-                    override fun visitGroupedWithMinMaxThresholds(
-                        groupedWithMinMaxThresholds: GroupedWithMinMaxThresholds
-                    ) {
-                        groupedWithMinMaxThresholds.validate()
                     }
 
                     override fun visitMinimum(minimum: NewFloatingMinimumCompositePrice) {
@@ -783,18 +786,14 @@ private constructor(
                 object : Visitor<Int> {
                     override fun visitUnit(unit: NewFloatingUnitPrice) = unit.validity()
 
+                    override fun visitTiered(tiered: NewFloatingTieredPrice) = tiered.validity()
+
+                    override fun visitBulk(bulk: NewFloatingBulkPrice) = bulk.validity()
+
                     override fun visitPackage(package_: NewFloatingPackagePrice) =
                         package_.validity()
 
                     override fun visitMatrix(matrix: NewFloatingMatrixPrice) = matrix.validity()
-
-                    override fun visitMatrixWithAllocation(
-                        matrixWithAllocation: NewFloatingMatrixWithAllocationPrice
-                    ) = matrixWithAllocation.validity()
-
-                    override fun visitTiered(tiered: NewFloatingTieredPrice) = tiered.validity()
-
-                    override fun visitBulk(bulk: NewFloatingBulkPrice) = bulk.validity()
 
                     override fun visitThresholdTotalAmount(
                         thresholdTotalAmount: NewFloatingThresholdTotalAmountPrice
@@ -803,28 +802,28 @@ private constructor(
                     override fun visitTieredPackage(tieredPackage: NewFloatingTieredPackagePrice) =
                         tieredPackage.validity()
 
-                    override fun visitGroupedTiered(groupedTiered: NewFloatingGroupedTieredPrice) =
-                        groupedTiered.validity()
-
-                    override fun visitMaxGroupTieredPackage(
-                        maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
-                    ) = maxGroupTieredPackage.validity()
-
                     override fun visitTieredWithMinimum(
                         tieredWithMinimum: NewFloatingTieredWithMinimumPrice
                     ) = tieredWithMinimum.validity()
 
-                    override fun visitPackageWithAllocation(
-                        packageWithAllocation: NewFloatingPackageWithAllocationPrice
-                    ) = packageWithAllocation.validity()
+                    override fun visitGroupedTiered(groupedTiered: NewFloatingGroupedTieredPrice) =
+                        groupedTiered.validity()
 
                     override fun visitTieredPackageWithMinimum(
                         tieredPackageWithMinimum: NewFloatingTieredPackageWithMinimumPrice
                     ) = tieredPackageWithMinimum.validity()
 
+                    override fun visitPackageWithAllocation(
+                        packageWithAllocation: NewFloatingPackageWithAllocationPrice
+                    ) = packageWithAllocation.validity()
+
                     override fun visitUnitWithPercent(
                         unitWithPercent: NewFloatingUnitWithPercentPrice
                     ) = unitWithPercent.validity()
+
+                    override fun visitMatrixWithAllocation(
+                        matrixWithAllocation: NewFloatingMatrixWithAllocationPrice
+                    ) = matrixWithAllocation.validity()
 
                     override fun visitTieredWithProration(
                         tieredWithProration: NewFloatingTieredWithProrationPrice
@@ -838,6 +837,10 @@ private constructor(
                         groupedAllocation: NewFloatingGroupedAllocationPrice
                     ) = groupedAllocation.validity()
 
+                    override fun visitBulkWithProration(
+                        bulkWithProration: NewFloatingBulkWithProrationPrice
+                    ) = bulkWithProration.validity()
+
                     override fun visitGroupedWithProratedMinimum(
                         groupedWithProratedMinimum: NewFloatingGroupedWithProratedMinimumPrice
                     ) = groupedWithProratedMinimum.validity()
@@ -846,17 +849,21 @@ private constructor(
                         groupedWithMeteredMinimum: NewFloatingGroupedWithMeteredMinimumPrice
                     ) = groupedWithMeteredMinimum.validity()
 
+                    override fun visitGroupedWithMinMaxThresholds(
+                        groupedWithMinMaxThresholds: GroupedWithMinMaxThresholds
+                    ) = groupedWithMinMaxThresholds.validity()
+
                     override fun visitMatrixWithDisplayName(
                         matrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice
                     ) = matrixWithDisplayName.validity()
 
-                    override fun visitBulkWithProration(
-                        bulkWithProration: NewFloatingBulkWithProrationPrice
-                    ) = bulkWithProration.validity()
-
                     override fun visitGroupedTieredPackage(
                         groupedTieredPackage: NewFloatingGroupedTieredPackagePrice
                     ) = groupedTieredPackage.validity()
+
+                    override fun visitMaxGroupTieredPackage(
+                        maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
+                    ) = maxGroupTieredPackage.validity()
 
                     override fun visitScalableMatrixWithUnitPricing(
                         scalableMatrixWithUnitPricing: NewFloatingScalableMatrixWithUnitPricingPrice
@@ -870,10 +877,6 @@ private constructor(
                     override fun visitCumulativeGroupedBulk(
                         cumulativeGroupedBulk: NewFloatingCumulativeGroupedBulkPrice
                     ) = cumulativeGroupedBulk.validity()
-
-                    override fun visitGroupedWithMinMaxThresholds(
-                        groupedWithMinMaxThresholds: GroupedWithMinMaxThresholds
-                    ) = groupedWithMinMaxThresholds.validity()
 
                     override fun visitMinimum(minimum: NewFloatingMinimumCompositePrice) =
                         minimum.validity()
@@ -889,103 +892,103 @@ private constructor(
 
             return other is Body &&
                 unit == other.unit &&
-                package_ == other.package_ &&
-                matrix == other.matrix &&
-                matrixWithAllocation == other.matrixWithAllocation &&
                 tiered == other.tiered &&
                 bulk == other.bulk &&
+                package_ == other.package_ &&
+                matrix == other.matrix &&
                 thresholdTotalAmount == other.thresholdTotalAmount &&
                 tieredPackage == other.tieredPackage &&
-                groupedTiered == other.groupedTiered &&
-                maxGroupTieredPackage == other.maxGroupTieredPackage &&
                 tieredWithMinimum == other.tieredWithMinimum &&
-                packageWithAllocation == other.packageWithAllocation &&
+                groupedTiered == other.groupedTiered &&
                 tieredPackageWithMinimum == other.tieredPackageWithMinimum &&
+                packageWithAllocation == other.packageWithAllocation &&
                 unitWithPercent == other.unitWithPercent &&
+                matrixWithAllocation == other.matrixWithAllocation &&
                 tieredWithProration == other.tieredWithProration &&
                 unitWithProration == other.unitWithProration &&
                 groupedAllocation == other.groupedAllocation &&
+                bulkWithProration == other.bulkWithProration &&
                 groupedWithProratedMinimum == other.groupedWithProratedMinimum &&
                 groupedWithMeteredMinimum == other.groupedWithMeteredMinimum &&
+                groupedWithMinMaxThresholds == other.groupedWithMinMaxThresholds &&
                 matrixWithDisplayName == other.matrixWithDisplayName &&
-                bulkWithProration == other.bulkWithProration &&
                 groupedTieredPackage == other.groupedTieredPackage &&
+                maxGroupTieredPackage == other.maxGroupTieredPackage &&
                 scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing &&
                 scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing &&
                 cumulativeGroupedBulk == other.cumulativeGroupedBulk &&
-                groupedWithMinMaxThresholds == other.groupedWithMinMaxThresholds &&
                 minimum == other.minimum
         }
 
         override fun hashCode(): Int =
             Objects.hash(
                 unit,
-                package_,
-                matrix,
-                matrixWithAllocation,
                 tiered,
                 bulk,
+                package_,
+                matrix,
                 thresholdTotalAmount,
                 tieredPackage,
-                groupedTiered,
-                maxGroupTieredPackage,
                 tieredWithMinimum,
-                packageWithAllocation,
+                groupedTiered,
                 tieredPackageWithMinimum,
+                packageWithAllocation,
                 unitWithPercent,
+                matrixWithAllocation,
                 tieredWithProration,
                 unitWithProration,
                 groupedAllocation,
+                bulkWithProration,
                 groupedWithProratedMinimum,
                 groupedWithMeteredMinimum,
+                groupedWithMinMaxThresholds,
                 matrixWithDisplayName,
-                bulkWithProration,
                 groupedTieredPackage,
+                maxGroupTieredPackage,
                 scalableMatrixWithUnitPricing,
                 scalableMatrixWithTieredPricing,
                 cumulativeGroupedBulk,
-                groupedWithMinMaxThresholds,
                 minimum,
             )
 
         override fun toString(): String =
             when {
                 unit != null -> "Body{unit=$unit}"
-                package_ != null -> "Body{package_=$package_}"
-                matrix != null -> "Body{matrix=$matrix}"
-                matrixWithAllocation != null -> "Body{matrixWithAllocation=$matrixWithAllocation}"
                 tiered != null -> "Body{tiered=$tiered}"
                 bulk != null -> "Body{bulk=$bulk}"
+                package_ != null -> "Body{package_=$package_}"
+                matrix != null -> "Body{matrix=$matrix}"
                 thresholdTotalAmount != null -> "Body{thresholdTotalAmount=$thresholdTotalAmount}"
                 tieredPackage != null -> "Body{tieredPackage=$tieredPackage}"
-                groupedTiered != null -> "Body{groupedTiered=$groupedTiered}"
-                maxGroupTieredPackage != null ->
-                    "Body{maxGroupTieredPackage=$maxGroupTieredPackage}"
                 tieredWithMinimum != null -> "Body{tieredWithMinimum=$tieredWithMinimum}"
-                packageWithAllocation != null ->
-                    "Body{packageWithAllocation=$packageWithAllocation}"
+                groupedTiered != null -> "Body{groupedTiered=$groupedTiered}"
                 tieredPackageWithMinimum != null ->
                     "Body{tieredPackageWithMinimum=$tieredPackageWithMinimum}"
+                packageWithAllocation != null ->
+                    "Body{packageWithAllocation=$packageWithAllocation}"
                 unitWithPercent != null -> "Body{unitWithPercent=$unitWithPercent}"
+                matrixWithAllocation != null -> "Body{matrixWithAllocation=$matrixWithAllocation}"
                 tieredWithProration != null -> "Body{tieredWithProration=$tieredWithProration}"
                 unitWithProration != null -> "Body{unitWithProration=$unitWithProration}"
                 groupedAllocation != null -> "Body{groupedAllocation=$groupedAllocation}"
+                bulkWithProration != null -> "Body{bulkWithProration=$bulkWithProration}"
                 groupedWithProratedMinimum != null ->
                     "Body{groupedWithProratedMinimum=$groupedWithProratedMinimum}"
                 groupedWithMeteredMinimum != null ->
                     "Body{groupedWithMeteredMinimum=$groupedWithMeteredMinimum}"
+                groupedWithMinMaxThresholds != null ->
+                    "Body{groupedWithMinMaxThresholds=$groupedWithMinMaxThresholds}"
                 matrixWithDisplayName != null ->
                     "Body{matrixWithDisplayName=$matrixWithDisplayName}"
-                bulkWithProration != null -> "Body{bulkWithProration=$bulkWithProration}"
                 groupedTieredPackage != null -> "Body{groupedTieredPackage=$groupedTieredPackage}"
+                maxGroupTieredPackage != null ->
+                    "Body{maxGroupTieredPackage=$maxGroupTieredPackage}"
                 scalableMatrixWithUnitPricing != null ->
                     "Body{scalableMatrixWithUnitPricing=$scalableMatrixWithUnitPricing}"
                 scalableMatrixWithTieredPricing != null ->
                     "Body{scalableMatrixWithTieredPricing=$scalableMatrixWithTieredPricing}"
                 cumulativeGroupedBulk != null ->
                     "Body{cumulativeGroupedBulk=$cumulativeGroupedBulk}"
-                groupedWithMinMaxThresholds != null ->
-                    "Body{groupedWithMinMaxThresholds=$groupedWithMinMaxThresholds}"
                 minimum != null -> "Body{minimum=$minimum}"
                 _json != null -> "Body{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Body")
@@ -995,16 +998,13 @@ private constructor(
 
             fun ofUnit(unit: NewFloatingUnitPrice) = Body(unit = unit)
 
-            fun ofPackage(package_: NewFloatingPackagePrice) = Body(package_ = package_)
-
-            fun ofMatrix(matrix: NewFloatingMatrixPrice) = Body(matrix = matrix)
-
-            fun ofMatrixWithAllocation(matrixWithAllocation: NewFloatingMatrixWithAllocationPrice) =
-                Body(matrixWithAllocation = matrixWithAllocation)
-
             fun ofTiered(tiered: NewFloatingTieredPrice) = Body(tiered = tiered)
 
             fun ofBulk(bulk: NewFloatingBulkPrice) = Body(bulk = bulk)
+
+            fun ofPackage(package_: NewFloatingPackagePrice) = Body(package_ = package_)
+
+            fun ofMatrix(matrix: NewFloatingMatrixPrice) = Body(matrix = matrix)
 
             fun ofThresholdTotalAmount(thresholdTotalAmount: NewFloatingThresholdTotalAmountPrice) =
                 Body(thresholdTotalAmount = thresholdTotalAmount)
@@ -1012,26 +1012,25 @@ private constructor(
             fun ofTieredPackage(tieredPackage: NewFloatingTieredPackagePrice) =
                 Body(tieredPackage = tieredPackage)
 
-            fun ofGroupedTiered(groupedTiered: NewFloatingGroupedTieredPrice) =
-                Body(groupedTiered = groupedTiered)
-
-            fun ofMaxGroupTieredPackage(
-                maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
-            ) = Body(maxGroupTieredPackage = maxGroupTieredPackage)
-
             fun ofTieredWithMinimum(tieredWithMinimum: NewFloatingTieredWithMinimumPrice) =
                 Body(tieredWithMinimum = tieredWithMinimum)
 
-            fun ofPackageWithAllocation(
-                packageWithAllocation: NewFloatingPackageWithAllocationPrice
-            ) = Body(packageWithAllocation = packageWithAllocation)
+            fun ofGroupedTiered(groupedTiered: NewFloatingGroupedTieredPrice) =
+                Body(groupedTiered = groupedTiered)
 
             fun ofTieredPackageWithMinimum(
                 tieredPackageWithMinimum: NewFloatingTieredPackageWithMinimumPrice
             ) = Body(tieredPackageWithMinimum = tieredPackageWithMinimum)
 
+            fun ofPackageWithAllocation(
+                packageWithAllocation: NewFloatingPackageWithAllocationPrice
+            ) = Body(packageWithAllocation = packageWithAllocation)
+
             fun ofUnitWithPercent(unitWithPercent: NewFloatingUnitWithPercentPrice) =
                 Body(unitWithPercent = unitWithPercent)
+
+            fun ofMatrixWithAllocation(matrixWithAllocation: NewFloatingMatrixWithAllocationPrice) =
+                Body(matrixWithAllocation = matrixWithAllocation)
 
             fun ofTieredWithProration(tieredWithProration: NewFloatingTieredWithProrationPrice) =
                 Body(tieredWithProration = tieredWithProration)
@@ -1042,6 +1041,9 @@ private constructor(
             fun ofGroupedAllocation(groupedAllocation: NewFloatingGroupedAllocationPrice) =
                 Body(groupedAllocation = groupedAllocation)
 
+            fun ofBulkWithProration(bulkWithProration: NewFloatingBulkWithProrationPrice) =
+                Body(bulkWithProration = bulkWithProration)
+
             fun ofGroupedWithProratedMinimum(
                 groupedWithProratedMinimum: NewFloatingGroupedWithProratedMinimumPrice
             ) = Body(groupedWithProratedMinimum = groupedWithProratedMinimum)
@@ -1050,15 +1052,20 @@ private constructor(
                 groupedWithMeteredMinimum: NewFloatingGroupedWithMeteredMinimumPrice
             ) = Body(groupedWithMeteredMinimum = groupedWithMeteredMinimum)
 
+            fun ofGroupedWithMinMaxThresholds(
+                groupedWithMinMaxThresholds: GroupedWithMinMaxThresholds
+            ) = Body(groupedWithMinMaxThresholds = groupedWithMinMaxThresholds)
+
             fun ofMatrixWithDisplayName(
                 matrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice
             ) = Body(matrixWithDisplayName = matrixWithDisplayName)
 
-            fun ofBulkWithProration(bulkWithProration: NewFloatingBulkWithProrationPrice) =
-                Body(bulkWithProration = bulkWithProration)
-
             fun ofGroupedTieredPackage(groupedTieredPackage: NewFloatingGroupedTieredPackagePrice) =
                 Body(groupedTieredPackage = groupedTieredPackage)
+
+            fun ofMaxGroupTieredPackage(
+                maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
+            ) = Body(maxGroupTieredPackage = maxGroupTieredPackage)
 
             fun ofScalableMatrixWithUnitPricing(
                 scalableMatrixWithUnitPricing: NewFloatingScalableMatrixWithUnitPricingPrice
@@ -1072,10 +1079,6 @@ private constructor(
                 cumulativeGroupedBulk: NewFloatingCumulativeGroupedBulkPrice
             ) = Body(cumulativeGroupedBulk = cumulativeGroupedBulk)
 
-            fun ofGroupedWithMinMaxThresholds(
-                groupedWithMinMaxThresholds: GroupedWithMinMaxThresholds
-            ) = Body(groupedWithMinMaxThresholds = groupedWithMinMaxThresholds)
-
             fun ofMinimum(minimum: NewFloatingMinimumCompositePrice) = Body(minimum = minimum)
         }
 
@@ -1084,17 +1087,13 @@ private constructor(
 
             fun visitUnit(unit: NewFloatingUnitPrice): T
 
-            fun visitPackage(package_: NewFloatingPackagePrice): T
-
-            fun visitMatrix(matrix: NewFloatingMatrixPrice): T
-
-            fun visitMatrixWithAllocation(
-                matrixWithAllocation: NewFloatingMatrixWithAllocationPrice
-            ): T
-
             fun visitTiered(tiered: NewFloatingTieredPrice): T
 
             fun visitBulk(bulk: NewFloatingBulkPrice): T
+
+            fun visitPackage(package_: NewFloatingPackagePrice): T
+
+            fun visitMatrix(matrix: NewFloatingMatrixPrice): T
 
             fun visitThresholdTotalAmount(
                 thresholdTotalAmount: NewFloatingThresholdTotalAmountPrice
@@ -1102,23 +1101,23 @@ private constructor(
 
             fun visitTieredPackage(tieredPackage: NewFloatingTieredPackagePrice): T
 
-            fun visitGroupedTiered(groupedTiered: NewFloatingGroupedTieredPrice): T
-
-            fun visitMaxGroupTieredPackage(
-                maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
-            ): T
-
             fun visitTieredWithMinimum(tieredWithMinimum: NewFloatingTieredWithMinimumPrice): T
 
-            fun visitPackageWithAllocation(
-                packageWithAllocation: NewFloatingPackageWithAllocationPrice
-            ): T
+            fun visitGroupedTiered(groupedTiered: NewFloatingGroupedTieredPrice): T
 
             fun visitTieredPackageWithMinimum(
                 tieredPackageWithMinimum: NewFloatingTieredPackageWithMinimumPrice
             ): T
 
+            fun visitPackageWithAllocation(
+                packageWithAllocation: NewFloatingPackageWithAllocationPrice
+            ): T
+
             fun visitUnitWithPercent(unitWithPercent: NewFloatingUnitWithPercentPrice): T
+
+            fun visitMatrixWithAllocation(
+                matrixWithAllocation: NewFloatingMatrixWithAllocationPrice
+            ): T
 
             fun visitTieredWithProration(
                 tieredWithProration: NewFloatingTieredWithProrationPrice
@@ -1128,6 +1127,8 @@ private constructor(
 
             fun visitGroupedAllocation(groupedAllocation: NewFloatingGroupedAllocationPrice): T
 
+            fun visitBulkWithProration(bulkWithProration: NewFloatingBulkWithProrationPrice): T
+
             fun visitGroupedWithProratedMinimum(
                 groupedWithProratedMinimum: NewFloatingGroupedWithProratedMinimumPrice
             ): T
@@ -1136,14 +1137,20 @@ private constructor(
                 groupedWithMeteredMinimum: NewFloatingGroupedWithMeteredMinimumPrice
             ): T
 
+            fun visitGroupedWithMinMaxThresholds(
+                groupedWithMinMaxThresholds: GroupedWithMinMaxThresholds
+            ): T
+
             fun visitMatrixWithDisplayName(
                 matrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice
             ): T
 
-            fun visitBulkWithProration(bulkWithProration: NewFloatingBulkWithProrationPrice): T
-
             fun visitGroupedTieredPackage(
                 groupedTieredPackage: NewFloatingGroupedTieredPackagePrice
+            ): T
+
+            fun visitMaxGroupTieredPackage(
+                maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
             ): T
 
             fun visitScalableMatrixWithUnitPricing(
@@ -1156,10 +1163,6 @@ private constructor(
 
             fun visitCumulativeGroupedBulk(
                 cumulativeGroupedBulk: NewFloatingCumulativeGroupedBulkPrice
-            ): T
-
-            fun visitGroupedWithMinMaxThresholds(
-                groupedWithMinMaxThresholds: GroupedWithMinMaxThresholds
             ): T
 
             fun visitMinimum(minimum: NewFloatingMinimumCompositePrice): T
@@ -1190,23 +1193,6 @@ private constructor(
                             Body(unit = it, _json = json)
                         } ?: Body(_json = json)
                     }
-                    "package" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewFloatingPackagePrice>())
-                            ?.let { Body(package_ = it, _json = json) } ?: Body(_json = json)
-                    }
-                    "matrix" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewFloatingMatrixPrice>())?.let {
-                            Body(matrix = it, _json = json)
-                        } ?: Body(_json = json)
-                    }
-                    "matrix_with_allocation" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewFloatingMatrixWithAllocationPrice>(),
-                            )
-                            ?.let { Body(matrixWithAllocation = it, _json = json) }
-                            ?: Body(_json = json)
-                    }
                     "tiered" -> {
                         return tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPrice>())?.let {
                             Body(tiered = it, _json = json)
@@ -1215,6 +1201,15 @@ private constructor(
                     "bulk" -> {
                         return tryDeserialize(node, jacksonTypeRef<NewFloatingBulkPrice>())?.let {
                             Body(bulk = it, _json = json)
+                        } ?: Body(_json = json)
+                    }
+                    "package" -> {
+                        return tryDeserialize(node, jacksonTypeRef<NewFloatingPackagePrice>())
+                            ?.let { Body(package_ = it, _json = json) } ?: Body(_json = json)
+                    }
+                    "matrix" -> {
+                        return tryDeserialize(node, jacksonTypeRef<NewFloatingMatrixPrice>())?.let {
+                            Body(matrix = it, _json = json)
                         } ?: Body(_json = json)
                     }
                     "threshold_total_amount" -> {
@@ -1229,24 +1224,24 @@ private constructor(
                         return tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPackagePrice>())
                             ?.let { Body(tieredPackage = it, _json = json) } ?: Body(_json = json)
                     }
-                    "grouped_tiered" -> {
-                        return tryDeserialize(node, jacksonTypeRef<NewFloatingGroupedTieredPrice>())
-                            ?.let { Body(groupedTiered = it, _json = json) } ?: Body(_json = json)
-                    }
-                    "max_group_tiered_package" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewFloatingMaxGroupTieredPackagePrice>(),
-                            )
-                            ?.let { Body(maxGroupTieredPackage = it, _json = json) }
-                            ?: Body(_json = json)
-                    }
                     "tiered_with_minimum" -> {
                         return tryDeserialize(
                                 node,
                                 jacksonTypeRef<NewFloatingTieredWithMinimumPrice>(),
                             )
                             ?.let { Body(tieredWithMinimum = it, _json = json) }
+                            ?: Body(_json = json)
+                    }
+                    "grouped_tiered" -> {
+                        return tryDeserialize(node, jacksonTypeRef<NewFloatingGroupedTieredPrice>())
+                            ?.let { Body(groupedTiered = it, _json = json) } ?: Body(_json = json)
+                    }
+                    "tiered_package_with_minimum" -> {
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewFloatingTieredPackageWithMinimumPrice>(),
+                            )
+                            ?.let { Body(tieredPackageWithMinimum = it, _json = json) }
                             ?: Body(_json = json)
                     }
                     "package_with_allocation" -> {
@@ -1257,20 +1252,20 @@ private constructor(
                             ?.let { Body(packageWithAllocation = it, _json = json) }
                             ?: Body(_json = json)
                     }
-                    "tiered_package_with_minimum" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewFloatingTieredPackageWithMinimumPrice>(),
-                            )
-                            ?.let { Body(tieredPackageWithMinimum = it, _json = json) }
-                            ?: Body(_json = json)
-                    }
                     "unit_with_percent" -> {
                         return tryDeserialize(
                                 node,
                                 jacksonTypeRef<NewFloatingUnitWithPercentPrice>(),
                             )
                             ?.let { Body(unitWithPercent = it, _json = json) } ?: Body(_json = json)
+                    }
+                    "matrix_with_allocation" -> {
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewFloatingMatrixWithAllocationPrice>(),
+                            )
+                            ?.let { Body(matrixWithAllocation = it, _json = json) }
+                            ?: Body(_json = json)
                     }
                     "tiered_with_proration" -> {
                         return tryDeserialize(
@@ -1296,6 +1291,14 @@ private constructor(
                             ?.let { Body(groupedAllocation = it, _json = json) }
                             ?: Body(_json = json)
                     }
+                    "bulk_with_proration" -> {
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewFloatingBulkWithProrationPrice>(),
+                            )
+                            ?.let { Body(bulkWithProration = it, _json = json) }
+                            ?: Body(_json = json)
+                    }
                     "grouped_with_prorated_minimum" -> {
                         return tryDeserialize(
                                 node,
@@ -1312,6 +1315,11 @@ private constructor(
                             ?.let { Body(groupedWithMeteredMinimum = it, _json = json) }
                             ?: Body(_json = json)
                     }
+                    "grouped_with_min_max_thresholds" -> {
+                        return tryDeserialize(node, jacksonTypeRef<GroupedWithMinMaxThresholds>())
+                            ?.let { Body(groupedWithMinMaxThresholds = it, _json = json) }
+                            ?: Body(_json = json)
+                    }
                     "matrix_with_display_name" -> {
                         return tryDeserialize(
                                 node,
@@ -1320,20 +1328,20 @@ private constructor(
                             ?.let { Body(matrixWithDisplayName = it, _json = json) }
                             ?: Body(_json = json)
                     }
-                    "bulk_with_proration" -> {
-                        return tryDeserialize(
-                                node,
-                                jacksonTypeRef<NewFloatingBulkWithProrationPrice>(),
-                            )
-                            ?.let { Body(bulkWithProration = it, _json = json) }
-                            ?: Body(_json = json)
-                    }
                     "grouped_tiered_package" -> {
                         return tryDeserialize(
                                 node,
                                 jacksonTypeRef<NewFloatingGroupedTieredPackagePrice>(),
                             )
                             ?.let { Body(groupedTieredPackage = it, _json = json) }
+                            ?: Body(_json = json)
+                    }
+                    "max_group_tiered_package" -> {
+                        return tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewFloatingMaxGroupTieredPackagePrice>(),
+                            )
+                            ?.let { Body(maxGroupTieredPackage = it, _json = json) }
                             ?: Body(_json = json)
                     }
                     "scalable_matrix_with_unit_pricing" -> {
@@ -1360,11 +1368,6 @@ private constructor(
                             ?.let { Body(cumulativeGroupedBulk = it, _json = json) }
                             ?: Body(_json = json)
                     }
-                    "grouped_with_min_max_thresholds" -> {
-                        return tryDeserialize(node, jacksonTypeRef<GroupedWithMinMaxThresholds>())
-                            ?.let { Body(groupedWithMinMaxThresholds = it, _json = json) }
-                            ?: Body(_json = json)
-                    }
                     "minimum" -> {
                         return tryDeserialize(
                                 node,
@@ -1387,49 +1390,49 @@ private constructor(
             ) {
                 when {
                     value.unit != null -> generator.writeObject(value.unit)
-                    value.package_ != null -> generator.writeObject(value.package_)
-                    value.matrix != null -> generator.writeObject(value.matrix)
-                    value.matrixWithAllocation != null ->
-                        generator.writeObject(value.matrixWithAllocation)
                     value.tiered != null -> generator.writeObject(value.tiered)
                     value.bulk != null -> generator.writeObject(value.bulk)
+                    value.package_ != null -> generator.writeObject(value.package_)
+                    value.matrix != null -> generator.writeObject(value.matrix)
                     value.thresholdTotalAmount != null ->
                         generator.writeObject(value.thresholdTotalAmount)
                     value.tieredPackage != null -> generator.writeObject(value.tieredPackage)
-                    value.groupedTiered != null -> generator.writeObject(value.groupedTiered)
-                    value.maxGroupTieredPackage != null ->
-                        generator.writeObject(value.maxGroupTieredPackage)
                     value.tieredWithMinimum != null ->
                         generator.writeObject(value.tieredWithMinimum)
-                    value.packageWithAllocation != null ->
-                        generator.writeObject(value.packageWithAllocation)
+                    value.groupedTiered != null -> generator.writeObject(value.groupedTiered)
                     value.tieredPackageWithMinimum != null ->
                         generator.writeObject(value.tieredPackageWithMinimum)
+                    value.packageWithAllocation != null ->
+                        generator.writeObject(value.packageWithAllocation)
                     value.unitWithPercent != null -> generator.writeObject(value.unitWithPercent)
+                    value.matrixWithAllocation != null ->
+                        generator.writeObject(value.matrixWithAllocation)
                     value.tieredWithProration != null ->
                         generator.writeObject(value.tieredWithProration)
                     value.unitWithProration != null ->
                         generator.writeObject(value.unitWithProration)
                     value.groupedAllocation != null ->
                         generator.writeObject(value.groupedAllocation)
+                    value.bulkWithProration != null ->
+                        generator.writeObject(value.bulkWithProration)
                     value.groupedWithProratedMinimum != null ->
                         generator.writeObject(value.groupedWithProratedMinimum)
                     value.groupedWithMeteredMinimum != null ->
                         generator.writeObject(value.groupedWithMeteredMinimum)
+                    value.groupedWithMinMaxThresholds != null ->
+                        generator.writeObject(value.groupedWithMinMaxThresholds)
                     value.matrixWithDisplayName != null ->
                         generator.writeObject(value.matrixWithDisplayName)
-                    value.bulkWithProration != null ->
-                        generator.writeObject(value.bulkWithProration)
                     value.groupedTieredPackage != null ->
                         generator.writeObject(value.groupedTieredPackage)
+                    value.maxGroupTieredPackage != null ->
+                        generator.writeObject(value.maxGroupTieredPackage)
                     value.scalableMatrixWithUnitPricing != null ->
                         generator.writeObject(value.scalableMatrixWithUnitPricing)
                     value.scalableMatrixWithTieredPricing != null ->
                         generator.writeObject(value.scalableMatrixWithTieredPricing)
                     value.cumulativeGroupedBulk != null ->
                         generator.writeObject(value.cumulativeGroupedBulk)
-                    value.groupedWithMinMaxThresholds != null ->
-                        generator.writeObject(value.groupedWithMinMaxThresholds)
                     value.minimum != null -> generator.writeObject(value.minimum)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Body")
@@ -1553,6 +1556,8 @@ private constructor(
             fun currency(): String = currency.getRequired("currency")
 
             /**
+             * Configuration for grouped_with_min_max_thresholds pricing
+             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
@@ -1572,6 +1577,8 @@ private constructor(
             fun itemId(): String = itemId.getRequired("item_id")
 
             /**
+             * The pricing model type
+             *
              * Expected to always return the following:
              * ```kotlin
              * JsonValue.from("grouped_with_min_max_thresholds")
@@ -1951,6 +1958,7 @@ private constructor(
                  */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                /** Configuration for grouped_with_min_max_thresholds pricing */
                 fun groupedWithMinMaxThresholdsConfig(
                     groupedWithMinMaxThresholdsConfig: GroupedWithMinMaxThresholdsConfig
                 ) =
@@ -2557,16 +2565,117 @@ private constructor(
                 override fun toString() = value.toString()
             }
 
+            /** Configuration for grouped_with_min_max_thresholds pricing */
             class GroupedWithMinMaxThresholdsConfig
-            @JsonCreator
             private constructor(
-                @com.fasterxml.jackson.annotation.JsonValue
-                private val additionalProperties: Map<String, JsonValue>
+                private val groupingKey: JsonField<String>,
+                private val maximumCharge: JsonField<String>,
+                private val minimumCharge: JsonField<String>,
+                private val perUnitRate: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("grouping_key")
+                    @ExcludeMissing
+                    groupingKey: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("maximum_charge")
+                    @ExcludeMissing
+                    maximumCharge: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("minimum_charge")
+                    @ExcludeMissing
+                    minimumCharge: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("per_unit_rate")
+                    @ExcludeMissing
+                    perUnitRate: JsonField<String> = JsonMissing.of(),
+                ) : this(groupingKey, maximumCharge, minimumCharge, perUnitRate, mutableMapOf())
+
+                /**
+                 * The event property used to group before applying thresholds
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun groupingKey(): String = groupingKey.getRequired("grouping_key")
+
+                /**
+                 * The maximum amount to charge each group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun maximumCharge(): String = maximumCharge.getRequired("maximum_charge")
+
+                /**
+                 * The minimum amount to charge each group, regardless of usage
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun minimumCharge(): String = minimumCharge.getRequired("minimum_charge")
+
+                /**
+                 * The base price charged per group
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun perUnitRate(): String = perUnitRate.getRequired("per_unit_rate")
+
+                /**
+                 * Returns the raw JSON value of [groupingKey].
+                 *
+                 * Unlike [groupingKey], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("grouping_key")
+                @ExcludeMissing
+                fun _groupingKey(): JsonField<String> = groupingKey
+
+                /**
+                 * Returns the raw JSON value of [maximumCharge].
+                 *
+                 * Unlike [maximumCharge], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("maximum_charge")
+                @ExcludeMissing
+                fun _maximumCharge(): JsonField<String> = maximumCharge
+
+                /**
+                 * Returns the raw JSON value of [minimumCharge].
+                 *
+                 * Unlike [minimumCharge], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("minimum_charge")
+                @ExcludeMissing
+                fun _minimumCharge(): JsonField<String> = minimumCharge
+
+                /**
+                 * Returns the raw JSON value of [perUnitRate].
+                 *
+                 * Unlike [perUnitRate], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("per_unit_rate")
+                @ExcludeMissing
+                fun _perUnitRate(): JsonField<String> = perUnitRate
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
 
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -2575,6 +2684,14 @@ private constructor(
                     /**
                      * Returns a mutable builder for constructing an instance of
                      * [GroupedWithMinMaxThresholdsConfig].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .groupingKey()
+                     * .maximumCharge()
+                     * .minimumCharge()
+                     * .perUnitRate()
+                     * ```
                      */
                     fun builder() = Builder()
                 }
@@ -2582,13 +2699,79 @@ private constructor(
                 /** A builder for [GroupedWithMinMaxThresholdsConfig]. */
                 class Builder internal constructor() {
 
+                    private var groupingKey: JsonField<String>? = null
+                    private var maximumCharge: JsonField<String>? = null
+                    private var minimumCharge: JsonField<String>? = null
+                    private var perUnitRate: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
                         groupedWithMinMaxThresholdsConfig: GroupedWithMinMaxThresholdsConfig
                     ) = apply {
+                        groupingKey = groupedWithMinMaxThresholdsConfig.groupingKey
+                        maximumCharge = groupedWithMinMaxThresholdsConfig.maximumCharge
+                        minimumCharge = groupedWithMinMaxThresholdsConfig.minimumCharge
+                        perUnitRate = groupedWithMinMaxThresholdsConfig.perUnitRate
                         additionalProperties =
                             groupedWithMinMaxThresholdsConfig.additionalProperties.toMutableMap()
+                    }
+
+                    /** The event property used to group before applying thresholds */
+                    fun groupingKey(groupingKey: String) = groupingKey(JsonField.of(groupingKey))
+
+                    /**
+                     * Sets [Builder.groupingKey] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.groupingKey] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun groupingKey(groupingKey: JsonField<String>) = apply {
+                        this.groupingKey = groupingKey
+                    }
+
+                    /** The maximum amount to charge each group */
+                    fun maximumCharge(maximumCharge: String) =
+                        maximumCharge(JsonField.of(maximumCharge))
+
+                    /**
+                     * Sets [Builder.maximumCharge] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.maximumCharge] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun maximumCharge(maximumCharge: JsonField<String>) = apply {
+                        this.maximumCharge = maximumCharge
+                    }
+
+                    /** The minimum amount to charge each group, regardless of usage */
+                    fun minimumCharge(minimumCharge: String) =
+                        minimumCharge(JsonField.of(minimumCharge))
+
+                    /**
+                     * Sets [Builder.minimumCharge] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.minimumCharge] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun minimumCharge(minimumCharge: JsonField<String>) = apply {
+                        this.minimumCharge = minimumCharge
+                    }
+
+                    /** The base price charged per group */
+                    fun perUnitRate(perUnitRate: String) = perUnitRate(JsonField.of(perUnitRate))
+
+                    /**
+                     * Sets [Builder.perUnitRate] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.perUnitRate] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun perUnitRate(perUnitRate: JsonField<String>) = apply {
+                        this.perUnitRate = perUnitRate
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -2617,9 +2800,25 @@ private constructor(
                      * Returns an immutable instance of [GroupedWithMinMaxThresholdsConfig].
                      *
                      * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .groupingKey()
+                     * .maximumCharge()
+                     * .minimumCharge()
+                     * .perUnitRate()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
                      */
                     fun build(): GroupedWithMinMaxThresholdsConfig =
-                        GroupedWithMinMaxThresholdsConfig(additionalProperties.toImmutable())
+                        GroupedWithMinMaxThresholdsConfig(
+                            checkRequired("groupingKey", groupingKey),
+                            checkRequired("maximumCharge", maximumCharge),
+                            checkRequired("minimumCharge", minimumCharge),
+                            checkRequired("perUnitRate", perUnitRate),
+                            additionalProperties.toMutableMap(),
+                        )
                 }
 
                 private var validated: Boolean = false
@@ -2629,6 +2828,10 @@ private constructor(
                         return@apply
                     }
 
+                    groupingKey()
+                    maximumCharge()
+                    minimumCharge()
+                    perUnitRate()
                     validated = true
                 }
 
@@ -2647,9 +2850,10 @@ private constructor(
                  * Used for best match union deserialization.
                  */
                 internal fun validity(): Int =
-                    additionalProperties.count { (_, value) ->
-                        !value.isNull() && !value.isMissing()
-                    }
+                    (if (groupingKey.asKnown() == null) 0 else 1) +
+                        (if (maximumCharge.asKnown() == null) 0 else 1) +
+                        (if (minimumCharge.asKnown() == null) 0 else 1) +
+                        (if (perUnitRate.asKnown() == null) 0 else 1)
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -2657,15 +2861,27 @@ private constructor(
                     }
 
                     return other is GroupedWithMinMaxThresholdsConfig &&
+                        groupingKey == other.groupingKey &&
+                        maximumCharge == other.maximumCharge &&
+                        minimumCharge == other.minimumCharge &&
+                        perUnitRate == other.perUnitRate &&
                         additionalProperties == other.additionalProperties
                 }
 
-                private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+                private val hashCode: Int by lazy {
+                    Objects.hash(
+                        groupingKey,
+                        maximumCharge,
+                        minimumCharge,
+                        perUnitRate,
+                        additionalProperties,
+                    )
+                }
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "GroupedWithMinMaxThresholdsConfig{additionalProperties=$additionalProperties}"
+                    "GroupedWithMinMaxThresholdsConfig{groupingKey=$groupingKey, maximumCharge=$maximumCharge, minimumCharge=$minimumCharge, perUnitRate=$perUnitRate, additionalProperties=$additionalProperties}"
             }
 
             /**

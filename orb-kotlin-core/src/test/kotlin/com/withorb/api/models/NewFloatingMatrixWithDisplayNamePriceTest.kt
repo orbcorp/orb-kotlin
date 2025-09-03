@@ -19,7 +19,16 @@ internal class NewFloatingMatrixWithDisplayNamePriceTest {
                 .itemId("item_id")
                 .matrixWithDisplayNameConfig(
                     NewFloatingMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .dimension("dimension")
+                        .addUnitAmount(
+                            NewFloatingMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig
+                                .UnitAmount
+                                .builder()
+                                .dimensionValue("dimension_value")
+                                .displayName("display_name")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .modelType(NewFloatingMatrixWithDisplayNamePrice.ModelType.MATRIX_WITH_DISPLAY_NAME)
@@ -66,7 +75,15 @@ internal class NewFloatingMatrixWithDisplayNamePriceTest {
         assertThat(newFloatingMatrixWithDisplayNamePrice.matrixWithDisplayNameConfig())
             .isEqualTo(
                 NewFloatingMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .dimension("dimension")
+                    .addUnitAmount(
+                        NewFloatingMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.UnitAmount
+                            .builder()
+                            .dimensionValue("dimension_value")
+                            .displayName("display_name")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newFloatingMatrixWithDisplayNamePrice.modelType())
@@ -131,7 +148,16 @@ internal class NewFloatingMatrixWithDisplayNamePriceTest {
                 .itemId("item_id")
                 .matrixWithDisplayNameConfig(
                     NewFloatingMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .dimension("dimension")
+                        .addUnitAmount(
+                            NewFloatingMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig
+                                .UnitAmount
+                                .builder()
+                                .dimensionValue("dimension_value")
+                                .displayName("display_name")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .modelType(NewFloatingMatrixWithDisplayNamePrice.ModelType.MATRIX_WITH_DISPLAY_NAME)

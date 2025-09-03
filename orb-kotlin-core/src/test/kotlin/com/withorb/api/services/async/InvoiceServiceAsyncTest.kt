@@ -43,7 +43,12 @@ internal class InvoiceServiceAsyncTest {
                             .name("Line Item Name")
                             .quantity(1.0)
                             .startDate(LocalDate.parse("2023-09-22"))
-                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .scalingFactor(0.0)
+                                    .build()
+                            )
                             .build()
                     )
                     .customerId("4khy3nwzktxv7")

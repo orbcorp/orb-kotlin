@@ -17,7 +17,16 @@ internal class NewFloatingCumulativeGroupedBulkPriceTest {
                 .cadence(NewFloatingCumulativeGroupedBulkPrice.Cadence.ANNUAL)
                 .cumulativeGroupedBulkConfig(
                     NewFloatingCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addDimensionValue(
+                            NewFloatingCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig
+                                .DimensionValue
+                                .builder()
+                                .groupingKey("x")
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .group("group")
                         .build()
                 )
                 .currency("currency")
@@ -64,7 +73,16 @@ internal class NewFloatingCumulativeGroupedBulkPriceTest {
         assertThat(newFloatingCumulativeGroupedBulkPrice.cumulativeGroupedBulkConfig())
             .isEqualTo(
                 NewFloatingCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .addDimensionValue(
+                        NewFloatingCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig
+                            .DimensionValue
+                            .builder()
+                            .groupingKey("x")
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .group("group")
                     .build()
             )
         assertThat(newFloatingCumulativeGroupedBulkPrice.currency()).isEqualTo("currency")
@@ -129,7 +147,16 @@ internal class NewFloatingCumulativeGroupedBulkPriceTest {
                 .cadence(NewFloatingCumulativeGroupedBulkPrice.Cadence.ANNUAL)
                 .cumulativeGroupedBulkConfig(
                     NewFloatingCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addDimensionValue(
+                            NewFloatingCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig
+                                .DimensionValue
+                                .builder()
+                                .groupingKey("x")
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .group("group")
                         .build()
                 )
                 .currency("currency")

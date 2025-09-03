@@ -17,6 +17,7 @@ import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Collections
 import java.util.Objects
 
+/** Configuration for tiered pricing */
 class TieredConfig
 private constructor(
     private val tiers: JsonField<List<Tier>>,

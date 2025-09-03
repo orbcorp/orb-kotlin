@@ -18,7 +18,11 @@ internal class TierSubLineItemTest {
                 .name("Tier One")
                 .quantity(5.0)
                 .tierConfig(
-                    TierConfig.builder().firstUnit(1.0).lastUnit(1000.0).unitAmount("3.00").build()
+                    TierSubLineItem.TierConfig.builder()
+                        .firstUnit(1.0)
+                        .lastUnit(1000.0)
+                        .unitAmount("3.00")
+                        .build()
                 )
                 .type(TierSubLineItem.Type.TIER)
                 .build()
@@ -30,7 +34,11 @@ internal class TierSubLineItemTest {
         assertThat(tierSubLineItem.quantity()).isEqualTo(5.0)
         assertThat(tierSubLineItem.tierConfig())
             .isEqualTo(
-                TierConfig.builder().firstUnit(1.0).lastUnit(1000.0).unitAmount("3.00").build()
+                TierSubLineItem.TierConfig.builder()
+                    .firstUnit(1.0)
+                    .lastUnit(1000.0)
+                    .unitAmount("3.00")
+                    .build()
             )
         assertThat(tierSubLineItem.type()).isEqualTo(TierSubLineItem.Type.TIER)
     }
@@ -45,7 +53,11 @@ internal class TierSubLineItemTest {
                 .name("Tier One")
                 .quantity(5.0)
                 .tierConfig(
-                    TierConfig.builder().firstUnit(1.0).lastUnit(1000.0).unitAmount("3.00").build()
+                    TierSubLineItem.TierConfig.builder()
+                        .firstUnit(1.0)
+                        .lastUnit(1000.0)
+                        .unitAmount("3.00")
+                        .build()
                 )
                 .type(TierSubLineItem.Type.TIER)
                 .build()

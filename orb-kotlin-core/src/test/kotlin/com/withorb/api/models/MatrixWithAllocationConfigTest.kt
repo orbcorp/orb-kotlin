@@ -13,23 +13,26 @@ internal class MatrixWithAllocationConfigTest {
     fun create() {
         val matrixWithAllocationConfig =
             MatrixWithAllocationConfig.builder()
-                .allocation(0.0)
+                .allocation("allocation")
                 .defaultUnitAmount("default_unit_amount")
                 .addDimension("string")
                 .addMatrixValue(
-                    MatrixValue.builder()
+                    MatrixWithAllocationConfig.MatrixValue.builder()
                         .addDimensionValue("string")
                         .unitAmount("unit_amount")
                         .build()
                 )
                 .build()
 
-        assertThat(matrixWithAllocationConfig.allocation()).isEqualTo(0.0)
+        assertThat(matrixWithAllocationConfig.allocation()).isEqualTo("allocation")
         assertThat(matrixWithAllocationConfig.defaultUnitAmount()).isEqualTo("default_unit_amount")
         assertThat(matrixWithAllocationConfig.dimensions()).containsExactly("string")
         assertThat(matrixWithAllocationConfig.matrixValues())
             .containsExactly(
-                MatrixValue.builder().addDimensionValue("string").unitAmount("unit_amount").build()
+                MatrixWithAllocationConfig.MatrixValue.builder()
+                    .addDimensionValue("string")
+                    .unitAmount("unit_amount")
+                    .build()
             )
     }
 
@@ -38,11 +41,11 @@ internal class MatrixWithAllocationConfigTest {
         val jsonMapper = jsonMapper()
         val matrixWithAllocationConfig =
             MatrixWithAllocationConfig.builder()
-                .allocation(0.0)
+                .allocation("allocation")
                 .defaultUnitAmount("default_unit_amount")
                 .addDimension("string")
                 .addMatrixValue(
-                    MatrixValue.builder()
+                    MatrixWithAllocationConfig.MatrixValue.builder()
                         .addDimensionValue("string")
                         .unitAmount("unit_amount")
                         .build()

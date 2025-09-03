@@ -21,7 +21,7 @@ internal class NewFloatingUnitWithProrationPriceTest {
                 .name("Annual fee")
                 .unitWithProrationConfig(
                     NewFloatingUnitWithProrationPrice.UnitWithProrationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .unitAmount("unit_amount")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -69,7 +69,7 @@ internal class NewFloatingUnitWithProrationPriceTest {
         assertThat(newFloatingUnitWithProrationPrice.unitWithProrationConfig())
             .isEqualTo(
                 NewFloatingUnitWithProrationPrice.UnitWithProrationConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .unitAmount("unit_amount")
                     .build()
             )
         assertThat(newFloatingUnitWithProrationPrice.billableMetricId())
@@ -133,7 +133,7 @@ internal class NewFloatingUnitWithProrationPriceTest {
                 .name("Annual fee")
                 .unitWithProrationConfig(
                     NewFloatingUnitWithProrationPrice.UnitWithProrationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .unitAmount("unit_amount")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

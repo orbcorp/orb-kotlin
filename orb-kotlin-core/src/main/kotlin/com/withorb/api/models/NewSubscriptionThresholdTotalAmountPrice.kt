@@ -11,6 +11,7 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -126,6 +127,8 @@ private constructor(
     fun itemId(): String = itemId.getRequired("item_id")
 
     /**
+     * The pricing model type
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -140,6 +143,8 @@ private constructor(
     fun name(): String = name.getRequired("name")
 
     /**
+     * Configuration for threshold_total_amount pricing
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -529,6 +534,7 @@ private constructor(
          */
         fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
+        /** The pricing model type */
         fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
         /**
@@ -551,6 +557,7 @@ private constructor(
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
+        /** Configuration for threshold_total_amount pricing */
         fun thresholdTotalAmountConfig(thresholdTotalAmountConfig: ThresholdTotalAmountConfig) =
             thresholdTotalAmountConfig(JsonField.of(thresholdTotalAmountConfig))
 
@@ -1103,6 +1110,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The pricing model type */
     class ModelType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -1223,16 +1231,66 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Configuration for threshold_total_amount pricing */
     class ThresholdTotalAmountConfig
-    @JsonCreator
     private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+        private val consumptionTable: JsonField<List<ConsumptionTable>>,
+        private val prorate: JsonField<Boolean>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("consumption_table")
+            @ExcludeMissing
+            consumptionTable: JsonField<List<ConsumptionTable>> = JsonMissing.of(),
+            @JsonProperty("prorate") @ExcludeMissing prorate: JsonField<Boolean> = JsonMissing.of(),
+        ) : this(consumptionTable, prorate, mutableMapOf())
+
+        /**
+         * When the quantity consumed passes a provided threshold, the configured total will be
+         * charged
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun consumptionTable(): List<ConsumptionTable> =
+            consumptionTable.getRequired("consumption_table")
+
+        /**
+         * If true, the unit price will be prorated to the billing period
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun prorate(): Boolean? = prorate.getNullable("prorate")
+
+        /**
+         * Returns the raw JSON value of [consumptionTable].
+         *
+         * Unlike [consumptionTable], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("consumption_table")
+        @ExcludeMissing
+        fun _consumptionTable(): JsonField<List<ConsumptionTable>> = consumptionTable
+
+        /**
+         * Returns the raw JSON value of [prorate].
+         *
+         * Unlike [prorate], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("prorate") @ExcludeMissing fun _prorate(): JsonField<Boolean> = prorate
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1241,6 +1299,11 @@ private constructor(
             /**
              * Returns a mutable builder for constructing an instance of
              * [ThresholdTotalAmountConfig].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .consumptionTable()
+             * ```
              */
             fun builder() = Builder()
         }
@@ -1248,12 +1311,66 @@ private constructor(
         /** A builder for [ThresholdTotalAmountConfig]. */
         class Builder internal constructor() {
 
+            private var consumptionTable: JsonField<MutableList<ConsumptionTable>>? = null
+            private var prorate: JsonField<Boolean> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(thresholdTotalAmountConfig: ThresholdTotalAmountConfig) = apply {
+                consumptionTable =
+                    thresholdTotalAmountConfig.consumptionTable.map { it.toMutableList() }
+                prorate = thresholdTotalAmountConfig.prorate
                 additionalProperties =
                     thresholdTotalAmountConfig.additionalProperties.toMutableMap()
             }
+
+            /**
+             * When the quantity consumed passes a provided threshold, the configured total will be
+             * charged
+             */
+            fun consumptionTable(consumptionTable: List<ConsumptionTable>) =
+                consumptionTable(JsonField.of(consumptionTable))
+
+            /**
+             * Sets [Builder.consumptionTable] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.consumptionTable] with a well-typed
+             * `List<ConsumptionTable>` value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
+             */
+            fun consumptionTable(consumptionTable: JsonField<List<ConsumptionTable>>) = apply {
+                this.consumptionTable = consumptionTable.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [ConsumptionTable] to [Builder.consumptionTable].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addConsumptionTable(consumptionTable: ConsumptionTable) = apply {
+                this.consumptionTable =
+                    (this.consumptionTable ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("consumptionTable", it).add(consumptionTable)
+                    }
+            }
+
+            /** If true, the unit price will be prorated to the billing period */
+            fun prorate(prorate: Boolean?) = prorate(JsonField.ofNullable(prorate))
+
+            /**
+             * Alias for [Builder.prorate].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun prorate(prorate: Boolean) = prorate(prorate as Boolean?)
+
+            /**
+             * Sets [Builder.prorate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.prorate] with a well-typed [Boolean] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun prorate(prorate: JsonField<Boolean>) = apply { this.prorate = prorate }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1278,9 +1395,20 @@ private constructor(
              * Returns an immutable instance of [ThresholdTotalAmountConfig].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .consumptionTable()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): ThresholdTotalAmountConfig =
-                ThresholdTotalAmountConfig(additionalProperties.toImmutable())
+                ThresholdTotalAmountConfig(
+                    checkRequired("consumptionTable", consumptionTable).map { it.toImmutable() },
+                    prorate,
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1290,6 +1418,8 @@ private constructor(
                 return@apply
             }
 
+            consumptionTable().forEach { it.validate() }
+            prorate()
             validated = true
         }
 
@@ -1308,7 +1438,223 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+            (consumptionTable.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (prorate.asKnown() == null) 0 else 1)
+
+        /** Configuration for a single threshold */
+        class ConsumptionTable
+        private constructor(
+            private val threshold: JsonField<String>,
+            private val totalAmount: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("threshold")
+                @ExcludeMissing
+                threshold: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("total_amount")
+                @ExcludeMissing
+                totalAmount: JsonField<String> = JsonMissing.of(),
+            ) : this(threshold, totalAmount, mutableMapOf())
+
+            /**
+             * Quantity threshold
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun threshold(): String = threshold.getRequired("threshold")
+
+            /**
+             * Total amount for this threshold
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun totalAmount(): String = totalAmount.getRequired("total_amount")
+
+            /**
+             * Returns the raw JSON value of [threshold].
+             *
+             * Unlike [threshold], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("threshold")
+            @ExcludeMissing
+            fun _threshold(): JsonField<String> = threshold
+
+            /**
+             * Returns the raw JSON value of [totalAmount].
+             *
+             * Unlike [totalAmount], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("total_amount")
+            @ExcludeMissing
+            fun _totalAmount(): JsonField<String> = totalAmount
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [ConsumptionTable].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .threshold()
+                 * .totalAmount()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [ConsumptionTable]. */
+            class Builder internal constructor() {
+
+                private var threshold: JsonField<String>? = null
+                private var totalAmount: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(consumptionTable: ConsumptionTable) = apply {
+                    threshold = consumptionTable.threshold
+                    totalAmount = consumptionTable.totalAmount
+                    additionalProperties = consumptionTable.additionalProperties.toMutableMap()
+                }
+
+                /** Quantity threshold */
+                fun threshold(threshold: String) = threshold(JsonField.of(threshold))
+
+                /**
+                 * Sets [Builder.threshold] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.threshold] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun threshold(threshold: JsonField<String>) = apply { this.threshold = threshold }
+
+                /** Total amount for this threshold */
+                fun totalAmount(totalAmount: String) = totalAmount(JsonField.of(totalAmount))
+
+                /**
+                 * Sets [Builder.totalAmount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.totalAmount] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun totalAmount(totalAmount: JsonField<String>) = apply {
+                    this.totalAmount = totalAmount
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [ConsumptionTable].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .threshold()
+                 * .totalAmount()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): ConsumptionTable =
+                    ConsumptionTable(
+                        checkRequired("threshold", threshold),
+                        checkRequired("totalAmount", totalAmount),
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConsumptionTable = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                threshold()
+                totalAmount()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (threshold.asKnown() == null) 0 else 1) +
+                    (if (totalAmount.asKnown() == null) 0 else 1)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is ConsumptionTable &&
+                    threshold == other.threshold &&
+                    totalAmount == other.totalAmount &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(threshold, totalAmount, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "ConsumptionTable{threshold=$threshold, totalAmount=$totalAmount, additionalProperties=$additionalProperties}"
+        }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1316,15 +1662,19 @@ private constructor(
             }
 
             return other is ThresholdTotalAmountConfig &&
+                consumptionTable == other.consumptionTable &&
+                prorate == other.prorate &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        private val hashCode: Int by lazy {
+            Objects.hash(consumptionTable, prorate, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ThresholdTotalAmountConfig{additionalProperties=$additionalProperties}"
+            "ThresholdTotalAmountConfig{consumptionTable=$consumptionTable, prorate=$prorate, additionalProperties=$additionalProperties}"
     }
 
     /**

@@ -126,6 +126,8 @@ private constructor(
     fun itemId(): String = itemId.getRequired("item_id")
 
     /**
+     * The pricing model type
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -140,6 +142,8 @@ private constructor(
     fun name(): String = name.getRequired("name")
 
     /**
+     * Configuration for unit_with_percent pricing
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -527,6 +531,7 @@ private constructor(
          */
         fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
+        /** The pricing model type */
         fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
         /**
@@ -549,6 +554,7 @@ private constructor(
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
+        /** Configuration for unit_with_percent pricing */
         fun unitWithPercentConfig(unitWithPercentConfig: UnitWithPercentConfig) =
             unitWithPercentConfig(JsonField.of(unitWithPercentConfig))
 
@@ -1101,6 +1107,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The pricing model type */
     class ModelType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -1221,16 +1228,63 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Configuration for unit_with_percent pricing */
     class UnitWithPercentConfig
-    @JsonCreator
     private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+        private val percent: JsonField<String>,
+        private val unitAmount: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("percent") @ExcludeMissing percent: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("unit_amount")
+            @ExcludeMissing
+            unitAmount: JsonField<String> = JsonMissing.of(),
+        ) : this(percent, unitAmount, mutableMapOf())
+
+        /**
+         * What percent, out of 100, of the calculated total to charge
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun percent(): String = percent.getRequired("percent")
+
+        /**
+         * Rate per unit of usage
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun unitAmount(): String = unitAmount.getRequired("unit_amount")
+
+        /**
+         * Returns the raw JSON value of [percent].
+         *
+         * Unlike [percent], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("percent") @ExcludeMissing fun _percent(): JsonField<String> = percent
+
+        /**
+         * Returns the raw JSON value of [unitAmount].
+         *
+         * Unlike [unitAmount], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("unit_amount")
+        @ExcludeMissing
+        fun _unitAmount(): JsonField<String> = unitAmount
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1238,6 +1292,12 @@ private constructor(
 
             /**
              * Returns a mutable builder for constructing an instance of [UnitWithPercentConfig].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .percent()
+             * .unitAmount()
+             * ```
              */
             fun builder() = Builder()
         }
@@ -1245,11 +1305,39 @@ private constructor(
         /** A builder for [UnitWithPercentConfig]. */
         class Builder internal constructor() {
 
+            private var percent: JsonField<String>? = null
+            private var unitAmount: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(unitWithPercentConfig: UnitWithPercentConfig) = apply {
+                percent = unitWithPercentConfig.percent
+                unitAmount = unitWithPercentConfig.unitAmount
                 additionalProperties = unitWithPercentConfig.additionalProperties.toMutableMap()
             }
+
+            /** What percent, out of 100, of the calculated total to charge */
+            fun percent(percent: String) = percent(JsonField.of(percent))
+
+            /**
+             * Sets [Builder.percent] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.percent] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun percent(percent: JsonField<String>) = apply { this.percent = percent }
+
+            /** Rate per unit of usage */
+            fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
+
+            /**
+             * Sets [Builder.unitAmount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.unitAmount] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun unitAmount(unitAmount: JsonField<String>) = apply { this.unitAmount = unitAmount }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1274,9 +1362,21 @@ private constructor(
              * Returns an immutable instance of [UnitWithPercentConfig].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .percent()
+             * .unitAmount()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): UnitWithPercentConfig =
-                UnitWithPercentConfig(additionalProperties.toImmutable())
+                UnitWithPercentConfig(
+                    checkRequired("percent", percent),
+                    checkRequired("unitAmount", unitAmount),
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1286,6 +1386,8 @@ private constructor(
                 return@apply
             }
 
+            percent()
+            unitAmount()
             validated = true
         }
 
@@ -1304,7 +1406,7 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+            (if (percent.asKnown() == null) 0 else 1) + (if (unitAmount.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1312,15 +1414,19 @@ private constructor(
             }
 
             return other is UnitWithPercentConfig &&
+                percent == other.percent &&
+                unitAmount == other.unitAmount &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        private val hashCode: Int by lazy {
+            Objects.hash(percent, unitAmount, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "UnitWithPercentConfig{additionalProperties=$additionalProperties}"
+            "UnitWithPercentConfig{percent=$percent, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
     }
 
     /**

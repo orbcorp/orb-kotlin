@@ -118,6 +118,8 @@ private constructor(
     fun cadence(): Cadence = cadence.getRequired("cadence")
 
     /**
+     * Configuration for grouped_allocation pricing
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -133,6 +135,8 @@ private constructor(
     fun itemId(): String = itemId.getRequired("item_id")
 
     /**
+     * The pricing model type
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -516,6 +520,7 @@ private constructor(
          */
         fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
+        /** Configuration for grouped_allocation pricing */
         fun groupedAllocationConfig(groupedAllocationConfig: GroupedAllocationConfig) =
             groupedAllocationConfig(JsonField.of(groupedAllocationConfig))
 
@@ -542,6 +547,7 @@ private constructor(
          */
         fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
+        /** The pricing model type */
         fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
         /**
@@ -1102,16 +1108,89 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Configuration for grouped_allocation pricing */
     class GroupedAllocationConfig
-    @JsonCreator
     private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+        private val allocation: JsonField<String>,
+        private val groupingKey: JsonField<String>,
+        private val overageUnitRate: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("allocation")
+            @ExcludeMissing
+            allocation: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("grouping_key")
+            @ExcludeMissing
+            groupingKey: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("overage_unit_rate")
+            @ExcludeMissing
+            overageUnitRate: JsonField<String> = JsonMissing.of(),
+        ) : this(allocation, groupingKey, overageUnitRate, mutableMapOf())
+
+        /**
+         * Usage allocation per group
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun allocation(): String = allocation.getRequired("allocation")
+
+        /**
+         * How to determine the groups that should each be allocated some quantity
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun groupingKey(): String = groupingKey.getRequired("grouping_key")
+
+        /**
+         * Unit rate for post-allocation
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun overageUnitRate(): String = overageUnitRate.getRequired("overage_unit_rate")
+
+        /**
+         * Returns the raw JSON value of [allocation].
+         *
+         * Unlike [allocation], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("allocation")
+        @ExcludeMissing
+        fun _allocation(): JsonField<String> = allocation
+
+        /**
+         * Returns the raw JSON value of [groupingKey].
+         *
+         * Unlike [groupingKey], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("grouping_key")
+        @ExcludeMissing
+        fun _groupingKey(): JsonField<String> = groupingKey
+
+        /**
+         * Returns the raw JSON value of [overageUnitRate].
+         *
+         * Unlike [overageUnitRate], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("overage_unit_rate")
+        @ExcludeMissing
+        fun _overageUnitRate(): JsonField<String> = overageUnitRate
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1119,6 +1198,13 @@ private constructor(
 
             /**
              * Returns a mutable builder for constructing an instance of [GroupedAllocationConfig].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .allocation()
+             * .groupingKey()
+             * .overageUnitRate()
+             * ```
              */
             fun builder() = Builder()
         }
@@ -1126,10 +1212,57 @@ private constructor(
         /** A builder for [GroupedAllocationConfig]. */
         class Builder internal constructor() {
 
+            private var allocation: JsonField<String>? = null
+            private var groupingKey: JsonField<String>? = null
+            private var overageUnitRate: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(groupedAllocationConfig: GroupedAllocationConfig) = apply {
+                allocation = groupedAllocationConfig.allocation
+                groupingKey = groupedAllocationConfig.groupingKey
+                overageUnitRate = groupedAllocationConfig.overageUnitRate
                 additionalProperties = groupedAllocationConfig.additionalProperties.toMutableMap()
+            }
+
+            /** Usage allocation per group */
+            fun allocation(allocation: String) = allocation(JsonField.of(allocation))
+
+            /**
+             * Sets [Builder.allocation] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.allocation] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun allocation(allocation: JsonField<String>) = apply { this.allocation = allocation }
+
+            /** How to determine the groups that should each be allocated some quantity */
+            fun groupingKey(groupingKey: String) = groupingKey(JsonField.of(groupingKey))
+
+            /**
+             * Sets [Builder.groupingKey] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.groupingKey] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun groupingKey(groupingKey: JsonField<String>) = apply {
+                this.groupingKey = groupingKey
+            }
+
+            /** Unit rate for post-allocation */
+            fun overageUnitRate(overageUnitRate: String) =
+                overageUnitRate(JsonField.of(overageUnitRate))
+
+            /**
+             * Sets [Builder.overageUnitRate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.overageUnitRate] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun overageUnitRate(overageUnitRate: JsonField<String>) = apply {
+                this.overageUnitRate = overageUnitRate
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1155,9 +1288,23 @@ private constructor(
              * Returns an immutable instance of [GroupedAllocationConfig].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .allocation()
+             * .groupingKey()
+             * .overageUnitRate()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): GroupedAllocationConfig =
-                GroupedAllocationConfig(additionalProperties.toImmutable())
+                GroupedAllocationConfig(
+                    checkRequired("allocation", allocation),
+                    checkRequired("groupingKey", groupingKey),
+                    checkRequired("overageUnitRate", overageUnitRate),
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1167,6 +1314,9 @@ private constructor(
                 return@apply
             }
 
+            allocation()
+            groupingKey()
+            overageUnitRate()
             validated = true
         }
 
@@ -1185,7 +1335,9 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+            (if (allocation.asKnown() == null) 0 else 1) +
+                (if (groupingKey.asKnown() == null) 0 else 1) +
+                (if (overageUnitRate.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1193,17 +1345,23 @@ private constructor(
             }
 
             return other is GroupedAllocationConfig &&
+                allocation == other.allocation &&
+                groupingKey == other.groupingKey &&
+                overageUnitRate == other.overageUnitRate &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        private val hashCode: Int by lazy {
+            Objects.hash(allocation, groupingKey, overageUnitRate, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedAllocationConfig{additionalProperties=$additionalProperties}"
+            "GroupedAllocationConfig{allocation=$allocation, groupingKey=$groupingKey, overageUnitRate=$overageUnitRate, additionalProperties=$additionalProperties}"
     }
 
+    /** The pricing model type */
     class ModelType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**

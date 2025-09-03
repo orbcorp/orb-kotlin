@@ -26,7 +26,20 @@ internal class NewFloatingScalableMatrixWithUnitPricingPriceTest {
                     NewFloatingScalableMatrixWithUnitPricingPrice
                         .ScalableMatrixWithUnitPricingConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .firstDimension("first_dimension")
+                        .addMatrixScalingFactor(
+                            NewFloatingScalableMatrixWithUnitPricingPrice
+                                .ScalableMatrixWithUnitPricingConfig
+                                .MatrixScalingFactor
+                                .builder()
+                                .firstDimensionValue("first_dimension_value")
+                                .scalingFactor("scaling_factor")
+                                .secondDimensionValue("second_dimension_value")
+                                .build()
+                        )
+                        .unitPrice("unit_price")
+                        .prorate(true)
+                        .secondDimension("second_dimension")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -80,7 +93,20 @@ internal class NewFloatingScalableMatrixWithUnitPricingPriceTest {
             .isEqualTo(
                 NewFloatingScalableMatrixWithUnitPricingPrice.ScalableMatrixWithUnitPricingConfig
                     .builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .firstDimension("first_dimension")
+                    .addMatrixScalingFactor(
+                        NewFloatingScalableMatrixWithUnitPricingPrice
+                            .ScalableMatrixWithUnitPricingConfig
+                            .MatrixScalingFactor
+                            .builder()
+                            .firstDimensionValue("first_dimension_value")
+                            .scalingFactor("scaling_factor")
+                            .secondDimensionValue("second_dimension_value")
+                            .build()
+                    )
+                    .unitPrice("unit_price")
+                    .prorate(true)
+                    .secondDimension("second_dimension")
                     .build()
             )
         assertThat(newFloatingScalableMatrixWithUnitPricingPrice.billableMetricId())
@@ -151,7 +177,20 @@ internal class NewFloatingScalableMatrixWithUnitPricingPriceTest {
                     NewFloatingScalableMatrixWithUnitPricingPrice
                         .ScalableMatrixWithUnitPricingConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .firstDimension("first_dimension")
+                        .addMatrixScalingFactor(
+                            NewFloatingScalableMatrixWithUnitPricingPrice
+                                .ScalableMatrixWithUnitPricingConfig
+                                .MatrixScalingFactor
+                                .builder()
+                                .firstDimensionValue("first_dimension_value")
+                                .scalingFactor("scaling_factor")
+                                .secondDimensionValue("second_dimension_value")
+                                .build()
+                        )
+                        .unitPrice("unit_price")
+                        .prorate(true)
+                        .secondDimension("second_dimension")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

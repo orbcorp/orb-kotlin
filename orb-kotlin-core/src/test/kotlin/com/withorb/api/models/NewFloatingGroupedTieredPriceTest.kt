@@ -18,7 +18,19 @@ internal class NewFloatingGroupedTieredPriceTest {
                 .currency("currency")
                 .groupedTieredConfig(
                     NewFloatingGroupedTieredPrice.GroupedTieredConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .addTier(
+                            NewFloatingGroupedTieredPrice.GroupedTieredConfig.Tier.builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .addTier(
+                            NewFloatingGroupedTieredPrice.GroupedTieredConfig.Tier.builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .itemId("item_id")
@@ -65,7 +77,19 @@ internal class NewFloatingGroupedTieredPriceTest {
         assertThat(newFloatingGroupedTieredPrice.groupedTieredConfig())
             .isEqualTo(
                 NewFloatingGroupedTieredPrice.GroupedTieredConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .groupingKey("x")
+                    .addTier(
+                        NewFloatingGroupedTieredPrice.GroupedTieredConfig.Tier.builder()
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .addTier(
+                        NewFloatingGroupedTieredPrice.GroupedTieredConfig.Tier.builder()
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newFloatingGroupedTieredPrice.itemId()).isEqualTo("item_id")
@@ -128,7 +152,19 @@ internal class NewFloatingGroupedTieredPriceTest {
                 .currency("currency")
                 .groupedTieredConfig(
                     NewFloatingGroupedTieredPrice.GroupedTieredConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .addTier(
+                            NewFloatingGroupedTieredPrice.GroupedTieredConfig.Tier.builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .addTier(
+                            NewFloatingGroupedTieredPrice.GroupedTieredConfig.Tier.builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .itemId("item_id")

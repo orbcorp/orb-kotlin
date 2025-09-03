@@ -19,11 +19,11 @@ internal class NewFloatingMatrixWithAllocationPriceTest {
                 .itemId("item_id")
                 .matrixWithAllocationConfig(
                     MatrixWithAllocationConfig.builder()
-                        .allocation(0.0)
+                        .allocation("allocation")
                         .defaultUnitAmount("default_unit_amount")
                         .addDimension("string")
                         .addMatrixValue(
-                            MatrixValue.builder()
+                            MatrixWithAllocationConfig.MatrixValue.builder()
                                 .addDimensionValue("string")
                                 .unitAmount("unit_amount")
                                 .build()
@@ -74,11 +74,11 @@ internal class NewFloatingMatrixWithAllocationPriceTest {
         assertThat(newFloatingMatrixWithAllocationPrice.matrixWithAllocationConfig())
             .isEqualTo(
                 MatrixWithAllocationConfig.builder()
-                    .allocation(0.0)
+                    .allocation("allocation")
                     .defaultUnitAmount("default_unit_amount")
                     .addDimension("string")
                     .addMatrixValue(
-                        MatrixValue.builder()
+                        MatrixWithAllocationConfig.MatrixValue.builder()
                             .addDimensionValue("string")
                             .unitAmount("unit_amount")
                             .build()
@@ -147,11 +147,11 @@ internal class NewFloatingMatrixWithAllocationPriceTest {
                 .itemId("item_id")
                 .matrixWithAllocationConfig(
                     MatrixWithAllocationConfig.builder()
-                        .allocation(0.0)
+                        .allocation("allocation")
                         .defaultUnitAmount("default_unit_amount")
                         .addDimension("string")
                         .addMatrixValue(
-                            MatrixValue.builder()
+                            MatrixWithAllocationConfig.MatrixValue.builder()
                                 .addDimensionValue("string")
                                 .unitAmount("unit_amount")
                                 .build()

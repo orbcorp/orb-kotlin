@@ -11,6 +11,7 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -118,6 +119,8 @@ private constructor(
     fun cadence(): Cadence = cadence.getRequired("cadence")
 
     /**
+     * Configuration for cumulative_grouped_bulk pricing
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -133,6 +136,8 @@ private constructor(
     fun itemId(): String = itemId.getRequired("item_id")
 
     /**
+     * The pricing model type
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -518,6 +523,7 @@ private constructor(
          */
         fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
+        /** Configuration for cumulative_grouped_bulk pricing */
         fun cumulativeGroupedBulkConfig(cumulativeGroupedBulkConfig: CumulativeGroupedBulkConfig) =
             cumulativeGroupedBulkConfig(JsonField.of(cumulativeGroupedBulkConfig))
 
@@ -543,6 +549,7 @@ private constructor(
          */
         fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
+        /** The pricing model type */
         fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
         /**
@@ -1103,16 +1110,65 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Configuration for cumulative_grouped_bulk pricing */
     class CumulativeGroupedBulkConfig
-    @JsonCreator
     private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+        private val dimensionValues: JsonField<List<DimensionValue>>,
+        private val group: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("dimension_values")
+            @ExcludeMissing
+            dimensionValues: JsonField<List<DimensionValue>> = JsonMissing.of(),
+            @JsonProperty("group") @ExcludeMissing group: JsonField<String> = JsonMissing.of(),
+        ) : this(dimensionValues, group, mutableMapOf())
+
+        /**
+         * Each tier lower bound must have the same group of values.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun dimensionValues(): List<DimensionValue> =
+            dimensionValues.getRequired("dimension_values")
+
+        /**
+         * Grouping key name
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun group(): String = group.getRequired("group")
+
+        /**
+         * Returns the raw JSON value of [dimensionValues].
+         *
+         * Unlike [dimensionValues], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("dimension_values")
+        @ExcludeMissing
+        fun _dimensionValues(): JsonField<List<DimensionValue>> = dimensionValues
+
+        /**
+         * Returns the raw JSON value of [group].
+         *
+         * Unlike [group], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("group") @ExcludeMissing fun _group(): JsonField<String> = group
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1121,6 +1177,12 @@ private constructor(
             /**
              * Returns a mutable builder for constructing an instance of
              * [CumulativeGroupedBulkConfig].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .dimensionValues()
+             * .group()
+             * ```
              */
             fun builder() = Builder()
         }
@@ -1128,12 +1190,56 @@ private constructor(
         /** A builder for [CumulativeGroupedBulkConfig]. */
         class Builder internal constructor() {
 
+            private var dimensionValues: JsonField<MutableList<DimensionValue>>? = null
+            private var group: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cumulativeGroupedBulkConfig: CumulativeGroupedBulkConfig) = apply {
+                dimensionValues =
+                    cumulativeGroupedBulkConfig.dimensionValues.map { it.toMutableList() }
+                group = cumulativeGroupedBulkConfig.group
                 additionalProperties =
                     cumulativeGroupedBulkConfig.additionalProperties.toMutableMap()
             }
+
+            /** Each tier lower bound must have the same group of values. */
+            fun dimensionValues(dimensionValues: List<DimensionValue>) =
+                dimensionValues(JsonField.of(dimensionValues))
+
+            /**
+             * Sets [Builder.dimensionValues] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.dimensionValues] with a well-typed
+             * `List<DimensionValue>` value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun dimensionValues(dimensionValues: JsonField<List<DimensionValue>>) = apply {
+                this.dimensionValues = dimensionValues.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [DimensionValue] to [dimensionValues].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addDimensionValue(dimensionValue: DimensionValue) = apply {
+                dimensionValues =
+                    (dimensionValues ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("dimensionValues", it).add(dimensionValue)
+                    }
+            }
+
+            /** Grouping key name */
+            fun group(group: String) = group(JsonField.of(group))
+
+            /**
+             * Sets [Builder.group] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.group] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun group(group: JsonField<String>) = apply { this.group = group }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1158,9 +1264,21 @@ private constructor(
              * Returns an immutable instance of [CumulativeGroupedBulkConfig].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .dimensionValues()
+             * .group()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): CumulativeGroupedBulkConfig =
-                CumulativeGroupedBulkConfig(additionalProperties.toImmutable())
+                CumulativeGroupedBulkConfig(
+                    checkRequired("dimensionValues", dimensionValues).map { it.toImmutable() },
+                    checkRequired("group", group),
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1170,6 +1288,8 @@ private constructor(
                 return@apply
             }
 
+            dimensionValues().forEach { it.validate() }
+            group()
             validated = true
         }
 
@@ -1188,7 +1308,271 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+            (dimensionValues.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (group.asKnown() == null) 0 else 1)
+
+        /** Configuration for a dimension value entry */
+        class DimensionValue
+        private constructor(
+            private val groupingKey: JsonField<String>,
+            private val tierLowerBound: JsonField<String>,
+            private val unitAmount: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("grouping_key")
+                @ExcludeMissing
+                groupingKey: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("tier_lower_bound")
+                @ExcludeMissing
+                tierLowerBound: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("unit_amount")
+                @ExcludeMissing
+                unitAmount: JsonField<String> = JsonMissing.of(),
+            ) : this(groupingKey, tierLowerBound, unitAmount, mutableMapOf())
+
+            /**
+             * Grouping key value
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun groupingKey(): String = groupingKey.getRequired("grouping_key")
+
+            /**
+             * Tier lower bound
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun tierLowerBound(): String = tierLowerBound.getRequired("tier_lower_bound")
+
+            /**
+             * Unit amount for this combination
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun unitAmount(): String = unitAmount.getRequired("unit_amount")
+
+            /**
+             * Returns the raw JSON value of [groupingKey].
+             *
+             * Unlike [groupingKey], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("grouping_key")
+            @ExcludeMissing
+            fun _groupingKey(): JsonField<String> = groupingKey
+
+            /**
+             * Returns the raw JSON value of [tierLowerBound].
+             *
+             * Unlike [tierLowerBound], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("tier_lower_bound")
+            @ExcludeMissing
+            fun _tierLowerBound(): JsonField<String> = tierLowerBound
+
+            /**
+             * Returns the raw JSON value of [unitAmount].
+             *
+             * Unlike [unitAmount], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("unit_amount")
+            @ExcludeMissing
+            fun _unitAmount(): JsonField<String> = unitAmount
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [DimensionValue].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .groupingKey()
+                 * .tierLowerBound()
+                 * .unitAmount()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [DimensionValue]. */
+            class Builder internal constructor() {
+
+                private var groupingKey: JsonField<String>? = null
+                private var tierLowerBound: JsonField<String>? = null
+                private var unitAmount: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(dimensionValue: DimensionValue) = apply {
+                    groupingKey = dimensionValue.groupingKey
+                    tierLowerBound = dimensionValue.tierLowerBound
+                    unitAmount = dimensionValue.unitAmount
+                    additionalProperties = dimensionValue.additionalProperties.toMutableMap()
+                }
+
+                /** Grouping key value */
+                fun groupingKey(groupingKey: String) = groupingKey(JsonField.of(groupingKey))
+
+                /**
+                 * Sets [Builder.groupingKey] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.groupingKey] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun groupingKey(groupingKey: JsonField<String>) = apply {
+                    this.groupingKey = groupingKey
+                }
+
+                /** Tier lower bound */
+                fun tierLowerBound(tierLowerBound: String) =
+                    tierLowerBound(JsonField.of(tierLowerBound))
+
+                /**
+                 * Sets [Builder.tierLowerBound] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.tierLowerBound] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun tierLowerBound(tierLowerBound: JsonField<String>) = apply {
+                    this.tierLowerBound = tierLowerBound
+                }
+
+                /** Unit amount for this combination */
+                fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
+
+                /**
+                 * Sets [Builder.unitAmount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.unitAmount] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun unitAmount(unitAmount: JsonField<String>) = apply {
+                    this.unitAmount = unitAmount
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [DimensionValue].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .groupingKey()
+                 * .tierLowerBound()
+                 * .unitAmount()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): DimensionValue =
+                    DimensionValue(
+                        checkRequired("groupingKey", groupingKey),
+                        checkRequired("tierLowerBound", tierLowerBound),
+                        checkRequired("unitAmount", unitAmount),
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): DimensionValue = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                groupingKey()
+                tierLowerBound()
+                unitAmount()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (groupingKey.asKnown() == null) 0 else 1) +
+                    (if (tierLowerBound.asKnown() == null) 0 else 1) +
+                    (if (unitAmount.asKnown() == null) 0 else 1)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is DimensionValue &&
+                    groupingKey == other.groupingKey &&
+                    tierLowerBound == other.tierLowerBound &&
+                    unitAmount == other.unitAmount &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(groupingKey, tierLowerBound, unitAmount, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "DimensionValue{groupingKey=$groupingKey, tierLowerBound=$tierLowerBound, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
+        }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1196,17 +1580,22 @@ private constructor(
             }
 
             return other is CumulativeGroupedBulkConfig &&
+                dimensionValues == other.dimensionValues &&
+                group == other.group &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        private val hashCode: Int by lazy {
+            Objects.hash(dimensionValues, group, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CumulativeGroupedBulkConfig{additionalProperties=$additionalProperties}"
+            "CumulativeGroupedBulkConfig{dimensionValues=$dimensionValues, group=$group, additionalProperties=$additionalProperties}"
     }
 
+    /** The pricing model type */
     class ModelType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**

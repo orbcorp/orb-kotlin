@@ -15,6 +15,7 @@ import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Collections
 import java.util.Objects
 
+/** Configuration for a single tier */
 class Tier
 private constructor(
     private val firstUnit: JsonField<Double>,
@@ -49,7 +50,7 @@ private constructor(
     fun unitAmount(): String = unitAmount.getRequired("unit_amount")
 
     /**
-     * Inclusive tier ending value. If null, this is treated as the last tier
+     * Inclusive tier ending value. This value is null if and only if this is the last tier.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -142,7 +143,7 @@ private constructor(
          */
         fun unitAmount(unitAmount: JsonField<String>) = apply { this.unitAmount = unitAmount }
 
-        /** Inclusive tier ending value. If null, this is treated as the last tier */
+        /** Inclusive tier ending value. This value is null if and only if this is the last tier. */
         fun lastUnit(lastUnit: Double?) = lastUnit(JsonField.ofNullable(lastUnit))
 
         /**

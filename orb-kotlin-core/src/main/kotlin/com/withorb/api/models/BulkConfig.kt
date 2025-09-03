@@ -17,6 +17,7 @@ import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Collections
 import java.util.Objects
 
+/** Configuration for bulk pricing */
 class BulkConfig
 private constructor(
     private val tiers: JsonField<List<BulkTier>>,

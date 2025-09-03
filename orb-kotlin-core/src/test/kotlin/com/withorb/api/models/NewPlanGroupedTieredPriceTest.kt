@@ -17,7 +17,19 @@ internal class NewPlanGroupedTieredPriceTest {
                 .cadence(NewPlanGroupedTieredPrice.Cadence.ANNUAL)
                 .groupedTieredConfig(
                     NewPlanGroupedTieredPrice.GroupedTieredConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .addTier(
+                            NewPlanGroupedTieredPrice.GroupedTieredConfig.Tier.builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .addTier(
+                            NewPlanGroupedTieredPrice.GroupedTieredConfig.Tier.builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .itemId("item_id")
@@ -65,7 +77,19 @@ internal class NewPlanGroupedTieredPriceTest {
         assertThat(newPlanGroupedTieredPrice.groupedTieredConfig())
             .isEqualTo(
                 NewPlanGroupedTieredPrice.GroupedTieredConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .groupingKey("x")
+                    .addTier(
+                        NewPlanGroupedTieredPrice.GroupedTieredConfig.Tier.builder()
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .addTier(
+                        NewPlanGroupedTieredPrice.GroupedTieredConfig.Tier.builder()
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newPlanGroupedTieredPrice.itemId()).isEqualTo("item_id")
@@ -129,7 +153,19 @@ internal class NewPlanGroupedTieredPriceTest {
                 .cadence(NewPlanGroupedTieredPrice.Cadence.ANNUAL)
                 .groupedTieredConfig(
                     NewPlanGroupedTieredPrice.GroupedTieredConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .addTier(
+                            NewPlanGroupedTieredPrice.GroupedTieredConfig.Tier.builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .addTier(
+                            NewPlanGroupedTieredPrice.GroupedTieredConfig.Tier.builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .itemId("item_id")
