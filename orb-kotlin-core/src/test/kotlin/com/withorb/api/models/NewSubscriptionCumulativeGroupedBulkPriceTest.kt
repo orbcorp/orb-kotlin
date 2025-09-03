@@ -17,7 +17,16 @@ internal class NewSubscriptionCumulativeGroupedBulkPriceTest {
                 .cadence(NewSubscriptionCumulativeGroupedBulkPrice.Cadence.ANNUAL)
                 .cumulativeGroupedBulkConfig(
                     NewSubscriptionCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addDimensionValue(
+                            NewSubscriptionCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig
+                                .DimensionValue
+                                .builder()
+                                .groupingKey("x")
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .group("group")
                         .build()
                 )
                 .itemId("item_id")
@@ -67,7 +76,16 @@ internal class NewSubscriptionCumulativeGroupedBulkPriceTest {
         assertThat(newSubscriptionCumulativeGroupedBulkPrice.cumulativeGroupedBulkConfig())
             .isEqualTo(
                 NewSubscriptionCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .addDimensionValue(
+                        NewSubscriptionCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig
+                            .DimensionValue
+                            .builder()
+                            .groupingKey("x")
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .group("group")
                     .build()
             )
         assertThat(newSubscriptionCumulativeGroupedBulkPrice.itemId()).isEqualTo("item_id")
@@ -134,7 +152,16 @@ internal class NewSubscriptionCumulativeGroupedBulkPriceTest {
                 .cadence(NewSubscriptionCumulativeGroupedBulkPrice.Cadence.ANNUAL)
                 .cumulativeGroupedBulkConfig(
                     NewSubscriptionCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addDimensionValue(
+                            NewSubscriptionCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig
+                                .DimensionValue
+                                .builder()
+                                .groupingKey("x")
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .group("group")
                         .build()
                 )
                 .itemId("item_id")

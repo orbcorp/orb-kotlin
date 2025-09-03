@@ -20,7 +20,9 @@ internal class NewPlanPackageWithAllocationPriceTest {
                 .name("Annual fee")
                 .packageWithAllocationConfig(
                     NewPlanPackageWithAllocationPrice.PackageWithAllocationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .allocation("allocation")
+                        .packageAmount("package_amount")
+                        .packageSize("package_size")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -69,7 +71,9 @@ internal class NewPlanPackageWithAllocationPriceTest {
         assertThat(newPlanPackageWithAllocationPrice.packageWithAllocationConfig())
             .isEqualTo(
                 NewPlanPackageWithAllocationPrice.PackageWithAllocationConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .allocation("allocation")
+                    .packageAmount("package_amount")
+                    .packageSize("package_size")
                     .build()
             )
         assertThat(newPlanPackageWithAllocationPrice.billableMetricId())
@@ -134,7 +138,9 @@ internal class NewPlanPackageWithAllocationPriceTest {
                 .name("Annual fee")
                 .packageWithAllocationConfig(
                     NewPlanPackageWithAllocationPrice.PackageWithAllocationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .allocation("allocation")
+                        .packageAmount("package_amount")
+                        .packageSize("package_size")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

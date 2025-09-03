@@ -129,6 +129,8 @@ private constructor(
     fun itemId(): String = itemId.getRequired("item_id")
 
     /**
+     * The pricing model type
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -143,6 +145,8 @@ private constructor(
     fun name(): String = name.getRequired("name")
 
     /**
+     * Configuration for package_with_allocation pricing
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -515,6 +519,7 @@ private constructor(
          */
         fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
+        /** The pricing model type */
         fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
         /**
@@ -537,6 +542,7 @@ private constructor(
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
+        /** Configuration for package_with_allocation pricing */
         fun packageWithAllocationConfig(packageWithAllocationConfig: PackageWithAllocationConfig) =
             packageWithAllocationConfig(JsonField.of(packageWithAllocationConfig))
 
@@ -1058,6 +1064,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The pricing model type */
     class ModelType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -1178,16 +1185,89 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Configuration for package_with_allocation pricing */
     class PackageWithAllocationConfig
-    @JsonCreator
     private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+        private val allocation: JsonField<String>,
+        private val packageAmount: JsonField<String>,
+        private val packageSize: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("allocation")
+            @ExcludeMissing
+            allocation: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("package_amount")
+            @ExcludeMissing
+            packageAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("package_size")
+            @ExcludeMissing
+            packageSize: JsonField<String> = JsonMissing.of(),
+        ) : this(allocation, packageAmount, packageSize, mutableMapOf())
+
+        /**
+         * Usage allocation
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun allocation(): String = allocation.getRequired("allocation")
+
+        /**
+         * Price per package
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun packageAmount(): String = packageAmount.getRequired("package_amount")
+
+        /**
+         * Package size
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun packageSize(): String = packageSize.getRequired("package_size")
+
+        /**
+         * Returns the raw JSON value of [allocation].
+         *
+         * Unlike [allocation], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("allocation")
+        @ExcludeMissing
+        fun _allocation(): JsonField<String> = allocation
+
+        /**
+         * Returns the raw JSON value of [packageAmount].
+         *
+         * Unlike [packageAmount], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("package_amount")
+        @ExcludeMissing
+        fun _packageAmount(): JsonField<String> = packageAmount
+
+        /**
+         * Returns the raw JSON value of [packageSize].
+         *
+         * Unlike [packageSize], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("package_size")
+        @ExcludeMissing
+        fun _packageSize(): JsonField<String> = packageSize
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1196,6 +1276,13 @@ private constructor(
             /**
              * Returns a mutable builder for constructing an instance of
              * [PackageWithAllocationConfig].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .allocation()
+             * .packageAmount()
+             * .packageSize()
+             * ```
              */
             fun builder() = Builder()
         }
@@ -1203,11 +1290,57 @@ private constructor(
         /** A builder for [PackageWithAllocationConfig]. */
         class Builder internal constructor() {
 
+            private var allocation: JsonField<String>? = null
+            private var packageAmount: JsonField<String>? = null
+            private var packageSize: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(packageWithAllocationConfig: PackageWithAllocationConfig) = apply {
+                allocation = packageWithAllocationConfig.allocation
+                packageAmount = packageWithAllocationConfig.packageAmount
+                packageSize = packageWithAllocationConfig.packageSize
                 additionalProperties =
                     packageWithAllocationConfig.additionalProperties.toMutableMap()
+            }
+
+            /** Usage allocation */
+            fun allocation(allocation: String) = allocation(JsonField.of(allocation))
+
+            /**
+             * Sets [Builder.allocation] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.allocation] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun allocation(allocation: JsonField<String>) = apply { this.allocation = allocation }
+
+            /** Price per package */
+            fun packageAmount(packageAmount: String) = packageAmount(JsonField.of(packageAmount))
+
+            /**
+             * Sets [Builder.packageAmount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.packageAmount] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun packageAmount(packageAmount: JsonField<String>) = apply {
+                this.packageAmount = packageAmount
+            }
+
+            /** Package size */
+            fun packageSize(packageSize: String) = packageSize(JsonField.of(packageSize))
+
+            /**
+             * Sets [Builder.packageSize] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.packageSize] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun packageSize(packageSize: JsonField<String>) = apply {
+                this.packageSize = packageSize
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1233,9 +1366,23 @@ private constructor(
              * Returns an immutable instance of [PackageWithAllocationConfig].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .allocation()
+             * .packageAmount()
+             * .packageSize()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): PackageWithAllocationConfig =
-                PackageWithAllocationConfig(additionalProperties.toImmutable())
+                PackageWithAllocationConfig(
+                    checkRequired("allocation", allocation),
+                    checkRequired("packageAmount", packageAmount),
+                    checkRequired("packageSize", packageSize),
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1245,6 +1392,9 @@ private constructor(
                 return@apply
             }
 
+            allocation()
+            packageAmount()
+            packageSize()
             validated = true
         }
 
@@ -1263,7 +1413,9 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+            (if (allocation.asKnown() == null) 0 else 1) +
+                (if (packageAmount.asKnown() == null) 0 else 1) +
+                (if (packageSize.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1271,15 +1423,20 @@ private constructor(
             }
 
             return other is PackageWithAllocationConfig &&
+                allocation == other.allocation &&
+                packageAmount == other.packageAmount &&
+                packageSize == other.packageSize &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        private val hashCode: Int by lazy {
+            Objects.hash(allocation, packageAmount, packageSize, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PackageWithAllocationConfig{additionalProperties=$additionalProperties}"
+            "PackageWithAllocationConfig{allocation=$allocation, packageAmount=$packageAmount, packageSize=$packageSize, additionalProperties=$additionalProperties}"
     }
 
     /**

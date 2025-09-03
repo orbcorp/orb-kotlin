@@ -11,6 +11,7 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -127,6 +128,8 @@ private constructor(
     fun itemId(): String = itemId.getRequired("item_id")
 
     /**
+     * The pricing model type
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -141,6 +144,8 @@ private constructor(
     fun name(): String = name.getRequired("name")
 
     /**
+     * Configuration for scalable_matrix_with_unit_pricing pricing
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -538,6 +543,7 @@ private constructor(
          */
         fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
+        /** The pricing model type */
         fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
         /**
@@ -560,6 +566,7 @@ private constructor(
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
+        /** Configuration for scalable_matrix_with_unit_pricing pricing */
         fun scalableMatrixWithUnitPricingConfig(
             scalableMatrixWithUnitPricingConfig: ScalableMatrixWithUnitPricingConfig
         ) = scalableMatrixWithUnitPricingConfig(JsonField.of(scalableMatrixWithUnitPricingConfig))
@@ -1116,6 +1123,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The pricing model type */
     class ModelType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -1236,16 +1244,135 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Configuration for scalable_matrix_with_unit_pricing pricing */
     class ScalableMatrixWithUnitPricingConfig
-    @JsonCreator
     private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+        private val firstDimension: JsonField<String>,
+        private val matrixScalingFactors: JsonField<List<MatrixScalingFactor>>,
+        private val unitPrice: JsonField<String>,
+        private val prorate: JsonField<Boolean>,
+        private val secondDimension: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("first_dimension")
+            @ExcludeMissing
+            firstDimension: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("matrix_scaling_factors")
+            @ExcludeMissing
+            matrixScalingFactors: JsonField<List<MatrixScalingFactor>> = JsonMissing.of(),
+            @JsonProperty("unit_price")
+            @ExcludeMissing
+            unitPrice: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("prorate") @ExcludeMissing prorate: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("second_dimension")
+            @ExcludeMissing
+            secondDimension: JsonField<String> = JsonMissing.of(),
+        ) : this(
+            firstDimension,
+            matrixScalingFactors,
+            unitPrice,
+            prorate,
+            secondDimension,
+            mutableMapOf(),
+        )
+
+        /**
+         * Used to determine the unit rate
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun firstDimension(): String = firstDimension.getRequired("first_dimension")
+
+        /**
+         * Apply a scaling factor to each dimension
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun matrixScalingFactors(): List<MatrixScalingFactor> =
+            matrixScalingFactors.getRequired("matrix_scaling_factors")
+
+        /**
+         * The final unit price to rate against the output of the matrix
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun unitPrice(): String = unitPrice.getRequired("unit_price")
+
+        /**
+         * If true, the unit price will be prorated to the billing period
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun prorate(): Boolean? = prorate.getNullable("prorate")
+
+        /**
+         * Used to determine the unit rate (optional)
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun secondDimension(): String? = secondDimension.getNullable("second_dimension")
+
+        /**
+         * Returns the raw JSON value of [firstDimension].
+         *
+         * Unlike [firstDimension], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("first_dimension")
+        @ExcludeMissing
+        fun _firstDimension(): JsonField<String> = firstDimension
+
+        /**
+         * Returns the raw JSON value of [matrixScalingFactors].
+         *
+         * Unlike [matrixScalingFactors], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("matrix_scaling_factors")
+        @ExcludeMissing
+        fun _matrixScalingFactors(): JsonField<List<MatrixScalingFactor>> = matrixScalingFactors
+
+        /**
+         * Returns the raw JSON value of [unitPrice].
+         *
+         * Unlike [unitPrice], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("unit_price") @ExcludeMissing fun _unitPrice(): JsonField<String> = unitPrice
+
+        /**
+         * Returns the raw JSON value of [prorate].
+         *
+         * Unlike [prorate], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("prorate") @ExcludeMissing fun _prorate(): JsonField<Boolean> = prorate
+
+        /**
+         * Returns the raw JSON value of [secondDimension].
+         *
+         * Unlike [secondDimension], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("second_dimension")
+        @ExcludeMissing
+        fun _secondDimension(): JsonField<String> = secondDimension
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1254,6 +1381,13 @@ private constructor(
             /**
              * Returns a mutable builder for constructing an instance of
              * [ScalableMatrixWithUnitPricingConfig].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .firstDimension()
+             * .matrixScalingFactors()
+             * .unitPrice()
+             * ```
              */
             fun builder() = Builder()
         }
@@ -1261,13 +1395,115 @@ private constructor(
         /** A builder for [ScalableMatrixWithUnitPricingConfig]. */
         class Builder internal constructor() {
 
+            private var firstDimension: JsonField<String>? = null
+            private var matrixScalingFactors: JsonField<MutableList<MatrixScalingFactor>>? = null
+            private var unitPrice: JsonField<String>? = null
+            private var prorate: JsonField<Boolean> = JsonMissing.of()
+            private var secondDimension: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
                 scalableMatrixWithUnitPricingConfig: ScalableMatrixWithUnitPricingConfig
             ) = apply {
+                firstDimension = scalableMatrixWithUnitPricingConfig.firstDimension
+                matrixScalingFactors =
+                    scalableMatrixWithUnitPricingConfig.matrixScalingFactors.map {
+                        it.toMutableList()
+                    }
+                unitPrice = scalableMatrixWithUnitPricingConfig.unitPrice
+                prorate = scalableMatrixWithUnitPricingConfig.prorate
+                secondDimension = scalableMatrixWithUnitPricingConfig.secondDimension
                 additionalProperties =
                     scalableMatrixWithUnitPricingConfig.additionalProperties.toMutableMap()
+            }
+
+            /** Used to determine the unit rate */
+            fun firstDimension(firstDimension: String) =
+                firstDimension(JsonField.of(firstDimension))
+
+            /**
+             * Sets [Builder.firstDimension] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.firstDimension] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun firstDimension(firstDimension: JsonField<String>) = apply {
+                this.firstDimension = firstDimension
+            }
+
+            /** Apply a scaling factor to each dimension */
+            fun matrixScalingFactors(matrixScalingFactors: List<MatrixScalingFactor>) =
+                matrixScalingFactors(JsonField.of(matrixScalingFactors))
+
+            /**
+             * Sets [Builder.matrixScalingFactors] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.matrixScalingFactors] with a well-typed
+             * `List<MatrixScalingFactor>` value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
+             */
+            fun matrixScalingFactors(matrixScalingFactors: JsonField<List<MatrixScalingFactor>>) =
+                apply {
+                    this.matrixScalingFactors = matrixScalingFactors.map { it.toMutableList() }
+                }
+
+            /**
+             * Adds a single [MatrixScalingFactor] to [matrixScalingFactors].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addMatrixScalingFactor(matrixScalingFactor: MatrixScalingFactor) = apply {
+                matrixScalingFactors =
+                    (matrixScalingFactors ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("matrixScalingFactors", it).add(matrixScalingFactor)
+                    }
+            }
+
+            /** The final unit price to rate against the output of the matrix */
+            fun unitPrice(unitPrice: String) = unitPrice(JsonField.of(unitPrice))
+
+            /**
+             * Sets [Builder.unitPrice] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.unitPrice] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun unitPrice(unitPrice: JsonField<String>) = apply { this.unitPrice = unitPrice }
+
+            /** If true, the unit price will be prorated to the billing period */
+            fun prorate(prorate: Boolean?) = prorate(JsonField.ofNullable(prorate))
+
+            /**
+             * Alias for [Builder.prorate].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun prorate(prorate: Boolean) = prorate(prorate as Boolean?)
+
+            /**
+             * Sets [Builder.prorate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.prorate] with a well-typed [Boolean] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun prorate(prorate: JsonField<Boolean>) = apply { this.prorate = prorate }
+
+            /** Used to determine the unit rate (optional) */
+            fun secondDimension(secondDimension: String?) =
+                secondDimension(JsonField.ofNullable(secondDimension))
+
+            /**
+             * Sets [Builder.secondDimension] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.secondDimension] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun secondDimension(secondDimension: JsonField<String>) = apply {
+                this.secondDimension = secondDimension
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1293,9 +1529,27 @@ private constructor(
              * Returns an immutable instance of [ScalableMatrixWithUnitPricingConfig].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .firstDimension()
+             * .matrixScalingFactors()
+             * .unitPrice()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): ScalableMatrixWithUnitPricingConfig =
-                ScalableMatrixWithUnitPricingConfig(additionalProperties.toImmutable())
+                ScalableMatrixWithUnitPricingConfig(
+                    checkRequired("firstDimension", firstDimension),
+                    checkRequired("matrixScalingFactors", matrixScalingFactors).map {
+                        it.toImmutable()
+                    },
+                    checkRequired("unitPrice", unitPrice),
+                    prorate,
+                    secondDimension,
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1305,6 +1559,11 @@ private constructor(
                 return@apply
             }
 
+            firstDimension()
+            matrixScalingFactors().forEach { it.validate() }
+            unitPrice()
+            prorate()
+            secondDimension()
             validated = true
         }
 
@@ -1323,7 +1582,280 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+            (if (firstDimension.asKnown() == null) 0 else 1) +
+                (matrixScalingFactors.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (unitPrice.asKnown() == null) 0 else 1) +
+                (if (prorate.asKnown() == null) 0 else 1) +
+                (if (secondDimension.asKnown() == null) 0 else 1)
+
+        /** Configuration for a single matrix scaling factor */
+        class MatrixScalingFactor
+        private constructor(
+            private val firstDimensionValue: JsonField<String>,
+            private val scalingFactor: JsonField<String>,
+            private val secondDimensionValue: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("first_dimension_value")
+                @ExcludeMissing
+                firstDimensionValue: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("scaling_factor")
+                @ExcludeMissing
+                scalingFactor: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("second_dimension_value")
+                @ExcludeMissing
+                secondDimensionValue: JsonField<String> = JsonMissing.of(),
+            ) : this(firstDimensionValue, scalingFactor, secondDimensionValue, mutableMapOf())
+
+            /**
+             * First dimension value
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun firstDimensionValue(): String =
+                firstDimensionValue.getRequired("first_dimension_value")
+
+            /**
+             * Scaling factor
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun scalingFactor(): String = scalingFactor.getRequired("scaling_factor")
+
+            /**
+             * Second dimension value (optional)
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun secondDimensionValue(): String? =
+                secondDimensionValue.getNullable("second_dimension_value")
+
+            /**
+             * Returns the raw JSON value of [firstDimensionValue].
+             *
+             * Unlike [firstDimensionValue], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("first_dimension_value")
+            @ExcludeMissing
+            fun _firstDimensionValue(): JsonField<String> = firstDimensionValue
+
+            /**
+             * Returns the raw JSON value of [scalingFactor].
+             *
+             * Unlike [scalingFactor], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("scaling_factor")
+            @ExcludeMissing
+            fun _scalingFactor(): JsonField<String> = scalingFactor
+
+            /**
+             * Returns the raw JSON value of [secondDimensionValue].
+             *
+             * Unlike [secondDimensionValue], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("second_dimension_value")
+            @ExcludeMissing
+            fun _secondDimensionValue(): JsonField<String> = secondDimensionValue
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [MatrixScalingFactor].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .firstDimensionValue()
+                 * .scalingFactor()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [MatrixScalingFactor]. */
+            class Builder internal constructor() {
+
+                private var firstDimensionValue: JsonField<String>? = null
+                private var scalingFactor: JsonField<String>? = null
+                private var secondDimensionValue: JsonField<String> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(matrixScalingFactor: MatrixScalingFactor) = apply {
+                    firstDimensionValue = matrixScalingFactor.firstDimensionValue
+                    scalingFactor = matrixScalingFactor.scalingFactor
+                    secondDimensionValue = matrixScalingFactor.secondDimensionValue
+                    additionalProperties = matrixScalingFactor.additionalProperties.toMutableMap()
+                }
+
+                /** First dimension value */
+                fun firstDimensionValue(firstDimensionValue: String) =
+                    firstDimensionValue(JsonField.of(firstDimensionValue))
+
+                /**
+                 * Sets [Builder.firstDimensionValue] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.firstDimensionValue] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun firstDimensionValue(firstDimensionValue: JsonField<String>) = apply {
+                    this.firstDimensionValue = firstDimensionValue
+                }
+
+                /** Scaling factor */
+                fun scalingFactor(scalingFactor: String) =
+                    scalingFactor(JsonField.of(scalingFactor))
+
+                /**
+                 * Sets [Builder.scalingFactor] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.scalingFactor] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun scalingFactor(scalingFactor: JsonField<String>) = apply {
+                    this.scalingFactor = scalingFactor
+                }
+
+                /** Second dimension value (optional) */
+                fun secondDimensionValue(secondDimensionValue: String?) =
+                    secondDimensionValue(JsonField.ofNullable(secondDimensionValue))
+
+                /**
+                 * Sets [Builder.secondDimensionValue] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.secondDimensionValue] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun secondDimensionValue(secondDimensionValue: JsonField<String>) = apply {
+                    this.secondDimensionValue = secondDimensionValue
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [MatrixScalingFactor].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .firstDimensionValue()
+                 * .scalingFactor()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): MatrixScalingFactor =
+                    MatrixScalingFactor(
+                        checkRequired("firstDimensionValue", firstDimensionValue),
+                        checkRequired("scalingFactor", scalingFactor),
+                        secondDimensionValue,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): MatrixScalingFactor = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                firstDimensionValue()
+                scalingFactor()
+                secondDimensionValue()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (firstDimensionValue.asKnown() == null) 0 else 1) +
+                    (if (scalingFactor.asKnown() == null) 0 else 1) +
+                    (if (secondDimensionValue.asKnown() == null) 0 else 1)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is MatrixScalingFactor &&
+                    firstDimensionValue == other.firstDimensionValue &&
+                    scalingFactor == other.scalingFactor &&
+                    secondDimensionValue == other.secondDimensionValue &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(
+                    firstDimensionValue,
+                    scalingFactor,
+                    secondDimensionValue,
+                    additionalProperties,
+                )
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "MatrixScalingFactor{firstDimensionValue=$firstDimensionValue, scalingFactor=$scalingFactor, secondDimensionValue=$secondDimensionValue, additionalProperties=$additionalProperties}"
+        }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1331,15 +1863,29 @@ private constructor(
             }
 
             return other is ScalableMatrixWithUnitPricingConfig &&
+                firstDimension == other.firstDimension &&
+                matrixScalingFactors == other.matrixScalingFactors &&
+                unitPrice == other.unitPrice &&
+                prorate == other.prorate &&
+                secondDimension == other.secondDimension &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                firstDimension,
+                matrixScalingFactors,
+                unitPrice,
+                prorate,
+                secondDimension,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ScalableMatrixWithUnitPricingConfig{additionalProperties=$additionalProperties}"
+            "ScalableMatrixWithUnitPricingConfig{firstDimension=$firstDimension, matrixScalingFactors=$matrixScalingFactors, unitPrice=$unitPrice, prorate=$prorate, secondDimension=$secondDimension, additionalProperties=$additionalProperties}"
     }
 
     /**

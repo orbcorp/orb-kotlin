@@ -1711,7 +1711,7 @@ private constructor(
         fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
 
         /**
-         * The price to add to the plan
+         * New plan price request body params.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1815,7 +1815,7 @@ private constructor(
                 this.planPhaseOrder = planPhaseOrder
             }
 
-            /** The price to add to the plan */
+            /** New plan price request body params. */
             fun price(price: Price?) = price(JsonField.ofNullable(price))
 
             /**
@@ -1830,17 +1830,17 @@ private constructor(
             /** Alias for calling [price] with `Price.ofUnit(unit)`. */
             fun price(unit: NewPlanUnitPrice) = price(Price.ofUnit(unit))
 
-            /** Alias for calling [price] with `Price.ofPackage(package_)`. */
-            fun price(package_: NewPlanPackagePrice) = price(Price.ofPackage(package_))
-
-            /** Alias for calling [price] with `Price.ofMatrix(matrix)`. */
-            fun price(matrix: NewPlanMatrixPrice) = price(Price.ofMatrix(matrix))
-
             /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
             fun price(tiered: NewPlanTieredPrice) = price(Price.ofTiered(tiered))
 
             /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
             fun price(bulk: NewPlanBulkPrice) = price(Price.ofBulk(bulk))
+
+            /** Alias for calling [price] with `Price.ofPackage(package_)`. */
+            fun price(package_: NewPlanPackagePrice) = price(Price.ofPackage(package_))
+
+            /** Alias for calling [price] with `Price.ofMatrix(matrix)`. */
+            fun price(matrix: NewPlanMatrixPrice) = price(Price.ofMatrix(matrix))
 
             /**
              * Alias for calling [price] with `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
@@ -1856,9 +1856,16 @@ private constructor(
             fun price(tieredWithMinimum: NewPlanTieredWithMinimumPrice) =
                 price(Price.ofTieredWithMinimum(tieredWithMinimum))
 
-            /** Alias for calling [price] with `Price.ofUnitWithPercent(unitWithPercent)`. */
-            fun price(unitWithPercent: NewPlanUnitWithPercentPrice) =
-                price(Price.ofUnitWithPercent(unitWithPercent))
+            /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
+            fun price(groupedTiered: NewPlanGroupedTieredPrice) =
+                price(Price.ofGroupedTiered(groupedTiered))
+
+            /**
+             * Alias for calling [price] with
+             * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
+             */
+            fun price(tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice) =
+                price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
 
             /**
              * Alias for calling [price] with
@@ -1867,10 +1874,20 @@ private constructor(
             fun price(packageWithAllocation: NewPlanPackageWithAllocationPrice) =
                 price(Price.ofPackageWithAllocation(packageWithAllocation))
 
+            /** Alias for calling [price] with `Price.ofUnitWithPercent(unitWithPercent)`. */
+            fun price(unitWithPercent: NewPlanUnitWithPercentPrice) =
+                price(Price.ofUnitWithPercent(unitWithPercent))
+
+            /**
+             * Alias for calling [price] with `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
+             */
+            fun price(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
+                price(Price.ofMatrixWithAllocation(matrixWithAllocation))
+
             /**
              * Alias for calling [price] with `Price.ofTieredWithProration(tieredWithProration)`.
              */
-            fun price(tieredWithProration: NewPlanTierWithProrationPrice) =
+            fun price(tieredWithProration: Price.TieredWithProration) =
                 price(Price.ofTieredWithProration(tieredWithProration))
 
             /** Alias for calling [price] with `Price.ofUnitWithProration(unitWithProration)`. */
@@ -1880,6 +1897,10 @@ private constructor(
             /** Alias for calling [price] with `Price.ofGroupedAllocation(groupedAllocation)`. */
             fun price(groupedAllocation: NewPlanGroupedAllocationPrice) =
                 price(Price.ofGroupedAllocation(groupedAllocation))
+
+            /** Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`. */
+            fun price(bulkWithProration: NewPlanBulkWithProrationPrice) =
+                price(Price.ofBulkWithProration(bulkWithProration))
 
             /**
              * Alias for calling [price] with
@@ -1908,10 +1929,6 @@ private constructor(
              */
             fun price(matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice) =
                 price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
-
-            /** Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`. */
-            fun price(bulkWithProration: NewPlanBulkWithProrationPrice) =
-                price(Price.ofBulkWithProration(bulkWithProration))
 
             /**
              * Alias for calling [price] with `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
@@ -1947,23 +1964,6 @@ private constructor(
              */
             fun price(cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice) =
                 price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
-
-            /**
-             * Alias for calling [price] with
-             * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
-             */
-            fun price(tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice) =
-                price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
-
-            /**
-             * Alias for calling [price] with `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
-             */
-            fun price(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
-                price(Price.ofMatrixWithAllocation(matrixWithAllocation))
-
-            /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
-            fun price(groupedTiered: NewPlanGroupedTieredPrice) =
-                price(Price.ofGroupedTiered(groupedTiered))
 
             /** Alias for calling [price] with `Price.ofMinimum(minimum)`. */
             fun price(minimum: NewPlanMinimumCompositePrice) = price(Price.ofMinimum(minimum))
@@ -2033,29 +2033,32 @@ private constructor(
                 (if (planPhaseOrder.asKnown() == null) 0 else 1) +
                 (price.asKnown()?.validity() ?: 0)
 
-        /** The price to add to the plan */
+        /** New plan price request body params. */
         @JsonDeserialize(using = Price.Deserializer::class)
         @JsonSerialize(using = Price.Serializer::class)
         class Price
         private constructor(
             private val unit: NewPlanUnitPrice? = null,
-            private val package_: NewPlanPackagePrice? = null,
-            private val matrix: NewPlanMatrixPrice? = null,
             private val tiered: NewPlanTieredPrice? = null,
             private val bulk: NewPlanBulkPrice? = null,
+            private val package_: NewPlanPackagePrice? = null,
+            private val matrix: NewPlanMatrixPrice? = null,
             private val thresholdTotalAmount: NewPlanThresholdTotalAmountPrice? = null,
             private val tieredPackage: NewPlanTieredPackagePrice? = null,
             private val tieredWithMinimum: NewPlanTieredWithMinimumPrice? = null,
-            private val unitWithPercent: NewPlanUnitWithPercentPrice? = null,
+            private val groupedTiered: NewPlanGroupedTieredPrice? = null,
+            private val tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice? = null,
             private val packageWithAllocation: NewPlanPackageWithAllocationPrice? = null,
-            private val tieredWithProration: NewPlanTierWithProrationPrice? = null,
+            private val unitWithPercent: NewPlanUnitWithPercentPrice? = null,
+            private val matrixWithAllocation: NewPlanMatrixWithAllocationPrice? = null,
+            private val tieredWithProration: TieredWithProration? = null,
             private val unitWithProration: NewPlanUnitWithProrationPrice? = null,
             private val groupedAllocation: NewPlanGroupedAllocationPrice? = null,
+            private val bulkWithProration: NewPlanBulkWithProrationPrice? = null,
             private val groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice? = null,
             private val groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice? = null,
             private val groupedWithMinMaxThresholds: GroupedWithMinMaxThresholds? = null,
             private val matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice? = null,
-            private val bulkWithProration: NewPlanBulkWithProrationPrice? = null,
             private val groupedTieredPackage: NewPlanGroupedTieredPackagePrice? = null,
             private val maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice? = null,
             private val scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice? =
@@ -2064,22 +2067,19 @@ private constructor(
                 NewPlanScalableMatrixWithTieredPricingPrice? =
                 null,
             private val cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice? = null,
-            private val tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice? = null,
-            private val matrixWithAllocation: NewPlanMatrixWithAllocationPrice? = null,
-            private val groupedTiered: NewPlanGroupedTieredPrice? = null,
             private val minimum: NewPlanMinimumCompositePrice? = null,
             private val _json: JsonValue? = null,
         ) {
 
             fun unit(): NewPlanUnitPrice? = unit
 
-            fun package_(): NewPlanPackagePrice? = package_
-
-            fun matrix(): NewPlanMatrixPrice? = matrix
-
             fun tiered(): NewPlanTieredPrice? = tiered
 
             fun bulk(): NewPlanBulkPrice? = bulk
+
+            fun package_(): NewPlanPackagePrice? = package_
+
+            fun matrix(): NewPlanMatrixPrice? = matrix
 
             fun thresholdTotalAmount(): NewPlanThresholdTotalAmountPrice? = thresholdTotalAmount
 
@@ -2087,15 +2087,24 @@ private constructor(
 
             fun tieredWithMinimum(): NewPlanTieredWithMinimumPrice? = tieredWithMinimum
 
-            fun unitWithPercent(): NewPlanUnitWithPercentPrice? = unitWithPercent
+            fun groupedTiered(): NewPlanGroupedTieredPrice? = groupedTiered
+
+            fun tieredPackageWithMinimum(): NewPlanTieredPackageWithMinimumPrice? =
+                tieredPackageWithMinimum
 
             fun packageWithAllocation(): NewPlanPackageWithAllocationPrice? = packageWithAllocation
 
-            fun tieredWithProration(): NewPlanTierWithProrationPrice? = tieredWithProration
+            fun unitWithPercent(): NewPlanUnitWithPercentPrice? = unitWithPercent
+
+            fun matrixWithAllocation(): NewPlanMatrixWithAllocationPrice? = matrixWithAllocation
+
+            fun tieredWithProration(): TieredWithProration? = tieredWithProration
 
             fun unitWithProration(): NewPlanUnitWithProrationPrice? = unitWithProration
 
             fun groupedAllocation(): NewPlanGroupedAllocationPrice? = groupedAllocation
+
+            fun bulkWithProration(): NewPlanBulkWithProrationPrice? = bulkWithProration
 
             fun groupedWithProratedMinimum(): NewPlanGroupedWithProratedMinimumPrice? =
                 groupedWithProratedMinimum
@@ -2107,8 +2116,6 @@ private constructor(
                 groupedWithMinMaxThresholds
 
             fun matrixWithDisplayName(): NewPlanMatrixWithDisplayNamePrice? = matrixWithDisplayName
-
-            fun bulkWithProration(): NewPlanBulkWithProrationPrice? = bulkWithProration
 
             fun groupedTieredPackage(): NewPlanGroupedTieredPackagePrice? = groupedTieredPackage
 
@@ -2122,24 +2129,17 @@ private constructor(
 
             fun cumulativeGroupedBulk(): NewPlanCumulativeGroupedBulkPrice? = cumulativeGroupedBulk
 
-            fun tieredPackageWithMinimum(): NewPlanTieredPackageWithMinimumPrice? =
-                tieredPackageWithMinimum
-
-            fun matrixWithAllocation(): NewPlanMatrixWithAllocationPrice? = matrixWithAllocation
-
-            fun groupedTiered(): NewPlanGroupedTieredPrice? = groupedTiered
-
             fun minimum(): NewPlanMinimumCompositePrice? = minimum
 
             fun isUnit(): Boolean = unit != null
 
-            fun isPackage(): Boolean = package_ != null
-
-            fun isMatrix(): Boolean = matrix != null
-
             fun isTiered(): Boolean = tiered != null
 
             fun isBulk(): Boolean = bulk != null
+
+            fun isPackage(): Boolean = package_ != null
+
+            fun isMatrix(): Boolean = matrix != null
 
             fun isThresholdTotalAmount(): Boolean = thresholdTotalAmount != null
 
@@ -2147,15 +2147,23 @@ private constructor(
 
             fun isTieredWithMinimum(): Boolean = tieredWithMinimum != null
 
-            fun isUnitWithPercent(): Boolean = unitWithPercent != null
+            fun isGroupedTiered(): Boolean = groupedTiered != null
+
+            fun isTieredPackageWithMinimum(): Boolean = tieredPackageWithMinimum != null
 
             fun isPackageWithAllocation(): Boolean = packageWithAllocation != null
+
+            fun isUnitWithPercent(): Boolean = unitWithPercent != null
+
+            fun isMatrixWithAllocation(): Boolean = matrixWithAllocation != null
 
             fun isTieredWithProration(): Boolean = tieredWithProration != null
 
             fun isUnitWithProration(): Boolean = unitWithProration != null
 
             fun isGroupedAllocation(): Boolean = groupedAllocation != null
+
+            fun isBulkWithProration(): Boolean = bulkWithProration != null
 
             fun isGroupedWithProratedMinimum(): Boolean = groupedWithProratedMinimum != null
 
@@ -2164,8 +2172,6 @@ private constructor(
             fun isGroupedWithMinMaxThresholds(): Boolean = groupedWithMinMaxThresholds != null
 
             fun isMatrixWithDisplayName(): Boolean = matrixWithDisplayName != null
-
-            fun isBulkWithProration(): Boolean = bulkWithProration != null
 
             fun isGroupedTieredPackage(): Boolean = groupedTieredPackage != null
 
@@ -2178,23 +2184,17 @@ private constructor(
 
             fun isCumulativeGroupedBulk(): Boolean = cumulativeGroupedBulk != null
 
-            fun isTieredPackageWithMinimum(): Boolean = tieredPackageWithMinimum != null
-
-            fun isMatrixWithAllocation(): Boolean = matrixWithAllocation != null
-
-            fun isGroupedTiered(): Boolean = groupedTiered != null
-
             fun isMinimum(): Boolean = minimum != null
 
             fun asUnit(): NewPlanUnitPrice = unit.getOrThrow("unit")
 
-            fun asPackage(): NewPlanPackagePrice = package_.getOrThrow("package_")
-
-            fun asMatrix(): NewPlanMatrixPrice = matrix.getOrThrow("matrix")
-
             fun asTiered(): NewPlanTieredPrice = tiered.getOrThrow("tiered")
 
             fun asBulk(): NewPlanBulkPrice = bulk.getOrThrow("bulk")
+
+            fun asPackage(): NewPlanPackagePrice = package_.getOrThrow("package_")
+
+            fun asMatrix(): NewPlanMatrixPrice = matrix.getOrThrow("matrix")
 
             fun asThresholdTotalAmount(): NewPlanThresholdTotalAmountPrice =
                 thresholdTotalAmount.getOrThrow("thresholdTotalAmount")
@@ -2205,13 +2205,22 @@ private constructor(
             fun asTieredWithMinimum(): NewPlanTieredWithMinimumPrice =
                 tieredWithMinimum.getOrThrow("tieredWithMinimum")
 
-            fun asUnitWithPercent(): NewPlanUnitWithPercentPrice =
-                unitWithPercent.getOrThrow("unitWithPercent")
+            fun asGroupedTiered(): NewPlanGroupedTieredPrice =
+                groupedTiered.getOrThrow("groupedTiered")
+
+            fun asTieredPackageWithMinimum(): NewPlanTieredPackageWithMinimumPrice =
+                tieredPackageWithMinimum.getOrThrow("tieredPackageWithMinimum")
 
             fun asPackageWithAllocation(): NewPlanPackageWithAllocationPrice =
                 packageWithAllocation.getOrThrow("packageWithAllocation")
 
-            fun asTieredWithProration(): NewPlanTierWithProrationPrice =
+            fun asUnitWithPercent(): NewPlanUnitWithPercentPrice =
+                unitWithPercent.getOrThrow("unitWithPercent")
+
+            fun asMatrixWithAllocation(): NewPlanMatrixWithAllocationPrice =
+                matrixWithAllocation.getOrThrow("matrixWithAllocation")
+
+            fun asTieredWithProration(): TieredWithProration =
                 tieredWithProration.getOrThrow("tieredWithProration")
 
             fun asUnitWithProration(): NewPlanUnitWithProrationPrice =
@@ -2219,6 +2228,9 @@ private constructor(
 
             fun asGroupedAllocation(): NewPlanGroupedAllocationPrice =
                 groupedAllocation.getOrThrow("groupedAllocation")
+
+            fun asBulkWithProration(): NewPlanBulkWithProrationPrice =
+                bulkWithProration.getOrThrow("bulkWithProration")
 
             fun asGroupedWithProratedMinimum(): NewPlanGroupedWithProratedMinimumPrice =
                 groupedWithProratedMinimum.getOrThrow("groupedWithProratedMinimum")
@@ -2231,9 +2243,6 @@ private constructor(
 
             fun asMatrixWithDisplayName(): NewPlanMatrixWithDisplayNamePrice =
                 matrixWithDisplayName.getOrThrow("matrixWithDisplayName")
-
-            fun asBulkWithProration(): NewPlanBulkWithProrationPrice =
-                bulkWithProration.getOrThrow("bulkWithProration")
 
             fun asGroupedTieredPackage(): NewPlanGroupedTieredPackagePrice =
                 groupedTieredPackage.getOrThrow("groupedTieredPackage")
@@ -2250,15 +2259,6 @@ private constructor(
             fun asCumulativeGroupedBulk(): NewPlanCumulativeGroupedBulkPrice =
                 cumulativeGroupedBulk.getOrThrow("cumulativeGroupedBulk")
 
-            fun asTieredPackageWithMinimum(): NewPlanTieredPackageWithMinimumPrice =
-                tieredPackageWithMinimum.getOrThrow("tieredPackageWithMinimum")
-
-            fun asMatrixWithAllocation(): NewPlanMatrixWithAllocationPrice =
-                matrixWithAllocation.getOrThrow("matrixWithAllocation")
-
-            fun asGroupedTiered(): NewPlanGroupedTieredPrice =
-                groupedTiered.getOrThrow("groupedTiered")
-
             fun asMinimum(): NewPlanMinimumCompositePrice = minimum.getOrThrow("minimum")
 
             fun _json(): JsonValue? = _json
@@ -2266,21 +2266,27 @@ private constructor(
             fun <T> accept(visitor: Visitor<T>): T =
                 when {
                     unit != null -> visitor.visitUnit(unit)
-                    package_ != null -> visitor.visitPackage(package_)
-                    matrix != null -> visitor.visitMatrix(matrix)
                     tiered != null -> visitor.visitTiered(tiered)
                     bulk != null -> visitor.visitBulk(bulk)
+                    package_ != null -> visitor.visitPackage(package_)
+                    matrix != null -> visitor.visitMatrix(matrix)
                     thresholdTotalAmount != null ->
                         visitor.visitThresholdTotalAmount(thresholdTotalAmount)
                     tieredPackage != null -> visitor.visitTieredPackage(tieredPackage)
                     tieredWithMinimum != null -> visitor.visitTieredWithMinimum(tieredWithMinimum)
-                    unitWithPercent != null -> visitor.visitUnitWithPercent(unitWithPercent)
+                    groupedTiered != null -> visitor.visitGroupedTiered(groupedTiered)
+                    tieredPackageWithMinimum != null ->
+                        visitor.visitTieredPackageWithMinimum(tieredPackageWithMinimum)
                     packageWithAllocation != null ->
                         visitor.visitPackageWithAllocation(packageWithAllocation)
+                    unitWithPercent != null -> visitor.visitUnitWithPercent(unitWithPercent)
+                    matrixWithAllocation != null ->
+                        visitor.visitMatrixWithAllocation(matrixWithAllocation)
                     tieredWithProration != null ->
                         visitor.visitTieredWithProration(tieredWithProration)
                     unitWithProration != null -> visitor.visitUnitWithProration(unitWithProration)
                     groupedAllocation != null -> visitor.visitGroupedAllocation(groupedAllocation)
+                    bulkWithProration != null -> visitor.visitBulkWithProration(bulkWithProration)
                     groupedWithProratedMinimum != null ->
                         visitor.visitGroupedWithProratedMinimum(groupedWithProratedMinimum)
                     groupedWithMeteredMinimum != null ->
@@ -2289,7 +2295,6 @@ private constructor(
                         visitor.visitGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)
                     matrixWithDisplayName != null ->
                         visitor.visitMatrixWithDisplayName(matrixWithDisplayName)
-                    bulkWithProration != null -> visitor.visitBulkWithProration(bulkWithProration)
                     groupedTieredPackage != null ->
                         visitor.visitGroupedTieredPackage(groupedTieredPackage)
                     maxGroupTieredPackage != null ->
@@ -2302,11 +2307,6 @@ private constructor(
                         )
                     cumulativeGroupedBulk != null ->
                         visitor.visitCumulativeGroupedBulk(cumulativeGroupedBulk)
-                    tieredPackageWithMinimum != null ->
-                        visitor.visitTieredPackageWithMinimum(tieredPackageWithMinimum)
-                    matrixWithAllocation != null ->
-                        visitor.visitMatrixWithAllocation(matrixWithAllocation)
-                    groupedTiered != null -> visitor.visitGroupedTiered(groupedTiered)
                     minimum != null -> visitor.visitMinimum(minimum)
                     else -> visitor.unknown(_json)
                 }
@@ -2324,20 +2324,20 @@ private constructor(
                             unit.validate()
                         }
 
-                        override fun visitPackage(package_: NewPlanPackagePrice) {
-                            package_.validate()
-                        }
-
-                        override fun visitMatrix(matrix: NewPlanMatrixPrice) {
-                            matrix.validate()
-                        }
-
                         override fun visitTiered(tiered: NewPlanTieredPrice) {
                             tiered.validate()
                         }
 
                         override fun visitBulk(bulk: NewPlanBulkPrice) {
                             bulk.validate()
+                        }
+
+                        override fun visitPackage(package_: NewPlanPackagePrice) {
+                            package_.validate()
+                        }
+
+                        override fun visitMatrix(matrix: NewPlanMatrixPrice) {
+                            matrix.validate()
                         }
 
                         override fun visitThresholdTotalAmount(
@@ -2356,10 +2356,14 @@ private constructor(
                             tieredWithMinimum.validate()
                         }
 
-                        override fun visitUnitWithPercent(
-                            unitWithPercent: NewPlanUnitWithPercentPrice
+                        override fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) {
+                            groupedTiered.validate()
+                        }
+
+                        override fun visitTieredPackageWithMinimum(
+                            tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
                         ) {
-                            unitWithPercent.validate()
+                            tieredPackageWithMinimum.validate()
                         }
 
                         override fun visitPackageWithAllocation(
@@ -2368,8 +2372,20 @@ private constructor(
                             packageWithAllocation.validate()
                         }
 
+                        override fun visitUnitWithPercent(
+                            unitWithPercent: NewPlanUnitWithPercentPrice
+                        ) {
+                            unitWithPercent.validate()
+                        }
+
+                        override fun visitMatrixWithAllocation(
+                            matrixWithAllocation: NewPlanMatrixWithAllocationPrice
+                        ) {
+                            matrixWithAllocation.validate()
+                        }
+
                         override fun visitTieredWithProration(
-                            tieredWithProration: NewPlanTierWithProrationPrice
+                            tieredWithProration: TieredWithProration
                         ) {
                             tieredWithProration.validate()
                         }
@@ -2384,6 +2400,12 @@ private constructor(
                             groupedAllocation: NewPlanGroupedAllocationPrice
                         ) {
                             groupedAllocation.validate()
+                        }
+
+                        override fun visitBulkWithProration(
+                            bulkWithProration: NewPlanBulkWithProrationPrice
+                        ) {
+                            bulkWithProration.validate()
                         }
 
                         override fun visitGroupedWithProratedMinimum(
@@ -2408,12 +2430,6 @@ private constructor(
                             matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
                         ) {
                             matrixWithDisplayName.validate()
-                        }
-
-                        override fun visitBulkWithProration(
-                            bulkWithProration: NewPlanBulkWithProrationPrice
-                        ) {
-                            bulkWithProration.validate()
                         }
 
                         override fun visitGroupedTieredPackage(
@@ -2447,22 +2463,6 @@ private constructor(
                             cumulativeGroupedBulk.validate()
                         }
 
-                        override fun visitTieredPackageWithMinimum(
-                            tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
-                        ) {
-                            tieredPackageWithMinimum.validate()
-                        }
-
-                        override fun visitMatrixWithAllocation(
-                            matrixWithAllocation: NewPlanMatrixWithAllocationPrice
-                        ) {
-                            matrixWithAllocation.validate()
-                        }
-
-                        override fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) {
-                            groupedTiered.validate()
-                        }
-
                         override fun visitMinimum(minimum: NewPlanMinimumCompositePrice) {
                             minimum.validate()
                         }
@@ -2490,14 +2490,14 @@ private constructor(
                     object : Visitor<Int> {
                         override fun visitUnit(unit: NewPlanUnitPrice) = unit.validity()
 
+                        override fun visitTiered(tiered: NewPlanTieredPrice) = tiered.validity()
+
+                        override fun visitBulk(bulk: NewPlanBulkPrice) = bulk.validity()
+
                         override fun visitPackage(package_: NewPlanPackagePrice) =
                             package_.validity()
 
                         override fun visitMatrix(matrix: NewPlanMatrixPrice) = matrix.validity()
-
-                        override fun visitTiered(tiered: NewPlanTieredPrice) = tiered.validity()
-
-                        override fun visitBulk(bulk: NewPlanBulkPrice) = bulk.validity()
 
                         override fun visitThresholdTotalAmount(
                             thresholdTotalAmount: NewPlanThresholdTotalAmountPrice
@@ -2510,16 +2510,27 @@ private constructor(
                             tieredWithMinimum: NewPlanTieredWithMinimumPrice
                         ) = tieredWithMinimum.validity()
 
-                        override fun visitUnitWithPercent(
-                            unitWithPercent: NewPlanUnitWithPercentPrice
-                        ) = unitWithPercent.validity()
+                        override fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) =
+                            groupedTiered.validity()
+
+                        override fun visitTieredPackageWithMinimum(
+                            tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
+                        ) = tieredPackageWithMinimum.validity()
 
                         override fun visitPackageWithAllocation(
                             packageWithAllocation: NewPlanPackageWithAllocationPrice
                         ) = packageWithAllocation.validity()
 
+                        override fun visitUnitWithPercent(
+                            unitWithPercent: NewPlanUnitWithPercentPrice
+                        ) = unitWithPercent.validity()
+
+                        override fun visitMatrixWithAllocation(
+                            matrixWithAllocation: NewPlanMatrixWithAllocationPrice
+                        ) = matrixWithAllocation.validity()
+
                         override fun visitTieredWithProration(
-                            tieredWithProration: NewPlanTierWithProrationPrice
+                            tieredWithProration: TieredWithProration
                         ) = tieredWithProration.validity()
 
                         override fun visitUnitWithProration(
@@ -2529,6 +2540,10 @@ private constructor(
                         override fun visitGroupedAllocation(
                             groupedAllocation: NewPlanGroupedAllocationPrice
                         ) = groupedAllocation.validity()
+
+                        override fun visitBulkWithProration(
+                            bulkWithProration: NewPlanBulkWithProrationPrice
+                        ) = bulkWithProration.validity()
 
                         override fun visitGroupedWithProratedMinimum(
                             groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
@@ -2545,10 +2560,6 @@ private constructor(
                         override fun visitMatrixWithDisplayName(
                             matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
                         ) = matrixWithDisplayName.validity()
-
-                        override fun visitBulkWithProration(
-                            bulkWithProration: NewPlanBulkWithProrationPrice
-                        ) = bulkWithProration.validity()
 
                         override fun visitGroupedTieredPackage(
                             groupedTieredPackage: NewPlanGroupedTieredPackagePrice
@@ -2571,17 +2582,6 @@ private constructor(
                             cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
                         ) = cumulativeGroupedBulk.validity()
 
-                        override fun visitTieredPackageWithMinimum(
-                            tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
-                        ) = tieredPackageWithMinimum.validity()
-
-                        override fun visitMatrixWithAllocation(
-                            matrixWithAllocation: NewPlanMatrixWithAllocationPrice
-                        ) = matrixWithAllocation.validity()
-
-                        override fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) =
-                            groupedTiered.validity()
-
                         override fun visitMinimum(minimum: NewPlanMinimumCompositePrice) =
                             minimum.validity()
 
@@ -2596,82 +2596,88 @@ private constructor(
 
                 return other is Price &&
                     unit == other.unit &&
-                    package_ == other.package_ &&
-                    matrix == other.matrix &&
                     tiered == other.tiered &&
                     bulk == other.bulk &&
+                    package_ == other.package_ &&
+                    matrix == other.matrix &&
                     thresholdTotalAmount == other.thresholdTotalAmount &&
                     tieredPackage == other.tieredPackage &&
                     tieredWithMinimum == other.tieredWithMinimum &&
-                    unitWithPercent == other.unitWithPercent &&
+                    groupedTiered == other.groupedTiered &&
+                    tieredPackageWithMinimum == other.tieredPackageWithMinimum &&
                     packageWithAllocation == other.packageWithAllocation &&
+                    unitWithPercent == other.unitWithPercent &&
+                    matrixWithAllocation == other.matrixWithAllocation &&
                     tieredWithProration == other.tieredWithProration &&
                     unitWithProration == other.unitWithProration &&
                     groupedAllocation == other.groupedAllocation &&
+                    bulkWithProration == other.bulkWithProration &&
                     groupedWithProratedMinimum == other.groupedWithProratedMinimum &&
                     groupedWithMeteredMinimum == other.groupedWithMeteredMinimum &&
                     groupedWithMinMaxThresholds == other.groupedWithMinMaxThresholds &&
                     matrixWithDisplayName == other.matrixWithDisplayName &&
-                    bulkWithProration == other.bulkWithProration &&
                     groupedTieredPackage == other.groupedTieredPackage &&
                     maxGroupTieredPackage == other.maxGroupTieredPackage &&
                     scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing &&
                     scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing &&
                     cumulativeGroupedBulk == other.cumulativeGroupedBulk &&
-                    tieredPackageWithMinimum == other.tieredPackageWithMinimum &&
-                    matrixWithAllocation == other.matrixWithAllocation &&
-                    groupedTiered == other.groupedTiered &&
                     minimum == other.minimum
             }
 
             override fun hashCode(): Int =
                 Objects.hash(
                     unit,
-                    package_,
-                    matrix,
                     tiered,
                     bulk,
+                    package_,
+                    matrix,
                     thresholdTotalAmount,
                     tieredPackage,
                     tieredWithMinimum,
-                    unitWithPercent,
+                    groupedTiered,
+                    tieredPackageWithMinimum,
                     packageWithAllocation,
+                    unitWithPercent,
+                    matrixWithAllocation,
                     tieredWithProration,
                     unitWithProration,
                     groupedAllocation,
+                    bulkWithProration,
                     groupedWithProratedMinimum,
                     groupedWithMeteredMinimum,
                     groupedWithMinMaxThresholds,
                     matrixWithDisplayName,
-                    bulkWithProration,
                     groupedTieredPackage,
                     maxGroupTieredPackage,
                     scalableMatrixWithUnitPricing,
                     scalableMatrixWithTieredPricing,
                     cumulativeGroupedBulk,
-                    tieredPackageWithMinimum,
-                    matrixWithAllocation,
-                    groupedTiered,
                     minimum,
                 )
 
             override fun toString(): String =
                 when {
                     unit != null -> "Price{unit=$unit}"
-                    package_ != null -> "Price{package_=$package_}"
-                    matrix != null -> "Price{matrix=$matrix}"
                     tiered != null -> "Price{tiered=$tiered}"
                     bulk != null -> "Price{bulk=$bulk}"
+                    package_ != null -> "Price{package_=$package_}"
+                    matrix != null -> "Price{matrix=$matrix}"
                     thresholdTotalAmount != null ->
                         "Price{thresholdTotalAmount=$thresholdTotalAmount}"
                     tieredPackage != null -> "Price{tieredPackage=$tieredPackage}"
                     tieredWithMinimum != null -> "Price{tieredWithMinimum=$tieredWithMinimum}"
-                    unitWithPercent != null -> "Price{unitWithPercent=$unitWithPercent}"
+                    groupedTiered != null -> "Price{groupedTiered=$groupedTiered}"
+                    tieredPackageWithMinimum != null ->
+                        "Price{tieredPackageWithMinimum=$tieredPackageWithMinimum}"
                     packageWithAllocation != null ->
                         "Price{packageWithAllocation=$packageWithAllocation}"
+                    unitWithPercent != null -> "Price{unitWithPercent=$unitWithPercent}"
+                    matrixWithAllocation != null ->
+                        "Price{matrixWithAllocation=$matrixWithAllocation}"
                     tieredWithProration != null -> "Price{tieredWithProration=$tieredWithProration}"
                     unitWithProration != null -> "Price{unitWithProration=$unitWithProration}"
                     groupedAllocation != null -> "Price{groupedAllocation=$groupedAllocation}"
+                    bulkWithProration != null -> "Price{bulkWithProration=$bulkWithProration}"
                     groupedWithProratedMinimum != null ->
                         "Price{groupedWithProratedMinimum=$groupedWithProratedMinimum}"
                     groupedWithMeteredMinimum != null ->
@@ -2680,7 +2686,6 @@ private constructor(
                         "Price{groupedWithMinMaxThresholds=$groupedWithMinMaxThresholds}"
                     matrixWithDisplayName != null ->
                         "Price{matrixWithDisplayName=$matrixWithDisplayName}"
-                    bulkWithProration != null -> "Price{bulkWithProration=$bulkWithProration}"
                     groupedTieredPackage != null ->
                         "Price{groupedTieredPackage=$groupedTieredPackage}"
                     maxGroupTieredPackage != null ->
@@ -2691,11 +2696,6 @@ private constructor(
                         "Price{scalableMatrixWithTieredPricing=$scalableMatrixWithTieredPricing}"
                     cumulativeGroupedBulk != null ->
                         "Price{cumulativeGroupedBulk=$cumulativeGroupedBulk}"
-                    tieredPackageWithMinimum != null ->
-                        "Price{tieredPackageWithMinimum=$tieredPackageWithMinimum}"
-                    matrixWithAllocation != null ->
-                        "Price{matrixWithAllocation=$matrixWithAllocation}"
-                    groupedTiered != null -> "Price{groupedTiered=$groupedTiered}"
                     minimum != null -> "Price{minimum=$minimum}"
                     _json != null -> "Price{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid Price")
@@ -2705,13 +2705,13 @@ private constructor(
 
                 fun ofUnit(unit: NewPlanUnitPrice) = Price(unit = unit)
 
-                fun ofPackage(package_: NewPlanPackagePrice) = Price(package_ = package_)
-
-                fun ofMatrix(matrix: NewPlanMatrixPrice) = Price(matrix = matrix)
-
                 fun ofTiered(tiered: NewPlanTieredPrice) = Price(tiered = tiered)
 
                 fun ofBulk(bulk: NewPlanBulkPrice) = Price(bulk = bulk)
+
+                fun ofPackage(package_: NewPlanPackagePrice) = Price(package_ = package_)
+
+                fun ofMatrix(matrix: NewPlanMatrixPrice) = Price(matrix = matrix)
 
                 fun ofThresholdTotalAmount(thresholdTotalAmount: NewPlanThresholdTotalAmountPrice) =
                     Price(thresholdTotalAmount = thresholdTotalAmount)
@@ -2722,14 +2722,24 @@ private constructor(
                 fun ofTieredWithMinimum(tieredWithMinimum: NewPlanTieredWithMinimumPrice) =
                     Price(tieredWithMinimum = tieredWithMinimum)
 
-                fun ofUnitWithPercent(unitWithPercent: NewPlanUnitWithPercentPrice) =
-                    Price(unitWithPercent = unitWithPercent)
+                fun ofGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) =
+                    Price(groupedTiered = groupedTiered)
+
+                fun ofTieredPackageWithMinimum(
+                    tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
+                ) = Price(tieredPackageWithMinimum = tieredPackageWithMinimum)
 
                 fun ofPackageWithAllocation(
                     packageWithAllocation: NewPlanPackageWithAllocationPrice
                 ) = Price(packageWithAllocation = packageWithAllocation)
 
-                fun ofTieredWithProration(tieredWithProration: NewPlanTierWithProrationPrice) =
+                fun ofUnitWithPercent(unitWithPercent: NewPlanUnitWithPercentPrice) =
+                    Price(unitWithPercent = unitWithPercent)
+
+                fun ofMatrixWithAllocation(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
+                    Price(matrixWithAllocation = matrixWithAllocation)
+
+                fun ofTieredWithProration(tieredWithProration: TieredWithProration) =
                     Price(tieredWithProration = tieredWithProration)
 
                 fun ofUnitWithProration(unitWithProration: NewPlanUnitWithProrationPrice) =
@@ -2737,6 +2747,9 @@ private constructor(
 
                 fun ofGroupedAllocation(groupedAllocation: NewPlanGroupedAllocationPrice) =
                     Price(groupedAllocation = groupedAllocation)
+
+                fun ofBulkWithProration(bulkWithProration: NewPlanBulkWithProrationPrice) =
+                    Price(bulkWithProration = bulkWithProration)
 
                 fun ofGroupedWithProratedMinimum(
                     groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
@@ -2753,9 +2766,6 @@ private constructor(
                 fun ofMatrixWithDisplayName(
                     matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
                 ) = Price(matrixWithDisplayName = matrixWithDisplayName)
-
-                fun ofBulkWithProration(bulkWithProration: NewPlanBulkWithProrationPrice) =
-                    Price(bulkWithProration = bulkWithProration)
 
                 fun ofGroupedTieredPackage(groupedTieredPackage: NewPlanGroupedTieredPackagePrice) =
                     Price(groupedTieredPackage = groupedTieredPackage)
@@ -2776,16 +2786,6 @@ private constructor(
                     cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
                 ) = Price(cumulativeGroupedBulk = cumulativeGroupedBulk)
 
-                fun ofTieredPackageWithMinimum(
-                    tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
-                ) = Price(tieredPackageWithMinimum = tieredPackageWithMinimum)
-
-                fun ofMatrixWithAllocation(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
-                    Price(matrixWithAllocation = matrixWithAllocation)
-
-                fun ofGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) =
-                    Price(groupedTiered = groupedTiered)
-
                 fun ofMinimum(minimum: NewPlanMinimumCompositePrice) = Price(minimum = minimum)
             }
 
@@ -2796,13 +2796,13 @@ private constructor(
 
                 fun visitUnit(unit: NewPlanUnitPrice): T
 
-                fun visitPackage(package_: NewPlanPackagePrice): T
-
-                fun visitMatrix(matrix: NewPlanMatrixPrice): T
-
                 fun visitTiered(tiered: NewPlanTieredPrice): T
 
                 fun visitBulk(bulk: NewPlanBulkPrice): T
+
+                fun visitPackage(package_: NewPlanPackagePrice): T
+
+                fun visitMatrix(matrix: NewPlanMatrixPrice): T
 
                 fun visitThresholdTotalAmount(
                     thresholdTotalAmount: NewPlanThresholdTotalAmountPrice
@@ -2812,17 +2812,29 @@ private constructor(
 
                 fun visitTieredWithMinimum(tieredWithMinimum: NewPlanTieredWithMinimumPrice): T
 
-                fun visitUnitWithPercent(unitWithPercent: NewPlanUnitWithPercentPrice): T
+                fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice): T
+
+                fun visitTieredPackageWithMinimum(
+                    tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
+                ): T
 
                 fun visitPackageWithAllocation(
                     packageWithAllocation: NewPlanPackageWithAllocationPrice
                 ): T
 
-                fun visitTieredWithProration(tieredWithProration: NewPlanTierWithProrationPrice): T
+                fun visitUnitWithPercent(unitWithPercent: NewPlanUnitWithPercentPrice): T
+
+                fun visitMatrixWithAllocation(
+                    matrixWithAllocation: NewPlanMatrixWithAllocationPrice
+                ): T
+
+                fun visitTieredWithProration(tieredWithProration: TieredWithProration): T
 
                 fun visitUnitWithProration(unitWithProration: NewPlanUnitWithProrationPrice): T
 
                 fun visitGroupedAllocation(groupedAllocation: NewPlanGroupedAllocationPrice): T
+
+                fun visitBulkWithProration(bulkWithProration: NewPlanBulkWithProrationPrice): T
 
                 fun visitGroupedWithProratedMinimum(
                     groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
@@ -2839,8 +2851,6 @@ private constructor(
                 fun visitMatrixWithDisplayName(
                     matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
                 ): T
-
-                fun visitBulkWithProration(bulkWithProration: NewPlanBulkWithProrationPrice): T
 
                 fun visitGroupedTieredPackage(
                     groupedTieredPackage: NewPlanGroupedTieredPackagePrice
@@ -2861,16 +2871,6 @@ private constructor(
                 fun visitCumulativeGroupedBulk(
                     cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
                 ): T
-
-                fun visitTieredPackageWithMinimum(
-                    tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
-                ): T
-
-                fun visitMatrixWithAllocation(
-                    matrixWithAllocation: NewPlanMatrixWithAllocationPrice
-                ): T
-
-                fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice): T
 
                 fun visitMinimum(minimum: NewPlanMinimumCompositePrice): T
 
@@ -2901,15 +2901,6 @@ private constructor(
                                 Price(unit = it, _json = json)
                             } ?: Price(_json = json)
                         }
-                        "package" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewPlanPackagePrice>())
-                                ?.let { Price(package_ = it, _json = json) } ?: Price(_json = json)
-                        }
-                        "matrix" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewPlanMatrixPrice>())?.let {
-                                Price(matrix = it, _json = json)
-                            } ?: Price(_json = json)
-                        }
                         "tiered" -> {
                             return tryDeserialize(node, jacksonTypeRef<NewPlanTieredPrice>())?.let {
                                 Price(tiered = it, _json = json)
@@ -2918,6 +2909,15 @@ private constructor(
                         "bulk" -> {
                             return tryDeserialize(node, jacksonTypeRef<NewPlanBulkPrice>())?.let {
                                 Price(bulk = it, _json = json)
+                            } ?: Price(_json = json)
+                        }
+                        "package" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanPackagePrice>())
+                                ?.let { Price(package_ = it, _json = json) } ?: Price(_json = json)
+                        }
+                        "matrix" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanMatrixPrice>())?.let {
+                                Price(matrix = it, _json = json)
                             } ?: Price(_json = json)
                         }
                         "threshold_total_amount" -> {
@@ -2941,12 +2941,17 @@ private constructor(
                                 ?.let { Price(tieredWithMinimum = it, _json = json) }
                                 ?: Price(_json = json)
                         }
-                        "unit_with_percent" -> {
+                        "grouped_tiered" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanGroupedTieredPrice>())
+                                ?.let { Price(groupedTiered = it, _json = json) }
+                                ?: Price(_json = json)
+                        }
+                        "tiered_package_with_minimum" -> {
                             return tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewPlanUnitWithPercentPrice>(),
+                                    jacksonTypeRef<NewPlanTieredPackageWithMinimumPrice>(),
                                 )
-                                ?.let { Price(unitWithPercent = it, _json = json) }
+                                ?.let { Price(tieredPackageWithMinimum = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "package_with_allocation" -> {
@@ -2957,11 +2962,24 @@ private constructor(
                                 ?.let { Price(packageWithAllocation = it, _json = json) }
                                 ?: Price(_json = json)
                         }
-                        "tiered_with_proration" -> {
+                        "unit_with_percent" -> {
                             return tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewPlanTierWithProrationPrice>(),
+                                    jacksonTypeRef<NewPlanUnitWithPercentPrice>(),
                                 )
+                                ?.let { Price(unitWithPercent = it, _json = json) }
+                                ?: Price(_json = json)
+                        }
+                        "matrix_with_allocation" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanMatrixWithAllocationPrice>(),
+                                )
+                                ?.let { Price(matrixWithAllocation = it, _json = json) }
+                                ?: Price(_json = json)
+                        }
+                        "tiered_with_proration" -> {
+                            return tryDeserialize(node, jacksonTypeRef<TieredWithProration>())
                                 ?.let { Price(tieredWithProration = it, _json = json) }
                                 ?: Price(_json = json)
                         }
@@ -2979,6 +2997,14 @@ private constructor(
                                     jacksonTypeRef<NewPlanGroupedAllocationPrice>(),
                                 )
                                 ?.let { Price(groupedAllocation = it, _json = json) }
+                                ?: Price(_json = json)
+                        }
+                        "bulk_with_proration" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanBulkWithProrationPrice>(),
+                                )
+                                ?.let { Price(bulkWithProration = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "grouped_with_prorated_minimum" -> {
@@ -3011,14 +3037,6 @@ private constructor(
                                     jacksonTypeRef<NewPlanMatrixWithDisplayNamePrice>(),
                                 )
                                 ?.let { Price(matrixWithDisplayName = it, _json = json) }
-                                ?: Price(_json = json)
-                        }
-                        "bulk_with_proration" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanBulkWithProrationPrice>(),
-                                )
-                                ?.let { Price(bulkWithProration = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "grouped_tiered_package" -> {
@@ -3061,27 +3079,6 @@ private constructor(
                                 ?.let { Price(cumulativeGroupedBulk = it, _json = json) }
                                 ?: Price(_json = json)
                         }
-                        "tiered_package_with_minimum" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanTieredPackageWithMinimumPrice>(),
-                                )
-                                ?.let { Price(tieredPackageWithMinimum = it, _json = json) }
-                                ?: Price(_json = json)
-                        }
-                        "matrix_with_allocation" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanMatrixWithAllocationPrice>(),
-                                )
-                                ?.let { Price(matrixWithAllocation = it, _json = json) }
-                                ?: Price(_json = json)
-                        }
-                        "grouped_tiered" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewPlanGroupedTieredPrice>())
-                                ?.let { Price(groupedTiered = it, _json = json) }
-                                ?: Price(_json = json)
-                        }
                         "minimum" -> {
                             return tryDeserialize(
                                     node,
@@ -3104,25 +3101,32 @@ private constructor(
                 ) {
                     when {
                         value.unit != null -> generator.writeObject(value.unit)
-                        value.package_ != null -> generator.writeObject(value.package_)
-                        value.matrix != null -> generator.writeObject(value.matrix)
                         value.tiered != null -> generator.writeObject(value.tiered)
                         value.bulk != null -> generator.writeObject(value.bulk)
+                        value.package_ != null -> generator.writeObject(value.package_)
+                        value.matrix != null -> generator.writeObject(value.matrix)
                         value.thresholdTotalAmount != null ->
                             generator.writeObject(value.thresholdTotalAmount)
                         value.tieredPackage != null -> generator.writeObject(value.tieredPackage)
                         value.tieredWithMinimum != null ->
                             generator.writeObject(value.tieredWithMinimum)
-                        value.unitWithPercent != null ->
-                            generator.writeObject(value.unitWithPercent)
+                        value.groupedTiered != null -> generator.writeObject(value.groupedTiered)
+                        value.tieredPackageWithMinimum != null ->
+                            generator.writeObject(value.tieredPackageWithMinimum)
                         value.packageWithAllocation != null ->
                             generator.writeObject(value.packageWithAllocation)
+                        value.unitWithPercent != null ->
+                            generator.writeObject(value.unitWithPercent)
+                        value.matrixWithAllocation != null ->
+                            generator.writeObject(value.matrixWithAllocation)
                         value.tieredWithProration != null ->
                             generator.writeObject(value.tieredWithProration)
                         value.unitWithProration != null ->
                             generator.writeObject(value.unitWithProration)
                         value.groupedAllocation != null ->
                             generator.writeObject(value.groupedAllocation)
+                        value.bulkWithProration != null ->
+                            generator.writeObject(value.bulkWithProration)
                         value.groupedWithProratedMinimum != null ->
                             generator.writeObject(value.groupedWithProratedMinimum)
                         value.groupedWithMeteredMinimum != null ->
@@ -3131,8 +3135,6 @@ private constructor(
                             generator.writeObject(value.groupedWithMinMaxThresholds)
                         value.matrixWithDisplayName != null ->
                             generator.writeObject(value.matrixWithDisplayName)
-                        value.bulkWithProration != null ->
-                            generator.writeObject(value.bulkWithProration)
                         value.groupedTieredPackage != null ->
                             generator.writeObject(value.groupedTieredPackage)
                         value.maxGroupTieredPackage != null ->
@@ -3143,16 +3145,1777 @@ private constructor(
                             generator.writeObject(value.scalableMatrixWithTieredPricing)
                         value.cumulativeGroupedBulk != null ->
                             generator.writeObject(value.cumulativeGroupedBulk)
-                        value.tieredPackageWithMinimum != null ->
-                            generator.writeObject(value.tieredPackageWithMinimum)
-                        value.matrixWithAllocation != null ->
-                            generator.writeObject(value.matrixWithAllocation)
-                        value.groupedTiered != null -> generator.writeObject(value.groupedTiered)
                         value.minimum != null -> generator.writeObject(value.minimum)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid Price")
                     }
                 }
+            }
+
+            class TieredWithProration
+            private constructor(
+                private val cadence: JsonField<Cadence>,
+                private val itemId: JsonField<String>,
+                private val modelType: JsonValue,
+                private val name: JsonField<String>,
+                private val tieredWithProrationConfig: JsonField<TieredWithProrationConfig>,
+                private val billableMetricId: JsonField<String>,
+                private val billedInAdvance: JsonField<Boolean>,
+                private val billingCycleConfiguration: JsonField<NewBillingCycleConfiguration>,
+                private val conversionRate: JsonField<Double>,
+                private val conversionRateConfig: JsonField<ConversionRateConfig>,
+                private val currency: JsonField<String>,
+                private val dimensionalPriceConfiguration:
+                    JsonField<NewDimensionalPriceConfiguration>,
+                private val externalPriceId: JsonField<String>,
+                private val fixedPriceQuantity: JsonField<Double>,
+                private val invoiceGroupingKey: JsonField<String>,
+                private val invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>,
+                private val metadata: JsonField<Metadata>,
+                private val referenceId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("cadence")
+                    @ExcludeMissing
+                    cadence: JsonField<Cadence> = JsonMissing.of(),
+                    @JsonProperty("item_id")
+                    @ExcludeMissing
+                    itemId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("model_type")
+                    @ExcludeMissing
+                    modelType: JsonValue = JsonMissing.of(),
+                    @JsonProperty("name")
+                    @ExcludeMissing
+                    name: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("tiered_with_proration_config")
+                    @ExcludeMissing
+                    tieredWithProrationConfig: JsonField<TieredWithProrationConfig> =
+                        JsonMissing.of(),
+                    @JsonProperty("billable_metric_id")
+                    @ExcludeMissing
+                    billableMetricId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("billed_in_advance")
+                    @ExcludeMissing
+                    billedInAdvance: JsonField<Boolean> = JsonMissing.of(),
+                    @JsonProperty("billing_cycle_configuration")
+                    @ExcludeMissing
+                    billingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of(),
+                    @JsonProperty("conversion_rate")
+                    @ExcludeMissing
+                    conversionRate: JsonField<Double> = JsonMissing.of(),
+                    @JsonProperty("conversion_rate_config")
+                    @ExcludeMissing
+                    conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
+                    @JsonProperty("currency")
+                    @ExcludeMissing
+                    currency: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_configuration")
+                    @ExcludeMissing
+                    dimensionalPriceConfiguration: JsonField<NewDimensionalPriceConfiguration> =
+                        JsonMissing.of(),
+                    @JsonProperty("external_price_id")
+                    @ExcludeMissing
+                    externalPriceId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("fixed_price_quantity")
+                    @ExcludeMissing
+                    fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+                    @JsonProperty("invoice_grouping_key")
+                    @ExcludeMissing
+                    invoiceGroupingKey: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("invoicing_cycle_configuration")
+                    @ExcludeMissing
+                    invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of(),
+                    @JsonProperty("metadata")
+                    @ExcludeMissing
+                    metadata: JsonField<Metadata> = JsonMissing.of(),
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    referenceId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    cadence,
+                    itemId,
+                    modelType,
+                    name,
+                    tieredWithProrationConfig,
+                    billableMetricId,
+                    billedInAdvance,
+                    billingCycleConfiguration,
+                    conversionRate,
+                    conversionRateConfig,
+                    currency,
+                    dimensionalPriceConfiguration,
+                    externalPriceId,
+                    fixedPriceQuantity,
+                    invoiceGroupingKey,
+                    invoicingCycleConfiguration,
+                    metadata,
+                    referenceId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The cadence to bill for this price on.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun cadence(): Cadence = cadence.getRequired("cadence")
+
+                /**
+                 * The id of the item the price will be associated with.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun itemId(): String = itemId.getRequired("item_id")
+
+                /**
+                 * The pricing model type
+                 *
+                 * Expected to always return the following:
+                 * ```kotlin
+                 * JsonValue.from("tiered_with_proration")
+                 * ```
+                 *
+                 * However, this method can be useful for debugging and logging (e.g. if the server
+                 * responded with an unexpected value).
+                 */
+                @JsonProperty("model_type") @ExcludeMissing fun _modelType(): JsonValue = modelType
+
+                /**
+                 * The name of the price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun name(): String = name.getRequired("name")
+
+                /**
+                 * Configuration for tiered_with_proration pricing
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun tieredWithProrationConfig(): TieredWithProrationConfig =
+                    tieredWithProrationConfig.getRequired("tiered_with_proration_config")
+
+                /**
+                 * The id of the billable metric for the price. Only needed if the price is
+                 * usage-based.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun billableMetricId(): String? = billableMetricId.getNullable("billable_metric_id")
+
+                /**
+                 * If the Price represents a fixed cost, the price will be billed in-advance if this
+                 * is true, and in-arrears if this is false.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun billedInAdvance(): Boolean? = billedInAdvance.getNullable("billed_in_advance")
+
+                /**
+                 * For custom cadence: specifies the duration of the billing period in days or
+                 * months.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun billingCycleConfiguration(): NewBillingCycleConfiguration? =
+                    billingCycleConfiguration.getNullable("billing_cycle_configuration")
+
+                /**
+                 * The per unit conversion rate of the price currency to the invoicing currency.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+                /**
+                 * The configuration for the rate of the price currency to the invoicing currency.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun conversionRateConfig(): ConversionRateConfig? =
+                    conversionRateConfig.getNullable("conversion_rate_config")
+
+                /**
+                 * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                 * price is billed.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * For dimensional price: specifies a price group and dimension values
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceConfiguration(): NewDimensionalPriceConfiguration? =
+                    dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
+
+                /**
+                 * An alias for the price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
+
+                /**
+                 * If the Price represents a fixed cost, this represents the quantity of units
+                 * applied.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun fixedPriceQuantity(): Double? =
+                    fixedPriceQuantity.getNullable("fixed_price_quantity")
+
+                /**
+                 * The property used to group this price on an invoice
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun invoiceGroupingKey(): String? =
+                    invoiceGroupingKey.getNullable("invoice_grouping_key")
+
+                /**
+                 * Within each billing cycle, specifies the cadence at which invoices are produced.
+                 * If unspecified, a single invoice is produced per billing cycle.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun invoicingCycleConfiguration(): NewBillingCycleConfiguration? =
+                    invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
+
+                /**
+                 * Returns the raw JSON value of [cadence].
+                 *
+                 * Unlike [cadence], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("cadence")
+                @ExcludeMissing
+                fun _cadence(): JsonField<Cadence> = cadence
+
+                /**
+                 * Returns the raw JSON value of [itemId].
+                 *
+                 * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+
+                /**
+                 * Returns the raw JSON value of [name].
+                 *
+                 * Unlike [name], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+                /**
+                 * Returns the raw JSON value of [tieredWithProrationConfig].
+                 *
+                 * Unlike [tieredWithProrationConfig], this method doesn't throw if the JSON field
+                 * has an unexpected type.
+                 */
+                @JsonProperty("tiered_with_proration_config")
+                @ExcludeMissing
+                fun _tieredWithProrationConfig(): JsonField<TieredWithProrationConfig> =
+                    tieredWithProrationConfig
+
+                /**
+                 * Returns the raw JSON value of [billableMetricId].
+                 *
+                 * Unlike [billableMetricId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("billable_metric_id")
+                @ExcludeMissing
+                fun _billableMetricId(): JsonField<String> = billableMetricId
+
+                /**
+                 * Returns the raw JSON value of [billedInAdvance].
+                 *
+                 * Unlike [billedInAdvance], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("billed_in_advance")
+                @ExcludeMissing
+                fun _billedInAdvance(): JsonField<Boolean> = billedInAdvance
+
+                /**
+                 * Returns the raw JSON value of [billingCycleConfiguration].
+                 *
+                 * Unlike [billingCycleConfiguration], this method doesn't throw if the JSON field
+                 * has an unexpected type.
+                 */
+                @JsonProperty("billing_cycle_configuration")
+                @ExcludeMissing
+                fun _billingCycleConfiguration(): JsonField<NewBillingCycleConfiguration> =
+                    billingCycleConfiguration
+
+                /**
+                 * Returns the raw JSON value of [conversionRate].
+                 *
+                 * Unlike [conversionRate], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("conversion_rate")
+                @ExcludeMissing
+                fun _conversionRate(): JsonField<Double> = conversionRate
+
+                /**
+                 * Returns the raw JSON value of [conversionRateConfig].
+                 *
+                 * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("conversion_rate_config")
+                @ExcludeMissing
+                fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
+
+                /**
+                 * Returns the raw JSON value of [currency].
+                 *
+                 * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("currency")
+                @ExcludeMissing
+                fun _currency(): JsonField<String> = currency
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceConfiguration].
+                 *
+                 * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                fun _dimensionalPriceConfiguration(): JsonField<NewDimensionalPriceConfiguration> =
+                    dimensionalPriceConfiguration
+
+                /**
+                 * Returns the raw JSON value of [externalPriceId].
+                 *
+                 * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("external_price_id")
+                @ExcludeMissing
+                fun _externalPriceId(): JsonField<String> = externalPriceId
+
+                /**
+                 * Returns the raw JSON value of [fixedPriceQuantity].
+                 *
+                 * Unlike [fixedPriceQuantity], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("fixed_price_quantity")
+                @ExcludeMissing
+                fun _fixedPriceQuantity(): JsonField<Double> = fixedPriceQuantity
+
+                /**
+                 * Returns the raw JSON value of [invoiceGroupingKey].
+                 *
+                 * Unlike [invoiceGroupingKey], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("invoice_grouping_key")
+                @ExcludeMissing
+                fun _invoiceGroupingKey(): JsonField<String> = invoiceGroupingKey
+
+                /**
+                 * Returns the raw JSON value of [invoicingCycleConfiguration].
+                 *
+                 * Unlike [invoicingCycleConfiguration], this method doesn't throw if the JSON field
+                 * has an unexpected type.
+                 */
+                @JsonProperty("invoicing_cycle_configuration")
+                @ExcludeMissing
+                fun _invoicingCycleConfiguration(): JsonField<NewBillingCycleConfiguration> =
+                    invoicingCycleConfiguration
+
+                /**
+                 * Returns the raw JSON value of [metadata].
+                 *
+                 * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun _metadata(): JsonField<Metadata> = metadata
+
+                /**
+                 * Returns the raw JSON value of [referenceId].
+                 *
+                 * Unlike [referenceId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("reference_id")
+                @ExcludeMissing
+                fun _referenceId(): JsonField<String> = referenceId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [TieredWithProration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .itemId()
+                     * .name()
+                     * .tieredWithProrationConfig()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [TieredWithProration]. */
+                class Builder internal constructor() {
+
+                    private var cadence: JsonField<Cadence>? = null
+                    private var itemId: JsonField<String>? = null
+                    private var modelType: JsonValue = JsonValue.from("tiered_with_proration")
+                    private var name: JsonField<String>? = null
+                    private var tieredWithProrationConfig: JsonField<TieredWithProrationConfig>? =
+                        null
+                    private var billableMetricId: JsonField<String> = JsonMissing.of()
+                    private var billedInAdvance: JsonField<Boolean> = JsonMissing.of()
+                    private var billingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of()
+                    private var conversionRate: JsonField<Double> = JsonMissing.of()
+                    private var conversionRateConfig: JsonField<ConversionRateConfig> =
+                        JsonMissing.of()
+                    private var currency: JsonField<String> = JsonMissing.of()
+                    private var dimensionalPriceConfiguration:
+                        JsonField<NewDimensionalPriceConfiguration> =
+                        JsonMissing.of()
+                    private var externalPriceId: JsonField<String> = JsonMissing.of()
+                    private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
+                    private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
+                    private var invoicingCycleConfiguration:
+                        JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of()
+                    private var metadata: JsonField<Metadata> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(tieredWithProration: TieredWithProration) = apply {
+                        cadence = tieredWithProration.cadence
+                        itemId = tieredWithProration.itemId
+                        modelType = tieredWithProration.modelType
+                        name = tieredWithProration.name
+                        tieredWithProrationConfig = tieredWithProration.tieredWithProrationConfig
+                        billableMetricId = tieredWithProration.billableMetricId
+                        billedInAdvance = tieredWithProration.billedInAdvance
+                        billingCycleConfiguration = tieredWithProration.billingCycleConfiguration
+                        conversionRate = tieredWithProration.conversionRate
+                        conversionRateConfig = tieredWithProration.conversionRateConfig
+                        currency = tieredWithProration.currency
+                        dimensionalPriceConfiguration =
+                            tieredWithProration.dimensionalPriceConfiguration
+                        externalPriceId = tieredWithProration.externalPriceId
+                        fixedPriceQuantity = tieredWithProration.fixedPriceQuantity
+                        invoiceGroupingKey = tieredWithProration.invoiceGroupingKey
+                        invoicingCycleConfiguration =
+                            tieredWithProration.invoicingCycleConfiguration
+                        metadata = tieredWithProration.metadata
+                        referenceId = tieredWithProration.referenceId
+                        additionalProperties =
+                            tieredWithProration.additionalProperties.toMutableMap()
+                    }
+
+                    /** The cadence to bill for this price on. */
+                    fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
+
+                    /**
+                     * Sets [Builder.cadence] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.cadence] with a well-typed [Cadence] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
+
+                    /** The id of the item the price will be associated with. */
+                    fun itemId(itemId: String) = itemId(JsonField.of(itemId))
+
+                    /**
+                     * Sets [Builder.itemId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.itemId] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
+                    /**
+                     * Sets the field to an arbitrary JSON value.
+                     *
+                     * It is usually unnecessary to call this method because the field defaults to
+                     * the following:
+                     * ```kotlin
+                     * JsonValue.from("tiered_with_proration")
+                     * ```
+                     *
+                     * This method is primarily for setting the field to an undocumented or not yet
+                     * supported value.
+                     */
+                    fun modelType(modelType: JsonValue) = apply { this.modelType = modelType }
+
+                    /** The name of the price. */
+                    fun name(name: String) = name(JsonField.of(name))
+
+                    /**
+                     * Sets [Builder.name] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.name] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun name(name: JsonField<String>) = apply { this.name = name }
+
+                    /** Configuration for tiered_with_proration pricing */
+                    fun tieredWithProrationConfig(
+                        tieredWithProrationConfig: TieredWithProrationConfig
+                    ) = tieredWithProrationConfig(JsonField.of(tieredWithProrationConfig))
+
+                    /**
+                     * Sets [Builder.tieredWithProrationConfig] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.tieredWithProrationConfig] with a well-typed
+                     * [TieredWithProrationConfig] value instead. This method is primarily for
+                     * setting the field to an undocumented or not yet supported value.
+                     */
+                    fun tieredWithProrationConfig(
+                        tieredWithProrationConfig: JsonField<TieredWithProrationConfig>
+                    ) = apply { this.tieredWithProrationConfig = tieredWithProrationConfig }
+
+                    /**
+                     * The id of the billable metric for the price. Only needed if the price is
+                     * usage-based.
+                     */
+                    fun billableMetricId(billableMetricId: String?) =
+                        billableMetricId(JsonField.ofNullable(billableMetricId))
+
+                    /**
+                     * Sets [Builder.billableMetricId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.billableMetricId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun billableMetricId(billableMetricId: JsonField<String>) = apply {
+                        this.billableMetricId = billableMetricId
+                    }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean?) =
+                        billedInAdvance(JsonField.ofNullable(billedInAdvance))
+
+                    /**
+                     * Alias for [Builder.billedInAdvance].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
+
+                    /**
+                     * Sets [Builder.billedInAdvance] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.billedInAdvance] with a well-typed [Boolean]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun billedInAdvance(billedInAdvance: JsonField<Boolean>) = apply {
+                        this.billedInAdvance = billedInAdvance
+                    }
+
+                    /**
+                     * For custom cadence: specifies the duration of the billing period in days or
+                     * months.
+                     */
+                    fun billingCycleConfiguration(
+                        billingCycleConfiguration: NewBillingCycleConfiguration?
+                    ) = billingCycleConfiguration(JsonField.ofNullable(billingCycleConfiguration))
+
+                    /**
+                     * Sets [Builder.billingCycleConfiguration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.billingCycleConfiguration] with a well-typed
+                     * [NewBillingCycleConfiguration] value instead. This method is primarily for
+                     * setting the field to an undocumented or not yet supported value.
+                     */
+                    fun billingCycleConfiguration(
+                        billingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
+                    ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double?) =
+                        conversionRate(JsonField.ofNullable(conversionRate))
+
+                    /**
+                     * Alias for [Builder.conversionRate].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
+                    /**
+                     * Sets [Builder.conversionRate] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.conversionRate] with a well-typed [Double]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun conversionRate(conversionRate: JsonField<Double>) = apply {
+                        this.conversionRate = conversionRate
+                    }
+
+                    /**
+                     * The configuration for the rate of the price currency to the invoicing
+                     * currency.
+                     */
+                    fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                        conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+                    /**
+                     * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.conversionRateConfig] with a well-typed
+                     * [ConversionRateConfig] value instead. This method is primarily for setting
+                     * the field to an undocumented or not yet supported value.
+                     */
+                    fun conversionRateConfig(
+                        conversionRateConfig: JsonField<ConversionRateConfig>
+                    ) = apply { this.conversionRateConfig = conversionRateConfig }
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with
+                     * `ConversionRateConfig.ofUnit(unit)`.
+                     */
+                    fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                        conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with the following:
+                     * ```kotlin
+                     * UnitConversionRateConfig.builder()
+                     *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                     *     .unitConfig(unitConfig)
+                     *     .build()
+                     * ```
+                     */
+                    fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                        conversionRateConfig(
+                            UnitConversionRateConfig.builder()
+                                .conversionRateType(
+                                    UnitConversionRateConfig.ConversionRateType.UNIT
+                                )
+                                .unitConfig(unitConfig)
+                                .build()
+                        )
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with
+                     * `ConversionRateConfig.ofTiered(tiered)`.
+                     */
+                    fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                        conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with the following:
+                     * ```kotlin
+                     * TieredConversionRateConfig.builder()
+                     *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                     *     .tieredConfig(tieredConfig)
+                     *     .build()
+                     * ```
+                     */
+                    fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                        conversionRateConfig(
+                            TieredConversionRateConfig.builder()
+                                .conversionRateType(
+                                    TieredConversionRateConfig.ConversionRateType.TIERED
+                                )
+                                .tieredConfig(tieredConfig)
+                                .build()
+                        )
+
+                    /**
+                     * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                     * price is billed.
+                     */
+                    fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
+
+                    /**
+                     * Sets [Builder.currency] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.currency] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+                    /** For dimensional price: specifies a price group and dimension values */
+                    fun dimensionalPriceConfiguration(
+                        dimensionalPriceConfiguration: NewDimensionalPriceConfiguration?
+                    ) =
+                        dimensionalPriceConfiguration(
+                            JsonField.ofNullable(dimensionalPriceConfiguration)
+                        )
+
+                    /**
+                     * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceConfiguration] with a
+                     * well-typed [NewDimensionalPriceConfiguration] value instead. This method is
+                     * primarily for setting the field to an undocumented or not yet supported
+                     * value.
+                     */
+                    fun dimensionalPriceConfiguration(
+                        dimensionalPriceConfiguration: JsonField<NewDimensionalPriceConfiguration>
+                    ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
+                    /** An alias for the price. */
+                    fun externalPriceId(externalPriceId: String?) =
+                        externalPriceId(JsonField.ofNullable(externalPriceId))
+
+                    /**
+                     * Sets [Builder.externalPriceId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalPriceId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun externalPriceId(externalPriceId: JsonField<String>) = apply {
+                        this.externalPriceId = externalPriceId
+                    }
+
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) =
+                        fixedPriceQuantity(JsonField.ofNullable(fixedPriceQuantity))
+
+                    /**
+                     * Alias for [Builder.fixedPriceQuantity].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
+                    /**
+                     * Sets [Builder.fixedPriceQuantity] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.fixedPriceQuantity] with a well-typed
+                     * [Double] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
+                        this.fixedPriceQuantity = fixedPriceQuantity
+                    }
+
+                    /** The property used to group this price on an invoice */
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) =
+                        invoiceGroupingKey(JsonField.ofNullable(invoiceGroupingKey))
+
+                    /**
+                     * Sets [Builder.invoiceGroupingKey] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.invoiceGroupingKey] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun invoiceGroupingKey(invoiceGroupingKey: JsonField<String>) = apply {
+                        this.invoiceGroupingKey = invoiceGroupingKey
+                    }
+
+                    /**
+                     * Within each billing cycle, specifies the cadence at which invoices are
+                     * produced. If unspecified, a single invoice is produced per billing cycle.
+                     */
+                    fun invoicingCycleConfiguration(
+                        invoicingCycleConfiguration: NewBillingCycleConfiguration?
+                    ) =
+                        invoicingCycleConfiguration(
+                            JsonField.ofNullable(invoicingCycleConfiguration)
+                        )
+
+                    /**
+                     * Sets [Builder.invoicingCycleConfiguration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.invoicingCycleConfiguration] with a
+                     * well-typed [NewBillingCycleConfiguration] value instead. This method is
+                     * primarily for setting the field to an undocumented or not yet supported
+                     * value.
+                     */
+                    fun invoicingCycleConfiguration(
+                        invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
+                    ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
+
+                    /**
+                     * User-specified key/value pairs for the resource. Individual keys can be
+                     * removed by setting the value to `null`, and the entire metadata mapping can
+                     * be cleared by setting `metadata` to `null`.
+                     */
+                    fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+                    /**
+                     * Sets [Builder.metadata] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String?) =
+                        referenceId(JsonField.ofNullable(referenceId))
+
+                    /**
+                     * Sets [Builder.referenceId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.referenceId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [TieredWithProration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .itemId()
+                     * .name()
+                     * .tieredWithProrationConfig()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): TieredWithProration =
+                        TieredWithProration(
+                            checkRequired("cadence", cadence),
+                            checkRequired("itemId", itemId),
+                            modelType,
+                            checkRequired("name", name),
+                            checkRequired("tieredWithProrationConfig", tieredWithProrationConfig),
+                            billableMetricId,
+                            billedInAdvance,
+                            billingCycleConfiguration,
+                            conversionRate,
+                            conversionRateConfig,
+                            currency,
+                            dimensionalPriceConfiguration,
+                            externalPriceId,
+                            fixedPriceQuantity,
+                            invoiceGroupingKey,
+                            invoicingCycleConfiguration,
+                            metadata,
+                            referenceId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): TieredWithProration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    cadence().validate()
+                    itemId()
+                    _modelType().let {
+                        if (it != JsonValue.from("tiered_with_proration")) {
+                            throw OrbInvalidDataException("'modelType' is invalid, received $it")
+                        }
+                    }
+                    name()
+                    tieredWithProrationConfig().validate()
+                    billableMetricId()
+                    billedInAdvance()
+                    billingCycleConfiguration()?.validate()
+                    conversionRate()
+                    conversionRateConfig()?.validate()
+                    currency()
+                    dimensionalPriceConfiguration()?.validate()
+                    externalPriceId()
+                    fixedPriceQuantity()
+                    invoiceGroupingKey()
+                    invoicingCycleConfiguration()?.validate()
+                    metadata()?.validate()
+                    referenceId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (cadence.asKnown()?.validity() ?: 0) +
+                        (if (itemId.asKnown() == null) 0 else 1) +
+                        modelType.let {
+                            if (it == JsonValue.from("tiered_with_proration")) 1 else 0
+                        } +
+                        (if (name.asKnown() == null) 0 else 1) +
+                        (tieredWithProrationConfig.asKnown()?.validity() ?: 0) +
+                        (if (billableMetricId.asKnown() == null) 0 else 1) +
+                        (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                        (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                        (if (conversionRate.asKnown() == null) 0 else 1) +
+                        (conversionRateConfig.asKnown()?.validity() ?: 0) +
+                        (if (currency.asKnown() == null) 0 else 1) +
+                        (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
+                        (if (externalPriceId.asKnown() == null) 0 else 1) +
+                        (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                        (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                        (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                        (metadata.asKnown()?.validity() ?: 0) +
+                        (if (referenceId.asKnown() == null) 0 else 1)
+
+                /** The cadence to bill for this price on. */
+                class Cadence
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val ANNUAL = of("annual")
+
+                        val SEMI_ANNUAL = of("semi_annual")
+
+                        val MONTHLY = of("monthly")
+
+                        val QUARTERLY = of("quarterly")
+
+                        val ONE_TIME = of("one_time")
+
+                        val CUSTOM = of("custom")
+
+                        fun of(value: String) = Cadence(JsonField.of(value))
+                    }
+
+                    /** An enum containing [Cadence]'s known values. */
+                    enum class Known {
+                        ANNUAL,
+                        SEMI_ANNUAL,
+                        MONTHLY,
+                        QUARTERLY,
+                        ONE_TIME,
+                        CUSTOM,
+                    }
+
+                    /**
+                     * An enum containing [Cadence]'s known values, as well as an [_UNKNOWN] member.
+                     *
+                     * An instance of [Cadence] can contain an unknown value in a couple of cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        ANNUAL,
+                        SEMI_ANNUAL,
+                        MONTHLY,
+                        QUARTERLY,
+                        ONE_TIME,
+                        CUSTOM,
+                        /**
+                         * An enum member indicating that [Cadence] was instantiated with an unknown
+                         * value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
+                            MONTHLY -> Value.MONTHLY
+                            QUARTERLY -> Value.QUARTERLY
+                            ONE_TIME -> Value.ONE_TIME
+                            CUSTOM -> Value.CUSTOM
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
+                            MONTHLY -> Known.MONTHLY
+                            QUARTERLY -> Known.QUARTERLY
+                            ONE_TIME -> Known.ONE_TIME
+                            CUSTOM -> Known.CUSTOM
+                            else -> throw OrbInvalidDataException("Unknown Cadence: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Cadence = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is Cadence && value == other.value
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                /** Configuration for tiered_with_proration pricing */
+                class TieredWithProrationConfig
+                private constructor(
+                    private val tiers: JsonField<List<Tier>>,
+                    private val additionalProperties: MutableMap<String, JsonValue>,
+                ) {
+
+                    @JsonCreator
+                    private constructor(
+                        @JsonProperty("tiers")
+                        @ExcludeMissing
+                        tiers: JsonField<List<Tier>> = JsonMissing.of()
+                    ) : this(tiers, mutableMapOf())
+
+                    /**
+                     * Tiers for rating based on total usage quantities into the specified tier with
+                     * proration
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun tiers(): List<Tier> = tiers.getRequired("tiers")
+
+                    /**
+                     * Returns the raw JSON value of [tiers].
+                     *
+                     * Unlike [tiers], this method doesn't throw if the JSON field has an unexpected
+                     * type.
+                     */
+                    @JsonProperty("tiers")
+                    @ExcludeMissing
+                    fun _tiers(): JsonField<List<Tier>> = tiers
+
+                    @JsonAnySetter
+                    private fun putAdditionalProperty(key: String, value: JsonValue) {
+                        additionalProperties.put(key, value)
+                    }
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> =
+                        Collections.unmodifiableMap(additionalProperties)
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [TieredWithProrationConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .tiers()
+                         * ```
+                         */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [TieredWithProrationConfig]. */
+                    class Builder internal constructor() {
+
+                        private var tiers: JsonField<MutableList<Tier>>? = null
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(tieredWithProrationConfig: TieredWithProrationConfig) =
+                            apply {
+                                tiers = tieredWithProrationConfig.tiers.map { it.toMutableList() }
+                                additionalProperties =
+                                    tieredWithProrationConfig.additionalProperties.toMutableMap()
+                            }
+
+                        /**
+                         * Tiers for rating based on total usage quantities into the specified tier
+                         * with proration
+                         */
+                        fun tiers(tiers: List<Tier>) = tiers(JsonField.of(tiers))
+
+                        /**
+                         * Sets [Builder.tiers] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.tiers] with a well-typed `List<Tier>`
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun tiers(tiers: JsonField<List<Tier>>) = apply {
+                            this.tiers = tiers.map { it.toMutableList() }
+                        }
+
+                        /**
+                         * Adds a single [Tier] to [tiers].
+                         *
+                         * @throws IllegalStateException if the field was previously set to a
+                         *   non-list.
+                         */
+                        fun addTier(tier: Tier) = apply {
+                            tiers =
+                                (tiers ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("tiers", it).add(tier)
+                                }
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [TieredWithProrationConfig].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .tiers()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
+                        fun build(): TieredWithProrationConfig =
+                            TieredWithProrationConfig(
+                                checkRequired("tiers", tiers).map { it.toImmutable() },
+                                additionalProperties.toMutableMap(),
+                            )
+                    }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): TieredWithProrationConfig = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        tiers().forEach { it.validate() }
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (tiers.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+
+                    /** Configuration for a single tiered with proration tier */
+                    class Tier
+                    private constructor(
+                        private val tierLowerBound: JsonField<String>,
+                        private val unitAmount: JsonField<String>,
+                        private val additionalProperties: MutableMap<String, JsonValue>,
+                    ) {
+
+                        @JsonCreator
+                        private constructor(
+                            @JsonProperty("tier_lower_bound")
+                            @ExcludeMissing
+                            tierLowerBound: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("unit_amount")
+                            @ExcludeMissing
+                            unitAmount: JsonField<String> = JsonMissing.of(),
+                        ) : this(tierLowerBound, unitAmount, mutableMapOf())
+
+                        /**
+                         * Inclusive tier starting value
+                         *
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun tierLowerBound(): String =
+                            tierLowerBound.getRequired("tier_lower_bound")
+
+                        /**
+                         * Amount per unit
+                         *
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun unitAmount(): String = unitAmount.getRequired("unit_amount")
+
+                        /**
+                         * Returns the raw JSON value of [tierLowerBound].
+                         *
+                         * Unlike [tierLowerBound], this method doesn't throw if the JSON field has
+                         * an unexpected type.
+                         */
+                        @JsonProperty("tier_lower_bound")
+                        @ExcludeMissing
+                        fun _tierLowerBound(): JsonField<String> = tierLowerBound
+
+                        /**
+                         * Returns the raw JSON value of [unitAmount].
+                         *
+                         * Unlike [unitAmount], this method doesn't throw if the JSON field has an
+                         * unexpected type.
+                         */
+                        @JsonProperty("unit_amount")
+                        @ExcludeMissing
+                        fun _unitAmount(): JsonField<String> = unitAmount
+
+                        @JsonAnySetter
+                        private fun putAdditionalProperty(key: String, value: JsonValue) {
+                            additionalProperties.put(key, value)
+                        }
+
+                        @JsonAnyGetter
+                        @ExcludeMissing
+                        fun _additionalProperties(): Map<String, JsonValue> =
+                            Collections.unmodifiableMap(additionalProperties)
+
+                        fun toBuilder() = Builder().from(this)
+
+                        companion object {
+
+                            /**
+                             * Returns a mutable builder for constructing an instance of [Tier].
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .tierLowerBound()
+                             * .unitAmount()
+                             * ```
+                             */
+                            fun builder() = Builder()
+                        }
+
+                        /** A builder for [Tier]. */
+                        class Builder internal constructor() {
+
+                            private var tierLowerBound: JsonField<String>? = null
+                            private var unitAmount: JsonField<String>? = null
+                            private var additionalProperties: MutableMap<String, JsonValue> =
+                                mutableMapOf()
+
+                            internal fun from(tier: Tier) = apply {
+                                tierLowerBound = tier.tierLowerBound
+                                unitAmount = tier.unitAmount
+                                additionalProperties = tier.additionalProperties.toMutableMap()
+                            }
+
+                            /** Inclusive tier starting value */
+                            fun tierLowerBound(tierLowerBound: String) =
+                                tierLowerBound(JsonField.of(tierLowerBound))
+
+                            /**
+                             * Sets [Builder.tierLowerBound] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.tierLowerBound] with a well-typed
+                             * [String] value instead. This method is primarily for setting the
+                             * field to an undocumented or not yet supported value.
+                             */
+                            fun tierLowerBound(tierLowerBound: JsonField<String>) = apply {
+                                this.tierLowerBound = tierLowerBound
+                            }
+
+                            /** Amount per unit */
+                            fun unitAmount(unitAmount: String) =
+                                unitAmount(JsonField.of(unitAmount))
+
+                            /**
+                             * Sets [Builder.unitAmount] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.unitAmount] with a well-typed
+                             * [String] value instead. This method is primarily for setting the
+                             * field to an undocumented or not yet supported value.
+                             */
+                            fun unitAmount(unitAmount: JsonField<String>) = apply {
+                                this.unitAmount = unitAmount
+                            }
+
+                            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                                apply {
+                                    this.additionalProperties.clear()
+                                    putAllAdditionalProperties(additionalProperties)
+                                }
+
+                            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                                additionalProperties.put(key, value)
+                            }
+
+                            fun putAllAdditionalProperties(
+                                additionalProperties: Map<String, JsonValue>
+                            ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                            fun removeAdditionalProperty(key: String) = apply {
+                                additionalProperties.remove(key)
+                            }
+
+                            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                                keys.forEach(::removeAdditionalProperty)
+                            }
+
+                            /**
+                             * Returns an immutable instance of [Tier].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .tierLowerBound()
+                             * .unitAmount()
+                             * ```
+                             *
+                             * @throws IllegalStateException if any required field is unset.
+                             */
+                            fun build(): Tier =
+                                Tier(
+                                    checkRequired("tierLowerBound", tierLowerBound),
+                                    checkRequired("unitAmount", unitAmount),
+                                    additionalProperties.toMutableMap(),
+                                )
+                        }
+
+                        private var validated: Boolean = false
+
+                        fun validate(): Tier = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            tierLowerBound()
+                            unitAmount()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int =
+                            (if (tierLowerBound.asKnown() == null) 0 else 1) +
+                                (if (unitAmount.asKnown() == null) 0 else 1)
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return other is Tier &&
+                                tierLowerBound == other.tierLowerBound &&
+                                unitAmount == other.unitAmount &&
+                                additionalProperties == other.additionalProperties
+                        }
+
+                        private val hashCode: Int by lazy {
+                            Objects.hash(tierLowerBound, unitAmount, additionalProperties)
+                        }
+
+                        override fun hashCode(): Int = hashCode
+
+                        override fun toString() =
+                            "Tier{tierLowerBound=$tierLowerBound, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
+                    }
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is TieredWithProrationConfig &&
+                            tiers == other.tiers &&
+                            additionalProperties == other.additionalProperties
+                    }
+
+                    private val hashCode: Int by lazy { Objects.hash(tiers, additionalProperties) }
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() =
+                        "TieredWithProrationConfig{tiers=$tiers, additionalProperties=$additionalProperties}"
+                }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                class Metadata
+                @JsonCreator
+                private constructor(
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    private val additionalProperties: Map<String, JsonValue>
+                ) {
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [Metadata]. */
+                    class Builder internal constructor() {
+
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(metadata: Metadata) = apply {
+                            additionalProperties = metadata.additionalProperties.toMutableMap()
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
+                        fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                    }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Metadata = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        additionalProperties.count { (_, value) ->
+                            !value.isNull() && !value.isMissing()
+                        }
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is Metadata &&
+                            additionalProperties == other.additionalProperties
+                    }
+
+                    private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is TieredWithProration &&
+                        cadence == other.cadence &&
+                        itemId == other.itemId &&
+                        modelType == other.modelType &&
+                        name == other.name &&
+                        tieredWithProrationConfig == other.tieredWithProrationConfig &&
+                        billableMetricId == other.billableMetricId &&
+                        billedInAdvance == other.billedInAdvance &&
+                        billingCycleConfiguration == other.billingCycleConfiguration &&
+                        conversionRate == other.conversionRate &&
+                        conversionRateConfig == other.conversionRateConfig &&
+                        currency == other.currency &&
+                        dimensionalPriceConfiguration == other.dimensionalPriceConfiguration &&
+                        externalPriceId == other.externalPriceId &&
+                        fixedPriceQuantity == other.fixedPriceQuantity &&
+                        invoiceGroupingKey == other.invoiceGroupingKey &&
+                        invoicingCycleConfiguration == other.invoicingCycleConfiguration &&
+                        metadata == other.metadata &&
+                        referenceId == other.referenceId &&
+                        additionalProperties == other.additionalProperties
+                }
+
+                private val hashCode: Int by lazy {
+                    Objects.hash(
+                        cadence,
+                        itemId,
+                        modelType,
+                        name,
+                        tieredWithProrationConfig,
+                        billableMetricId,
+                        billedInAdvance,
+                        billingCycleConfiguration,
+                        conversionRate,
+                        conversionRateConfig,
+                        currency,
+                        dimensionalPriceConfiguration,
+                        externalPriceId,
+                        fixedPriceQuantity,
+                        invoiceGroupingKey,
+                        invoicingCycleConfiguration,
+                        metadata,
+                        referenceId,
+                        additionalProperties,
+                    )
+                }
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "TieredWithProration{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredWithProrationConfig=$tieredWithProrationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, referenceId=$referenceId, additionalProperties=$additionalProperties}"
             }
 
             class GroupedWithMinMaxThresholds
@@ -3273,6 +5036,8 @@ private constructor(
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
                 /**
+                 * Configuration for grouped_with_min_max_thresholds pricing
+                 *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
                  *   unexpectedly missing or null (e.g. if the server responded with an unexpected
                  *   value).
@@ -3292,6 +5057,8 @@ private constructor(
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 /**
+                 * The pricing model type
+                 *
                  * Expected to always return the following:
                  * ```kotlin
                  * JsonValue.from("grouped_with_min_max_thresholds")
@@ -3701,6 +5468,7 @@ private constructor(
                      */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
+                    /** Configuration for grouped_with_min_max_thresholds pricing */
                     fun groupedWithMinMaxThresholdsConfig(
                         groupedWithMinMaxThresholdsConfig: GroupedWithMinMaxThresholdsConfig
                     ) =
@@ -4356,16 +6124,117 @@ private constructor(
                     override fun toString() = value.toString()
                 }
 
+                /** Configuration for grouped_with_min_max_thresholds pricing */
                 class GroupedWithMinMaxThresholdsConfig
-                @JsonCreator
                 private constructor(
-                    @com.fasterxml.jackson.annotation.JsonValue
-                    private val additionalProperties: Map<String, JsonValue>
+                    private val groupingKey: JsonField<String>,
+                    private val maximumCharge: JsonField<String>,
+                    private val minimumCharge: JsonField<String>,
+                    private val perUnitRate: JsonField<String>,
+                    private val additionalProperties: MutableMap<String, JsonValue>,
                 ) {
+
+                    @JsonCreator
+                    private constructor(
+                        @JsonProperty("grouping_key")
+                        @ExcludeMissing
+                        groupingKey: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("maximum_charge")
+                        @ExcludeMissing
+                        maximumCharge: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("minimum_charge")
+                        @ExcludeMissing
+                        minimumCharge: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("per_unit_rate")
+                        @ExcludeMissing
+                        perUnitRate: JsonField<String> = JsonMissing.of(),
+                    ) : this(groupingKey, maximumCharge, minimumCharge, perUnitRate, mutableMapOf())
+
+                    /**
+                     * The event property used to group before applying thresholds
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun groupingKey(): String = groupingKey.getRequired("grouping_key")
+
+                    /**
+                     * The maximum amount to charge each group
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun maximumCharge(): String = maximumCharge.getRequired("maximum_charge")
+
+                    /**
+                     * The minimum amount to charge each group, regardless of usage
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun minimumCharge(): String = minimumCharge.getRequired("minimum_charge")
+
+                    /**
+                     * The base price charged per group
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun perUnitRate(): String = perUnitRate.getRequired("per_unit_rate")
+
+                    /**
+                     * Returns the raw JSON value of [groupingKey].
+                     *
+                     * Unlike [groupingKey], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("grouping_key")
+                    @ExcludeMissing
+                    fun _groupingKey(): JsonField<String> = groupingKey
+
+                    /**
+                     * Returns the raw JSON value of [maximumCharge].
+                     *
+                     * Unlike [maximumCharge], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("maximum_charge")
+                    @ExcludeMissing
+                    fun _maximumCharge(): JsonField<String> = maximumCharge
+
+                    /**
+                     * Returns the raw JSON value of [minimumCharge].
+                     *
+                     * Unlike [minimumCharge], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("minimum_charge")
+                    @ExcludeMissing
+                    fun _minimumCharge(): JsonField<String> = minimumCharge
+
+                    /**
+                     * Returns the raw JSON value of [perUnitRate].
+                     *
+                     * Unlike [perUnitRate], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("per_unit_rate")
+                    @ExcludeMissing
+                    fun _perUnitRate(): JsonField<String> = perUnitRate
+
+                    @JsonAnySetter
+                    private fun putAdditionalProperty(key: String, value: JsonValue) {
+                        additionalProperties.put(key, value)
+                    }
 
                     @JsonAnyGetter
                     @ExcludeMissing
-                    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+                    fun _additionalProperties(): Map<String, JsonValue> =
+                        Collections.unmodifiableMap(additionalProperties)
 
                     fun toBuilder() = Builder().from(this)
 
@@ -4374,6 +6243,14 @@ private constructor(
                         /**
                          * Returns a mutable builder for constructing an instance of
                          * [GroupedWithMinMaxThresholdsConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .groupingKey()
+                         * .maximumCharge()
+                         * .minimumCharge()
+                         * .perUnitRate()
+                         * ```
                          */
                         fun builder() = Builder()
                     }
@@ -4381,15 +6258,83 @@ private constructor(
                     /** A builder for [GroupedWithMinMaxThresholdsConfig]. */
                     class Builder internal constructor() {
 
+                        private var groupingKey: JsonField<String>? = null
+                        private var maximumCharge: JsonField<String>? = null
+                        private var minimumCharge: JsonField<String>? = null
+                        private var perUnitRate: JsonField<String>? = null
                         private var additionalProperties: MutableMap<String, JsonValue> =
                             mutableMapOf()
 
                         internal fun from(
                             groupedWithMinMaxThresholdsConfig: GroupedWithMinMaxThresholdsConfig
                         ) = apply {
+                            groupingKey = groupedWithMinMaxThresholdsConfig.groupingKey
+                            maximumCharge = groupedWithMinMaxThresholdsConfig.maximumCharge
+                            minimumCharge = groupedWithMinMaxThresholdsConfig.minimumCharge
+                            perUnitRate = groupedWithMinMaxThresholdsConfig.perUnitRate
                             additionalProperties =
                                 groupedWithMinMaxThresholdsConfig.additionalProperties
                                     .toMutableMap()
+                        }
+
+                        /** The event property used to group before applying thresholds */
+                        fun groupingKey(groupingKey: String) =
+                            groupingKey(JsonField.of(groupingKey))
+
+                        /**
+                         * Sets [Builder.groupingKey] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.groupingKey] with a well-typed [String]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun groupingKey(groupingKey: JsonField<String>) = apply {
+                            this.groupingKey = groupingKey
+                        }
+
+                        /** The maximum amount to charge each group */
+                        fun maximumCharge(maximumCharge: String) =
+                            maximumCharge(JsonField.of(maximumCharge))
+
+                        /**
+                         * Sets [Builder.maximumCharge] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.maximumCharge] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun maximumCharge(maximumCharge: JsonField<String>) = apply {
+                            this.maximumCharge = maximumCharge
+                        }
+
+                        /** The minimum amount to charge each group, regardless of usage */
+                        fun minimumCharge(minimumCharge: String) =
+                            minimumCharge(JsonField.of(minimumCharge))
+
+                        /**
+                         * Sets [Builder.minimumCharge] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.minimumCharge] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun minimumCharge(minimumCharge: JsonField<String>) = apply {
+                            this.minimumCharge = minimumCharge
+                        }
+
+                        /** The base price charged per group */
+                        fun perUnitRate(perUnitRate: String) =
+                            perUnitRate(JsonField.of(perUnitRate))
+
+                        /**
+                         * Sets [Builder.perUnitRate] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.perUnitRate] with a well-typed [String]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun perUnitRate(perUnitRate: JsonField<String>) = apply {
+                            this.perUnitRate = perUnitRate
                         }
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
@@ -4418,9 +6363,25 @@ private constructor(
                          * Returns an immutable instance of [GroupedWithMinMaxThresholdsConfig].
                          *
                          * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .groupingKey()
+                         * .maximumCharge()
+                         * .minimumCharge()
+                         * .perUnitRate()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
                          */
                         fun build(): GroupedWithMinMaxThresholdsConfig =
-                            GroupedWithMinMaxThresholdsConfig(additionalProperties.toImmutable())
+                            GroupedWithMinMaxThresholdsConfig(
+                                checkRequired("groupingKey", groupingKey),
+                                checkRequired("maximumCharge", maximumCharge),
+                                checkRequired("minimumCharge", minimumCharge),
+                                checkRequired("perUnitRate", perUnitRate),
+                                additionalProperties.toMutableMap(),
+                            )
                     }
 
                     private var validated: Boolean = false
@@ -4430,6 +6391,10 @@ private constructor(
                             return@apply
                         }
 
+                        groupingKey()
+                        maximumCharge()
+                        minimumCharge()
+                        perUnitRate()
                         validated = true
                     }
 
@@ -4448,9 +6413,10 @@ private constructor(
                      * Used for best match union deserialization.
                      */
                     internal fun validity(): Int =
-                        additionalProperties.count { (_, value) ->
-                            !value.isNull() && !value.isMissing()
-                        }
+                        (if (groupingKey.asKnown() == null) 0 else 1) +
+                            (if (maximumCharge.asKnown() == null) 0 else 1) +
+                            (if (minimumCharge.asKnown() == null) 0 else 1) +
+                            (if (perUnitRate.asKnown() == null) 0 else 1)
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -4458,15 +6424,27 @@ private constructor(
                         }
 
                         return other is GroupedWithMinMaxThresholdsConfig &&
+                            groupingKey == other.groupingKey &&
+                            maximumCharge == other.maximumCharge &&
+                            minimumCharge == other.minimumCharge &&
+                            perUnitRate == other.perUnitRate &&
                             additionalProperties == other.additionalProperties
                     }
 
-                    private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+                    private val hashCode: Int by lazy {
+                        Objects.hash(
+                            groupingKey,
+                            maximumCharge,
+                            minimumCharge,
+                            perUnitRate,
+                            additionalProperties,
+                        )
+                    }
 
                     override fun hashCode(): Int = hashCode
 
                     override fun toString() =
-                        "GroupedWithMinMaxThresholdsConfig{additionalProperties=$additionalProperties}"
+                        "GroupedWithMinMaxThresholdsConfig{groupingKey=$groupingKey, maximumCharge=$maximumCharge, minimumCharge=$minimumCharge, perUnitRate=$perUnitRate, additionalProperties=$additionalProperties}"
                 }
 
                 /**
@@ -5748,7 +7726,7 @@ private constructor(
         fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
 
         /**
-         * The price to add to the plan
+         * New plan price request body params.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -5886,7 +7864,7 @@ private constructor(
                 this.planPhaseOrder = planPhaseOrder
             }
 
-            /** The price to add to the plan */
+            /** New plan price request body params. */
             fun price(price: Price?) = price(JsonField.ofNullable(price))
 
             /**
@@ -5901,17 +7879,17 @@ private constructor(
             /** Alias for calling [price] with `Price.ofUnit(unit)`. */
             fun price(unit: NewPlanUnitPrice) = price(Price.ofUnit(unit))
 
-            /** Alias for calling [price] with `Price.ofPackage(package_)`. */
-            fun price(package_: NewPlanPackagePrice) = price(Price.ofPackage(package_))
-
-            /** Alias for calling [price] with `Price.ofMatrix(matrix)`. */
-            fun price(matrix: NewPlanMatrixPrice) = price(Price.ofMatrix(matrix))
-
             /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
             fun price(tiered: NewPlanTieredPrice) = price(Price.ofTiered(tiered))
 
             /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
             fun price(bulk: NewPlanBulkPrice) = price(Price.ofBulk(bulk))
+
+            /** Alias for calling [price] with `Price.ofPackage(package_)`. */
+            fun price(package_: NewPlanPackagePrice) = price(Price.ofPackage(package_))
+
+            /** Alias for calling [price] with `Price.ofMatrix(matrix)`. */
+            fun price(matrix: NewPlanMatrixPrice) = price(Price.ofMatrix(matrix))
 
             /**
              * Alias for calling [price] with `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
@@ -5927,9 +7905,16 @@ private constructor(
             fun price(tieredWithMinimum: NewPlanTieredWithMinimumPrice) =
                 price(Price.ofTieredWithMinimum(tieredWithMinimum))
 
-            /** Alias for calling [price] with `Price.ofUnitWithPercent(unitWithPercent)`. */
-            fun price(unitWithPercent: NewPlanUnitWithPercentPrice) =
-                price(Price.ofUnitWithPercent(unitWithPercent))
+            /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
+            fun price(groupedTiered: NewPlanGroupedTieredPrice) =
+                price(Price.ofGroupedTiered(groupedTiered))
+
+            /**
+             * Alias for calling [price] with
+             * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
+             */
+            fun price(tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice) =
+                price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
 
             /**
              * Alias for calling [price] with
@@ -5938,10 +7923,20 @@ private constructor(
             fun price(packageWithAllocation: NewPlanPackageWithAllocationPrice) =
                 price(Price.ofPackageWithAllocation(packageWithAllocation))
 
+            /** Alias for calling [price] with `Price.ofUnitWithPercent(unitWithPercent)`. */
+            fun price(unitWithPercent: NewPlanUnitWithPercentPrice) =
+                price(Price.ofUnitWithPercent(unitWithPercent))
+
+            /**
+             * Alias for calling [price] with `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
+             */
+            fun price(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
+                price(Price.ofMatrixWithAllocation(matrixWithAllocation))
+
             /**
              * Alias for calling [price] with `Price.ofTieredWithProration(tieredWithProration)`.
              */
-            fun price(tieredWithProration: NewPlanTierWithProrationPrice) =
+            fun price(tieredWithProration: Price.TieredWithProration) =
                 price(Price.ofTieredWithProration(tieredWithProration))
 
             /** Alias for calling [price] with `Price.ofUnitWithProration(unitWithProration)`. */
@@ -5951,6 +7946,10 @@ private constructor(
             /** Alias for calling [price] with `Price.ofGroupedAllocation(groupedAllocation)`. */
             fun price(groupedAllocation: NewPlanGroupedAllocationPrice) =
                 price(Price.ofGroupedAllocation(groupedAllocation))
+
+            /** Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`. */
+            fun price(bulkWithProration: NewPlanBulkWithProrationPrice) =
+                price(Price.ofBulkWithProration(bulkWithProration))
 
             /**
              * Alias for calling [price] with
@@ -5979,10 +7978,6 @@ private constructor(
              */
             fun price(matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice) =
                 price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
-
-            /** Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`. */
-            fun price(bulkWithProration: NewPlanBulkWithProrationPrice) =
-                price(Price.ofBulkWithProration(bulkWithProration))
 
             /**
              * Alias for calling [price] with `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
@@ -6018,23 +8013,6 @@ private constructor(
              */
             fun price(cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice) =
                 price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
-
-            /**
-             * Alias for calling [price] with
-             * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
-             */
-            fun price(tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice) =
-                price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
-
-            /**
-             * Alias for calling [price] with `Price.ofMatrixWithAllocation(matrixWithAllocation)`.
-             */
-            fun price(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
-                price(Price.ofMatrixWithAllocation(matrixWithAllocation))
-
-            /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
-            fun price(groupedTiered: NewPlanGroupedTieredPrice) =
-                price(Price.ofGroupedTiered(groupedTiered))
 
             /** Alias for calling [price] with `Price.ofMinimum(minimum)`. */
             fun price(minimum: NewPlanMinimumCompositePrice) = price(Price.ofMinimum(minimum))
@@ -6114,29 +8092,32 @@ private constructor(
                 (if (planPhaseOrder.asKnown() == null) 0 else 1) +
                 (price.asKnown()?.validity() ?: 0)
 
-        /** The price to add to the plan */
+        /** New plan price request body params. */
         @JsonDeserialize(using = Price.Deserializer::class)
         @JsonSerialize(using = Price.Serializer::class)
         class Price
         private constructor(
             private val unit: NewPlanUnitPrice? = null,
-            private val package_: NewPlanPackagePrice? = null,
-            private val matrix: NewPlanMatrixPrice? = null,
             private val tiered: NewPlanTieredPrice? = null,
             private val bulk: NewPlanBulkPrice? = null,
+            private val package_: NewPlanPackagePrice? = null,
+            private val matrix: NewPlanMatrixPrice? = null,
             private val thresholdTotalAmount: NewPlanThresholdTotalAmountPrice? = null,
             private val tieredPackage: NewPlanTieredPackagePrice? = null,
             private val tieredWithMinimum: NewPlanTieredWithMinimumPrice? = null,
-            private val unitWithPercent: NewPlanUnitWithPercentPrice? = null,
+            private val groupedTiered: NewPlanGroupedTieredPrice? = null,
+            private val tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice? = null,
             private val packageWithAllocation: NewPlanPackageWithAllocationPrice? = null,
-            private val tieredWithProration: NewPlanTierWithProrationPrice? = null,
+            private val unitWithPercent: NewPlanUnitWithPercentPrice? = null,
+            private val matrixWithAllocation: NewPlanMatrixWithAllocationPrice? = null,
+            private val tieredWithProration: TieredWithProration? = null,
             private val unitWithProration: NewPlanUnitWithProrationPrice? = null,
             private val groupedAllocation: NewPlanGroupedAllocationPrice? = null,
+            private val bulkWithProration: NewPlanBulkWithProrationPrice? = null,
             private val groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice? = null,
             private val groupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice? = null,
             private val groupedWithMinMaxThresholds: GroupedWithMinMaxThresholds? = null,
             private val matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice? = null,
-            private val bulkWithProration: NewPlanBulkWithProrationPrice? = null,
             private val groupedTieredPackage: NewPlanGroupedTieredPackagePrice? = null,
             private val maxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice? = null,
             private val scalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice? =
@@ -6145,22 +8126,19 @@ private constructor(
                 NewPlanScalableMatrixWithTieredPricingPrice? =
                 null,
             private val cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice? = null,
-            private val tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice? = null,
-            private val matrixWithAllocation: NewPlanMatrixWithAllocationPrice? = null,
-            private val groupedTiered: NewPlanGroupedTieredPrice? = null,
             private val minimum: NewPlanMinimumCompositePrice? = null,
             private val _json: JsonValue? = null,
         ) {
 
             fun unit(): NewPlanUnitPrice? = unit
 
-            fun package_(): NewPlanPackagePrice? = package_
-
-            fun matrix(): NewPlanMatrixPrice? = matrix
-
             fun tiered(): NewPlanTieredPrice? = tiered
 
             fun bulk(): NewPlanBulkPrice? = bulk
+
+            fun package_(): NewPlanPackagePrice? = package_
+
+            fun matrix(): NewPlanMatrixPrice? = matrix
 
             fun thresholdTotalAmount(): NewPlanThresholdTotalAmountPrice? = thresholdTotalAmount
 
@@ -6168,15 +8146,24 @@ private constructor(
 
             fun tieredWithMinimum(): NewPlanTieredWithMinimumPrice? = tieredWithMinimum
 
-            fun unitWithPercent(): NewPlanUnitWithPercentPrice? = unitWithPercent
+            fun groupedTiered(): NewPlanGroupedTieredPrice? = groupedTiered
+
+            fun tieredPackageWithMinimum(): NewPlanTieredPackageWithMinimumPrice? =
+                tieredPackageWithMinimum
 
             fun packageWithAllocation(): NewPlanPackageWithAllocationPrice? = packageWithAllocation
 
-            fun tieredWithProration(): NewPlanTierWithProrationPrice? = tieredWithProration
+            fun unitWithPercent(): NewPlanUnitWithPercentPrice? = unitWithPercent
+
+            fun matrixWithAllocation(): NewPlanMatrixWithAllocationPrice? = matrixWithAllocation
+
+            fun tieredWithProration(): TieredWithProration? = tieredWithProration
 
             fun unitWithProration(): NewPlanUnitWithProrationPrice? = unitWithProration
 
             fun groupedAllocation(): NewPlanGroupedAllocationPrice? = groupedAllocation
+
+            fun bulkWithProration(): NewPlanBulkWithProrationPrice? = bulkWithProration
 
             fun groupedWithProratedMinimum(): NewPlanGroupedWithProratedMinimumPrice? =
                 groupedWithProratedMinimum
@@ -6188,8 +8175,6 @@ private constructor(
                 groupedWithMinMaxThresholds
 
             fun matrixWithDisplayName(): NewPlanMatrixWithDisplayNamePrice? = matrixWithDisplayName
-
-            fun bulkWithProration(): NewPlanBulkWithProrationPrice? = bulkWithProration
 
             fun groupedTieredPackage(): NewPlanGroupedTieredPackagePrice? = groupedTieredPackage
 
@@ -6203,24 +8188,17 @@ private constructor(
 
             fun cumulativeGroupedBulk(): NewPlanCumulativeGroupedBulkPrice? = cumulativeGroupedBulk
 
-            fun tieredPackageWithMinimum(): NewPlanTieredPackageWithMinimumPrice? =
-                tieredPackageWithMinimum
-
-            fun matrixWithAllocation(): NewPlanMatrixWithAllocationPrice? = matrixWithAllocation
-
-            fun groupedTiered(): NewPlanGroupedTieredPrice? = groupedTiered
-
             fun minimum(): NewPlanMinimumCompositePrice? = minimum
 
             fun isUnit(): Boolean = unit != null
 
-            fun isPackage(): Boolean = package_ != null
-
-            fun isMatrix(): Boolean = matrix != null
-
             fun isTiered(): Boolean = tiered != null
 
             fun isBulk(): Boolean = bulk != null
+
+            fun isPackage(): Boolean = package_ != null
+
+            fun isMatrix(): Boolean = matrix != null
 
             fun isThresholdTotalAmount(): Boolean = thresholdTotalAmount != null
 
@@ -6228,15 +8206,23 @@ private constructor(
 
             fun isTieredWithMinimum(): Boolean = tieredWithMinimum != null
 
-            fun isUnitWithPercent(): Boolean = unitWithPercent != null
+            fun isGroupedTiered(): Boolean = groupedTiered != null
+
+            fun isTieredPackageWithMinimum(): Boolean = tieredPackageWithMinimum != null
 
             fun isPackageWithAllocation(): Boolean = packageWithAllocation != null
+
+            fun isUnitWithPercent(): Boolean = unitWithPercent != null
+
+            fun isMatrixWithAllocation(): Boolean = matrixWithAllocation != null
 
             fun isTieredWithProration(): Boolean = tieredWithProration != null
 
             fun isUnitWithProration(): Boolean = unitWithProration != null
 
             fun isGroupedAllocation(): Boolean = groupedAllocation != null
+
+            fun isBulkWithProration(): Boolean = bulkWithProration != null
 
             fun isGroupedWithProratedMinimum(): Boolean = groupedWithProratedMinimum != null
 
@@ -6245,8 +8231,6 @@ private constructor(
             fun isGroupedWithMinMaxThresholds(): Boolean = groupedWithMinMaxThresholds != null
 
             fun isMatrixWithDisplayName(): Boolean = matrixWithDisplayName != null
-
-            fun isBulkWithProration(): Boolean = bulkWithProration != null
 
             fun isGroupedTieredPackage(): Boolean = groupedTieredPackage != null
 
@@ -6259,23 +8243,17 @@ private constructor(
 
             fun isCumulativeGroupedBulk(): Boolean = cumulativeGroupedBulk != null
 
-            fun isTieredPackageWithMinimum(): Boolean = tieredPackageWithMinimum != null
-
-            fun isMatrixWithAllocation(): Boolean = matrixWithAllocation != null
-
-            fun isGroupedTiered(): Boolean = groupedTiered != null
-
             fun isMinimum(): Boolean = minimum != null
 
             fun asUnit(): NewPlanUnitPrice = unit.getOrThrow("unit")
 
-            fun asPackage(): NewPlanPackagePrice = package_.getOrThrow("package_")
-
-            fun asMatrix(): NewPlanMatrixPrice = matrix.getOrThrow("matrix")
-
             fun asTiered(): NewPlanTieredPrice = tiered.getOrThrow("tiered")
 
             fun asBulk(): NewPlanBulkPrice = bulk.getOrThrow("bulk")
+
+            fun asPackage(): NewPlanPackagePrice = package_.getOrThrow("package_")
+
+            fun asMatrix(): NewPlanMatrixPrice = matrix.getOrThrow("matrix")
 
             fun asThresholdTotalAmount(): NewPlanThresholdTotalAmountPrice =
                 thresholdTotalAmount.getOrThrow("thresholdTotalAmount")
@@ -6286,13 +8264,22 @@ private constructor(
             fun asTieredWithMinimum(): NewPlanTieredWithMinimumPrice =
                 tieredWithMinimum.getOrThrow("tieredWithMinimum")
 
-            fun asUnitWithPercent(): NewPlanUnitWithPercentPrice =
-                unitWithPercent.getOrThrow("unitWithPercent")
+            fun asGroupedTiered(): NewPlanGroupedTieredPrice =
+                groupedTiered.getOrThrow("groupedTiered")
+
+            fun asTieredPackageWithMinimum(): NewPlanTieredPackageWithMinimumPrice =
+                tieredPackageWithMinimum.getOrThrow("tieredPackageWithMinimum")
 
             fun asPackageWithAllocation(): NewPlanPackageWithAllocationPrice =
                 packageWithAllocation.getOrThrow("packageWithAllocation")
 
-            fun asTieredWithProration(): NewPlanTierWithProrationPrice =
+            fun asUnitWithPercent(): NewPlanUnitWithPercentPrice =
+                unitWithPercent.getOrThrow("unitWithPercent")
+
+            fun asMatrixWithAllocation(): NewPlanMatrixWithAllocationPrice =
+                matrixWithAllocation.getOrThrow("matrixWithAllocation")
+
+            fun asTieredWithProration(): TieredWithProration =
                 tieredWithProration.getOrThrow("tieredWithProration")
 
             fun asUnitWithProration(): NewPlanUnitWithProrationPrice =
@@ -6300,6 +8287,9 @@ private constructor(
 
             fun asGroupedAllocation(): NewPlanGroupedAllocationPrice =
                 groupedAllocation.getOrThrow("groupedAllocation")
+
+            fun asBulkWithProration(): NewPlanBulkWithProrationPrice =
+                bulkWithProration.getOrThrow("bulkWithProration")
 
             fun asGroupedWithProratedMinimum(): NewPlanGroupedWithProratedMinimumPrice =
                 groupedWithProratedMinimum.getOrThrow("groupedWithProratedMinimum")
@@ -6312,9 +8302,6 @@ private constructor(
 
             fun asMatrixWithDisplayName(): NewPlanMatrixWithDisplayNamePrice =
                 matrixWithDisplayName.getOrThrow("matrixWithDisplayName")
-
-            fun asBulkWithProration(): NewPlanBulkWithProrationPrice =
-                bulkWithProration.getOrThrow("bulkWithProration")
 
             fun asGroupedTieredPackage(): NewPlanGroupedTieredPackagePrice =
                 groupedTieredPackage.getOrThrow("groupedTieredPackage")
@@ -6331,15 +8318,6 @@ private constructor(
             fun asCumulativeGroupedBulk(): NewPlanCumulativeGroupedBulkPrice =
                 cumulativeGroupedBulk.getOrThrow("cumulativeGroupedBulk")
 
-            fun asTieredPackageWithMinimum(): NewPlanTieredPackageWithMinimumPrice =
-                tieredPackageWithMinimum.getOrThrow("tieredPackageWithMinimum")
-
-            fun asMatrixWithAllocation(): NewPlanMatrixWithAllocationPrice =
-                matrixWithAllocation.getOrThrow("matrixWithAllocation")
-
-            fun asGroupedTiered(): NewPlanGroupedTieredPrice =
-                groupedTiered.getOrThrow("groupedTiered")
-
             fun asMinimum(): NewPlanMinimumCompositePrice = minimum.getOrThrow("minimum")
 
             fun _json(): JsonValue? = _json
@@ -6347,21 +8325,27 @@ private constructor(
             fun <T> accept(visitor: Visitor<T>): T =
                 when {
                     unit != null -> visitor.visitUnit(unit)
-                    package_ != null -> visitor.visitPackage(package_)
-                    matrix != null -> visitor.visitMatrix(matrix)
                     tiered != null -> visitor.visitTiered(tiered)
                     bulk != null -> visitor.visitBulk(bulk)
+                    package_ != null -> visitor.visitPackage(package_)
+                    matrix != null -> visitor.visitMatrix(matrix)
                     thresholdTotalAmount != null ->
                         visitor.visitThresholdTotalAmount(thresholdTotalAmount)
                     tieredPackage != null -> visitor.visitTieredPackage(tieredPackage)
                     tieredWithMinimum != null -> visitor.visitTieredWithMinimum(tieredWithMinimum)
-                    unitWithPercent != null -> visitor.visitUnitWithPercent(unitWithPercent)
+                    groupedTiered != null -> visitor.visitGroupedTiered(groupedTiered)
+                    tieredPackageWithMinimum != null ->
+                        visitor.visitTieredPackageWithMinimum(tieredPackageWithMinimum)
                     packageWithAllocation != null ->
                         visitor.visitPackageWithAllocation(packageWithAllocation)
+                    unitWithPercent != null -> visitor.visitUnitWithPercent(unitWithPercent)
+                    matrixWithAllocation != null ->
+                        visitor.visitMatrixWithAllocation(matrixWithAllocation)
                     tieredWithProration != null ->
                         visitor.visitTieredWithProration(tieredWithProration)
                     unitWithProration != null -> visitor.visitUnitWithProration(unitWithProration)
                     groupedAllocation != null -> visitor.visitGroupedAllocation(groupedAllocation)
+                    bulkWithProration != null -> visitor.visitBulkWithProration(bulkWithProration)
                     groupedWithProratedMinimum != null ->
                         visitor.visitGroupedWithProratedMinimum(groupedWithProratedMinimum)
                     groupedWithMeteredMinimum != null ->
@@ -6370,7 +8354,6 @@ private constructor(
                         visitor.visitGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)
                     matrixWithDisplayName != null ->
                         visitor.visitMatrixWithDisplayName(matrixWithDisplayName)
-                    bulkWithProration != null -> visitor.visitBulkWithProration(bulkWithProration)
                     groupedTieredPackage != null ->
                         visitor.visitGroupedTieredPackage(groupedTieredPackage)
                     maxGroupTieredPackage != null ->
@@ -6383,11 +8366,6 @@ private constructor(
                         )
                     cumulativeGroupedBulk != null ->
                         visitor.visitCumulativeGroupedBulk(cumulativeGroupedBulk)
-                    tieredPackageWithMinimum != null ->
-                        visitor.visitTieredPackageWithMinimum(tieredPackageWithMinimum)
-                    matrixWithAllocation != null ->
-                        visitor.visitMatrixWithAllocation(matrixWithAllocation)
-                    groupedTiered != null -> visitor.visitGroupedTiered(groupedTiered)
                     minimum != null -> visitor.visitMinimum(minimum)
                     else -> visitor.unknown(_json)
                 }
@@ -6405,20 +8383,20 @@ private constructor(
                             unit.validate()
                         }
 
-                        override fun visitPackage(package_: NewPlanPackagePrice) {
-                            package_.validate()
-                        }
-
-                        override fun visitMatrix(matrix: NewPlanMatrixPrice) {
-                            matrix.validate()
-                        }
-
                         override fun visitTiered(tiered: NewPlanTieredPrice) {
                             tiered.validate()
                         }
 
                         override fun visitBulk(bulk: NewPlanBulkPrice) {
                             bulk.validate()
+                        }
+
+                        override fun visitPackage(package_: NewPlanPackagePrice) {
+                            package_.validate()
+                        }
+
+                        override fun visitMatrix(matrix: NewPlanMatrixPrice) {
+                            matrix.validate()
                         }
 
                         override fun visitThresholdTotalAmount(
@@ -6437,10 +8415,14 @@ private constructor(
                             tieredWithMinimum.validate()
                         }
 
-                        override fun visitUnitWithPercent(
-                            unitWithPercent: NewPlanUnitWithPercentPrice
+                        override fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) {
+                            groupedTiered.validate()
+                        }
+
+                        override fun visitTieredPackageWithMinimum(
+                            tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
                         ) {
-                            unitWithPercent.validate()
+                            tieredPackageWithMinimum.validate()
                         }
 
                         override fun visitPackageWithAllocation(
@@ -6449,8 +8431,20 @@ private constructor(
                             packageWithAllocation.validate()
                         }
 
+                        override fun visitUnitWithPercent(
+                            unitWithPercent: NewPlanUnitWithPercentPrice
+                        ) {
+                            unitWithPercent.validate()
+                        }
+
+                        override fun visitMatrixWithAllocation(
+                            matrixWithAllocation: NewPlanMatrixWithAllocationPrice
+                        ) {
+                            matrixWithAllocation.validate()
+                        }
+
                         override fun visitTieredWithProration(
-                            tieredWithProration: NewPlanTierWithProrationPrice
+                            tieredWithProration: TieredWithProration
                         ) {
                             tieredWithProration.validate()
                         }
@@ -6465,6 +8459,12 @@ private constructor(
                             groupedAllocation: NewPlanGroupedAllocationPrice
                         ) {
                             groupedAllocation.validate()
+                        }
+
+                        override fun visitBulkWithProration(
+                            bulkWithProration: NewPlanBulkWithProrationPrice
+                        ) {
+                            bulkWithProration.validate()
                         }
 
                         override fun visitGroupedWithProratedMinimum(
@@ -6489,12 +8489,6 @@ private constructor(
                             matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
                         ) {
                             matrixWithDisplayName.validate()
-                        }
-
-                        override fun visitBulkWithProration(
-                            bulkWithProration: NewPlanBulkWithProrationPrice
-                        ) {
-                            bulkWithProration.validate()
                         }
 
                         override fun visitGroupedTieredPackage(
@@ -6528,22 +8522,6 @@ private constructor(
                             cumulativeGroupedBulk.validate()
                         }
 
-                        override fun visitTieredPackageWithMinimum(
-                            tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
-                        ) {
-                            tieredPackageWithMinimum.validate()
-                        }
-
-                        override fun visitMatrixWithAllocation(
-                            matrixWithAllocation: NewPlanMatrixWithAllocationPrice
-                        ) {
-                            matrixWithAllocation.validate()
-                        }
-
-                        override fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) {
-                            groupedTiered.validate()
-                        }
-
                         override fun visitMinimum(minimum: NewPlanMinimumCompositePrice) {
                             minimum.validate()
                         }
@@ -6571,14 +8549,14 @@ private constructor(
                     object : Visitor<Int> {
                         override fun visitUnit(unit: NewPlanUnitPrice) = unit.validity()
 
+                        override fun visitTiered(tiered: NewPlanTieredPrice) = tiered.validity()
+
+                        override fun visitBulk(bulk: NewPlanBulkPrice) = bulk.validity()
+
                         override fun visitPackage(package_: NewPlanPackagePrice) =
                             package_.validity()
 
                         override fun visitMatrix(matrix: NewPlanMatrixPrice) = matrix.validity()
-
-                        override fun visitTiered(tiered: NewPlanTieredPrice) = tiered.validity()
-
-                        override fun visitBulk(bulk: NewPlanBulkPrice) = bulk.validity()
 
                         override fun visitThresholdTotalAmount(
                             thresholdTotalAmount: NewPlanThresholdTotalAmountPrice
@@ -6591,16 +8569,27 @@ private constructor(
                             tieredWithMinimum: NewPlanTieredWithMinimumPrice
                         ) = tieredWithMinimum.validity()
 
-                        override fun visitUnitWithPercent(
-                            unitWithPercent: NewPlanUnitWithPercentPrice
-                        ) = unitWithPercent.validity()
+                        override fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) =
+                            groupedTiered.validity()
+
+                        override fun visitTieredPackageWithMinimum(
+                            tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
+                        ) = tieredPackageWithMinimum.validity()
 
                         override fun visitPackageWithAllocation(
                             packageWithAllocation: NewPlanPackageWithAllocationPrice
                         ) = packageWithAllocation.validity()
 
+                        override fun visitUnitWithPercent(
+                            unitWithPercent: NewPlanUnitWithPercentPrice
+                        ) = unitWithPercent.validity()
+
+                        override fun visitMatrixWithAllocation(
+                            matrixWithAllocation: NewPlanMatrixWithAllocationPrice
+                        ) = matrixWithAllocation.validity()
+
                         override fun visitTieredWithProration(
-                            tieredWithProration: NewPlanTierWithProrationPrice
+                            tieredWithProration: TieredWithProration
                         ) = tieredWithProration.validity()
 
                         override fun visitUnitWithProration(
@@ -6610,6 +8599,10 @@ private constructor(
                         override fun visitGroupedAllocation(
                             groupedAllocation: NewPlanGroupedAllocationPrice
                         ) = groupedAllocation.validity()
+
+                        override fun visitBulkWithProration(
+                            bulkWithProration: NewPlanBulkWithProrationPrice
+                        ) = bulkWithProration.validity()
 
                         override fun visitGroupedWithProratedMinimum(
                             groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
@@ -6626,10 +8619,6 @@ private constructor(
                         override fun visitMatrixWithDisplayName(
                             matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
                         ) = matrixWithDisplayName.validity()
-
-                        override fun visitBulkWithProration(
-                            bulkWithProration: NewPlanBulkWithProrationPrice
-                        ) = bulkWithProration.validity()
 
                         override fun visitGroupedTieredPackage(
                             groupedTieredPackage: NewPlanGroupedTieredPackagePrice
@@ -6652,17 +8641,6 @@ private constructor(
                             cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
                         ) = cumulativeGroupedBulk.validity()
 
-                        override fun visitTieredPackageWithMinimum(
-                            tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
-                        ) = tieredPackageWithMinimum.validity()
-
-                        override fun visitMatrixWithAllocation(
-                            matrixWithAllocation: NewPlanMatrixWithAllocationPrice
-                        ) = matrixWithAllocation.validity()
-
-                        override fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) =
-                            groupedTiered.validity()
-
                         override fun visitMinimum(minimum: NewPlanMinimumCompositePrice) =
                             minimum.validity()
 
@@ -6677,82 +8655,88 @@ private constructor(
 
                 return other is Price &&
                     unit == other.unit &&
-                    package_ == other.package_ &&
-                    matrix == other.matrix &&
                     tiered == other.tiered &&
                     bulk == other.bulk &&
+                    package_ == other.package_ &&
+                    matrix == other.matrix &&
                     thresholdTotalAmount == other.thresholdTotalAmount &&
                     tieredPackage == other.tieredPackage &&
                     tieredWithMinimum == other.tieredWithMinimum &&
-                    unitWithPercent == other.unitWithPercent &&
+                    groupedTiered == other.groupedTiered &&
+                    tieredPackageWithMinimum == other.tieredPackageWithMinimum &&
                     packageWithAllocation == other.packageWithAllocation &&
+                    unitWithPercent == other.unitWithPercent &&
+                    matrixWithAllocation == other.matrixWithAllocation &&
                     tieredWithProration == other.tieredWithProration &&
                     unitWithProration == other.unitWithProration &&
                     groupedAllocation == other.groupedAllocation &&
+                    bulkWithProration == other.bulkWithProration &&
                     groupedWithProratedMinimum == other.groupedWithProratedMinimum &&
                     groupedWithMeteredMinimum == other.groupedWithMeteredMinimum &&
                     groupedWithMinMaxThresholds == other.groupedWithMinMaxThresholds &&
                     matrixWithDisplayName == other.matrixWithDisplayName &&
-                    bulkWithProration == other.bulkWithProration &&
                     groupedTieredPackage == other.groupedTieredPackage &&
                     maxGroupTieredPackage == other.maxGroupTieredPackage &&
                     scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing &&
                     scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing &&
                     cumulativeGroupedBulk == other.cumulativeGroupedBulk &&
-                    tieredPackageWithMinimum == other.tieredPackageWithMinimum &&
-                    matrixWithAllocation == other.matrixWithAllocation &&
-                    groupedTiered == other.groupedTiered &&
                     minimum == other.minimum
             }
 
             override fun hashCode(): Int =
                 Objects.hash(
                     unit,
-                    package_,
-                    matrix,
                     tiered,
                     bulk,
+                    package_,
+                    matrix,
                     thresholdTotalAmount,
                     tieredPackage,
                     tieredWithMinimum,
-                    unitWithPercent,
+                    groupedTiered,
+                    tieredPackageWithMinimum,
                     packageWithAllocation,
+                    unitWithPercent,
+                    matrixWithAllocation,
                     tieredWithProration,
                     unitWithProration,
                     groupedAllocation,
+                    bulkWithProration,
                     groupedWithProratedMinimum,
                     groupedWithMeteredMinimum,
                     groupedWithMinMaxThresholds,
                     matrixWithDisplayName,
-                    bulkWithProration,
                     groupedTieredPackage,
                     maxGroupTieredPackage,
                     scalableMatrixWithUnitPricing,
                     scalableMatrixWithTieredPricing,
                     cumulativeGroupedBulk,
-                    tieredPackageWithMinimum,
-                    matrixWithAllocation,
-                    groupedTiered,
                     minimum,
                 )
 
             override fun toString(): String =
                 when {
                     unit != null -> "Price{unit=$unit}"
-                    package_ != null -> "Price{package_=$package_}"
-                    matrix != null -> "Price{matrix=$matrix}"
                     tiered != null -> "Price{tiered=$tiered}"
                     bulk != null -> "Price{bulk=$bulk}"
+                    package_ != null -> "Price{package_=$package_}"
+                    matrix != null -> "Price{matrix=$matrix}"
                     thresholdTotalAmount != null ->
                         "Price{thresholdTotalAmount=$thresholdTotalAmount}"
                     tieredPackage != null -> "Price{tieredPackage=$tieredPackage}"
                     tieredWithMinimum != null -> "Price{tieredWithMinimum=$tieredWithMinimum}"
-                    unitWithPercent != null -> "Price{unitWithPercent=$unitWithPercent}"
+                    groupedTiered != null -> "Price{groupedTiered=$groupedTiered}"
+                    tieredPackageWithMinimum != null ->
+                        "Price{tieredPackageWithMinimum=$tieredPackageWithMinimum}"
                     packageWithAllocation != null ->
                         "Price{packageWithAllocation=$packageWithAllocation}"
+                    unitWithPercent != null -> "Price{unitWithPercent=$unitWithPercent}"
+                    matrixWithAllocation != null ->
+                        "Price{matrixWithAllocation=$matrixWithAllocation}"
                     tieredWithProration != null -> "Price{tieredWithProration=$tieredWithProration}"
                     unitWithProration != null -> "Price{unitWithProration=$unitWithProration}"
                     groupedAllocation != null -> "Price{groupedAllocation=$groupedAllocation}"
+                    bulkWithProration != null -> "Price{bulkWithProration=$bulkWithProration}"
                     groupedWithProratedMinimum != null ->
                         "Price{groupedWithProratedMinimum=$groupedWithProratedMinimum}"
                     groupedWithMeteredMinimum != null ->
@@ -6761,7 +8745,6 @@ private constructor(
                         "Price{groupedWithMinMaxThresholds=$groupedWithMinMaxThresholds}"
                     matrixWithDisplayName != null ->
                         "Price{matrixWithDisplayName=$matrixWithDisplayName}"
-                    bulkWithProration != null -> "Price{bulkWithProration=$bulkWithProration}"
                     groupedTieredPackage != null ->
                         "Price{groupedTieredPackage=$groupedTieredPackage}"
                     maxGroupTieredPackage != null ->
@@ -6772,11 +8755,6 @@ private constructor(
                         "Price{scalableMatrixWithTieredPricing=$scalableMatrixWithTieredPricing}"
                     cumulativeGroupedBulk != null ->
                         "Price{cumulativeGroupedBulk=$cumulativeGroupedBulk}"
-                    tieredPackageWithMinimum != null ->
-                        "Price{tieredPackageWithMinimum=$tieredPackageWithMinimum}"
-                    matrixWithAllocation != null ->
-                        "Price{matrixWithAllocation=$matrixWithAllocation}"
-                    groupedTiered != null -> "Price{groupedTiered=$groupedTiered}"
                     minimum != null -> "Price{minimum=$minimum}"
                     _json != null -> "Price{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid Price")
@@ -6786,13 +8764,13 @@ private constructor(
 
                 fun ofUnit(unit: NewPlanUnitPrice) = Price(unit = unit)
 
-                fun ofPackage(package_: NewPlanPackagePrice) = Price(package_ = package_)
-
-                fun ofMatrix(matrix: NewPlanMatrixPrice) = Price(matrix = matrix)
-
                 fun ofTiered(tiered: NewPlanTieredPrice) = Price(tiered = tiered)
 
                 fun ofBulk(bulk: NewPlanBulkPrice) = Price(bulk = bulk)
+
+                fun ofPackage(package_: NewPlanPackagePrice) = Price(package_ = package_)
+
+                fun ofMatrix(matrix: NewPlanMatrixPrice) = Price(matrix = matrix)
 
                 fun ofThresholdTotalAmount(thresholdTotalAmount: NewPlanThresholdTotalAmountPrice) =
                     Price(thresholdTotalAmount = thresholdTotalAmount)
@@ -6803,14 +8781,24 @@ private constructor(
                 fun ofTieredWithMinimum(tieredWithMinimum: NewPlanTieredWithMinimumPrice) =
                     Price(tieredWithMinimum = tieredWithMinimum)
 
-                fun ofUnitWithPercent(unitWithPercent: NewPlanUnitWithPercentPrice) =
-                    Price(unitWithPercent = unitWithPercent)
+                fun ofGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) =
+                    Price(groupedTiered = groupedTiered)
+
+                fun ofTieredPackageWithMinimum(
+                    tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
+                ) = Price(tieredPackageWithMinimum = tieredPackageWithMinimum)
 
                 fun ofPackageWithAllocation(
                     packageWithAllocation: NewPlanPackageWithAllocationPrice
                 ) = Price(packageWithAllocation = packageWithAllocation)
 
-                fun ofTieredWithProration(tieredWithProration: NewPlanTierWithProrationPrice) =
+                fun ofUnitWithPercent(unitWithPercent: NewPlanUnitWithPercentPrice) =
+                    Price(unitWithPercent = unitWithPercent)
+
+                fun ofMatrixWithAllocation(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
+                    Price(matrixWithAllocation = matrixWithAllocation)
+
+                fun ofTieredWithProration(tieredWithProration: TieredWithProration) =
                     Price(tieredWithProration = tieredWithProration)
 
                 fun ofUnitWithProration(unitWithProration: NewPlanUnitWithProrationPrice) =
@@ -6818,6 +8806,9 @@ private constructor(
 
                 fun ofGroupedAllocation(groupedAllocation: NewPlanGroupedAllocationPrice) =
                     Price(groupedAllocation = groupedAllocation)
+
+                fun ofBulkWithProration(bulkWithProration: NewPlanBulkWithProrationPrice) =
+                    Price(bulkWithProration = bulkWithProration)
 
                 fun ofGroupedWithProratedMinimum(
                     groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
@@ -6834,9 +8825,6 @@ private constructor(
                 fun ofMatrixWithDisplayName(
                     matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
                 ) = Price(matrixWithDisplayName = matrixWithDisplayName)
-
-                fun ofBulkWithProration(bulkWithProration: NewPlanBulkWithProrationPrice) =
-                    Price(bulkWithProration = bulkWithProration)
 
                 fun ofGroupedTieredPackage(groupedTieredPackage: NewPlanGroupedTieredPackagePrice) =
                     Price(groupedTieredPackage = groupedTieredPackage)
@@ -6857,16 +8845,6 @@ private constructor(
                     cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
                 ) = Price(cumulativeGroupedBulk = cumulativeGroupedBulk)
 
-                fun ofTieredPackageWithMinimum(
-                    tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
-                ) = Price(tieredPackageWithMinimum = tieredPackageWithMinimum)
-
-                fun ofMatrixWithAllocation(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
-                    Price(matrixWithAllocation = matrixWithAllocation)
-
-                fun ofGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice) =
-                    Price(groupedTiered = groupedTiered)
-
                 fun ofMinimum(minimum: NewPlanMinimumCompositePrice) = Price(minimum = minimum)
             }
 
@@ -6877,13 +8855,13 @@ private constructor(
 
                 fun visitUnit(unit: NewPlanUnitPrice): T
 
-                fun visitPackage(package_: NewPlanPackagePrice): T
-
-                fun visitMatrix(matrix: NewPlanMatrixPrice): T
-
                 fun visitTiered(tiered: NewPlanTieredPrice): T
 
                 fun visitBulk(bulk: NewPlanBulkPrice): T
+
+                fun visitPackage(package_: NewPlanPackagePrice): T
+
+                fun visitMatrix(matrix: NewPlanMatrixPrice): T
 
                 fun visitThresholdTotalAmount(
                     thresholdTotalAmount: NewPlanThresholdTotalAmountPrice
@@ -6893,17 +8871,29 @@ private constructor(
 
                 fun visitTieredWithMinimum(tieredWithMinimum: NewPlanTieredWithMinimumPrice): T
 
-                fun visitUnitWithPercent(unitWithPercent: NewPlanUnitWithPercentPrice): T
+                fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice): T
+
+                fun visitTieredPackageWithMinimum(
+                    tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
+                ): T
 
                 fun visitPackageWithAllocation(
                     packageWithAllocation: NewPlanPackageWithAllocationPrice
                 ): T
 
-                fun visitTieredWithProration(tieredWithProration: NewPlanTierWithProrationPrice): T
+                fun visitUnitWithPercent(unitWithPercent: NewPlanUnitWithPercentPrice): T
+
+                fun visitMatrixWithAllocation(
+                    matrixWithAllocation: NewPlanMatrixWithAllocationPrice
+                ): T
+
+                fun visitTieredWithProration(tieredWithProration: TieredWithProration): T
 
                 fun visitUnitWithProration(unitWithProration: NewPlanUnitWithProrationPrice): T
 
                 fun visitGroupedAllocation(groupedAllocation: NewPlanGroupedAllocationPrice): T
+
+                fun visitBulkWithProration(bulkWithProration: NewPlanBulkWithProrationPrice): T
 
                 fun visitGroupedWithProratedMinimum(
                     groupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
@@ -6920,8 +8910,6 @@ private constructor(
                 fun visitMatrixWithDisplayName(
                     matrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
                 ): T
-
-                fun visitBulkWithProration(bulkWithProration: NewPlanBulkWithProrationPrice): T
 
                 fun visitGroupedTieredPackage(
                     groupedTieredPackage: NewPlanGroupedTieredPackagePrice
@@ -6942,16 +8930,6 @@ private constructor(
                 fun visitCumulativeGroupedBulk(
                     cumulativeGroupedBulk: NewPlanCumulativeGroupedBulkPrice
                 ): T
-
-                fun visitTieredPackageWithMinimum(
-                    tieredPackageWithMinimum: NewPlanTieredPackageWithMinimumPrice
-                ): T
-
-                fun visitMatrixWithAllocation(
-                    matrixWithAllocation: NewPlanMatrixWithAllocationPrice
-                ): T
-
-                fun visitGroupedTiered(groupedTiered: NewPlanGroupedTieredPrice): T
 
                 fun visitMinimum(minimum: NewPlanMinimumCompositePrice): T
 
@@ -6982,15 +8960,6 @@ private constructor(
                                 Price(unit = it, _json = json)
                             } ?: Price(_json = json)
                         }
-                        "package" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewPlanPackagePrice>())
-                                ?.let { Price(package_ = it, _json = json) } ?: Price(_json = json)
-                        }
-                        "matrix" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewPlanMatrixPrice>())?.let {
-                                Price(matrix = it, _json = json)
-                            } ?: Price(_json = json)
-                        }
                         "tiered" -> {
                             return tryDeserialize(node, jacksonTypeRef<NewPlanTieredPrice>())?.let {
                                 Price(tiered = it, _json = json)
@@ -6999,6 +8968,15 @@ private constructor(
                         "bulk" -> {
                             return tryDeserialize(node, jacksonTypeRef<NewPlanBulkPrice>())?.let {
                                 Price(bulk = it, _json = json)
+                            } ?: Price(_json = json)
+                        }
+                        "package" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanPackagePrice>())
+                                ?.let { Price(package_ = it, _json = json) } ?: Price(_json = json)
+                        }
+                        "matrix" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanMatrixPrice>())?.let {
+                                Price(matrix = it, _json = json)
                             } ?: Price(_json = json)
                         }
                         "threshold_total_amount" -> {
@@ -7022,12 +9000,17 @@ private constructor(
                                 ?.let { Price(tieredWithMinimum = it, _json = json) }
                                 ?: Price(_json = json)
                         }
-                        "unit_with_percent" -> {
+                        "grouped_tiered" -> {
+                            return tryDeserialize(node, jacksonTypeRef<NewPlanGroupedTieredPrice>())
+                                ?.let { Price(groupedTiered = it, _json = json) }
+                                ?: Price(_json = json)
+                        }
+                        "tiered_package_with_minimum" -> {
                             return tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewPlanUnitWithPercentPrice>(),
+                                    jacksonTypeRef<NewPlanTieredPackageWithMinimumPrice>(),
                                 )
-                                ?.let { Price(unitWithPercent = it, _json = json) }
+                                ?.let { Price(tieredPackageWithMinimum = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "package_with_allocation" -> {
@@ -7038,11 +9021,24 @@ private constructor(
                                 ?.let { Price(packageWithAllocation = it, _json = json) }
                                 ?: Price(_json = json)
                         }
-                        "tiered_with_proration" -> {
+                        "unit_with_percent" -> {
                             return tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewPlanTierWithProrationPrice>(),
+                                    jacksonTypeRef<NewPlanUnitWithPercentPrice>(),
                                 )
+                                ?.let { Price(unitWithPercent = it, _json = json) }
+                                ?: Price(_json = json)
+                        }
+                        "matrix_with_allocation" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanMatrixWithAllocationPrice>(),
+                                )
+                                ?.let { Price(matrixWithAllocation = it, _json = json) }
+                                ?: Price(_json = json)
+                        }
+                        "tiered_with_proration" -> {
+                            return tryDeserialize(node, jacksonTypeRef<TieredWithProration>())
                                 ?.let { Price(tieredWithProration = it, _json = json) }
                                 ?: Price(_json = json)
                         }
@@ -7060,6 +9056,14 @@ private constructor(
                                     jacksonTypeRef<NewPlanGroupedAllocationPrice>(),
                                 )
                                 ?.let { Price(groupedAllocation = it, _json = json) }
+                                ?: Price(_json = json)
+                        }
+                        "bulk_with_proration" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewPlanBulkWithProrationPrice>(),
+                                )
+                                ?.let { Price(bulkWithProration = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "grouped_with_prorated_minimum" -> {
@@ -7092,14 +9096,6 @@ private constructor(
                                     jacksonTypeRef<NewPlanMatrixWithDisplayNamePrice>(),
                                 )
                                 ?.let { Price(matrixWithDisplayName = it, _json = json) }
-                                ?: Price(_json = json)
-                        }
-                        "bulk_with_proration" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanBulkWithProrationPrice>(),
-                                )
-                                ?.let { Price(bulkWithProration = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "grouped_tiered_package" -> {
@@ -7142,27 +9138,6 @@ private constructor(
                                 ?.let { Price(cumulativeGroupedBulk = it, _json = json) }
                                 ?: Price(_json = json)
                         }
-                        "tiered_package_with_minimum" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanTieredPackageWithMinimumPrice>(),
-                                )
-                                ?.let { Price(tieredPackageWithMinimum = it, _json = json) }
-                                ?: Price(_json = json)
-                        }
-                        "matrix_with_allocation" -> {
-                            return tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<NewPlanMatrixWithAllocationPrice>(),
-                                )
-                                ?.let { Price(matrixWithAllocation = it, _json = json) }
-                                ?: Price(_json = json)
-                        }
-                        "grouped_tiered" -> {
-                            return tryDeserialize(node, jacksonTypeRef<NewPlanGroupedTieredPrice>())
-                                ?.let { Price(groupedTiered = it, _json = json) }
-                                ?: Price(_json = json)
-                        }
                         "minimum" -> {
                             return tryDeserialize(
                                     node,
@@ -7185,25 +9160,32 @@ private constructor(
                 ) {
                     when {
                         value.unit != null -> generator.writeObject(value.unit)
-                        value.package_ != null -> generator.writeObject(value.package_)
-                        value.matrix != null -> generator.writeObject(value.matrix)
                         value.tiered != null -> generator.writeObject(value.tiered)
                         value.bulk != null -> generator.writeObject(value.bulk)
+                        value.package_ != null -> generator.writeObject(value.package_)
+                        value.matrix != null -> generator.writeObject(value.matrix)
                         value.thresholdTotalAmount != null ->
                             generator.writeObject(value.thresholdTotalAmount)
                         value.tieredPackage != null -> generator.writeObject(value.tieredPackage)
                         value.tieredWithMinimum != null ->
                             generator.writeObject(value.tieredWithMinimum)
-                        value.unitWithPercent != null ->
-                            generator.writeObject(value.unitWithPercent)
+                        value.groupedTiered != null -> generator.writeObject(value.groupedTiered)
+                        value.tieredPackageWithMinimum != null ->
+                            generator.writeObject(value.tieredPackageWithMinimum)
                         value.packageWithAllocation != null ->
                             generator.writeObject(value.packageWithAllocation)
+                        value.unitWithPercent != null ->
+                            generator.writeObject(value.unitWithPercent)
+                        value.matrixWithAllocation != null ->
+                            generator.writeObject(value.matrixWithAllocation)
                         value.tieredWithProration != null ->
                             generator.writeObject(value.tieredWithProration)
                         value.unitWithProration != null ->
                             generator.writeObject(value.unitWithProration)
                         value.groupedAllocation != null ->
                             generator.writeObject(value.groupedAllocation)
+                        value.bulkWithProration != null ->
+                            generator.writeObject(value.bulkWithProration)
                         value.groupedWithProratedMinimum != null ->
                             generator.writeObject(value.groupedWithProratedMinimum)
                         value.groupedWithMeteredMinimum != null ->
@@ -7212,8 +9194,6 @@ private constructor(
                             generator.writeObject(value.groupedWithMinMaxThresholds)
                         value.matrixWithDisplayName != null ->
                             generator.writeObject(value.matrixWithDisplayName)
-                        value.bulkWithProration != null ->
-                            generator.writeObject(value.bulkWithProration)
                         value.groupedTieredPackage != null ->
                             generator.writeObject(value.groupedTieredPackage)
                         value.maxGroupTieredPackage != null ->
@@ -7224,16 +9204,1777 @@ private constructor(
                             generator.writeObject(value.scalableMatrixWithTieredPricing)
                         value.cumulativeGroupedBulk != null ->
                             generator.writeObject(value.cumulativeGroupedBulk)
-                        value.tieredPackageWithMinimum != null ->
-                            generator.writeObject(value.tieredPackageWithMinimum)
-                        value.matrixWithAllocation != null ->
-                            generator.writeObject(value.matrixWithAllocation)
-                        value.groupedTiered != null -> generator.writeObject(value.groupedTiered)
                         value.minimum != null -> generator.writeObject(value.minimum)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid Price")
                     }
                 }
+            }
+
+            class TieredWithProration
+            private constructor(
+                private val cadence: JsonField<Cadence>,
+                private val itemId: JsonField<String>,
+                private val modelType: JsonValue,
+                private val name: JsonField<String>,
+                private val tieredWithProrationConfig: JsonField<TieredWithProrationConfig>,
+                private val billableMetricId: JsonField<String>,
+                private val billedInAdvance: JsonField<Boolean>,
+                private val billingCycleConfiguration: JsonField<NewBillingCycleConfiguration>,
+                private val conversionRate: JsonField<Double>,
+                private val conversionRateConfig: JsonField<ConversionRateConfig>,
+                private val currency: JsonField<String>,
+                private val dimensionalPriceConfiguration:
+                    JsonField<NewDimensionalPriceConfiguration>,
+                private val externalPriceId: JsonField<String>,
+                private val fixedPriceQuantity: JsonField<Double>,
+                private val invoiceGroupingKey: JsonField<String>,
+                private val invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>,
+                private val metadata: JsonField<Metadata>,
+                private val referenceId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("cadence")
+                    @ExcludeMissing
+                    cadence: JsonField<Cadence> = JsonMissing.of(),
+                    @JsonProperty("item_id")
+                    @ExcludeMissing
+                    itemId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("model_type")
+                    @ExcludeMissing
+                    modelType: JsonValue = JsonMissing.of(),
+                    @JsonProperty("name")
+                    @ExcludeMissing
+                    name: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("tiered_with_proration_config")
+                    @ExcludeMissing
+                    tieredWithProrationConfig: JsonField<TieredWithProrationConfig> =
+                        JsonMissing.of(),
+                    @JsonProperty("billable_metric_id")
+                    @ExcludeMissing
+                    billableMetricId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("billed_in_advance")
+                    @ExcludeMissing
+                    billedInAdvance: JsonField<Boolean> = JsonMissing.of(),
+                    @JsonProperty("billing_cycle_configuration")
+                    @ExcludeMissing
+                    billingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of(),
+                    @JsonProperty("conversion_rate")
+                    @ExcludeMissing
+                    conversionRate: JsonField<Double> = JsonMissing.of(),
+                    @JsonProperty("conversion_rate_config")
+                    @ExcludeMissing
+                    conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
+                    @JsonProperty("currency")
+                    @ExcludeMissing
+                    currency: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_configuration")
+                    @ExcludeMissing
+                    dimensionalPriceConfiguration: JsonField<NewDimensionalPriceConfiguration> =
+                        JsonMissing.of(),
+                    @JsonProperty("external_price_id")
+                    @ExcludeMissing
+                    externalPriceId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("fixed_price_quantity")
+                    @ExcludeMissing
+                    fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+                    @JsonProperty("invoice_grouping_key")
+                    @ExcludeMissing
+                    invoiceGroupingKey: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("invoicing_cycle_configuration")
+                    @ExcludeMissing
+                    invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of(),
+                    @JsonProperty("metadata")
+                    @ExcludeMissing
+                    metadata: JsonField<Metadata> = JsonMissing.of(),
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    referenceId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    cadence,
+                    itemId,
+                    modelType,
+                    name,
+                    tieredWithProrationConfig,
+                    billableMetricId,
+                    billedInAdvance,
+                    billingCycleConfiguration,
+                    conversionRate,
+                    conversionRateConfig,
+                    currency,
+                    dimensionalPriceConfiguration,
+                    externalPriceId,
+                    fixedPriceQuantity,
+                    invoiceGroupingKey,
+                    invoicingCycleConfiguration,
+                    metadata,
+                    referenceId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The cadence to bill for this price on.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun cadence(): Cadence = cadence.getRequired("cadence")
+
+                /**
+                 * The id of the item the price will be associated with.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun itemId(): String = itemId.getRequired("item_id")
+
+                /**
+                 * The pricing model type
+                 *
+                 * Expected to always return the following:
+                 * ```kotlin
+                 * JsonValue.from("tiered_with_proration")
+                 * ```
+                 *
+                 * However, this method can be useful for debugging and logging (e.g. if the server
+                 * responded with an unexpected value).
+                 */
+                @JsonProperty("model_type") @ExcludeMissing fun _modelType(): JsonValue = modelType
+
+                /**
+                 * The name of the price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun name(): String = name.getRequired("name")
+
+                /**
+                 * Configuration for tiered_with_proration pricing
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun tieredWithProrationConfig(): TieredWithProrationConfig =
+                    tieredWithProrationConfig.getRequired("tiered_with_proration_config")
+
+                /**
+                 * The id of the billable metric for the price. Only needed if the price is
+                 * usage-based.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun billableMetricId(): String? = billableMetricId.getNullable("billable_metric_id")
+
+                /**
+                 * If the Price represents a fixed cost, the price will be billed in-advance if this
+                 * is true, and in-arrears if this is false.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun billedInAdvance(): Boolean? = billedInAdvance.getNullable("billed_in_advance")
+
+                /**
+                 * For custom cadence: specifies the duration of the billing period in days or
+                 * months.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun billingCycleConfiguration(): NewBillingCycleConfiguration? =
+                    billingCycleConfiguration.getNullable("billing_cycle_configuration")
+
+                /**
+                 * The per unit conversion rate of the price currency to the invoicing currency.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+                /**
+                 * The configuration for the rate of the price currency to the invoicing currency.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun conversionRateConfig(): ConversionRateConfig? =
+                    conversionRateConfig.getNullable("conversion_rate_config")
+
+                /**
+                 * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                 * price is billed.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * For dimensional price: specifies a price group and dimension values
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceConfiguration(): NewDimensionalPriceConfiguration? =
+                    dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
+
+                /**
+                 * An alias for the price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
+
+                /**
+                 * If the Price represents a fixed cost, this represents the quantity of units
+                 * applied.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun fixedPriceQuantity(): Double? =
+                    fixedPriceQuantity.getNullable("fixed_price_quantity")
+
+                /**
+                 * The property used to group this price on an invoice
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun invoiceGroupingKey(): String? =
+                    invoiceGroupingKey.getNullable("invoice_grouping_key")
+
+                /**
+                 * Within each billing cycle, specifies the cadence at which invoices are produced.
+                 * If unspecified, a single invoice is produced per billing cycle.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun invoicingCycleConfiguration(): NewBillingCycleConfiguration? =
+                    invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
+
+                /**
+                 * Returns the raw JSON value of [cadence].
+                 *
+                 * Unlike [cadence], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("cadence")
+                @ExcludeMissing
+                fun _cadence(): JsonField<Cadence> = cadence
+
+                /**
+                 * Returns the raw JSON value of [itemId].
+                 *
+                 * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+
+                /**
+                 * Returns the raw JSON value of [name].
+                 *
+                 * Unlike [name], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+                /**
+                 * Returns the raw JSON value of [tieredWithProrationConfig].
+                 *
+                 * Unlike [tieredWithProrationConfig], this method doesn't throw if the JSON field
+                 * has an unexpected type.
+                 */
+                @JsonProperty("tiered_with_proration_config")
+                @ExcludeMissing
+                fun _tieredWithProrationConfig(): JsonField<TieredWithProrationConfig> =
+                    tieredWithProrationConfig
+
+                /**
+                 * Returns the raw JSON value of [billableMetricId].
+                 *
+                 * Unlike [billableMetricId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("billable_metric_id")
+                @ExcludeMissing
+                fun _billableMetricId(): JsonField<String> = billableMetricId
+
+                /**
+                 * Returns the raw JSON value of [billedInAdvance].
+                 *
+                 * Unlike [billedInAdvance], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("billed_in_advance")
+                @ExcludeMissing
+                fun _billedInAdvance(): JsonField<Boolean> = billedInAdvance
+
+                /**
+                 * Returns the raw JSON value of [billingCycleConfiguration].
+                 *
+                 * Unlike [billingCycleConfiguration], this method doesn't throw if the JSON field
+                 * has an unexpected type.
+                 */
+                @JsonProperty("billing_cycle_configuration")
+                @ExcludeMissing
+                fun _billingCycleConfiguration(): JsonField<NewBillingCycleConfiguration> =
+                    billingCycleConfiguration
+
+                /**
+                 * Returns the raw JSON value of [conversionRate].
+                 *
+                 * Unlike [conversionRate], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("conversion_rate")
+                @ExcludeMissing
+                fun _conversionRate(): JsonField<Double> = conversionRate
+
+                /**
+                 * Returns the raw JSON value of [conversionRateConfig].
+                 *
+                 * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("conversion_rate_config")
+                @ExcludeMissing
+                fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
+
+                /**
+                 * Returns the raw JSON value of [currency].
+                 *
+                 * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("currency")
+                @ExcludeMissing
+                fun _currency(): JsonField<String> = currency
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceConfiguration].
+                 *
+                 * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                fun _dimensionalPriceConfiguration(): JsonField<NewDimensionalPriceConfiguration> =
+                    dimensionalPriceConfiguration
+
+                /**
+                 * Returns the raw JSON value of [externalPriceId].
+                 *
+                 * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("external_price_id")
+                @ExcludeMissing
+                fun _externalPriceId(): JsonField<String> = externalPriceId
+
+                /**
+                 * Returns the raw JSON value of [fixedPriceQuantity].
+                 *
+                 * Unlike [fixedPriceQuantity], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("fixed_price_quantity")
+                @ExcludeMissing
+                fun _fixedPriceQuantity(): JsonField<Double> = fixedPriceQuantity
+
+                /**
+                 * Returns the raw JSON value of [invoiceGroupingKey].
+                 *
+                 * Unlike [invoiceGroupingKey], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("invoice_grouping_key")
+                @ExcludeMissing
+                fun _invoiceGroupingKey(): JsonField<String> = invoiceGroupingKey
+
+                /**
+                 * Returns the raw JSON value of [invoicingCycleConfiguration].
+                 *
+                 * Unlike [invoicingCycleConfiguration], this method doesn't throw if the JSON field
+                 * has an unexpected type.
+                 */
+                @JsonProperty("invoicing_cycle_configuration")
+                @ExcludeMissing
+                fun _invoicingCycleConfiguration(): JsonField<NewBillingCycleConfiguration> =
+                    invoicingCycleConfiguration
+
+                /**
+                 * Returns the raw JSON value of [metadata].
+                 *
+                 * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun _metadata(): JsonField<Metadata> = metadata
+
+                /**
+                 * Returns the raw JSON value of [referenceId].
+                 *
+                 * Unlike [referenceId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("reference_id")
+                @ExcludeMissing
+                fun _referenceId(): JsonField<String> = referenceId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [TieredWithProration].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .itemId()
+                     * .name()
+                     * .tieredWithProrationConfig()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [TieredWithProration]. */
+                class Builder internal constructor() {
+
+                    private var cadence: JsonField<Cadence>? = null
+                    private var itemId: JsonField<String>? = null
+                    private var modelType: JsonValue = JsonValue.from("tiered_with_proration")
+                    private var name: JsonField<String>? = null
+                    private var tieredWithProrationConfig: JsonField<TieredWithProrationConfig>? =
+                        null
+                    private var billableMetricId: JsonField<String> = JsonMissing.of()
+                    private var billedInAdvance: JsonField<Boolean> = JsonMissing.of()
+                    private var billingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of()
+                    private var conversionRate: JsonField<Double> = JsonMissing.of()
+                    private var conversionRateConfig: JsonField<ConversionRateConfig> =
+                        JsonMissing.of()
+                    private var currency: JsonField<String> = JsonMissing.of()
+                    private var dimensionalPriceConfiguration:
+                        JsonField<NewDimensionalPriceConfiguration> =
+                        JsonMissing.of()
+                    private var externalPriceId: JsonField<String> = JsonMissing.of()
+                    private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
+                    private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
+                    private var invoicingCycleConfiguration:
+                        JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of()
+                    private var metadata: JsonField<Metadata> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(tieredWithProration: TieredWithProration) = apply {
+                        cadence = tieredWithProration.cadence
+                        itemId = tieredWithProration.itemId
+                        modelType = tieredWithProration.modelType
+                        name = tieredWithProration.name
+                        tieredWithProrationConfig = tieredWithProration.tieredWithProrationConfig
+                        billableMetricId = tieredWithProration.billableMetricId
+                        billedInAdvance = tieredWithProration.billedInAdvance
+                        billingCycleConfiguration = tieredWithProration.billingCycleConfiguration
+                        conversionRate = tieredWithProration.conversionRate
+                        conversionRateConfig = tieredWithProration.conversionRateConfig
+                        currency = tieredWithProration.currency
+                        dimensionalPriceConfiguration =
+                            tieredWithProration.dimensionalPriceConfiguration
+                        externalPriceId = tieredWithProration.externalPriceId
+                        fixedPriceQuantity = tieredWithProration.fixedPriceQuantity
+                        invoiceGroupingKey = tieredWithProration.invoiceGroupingKey
+                        invoicingCycleConfiguration =
+                            tieredWithProration.invoicingCycleConfiguration
+                        metadata = tieredWithProration.metadata
+                        referenceId = tieredWithProration.referenceId
+                        additionalProperties =
+                            tieredWithProration.additionalProperties.toMutableMap()
+                    }
+
+                    /** The cadence to bill for this price on. */
+                    fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
+
+                    /**
+                     * Sets [Builder.cadence] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.cadence] with a well-typed [Cadence] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
+
+                    /** The id of the item the price will be associated with. */
+                    fun itemId(itemId: String) = itemId(JsonField.of(itemId))
+
+                    /**
+                     * Sets [Builder.itemId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.itemId] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
+                    /**
+                     * Sets the field to an arbitrary JSON value.
+                     *
+                     * It is usually unnecessary to call this method because the field defaults to
+                     * the following:
+                     * ```kotlin
+                     * JsonValue.from("tiered_with_proration")
+                     * ```
+                     *
+                     * This method is primarily for setting the field to an undocumented or not yet
+                     * supported value.
+                     */
+                    fun modelType(modelType: JsonValue) = apply { this.modelType = modelType }
+
+                    /** The name of the price. */
+                    fun name(name: String) = name(JsonField.of(name))
+
+                    /**
+                     * Sets [Builder.name] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.name] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun name(name: JsonField<String>) = apply { this.name = name }
+
+                    /** Configuration for tiered_with_proration pricing */
+                    fun tieredWithProrationConfig(
+                        tieredWithProrationConfig: TieredWithProrationConfig
+                    ) = tieredWithProrationConfig(JsonField.of(tieredWithProrationConfig))
+
+                    /**
+                     * Sets [Builder.tieredWithProrationConfig] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.tieredWithProrationConfig] with a well-typed
+                     * [TieredWithProrationConfig] value instead. This method is primarily for
+                     * setting the field to an undocumented or not yet supported value.
+                     */
+                    fun tieredWithProrationConfig(
+                        tieredWithProrationConfig: JsonField<TieredWithProrationConfig>
+                    ) = apply { this.tieredWithProrationConfig = tieredWithProrationConfig }
+
+                    /**
+                     * The id of the billable metric for the price. Only needed if the price is
+                     * usage-based.
+                     */
+                    fun billableMetricId(billableMetricId: String?) =
+                        billableMetricId(JsonField.ofNullable(billableMetricId))
+
+                    /**
+                     * Sets [Builder.billableMetricId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.billableMetricId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun billableMetricId(billableMetricId: JsonField<String>) = apply {
+                        this.billableMetricId = billableMetricId
+                    }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean?) =
+                        billedInAdvance(JsonField.ofNullable(billedInAdvance))
+
+                    /**
+                     * Alias for [Builder.billedInAdvance].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
+
+                    /**
+                     * Sets [Builder.billedInAdvance] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.billedInAdvance] with a well-typed [Boolean]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun billedInAdvance(billedInAdvance: JsonField<Boolean>) = apply {
+                        this.billedInAdvance = billedInAdvance
+                    }
+
+                    /**
+                     * For custom cadence: specifies the duration of the billing period in days or
+                     * months.
+                     */
+                    fun billingCycleConfiguration(
+                        billingCycleConfiguration: NewBillingCycleConfiguration?
+                    ) = billingCycleConfiguration(JsonField.ofNullable(billingCycleConfiguration))
+
+                    /**
+                     * Sets [Builder.billingCycleConfiguration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.billingCycleConfiguration] with a well-typed
+                     * [NewBillingCycleConfiguration] value instead. This method is primarily for
+                     * setting the field to an undocumented or not yet supported value.
+                     */
+                    fun billingCycleConfiguration(
+                        billingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
+                    ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double?) =
+                        conversionRate(JsonField.ofNullable(conversionRate))
+
+                    /**
+                     * Alias for [Builder.conversionRate].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
+                    /**
+                     * Sets [Builder.conversionRate] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.conversionRate] with a well-typed [Double]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun conversionRate(conversionRate: JsonField<Double>) = apply {
+                        this.conversionRate = conversionRate
+                    }
+
+                    /**
+                     * The configuration for the rate of the price currency to the invoicing
+                     * currency.
+                     */
+                    fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                        conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+                    /**
+                     * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.conversionRateConfig] with a well-typed
+                     * [ConversionRateConfig] value instead. This method is primarily for setting
+                     * the field to an undocumented or not yet supported value.
+                     */
+                    fun conversionRateConfig(
+                        conversionRateConfig: JsonField<ConversionRateConfig>
+                    ) = apply { this.conversionRateConfig = conversionRateConfig }
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with
+                     * `ConversionRateConfig.ofUnit(unit)`.
+                     */
+                    fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                        conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with the following:
+                     * ```kotlin
+                     * UnitConversionRateConfig.builder()
+                     *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                     *     .unitConfig(unitConfig)
+                     *     .build()
+                     * ```
+                     */
+                    fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                        conversionRateConfig(
+                            UnitConversionRateConfig.builder()
+                                .conversionRateType(
+                                    UnitConversionRateConfig.ConversionRateType.UNIT
+                                )
+                                .unitConfig(unitConfig)
+                                .build()
+                        )
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with
+                     * `ConversionRateConfig.ofTiered(tiered)`.
+                     */
+                    fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                        conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with the following:
+                     * ```kotlin
+                     * TieredConversionRateConfig.builder()
+                     *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                     *     .tieredConfig(tieredConfig)
+                     *     .build()
+                     * ```
+                     */
+                    fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                        conversionRateConfig(
+                            TieredConversionRateConfig.builder()
+                                .conversionRateType(
+                                    TieredConversionRateConfig.ConversionRateType.TIERED
+                                )
+                                .tieredConfig(tieredConfig)
+                                .build()
+                        )
+
+                    /**
+                     * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                     * price is billed.
+                     */
+                    fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
+
+                    /**
+                     * Sets [Builder.currency] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.currency] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+                    /** For dimensional price: specifies a price group and dimension values */
+                    fun dimensionalPriceConfiguration(
+                        dimensionalPriceConfiguration: NewDimensionalPriceConfiguration?
+                    ) =
+                        dimensionalPriceConfiguration(
+                            JsonField.ofNullable(dimensionalPriceConfiguration)
+                        )
+
+                    /**
+                     * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceConfiguration] with a
+                     * well-typed [NewDimensionalPriceConfiguration] value instead. This method is
+                     * primarily for setting the field to an undocumented or not yet supported
+                     * value.
+                     */
+                    fun dimensionalPriceConfiguration(
+                        dimensionalPriceConfiguration: JsonField<NewDimensionalPriceConfiguration>
+                    ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
+                    /** An alias for the price. */
+                    fun externalPriceId(externalPriceId: String?) =
+                        externalPriceId(JsonField.ofNullable(externalPriceId))
+
+                    /**
+                     * Sets [Builder.externalPriceId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalPriceId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun externalPriceId(externalPriceId: JsonField<String>) = apply {
+                        this.externalPriceId = externalPriceId
+                    }
+
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) =
+                        fixedPriceQuantity(JsonField.ofNullable(fixedPriceQuantity))
+
+                    /**
+                     * Alias for [Builder.fixedPriceQuantity].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
+                    /**
+                     * Sets [Builder.fixedPriceQuantity] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.fixedPriceQuantity] with a well-typed
+                     * [Double] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
+                        this.fixedPriceQuantity = fixedPriceQuantity
+                    }
+
+                    /** The property used to group this price on an invoice */
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) =
+                        invoiceGroupingKey(JsonField.ofNullable(invoiceGroupingKey))
+
+                    /**
+                     * Sets [Builder.invoiceGroupingKey] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.invoiceGroupingKey] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun invoiceGroupingKey(invoiceGroupingKey: JsonField<String>) = apply {
+                        this.invoiceGroupingKey = invoiceGroupingKey
+                    }
+
+                    /**
+                     * Within each billing cycle, specifies the cadence at which invoices are
+                     * produced. If unspecified, a single invoice is produced per billing cycle.
+                     */
+                    fun invoicingCycleConfiguration(
+                        invoicingCycleConfiguration: NewBillingCycleConfiguration?
+                    ) =
+                        invoicingCycleConfiguration(
+                            JsonField.ofNullable(invoicingCycleConfiguration)
+                        )
+
+                    /**
+                     * Sets [Builder.invoicingCycleConfiguration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.invoicingCycleConfiguration] with a
+                     * well-typed [NewBillingCycleConfiguration] value instead. This method is
+                     * primarily for setting the field to an undocumented or not yet supported
+                     * value.
+                     */
+                    fun invoicingCycleConfiguration(
+                        invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
+                    ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
+
+                    /**
+                     * User-specified key/value pairs for the resource. Individual keys can be
+                     * removed by setting the value to `null`, and the entire metadata mapping can
+                     * be cleared by setting `metadata` to `null`.
+                     */
+                    fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+                    /**
+                     * Sets [Builder.metadata] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String?) =
+                        referenceId(JsonField.ofNullable(referenceId))
+
+                    /**
+                     * Sets [Builder.referenceId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.referenceId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [TieredWithProration].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .itemId()
+                     * .name()
+                     * .tieredWithProrationConfig()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): TieredWithProration =
+                        TieredWithProration(
+                            checkRequired("cadence", cadence),
+                            checkRequired("itemId", itemId),
+                            modelType,
+                            checkRequired("name", name),
+                            checkRequired("tieredWithProrationConfig", tieredWithProrationConfig),
+                            billableMetricId,
+                            billedInAdvance,
+                            billingCycleConfiguration,
+                            conversionRate,
+                            conversionRateConfig,
+                            currency,
+                            dimensionalPriceConfiguration,
+                            externalPriceId,
+                            fixedPriceQuantity,
+                            invoiceGroupingKey,
+                            invoicingCycleConfiguration,
+                            metadata,
+                            referenceId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): TieredWithProration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    cadence().validate()
+                    itemId()
+                    _modelType().let {
+                        if (it != JsonValue.from("tiered_with_proration")) {
+                            throw OrbInvalidDataException("'modelType' is invalid, received $it")
+                        }
+                    }
+                    name()
+                    tieredWithProrationConfig().validate()
+                    billableMetricId()
+                    billedInAdvance()
+                    billingCycleConfiguration()?.validate()
+                    conversionRate()
+                    conversionRateConfig()?.validate()
+                    currency()
+                    dimensionalPriceConfiguration()?.validate()
+                    externalPriceId()
+                    fixedPriceQuantity()
+                    invoiceGroupingKey()
+                    invoicingCycleConfiguration()?.validate()
+                    metadata()?.validate()
+                    referenceId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (cadence.asKnown()?.validity() ?: 0) +
+                        (if (itemId.asKnown() == null) 0 else 1) +
+                        modelType.let {
+                            if (it == JsonValue.from("tiered_with_proration")) 1 else 0
+                        } +
+                        (if (name.asKnown() == null) 0 else 1) +
+                        (tieredWithProrationConfig.asKnown()?.validity() ?: 0) +
+                        (if (billableMetricId.asKnown() == null) 0 else 1) +
+                        (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                        (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                        (if (conversionRate.asKnown() == null) 0 else 1) +
+                        (conversionRateConfig.asKnown()?.validity() ?: 0) +
+                        (if (currency.asKnown() == null) 0 else 1) +
+                        (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
+                        (if (externalPriceId.asKnown() == null) 0 else 1) +
+                        (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                        (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                        (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                        (metadata.asKnown()?.validity() ?: 0) +
+                        (if (referenceId.asKnown() == null) 0 else 1)
+
+                /** The cadence to bill for this price on. */
+                class Cadence
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val ANNUAL = of("annual")
+
+                        val SEMI_ANNUAL = of("semi_annual")
+
+                        val MONTHLY = of("monthly")
+
+                        val QUARTERLY = of("quarterly")
+
+                        val ONE_TIME = of("one_time")
+
+                        val CUSTOM = of("custom")
+
+                        fun of(value: String) = Cadence(JsonField.of(value))
+                    }
+
+                    /** An enum containing [Cadence]'s known values. */
+                    enum class Known {
+                        ANNUAL,
+                        SEMI_ANNUAL,
+                        MONTHLY,
+                        QUARTERLY,
+                        ONE_TIME,
+                        CUSTOM,
+                    }
+
+                    /**
+                     * An enum containing [Cadence]'s known values, as well as an [_UNKNOWN] member.
+                     *
+                     * An instance of [Cadence] can contain an unknown value in a couple of cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        ANNUAL,
+                        SEMI_ANNUAL,
+                        MONTHLY,
+                        QUARTERLY,
+                        ONE_TIME,
+                        CUSTOM,
+                        /**
+                         * An enum member indicating that [Cadence] was instantiated with an unknown
+                         * value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
+                            MONTHLY -> Value.MONTHLY
+                            QUARTERLY -> Value.QUARTERLY
+                            ONE_TIME -> Value.ONE_TIME
+                            CUSTOM -> Value.CUSTOM
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
+                            MONTHLY -> Known.MONTHLY
+                            QUARTERLY -> Known.QUARTERLY
+                            ONE_TIME -> Known.ONE_TIME
+                            CUSTOM -> Known.CUSTOM
+                            else -> throw OrbInvalidDataException("Unknown Cadence: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Cadence = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is Cadence && value == other.value
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                /** Configuration for tiered_with_proration pricing */
+                class TieredWithProrationConfig
+                private constructor(
+                    private val tiers: JsonField<List<Tier>>,
+                    private val additionalProperties: MutableMap<String, JsonValue>,
+                ) {
+
+                    @JsonCreator
+                    private constructor(
+                        @JsonProperty("tiers")
+                        @ExcludeMissing
+                        tiers: JsonField<List<Tier>> = JsonMissing.of()
+                    ) : this(tiers, mutableMapOf())
+
+                    /**
+                     * Tiers for rating based on total usage quantities into the specified tier with
+                     * proration
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun tiers(): List<Tier> = tiers.getRequired("tiers")
+
+                    /**
+                     * Returns the raw JSON value of [tiers].
+                     *
+                     * Unlike [tiers], this method doesn't throw if the JSON field has an unexpected
+                     * type.
+                     */
+                    @JsonProperty("tiers")
+                    @ExcludeMissing
+                    fun _tiers(): JsonField<List<Tier>> = tiers
+
+                    @JsonAnySetter
+                    private fun putAdditionalProperty(key: String, value: JsonValue) {
+                        additionalProperties.put(key, value)
+                    }
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> =
+                        Collections.unmodifiableMap(additionalProperties)
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [TieredWithProrationConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .tiers()
+                         * ```
+                         */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [TieredWithProrationConfig]. */
+                    class Builder internal constructor() {
+
+                        private var tiers: JsonField<MutableList<Tier>>? = null
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(tieredWithProrationConfig: TieredWithProrationConfig) =
+                            apply {
+                                tiers = tieredWithProrationConfig.tiers.map { it.toMutableList() }
+                                additionalProperties =
+                                    tieredWithProrationConfig.additionalProperties.toMutableMap()
+                            }
+
+                        /**
+                         * Tiers for rating based on total usage quantities into the specified tier
+                         * with proration
+                         */
+                        fun tiers(tiers: List<Tier>) = tiers(JsonField.of(tiers))
+
+                        /**
+                         * Sets [Builder.tiers] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.tiers] with a well-typed `List<Tier>`
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun tiers(tiers: JsonField<List<Tier>>) = apply {
+                            this.tiers = tiers.map { it.toMutableList() }
+                        }
+
+                        /**
+                         * Adds a single [Tier] to [tiers].
+                         *
+                         * @throws IllegalStateException if the field was previously set to a
+                         *   non-list.
+                         */
+                        fun addTier(tier: Tier) = apply {
+                            tiers =
+                                (tiers ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("tiers", it).add(tier)
+                                }
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [TieredWithProrationConfig].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .tiers()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
+                        fun build(): TieredWithProrationConfig =
+                            TieredWithProrationConfig(
+                                checkRequired("tiers", tiers).map { it.toImmutable() },
+                                additionalProperties.toMutableMap(),
+                            )
+                    }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): TieredWithProrationConfig = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        tiers().forEach { it.validate() }
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (tiers.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+
+                    /** Configuration for a single tiered with proration tier */
+                    class Tier
+                    private constructor(
+                        private val tierLowerBound: JsonField<String>,
+                        private val unitAmount: JsonField<String>,
+                        private val additionalProperties: MutableMap<String, JsonValue>,
+                    ) {
+
+                        @JsonCreator
+                        private constructor(
+                            @JsonProperty("tier_lower_bound")
+                            @ExcludeMissing
+                            tierLowerBound: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("unit_amount")
+                            @ExcludeMissing
+                            unitAmount: JsonField<String> = JsonMissing.of(),
+                        ) : this(tierLowerBound, unitAmount, mutableMapOf())
+
+                        /**
+                         * Inclusive tier starting value
+                         *
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun tierLowerBound(): String =
+                            tierLowerBound.getRequired("tier_lower_bound")
+
+                        /**
+                         * Amount per unit
+                         *
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun unitAmount(): String = unitAmount.getRequired("unit_amount")
+
+                        /**
+                         * Returns the raw JSON value of [tierLowerBound].
+                         *
+                         * Unlike [tierLowerBound], this method doesn't throw if the JSON field has
+                         * an unexpected type.
+                         */
+                        @JsonProperty("tier_lower_bound")
+                        @ExcludeMissing
+                        fun _tierLowerBound(): JsonField<String> = tierLowerBound
+
+                        /**
+                         * Returns the raw JSON value of [unitAmount].
+                         *
+                         * Unlike [unitAmount], this method doesn't throw if the JSON field has an
+                         * unexpected type.
+                         */
+                        @JsonProperty("unit_amount")
+                        @ExcludeMissing
+                        fun _unitAmount(): JsonField<String> = unitAmount
+
+                        @JsonAnySetter
+                        private fun putAdditionalProperty(key: String, value: JsonValue) {
+                            additionalProperties.put(key, value)
+                        }
+
+                        @JsonAnyGetter
+                        @ExcludeMissing
+                        fun _additionalProperties(): Map<String, JsonValue> =
+                            Collections.unmodifiableMap(additionalProperties)
+
+                        fun toBuilder() = Builder().from(this)
+
+                        companion object {
+
+                            /**
+                             * Returns a mutable builder for constructing an instance of [Tier].
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .tierLowerBound()
+                             * .unitAmount()
+                             * ```
+                             */
+                            fun builder() = Builder()
+                        }
+
+                        /** A builder for [Tier]. */
+                        class Builder internal constructor() {
+
+                            private var tierLowerBound: JsonField<String>? = null
+                            private var unitAmount: JsonField<String>? = null
+                            private var additionalProperties: MutableMap<String, JsonValue> =
+                                mutableMapOf()
+
+                            internal fun from(tier: Tier) = apply {
+                                tierLowerBound = tier.tierLowerBound
+                                unitAmount = tier.unitAmount
+                                additionalProperties = tier.additionalProperties.toMutableMap()
+                            }
+
+                            /** Inclusive tier starting value */
+                            fun tierLowerBound(tierLowerBound: String) =
+                                tierLowerBound(JsonField.of(tierLowerBound))
+
+                            /**
+                             * Sets [Builder.tierLowerBound] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.tierLowerBound] with a well-typed
+                             * [String] value instead. This method is primarily for setting the
+                             * field to an undocumented or not yet supported value.
+                             */
+                            fun tierLowerBound(tierLowerBound: JsonField<String>) = apply {
+                                this.tierLowerBound = tierLowerBound
+                            }
+
+                            /** Amount per unit */
+                            fun unitAmount(unitAmount: String) =
+                                unitAmount(JsonField.of(unitAmount))
+
+                            /**
+                             * Sets [Builder.unitAmount] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.unitAmount] with a well-typed
+                             * [String] value instead. This method is primarily for setting the
+                             * field to an undocumented or not yet supported value.
+                             */
+                            fun unitAmount(unitAmount: JsonField<String>) = apply {
+                                this.unitAmount = unitAmount
+                            }
+
+                            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                                apply {
+                                    this.additionalProperties.clear()
+                                    putAllAdditionalProperties(additionalProperties)
+                                }
+
+                            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                                additionalProperties.put(key, value)
+                            }
+
+                            fun putAllAdditionalProperties(
+                                additionalProperties: Map<String, JsonValue>
+                            ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                            fun removeAdditionalProperty(key: String) = apply {
+                                additionalProperties.remove(key)
+                            }
+
+                            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                                keys.forEach(::removeAdditionalProperty)
+                            }
+
+                            /**
+                             * Returns an immutable instance of [Tier].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .tierLowerBound()
+                             * .unitAmount()
+                             * ```
+                             *
+                             * @throws IllegalStateException if any required field is unset.
+                             */
+                            fun build(): Tier =
+                                Tier(
+                                    checkRequired("tierLowerBound", tierLowerBound),
+                                    checkRequired("unitAmount", unitAmount),
+                                    additionalProperties.toMutableMap(),
+                                )
+                        }
+
+                        private var validated: Boolean = false
+
+                        fun validate(): Tier = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            tierLowerBound()
+                            unitAmount()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int =
+                            (if (tierLowerBound.asKnown() == null) 0 else 1) +
+                                (if (unitAmount.asKnown() == null) 0 else 1)
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return other is Tier &&
+                                tierLowerBound == other.tierLowerBound &&
+                                unitAmount == other.unitAmount &&
+                                additionalProperties == other.additionalProperties
+                        }
+
+                        private val hashCode: Int by lazy {
+                            Objects.hash(tierLowerBound, unitAmount, additionalProperties)
+                        }
+
+                        override fun hashCode(): Int = hashCode
+
+                        override fun toString() =
+                            "Tier{tierLowerBound=$tierLowerBound, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
+                    }
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is TieredWithProrationConfig &&
+                            tiers == other.tiers &&
+                            additionalProperties == other.additionalProperties
+                    }
+
+                    private val hashCode: Int by lazy { Objects.hash(tiers, additionalProperties) }
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() =
+                        "TieredWithProrationConfig{tiers=$tiers, additionalProperties=$additionalProperties}"
+                }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                class Metadata
+                @JsonCreator
+                private constructor(
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    private val additionalProperties: Map<String, JsonValue>
+                ) {
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [Metadata]. */
+                    class Builder internal constructor() {
+
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(metadata: Metadata) = apply {
+                            additionalProperties = metadata.additionalProperties.toMutableMap()
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
+                        fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                    }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Metadata = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        additionalProperties.count { (_, value) ->
+                            !value.isNull() && !value.isMissing()
+                        }
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is Metadata &&
+                            additionalProperties == other.additionalProperties
+                    }
+
+                    private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is TieredWithProration &&
+                        cadence == other.cadence &&
+                        itemId == other.itemId &&
+                        modelType == other.modelType &&
+                        name == other.name &&
+                        tieredWithProrationConfig == other.tieredWithProrationConfig &&
+                        billableMetricId == other.billableMetricId &&
+                        billedInAdvance == other.billedInAdvance &&
+                        billingCycleConfiguration == other.billingCycleConfiguration &&
+                        conversionRate == other.conversionRate &&
+                        conversionRateConfig == other.conversionRateConfig &&
+                        currency == other.currency &&
+                        dimensionalPriceConfiguration == other.dimensionalPriceConfiguration &&
+                        externalPriceId == other.externalPriceId &&
+                        fixedPriceQuantity == other.fixedPriceQuantity &&
+                        invoiceGroupingKey == other.invoiceGroupingKey &&
+                        invoicingCycleConfiguration == other.invoicingCycleConfiguration &&
+                        metadata == other.metadata &&
+                        referenceId == other.referenceId &&
+                        additionalProperties == other.additionalProperties
+                }
+
+                private val hashCode: Int by lazy {
+                    Objects.hash(
+                        cadence,
+                        itemId,
+                        modelType,
+                        name,
+                        tieredWithProrationConfig,
+                        billableMetricId,
+                        billedInAdvance,
+                        billingCycleConfiguration,
+                        conversionRate,
+                        conversionRateConfig,
+                        currency,
+                        dimensionalPriceConfiguration,
+                        externalPriceId,
+                        fixedPriceQuantity,
+                        invoiceGroupingKey,
+                        invoicingCycleConfiguration,
+                        metadata,
+                        referenceId,
+                        additionalProperties,
+                    )
+                }
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "TieredWithProration{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredWithProrationConfig=$tieredWithProrationConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, referenceId=$referenceId, additionalProperties=$additionalProperties}"
             }
 
             class GroupedWithMinMaxThresholds
@@ -7354,6 +11095,8 @@ private constructor(
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
                 /**
+                 * Configuration for grouped_with_min_max_thresholds pricing
+                 *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
                  *   unexpectedly missing or null (e.g. if the server responded with an unexpected
                  *   value).
@@ -7373,6 +11116,8 @@ private constructor(
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 /**
+                 * The pricing model type
+                 *
                  * Expected to always return the following:
                  * ```kotlin
                  * JsonValue.from("grouped_with_min_max_thresholds")
@@ -7782,6 +11527,7 @@ private constructor(
                      */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
+                    /** Configuration for grouped_with_min_max_thresholds pricing */
                     fun groupedWithMinMaxThresholdsConfig(
                         groupedWithMinMaxThresholdsConfig: GroupedWithMinMaxThresholdsConfig
                     ) =
@@ -8437,16 +12183,117 @@ private constructor(
                     override fun toString() = value.toString()
                 }
 
+                /** Configuration for grouped_with_min_max_thresholds pricing */
                 class GroupedWithMinMaxThresholdsConfig
-                @JsonCreator
                 private constructor(
-                    @com.fasterxml.jackson.annotation.JsonValue
-                    private val additionalProperties: Map<String, JsonValue>
+                    private val groupingKey: JsonField<String>,
+                    private val maximumCharge: JsonField<String>,
+                    private val minimumCharge: JsonField<String>,
+                    private val perUnitRate: JsonField<String>,
+                    private val additionalProperties: MutableMap<String, JsonValue>,
                 ) {
+
+                    @JsonCreator
+                    private constructor(
+                        @JsonProperty("grouping_key")
+                        @ExcludeMissing
+                        groupingKey: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("maximum_charge")
+                        @ExcludeMissing
+                        maximumCharge: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("minimum_charge")
+                        @ExcludeMissing
+                        minimumCharge: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("per_unit_rate")
+                        @ExcludeMissing
+                        perUnitRate: JsonField<String> = JsonMissing.of(),
+                    ) : this(groupingKey, maximumCharge, minimumCharge, perUnitRate, mutableMapOf())
+
+                    /**
+                     * The event property used to group before applying thresholds
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun groupingKey(): String = groupingKey.getRequired("grouping_key")
+
+                    /**
+                     * The maximum amount to charge each group
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun maximumCharge(): String = maximumCharge.getRequired("maximum_charge")
+
+                    /**
+                     * The minimum amount to charge each group, regardless of usage
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun minimumCharge(): String = minimumCharge.getRequired("minimum_charge")
+
+                    /**
+                     * The base price charged per group
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun perUnitRate(): String = perUnitRate.getRequired("per_unit_rate")
+
+                    /**
+                     * Returns the raw JSON value of [groupingKey].
+                     *
+                     * Unlike [groupingKey], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("grouping_key")
+                    @ExcludeMissing
+                    fun _groupingKey(): JsonField<String> = groupingKey
+
+                    /**
+                     * Returns the raw JSON value of [maximumCharge].
+                     *
+                     * Unlike [maximumCharge], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("maximum_charge")
+                    @ExcludeMissing
+                    fun _maximumCharge(): JsonField<String> = maximumCharge
+
+                    /**
+                     * Returns the raw JSON value of [minimumCharge].
+                     *
+                     * Unlike [minimumCharge], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("minimum_charge")
+                    @ExcludeMissing
+                    fun _minimumCharge(): JsonField<String> = minimumCharge
+
+                    /**
+                     * Returns the raw JSON value of [perUnitRate].
+                     *
+                     * Unlike [perUnitRate], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("per_unit_rate")
+                    @ExcludeMissing
+                    fun _perUnitRate(): JsonField<String> = perUnitRate
+
+                    @JsonAnySetter
+                    private fun putAdditionalProperty(key: String, value: JsonValue) {
+                        additionalProperties.put(key, value)
+                    }
 
                     @JsonAnyGetter
                     @ExcludeMissing
-                    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+                    fun _additionalProperties(): Map<String, JsonValue> =
+                        Collections.unmodifiableMap(additionalProperties)
 
                     fun toBuilder() = Builder().from(this)
 
@@ -8455,6 +12302,14 @@ private constructor(
                         /**
                          * Returns a mutable builder for constructing an instance of
                          * [GroupedWithMinMaxThresholdsConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .groupingKey()
+                         * .maximumCharge()
+                         * .minimumCharge()
+                         * .perUnitRate()
+                         * ```
                          */
                         fun builder() = Builder()
                     }
@@ -8462,15 +12317,83 @@ private constructor(
                     /** A builder for [GroupedWithMinMaxThresholdsConfig]. */
                     class Builder internal constructor() {
 
+                        private var groupingKey: JsonField<String>? = null
+                        private var maximumCharge: JsonField<String>? = null
+                        private var minimumCharge: JsonField<String>? = null
+                        private var perUnitRate: JsonField<String>? = null
                         private var additionalProperties: MutableMap<String, JsonValue> =
                             mutableMapOf()
 
                         internal fun from(
                             groupedWithMinMaxThresholdsConfig: GroupedWithMinMaxThresholdsConfig
                         ) = apply {
+                            groupingKey = groupedWithMinMaxThresholdsConfig.groupingKey
+                            maximumCharge = groupedWithMinMaxThresholdsConfig.maximumCharge
+                            minimumCharge = groupedWithMinMaxThresholdsConfig.minimumCharge
+                            perUnitRate = groupedWithMinMaxThresholdsConfig.perUnitRate
                             additionalProperties =
                                 groupedWithMinMaxThresholdsConfig.additionalProperties
                                     .toMutableMap()
+                        }
+
+                        /** The event property used to group before applying thresholds */
+                        fun groupingKey(groupingKey: String) =
+                            groupingKey(JsonField.of(groupingKey))
+
+                        /**
+                         * Sets [Builder.groupingKey] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.groupingKey] with a well-typed [String]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun groupingKey(groupingKey: JsonField<String>) = apply {
+                            this.groupingKey = groupingKey
+                        }
+
+                        /** The maximum amount to charge each group */
+                        fun maximumCharge(maximumCharge: String) =
+                            maximumCharge(JsonField.of(maximumCharge))
+
+                        /**
+                         * Sets [Builder.maximumCharge] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.maximumCharge] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun maximumCharge(maximumCharge: JsonField<String>) = apply {
+                            this.maximumCharge = maximumCharge
+                        }
+
+                        /** The minimum amount to charge each group, regardless of usage */
+                        fun minimumCharge(minimumCharge: String) =
+                            minimumCharge(JsonField.of(minimumCharge))
+
+                        /**
+                         * Sets [Builder.minimumCharge] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.minimumCharge] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun minimumCharge(minimumCharge: JsonField<String>) = apply {
+                            this.minimumCharge = minimumCharge
+                        }
+
+                        /** The base price charged per group */
+                        fun perUnitRate(perUnitRate: String) =
+                            perUnitRate(JsonField.of(perUnitRate))
+
+                        /**
+                         * Sets [Builder.perUnitRate] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.perUnitRate] with a well-typed [String]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun perUnitRate(perUnitRate: JsonField<String>) = apply {
+                            this.perUnitRate = perUnitRate
                         }
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
@@ -8499,9 +12422,25 @@ private constructor(
                          * Returns an immutable instance of [GroupedWithMinMaxThresholdsConfig].
                          *
                          * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .groupingKey()
+                         * .maximumCharge()
+                         * .minimumCharge()
+                         * .perUnitRate()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
                          */
                         fun build(): GroupedWithMinMaxThresholdsConfig =
-                            GroupedWithMinMaxThresholdsConfig(additionalProperties.toImmutable())
+                            GroupedWithMinMaxThresholdsConfig(
+                                checkRequired("groupingKey", groupingKey),
+                                checkRequired("maximumCharge", maximumCharge),
+                                checkRequired("minimumCharge", minimumCharge),
+                                checkRequired("perUnitRate", perUnitRate),
+                                additionalProperties.toMutableMap(),
+                            )
                     }
 
                     private var validated: Boolean = false
@@ -8511,6 +12450,10 @@ private constructor(
                             return@apply
                         }
 
+                        groupingKey()
+                        maximumCharge()
+                        minimumCharge()
+                        perUnitRate()
                         validated = true
                     }
 
@@ -8529,9 +12472,10 @@ private constructor(
                      * Used for best match union deserialization.
                      */
                     internal fun validity(): Int =
-                        additionalProperties.count { (_, value) ->
-                            !value.isNull() && !value.isMissing()
-                        }
+                        (if (groupingKey.asKnown() == null) 0 else 1) +
+                            (if (maximumCharge.asKnown() == null) 0 else 1) +
+                            (if (minimumCharge.asKnown() == null) 0 else 1) +
+                            (if (perUnitRate.asKnown() == null) 0 else 1)
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -8539,15 +12483,27 @@ private constructor(
                         }
 
                         return other is GroupedWithMinMaxThresholdsConfig &&
+                            groupingKey == other.groupingKey &&
+                            maximumCharge == other.maximumCharge &&
+                            minimumCharge == other.minimumCharge &&
+                            perUnitRate == other.perUnitRate &&
                             additionalProperties == other.additionalProperties
                     }
 
-                    private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+                    private val hashCode: Int by lazy {
+                        Objects.hash(
+                            groupingKey,
+                            maximumCharge,
+                            minimumCharge,
+                            perUnitRate,
+                            additionalProperties,
+                        )
+                    }
 
                     override fun hashCode(): Int = hashCode
 
                     override fun toString() =
-                        "GroupedWithMinMaxThresholdsConfig{additionalProperties=$additionalProperties}"
+                        "GroupedWithMinMaxThresholdsConfig{groupingKey=$groupingKey, maximumCharge=$maximumCharge, minimumCharge=$minimumCharge, perUnitRate=$perUnitRate, additionalProperties=$additionalProperties}"
                 }
 
                 /**

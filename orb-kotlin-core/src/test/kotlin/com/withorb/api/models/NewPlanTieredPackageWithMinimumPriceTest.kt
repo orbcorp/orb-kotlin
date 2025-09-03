@@ -22,7 +22,23 @@ internal class NewPlanTieredPackageWithMinimumPriceTest {
                 .name("Annual fee")
                 .tieredPackageWithMinimumConfig(
                     NewPlanTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .packageSize(0.0)
+                        .addTier(
+                            NewPlanTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.Tier
+                                .builder()
+                                .minimumAmount("minimum_amount")
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
+                        .addTier(
+                            NewPlanTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.Tier
+                                .builder()
+                                .minimumAmount("minimum_amount")
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -71,7 +87,23 @@ internal class NewPlanTieredPackageWithMinimumPriceTest {
         assertThat(newPlanTieredPackageWithMinimumPrice.tieredPackageWithMinimumConfig())
             .isEqualTo(
                 NewPlanTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .packageSize(0.0)
+                    .addTier(
+                        NewPlanTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.Tier
+                            .builder()
+                            .minimumAmount("minimum_amount")
+                            .perUnit("per_unit")
+                            .tierLowerBound("tier_lower_bound")
+                            .build()
+                    )
+                    .addTier(
+                        NewPlanTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.Tier
+                            .builder()
+                            .minimumAmount("minimum_amount")
+                            .perUnit("per_unit")
+                            .tierLowerBound("tier_lower_bound")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newPlanTieredPackageWithMinimumPrice.billableMetricId())
@@ -138,7 +170,23 @@ internal class NewPlanTieredPackageWithMinimumPriceTest {
                 .name("Annual fee")
                 .tieredPackageWithMinimumConfig(
                     NewPlanTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .packageSize(0.0)
+                        .addTier(
+                            NewPlanTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.Tier
+                                .builder()
+                                .minimumAmount("minimum_amount")
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
+                        .addTier(
+                            NewPlanTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.Tier
+                                .builder()
+                                .minimumAmount("minimum_amount")
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

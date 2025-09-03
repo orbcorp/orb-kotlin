@@ -15,6 +15,7 @@ import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Collections
 import java.util.Objects
 
+/** Configuration for package pricing */
 class PackageConfig
 private constructor(
     private val packageAmount: JsonField<String>,

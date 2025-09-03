@@ -25,7 +25,36 @@ internal class NewSubscriptionScalableMatrixWithTieredPricingPriceTest {
                     NewSubscriptionScalableMatrixWithTieredPricingPrice
                         .ScalableMatrixWithTieredPricingConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .firstDimension("first_dimension")
+                        .addMatrixScalingFactor(
+                            NewSubscriptionScalableMatrixWithTieredPricingPrice
+                                .ScalableMatrixWithTieredPricingConfig
+                                .MatrixScalingFactor
+                                .builder()
+                                .firstDimensionValue("first_dimension_value")
+                                .scalingFactor("scaling_factor")
+                                .secondDimensionValue("second_dimension_value")
+                                .build()
+                        )
+                        .addTier(
+                            NewSubscriptionScalableMatrixWithTieredPricingPrice
+                                .ScalableMatrixWithTieredPricingConfig
+                                .Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .addTier(
+                            NewSubscriptionScalableMatrixWithTieredPricingPrice
+                                .ScalableMatrixWithTieredPricingConfig
+                                .Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .secondDimension("second_dimension")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -84,7 +113,36 @@ internal class NewSubscriptionScalableMatrixWithTieredPricingPriceTest {
                 NewSubscriptionScalableMatrixWithTieredPricingPrice
                     .ScalableMatrixWithTieredPricingConfig
                     .builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .firstDimension("first_dimension")
+                    .addMatrixScalingFactor(
+                        NewSubscriptionScalableMatrixWithTieredPricingPrice
+                            .ScalableMatrixWithTieredPricingConfig
+                            .MatrixScalingFactor
+                            .builder()
+                            .firstDimensionValue("first_dimension_value")
+                            .scalingFactor("scaling_factor")
+                            .secondDimensionValue("second_dimension_value")
+                            .build()
+                    )
+                    .addTier(
+                        NewSubscriptionScalableMatrixWithTieredPricingPrice
+                            .ScalableMatrixWithTieredPricingConfig
+                            .Tier
+                            .builder()
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .addTier(
+                        NewSubscriptionScalableMatrixWithTieredPricingPrice
+                            .ScalableMatrixWithTieredPricingConfig
+                            .Tier
+                            .builder()
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .secondDimension("second_dimension")
                     .build()
             )
         assertThat(newSubscriptionScalableMatrixWithTieredPricingPrice.billableMetricId())
@@ -164,7 +222,36 @@ internal class NewSubscriptionScalableMatrixWithTieredPricingPriceTest {
                     NewSubscriptionScalableMatrixWithTieredPricingPrice
                         .ScalableMatrixWithTieredPricingConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .firstDimension("first_dimension")
+                        .addMatrixScalingFactor(
+                            NewSubscriptionScalableMatrixWithTieredPricingPrice
+                                .ScalableMatrixWithTieredPricingConfig
+                                .MatrixScalingFactor
+                                .builder()
+                                .firstDimensionValue("first_dimension_value")
+                                .scalingFactor("scaling_factor")
+                                .secondDimensionValue("second_dimension_value")
+                                .build()
+                        )
+                        .addTier(
+                            NewSubscriptionScalableMatrixWithTieredPricingPrice
+                                .ScalableMatrixWithTieredPricingConfig
+                                .Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .addTier(
+                            NewSubscriptionScalableMatrixWithTieredPricingPrice
+                                .ScalableMatrixWithTieredPricingConfig
+                                .Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .secondDimension("second_dimension")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

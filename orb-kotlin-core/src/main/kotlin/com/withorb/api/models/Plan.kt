@@ -1045,17 +1045,17 @@ private constructor(
         /** Alias for calling [addPrice] with `Price.ofUnit(unit)`. */
         fun addPrice(unit: Price.Unit) = addPrice(Price.ofUnit(unit))
 
-        /** Alias for calling [addPrice] with `Price.ofPackage(package_)`. */
-        fun addPrice(package_: Price.Package) = addPrice(Price.ofPackage(package_))
-
-        /** Alias for calling [addPrice] with `Price.ofMatrix(matrix)`. */
-        fun addPrice(matrix: Price.Matrix) = addPrice(Price.ofMatrix(matrix))
-
         /** Alias for calling [addPrice] with `Price.ofTiered(tiered)`. */
         fun addPrice(tiered: Price.Tiered) = addPrice(Price.ofTiered(tiered))
 
         /** Alias for calling [addPrice] with `Price.ofBulk(bulk)`. */
         fun addPrice(bulk: Price.Bulk) = addPrice(Price.ofBulk(bulk))
+
+        /** Alias for calling [addPrice] with `Price.ofPackage(package_)`. */
+        fun addPrice(package_: Price.Package) = addPrice(Price.ofPackage(package_))
+
+        /** Alias for calling [addPrice] with `Price.ofMatrix(matrix)`. */
+        fun addPrice(matrix: Price.Matrix) = addPrice(Price.ofMatrix(matrix))
 
         /**
          * Alias for calling [addPrice] with `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
@@ -1067,13 +1067,13 @@ private constructor(
         fun addPrice(tieredPackage: Price.TieredPackage) =
             addPrice(Price.ofTieredPackage(tieredPackage))
 
-        /** Alias for calling [addPrice] with `Price.ofGroupedTiered(groupedTiered)`. */
-        fun addPrice(groupedTiered: Price.GroupedTiered) =
-            addPrice(Price.ofGroupedTiered(groupedTiered))
-
         /** Alias for calling [addPrice] with `Price.ofTieredWithMinimum(tieredWithMinimum)`. */
         fun addPrice(tieredWithMinimum: Price.TieredWithMinimum) =
             addPrice(Price.ofTieredWithMinimum(tieredWithMinimum))
+
+        /** Alias for calling [addPrice] with `Price.ofGroupedTiered(groupedTiered)`. */
+        fun addPrice(groupedTiered: Price.GroupedTiered) =
+            addPrice(Price.ofGroupedTiered(groupedTiered))
 
         /**
          * Alias for calling [addPrice] with
@@ -1110,6 +1110,10 @@ private constructor(
         fun addPrice(groupedAllocation: Price.GroupedAllocation) =
             addPrice(Price.ofGroupedAllocation(groupedAllocation))
 
+        /** Alias for calling [addPrice] with `Price.ofBulkWithProration(bulkWithProration)`. */
+        fun addPrice(bulkWithProration: Price.BulkWithProration) =
+            addPrice(Price.ofBulkWithProration(bulkWithProration))
+
         /**
          * Alias for calling [addPrice] with
          * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
@@ -1125,14 +1129,17 @@ private constructor(
             addPrice(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
         /**
+         * Alias for calling [addPrice] with
+         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         */
+        fun addPrice(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
+            addPrice(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+
+        /**
          * Alias for calling [addPrice] with `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
          */
         fun addPrice(matrixWithDisplayName: Price.MatrixWithDisplayName) =
             addPrice(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
-
-        /** Alias for calling [addPrice] with `Price.ofBulkWithProration(bulkWithProration)`. */
-        fun addPrice(bulkWithProration: Price.BulkWithProration) =
-            addPrice(Price.ofBulkWithProration(bulkWithProration))
 
         /**
          * Alias for calling [addPrice] with `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
@@ -1165,13 +1172,6 @@ private constructor(
          */
         fun addPrice(cumulativeGroupedBulk: Price.CumulativeGroupedBulk) =
             addPrice(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
-
-        /**
-         * Alias for calling [addPrice] with
-         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
-         */
-        fun addPrice(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
-            addPrice(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
 
         /** Alias for calling [addPrice] with `Price.ofMinimum(minimum)`. */
         fun addPrice(minimum: Price.Minimum) = addPrice(Price.ofMinimum(minimum))

@@ -11,6 +11,7 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -129,6 +130,8 @@ private constructor(
     fun itemId(): String = itemId.getRequired("item_id")
 
     /**
+     * The pricing model type
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -143,6 +146,8 @@ private constructor(
     fun name(): String = name.getRequired("name")
 
     /**
+     * Configuration for tiered_with_proration pricing
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -515,6 +520,7 @@ private constructor(
          */
         fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
+        /** The pricing model type */
         fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
         /**
@@ -537,6 +543,7 @@ private constructor(
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
+        /** Configuration for tiered_with_proration pricing */
         fun tieredWithProrationConfig(tieredWithProrationConfig: TieredWithProrationConfig) =
             tieredWithProrationConfig(JsonField.of(tieredWithProrationConfig))
 
@@ -1058,6 +1065,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The pricing model type */
     class ModelType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -1178,16 +1186,42 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Configuration for tiered_with_proration pricing */
     class TieredWithProrationConfig
-    @JsonCreator
     private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+        private val tiers: JsonField<List<Tier>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("tiers") @ExcludeMissing tiers: JsonField<List<Tier>> = JsonMissing.of()
+        ) : this(tiers, mutableMapOf())
+
+        /**
+         * Tiers for rating based on total usage quantities into the specified tier with proration
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun tiers(): List<Tier> = tiers.getRequired("tiers")
+
+        /**
+         * Returns the raw JSON value of [tiers].
+         *
+         * Unlike [tiers], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("tiers") @ExcludeMissing fun _tiers(): JsonField<List<Tier>> = tiers
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1196,6 +1230,11 @@ private constructor(
             /**
              * Returns a mutable builder for constructing an instance of
              * [TieredWithProrationConfig].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .tiers()
+             * ```
              */
             fun builder() = Builder()
         }
@@ -1203,10 +1242,41 @@ private constructor(
         /** A builder for [TieredWithProrationConfig]. */
         class Builder internal constructor() {
 
+            private var tiers: JsonField<MutableList<Tier>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(tieredWithProrationConfig: TieredWithProrationConfig) = apply {
+                tiers = tieredWithProrationConfig.tiers.map { it.toMutableList() }
                 additionalProperties = tieredWithProrationConfig.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * Tiers for rating based on total usage quantities into the specified tier with
+             * proration
+             */
+            fun tiers(tiers: List<Tier>) = tiers(JsonField.of(tiers))
+
+            /**
+             * Sets [Builder.tiers] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.tiers] with a well-typed `List<Tier>` value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun tiers(tiers: JsonField<List<Tier>>) = apply {
+                this.tiers = tiers.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Tier] to [tiers].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addTier(tier: Tier) = apply {
+                tiers =
+                    (tiers ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("tiers", it).add(tier)
+                    }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1232,9 +1302,19 @@ private constructor(
              * Returns an immutable instance of [TieredWithProrationConfig].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .tiers()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): TieredWithProrationConfig =
-                TieredWithProrationConfig(additionalProperties.toImmutable())
+                TieredWithProrationConfig(
+                    checkRequired("tiers", tiers).map { it.toImmutable() },
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1244,6 +1324,7 @@ private constructor(
                 return@apply
             }
 
+            tiers().forEach { it.validate() }
             validated = true
         }
 
@@ -1261,8 +1342,225 @@ private constructor(
          *
          * Used for best match union deserialization.
          */
-        internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+        internal fun validity(): Int = (tiers.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+
+        /** Configuration for a single tiered with proration tier */
+        class Tier
+        private constructor(
+            private val tierLowerBound: JsonField<String>,
+            private val unitAmount: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("tier_lower_bound")
+                @ExcludeMissing
+                tierLowerBound: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("unit_amount")
+                @ExcludeMissing
+                unitAmount: JsonField<String> = JsonMissing.of(),
+            ) : this(tierLowerBound, unitAmount, mutableMapOf())
+
+            /**
+             * Inclusive tier starting value
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun tierLowerBound(): String = tierLowerBound.getRequired("tier_lower_bound")
+
+            /**
+             * Amount per unit
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun unitAmount(): String = unitAmount.getRequired("unit_amount")
+
+            /**
+             * Returns the raw JSON value of [tierLowerBound].
+             *
+             * Unlike [tierLowerBound], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("tier_lower_bound")
+            @ExcludeMissing
+            fun _tierLowerBound(): JsonField<String> = tierLowerBound
+
+            /**
+             * Returns the raw JSON value of [unitAmount].
+             *
+             * Unlike [unitAmount], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("unit_amount")
+            @ExcludeMissing
+            fun _unitAmount(): JsonField<String> = unitAmount
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [Tier].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .tierLowerBound()
+                 * .unitAmount()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Tier]. */
+            class Builder internal constructor() {
+
+                private var tierLowerBound: JsonField<String>? = null
+                private var unitAmount: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(tier: Tier) = apply {
+                    tierLowerBound = tier.tierLowerBound
+                    unitAmount = tier.unitAmount
+                    additionalProperties = tier.additionalProperties.toMutableMap()
+                }
+
+                /** Inclusive tier starting value */
+                fun tierLowerBound(tierLowerBound: String) =
+                    tierLowerBound(JsonField.of(tierLowerBound))
+
+                /**
+                 * Sets [Builder.tierLowerBound] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.tierLowerBound] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun tierLowerBound(tierLowerBound: JsonField<String>) = apply {
+                    this.tierLowerBound = tierLowerBound
+                }
+
+                /** Amount per unit */
+                fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
+
+                /**
+                 * Sets [Builder.unitAmount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.unitAmount] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun unitAmount(unitAmount: JsonField<String>) = apply {
+                    this.unitAmount = unitAmount
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [Tier].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .tierLowerBound()
+                 * .unitAmount()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): Tier =
+                    Tier(
+                        checkRequired("tierLowerBound", tierLowerBound),
+                        checkRequired("unitAmount", unitAmount),
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Tier = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                tierLowerBound()
+                unitAmount()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (tierLowerBound.asKnown() == null) 0 else 1) +
+                    (if (unitAmount.asKnown() == null) 0 else 1)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Tier &&
+                    tierLowerBound == other.tierLowerBound &&
+                    unitAmount == other.unitAmount &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(tierLowerBound, unitAmount, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "Tier{tierLowerBound=$tierLowerBound, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
+        }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1270,15 +1568,16 @@ private constructor(
             }
 
             return other is TieredWithProrationConfig &&
+                tiers == other.tiers &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(tiers, additionalProperties) }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TieredWithProrationConfig{additionalProperties=$additionalProperties}"
+            "TieredWithProrationConfig{tiers=$tiers, additionalProperties=$additionalProperties}"
     }
 
     /**

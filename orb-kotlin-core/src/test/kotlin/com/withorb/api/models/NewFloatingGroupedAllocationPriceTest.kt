@@ -18,7 +18,9 @@ internal class NewFloatingGroupedAllocationPriceTest {
                 .currency("currency")
                 .groupedAllocationConfig(
                     NewFloatingGroupedAllocationPrice.GroupedAllocationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .allocation("allocation")
+                        .groupingKey("x")
+                        .overageUnitRate("overage_unit_rate")
                         .build()
                 )
                 .itemId("item_id")
@@ -65,7 +67,9 @@ internal class NewFloatingGroupedAllocationPriceTest {
         assertThat(newFloatingGroupedAllocationPrice.groupedAllocationConfig())
             .isEqualTo(
                 NewFloatingGroupedAllocationPrice.GroupedAllocationConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .allocation("allocation")
+                    .groupingKey("x")
+                    .overageUnitRate("overage_unit_rate")
                     .build()
             )
         assertThat(newFloatingGroupedAllocationPrice.itemId()).isEqualTo("item_id")
@@ -130,7 +134,9 @@ internal class NewFloatingGroupedAllocationPriceTest {
                 .currency("currency")
                 .groupedAllocationConfig(
                     NewFloatingGroupedAllocationPrice.GroupedAllocationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .allocation("allocation")
+                        .groupingKey("x")
+                        .overageUnitRate("overage_unit_rate")
                         .build()
                 )
                 .itemId("item_id")

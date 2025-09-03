@@ -24,7 +24,25 @@ internal class NewFloatingTieredPackageWithMinimumPriceTest {
                 .tieredPackageWithMinimumConfig(
                     NewFloatingTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .packageSize(0.0)
+                        .addTier(
+                            NewFloatingTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig
+                                .Tier
+                                .builder()
+                                .minimumAmount("minimum_amount")
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
+                        .addTier(
+                            NewFloatingTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig
+                                .Tier
+                                .builder()
+                                .minimumAmount("minimum_amount")
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -74,7 +92,23 @@ internal class NewFloatingTieredPackageWithMinimumPriceTest {
         assertThat(newFloatingTieredPackageWithMinimumPrice.tieredPackageWithMinimumConfig())
             .isEqualTo(
                 NewFloatingTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .packageSize(0.0)
+                    .addTier(
+                        NewFloatingTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.Tier
+                            .builder()
+                            .minimumAmount("minimum_amount")
+                            .perUnit("per_unit")
+                            .tierLowerBound("tier_lower_bound")
+                            .build()
+                    )
+                    .addTier(
+                        NewFloatingTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig.Tier
+                            .builder()
+                            .minimumAmount("minimum_amount")
+                            .perUnit("per_unit")
+                            .tierLowerBound("tier_lower_bound")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newFloatingTieredPackageWithMinimumPrice.billableMetricId())
@@ -141,7 +175,25 @@ internal class NewFloatingTieredPackageWithMinimumPriceTest {
                 .tieredPackageWithMinimumConfig(
                     NewFloatingTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .packageSize(0.0)
+                        .addTier(
+                            NewFloatingTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig
+                                .Tier
+                                .builder()
+                                .minimumAmount("minimum_amount")
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
+                        .addTier(
+                            NewFloatingTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig
+                                .Tier
+                                .builder()
+                                .minimumAmount("minimum_amount")
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

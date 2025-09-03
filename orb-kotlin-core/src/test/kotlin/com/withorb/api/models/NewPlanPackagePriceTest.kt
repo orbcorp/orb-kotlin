@@ -19,7 +19,7 @@ internal class NewPlanPackagePriceTest {
                 .modelType(NewPlanPackagePrice.ModelType.PACKAGE)
                 .name("Annual fee")
                 .packageConfig(
-                    PackageConfig.builder().packageAmount("package_amount").packageSize(0L).build()
+                    PackageConfig.builder().packageAmount("package_amount").packageSize(1L).build()
                 )
                 .billableMetricId("billable_metric_id")
                 .billedInAdvance(true)
@@ -64,7 +64,7 @@ internal class NewPlanPackagePriceTest {
         assertThat(newPlanPackagePrice.name()).isEqualTo("Annual fee")
         assertThat(newPlanPackagePrice.packageConfig())
             .isEqualTo(
-                PackageConfig.builder().packageAmount("package_amount").packageSize(0L).build()
+                PackageConfig.builder().packageAmount("package_amount").packageSize(1L).build()
             )
         assertThat(newPlanPackagePrice.billableMetricId()).isEqualTo("billable_metric_id")
         assertThat(newPlanPackagePrice.billedInAdvance()).isEqualTo(true)
@@ -125,7 +125,7 @@ internal class NewPlanPackagePriceTest {
                 .modelType(NewPlanPackagePrice.ModelType.PACKAGE)
                 .name("Annual fee")
                 .packageConfig(
-                    PackageConfig.builder().packageAmount("package_amount").packageSize(0L).build()
+                    PackageConfig.builder().packageAmount("package_amount").packageSize(1L).build()
                 )
                 .billableMetricId("billable_metric_id")
                 .billedInAdvance(true)

@@ -1433,6 +1433,8 @@ private constructor(
         fun startDate(): LocalDate = startDate.getRequired("start_date")
 
         /**
+         * Configuration for unit pricing
+         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -1617,6 +1619,7 @@ private constructor(
              */
             fun startDate(startDate: JsonField<LocalDate>) = apply { this.startDate = startDate }
 
+            /** Configuration for unit pricing */
             fun unitConfig(unitConfig: UnitConfig) = unitConfig(JsonField.of(unitConfig))
 
             /**

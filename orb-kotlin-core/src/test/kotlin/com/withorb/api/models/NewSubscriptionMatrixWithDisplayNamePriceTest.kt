@@ -18,7 +18,16 @@ internal class NewSubscriptionMatrixWithDisplayNamePriceTest {
                 .itemId("item_id")
                 .matrixWithDisplayNameConfig(
                     NewSubscriptionMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .dimension("dimension")
+                        .addUnitAmount(
+                            NewSubscriptionMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig
+                                .UnitAmount
+                                .builder()
+                                .dimensionValue("dimension_value")
+                                .displayName("display_name")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .modelType(
@@ -68,7 +77,16 @@ internal class NewSubscriptionMatrixWithDisplayNamePriceTest {
         assertThat(newSubscriptionMatrixWithDisplayNamePrice.matrixWithDisplayNameConfig())
             .isEqualTo(
                 NewSubscriptionMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .dimension("dimension")
+                    .addUnitAmount(
+                        NewSubscriptionMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig
+                            .UnitAmount
+                            .builder()
+                            .dimensionValue("dimension_value")
+                            .displayName("display_name")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newSubscriptionMatrixWithDisplayNamePrice.modelType())
@@ -135,7 +153,16 @@ internal class NewSubscriptionMatrixWithDisplayNamePriceTest {
                 .itemId("item_id")
                 .matrixWithDisplayNameConfig(
                     NewSubscriptionMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .dimension("dimension")
+                        .addUnitAmount(
+                            NewSubscriptionMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig
+                                .UnitAmount
+                                .builder()
+                                .dimensionValue("dimension_value")
+                                .displayName("display_name")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .modelType(

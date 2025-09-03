@@ -119,6 +119,8 @@ private constructor(
     fun cadence(): Cadence = cadence.getRequired("cadence")
 
     /**
+     * Configuration for grouped_with_prorated_minimum pricing
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -134,6 +136,8 @@ private constructor(
     fun itemId(): String = itemId.getRequired("item_id")
 
     /**
+     * The pricing model type
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -522,6 +526,7 @@ private constructor(
          */
         fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
+        /** Configuration for grouped_with_prorated_minimum pricing */
         fun groupedWithProratedMinimumConfig(
             groupedWithProratedMinimumConfig: GroupedWithProratedMinimumConfig
         ) = groupedWithProratedMinimumConfig(JsonField.of(groupedWithProratedMinimumConfig))
@@ -548,6 +553,7 @@ private constructor(
          */
         fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
+        /** The pricing model type */
         fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
         /**
@@ -1108,16 +1114,82 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Configuration for grouped_with_prorated_minimum pricing */
     class GroupedWithProratedMinimumConfig
-    @JsonCreator
     private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+        private val groupingKey: JsonField<String>,
+        private val minimum: JsonField<String>,
+        private val unitRate: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("grouping_key")
+            @ExcludeMissing
+            groupingKey: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("minimum") @ExcludeMissing minimum: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("unit_rate")
+            @ExcludeMissing
+            unitRate: JsonField<String> = JsonMissing.of(),
+        ) : this(groupingKey, minimum, unitRate, mutableMapOf())
+
+        /**
+         * How to determine the groups that should each have a minimum
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun groupingKey(): String = groupingKey.getRequired("grouping_key")
+
+        /**
+         * The minimum amount to charge per group
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun minimum(): String = minimum.getRequired("minimum")
+
+        /**
+         * The amount to charge per unit
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun unitRate(): String = unitRate.getRequired("unit_rate")
+
+        /**
+         * Returns the raw JSON value of [groupingKey].
+         *
+         * Unlike [groupingKey], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("grouping_key")
+        @ExcludeMissing
+        fun _groupingKey(): JsonField<String> = groupingKey
+
+        /**
+         * Returns the raw JSON value of [minimum].
+         *
+         * Unlike [minimum], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("minimum") @ExcludeMissing fun _minimum(): JsonField<String> = minimum
+
+        /**
+         * Returns the raw JSON value of [unitRate].
+         *
+         * Unlike [unitRate], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("unit_rate") @ExcludeMissing fun _unitRate(): JsonField<String> = unitRate
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1126,6 +1198,13 @@ private constructor(
             /**
              * Returns a mutable builder for constructing an instance of
              * [GroupedWithProratedMinimumConfig].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .groupingKey()
+             * .minimum()
+             * .unitRate()
+             * ```
              */
             fun builder() = Builder()
         }
@@ -1133,13 +1212,57 @@ private constructor(
         /** A builder for [GroupedWithProratedMinimumConfig]. */
         class Builder internal constructor() {
 
+            private var groupingKey: JsonField<String>? = null
+            private var minimum: JsonField<String>? = null
+            private var unitRate: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(groupedWithProratedMinimumConfig: GroupedWithProratedMinimumConfig) =
                 apply {
+                    groupingKey = groupedWithProratedMinimumConfig.groupingKey
+                    minimum = groupedWithProratedMinimumConfig.minimum
+                    unitRate = groupedWithProratedMinimumConfig.unitRate
                     additionalProperties =
                         groupedWithProratedMinimumConfig.additionalProperties.toMutableMap()
                 }
+
+            /** How to determine the groups that should each have a minimum */
+            fun groupingKey(groupingKey: String) = groupingKey(JsonField.of(groupingKey))
+
+            /**
+             * Sets [Builder.groupingKey] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.groupingKey] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun groupingKey(groupingKey: JsonField<String>) = apply {
+                this.groupingKey = groupingKey
+            }
+
+            /** The minimum amount to charge per group */
+            fun minimum(minimum: String) = minimum(JsonField.of(minimum))
+
+            /**
+             * Sets [Builder.minimum] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.minimum] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun minimum(minimum: JsonField<String>) = apply { this.minimum = minimum }
+
+            /** The amount to charge per unit */
+            fun unitRate(unitRate: String) = unitRate(JsonField.of(unitRate))
+
+            /**
+             * Sets [Builder.unitRate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.unitRate] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun unitRate(unitRate: JsonField<String>) = apply { this.unitRate = unitRate }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1164,9 +1287,23 @@ private constructor(
              * Returns an immutable instance of [GroupedWithProratedMinimumConfig].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .groupingKey()
+             * .minimum()
+             * .unitRate()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): GroupedWithProratedMinimumConfig =
-                GroupedWithProratedMinimumConfig(additionalProperties.toImmutable())
+                GroupedWithProratedMinimumConfig(
+                    checkRequired("groupingKey", groupingKey),
+                    checkRequired("minimum", minimum),
+                    checkRequired("unitRate", unitRate),
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1176,6 +1313,9 @@ private constructor(
                 return@apply
             }
 
+            groupingKey()
+            minimum()
+            unitRate()
             validated = true
         }
 
@@ -1194,7 +1334,9 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+            (if (groupingKey.asKnown() == null) 0 else 1) +
+                (if (minimum.asKnown() == null) 0 else 1) +
+                (if (unitRate.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1202,17 +1344,23 @@ private constructor(
             }
 
             return other is GroupedWithProratedMinimumConfig &&
+                groupingKey == other.groupingKey &&
+                minimum == other.minimum &&
+                unitRate == other.unitRate &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        private val hashCode: Int by lazy {
+            Objects.hash(groupingKey, minimum, unitRate, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedWithProratedMinimumConfig{additionalProperties=$additionalProperties}"
+            "GroupedWithProratedMinimumConfig{groupingKey=$groupingKey, minimum=$minimum, unitRate=$unitRate, additionalProperties=$additionalProperties}"
     }
 
+    /** The pricing model type */
     class ModelType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**

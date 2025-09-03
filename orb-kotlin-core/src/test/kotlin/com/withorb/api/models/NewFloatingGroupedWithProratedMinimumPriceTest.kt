@@ -19,7 +19,9 @@ internal class NewFloatingGroupedWithProratedMinimumPriceTest {
                 .groupedWithProratedMinimumConfig(
                     NewFloatingGroupedWithProratedMinimumPrice.GroupedWithProratedMinimumConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .minimum("minimum")
+                        .unitRate("unit_rate")
                         .build()
                 )
                 .itemId("item_id")
@@ -70,7 +72,9 @@ internal class NewFloatingGroupedWithProratedMinimumPriceTest {
             .isEqualTo(
                 NewFloatingGroupedWithProratedMinimumPrice.GroupedWithProratedMinimumConfig
                     .builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .groupingKey("x")
+                    .minimum("minimum")
+                    .unitRate("unit_rate")
                     .build()
             )
         assertThat(newFloatingGroupedWithProratedMinimumPrice.itemId()).isEqualTo("item_id")
@@ -138,7 +142,9 @@ internal class NewFloatingGroupedWithProratedMinimumPriceTest {
                 .groupedWithProratedMinimumConfig(
                     NewFloatingGroupedWithProratedMinimumPrice.GroupedWithProratedMinimumConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .minimum("minimum")
+                        .unitRate("unit_rate")
                         .build()
                 )
                 .itemId("item_id")

@@ -21,7 +21,13 @@ internal class NewFloatingTieredWithProrationPriceTest {
                 .name("Annual fee")
                 .tieredWithProrationConfig(
                     NewFloatingTieredWithProrationPrice.TieredWithProrationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addTier(
+                            NewFloatingTieredWithProrationPrice.TieredWithProrationConfig.Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -69,7 +75,12 @@ internal class NewFloatingTieredWithProrationPriceTest {
         assertThat(newFloatingTieredWithProrationPrice.tieredWithProrationConfig())
             .isEqualTo(
                 NewFloatingTieredWithProrationPrice.TieredWithProrationConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .addTier(
+                        NewFloatingTieredWithProrationPrice.TieredWithProrationConfig.Tier.builder()
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newFloatingTieredWithProrationPrice.billableMetricId())
@@ -133,7 +144,13 @@ internal class NewFloatingTieredWithProrationPriceTest {
                 .name("Annual fee")
                 .tieredWithProrationConfig(
                     NewFloatingTieredWithProrationPrice.TieredWithProrationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addTier(
+                            NewFloatingTieredWithProrationPrice.TieredWithProrationConfig.Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

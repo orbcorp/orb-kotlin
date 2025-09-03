@@ -11,6 +11,7 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -126,6 +127,8 @@ private constructor(
     fun itemId(): String = itemId.getRequired("item_id")
 
     /**
+     * The pricing model type
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -140,6 +143,8 @@ private constructor(
     fun name(): String = name.getRequired("name")
 
     /**
+     * Configuration for tiered_with_minimum pricing
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -522,6 +527,7 @@ private constructor(
          */
         fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
+        /** The pricing model type */
         fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
         /**
@@ -544,6 +550,7 @@ private constructor(
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
+        /** Configuration for tiered_with_minimum pricing */
         fun tieredWithMinimumConfig(tieredWithMinimumConfig: TieredWithMinimumConfig) =
             tieredWithMinimumConfig(JsonField.of(tieredWithMinimumConfig))
 
@@ -1097,6 +1104,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The pricing model type */
     class ModelType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -1217,16 +1225,83 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Configuration for tiered_with_minimum pricing */
     class TieredWithMinimumConfig
-    @JsonCreator
     private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+        private val tiers: JsonField<List<Tier>>,
+        private val hideZeroAmountTiers: JsonField<Boolean>,
+        private val prorate: JsonField<Boolean>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("tiers") @ExcludeMissing tiers: JsonField<List<Tier>> = JsonMissing.of(),
+            @JsonProperty("hide_zero_amount_tiers")
+            @ExcludeMissing
+            hideZeroAmountTiers: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("prorate") @ExcludeMissing prorate: JsonField<Boolean> = JsonMissing.of(),
+        ) : this(tiers, hideZeroAmountTiers, prorate, mutableMapOf())
+
+        /**
+         * Tiered pricing with a minimum amount dependent on the volume tier. Tiers are defined
+         * using exclusive lower bounds.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun tiers(): List<Tier> = tiers.getRequired("tiers")
+
+        /**
+         * If true, tiers with an accrued amount of 0 will not be included in the rating.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun hideZeroAmountTiers(): Boolean? =
+            hideZeroAmountTiers.getNullable("hide_zero_amount_tiers")
+
+        /**
+         * If true, the unit price will be prorated to the billing period
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun prorate(): Boolean? = prorate.getNullable("prorate")
+
+        /**
+         * Returns the raw JSON value of [tiers].
+         *
+         * Unlike [tiers], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("tiers") @ExcludeMissing fun _tiers(): JsonField<List<Tier>> = tiers
+
+        /**
+         * Returns the raw JSON value of [hideZeroAmountTiers].
+         *
+         * Unlike [hideZeroAmountTiers], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("hide_zero_amount_tiers")
+        @ExcludeMissing
+        fun _hideZeroAmountTiers(): JsonField<Boolean> = hideZeroAmountTiers
+
+        /**
+         * Returns the raw JSON value of [prorate].
+         *
+         * Unlike [prorate], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("prorate") @ExcludeMissing fun _prorate(): JsonField<Boolean> = prorate
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1234,6 +1309,11 @@ private constructor(
 
             /**
              * Returns a mutable builder for constructing an instance of [TieredWithMinimumConfig].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .tiers()
+             * ```
              */
             fun builder() = Builder()
         }
@@ -1241,11 +1321,73 @@ private constructor(
         /** A builder for [TieredWithMinimumConfig]. */
         class Builder internal constructor() {
 
+            private var tiers: JsonField<MutableList<Tier>>? = null
+            private var hideZeroAmountTiers: JsonField<Boolean> = JsonMissing.of()
+            private var prorate: JsonField<Boolean> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(tieredWithMinimumConfig: TieredWithMinimumConfig) = apply {
+                tiers = tieredWithMinimumConfig.tiers.map { it.toMutableList() }
+                hideZeroAmountTiers = tieredWithMinimumConfig.hideZeroAmountTiers
+                prorate = tieredWithMinimumConfig.prorate
                 additionalProperties = tieredWithMinimumConfig.additionalProperties.toMutableMap()
             }
+
+            /**
+             * Tiered pricing with a minimum amount dependent on the volume tier. Tiers are defined
+             * using exclusive lower bounds.
+             */
+            fun tiers(tiers: List<Tier>) = tiers(JsonField.of(tiers))
+
+            /**
+             * Sets [Builder.tiers] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.tiers] with a well-typed `List<Tier>` value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun tiers(tiers: JsonField<List<Tier>>) = apply {
+                this.tiers = tiers.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [Tier] to [tiers].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addTier(tier: Tier) = apply {
+                tiers =
+                    (tiers ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("tiers", it).add(tier)
+                    }
+            }
+
+            /** If true, tiers with an accrued amount of 0 will not be included in the rating. */
+            fun hideZeroAmountTiers(hideZeroAmountTiers: Boolean) =
+                hideZeroAmountTiers(JsonField.of(hideZeroAmountTiers))
+
+            /**
+             * Sets [Builder.hideZeroAmountTiers] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.hideZeroAmountTiers] with a well-typed [Boolean]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun hideZeroAmountTiers(hideZeroAmountTiers: JsonField<Boolean>) = apply {
+                this.hideZeroAmountTiers = hideZeroAmountTiers
+            }
+
+            /** If true, the unit price will be prorated to the billing period */
+            fun prorate(prorate: Boolean) = prorate(JsonField.of(prorate))
+
+            /**
+             * Sets [Builder.prorate] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.prorate] with a well-typed [Boolean] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun prorate(prorate: JsonField<Boolean>) = apply { this.prorate = prorate }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1270,9 +1412,21 @@ private constructor(
              * Returns an immutable instance of [TieredWithMinimumConfig].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .tiers()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): TieredWithMinimumConfig =
-                TieredWithMinimumConfig(additionalProperties.toImmutable())
+                TieredWithMinimumConfig(
+                    checkRequired("tiers", tiers).map { it.toImmutable() },
+                    hideZeroAmountTiers,
+                    prorate,
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1282,6 +1436,9 @@ private constructor(
                 return@apply
             }
 
+            tiers().forEach { it.validate() }
+            hideZeroAmountTiers()
+            prorate()
             validated = true
         }
 
@@ -1300,7 +1457,273 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+            (tiers.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (hideZeroAmountTiers.asKnown() == null) 0 else 1) +
+                (if (prorate.asKnown() == null) 0 else 1)
+
+        /** Configuration for a single tier */
+        class Tier
+        private constructor(
+            private val minimumAmount: JsonField<String>,
+            private val tierLowerBound: JsonField<String>,
+            private val unitAmount: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("minimum_amount")
+                @ExcludeMissing
+                minimumAmount: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("tier_lower_bound")
+                @ExcludeMissing
+                tierLowerBound: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("unit_amount")
+                @ExcludeMissing
+                unitAmount: JsonField<String> = JsonMissing.of(),
+            ) : this(minimumAmount, tierLowerBound, unitAmount, mutableMapOf())
+
+            /**
+             * Minimum amount
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
+
+            /**
+             * Tier lower bound
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun tierLowerBound(): String = tierLowerBound.getRequired("tier_lower_bound")
+
+            /**
+             * Per unit amount
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun unitAmount(): String = unitAmount.getRequired("unit_amount")
+
+            /**
+             * Returns the raw JSON value of [minimumAmount].
+             *
+             * Unlike [minimumAmount], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            fun _minimumAmount(): JsonField<String> = minimumAmount
+
+            /**
+             * Returns the raw JSON value of [tierLowerBound].
+             *
+             * Unlike [tierLowerBound], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("tier_lower_bound")
+            @ExcludeMissing
+            fun _tierLowerBound(): JsonField<String> = tierLowerBound
+
+            /**
+             * Returns the raw JSON value of [unitAmount].
+             *
+             * Unlike [unitAmount], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("unit_amount")
+            @ExcludeMissing
+            fun _unitAmount(): JsonField<String> = unitAmount
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [Tier].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .minimumAmount()
+                 * .tierLowerBound()
+                 * .unitAmount()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Tier]. */
+            class Builder internal constructor() {
+
+                private var minimumAmount: JsonField<String>? = null
+                private var tierLowerBound: JsonField<String>? = null
+                private var unitAmount: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(tier: Tier) = apply {
+                    minimumAmount = tier.minimumAmount
+                    tierLowerBound = tier.tierLowerBound
+                    unitAmount = tier.unitAmount
+                    additionalProperties = tier.additionalProperties.toMutableMap()
+                }
+
+                /** Minimum amount */
+                fun minimumAmount(minimumAmount: String) =
+                    minimumAmount(JsonField.of(minimumAmount))
+
+                /**
+                 * Sets [Builder.minimumAmount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.minimumAmount] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun minimumAmount(minimumAmount: JsonField<String>) = apply {
+                    this.minimumAmount = minimumAmount
+                }
+
+                /** Tier lower bound */
+                fun tierLowerBound(tierLowerBound: String) =
+                    tierLowerBound(JsonField.of(tierLowerBound))
+
+                /**
+                 * Sets [Builder.tierLowerBound] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.tierLowerBound] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun tierLowerBound(tierLowerBound: JsonField<String>) = apply {
+                    this.tierLowerBound = tierLowerBound
+                }
+
+                /** Per unit amount */
+                fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
+
+                /**
+                 * Sets [Builder.unitAmount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.unitAmount] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun unitAmount(unitAmount: JsonField<String>) = apply {
+                    this.unitAmount = unitAmount
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [Tier].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .minimumAmount()
+                 * .tierLowerBound()
+                 * .unitAmount()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): Tier =
+                    Tier(
+                        checkRequired("minimumAmount", minimumAmount),
+                        checkRequired("tierLowerBound", tierLowerBound),
+                        checkRequired("unitAmount", unitAmount),
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Tier = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                minimumAmount()
+                tierLowerBound()
+                unitAmount()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (minimumAmount.asKnown() == null) 0 else 1) +
+                    (if (tierLowerBound.asKnown() == null) 0 else 1) +
+                    (if (unitAmount.asKnown() == null) 0 else 1)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Tier &&
+                    minimumAmount == other.minimumAmount &&
+                    tierLowerBound == other.tierLowerBound &&
+                    unitAmount == other.unitAmount &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(minimumAmount, tierLowerBound, unitAmount, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "Tier{minimumAmount=$minimumAmount, tierLowerBound=$tierLowerBound, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
+        }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1308,15 +1731,20 @@ private constructor(
             }
 
             return other is TieredWithMinimumConfig &&
+                tiers == other.tiers &&
+                hideZeroAmountTiers == other.hideZeroAmountTiers &&
+                prorate == other.prorate &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        private val hashCode: Int by lazy {
+            Objects.hash(tiers, hideZeroAmountTiers, prorate, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TieredWithMinimumConfig{additionalProperties=$additionalProperties}"
+            "TieredWithMinimumConfig{tiers=$tiers, hideZeroAmountTiers=$hideZeroAmountTiers, prorate=$prorate, additionalProperties=$additionalProperties}"
     }
 
     /**
