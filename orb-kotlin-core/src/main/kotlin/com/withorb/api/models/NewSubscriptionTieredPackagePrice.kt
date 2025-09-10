@@ -1254,7 +1254,9 @@ private constructor(
 
         /**
          * Apply tiered pricing after rounding up the quantity to the package size. Tiers are
-         * defined using exclusive lower bounds.
+         * defined using exclusive lower bounds. The tier bounds are defined based on the total
+         * quantity rather than the number of packages, so they must be multiples of the package
+         * size.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -1332,7 +1334,9 @@ private constructor(
 
             /**
              * Apply tiered pricing after rounding up the quantity to the package size. Tiers are
-             * defined using exclusive lower bounds.
+             * defined using exclusive lower bounds. The tier bounds are defined based on the total
+             * quantity rather than the number of packages, so they must be multiples of the package
+             * size.
              */
             fun tiers(tiers: List<Tier>) = tiers(JsonField.of(tiers))
 
