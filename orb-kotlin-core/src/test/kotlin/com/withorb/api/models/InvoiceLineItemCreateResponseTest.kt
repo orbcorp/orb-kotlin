@@ -99,6 +99,7 @@ internal class InvoiceLineItemCreateResponseTest {
                                 .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                                 .build()
                         )
+                        .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                         .cadence(Price.Unit.Cadence.ONE_TIME)
                         .addCompositePriceFilter(
                             TransformPriceFilter.builder()
@@ -321,6 +322,7 @@ internal class InvoiceLineItemCreateResponseTest {
                                 .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                                 .build()
                         )
+                        .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                         .cadence(Price.Unit.Cadence.ONE_TIME)
                         .addCompositePriceFilter(
                             TransformPriceFilter.builder()
@@ -543,6 +545,7 @@ internal class InvoiceLineItemCreateResponseTest {
                                 .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                                 .build()
                         )
+                        .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                         .cadence(Price.Unit.Cadence.ONE_TIME)
                         .addCompositePriceFilter(
                             TransformPriceFilter.builder()

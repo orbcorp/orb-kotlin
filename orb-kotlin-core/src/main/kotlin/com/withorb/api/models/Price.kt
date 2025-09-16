@@ -1014,6 +1014,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -1050,6 +1051,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -1115,6 +1119,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -1160,6 +1165,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -1354,6 +1365,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -1593,6 +1613,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -1626,6 +1647,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -1657,6 +1679,7 @@ private constructor(
                 id = unit.id
                 billableMetric = unit.billableMetric
                 billingCycleConfiguration = unit.billingCycleConfiguration
+                billingMode = unit.billingMode
                 cadence = unit.cadence
                 compositePriceFilters = unit.compositePriceFilters.map { it.toMutableList() }
                 conversionRate = unit.conversionRate
@@ -1722,6 +1745,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -2236,6 +2272,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -2267,6 +2304,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -2307,6 +2345,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -2356,6 +2395,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -2380,6 +2420,135 @@ private constructor(
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (unitConfig.asKnown()?.validity() ?: 0) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -2782,6 +2951,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -2814,6 +2984,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -2845,7 +3016,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Unit{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, unitConfig=$unitConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "Unit{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, unitConfig=$unitConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class Tiered
@@ -2853,6 +3024,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -2889,6 +3061,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -2954,6 +3129,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -2999,6 +3175,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -3193,6 +3375,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -3433,6 +3624,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -3466,6 +3658,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -3497,6 +3690,7 @@ private constructor(
                 id = tiered.id
                 billableMetric = tiered.billableMetric
                 billingCycleConfiguration = tiered.billingCycleConfiguration
+                billingMode = tiered.billingMode
                 cadence = tiered.cadence
                 compositePriceFilters = tiered.compositePriceFilters.map { it.toMutableList() }
                 conversionRate = tiered.conversionRate
@@ -3562,6 +3756,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -4076,6 +4283,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -4107,6 +4315,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -4147,6 +4356,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -4196,6 +4406,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -4220,6 +4431,135 @@ private constructor(
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (tieredConfig.asKnown()?.validity() ?: 0) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -4622,6 +4962,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -4654,6 +4995,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -4685,7 +5027,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Tiered{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, tieredConfig=$tieredConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "Tiered{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, tieredConfig=$tieredConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class Bulk
@@ -4693,6 +5035,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val bulkConfig: JsonField<BulkConfig>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
@@ -4729,6 +5072,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("bulk_config")
             @ExcludeMissing
             bulkConfig: JsonField<BulkConfig> = JsonMissing.of(),
@@ -4794,6 +5140,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             bulkConfig,
             cadence,
             compositePriceFilters,
@@ -4839,6 +5186,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * Configuration for bulk pricing
@@ -5033,6 +5386,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [bulkConfig].
@@ -5272,6 +5634,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .bulkConfig()
              * .cadence()
              * .compositePriceFilters()
@@ -5305,6 +5668,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var bulkConfig: JsonField<BulkConfig>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
@@ -5336,6 +5700,7 @@ private constructor(
                 id = bulk.id
                 billableMetric = bulk.billableMetric
                 billingCycleConfiguration = bulk.billingCycleConfiguration
+                billingMode = bulk.billingMode
                 bulkConfig = bulk.bulkConfig
                 cadence = bulk.cadence
                 compositePriceFilters = bulk.compositePriceFilters.map { it.toMutableList() }
@@ -5401,6 +5766,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             /** Configuration for bulk pricing */
             fun bulkConfig(bulkConfig: BulkConfig) = bulkConfig(JsonField.of(bulkConfig))
@@ -5915,6 +6293,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .bulkConfig()
              * .cadence()
              * .compositePriceFilters()
@@ -5946,6 +6325,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("bulkConfig", bulkConfig),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
@@ -5986,6 +6366,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             bulkConfig().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
@@ -6035,6 +6416,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (bulkConfig.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
@@ -6059,6 +6441,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -6461,6 +6972,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 bulkConfig == other.bulkConfig &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
@@ -6493,6 +7005,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 bulkConfig,
                 cadence,
                 compositePriceFilters,
@@ -6524,7 +7037,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Bulk{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, bulkConfig=$bulkConfig, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "Bulk{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, bulkConfig=$bulkConfig, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class Package
@@ -6532,6 +7045,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -6568,6 +7082,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -6633,6 +7150,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -6678,6 +7196,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -6872,6 +7396,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -7112,6 +7645,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -7145,6 +7679,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -7176,6 +7711,7 @@ private constructor(
                 id = package_.id
                 billableMetric = package_.billableMetric
                 billingCycleConfiguration = package_.billingCycleConfiguration
+                billingMode = package_.billingMode
                 cadence = package_.cadence
                 compositePriceFilters = package_.compositePriceFilters.map { it.toMutableList() }
                 conversionRate = package_.conversionRate
@@ -7241,6 +7777,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -7756,6 +8305,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -7787,6 +8337,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -7827,6 +8378,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -7876,6 +8428,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -7900,6 +8453,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -8302,6 +8984,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -8334,6 +9017,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -8365,7 +9049,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Package{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, packageConfig=$packageConfig, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "Package{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, packageConfig=$packageConfig, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class Matrix
@@ -8373,6 +9057,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -8409,6 +9094,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -8474,6 +9162,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -8519,6 +9208,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -8713,6 +9408,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -8953,6 +9657,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -8986,6 +9691,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -9017,6 +9723,7 @@ private constructor(
                 id = matrix.id
                 billableMetric = matrix.billableMetric
                 billingCycleConfiguration = matrix.billingCycleConfiguration
+                billingMode = matrix.billingMode
                 cadence = matrix.cadence
                 compositePriceFilters = matrix.compositePriceFilters.map { it.toMutableList() }
                 conversionRate = matrix.conversionRate
@@ -9082,6 +9789,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -9596,6 +10316,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -9627,6 +10348,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -9667,6 +10389,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -9716,6 +10439,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -9740,6 +10464,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -10142,6 +10995,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -10174,6 +11028,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -10205,7 +11060,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Matrix{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, matrixConfig=$matrixConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "Matrix{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, matrixConfig=$matrixConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class ThresholdTotalAmount
@@ -10213,6 +11068,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -10249,6 +11105,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -10314,6 +11173,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -10359,6 +11219,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -10554,6 +11420,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -10795,6 +11670,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -10828,6 +11704,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -10859,6 +11736,7 @@ private constructor(
                 id = thresholdTotalAmount.id
                 billableMetric = thresholdTotalAmount.billableMetric
                 billingCycleConfiguration = thresholdTotalAmount.billingCycleConfiguration
+                billingMode = thresholdTotalAmount.billingMode
                 cadence = thresholdTotalAmount.cadence
                 compositePriceFilters =
                     thresholdTotalAmount.compositePriceFilters.map { it.toMutableList() }
@@ -10925,6 +11803,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -11440,6 +12331,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -11471,6 +12363,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -11511,6 +12404,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -11560,6 +12454,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -11584,6 +12479,135 @@ private constructor(
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (thresholdTotalAmountConfig.asKnown()?.validity() ?: 0) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -12442,6 +13466,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -12474,6 +13499,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -12505,7 +13531,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ThresholdTotalAmount{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "ThresholdTotalAmount{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class TieredPackage
@@ -12513,6 +13539,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -12549,6 +13576,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -12614,6 +13644,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -12659,6 +13690,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -12854,6 +13891,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -13094,6 +14140,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -13127,6 +14174,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -13158,6 +14206,7 @@ private constructor(
                 id = tieredPackage.id
                 billableMetric = tieredPackage.billableMetric
                 billingCycleConfiguration = tieredPackage.billingCycleConfiguration
+                billingMode = tieredPackage.billingMode
                 cadence = tieredPackage.cadence
                 compositePriceFilters =
                     tieredPackage.compositePriceFilters.map { it.toMutableList() }
@@ -13224,6 +14273,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -13739,6 +14801,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -13770,6 +14833,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -13810,6 +14874,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -13859,6 +14924,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -13883,6 +14949,135 @@ private constructor(
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (tieredPackageConfig.asKnown()?.validity() ?: 0) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -14735,6 +15930,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -14767,6 +15963,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -14798,7 +15995,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TieredPackage{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, tieredPackageConfig=$tieredPackageConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "TieredPackage{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, tieredPackageConfig=$tieredPackageConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class TieredWithMinimum
@@ -14806,6 +16003,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -14842,6 +16040,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -14907,6 +16108,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -14952,6 +16154,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -15147,6 +16355,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -15387,6 +16604,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -15420,6 +16638,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -15451,6 +16670,7 @@ private constructor(
                 id = tieredWithMinimum.id
                 billableMetric = tieredWithMinimum.billableMetric
                 billingCycleConfiguration = tieredWithMinimum.billingCycleConfiguration
+                billingMode = tieredWithMinimum.billingMode
                 cadence = tieredWithMinimum.cadence
                 compositePriceFilters =
                     tieredWithMinimum.compositePriceFilters.map { it.toMutableList() }
@@ -15517,6 +16737,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -16032,6 +17265,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -16063,6 +17297,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -16103,6 +17338,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -16152,6 +17388,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -16176,6 +17413,135 @@ private constructor(
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (tieredWithMinimumConfig.asKnown()?.validity() ?: 0) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -17112,6 +18478,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -17144,6 +18511,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -17175,7 +18543,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TieredWithMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, tieredWithMinimumConfig=$tieredWithMinimumConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "TieredWithMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, tieredWithMinimumConfig=$tieredWithMinimumConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class GroupedTiered
@@ -17183,6 +18551,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -17219,6 +18588,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -17284,6 +18656,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -17329,6 +18702,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -17524,6 +18903,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -17764,6 +19152,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -17797,6 +19186,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -17828,6 +19218,7 @@ private constructor(
                 id = groupedTiered.id
                 billableMetric = groupedTiered.billableMetric
                 billingCycleConfiguration = groupedTiered.billingCycleConfiguration
+                billingMode = groupedTiered.billingMode
                 cadence = groupedTiered.cadence
                 compositePriceFilters =
                     groupedTiered.compositePriceFilters.map { it.toMutableList() }
@@ -17894,6 +19285,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -18409,6 +19813,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -18440,6 +19845,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -18480,6 +19886,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -18529,6 +19936,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -18553,6 +19961,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -19402,6 +20939,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -19434,6 +20972,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -19465,7 +21004,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedTiered{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedTieredConfig=$groupedTieredConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "GroupedTiered{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedTieredConfig=$groupedTieredConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class TieredPackageWithMinimum
@@ -19473,6 +21012,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -19509,6 +21049,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -19575,6 +21118,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -19620,6 +21164,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -19815,6 +21365,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -20056,6 +21615,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -20089,6 +21649,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -20121,6 +21682,7 @@ private constructor(
                 id = tieredPackageWithMinimum.id
                 billableMetric = tieredPackageWithMinimum.billableMetric
                 billingCycleConfiguration = tieredPackageWithMinimum.billingCycleConfiguration
+                billingMode = tieredPackageWithMinimum.billingMode
                 cadence = tieredPackageWithMinimum.cadence
                 compositePriceFilters =
                     tieredPackageWithMinimum.compositePriceFilters.map { it.toMutableList() }
@@ -20189,6 +21751,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -20705,6 +22280,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -20736,6 +22312,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -20776,6 +22353,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -20825,6 +22403,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -20851,6 +22430,135 @@ private constructor(
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (tieredPackageWithMinimumConfig.asKnown()?.validity() ?: 0) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -21748,6 +23456,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -21780,6 +23489,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -21811,7 +23521,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TieredPackageWithMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, tieredPackageWithMinimumConfig=$tieredPackageWithMinimumConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "TieredPackageWithMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, tieredPackageWithMinimumConfig=$tieredPackageWithMinimumConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class PackageWithAllocation
@@ -21819,6 +23529,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -21855,6 +23566,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -21920,6 +23634,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -21965,6 +23680,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -22160,6 +23881,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -22401,6 +24131,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -22434,6 +24165,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -22465,6 +24197,7 @@ private constructor(
                 id = packageWithAllocation.id
                 billableMetric = packageWithAllocation.billableMetric
                 billingCycleConfiguration = packageWithAllocation.billingCycleConfiguration
+                billingMode = packageWithAllocation.billingMode
                 cadence = packageWithAllocation.cadence
                 compositePriceFilters =
                     packageWithAllocation.compositePriceFilters.map { it.toMutableList() }
@@ -22531,6 +24264,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -23047,6 +24793,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -23078,6 +24825,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -23118,6 +24866,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -23167,6 +24916,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -23191,6 +24941,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -23859,6 +25738,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -23891,6 +25771,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -23922,7 +25803,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PackageWithAllocation{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, packageWithAllocationConfig=$packageWithAllocationConfig, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "PackageWithAllocation{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, packageWithAllocationConfig=$packageWithAllocationConfig, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class UnitWithPercent
@@ -23930,6 +25811,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -23966,6 +25848,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -24031,6 +25916,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -24076,6 +25962,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -24271,6 +26163,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -24511,6 +26412,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -24544,6 +26446,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -24575,6 +26478,7 @@ private constructor(
                 id = unitWithPercent.id
                 billableMetric = unitWithPercent.billableMetric
                 billingCycleConfiguration = unitWithPercent.billingCycleConfiguration
+                billingMode = unitWithPercent.billingMode
                 cadence = unitWithPercent.cadence
                 compositePriceFilters =
                     unitWithPercent.compositePriceFilters.map { it.toMutableList() }
@@ -24641,6 +26545,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -25157,6 +27074,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -25188,6 +27106,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -25228,6 +27147,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -25277,6 +27197,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -25301,6 +27222,135 @@ private constructor(
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (unitWithPercentConfig.asKnown()?.validity() ?: 0) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -25916,6 +27966,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -25948,6 +27999,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -25979,7 +28031,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "UnitWithPercent{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, unitWithPercentConfig=$unitWithPercentConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "UnitWithPercent{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, unitWithPercentConfig=$unitWithPercentConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class MatrixWithAllocation
@@ -25987,6 +28039,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -26023,6 +28076,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -26088,6 +28144,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -26133,6 +28190,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -26328,6 +28391,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -26569,6 +28641,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -26602,6 +28675,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -26633,6 +28707,7 @@ private constructor(
                 id = matrixWithAllocation.id
                 billableMetric = matrixWithAllocation.billableMetric
                 billingCycleConfiguration = matrixWithAllocation.billingCycleConfiguration
+                billingMode = matrixWithAllocation.billingMode
                 cadence = matrixWithAllocation.cadence
                 compositePriceFilters =
                     matrixWithAllocation.compositePriceFilters.map { it.toMutableList() }
@@ -26699,6 +28774,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -27214,6 +29302,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -27245,6 +29334,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -27285,6 +29375,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -27334,6 +29425,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -27358,6 +29450,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -27760,6 +29981,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -27792,6 +30014,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -27823,7 +30046,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "MatrixWithAllocation{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, matrixWithAllocationConfig=$matrixWithAllocationConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "MatrixWithAllocation{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, matrixWithAllocationConfig=$matrixWithAllocationConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class TieredWithProration
@@ -27831,6 +30054,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -27867,6 +30091,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -27932,6 +30159,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -27977,6 +30205,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -28172,6 +30406,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -28413,6 +30656,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -28446,6 +30690,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -28477,6 +30722,7 @@ private constructor(
                 id = tieredWithProration.id
                 billableMetric = tieredWithProration.billableMetric
                 billingCycleConfiguration = tieredWithProration.billingCycleConfiguration
+                billingMode = tieredWithProration.billingMode
                 cadence = tieredWithProration.cadence
                 compositePriceFilters =
                     tieredWithProration.compositePriceFilters.map { it.toMutableList() }
@@ -28543,6 +30789,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -29058,6 +31317,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -29089,6 +31349,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -29129,6 +31390,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -29178,6 +31440,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -29202,6 +31465,135 @@ private constructor(
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (tieredWithProrationConfig.asKnown()?.validity() ?: 0) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -30006,6 +32398,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -30038,6 +32431,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -30069,7 +32463,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TieredWithProration{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, tieredWithProrationConfig=$tieredWithProrationConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "TieredWithProration{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, tieredWithProrationConfig=$tieredWithProrationConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class UnitWithProration
@@ -30077,6 +32471,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -30113,6 +32508,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -30178,6 +32576,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -30223,6 +32622,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -30418,6 +32823,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -30658,6 +33072,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -30691,6 +33106,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -30722,6 +33138,7 @@ private constructor(
                 id = unitWithProration.id
                 billableMetric = unitWithProration.billableMetric
                 billingCycleConfiguration = unitWithProration.billingCycleConfiguration
+                billingMode = unitWithProration.billingMode
                 cadence = unitWithProration.cadence
                 compositePriceFilters =
                     unitWithProration.compositePriceFilters.map { it.toMutableList() }
@@ -30788,6 +33205,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -31303,6 +33733,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -31334,6 +33765,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -31374,6 +33806,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -31423,6 +33856,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -31447,6 +33881,135 @@ private constructor(
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (unitWithProrationConfig.asKnown()?.validity() ?: 0) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -32020,6 +34583,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -32052,6 +34616,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -32083,7 +34648,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "UnitWithProration{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, unitWithProrationConfig=$unitWithProrationConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "UnitWithProration{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, unitWithProrationConfig=$unitWithProrationConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class GroupedAllocation
@@ -32091,6 +34656,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -32127,6 +34693,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -32192,6 +34761,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -32237,6 +34807,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -32432,6 +35008,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -32672,6 +35257,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -32705,6 +35291,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -32736,6 +35323,7 @@ private constructor(
                 id = groupedAllocation.id
                 billableMetric = groupedAllocation.billableMetric
                 billingCycleConfiguration = groupedAllocation.billingCycleConfiguration
+                billingMode = groupedAllocation.billingMode
                 cadence = groupedAllocation.cadence
                 compositePriceFilters =
                     groupedAllocation.compositePriceFilters.map { it.toMutableList() }
@@ -32802,6 +35390,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -33317,6 +35918,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -33348,6 +35950,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -33388,6 +35991,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -33437,6 +36041,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -33461,6 +36066,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -34128,6 +36862,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -34160,6 +36895,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -34191,7 +36927,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedAllocation{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedAllocationConfig=$groupedAllocationConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "GroupedAllocation{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedAllocationConfig=$groupedAllocationConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class BulkWithProration
@@ -34199,6 +36935,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val bulkWithProrationConfig: JsonField<BulkWithProrationConfig>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
@@ -34235,6 +36972,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("bulk_with_proration_config")
             @ExcludeMissing
             bulkWithProrationConfig: JsonField<BulkWithProrationConfig> = JsonMissing.of(),
@@ -34300,6 +37040,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             bulkWithProrationConfig,
             cadence,
             compositePriceFilters,
@@ -34345,6 +37086,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * Configuration for bulk_with_proration pricing
@@ -34540,6 +37287,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [bulkWithProrationConfig].
@@ -34780,6 +37536,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .bulkWithProrationConfig()
              * .cadence()
              * .compositePriceFilters()
@@ -34813,6 +37570,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var bulkWithProrationConfig: JsonField<BulkWithProrationConfig>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
@@ -34844,6 +37602,7 @@ private constructor(
                 id = bulkWithProration.id
                 billableMetric = bulkWithProration.billableMetric
                 billingCycleConfiguration = bulkWithProration.billingCycleConfiguration
+                billingMode = bulkWithProration.billingMode
                 bulkWithProrationConfig = bulkWithProration.bulkWithProrationConfig
                 cadence = bulkWithProration.cadence
                 compositePriceFilters =
@@ -34910,6 +37669,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             /** Configuration for bulk_with_proration pricing */
             fun bulkWithProrationConfig(bulkWithProrationConfig: BulkWithProrationConfig) =
@@ -35425,6 +38197,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .bulkWithProrationConfig()
              * .cadence()
              * .compositePriceFilters()
@@ -35456,6 +38229,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("bulkWithProrationConfig", bulkWithProrationConfig),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
@@ -35496,6 +38270,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             bulkWithProrationConfig().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
@@ -35545,6 +38320,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (bulkWithProrationConfig.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
@@ -35569,6 +38345,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         /** Configuration for bulk_with_proration pricing */
         class BulkWithProrationConfig
@@ -36366,6 +39271,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 bulkWithProrationConfig == other.bulkWithProrationConfig &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
@@ -36398,6 +39304,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 bulkWithProrationConfig,
                 cadence,
                 compositePriceFilters,
@@ -36429,7 +39336,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "BulkWithProration{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, bulkWithProrationConfig=$bulkWithProrationConfig, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "BulkWithProration{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, bulkWithProrationConfig=$bulkWithProrationConfig, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class GroupedWithProratedMinimum
@@ -36437,6 +39344,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -36473,6 +39381,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -36539,6 +39450,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -36584,6 +39496,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -36779,6 +39697,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -37021,6 +39948,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -37054,6 +39982,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -37087,6 +40016,7 @@ private constructor(
                 id = groupedWithProratedMinimum.id
                 billableMetric = groupedWithProratedMinimum.billableMetric
                 billingCycleConfiguration = groupedWithProratedMinimum.billingCycleConfiguration
+                billingMode = groupedWithProratedMinimum.billingMode
                 cadence = groupedWithProratedMinimum.cadence
                 compositePriceFilters =
                     groupedWithProratedMinimum.compositePriceFilters.map { it.toMutableList() }
@@ -37156,6 +40086,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -37672,6 +40615,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -37703,6 +40647,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -37746,6 +40691,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -37795,6 +40741,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -37821,6 +40768,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -38480,6 +41556,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -38512,6 +41589,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -38543,7 +41621,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedWithProratedMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "GroupedWithProratedMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class GroupedWithMeteredMinimum
@@ -38551,6 +41629,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -38587,6 +41666,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -38653,6 +41735,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -38698,6 +41781,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -38893,6 +41982,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -39135,6 +42233,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -39168,6 +42267,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -39201,6 +42301,7 @@ private constructor(
                 id = groupedWithMeteredMinimum.id
                 billableMetric = groupedWithMeteredMinimum.billableMetric
                 billingCycleConfiguration = groupedWithMeteredMinimum.billingCycleConfiguration
+                billingMode = groupedWithMeteredMinimum.billingMode
                 cadence = groupedWithMeteredMinimum.cadence
                 compositePriceFilters =
                     groupedWithMeteredMinimum.compositePriceFilters.map { it.toMutableList() }
@@ -39269,6 +42370,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -39785,6 +42899,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -39816,6 +42931,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -39859,6 +42975,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -39908,6 +43025,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -39934,6 +43052,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -41227,6 +44474,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -41259,6 +44507,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -41290,7 +44539,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedWithMeteredMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedWithMeteredMinimumConfig=$groupedWithMeteredMinimumConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "GroupedWithMeteredMinimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedWithMeteredMinimumConfig=$groupedWithMeteredMinimumConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class GroupedWithMinMaxThresholds
@@ -41298,6 +44547,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -41334,6 +44584,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -41400,6 +44653,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -41445,6 +44699,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -41640,6 +44900,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -41882,6 +45151,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -41915,6 +45185,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -41948,6 +45219,7 @@ private constructor(
                 id = groupedWithMinMaxThresholds.id
                 billableMetric = groupedWithMinMaxThresholds.billableMetric
                 billingCycleConfiguration = groupedWithMinMaxThresholds.billingCycleConfiguration
+                billingMode = groupedWithMinMaxThresholds.billingMode
                 cadence = groupedWithMinMaxThresholds.cadence
                 compositePriceFilters =
                     groupedWithMinMaxThresholds.compositePriceFilters.map { it.toMutableList() }
@@ -42018,6 +45290,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -42534,6 +45819,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -42565,6 +45851,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -42608,6 +45895,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -42657,6 +45945,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -42683,6 +45972,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -43404,6 +46822,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -43436,6 +46855,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -43467,7 +46887,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedWithMinMaxThresholds{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedWithMinMaxThresholdsConfig=$groupedWithMinMaxThresholdsConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "GroupedWithMinMaxThresholds{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedWithMinMaxThresholdsConfig=$groupedWithMinMaxThresholdsConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class MatrixWithDisplayName
@@ -43475,6 +46895,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -43511,6 +46932,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -43576,6 +47000,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -43621,6 +47046,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -43816,6 +47247,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -44057,6 +47497,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -44090,6 +47531,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -44121,6 +47563,7 @@ private constructor(
                 id = matrixWithDisplayName.id
                 billableMetric = matrixWithDisplayName.billableMetric
                 billingCycleConfiguration = matrixWithDisplayName.billingCycleConfiguration
+                billingMode = matrixWithDisplayName.billingMode
                 cadence = matrixWithDisplayName.cadence
                 compositePriceFilters =
                     matrixWithDisplayName.compositePriceFilters.map { it.toMutableList() }
@@ -44187,6 +47630,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -44703,6 +48159,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -44734,6 +48191,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -44774,6 +48232,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -44823,6 +48282,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -44847,6 +48307,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -45744,6 +49333,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -45776,6 +49366,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -45807,7 +49398,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "MatrixWithDisplayName{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, matrixWithDisplayNameConfig=$matrixWithDisplayNameConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "MatrixWithDisplayName{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, matrixWithDisplayNameConfig=$matrixWithDisplayNameConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class GroupedTieredPackage
@@ -45815,6 +49406,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -45851,6 +49443,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -45916,6 +49511,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -45961,6 +49557,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -46156,6 +49758,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -46397,6 +50008,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -46430,6 +50042,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -46461,6 +50074,7 @@ private constructor(
                 id = groupedTieredPackage.id
                 billableMetric = groupedTieredPackage.billableMetric
                 billingCycleConfiguration = groupedTieredPackage.billingCycleConfiguration
+                billingMode = groupedTieredPackage.billingMode
                 cadence = groupedTieredPackage.cadence
                 compositePriceFilters =
                     groupedTieredPackage.compositePriceFilters.map { it.toMutableList() }
@@ -46527,6 +50141,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -47042,6 +50669,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -47073,6 +50701,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -47113,6 +50742,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -47162,6 +50792,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -47186,6 +50817,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -48081,6 +51841,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -48113,6 +51874,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -48144,7 +51906,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "GroupedTieredPackage{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedTieredPackageConfig=$groupedTieredPackageConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "GroupedTieredPackage{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, groupedTieredPackageConfig=$groupedTieredPackageConfig, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class MaxGroupTieredPackage
@@ -48152,6 +51914,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -48188,6 +51951,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -48253,6 +52019,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -48298,6 +52065,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -48493,6 +52266,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -48734,6 +52516,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -48767,6 +52550,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -48798,6 +52582,7 @@ private constructor(
                 id = maxGroupTieredPackage.id
                 billableMetric = maxGroupTieredPackage.billableMetric
                 billingCycleConfiguration = maxGroupTieredPackage.billingCycleConfiguration
+                billingMode = maxGroupTieredPackage.billingMode
                 cadence = maxGroupTieredPackage.cadence
                 compositePriceFilters =
                     maxGroupTieredPackage.compositePriceFilters.map { it.toMutableList() }
@@ -48864,6 +52649,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -49380,6 +53178,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -49411,6 +53210,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -49451,6 +53251,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -49500,6 +53301,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -49524,6 +53326,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -50422,6 +54353,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -50454,6 +54386,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -50485,7 +54418,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "MaxGroupTieredPackage{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maxGroupTieredPackageConfig=$maxGroupTieredPackageConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "MaxGroupTieredPackage{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maxGroupTieredPackageConfig=$maxGroupTieredPackageConfig, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class ScalableMatrixWithUnitPricing
@@ -50493,6 +54426,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -50530,6 +54464,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -50596,6 +54533,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -50641,6 +54579,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -50838,6 +54782,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -51080,6 +55033,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -51113,6 +55067,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -51148,6 +55103,7 @@ private constructor(
                     billableMetric = scalableMatrixWithUnitPricing.billableMetric
                     billingCycleConfiguration =
                         scalableMatrixWithUnitPricing.billingCycleConfiguration
+                    billingMode = scalableMatrixWithUnitPricing.billingMode
                     cadence = scalableMatrixWithUnitPricing.cadence
                     compositePriceFilters =
                         scalableMatrixWithUnitPricing.compositePriceFilters.map {
@@ -51220,6 +55176,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -51741,6 +55710,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -51772,6 +55742,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -51815,6 +55786,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -51864,6 +55836,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -51890,6 +55863,135 @@ private constructor(
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (scalableMatrixWithUnitPricingConfig.asKnown()?.validity() ?: 0) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -52951,6 +57053,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -52983,6 +57086,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -53014,7 +57118,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ScalableMatrixWithUnitPricing{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, scalableMatrixWithUnitPricingConfig=$scalableMatrixWithUnitPricingConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "ScalableMatrixWithUnitPricing{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, scalableMatrixWithUnitPricingConfig=$scalableMatrixWithUnitPricingConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class ScalableMatrixWithTieredPricing
@@ -53022,6 +57126,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -53059,6 +57164,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -53126,6 +57234,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -53171,6 +57280,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -53368,6 +57483,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -53610,6 +57734,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -53643,6 +57768,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -53678,6 +57804,7 @@ private constructor(
                     billableMetric = scalableMatrixWithTieredPricing.billableMetric
                     billingCycleConfiguration =
                         scalableMatrixWithTieredPricing.billingCycleConfiguration
+                    billingMode = scalableMatrixWithTieredPricing.billingMode
                     cadence = scalableMatrixWithTieredPricing.cadence
                     compositePriceFilters =
                         scalableMatrixWithTieredPricing.compositePriceFilters.map {
@@ -53750,6 +57877,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -54272,6 +58412,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -54303,6 +58444,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -54346,6 +58488,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -54395,6 +58538,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -54421,6 +58565,135 @@ private constructor(
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (scalableMatrixWithTieredPricingConfig.asKnown()?.validity() ?: 0) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -55659,6 +59932,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -55692,6 +59966,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -55723,7 +59998,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ScalableMatrixWithTieredPricing{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, scalableMatrixWithTieredPricingConfig=$scalableMatrixWithTieredPricingConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "ScalableMatrixWithTieredPricing{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, scalableMatrixWithTieredPricingConfig=$scalableMatrixWithTieredPricingConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class CumulativeGroupedBulk
@@ -55731,6 +60006,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -55767,6 +60043,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -55832,6 +60111,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -55877,6 +60157,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -56072,6 +60358,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -56313,6 +60608,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -56346,6 +60642,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -56377,6 +60674,7 @@ private constructor(
                 id = cumulativeGroupedBulk.id
                 billableMetric = cumulativeGroupedBulk.billableMetric
                 billingCycleConfiguration = cumulativeGroupedBulk.billingCycleConfiguration
+                billingMode = cumulativeGroupedBulk.billingMode
                 cadence = cumulativeGroupedBulk.cadence
                 compositePriceFilters =
                     cumulativeGroupedBulk.compositePriceFilters.map { it.toMutableList() }
@@ -56443,6 +60741,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -56959,6 +61270,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -56990,6 +61302,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -57030,6 +61343,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -57079,6 +61393,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -57103,6 +61418,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -57996,6 +62440,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -58028,6 +62473,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -58059,7 +62505,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CumulativeGroupedBulk{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, cumulativeGroupedBulkConfig=$cumulativeGroupedBulkConfig, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "CumulativeGroupedBulk{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, cumulativeGroupedBulkConfig=$cumulativeGroupedBulkConfig, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 
     class Minimum
@@ -58067,6 +62513,7 @@ private constructor(
         private val id: JsonField<String>,
         private val billableMetric: JsonField<BillableMetricTiny>,
         private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
+        private val billingMode: JsonField<BillingMode>,
         private val cadence: JsonField<Cadence>,
         private val compositePriceFilters: JsonField<List<TransformPriceFilter>>,
         private val conversionRate: JsonField<Double>,
@@ -58103,6 +62550,9 @@ private constructor(
             @JsonProperty("billing_cycle_configuration")
             @ExcludeMissing
             billingCycleConfiguration: JsonField<BillingCycleConfiguration> = JsonMissing.of(),
+            @JsonProperty("billing_mode")
+            @ExcludeMissing
+            billingMode: JsonField<BillingMode> = JsonMissing.of(),
             @JsonProperty("cadence") @ExcludeMissing cadence: JsonField<Cadence> = JsonMissing.of(),
             @JsonProperty("composite_price_filters")
             @ExcludeMissing
@@ -58168,6 +62618,7 @@ private constructor(
             id,
             billableMetric,
             billingCycleConfiguration,
+            billingMode,
             cadence,
             compositePriceFilters,
             conversionRate,
@@ -58213,6 +62664,12 @@ private constructor(
          */
         fun billingCycleConfiguration(): BillingCycleConfiguration =
             billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun billingMode(): BillingMode = billingMode.getRequired("billing_mode")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
@@ -58407,6 +62864,15 @@ private constructor(
         @ExcludeMissing
         fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
             billingCycleConfiguration
+
+        /**
+         * Returns the raw JSON value of [billingMode].
+         *
+         * Unlike [billingMode], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("billing_mode")
+        @ExcludeMissing
+        fun _billingMode(): JsonField<BillingMode> = billingMode
 
         /**
          * Returns the raw JSON value of [cadence].
@@ -58647,6 +63113,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -58680,6 +63147,7 @@ private constructor(
             private var id: JsonField<String>? = null
             private var billableMetric: JsonField<BillableMetricTiny>? = null
             private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var billingMode: JsonField<BillingMode>? = null
             private var cadence: JsonField<Cadence>? = null
             private var compositePriceFilters: JsonField<MutableList<TransformPriceFilter>>? = null
             private var conversionRate: JsonField<Double>? = null
@@ -58711,6 +63179,7 @@ private constructor(
                 id = minimum.id
                 billableMetric = minimum.billableMetric
                 billingCycleConfiguration = minimum.billingCycleConfiguration
+                billingMode = minimum.billingMode
                 cadence = minimum.cadence
                 compositePriceFilters = minimum.compositePriceFilters.map { it.toMutableList() }
                 conversionRate = minimum.conversionRate
@@ -58776,6 +63245,19 @@ private constructor(
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun billingMode(billingMode: BillingMode) = billingMode(JsonField.of(billingMode))
+
+            /**
+             * Sets [Builder.billingMode] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingMode] with a well-typed [BillingMode] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingMode(billingMode: JsonField<BillingMode>) = apply {
+                this.billingMode = billingMode
+            }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
@@ -59291,6 +63773,7 @@ private constructor(
              * .id()
              * .billableMetric()
              * .billingCycleConfiguration()
+             * .billingMode()
              * .cadence()
              * .compositePriceFilters()
              * .conversionRate()
@@ -59322,6 +63805,7 @@ private constructor(
                     checkRequired("id", id),
                     checkRequired("billableMetric", billableMetric),
                     checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("billingMode", billingMode),
                     checkRequired("cadence", cadence),
                     checkRequired("compositePriceFilters", compositePriceFilters).map {
                         it.toImmutable()
@@ -59362,6 +63846,7 @@ private constructor(
             id()
             billableMetric()?.validate()
             billingCycleConfiguration().validate()
+            billingMode().validate()
             cadence().validate()
             compositePriceFilters()?.forEach { it.validate() }
             conversionRate()
@@ -59411,6 +63896,7 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (billableMetric.asKnown()?.validity() ?: 0) +
                 (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                (billingMode.asKnown()?.validity() ?: 0) +
                 (cadence.asKnown()?.validity() ?: 0) +
                 (compositePriceFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (conversionRate.asKnown() == null) 0 else 1) +
@@ -59435,6 +63921,135 @@ private constructor(
                 (priceType.asKnown()?.validity() ?: 0) +
                 (if (replacesPriceId.asKnown() == null) 0 else 1) +
                 (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0)
+
+        class BillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val IN_ADVANCE = of("in_advance")
+
+                val IN_ARREAR = of("in_arrear")
+
+                fun of(value: String) = BillingMode(JsonField.of(value))
+            }
+
+            /** An enum containing [BillingMode]'s known values. */
+            enum class Known {
+                IN_ADVANCE,
+                IN_ARREAR,
+            }
+
+            /**
+             * An enum containing [BillingMode]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [BillingMode] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                IN_ADVANCE,
+                IN_ARREAR,
+                /**
+                 * An enum member indicating that [BillingMode] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    IN_ADVANCE -> Value.IN_ADVANCE
+                    IN_ARREAR -> Value.IN_ARREAR
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    IN_ADVANCE -> Known.IN_ADVANCE
+                    IN_ARREAR -> Known.IN_ARREAR
+                    else -> throw OrbInvalidDataException("Unknown BillingMode: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws OrbInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingMode && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -60048,6 +64663,7 @@ private constructor(
                 id == other.id &&
                 billableMetric == other.billableMetric &&
                 billingCycleConfiguration == other.billingCycleConfiguration &&
+                billingMode == other.billingMode &&
                 cadence == other.cadence &&
                 compositePriceFilters == other.compositePriceFilters &&
                 conversionRate == other.conversionRate &&
@@ -60080,6 +64696,7 @@ private constructor(
                 id,
                 billableMetric,
                 billingCycleConfiguration,
+                billingMode,
                 cadence,
                 compositePriceFilters,
                 conversionRate,
@@ -60111,6 +64728,6 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Minimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, minimumConfig=$minimumConfig, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+            "Minimum{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, billingMode=$billingMode, cadence=$cadence, compositePriceFilters=$compositePriceFilters, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, minimumConfig=$minimumConfig, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, replacesPriceId=$replacesPriceId, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 }

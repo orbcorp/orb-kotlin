@@ -389,6 +389,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 )
                                                 .build()
                                         )
+                                        .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
                                             TransformPriceFilter.builder()
@@ -562,6 +563,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 )
                                                 .build()
                                         )
+                                        .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
                                             TransformPriceFilter.builder()
@@ -799,11 +801,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .build()
                                 )
                                 .addCreatedInvoice(
-                                    Invoice.builder()
+                                    ChangedSubscriptionResources.CreatedInvoice.builder()
                                         .id("id")
                                         .amountDue("8.00")
                                         .autoCollection(
-                                            Invoice.AutoCollection.builder()
+                                            ChangedSubscriptionResources.CreatedInvoice
+                                                .AutoCollection
+                                                .builder()
                                                 .enabled(true)
                                                 .nextAttemptAt(
                                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
@@ -828,7 +832,8 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             OffsetDateTime.parse("2022-05-01T07:01:31+00:00")
                                         )
                                         .addCreditNote(
-                                            Invoice.CreditNote.builder()
+                                            ChangedSubscriptionResources.CreatedInvoice.CreditNote
+                                                .builder()
                                                 .id("id")
                                                 .creditNoteNumber("credit_note_number")
                                                 .memo("memo")
@@ -850,10 +855,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .addCustomerBalanceTransaction(
-                                            Invoice.CustomerBalanceTransaction.builder()
+                                            ChangedSubscriptionResources.CreatedInvoice
+                                                .CustomerBalanceTransaction
+                                                .builder()
                                                 .id("cgZa3SXcsPTVyC4Y")
                                                 .action(
-                                                    Invoice.CustomerBalanceTransaction.Action
+                                                    ChangedSubscriptionResources.CreatedInvoice
+                                                        .CustomerBalanceTransaction
+                                                        .Action
                                                         .APPLIED_TO_INVOICE
                                                 )
                                                 .amount("11.00")
@@ -874,7 +883,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 )
                                                 .startingBalance("33.00")
                                                 .type(
-                                                    Invoice.CustomerBalanceTransaction.Type
+                                                    ChangedSubscriptionResources.CreatedInvoice
+                                                        .CustomerBalanceTransaction
+                                                        .Type
                                                         .INCREMENT
                                                 )
                                                 .build()
@@ -919,13 +930,19 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .invoicePdf(
                                             "https://assets.withorb.com/invoice/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
                                         )
-                                        .invoiceSource(Invoice.InvoiceSource.SUBSCRIPTION)
+                                        .invoiceSource(
+                                            ChangedSubscriptionResources.CreatedInvoice
+                                                .InvoiceSource
+                                                .SUBSCRIPTION
+                                        )
+                                        .isPayableNow(true)
                                         .issueFailedAt(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
                                         .issuedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .addLineItem(
-                                            Invoice.LineItem.builder()
+                                            ChangedSubscriptionResources.CreatedInvoice.LineItem
+                                                .builder()
                                                 .id("id")
                                                 .adjustedSubtotal("5.00")
                                                 .addAdjustment(
@@ -1052,6 +1069,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                         .DAY
                                                                 )
                                                                 .build()
+                                                        )
+                                                        .billingMode(
+                                                            Price.Unit.BillingMode.IN_ADVANCE
                                                         )
                                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .addCompositePriceFilter(
@@ -1270,7 +1290,8 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .maximumAmount("maximum_amount")
                                         .memo("memo")
                                         .metadata(
-                                            Invoice.Metadata.builder()
+                                            ChangedSubscriptionResources.CreatedInvoice.Metadata
+                                                .builder()
                                                 .putAdditionalProperty(
                                                     "foo",
                                                     JsonValue.from("string"),
@@ -1295,14 +1316,19 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .minimumAmount("minimum_amount")
                                         .paidAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .addPaymentAttempt(
-                                            Invoice.PaymentAttempt.builder()
+                                            ChangedSubscriptionResources.CreatedInvoice
+                                                .PaymentAttempt
+                                                .builder()
                                                 .id("id")
                                                 .amount("amount")
                                                 .createdAt(
                                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                                 )
                                                 .paymentProvider(
-                                                    Invoice.PaymentAttempt.PaymentProvider.STRIPE
+                                                    ChangedSubscriptionResources.CreatedInvoice
+                                                        .PaymentAttempt
+                                                        .PaymentProvider
+                                                        .STRIPE
                                                 )
                                                 .paymentProviderId("payment_provider_id")
                                                 .receiptPdf(
@@ -1330,7 +1356,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .state("state")
                                                 .build()
                                         )
-                                        .status(Invoice.Status.ISSUED)
+                                        .status(
+                                            ChangedSubscriptionResources.CreatedInvoice.Status
+                                                .ISSUED
+                                        )
                                         .subscription(
                                             SubscriptionMinified.builder()
                                                 .id("VDGsT23osdLb84KD")
@@ -1694,6 +1723,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                         .DAY
                                                                 )
                                                                 .build()
+                                                        )
+                                                        .billingMode(
+                                                            Price.Unit.BillingMode.IN_ADVANCE
                                                         )
                                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .addCompositePriceFilter(
@@ -2362,6 +2394,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             )
                                             .build()
                                     )
+                                    .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                     .addCompositePriceFilter(
                                         TransformPriceFilter.builder()
@@ -2524,6 +2557,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             )
                                             .build()
                                     )
+                                    .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                     .addCompositePriceFilter(
                                         TransformPriceFilter.builder()
@@ -2752,11 +2786,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .build()
                             )
                             .addCreatedInvoice(
-                                Invoice.builder()
+                                ChangedSubscriptionResources.CreatedInvoice.builder()
                                     .id("id")
                                     .amountDue("8.00")
                                     .autoCollection(
-                                        Invoice.AutoCollection.builder()
+                                        ChangedSubscriptionResources.CreatedInvoice.AutoCollection
+                                            .builder()
                                             .enabled(true)
                                             .nextAttemptAt(
                                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
@@ -2779,7 +2814,8 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     )
                                     .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                                     .addCreditNote(
-                                        Invoice.CreditNote.builder()
+                                        ChangedSubscriptionResources.CreatedInvoice.CreditNote
+                                            .builder()
                                             .id("id")
                                             .creditNoteNumber("credit_note_number")
                                             .memo("memo")
@@ -2799,10 +2835,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .build()
                                     )
                                     .addCustomerBalanceTransaction(
-                                        Invoice.CustomerBalanceTransaction.builder()
+                                        ChangedSubscriptionResources.CreatedInvoice
+                                            .CustomerBalanceTransaction
+                                            .builder()
                                             .id("cgZa3SXcsPTVyC4Y")
                                             .action(
-                                                Invoice.CustomerBalanceTransaction.Action
+                                                ChangedSubscriptionResources.CreatedInvoice
+                                                    .CustomerBalanceTransaction
+                                                    .Action
                                                     .APPLIED_TO_INVOICE
                                             )
                                             .amount("11.00")
@@ -2816,7 +2856,12 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 InvoiceTiny.builder().id("gXcsPTVyC4YZa3Sc").build()
                                             )
                                             .startingBalance("33.00")
-                                            .type(Invoice.CustomerBalanceTransaction.Type.INCREMENT)
+                                            .type(
+                                                ChangedSubscriptionResources.CreatedInvoice
+                                                    .CustomerBalanceTransaction
+                                                    .Type
+                                                    .INCREMENT
+                                            )
                                             .build()
                                     )
                                     .customerTaxId(
@@ -2857,11 +2902,16 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .invoicePdf(
                                         "https://assets.withorb.com/invoice/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
                                     )
-                                    .invoiceSource(Invoice.InvoiceSource.SUBSCRIPTION)
+                                    .invoiceSource(
+                                        ChangedSubscriptionResources.CreatedInvoice.InvoiceSource
+                                            .SUBSCRIPTION
+                                    )
+                                    .isPayableNow(true)
                                     .issueFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .issuedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .addLineItem(
-                                        Invoice.LineItem.builder()
+                                        ChangedSubscriptionResources.CreatedInvoice.LineItem
+                                            .builder()
                                             .id("id")
                                             .adjustedSubtotal("5.00")
                                             .addAdjustment(
@@ -2980,6 +3030,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                             )
                                                             .build()
                                                     )
+                                                    .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                                     .addCompositePriceFilter(
                                                         TransformPriceFilter.builder()
@@ -3187,7 +3238,8 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .maximumAmount("maximum_amount")
                                     .memo("memo")
                                     .metadata(
-                                        Invoice.Metadata.builder()
+                                        ChangedSubscriptionResources.CreatedInvoice.Metadata
+                                            .builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
                                             .build()
                                     )
@@ -3209,14 +3261,18 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .minimumAmount("minimum_amount")
                                     .paidAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .addPaymentAttempt(
-                                        Invoice.PaymentAttempt.builder()
+                                        ChangedSubscriptionResources.CreatedInvoice.PaymentAttempt
+                                            .builder()
                                             .id("id")
                                             .amount("amount")
                                             .createdAt(
                                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                             )
                                             .paymentProvider(
-                                                Invoice.PaymentAttempt.PaymentProvider.STRIPE
+                                                ChangedSubscriptionResources.CreatedInvoice
+                                                    .PaymentAttempt
+                                                    .PaymentProvider
+                                                    .STRIPE
                                             )
                                             .paymentProviderId("payment_provider_id")
                                             .receiptPdf(
@@ -3244,7 +3300,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .state("state")
                                             .build()
                                     )
-                                    .status(Invoice.Status.ISSUED)
+                                    .status(
+                                        ChangedSubscriptionResources.CreatedInvoice.Status.ISSUED
+                                    )
                                     .subscription(
                                         SubscriptionMinified.builder()
                                             .id("VDGsT23osdLb84KD")
@@ -3579,6 +3637,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                             )
                                                             .build()
                                                     )
+                                                    .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                                     .addCompositePriceFilter(
                                                         TransformPriceFilter.builder()
@@ -4245,6 +4304,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 )
                                                 .build()
                                         )
+                                        .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
                                             TransformPriceFilter.builder()
@@ -4418,6 +4478,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 )
                                                 .build()
                                         )
+                                        .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
                                             TransformPriceFilter.builder()
@@ -4655,11 +4716,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .build()
                                 )
                                 .addCreatedInvoice(
-                                    Invoice.builder()
+                                    ChangedSubscriptionResources.CreatedInvoice.builder()
                                         .id("id")
                                         .amountDue("8.00")
                                         .autoCollection(
-                                            Invoice.AutoCollection.builder()
+                                            ChangedSubscriptionResources.CreatedInvoice
+                                                .AutoCollection
+                                                .builder()
                                                 .enabled(true)
                                                 .nextAttemptAt(
                                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
@@ -4684,7 +4747,8 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             OffsetDateTime.parse("2022-05-01T07:01:31+00:00")
                                         )
                                         .addCreditNote(
-                                            Invoice.CreditNote.builder()
+                                            ChangedSubscriptionResources.CreatedInvoice.CreditNote
+                                                .builder()
                                                 .id("id")
                                                 .creditNoteNumber("credit_note_number")
                                                 .memo("memo")
@@ -4706,10 +4770,14 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .build()
                                         )
                                         .addCustomerBalanceTransaction(
-                                            Invoice.CustomerBalanceTransaction.builder()
+                                            ChangedSubscriptionResources.CreatedInvoice
+                                                .CustomerBalanceTransaction
+                                                .builder()
                                                 .id("cgZa3SXcsPTVyC4Y")
                                                 .action(
-                                                    Invoice.CustomerBalanceTransaction.Action
+                                                    ChangedSubscriptionResources.CreatedInvoice
+                                                        .CustomerBalanceTransaction
+                                                        .Action
                                                         .APPLIED_TO_INVOICE
                                                 )
                                                 .amount("11.00")
@@ -4730,7 +4798,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 )
                                                 .startingBalance("33.00")
                                                 .type(
-                                                    Invoice.CustomerBalanceTransaction.Type
+                                                    ChangedSubscriptionResources.CreatedInvoice
+                                                        .CustomerBalanceTransaction
+                                                        .Type
                                                         .INCREMENT
                                                 )
                                                 .build()
@@ -4775,13 +4845,19 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .invoicePdf(
                                             "https://assets.withorb.com/invoice/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
                                         )
-                                        .invoiceSource(Invoice.InvoiceSource.SUBSCRIPTION)
+                                        .invoiceSource(
+                                            ChangedSubscriptionResources.CreatedInvoice
+                                                .InvoiceSource
+                                                .SUBSCRIPTION
+                                        )
+                                        .isPayableNow(true)
                                         .issueFailedAt(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
                                         .issuedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .addLineItem(
-                                            Invoice.LineItem.builder()
+                                            ChangedSubscriptionResources.CreatedInvoice.LineItem
+                                                .builder()
                                                 .id("id")
                                                 .adjustedSubtotal("5.00")
                                                 .addAdjustment(
@@ -4908,6 +4984,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                         .DAY
                                                                 )
                                                                 .build()
+                                                        )
+                                                        .billingMode(
+                                                            Price.Unit.BillingMode.IN_ADVANCE
                                                         )
                                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .addCompositePriceFilter(
@@ -5126,7 +5205,8 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .maximumAmount("maximum_amount")
                                         .memo("memo")
                                         .metadata(
-                                            Invoice.Metadata.builder()
+                                            ChangedSubscriptionResources.CreatedInvoice.Metadata
+                                                .builder()
                                                 .putAdditionalProperty(
                                                     "foo",
                                                     JsonValue.from("string"),
@@ -5151,14 +5231,19 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .minimumAmount("minimum_amount")
                                         .paidAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .addPaymentAttempt(
-                                            Invoice.PaymentAttempt.builder()
+                                            ChangedSubscriptionResources.CreatedInvoice
+                                                .PaymentAttempt
+                                                .builder()
                                                 .id("id")
                                                 .amount("amount")
                                                 .createdAt(
                                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                                 )
                                                 .paymentProvider(
-                                                    Invoice.PaymentAttempt.PaymentProvider.STRIPE
+                                                    ChangedSubscriptionResources.CreatedInvoice
+                                                        .PaymentAttempt
+                                                        .PaymentProvider
+                                                        .STRIPE
                                                 )
                                                 .paymentProviderId("payment_provider_id")
                                                 .receiptPdf(
@@ -5186,7 +5271,10 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .state("state")
                                                 .build()
                                         )
-                                        .status(Invoice.Status.ISSUED)
+                                        .status(
+                                            ChangedSubscriptionResources.CreatedInvoice.Status
+                                                .ISSUED
+                                        )
                                         .subscription(
                                             SubscriptionMinified.builder()
                                                 .id("VDGsT23osdLb84KD")
@@ -5550,6 +5638,9 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                         .DAY
                                                                 )
                                                                 .build()
+                                                        )
+                                                        .billingMode(
+                                                            Price.Unit.BillingMode.IN_ADVANCE
                                                         )
                                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .addCompositePriceFilter(
