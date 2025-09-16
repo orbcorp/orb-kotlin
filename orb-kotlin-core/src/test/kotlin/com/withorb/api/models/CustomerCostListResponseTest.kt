@@ -33,6 +33,7 @@ internal class CustomerCostListResponseTest {
                                                 )
                                                 .build()
                                         )
+                                        .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
                                             TransformPriceFilter.builder()
@@ -185,6 +186,7 @@ internal class CustomerCostListResponseTest {
                                             )
                                             .build()
                                     )
+                                    .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                     .addCompositePriceFilter(
                                         TransformPriceFilter.builder()
@@ -336,6 +338,7 @@ internal class CustomerCostListResponseTest {
                                                 )
                                                 .build()
                                         )
+                                        .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
                                             TransformPriceFilter.builder()

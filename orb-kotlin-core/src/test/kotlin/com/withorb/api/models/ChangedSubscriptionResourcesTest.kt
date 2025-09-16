@@ -102,11 +102,11 @@ internal class ChangedSubscriptionResourcesTest {
                         .build()
                 )
                 .addCreatedInvoice(
-                    Invoice.builder()
+                    ChangedSubscriptionResources.CreatedInvoice.builder()
                         .id("id")
                         .amountDue("8.00")
                         .autoCollection(
-                            Invoice.AutoCollection.builder()
+                            ChangedSubscriptionResources.CreatedInvoice.AutoCollection.builder()
                                 .enabled(true)
                                 .nextAttemptAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .numAttempts(0L)
@@ -127,7 +127,7 @@ internal class ChangedSubscriptionResourcesTest {
                         )
                         .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                         .addCreditNote(
-                            Invoice.CreditNote.builder()
+                            ChangedSubscriptionResources.CreatedInvoice.CreditNote.builder()
                                 .id("id")
                                 .creditNoteNumber("credit_note_number")
                                 .memo("memo")
@@ -145,10 +145,14 @@ internal class ChangedSubscriptionResourcesTest {
                                 .build()
                         )
                         .addCustomerBalanceTransaction(
-                            Invoice.CustomerBalanceTransaction.builder()
+                            ChangedSubscriptionResources.CreatedInvoice.CustomerBalanceTransaction
+                                .builder()
                                 .id("cgZa3SXcsPTVyC4Y")
                                 .action(
-                                    Invoice.CustomerBalanceTransaction.Action.APPLIED_TO_INVOICE
+                                    ChangedSubscriptionResources.CreatedInvoice
+                                        .CustomerBalanceTransaction
+                                        .Action
+                                        .APPLIED_TO_INVOICE
                                 )
                                 .amount("11.00")
                                 .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
@@ -157,7 +161,12 @@ internal class ChangedSubscriptionResourcesTest {
                                 .endingBalance("22.00")
                                 .invoice(InvoiceTiny.builder().id("gXcsPTVyC4YZa3Sc").build())
                                 .startingBalance("33.00")
-                                .type(Invoice.CustomerBalanceTransaction.Type.INCREMENT)
+                                .type(
+                                    ChangedSubscriptionResources.CreatedInvoice
+                                        .CustomerBalanceTransaction
+                                        .Type
+                                        .INCREMENT
+                                )
                                 .build()
                         )
                         .customerTaxId(
@@ -192,11 +201,14 @@ internal class ChangedSubscriptionResourcesTest {
                         .invoicePdf(
                             "https://assets.withorb.com/invoice/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
                         )
-                        .invoiceSource(Invoice.InvoiceSource.SUBSCRIPTION)
+                        .invoiceSource(
+                            ChangedSubscriptionResources.CreatedInvoice.InvoiceSource.SUBSCRIPTION
+                        )
+                        .isPayableNow(true)
                         .issueFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .issuedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addLineItem(
-                            Invoice.LineItem.builder()
+                            ChangedSubscriptionResources.CreatedInvoice.LineItem.builder()
                                 .id("id")
                                 .adjustedSubtotal("5.00")
                                 .addAdjustment(
@@ -286,6 +298,7 @@ internal class ChangedSubscriptionResourcesTest {
                                                 )
                                                 .build()
                                         )
+                                        .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
                                             TransformPriceFilter.builder()
@@ -455,7 +468,7 @@ internal class ChangedSubscriptionResourcesTest {
                         .maximumAmount("maximum_amount")
                         .memo("memo")
                         .metadata(
-                            Invoice.Metadata.builder()
+                            ChangedSubscriptionResources.CreatedInvoice.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
@@ -475,11 +488,15 @@ internal class ChangedSubscriptionResourcesTest {
                         .minimumAmount("minimum_amount")
                         .paidAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addPaymentAttempt(
-                            Invoice.PaymentAttempt.builder()
+                            ChangedSubscriptionResources.CreatedInvoice.PaymentAttempt.builder()
                                 .id("id")
                                 .amount("amount")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .paymentProvider(Invoice.PaymentAttempt.PaymentProvider.STRIPE)
+                                .paymentProvider(
+                                    ChangedSubscriptionResources.CreatedInvoice.PaymentAttempt
+                                        .PaymentProvider
+                                        .STRIPE
+                                )
                                 .paymentProviderId("payment_provider_id")
                                 .receiptPdf(
                                     "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
@@ -500,7 +517,7 @@ internal class ChangedSubscriptionResourcesTest {
                                 .state("state")
                                 .build()
                         )
-                        .status(Invoice.Status.ISSUED)
+                        .status(ChangedSubscriptionResources.CreatedInvoice.Status.ISSUED)
                         .subscription(SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build())
                         .subtotal("8.00")
                         .syncFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -780,6 +797,7 @@ internal class ChangedSubscriptionResourcesTest {
                                                 )
                                                 .build()
                                         )
+                                        .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
                                             TransformPriceFilter.builder()
@@ -1092,11 +1110,11 @@ internal class ChangedSubscriptionResourcesTest {
             )
         assertThat(changedSubscriptionResources.createdInvoices())
             .containsExactly(
-                Invoice.builder()
+                ChangedSubscriptionResources.CreatedInvoice.builder()
                     .id("id")
                     .amountDue("8.00")
                     .autoCollection(
-                        Invoice.AutoCollection.builder()
+                        ChangedSubscriptionResources.CreatedInvoice.AutoCollection.builder()
                             .enabled(true)
                             .nextAttemptAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .numAttempts(0L)
@@ -1115,7 +1133,7 @@ internal class ChangedSubscriptionResourcesTest {
                     )
                     .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                     .addCreditNote(
-                        Invoice.CreditNote.builder()
+                        ChangedSubscriptionResources.CreatedInvoice.CreditNote.builder()
                             .id("id")
                             .creditNoteNumber("credit_note_number")
                             .memo("memo")
@@ -1133,9 +1151,15 @@ internal class ChangedSubscriptionResourcesTest {
                             .build()
                     )
                     .addCustomerBalanceTransaction(
-                        Invoice.CustomerBalanceTransaction.builder()
+                        ChangedSubscriptionResources.CreatedInvoice.CustomerBalanceTransaction
+                            .builder()
                             .id("cgZa3SXcsPTVyC4Y")
-                            .action(Invoice.CustomerBalanceTransaction.Action.APPLIED_TO_INVOICE)
+                            .action(
+                                ChangedSubscriptionResources.CreatedInvoice
+                                    .CustomerBalanceTransaction
+                                    .Action
+                                    .APPLIED_TO_INVOICE
+                            )
                             .amount("11.00")
                             .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                             .creditNote(CreditNoteTiny.builder().id("id").build())
@@ -1143,7 +1167,12 @@ internal class ChangedSubscriptionResourcesTest {
                             .endingBalance("22.00")
                             .invoice(InvoiceTiny.builder().id("gXcsPTVyC4YZa3Sc").build())
                             .startingBalance("33.00")
-                            .type(Invoice.CustomerBalanceTransaction.Type.INCREMENT)
+                            .type(
+                                ChangedSubscriptionResources.CreatedInvoice
+                                    .CustomerBalanceTransaction
+                                    .Type
+                                    .INCREMENT
+                            )
                             .build()
                     )
                     .customerTaxId(
@@ -1178,11 +1207,14 @@ internal class ChangedSubscriptionResourcesTest {
                     .invoicePdf(
                         "https://assets.withorb.com/invoice/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
                     )
-                    .invoiceSource(Invoice.InvoiceSource.SUBSCRIPTION)
+                    .invoiceSource(
+                        ChangedSubscriptionResources.CreatedInvoice.InvoiceSource.SUBSCRIPTION
+                    )
+                    .isPayableNow(true)
                     .issueFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .issuedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addLineItem(
-                        Invoice.LineItem.builder()
+                        ChangedSubscriptionResources.CreatedInvoice.LineItem.builder()
                             .id("id")
                             .adjustedSubtotal("5.00")
                             .addAdjustment(
@@ -1270,6 +1302,7 @@ internal class ChangedSubscriptionResourcesTest {
                                             )
                                             .build()
                                     )
+                                    .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                     .addCompositePriceFilter(
                                         TransformPriceFilter.builder()
@@ -1432,7 +1465,7 @@ internal class ChangedSubscriptionResourcesTest {
                     .maximumAmount("maximum_amount")
                     .memo("memo")
                     .metadata(
-                        Invoice.Metadata.builder()
+                        ChangedSubscriptionResources.CreatedInvoice.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
@@ -1452,11 +1485,15 @@ internal class ChangedSubscriptionResourcesTest {
                     .minimumAmount("minimum_amount")
                     .paidAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addPaymentAttempt(
-                        Invoice.PaymentAttempt.builder()
+                        ChangedSubscriptionResources.CreatedInvoice.PaymentAttempt.builder()
                             .id("id")
                             .amount("amount")
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .paymentProvider(Invoice.PaymentAttempt.PaymentProvider.STRIPE)
+                            .paymentProvider(
+                                ChangedSubscriptionResources.CreatedInvoice.PaymentAttempt
+                                    .PaymentProvider
+                                    .STRIPE
+                            )
                             .paymentProviderId("payment_provider_id")
                             .receiptPdf(
                                 "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
@@ -1477,7 +1514,7 @@ internal class ChangedSubscriptionResourcesTest {
                             .state("state")
                             .build()
                     )
-                    .status(Invoice.Status.ISSUED)
+                    .status(ChangedSubscriptionResources.CreatedInvoice.Status.ISSUED)
                     .subscription(SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build())
                     .subtotal("8.00")
                     .syncFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1751,6 +1788,7 @@ internal class ChangedSubscriptionResourcesTest {
                                             )
                                             .build()
                                     )
+                                    .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                     .addCompositePriceFilter(
                                         TransformPriceFilter.builder()
@@ -2061,11 +2099,11 @@ internal class ChangedSubscriptionResourcesTest {
                         .build()
                 )
                 .addCreatedInvoice(
-                    Invoice.builder()
+                    ChangedSubscriptionResources.CreatedInvoice.builder()
                         .id("id")
                         .amountDue("8.00")
                         .autoCollection(
-                            Invoice.AutoCollection.builder()
+                            ChangedSubscriptionResources.CreatedInvoice.AutoCollection.builder()
                                 .enabled(true)
                                 .nextAttemptAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .numAttempts(0L)
@@ -2086,7 +2124,7 @@ internal class ChangedSubscriptionResourcesTest {
                         )
                         .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                         .addCreditNote(
-                            Invoice.CreditNote.builder()
+                            ChangedSubscriptionResources.CreatedInvoice.CreditNote.builder()
                                 .id("id")
                                 .creditNoteNumber("credit_note_number")
                                 .memo("memo")
@@ -2104,10 +2142,14 @@ internal class ChangedSubscriptionResourcesTest {
                                 .build()
                         )
                         .addCustomerBalanceTransaction(
-                            Invoice.CustomerBalanceTransaction.builder()
+                            ChangedSubscriptionResources.CreatedInvoice.CustomerBalanceTransaction
+                                .builder()
                                 .id("cgZa3SXcsPTVyC4Y")
                                 .action(
-                                    Invoice.CustomerBalanceTransaction.Action.APPLIED_TO_INVOICE
+                                    ChangedSubscriptionResources.CreatedInvoice
+                                        .CustomerBalanceTransaction
+                                        .Action
+                                        .APPLIED_TO_INVOICE
                                 )
                                 .amount("11.00")
                                 .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
@@ -2116,7 +2158,12 @@ internal class ChangedSubscriptionResourcesTest {
                                 .endingBalance("22.00")
                                 .invoice(InvoiceTiny.builder().id("gXcsPTVyC4YZa3Sc").build())
                                 .startingBalance("33.00")
-                                .type(Invoice.CustomerBalanceTransaction.Type.INCREMENT)
+                                .type(
+                                    ChangedSubscriptionResources.CreatedInvoice
+                                        .CustomerBalanceTransaction
+                                        .Type
+                                        .INCREMENT
+                                )
                                 .build()
                         )
                         .customerTaxId(
@@ -2151,11 +2198,14 @@ internal class ChangedSubscriptionResourcesTest {
                         .invoicePdf(
                             "https://assets.withorb.com/invoice/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
                         )
-                        .invoiceSource(Invoice.InvoiceSource.SUBSCRIPTION)
+                        .invoiceSource(
+                            ChangedSubscriptionResources.CreatedInvoice.InvoiceSource.SUBSCRIPTION
+                        )
+                        .isPayableNow(true)
                         .issueFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .issuedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addLineItem(
-                            Invoice.LineItem.builder()
+                            ChangedSubscriptionResources.CreatedInvoice.LineItem.builder()
                                 .id("id")
                                 .adjustedSubtotal("5.00")
                                 .addAdjustment(
@@ -2245,6 +2295,7 @@ internal class ChangedSubscriptionResourcesTest {
                                                 )
                                                 .build()
                                         )
+                                        .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
                                             TransformPriceFilter.builder()
@@ -2414,7 +2465,7 @@ internal class ChangedSubscriptionResourcesTest {
                         .maximumAmount("maximum_amount")
                         .memo("memo")
                         .metadata(
-                            Invoice.Metadata.builder()
+                            ChangedSubscriptionResources.CreatedInvoice.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
@@ -2434,11 +2485,15 @@ internal class ChangedSubscriptionResourcesTest {
                         .minimumAmount("minimum_amount")
                         .paidAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addPaymentAttempt(
-                            Invoice.PaymentAttempt.builder()
+                            ChangedSubscriptionResources.CreatedInvoice.PaymentAttempt.builder()
                                 .id("id")
                                 .amount("amount")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .paymentProvider(Invoice.PaymentAttempt.PaymentProvider.STRIPE)
+                                .paymentProvider(
+                                    ChangedSubscriptionResources.CreatedInvoice.PaymentAttempt
+                                        .PaymentProvider
+                                        .STRIPE
+                                )
                                 .paymentProviderId("payment_provider_id")
                                 .receiptPdf(
                                     "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
@@ -2459,7 +2514,7 @@ internal class ChangedSubscriptionResourcesTest {
                                 .state("state")
                                 .build()
                         )
-                        .status(Invoice.Status.ISSUED)
+                        .status(ChangedSubscriptionResources.CreatedInvoice.Status.ISSUED)
                         .subscription(SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build())
                         .subtotal("8.00")
                         .syncFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -2739,6 +2794,7 @@ internal class ChangedSubscriptionResourcesTest {
                                                 )
                                                 .build()
                                         )
+                                        .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
                                             TransformPriceFilter.builder()

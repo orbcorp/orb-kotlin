@@ -27,6 +27,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                 .cadence(Price.Unit.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -171,6 +172,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                     .cadence(Price.Unit.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -289,6 +291,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.Tiered.BillingMode.IN_ADVANCE)
                 .cadence(Price.Tiered.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -441,6 +444,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.Tiered.BillingMode.IN_ADVANCE)
                     .cadence(Price.Tiered.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -567,6 +571,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.Bulk.BillingMode.IN_ADVANCE)
                 .bulkConfig(
                     BulkConfig.builder()
                         .addTier(
@@ -715,6 +720,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.Bulk.BillingMode.IN_ADVANCE)
                     .bulkConfig(
                         BulkConfig.builder()
                             .addTier(
@@ -840,6 +846,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.Package.BillingMode.IN_ADVANCE)
                 .cadence(Price.Package.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -984,6 +991,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.Package.BillingMode.IN_ADVANCE)
                     .cadence(Price.Package.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -1105,6 +1113,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.Matrix.BillingMode.IN_ADVANCE)
                 .cadence(Price.Matrix.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -1258,6 +1267,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.Matrix.BillingMode.IN_ADVANCE)
                     .cadence(Price.Matrix.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -1385,6 +1395,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.ThresholdTotalAmount.BillingMode.IN_ADVANCE)
                 .cadence(Price.ThresholdTotalAmount.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -1545,6 +1556,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.ThresholdTotalAmount.BillingMode.IN_ADVANCE)
                     .cadence(Price.ThresholdTotalAmount.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -1681,6 +1693,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.TieredPackage.BillingMode.IN_ADVANCE)
                 .cadence(Price.TieredPackage.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -1839,6 +1852,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.TieredPackage.BillingMode.IN_ADVANCE)
                     .cadence(Price.TieredPackage.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -1971,6 +1985,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.TieredWithMinimum.BillingMode.IN_ADVANCE)
                 .cadence(Price.TieredWithMinimum.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -2132,6 +2147,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.TieredWithMinimum.BillingMode.IN_ADVANCE)
                     .cadence(Price.TieredWithMinimum.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -2267,6 +2283,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.GroupedTiered.BillingMode.IN_ADVANCE)
                 .cadence(Price.GroupedTiered.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -2425,6 +2442,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.GroupedTiered.BillingMode.IN_ADVANCE)
                     .cadence(Price.GroupedTiered.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -2557,6 +2575,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.TieredPackageWithMinimum.BillingMode.IN_ADVANCE)
                 .cadence(Price.TieredPackageWithMinimum.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -2719,6 +2738,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.TieredPackageWithMinimum.BillingMode.IN_ADVANCE)
                     .cadence(Price.TieredPackageWithMinimum.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -2855,6 +2875,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.PackageWithAllocation.BillingMode.IN_ADVANCE)
                 .cadence(Price.PackageWithAllocation.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -3003,6 +3024,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.PackageWithAllocation.BillingMode.IN_ADVANCE)
                     .cadence(Price.PackageWithAllocation.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -3125,6 +3147,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.UnitWithPercent.BillingMode.IN_ADVANCE)
                 .cadence(Price.UnitWithPercent.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -3272,6 +3295,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.UnitWithPercent.BillingMode.IN_ADVANCE)
                     .cadence(Price.UnitWithPercent.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -3393,6 +3417,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.MatrixWithAllocation.BillingMode.IN_ADVANCE)
                 .cadence(Price.MatrixWithAllocation.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -3547,6 +3572,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.MatrixWithAllocation.BillingMode.IN_ADVANCE)
                     .cadence(Price.MatrixWithAllocation.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -3675,6 +3701,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.TieredWithProration.BillingMode.IN_ADVANCE)
                 .cadence(Price.TieredWithProration.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -3826,6 +3853,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.TieredWithProration.BillingMode.IN_ADVANCE)
                     .cadence(Price.TieredWithProration.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -3951,6 +3979,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.UnitWithProration.BillingMode.IN_ADVANCE)
                 .cadence(Price.UnitWithProration.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -4097,6 +4126,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.UnitWithProration.BillingMode.IN_ADVANCE)
                     .cadence(Price.UnitWithProration.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -4217,6 +4247,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.GroupedAllocation.BillingMode.IN_ADVANCE)
                 .cadence(Price.GroupedAllocation.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -4365,6 +4396,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.GroupedAllocation.BillingMode.IN_ADVANCE)
                     .cadence(Price.GroupedAllocation.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -4487,6 +4519,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.BulkWithProration.BillingMode.IN_ADVANCE)
                 .bulkWithProrationConfig(
                     Price.BulkWithProration.BulkWithProrationConfig.builder()
                         .addTier(
@@ -4644,6 +4677,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.BulkWithProration.BillingMode.IN_ADVANCE)
                     .bulkWithProrationConfig(
                         Price.BulkWithProration.BulkWithProrationConfig.builder()
                             .addTier(
@@ -4775,6 +4809,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.GroupedWithProratedMinimum.BillingMode.IN_ADVANCE)
                 .cadence(Price.GroupedWithProratedMinimum.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -4923,6 +4958,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.GroupedWithProratedMinimum.BillingMode.IN_ADVANCE)
                     .cadence(Price.GroupedWithProratedMinimum.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -5045,6 +5081,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.GroupedWithMeteredMinimum.BillingMode.IN_ADVANCE)
                 .cadence(Price.GroupedWithMeteredMinimum.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -5210,6 +5247,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.GroupedWithMeteredMinimum.BillingMode.IN_ADVANCE)
                     .cadence(Price.GroupedWithMeteredMinimum.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -5349,6 +5387,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.GroupedWithMinMaxThresholds.BillingMode.IN_ADVANCE)
                 .cadence(Price.GroupedWithMinMaxThresholds.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -5498,6 +5537,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.GroupedWithMinMaxThresholds.BillingMode.IN_ADVANCE)
                     .cadence(Price.GroupedWithMinMaxThresholds.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -5622,6 +5662,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.MatrixWithDisplayName.BillingMode.IN_ADVANCE)
                 .cadence(Price.MatrixWithDisplayName.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -5776,6 +5817,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.MatrixWithDisplayName.BillingMode.IN_ADVANCE)
                     .cadence(Price.MatrixWithDisplayName.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -5904,6 +5946,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.GroupedTieredPackage.BillingMode.IN_ADVANCE)
                 .cadence(Price.GroupedTieredPackage.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -6063,6 +6106,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.GroupedTieredPackage.BillingMode.IN_ADVANCE)
                     .cadence(Price.GroupedTieredPackage.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -6196,6 +6240,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.MaxGroupTieredPackage.BillingMode.IN_ADVANCE)
                 .cadence(Price.MaxGroupTieredPackage.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -6355,6 +6400,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.MaxGroupTieredPackage.BillingMode.IN_ADVANCE)
                     .cadence(Price.MaxGroupTieredPackage.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -6490,6 +6536,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.ScalableMatrixWithUnitPricing.BillingMode.IN_ADVANCE)
                 .cadence(Price.ScalableMatrixWithUnitPricing.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -6649,6 +6696,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.ScalableMatrixWithUnitPricing.BillingMode.IN_ADVANCE)
                     .cadence(Price.ScalableMatrixWithUnitPricing.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -6783,6 +6831,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.ScalableMatrixWithTieredPricing.BillingMode.IN_ADVANCE)
                 .cadence(Price.ScalableMatrixWithTieredPricing.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -6960,6 +7009,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.ScalableMatrixWithTieredPricing.BillingMode.IN_ADVANCE)
                     .cadence(Price.ScalableMatrixWithTieredPricing.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -7110,6 +7160,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.CumulativeGroupedBulk.BillingMode.IN_ADVANCE)
                 .cadence(Price.CumulativeGroupedBulk.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -7264,6 +7315,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.CumulativeGroupedBulk.BillingMode.IN_ADVANCE)
                     .cadence(Price.CumulativeGroupedBulk.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
@@ -7393,6 +7445,7 @@ internal class PriceTest {
                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .billingMode(Price.Minimum.BillingMode.IN_ADVANCE)
                 .cadence(Price.Minimum.Cadence.ONE_TIME)
                 .addCompositePriceFilter(
                     TransformPriceFilter.builder()
@@ -7540,6 +7593,7 @@ internal class PriceTest {
                             .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                             .build()
                     )
+                    .billingMode(Price.Minimum.BillingMode.IN_ADVANCE)
                     .cadence(Price.Minimum.Cadence.ONE_TIME)
                     .addCompositePriceFilter(
                         TransformPriceFilter.builder()
