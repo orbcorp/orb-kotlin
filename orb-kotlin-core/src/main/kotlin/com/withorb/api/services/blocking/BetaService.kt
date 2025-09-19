@@ -29,12 +29,7 @@ interface BetaService {
 
     fun externalPlanId(): ExternalPlanIdService
 
-    /**
-     * This API endpoint is in beta and its interface may change. It is recommended for use only in
-     * test mode.
-     *
-     * This endpoint allows the creation of a new plan version for an existing plan.
-     */
+    /** This endpoint allows the creation of a new plan version for an existing plan. */
     fun createPlanVersion(
         planId: String,
         params: BetaCreatePlanVersionParams,
