@@ -31,12 +31,7 @@ import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Collections
 import java.util.Objects
 
-/**
- * This API endpoint is in beta and its interface may change. It is recommended for use only in test
- * mode.
- *
- * This endpoint allows the creation of a new plan version for an existing plan.
- */
+/** This endpoint allows the creation of a new plan version for an existing plan. */
 class BetaCreatePlanVersionParams
 private constructor(
     private val planId: String?,
