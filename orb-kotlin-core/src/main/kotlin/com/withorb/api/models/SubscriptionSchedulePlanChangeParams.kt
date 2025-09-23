@@ -175,19 +175,16 @@ import java.util.Objects
  * the billable metric, cadence, type, and name of a price can not be overridden.
  *
  * ### Maximums, and minimums
- *
  * Price overrides are used to update some or all prices in the target plan. Minimums and maximums,
  * much like price overrides, can be useful when a new customer has negotiated a new or different
  * minimum or maximum spend cap than the default for the plan. The request format for maximums and
  * minimums is the same as those in [subscription creation](create-subscription).
  *
  * ## Scheduling multiple plan changes
- *
  * When scheduling multiple plan changes with the same date, the latest plan change on that day
  * takes effect.
  *
  * ## Prorations for in-advance fees
- *
  * By default, Orb calculates the prorated difference in any fixed fees when making a plan change,
  * adjusting the customer balance as needed. For details on this behavior, see
  * [Modifying subscriptions](/product-catalog/modifying-subscriptions#prorations-for-in-advance-fees).

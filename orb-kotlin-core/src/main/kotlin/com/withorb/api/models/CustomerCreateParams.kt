@@ -36,11 +36,11 @@ import java.util.Objects
  * See [Customer](/core-concepts##customer) for an overview of the customer resource.
  *
  * This endpoint is critical in the following Orb functionality:
- * - Automated charges can be configured by setting `payment_provider` and `payment_provider_id` to
+ * * Automated charges can be configured by setting `payment_provider` and `payment_provider_id` to
  *   automatically issue invoices
- * - [Customer ID Aliases](/events-and-metrics/customer-aliases) can be configured by setting
+ * * [Customer ID Aliases](/events-and-metrics/customer-aliases) can be configured by setting
  *   `external_customer_id`
- * - [Timezone localization](/essentials/timezones) can be configured on a per-customer basis by
+ * * [Timezone localization](/essentials/timezones) can be configured on a per-customer basis by
  *   setting the `timezone` parameter
  */
 class CustomerCreateParams
@@ -263,9 +263,9 @@ private constructor(
      * |Ireland               |`eu_vat`    |European VAT Number                                                                                    |
      * |Israel                |`il_vat`    |Israel VAT                                                                                             |
      * |Italy                 |`eu_vat`    |European VAT Number                                                                                    |
-     * |Japan                 |`jp_cn`     |Japanese Corporate Number (_Hōjin Bangō_)                                                              |
-     * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (_Tōroku Kokugai Jigyōsha no Tōroku Bangō_)|
-     * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (_Tōroku Bangō_)                                                      |
+     * |Japan                 |`jp_cn`     |Japanese Corporate Number (*Hōjin Bangō*)                                                              |
+     * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (*Tōroku Kokugai Jigyōsha no Tōroku Bangō*)|
+     * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (*Tōroku Bangō*)                                                      |
      * |Kazakhstan            |`kz_bin`    |Kazakhstani Business Identification Number                                                             |
      * |Kenya                 |`ke_pin`    |Kenya Revenue Authority Personal Identification Number                                                 |
      * |Kyrgyzstan            |`kg_tin`    |Kyrgyzstan Tax Identification Number                                                                   |
@@ -989,9 +989,9 @@ private constructor(
          * |Ireland               |`eu_vat`    |European VAT Number                                                                                    |
          * |Israel                |`il_vat`    |Israel VAT                                                                                             |
          * |Italy                 |`eu_vat`    |European VAT Number                                                                                    |
-         * |Japan                 |`jp_cn`     |Japanese Corporate Number (_Hōjin Bangō_)                                                              |
-         * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (_Tōroku Kokugai Jigyōsha no Tōroku Bangō_)|
-         * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (_Tōroku Bangō_)                                                      |
+         * |Japan                 |`jp_cn`     |Japanese Corporate Number (*Hōjin Bangō*)                                                              |
+         * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (*Tōroku Kokugai Jigyōsha no Tōroku Bangō*)|
+         * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (*Tōroku Bangō*)                                                      |
          * |Kazakhstan            |`kz_bin`    |Kazakhstani Business Identification Number                                                             |
          * |Kenya                 |`ke_pin`    |Kenya Revenue Authority Personal Identification Number                                                 |
          * |Kyrgyzstan            |`kg_tin`    |Kyrgyzstan Tax Identification Number                                                                   |
@@ -1547,9 +1547,9 @@ private constructor(
          * |Ireland               |`eu_vat`    |European VAT Number                                                                                    |
          * |Israel                |`il_vat`    |Israel VAT                                                                                             |
          * |Italy                 |`eu_vat`    |European VAT Number                                                                                    |
-         * |Japan                 |`jp_cn`     |Japanese Corporate Number (_Hōjin Bangō_)                                                              |
-         * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (_Tōroku Kokugai Jigyōsha no Tōroku Bangō_)|
-         * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (_Tōroku Bangō_)                                                      |
+         * |Japan                 |`jp_cn`     |Japanese Corporate Number (*Hōjin Bangō*)                                                              |
+         * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (*Tōroku Kokugai Jigyōsha no Tōroku Bangō*)|
+         * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (*Tōroku Bangō*)                                                      |
          * |Kazakhstan            |`kz_bin`    |Kazakhstani Business Identification Number                                                             |
          * |Kenya                 |`ke_pin`    |Kenya Revenue Authority Personal Identification Number                                                 |
          * |Kyrgyzstan            |`kg_tin`    |Kyrgyzstan Tax Identification Number                                                                   |
@@ -2337,9 +2337,9 @@ private constructor(
              * |Ireland               |`eu_vat`    |European VAT Number                                                                                    |
              * |Israel                |`il_vat`    |Israel VAT                                                                                             |
              * |Italy                 |`eu_vat`    |European VAT Number                                                                                    |
-             * |Japan                 |`jp_cn`     |Japanese Corporate Number (_Hōjin Bangō_)                                                              |
-             * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (_Tōroku Kokugai Jigyōsha no Tōroku Bangō_)|
-             * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (_Tōroku Bangō_)                                                      |
+             * |Japan                 |`jp_cn`     |Japanese Corporate Number (*Hōjin Bangō*)                                                              |
+             * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (*Tōroku Kokugai Jigyōsha no Tōroku Bangō*)|
+             * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (*Tōroku Bangō*)                                                      |
              * |Kazakhstan            |`kz_bin`    |Kazakhstani Business Identification Number                                                             |
              * |Kenya                 |`ke_pin`    |Kenya Revenue Authority Personal Identification Number                                                 |
              * |Kyrgyzstan            |`kg_tin`    |Kyrgyzstan Tax Identification Number                                                                   |
