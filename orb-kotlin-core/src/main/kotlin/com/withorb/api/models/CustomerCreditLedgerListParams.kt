@@ -24,14 +24,12 @@ import java.util.Objects
  * There are four major types of modifications to credit balance, detailed below.
  *
  * ## Increment
- *
  * Credits (which optionally expire on a future date) can be added via the API ([Add Ledger
  * Entry](create-ledger-entry)). The ledger entry for such an action will always contain the total
  * eligible starting and ending balance for the customer at the time the entry was added to the
  * ledger.
  *
  * ## Decrement
- *
  * Deductions can occur as a result of an API call to create a ledger entry (see
  * [Add Ledger Entry](create-ledger-entry)), or automatically as a result of incurring usage. Both
  * ledger entries present the `decrement` entry type.
@@ -43,13 +41,13 @@ import java.util.Objects
  * ingestion, used to pinpoint _why_ credit deduction took place and to ensure that credits are
  * never deducted without an associated usage event.
  *
- * By default, Orb uses an algorithm that automatically deducts from the _soonest expiring credit
- * block_ first in order to ensure that all credits are utilized appropriately. As an example, if
+ * By default, Orb uses an algorithm that automatically deducts from the *soonest expiring credit
+ * block* first in order to ensure that all credits are utilized appropriately. As an example, if
  * trial credits with an expiration date of 2 weeks from now are present for a customer, they will
  * be used before any deductions take place from a non-expiring credit block.
  *
  * If there are multiple blocks with the same expiration date, Orb will deduct from the block with
- * the _lower cost basis_ first (e.g. trial credits with a \$0 cost basis before paid credits with a
+ * the *lower cost basis* first (e.g. trial credits with a \$0 cost basis before paid credits with a
  * \$5.00 cost basis).
  *
  * It's also possible for a single usage event's deduction to _span_ credit blocks. In this case,
@@ -59,7 +57,6 @@ import java.util.Objects
  * a result of a decrement.
  *
  * ## Expiration change
- *
  * The expiry of credits can be changed as a result of the API (See
  * [Add Ledger Entry](create-ledger-entry)). This will create a ledger entry that specifies the
  * balance as well as the initial and target expiry dates.
@@ -69,24 +66,20 @@ import java.util.Objects
  * credit block from which there was an expiration change.
  *
  * ## Credits expiry
- *
  * When a set of credits expire on pre-set expiration date, the customer's balance automatically
  * reflects this change and adds an entry to the ledger indicating this event. Note that credit
  * expiry should always happen close to a date boundary in the customer's timezone.
  *
  * ## Void initiated
- *
  * Credit blocks can be voided via the API. The `amount` on this entry corresponds to the number of
  * credits that were remaining in the block at time of void. `void_reason` will be populated if the
  * void is created with a reason.
  *
  * ## Void
- *
  * When a set of credits is voided, the customer's balance automatically reflects this change and
  * adds an entry to the ledger indicating this event.
  *
  * ## Amendment
- *
  * When credits are added to a customer's balance as a result of a correction, this entry will be
  * added to the ledger to indicate the adjustment of credits.
  */

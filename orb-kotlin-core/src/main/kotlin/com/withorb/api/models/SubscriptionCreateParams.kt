@@ -168,7 +168,6 @@ import java.util.Objects
  * the billable metric, cadence, type, and name of a price can not be overridden.
  *
  * ### Maximums and Minimums
- *
  * Minimums and maximums, much like price overrides, can be useful when a new customer has
  * negotiated a new or different minimum or maximum spend cap than the default for a given price. If
  * one exists for a price and null is provided for the minimum/maximum override on creation, then
@@ -213,7 +212,6 @@ import java.util.Objects
  * ```
  *
  * ### Discounts
- *
  * Discounts, like price overrides, can be useful when a new customer has negotiated a new or
  * different discount than the default for a price. If a discount exists for a price and a null
  * discount is provided on creation, then there will be no discount on the new subscription.

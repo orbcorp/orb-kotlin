@@ -82,7 +82,6 @@ import java.util.Objects
  * interval entirely from a subscription, set the `end_date` to be equivalent to the `start_date`.
  *
  * ## Fixed fee quantity transitions
- *
  * The fixed fee quantity transitions for a fixed fee price interval can also be specified when
  * adding or editing by passing an array for `fixed_fee_quantity_transitions`. A fixed fee quantity
  * transition must have a `quantity` and an `effective_date`, which is the date after which the new

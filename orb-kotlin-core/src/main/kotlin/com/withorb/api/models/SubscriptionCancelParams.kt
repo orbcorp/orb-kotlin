@@ -63,7 +63,6 @@ import java.util.Objects
  * `end_date` equal to the `start_date` upon cancellation.
  *
  * ## Backdated cancellations
- *
  * Orb allows you to cancel a subscription in the past as long as there are no paid invoices between
  * the `requested_date` and the current time. If the cancellation is after the latest issued
  * invoice, Orb will generate a balance refund for the current period. If the cancellation is before

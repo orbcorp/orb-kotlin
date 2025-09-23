@@ -48,11 +48,11 @@ interface CustomerService {
      * resource.
      *
      * This endpoint is critical in the following Orb functionality:
-     * - Automated charges can be configured by setting `payment_provider` and `payment_provider_id`
+     * * Automated charges can be configured by setting `payment_provider` and `payment_provider_id`
      *   to automatically issue invoices
-     * - [Customer ID Aliases](/events-and-metrics/customer-aliases) can be configured by setting
+     * * [Customer ID Aliases](/events-and-metrics/customer-aliases) can be configured by setting
      *   `external_customer_id`
-     * - [Timezone localization](/essentials/timezones) can be configured on a per-customer basis by
+     * * [Timezone localization](/essentials/timezones) can be configured on a per-customer basis by
      *   setting the `timezone` parameter
      */
     fun create(

@@ -89,9 +89,9 @@ import java.util.Objects
  * |Ireland               |`eu_vat`    |European VAT Number                                                                                    |
  * |Israel                |`il_vat`    |Israel VAT                                                                                             |
  * |Italy                 |`eu_vat`    |European VAT Number                                                                                    |
- * |Japan                 |`jp_cn`     |Japanese Corporate Number (_Hōjin Bangō_)                                                              |
- * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (_Tōroku Kokugai Jigyōsha no Tōroku Bangō_)|
- * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (_Tōroku Bangō_)                                                      |
+ * |Japan                 |`jp_cn`     |Japanese Corporate Number (*Hōjin Bangō*)                                                              |
+ * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (*Tōroku Kokugai Jigyōsha no Tōroku Bangō*)|
+ * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (*Tōroku Bangō*)                                                      |
  * |Kazakhstan            |`kz_bin`    |Kazakhstani Business Identification Number                                                             |
  * |Kenya                 |`ke_pin`    |Kenya Revenue Authority Personal Identification Number                                                 |
  * |Kyrgyzstan            |`kg_tin`    |Kyrgyzstan Tax Identification Number                                                                   |
