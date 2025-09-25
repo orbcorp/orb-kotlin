@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class OtherSubLineItem
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val amount: JsonField<String>,
     private val grouping: JsonField<SubLineItemGrouping>,

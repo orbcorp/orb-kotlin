@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewSphereConfiguration
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val taxExempt: JsonField<Boolean>,
     private val taxProvider: JsonField<TaxProvider>,

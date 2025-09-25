@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewFloatingScalableMatrixWithTieredPricingPrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val cadence: JsonField<Cadence>,
     private val currency: JsonField<String>,
@@ -1206,6 +1207,7 @@ private constructor(
 
     /** Configuration for scalable_matrix_with_tiered_pricing pricing */
     class ScalableMatrixWithTieredPricingConfig
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val firstDimension: JsonField<String>,
         private val matrixScalingFactors: JsonField<List<MatrixScalingFactor>>,
@@ -1514,6 +1516,7 @@ private constructor(
 
         /** Configuration for a single matrix scaling factor */
         class MatrixScalingFactor
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val firstDimensionValue: JsonField<String>,
             private val scalingFactor: JsonField<String>,
@@ -1783,6 +1786,7 @@ private constructor(
 
         /** Configuration for a single tier entry with business logic */
         class Tier
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val tierLowerBound: JsonField<String>,
             private val unitAmount: JsonField<String>,

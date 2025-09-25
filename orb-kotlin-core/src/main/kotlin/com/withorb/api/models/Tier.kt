@@ -17,6 +17,7 @@ import java.util.Objects
 
 /** Configuration for a single tier */
 class Tier
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val firstUnit: JsonField<Double>,
     private val unitAmount: JsonField<String>,

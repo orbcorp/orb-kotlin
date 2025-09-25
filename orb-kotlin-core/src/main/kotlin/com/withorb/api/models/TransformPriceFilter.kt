@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class TransformPriceFilter
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val field: JsonField<Field>,
     private val operator: JsonField<Operator>,

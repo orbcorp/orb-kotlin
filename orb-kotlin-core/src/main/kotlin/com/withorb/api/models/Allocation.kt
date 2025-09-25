@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class Allocation
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val allowsRollover: JsonField<Boolean>,
     private val currency: JsonField<String>,

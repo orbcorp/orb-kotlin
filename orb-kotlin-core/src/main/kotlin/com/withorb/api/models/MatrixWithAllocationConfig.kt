@@ -19,6 +19,7 @@ import java.util.Objects
 
 /** Configuration for matrix pricing with usage allocation */
 class MatrixWithAllocationConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val allocation: JsonField<String>,
     private val defaultUnitAmount: JsonField<String>,
@@ -313,6 +314,7 @@ private constructor(
 
     /** Configuration for a single matrix value */
     class MatrixValue
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val dimensionValues: JsonField<List<String?>>,
         private val unitAmount: JsonField<String>,

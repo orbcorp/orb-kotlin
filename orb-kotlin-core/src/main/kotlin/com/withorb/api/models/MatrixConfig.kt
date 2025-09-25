@@ -19,6 +19,7 @@ import java.util.Objects
 
 /** Configuration for matrix pricing */
 class MatrixConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val defaultUnitAmount: JsonField<String>,
     private val dimensions: JsonField<List<String?>>,

@@ -33,6 +33,7 @@ import java.util.Objects
  * long it remains available for use by end users.
  */
 class Coupon
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val archivedAt: JsonField<OffsetDateTime>,

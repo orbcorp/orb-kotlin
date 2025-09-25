@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewSubscriptionPackageWithAllocationPrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val cadence: JsonField<Cadence>,
     private val itemId: JsonField<String>,
@@ -1232,6 +1233,7 @@ private constructor(
 
     /** Configuration for package_with_allocation pricing */
     class PackageWithAllocationConfig
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val allocation: JsonField<String>,
         private val packageAmount: JsonField<String>,

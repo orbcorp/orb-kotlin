@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class SubscriptionMinified
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,

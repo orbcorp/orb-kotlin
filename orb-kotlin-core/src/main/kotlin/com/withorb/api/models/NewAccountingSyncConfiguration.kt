@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewAccountingSyncConfiguration
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val accountingProviders: JsonField<List<AccountingProviderConfig>>,
     private val excluded: JsonField<Boolean>,

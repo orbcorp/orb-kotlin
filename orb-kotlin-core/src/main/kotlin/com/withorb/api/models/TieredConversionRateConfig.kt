@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class TieredConversionRateConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val conversionRateType: JsonField<ConversionRateType>,
     private val tieredConfig: JsonField<ConversionRateTieredConfig>,

@@ -23,6 +23,7 @@ import java.util.Objects
  * changes/creation of invoices (see `subscription.changed_resources`).
  */
 class SubscriptionChangeRetrieveResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val expirationTime: JsonField<OffsetDateTime>,

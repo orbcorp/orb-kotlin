@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewFloatingThresholdTotalAmountPrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val cadence: JsonField<Cadence>,
     private val currency: JsonField<String>,
@@ -1188,6 +1189,7 @@ private constructor(
 
     /** Configuration for threshold_total_amount pricing */
     class ThresholdTotalAmountConfig
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val consumptionTable: JsonField<List<ConsumptionTable>>,
         private val prorate: JsonField<Boolean>,
@@ -1398,6 +1400,7 @@ private constructor(
 
         /** Configuration for a single threshold */
         class ConsumptionTable
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val threshold: JsonField<String>,
             private val totalAmount: JsonField<String>,

@@ -321,6 +321,7 @@ private constructor(
      * replace the existing item mappings.
      */
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val externalConnections: JsonField<List<ExternalConnection>>,
         private val metadata: JsonField<Metadata>,
@@ -561,6 +562,7 @@ private constructor(
     }
 
     class ExternalConnection
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val externalConnectionName: JsonField<ExternalConnectionName>,
         private val externalEntityId: JsonField<String>,

@@ -17,6 +17,7 @@ import java.util.Objects
 
 /** Thresholds are used to define the conditions under which an alert will be triggered. */
 class Threshold
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val value: JsonField<Double>,
     private val additionalProperties: MutableMap<String, JsonValue>,

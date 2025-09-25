@@ -29,6 +29,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AdjustmentInterval
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val adjustment: JsonField<Adjustment>,

@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewFloatingScalableMatrixWithUnitPricingPrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val cadence: JsonField<Cadence>,
     private val currency: JsonField<String>,
@@ -1197,6 +1198,7 @@ private constructor(
 
     /** Configuration for scalable_matrix_with_unit_pricing pricing */
     class ScalableMatrixWithUnitPricingConfig
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val firstDimension: JsonField<String>,
         private val matrixScalingFactors: JsonField<List<MatrixScalingFactor>>,
@@ -1541,6 +1543,7 @@ private constructor(
 
         /** Configuration for a single matrix scaling factor */
         class MatrixScalingFactor
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val firstDimensionValue: JsonField<String>,
             private val scalingFactor: JsonField<String>,

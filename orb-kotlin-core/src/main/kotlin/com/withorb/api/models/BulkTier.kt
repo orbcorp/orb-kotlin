@@ -17,6 +17,7 @@ import java.util.Objects
 
 /** Configuration for a single bulk pricing tier */
 class BulkTier
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val unitAmount: JsonField<String>,
     private val maximumUnits: JsonField<Double>,

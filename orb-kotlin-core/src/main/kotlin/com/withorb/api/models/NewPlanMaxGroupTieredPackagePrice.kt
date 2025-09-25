@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewPlanMaxGroupTieredPackagePrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val cadence: JsonField<Cadence>,
     private val itemId: JsonField<String>,
@@ -1111,6 +1112,7 @@ private constructor(
 
     /** Configuration for max_group_tiered_package pricing */
     class MaxGroupTieredPackageConfig
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val groupingKey: JsonField<String>,
         private val packageSize: JsonField<String>,
@@ -1352,6 +1354,7 @@ private constructor(
 
         /** Configuration for a single tier */
         class Tier
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val tierLowerBound: JsonField<String>,
             private val unitAmount: JsonField<String>,

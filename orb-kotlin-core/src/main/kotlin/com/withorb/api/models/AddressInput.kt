@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AddressInput
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val city: JsonField<String>,
     private val country: JsonField<String>,

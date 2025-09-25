@@ -205,6 +205,7 @@ private constructor(
     }
 
     class UngroupedSubscriptionUsage
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val data: JsonField<List<Data>>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -357,6 +358,7 @@ private constructor(
         internal fun validity(): Int = (data.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
         class Data
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val billableMetric: JsonField<BillableMetric>,
             private val usage: JsonField<List<Usage>>,
@@ -595,6 +597,7 @@ private constructor(
                     (viewMode.asKnown()?.validity() ?: 0)
 
             class BillableMetric
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val id: JsonField<String>,
                 private val name: JsonField<String>,
@@ -789,6 +792,7 @@ private constructor(
             }
 
             class Usage
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val quantity: JsonField<Double>,
                 private val timeframeEnd: JsonField<OffsetDateTime>,
@@ -1210,6 +1214,7 @@ private constructor(
     }
 
     class GroupedSubscriptionUsage
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val data: JsonField<List<Data>>,
         private val paginationMetadata: JsonField<PaginationMetadata>,
@@ -1401,6 +1406,7 @@ private constructor(
                 (paginationMetadata.asKnown()?.validity() ?: 0)
 
         class Data
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val billableMetric: JsonField<BillableMetric>,
             private val metricGroup: JsonField<MetricGroup>,
@@ -1680,6 +1686,7 @@ private constructor(
                     (viewMode.asKnown()?.validity() ?: 0)
 
             class BillableMetric
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val id: JsonField<String>,
                 private val name: JsonField<String>,
@@ -1874,6 +1881,7 @@ private constructor(
             }
 
             class MetricGroup
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val propertyKey: JsonField<String>,
                 private val propertyValue: JsonField<String>,
@@ -2085,6 +2093,7 @@ private constructor(
             }
 
             class Usage
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val quantity: JsonField<Double>,
                 private val timeframeEnd: JsonField<OffsetDateTime>,

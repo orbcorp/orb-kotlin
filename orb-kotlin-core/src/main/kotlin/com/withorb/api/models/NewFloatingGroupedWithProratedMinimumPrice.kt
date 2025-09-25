@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewFloatingGroupedWithProratedMinimumPrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val cadence: JsonField<Cadence>,
     private val currency: JsonField<String>,
@@ -1069,6 +1070,7 @@ private constructor(
 
     /** Configuration for grouped_with_prorated_minimum pricing */
     class GroupedWithProratedMinimumConfig
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val groupingKey: JsonField<String>,
         private val minimum: JsonField<String>,
