@@ -33,6 +33,7 @@ import java.util.Objects
  * plan.
  */
 class PlanVersion
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val adjustments: JsonField<List<Adjustment>>,
     private val createdAt: JsonField<OffsetDateTime>,

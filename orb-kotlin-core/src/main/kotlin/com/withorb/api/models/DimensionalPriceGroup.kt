@@ -22,6 +22,7 @@ import java.util.Objects
  * dimensions. Prices in a price group must specify the parition used to derive their usage.
  */
 class DimensionalPriceGroup
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val billableMetricId: JsonField<String>,

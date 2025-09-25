@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewSubscriptionGroupedAllocationPrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val cadence: JsonField<Cadence>,
     private val groupedAllocationConfig: JsonField<GroupedAllocationConfig>,
@@ -1110,6 +1111,7 @@ private constructor(
 
     /** Configuration for grouped_allocation pricing */
     class GroupedAllocationConfig
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val allocation: JsonField<String>,
         private val groupingKey: JsonField<String>,

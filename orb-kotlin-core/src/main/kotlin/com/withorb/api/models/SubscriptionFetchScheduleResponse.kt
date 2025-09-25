@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class SubscriptionFetchScheduleResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val createdAt: JsonField<OffsetDateTime>,
     private val endDate: JsonField<OffsetDateTime>,
@@ -264,6 +265,7 @@ private constructor(
             (if (startDate.asKnown() == null) 0 else 1)
 
     class Plan
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val externalPlanId: JsonField<String>,

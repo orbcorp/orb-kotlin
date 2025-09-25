@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class TaxAmount
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val amount: JsonField<String>,
     private val taxRateDescription: JsonField<String>,

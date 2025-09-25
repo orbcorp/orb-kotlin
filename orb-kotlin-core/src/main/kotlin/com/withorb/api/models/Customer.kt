@@ -38,6 +38,7 @@ import java.util.Objects
  * timezone parameter influences within Orb.
  */
 class Customer
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val additionalEmails: JsonField<List<String>>,
@@ -1397,6 +1398,7 @@ private constructor(
 
     /** The hierarchical relationships for this customer. */
     class Hierarchy
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val children: JsonField<List<CustomerMinified>>,
         private val parent: JsonField<CustomerMinified>,
@@ -1858,6 +1860,7 @@ private constructor(
     }
 
     class AccountingSyncConfiguration
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val accountingProviders: JsonField<List<AccountingProvider>>,
         private val excluded: JsonField<Boolean>,
@@ -2057,6 +2060,7 @@ private constructor(
                 (if (excluded.asKnown() == null) 0 else 1)
 
         class AccountingProvider
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val externalProviderId: JsonField<String>,
             private val providerType: JsonField<ProviderType>,
@@ -2421,6 +2425,7 @@ private constructor(
     }
 
     class ReportingConfiguration
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val exempt: JsonField<Boolean>,
         private val additionalProperties: MutableMap<String, JsonValue>,

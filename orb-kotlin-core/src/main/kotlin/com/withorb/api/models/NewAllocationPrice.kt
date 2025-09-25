@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewAllocationPrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val amount: JsonField<String>,
     private val cadence: JsonField<Cadence>,

@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewFloatingUnitWithProrationPrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val cadence: JsonField<Cadence>,
     private val currency: JsonField<String>,
@@ -1185,6 +1186,7 @@ private constructor(
 
     /** Configuration for unit_with_proration pricing */
     class UnitWithProrationConfig
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val unitAmount: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,

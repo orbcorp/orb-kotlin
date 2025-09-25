@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class DiscountOverride
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val discountType: JsonField<DiscountType>,
     private val amountDiscount: JsonField<String>,

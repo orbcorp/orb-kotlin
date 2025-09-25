@@ -300,6 +300,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val allowInvoiceCreditOrVoid: JsonField<Boolean>,
         private val effectiveDate: JsonField<LocalDate>,

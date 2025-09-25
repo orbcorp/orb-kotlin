@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class BillingCycleAnchorConfiguration
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val day: JsonField<Long>,
     private val month: JsonField<Long>,

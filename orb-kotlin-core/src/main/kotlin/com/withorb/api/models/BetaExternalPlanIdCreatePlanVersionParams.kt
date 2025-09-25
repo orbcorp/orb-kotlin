@@ -548,6 +548,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val version: JsonField<Long>,
         private val addAdjustments: JsonField<List<AddAdjustment>>,
@@ -1108,6 +1109,7 @@ private constructor(
     }
 
     class AddAdjustment
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val adjustment: JsonField<Adjustment>,
         private val planPhaseOrder: JsonField<Long>,
@@ -1676,6 +1678,7 @@ private constructor(
     }
 
     class AddPrice
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val allocationPrice: JsonField<NewAllocationPrice>,
         private val planPhaseOrder: JsonField<Long>,
@@ -3153,6 +3156,7 @@ private constructor(
             }
 
             class TieredWithProration
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val itemId: JsonField<String>,
@@ -4341,6 +4345,7 @@ private constructor(
 
                 /** Configuration for tiered_with_proration pricing */
                 class TieredWithProrationConfig
+                @JsonCreator(mode = JsonCreator.Mode.DISABLED)
                 private constructor(
                     private val tiers: JsonField<List<Tier>>,
                     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -4514,6 +4519,7 @@ private constructor(
 
                     /** Configuration for a single tiered with proration tier */
                     class Tier
+                    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
                     private constructor(
                         private val tierLowerBound: JsonField<String>,
                         private val unitAmount: JsonField<String>,
@@ -4919,6 +4925,7 @@ private constructor(
             }
 
             class GroupedWithMinMaxThresholds
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val groupedWithMinMaxThresholdsConfig:
@@ -6126,6 +6133,7 @@ private constructor(
 
                 /** Configuration for grouped_with_min_max_thresholds pricing */
                 class GroupedWithMinMaxThresholdsConfig
+                @JsonCreator(mode = JsonCreator.Mode.DISABLED)
                 private constructor(
                     private val groupingKey: JsonField<String>,
                     private val maximumCharge: JsonField<String>,
@@ -6638,6 +6646,7 @@ private constructor(
     }
 
     class RemoveAdjustment
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val adjustmentId: JsonField<String>,
         private val planPhaseOrder: JsonField<Long>,
@@ -6855,6 +6864,7 @@ private constructor(
     }
 
     class RemovePrice
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val priceId: JsonField<String>,
         private val planPhaseOrder: JsonField<Long>,
@@ -7065,6 +7075,7 @@ private constructor(
     }
 
     class ReplaceAdjustment
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val adjustment: JsonField<Adjustment>,
         private val replacesAdjustmentId: JsonField<String>,
@@ -7679,6 +7690,7 @@ private constructor(
     }
 
     class ReplacePrice
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val replacesPriceId: JsonField<String>,
         private val allocationPrice: JsonField<NewAllocationPrice>,
@@ -9212,6 +9224,7 @@ private constructor(
             }
 
             class TieredWithProration
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val itemId: JsonField<String>,
@@ -10400,6 +10413,7 @@ private constructor(
 
                 /** Configuration for tiered_with_proration pricing */
                 class TieredWithProrationConfig
+                @JsonCreator(mode = JsonCreator.Mode.DISABLED)
                 private constructor(
                     private val tiers: JsonField<List<Tier>>,
                     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -10573,6 +10587,7 @@ private constructor(
 
                     /** Configuration for a single tiered with proration tier */
                     class Tier
+                    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
                     private constructor(
                         private val tierLowerBound: JsonField<String>,
                         private val unitAmount: JsonField<String>,
@@ -10978,6 +10993,7 @@ private constructor(
             }
 
             class GroupedWithMinMaxThresholds
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val groupedWithMinMaxThresholdsConfig:
@@ -12185,6 +12201,7 @@ private constructor(
 
                 /** Configuration for grouped_with_min_max_thresholds pricing */
                 class GroupedWithMinMaxThresholdsConfig
+                @JsonCreator(mode = JsonCreator.Mode.DISABLED)
                 private constructor(
                     private val groupingKey: JsonField<String>,
                     private val maximumCharge: JsonField<String>,

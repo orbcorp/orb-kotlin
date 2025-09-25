@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class ConversionRateTieredConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val tiers: JsonField<List<ConversionRateTier>>,
     private val additionalProperties: MutableMap<String, JsonValue>,

@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class MetricListPageResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<List<BillableMetric>>,
     private val paginationMetadata: JsonField<PaginationMetadata>,

@@ -17,6 +17,7 @@ import java.util.Objects
 
 /** Configuration for unit pricing */
 class UnitConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val unitAmount: JsonField<String>,
     private val scalingFactor: JsonField<Double>,

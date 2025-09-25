@@ -497,6 +497,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val add: JsonField<List<Add>>,
         private val addAdjustments: JsonField<List<AddAdjustment>>,
@@ -887,6 +888,7 @@ private constructor(
     }
 
     class Add
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val startDate: JsonField<StartDate>,
         private val allocationPrice: JsonField<NewAllocationPrice>,
@@ -2156,6 +2158,7 @@ private constructor(
             }
 
             class Amount
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val amountDiscount: JsonField<Double>,
                 private val discountType: JsonValue,
@@ -2371,6 +2374,7 @@ private constructor(
             }
 
             class Percentage
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val discountType: JsonValue,
                 private val percentageDiscount: JsonField<Double>,
@@ -2591,6 +2595,7 @@ private constructor(
             }
 
             class Usage
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val discountType: JsonValue,
                 private val usageDiscount: JsonField<Double>,
@@ -2996,6 +3001,7 @@ private constructor(
         }
 
         class FixedFeeQuantityTransition
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val effectiveDate: JsonField<OffsetDateTime>,
             private val quantity: JsonField<Long>,
@@ -4359,6 +4365,7 @@ private constructor(
             }
 
             class GroupedWithMinMaxThresholds
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val cadence: JsonField<Cadence>,
                 private val currency: JsonField<String>,
@@ -5518,6 +5525,7 @@ private constructor(
 
                 /** Configuration for grouped_with_min_max_thresholds pricing */
                 class GroupedWithMinMaxThresholdsConfig
+                @JsonCreator(mode = JsonCreator.Mode.DISABLED)
                 private constructor(
                     private val groupingKey: JsonField<String>,
                     private val maximumCharge: JsonField<String>,
@@ -6051,6 +6059,7 @@ private constructor(
     }
 
     class AddAdjustment
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val startDate: JsonField<StartDate>,
         private val adjustment: JsonField<Adjustment>,
@@ -7102,6 +7111,7 @@ private constructor(
     }
 
     class Edit
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val priceIntervalId: JsonField<String>,
         private val billingCycleDay: JsonField<Long>,
@@ -7778,6 +7788,7 @@ private constructor(
         }
 
         class FixedFeeQuantityTransition
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val effectiveDate: JsonField<OffsetDateTime>,
             private val quantity: JsonField<Long>,
@@ -8213,6 +8224,7 @@ private constructor(
     }
 
     class EditAdjustment
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val adjustmentIntervalId: JsonField<String>,
         private val endDate: JsonField<EndDate>,

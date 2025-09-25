@@ -397,6 +397,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val discount: JsonField<Discount>,
         private val redemptionCode: JsonField<String>,
@@ -911,6 +912,7 @@ private constructor(
         }
 
         class Percentage
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val discountType: JsonValue,
             private val percentageDiscount: JsonField<Double>,
@@ -1123,6 +1125,7 @@ private constructor(
         }
 
         class Amount
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val amountDiscount: JsonField<String>,
             private val discountType: JsonValue,

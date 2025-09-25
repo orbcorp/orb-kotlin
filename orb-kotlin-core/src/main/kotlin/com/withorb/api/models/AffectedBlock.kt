@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AffectedBlock
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val expiryDate: JsonField<OffsetDateTime>,

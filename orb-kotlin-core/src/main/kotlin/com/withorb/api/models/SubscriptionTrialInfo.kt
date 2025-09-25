@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class SubscriptionTrialInfo
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val endDate: JsonField<OffsetDateTime>,
     private val additionalProperties: MutableMap<String, JsonValue>,

@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewFloatingBulkWithProrationPrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val bulkWithProrationConfig: JsonField<BulkWithProrationConfig>,
     private val cadence: JsonField<Cadence>,
@@ -916,6 +917,7 @@ private constructor(
 
     /** Configuration for bulk_with_proration pricing */
     class BulkWithProrationConfig
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val tiers: JsonField<List<Tier>>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -1070,6 +1072,7 @@ private constructor(
 
         /** Configuration for a single bulk pricing tier with proration */
         class Tier
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val unitAmount: JsonField<String>,
             private val tierLowerBound: JsonField<String>,

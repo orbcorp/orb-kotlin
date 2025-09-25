@@ -1198,6 +1198,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val accountingSyncConfiguration: JsonField<NewAccountingSyncConfiguration>,
         private val additionalEmails: JsonField<List<String>>,
@@ -3003,6 +3004,7 @@ private constructor(
         }
 
         class Numeral
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val taxExempt: JsonField<Boolean>,
             private val taxProvider: JsonValue,

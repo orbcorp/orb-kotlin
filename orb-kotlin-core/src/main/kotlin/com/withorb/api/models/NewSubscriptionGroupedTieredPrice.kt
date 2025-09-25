@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewSubscriptionGroupedTieredPrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val cadence: JsonField<Cadence>,
     private val groupedTieredConfig: JsonField<GroupedTieredConfig>,
@@ -1109,6 +1110,7 @@ private constructor(
 
     /** Configuration for grouped_tiered pricing */
     class GroupedTieredConfig
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val groupingKey: JsonField<String>,
         private val tiers: JsonField<List<Tier>>,
@@ -1308,6 +1310,7 @@ private constructor(
 
         /** Configuration for a single tier */
         class Tier
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val tierLowerBound: JsonField<String>,
             private val unitAmount: JsonField<String>,

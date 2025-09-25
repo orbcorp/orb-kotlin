@@ -19,6 +19,7 @@ import java.util.Objects
 
 /** Configuration for a single matrix value */
 class MatrixValue
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val dimensionValues: JsonField<List<String?>>,
     private val unitAmount: JsonField<String>,

@@ -401,6 +401,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val lineItems: JsonField<List<LineItem>>,
         private val reason: JsonField<Reason>,
@@ -740,6 +741,7 @@ private constructor(
     }
 
     class LineItem
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val amount: JsonField<String>,
         private val invoiceLineItemId: JsonField<String>,

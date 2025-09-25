@@ -20,6 +20,7 @@ import java.util.Collections
 import java.util.Objects
 
 class PercentageDiscountInterval
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val appliesToPriceIntervalIds: JsonField<List<String>>,
     private val discountType: JsonField<DiscountType>,

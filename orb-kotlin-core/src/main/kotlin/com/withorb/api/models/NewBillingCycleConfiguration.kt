@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewBillingCycleConfiguration
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val duration: JsonField<Long>,
     private val durationUnit: JsonField<DurationUnit>,

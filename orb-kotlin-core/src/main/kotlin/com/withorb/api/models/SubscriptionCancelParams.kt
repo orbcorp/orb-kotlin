@@ -393,6 +393,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val cancelOption: JsonField<CancelOption>,
         private val allowInvoiceCreditOrVoid: JsonField<Boolean>,

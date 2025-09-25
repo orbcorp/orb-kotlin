@@ -25,6 +25,7 @@ import java.util.Objects
  * and tax calculation purposes.
  */
 class Item
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
@@ -325,6 +326,7 @@ private constructor(
             (if (name.asKnown() == null) 0 else 1)
 
     class ExternalConnection
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val externalConnectionName: JsonField<ExternalConnectionName>,
         private val externalEntityId: JsonField<String>,

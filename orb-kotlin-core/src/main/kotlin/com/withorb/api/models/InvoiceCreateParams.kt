@@ -648,6 +648,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val currency: JsonField<String>,
         private val invoiceDate: JsonField<OffsetDateTime>,
@@ -1356,6 +1357,7 @@ private constructor(
     }
 
     class LineItem
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val endDate: JsonField<LocalDate>,
         private val itemId: JsonField<String>,

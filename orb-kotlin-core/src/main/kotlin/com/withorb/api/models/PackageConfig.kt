@@ -17,6 +17,7 @@ import java.util.Objects
 
 /** Configuration for package pricing */
 class PackageConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val packageAmount: JsonField<String>,
     private val packageSize: JsonField<Long>,

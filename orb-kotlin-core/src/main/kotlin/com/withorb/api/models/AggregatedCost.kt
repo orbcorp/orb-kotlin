@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AggregatedCost
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val perPriceCosts: JsonField<List<PerPriceCost>>,
     private val subtotal: JsonField<String>,

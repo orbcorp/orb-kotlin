@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AccountingProviderConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val externalProviderId: JsonField<String>,
     private val providerType: JsonField<String>,

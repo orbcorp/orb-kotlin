@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class FixedFeeQuantityTransition
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val effectiveDate: JsonField<OffsetDateTime>,
     private val priceId: JsonField<String>,

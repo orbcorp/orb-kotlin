@@ -29,6 +29,7 @@ import java.util.Collections
 import java.util.Objects
 
 class EvaluatePriceGroup
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val amount: JsonField<String>,
     private val groupingValues: JsonField<List<GroupingValue>>,

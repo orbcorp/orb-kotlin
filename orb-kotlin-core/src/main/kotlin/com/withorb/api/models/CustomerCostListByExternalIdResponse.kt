@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class CustomerCostListByExternalIdResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<List<AggregatedCost>>,
     private val additionalProperties: MutableMap<String, JsonValue>,

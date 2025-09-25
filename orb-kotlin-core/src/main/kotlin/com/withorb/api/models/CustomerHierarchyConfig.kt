@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class CustomerHierarchyConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val childCustomerIds: JsonField<List<String>>,
     private val parentCustomerId: JsonField<String>,

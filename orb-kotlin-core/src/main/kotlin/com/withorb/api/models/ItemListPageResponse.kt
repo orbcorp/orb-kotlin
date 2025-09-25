@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class ItemListPageResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<List<Item>>,
     private val paginationMetadata: JsonField<PaginationMetadata>,

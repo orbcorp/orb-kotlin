@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewPlanPackagePrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val cadence: JsonField<Cadence>,
     private val itemId: JsonField<String>,

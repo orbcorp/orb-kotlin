@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class TopLevelPingResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val response: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,

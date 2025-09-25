@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AmountDiscount
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val amountDiscount: JsonField<String>,
     private val discountType: JsonField<DiscountType>,

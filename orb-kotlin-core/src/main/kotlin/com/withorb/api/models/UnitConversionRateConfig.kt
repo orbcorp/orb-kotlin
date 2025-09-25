@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class UnitConversionRateConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val conversionRateType: JsonField<ConversionRateType>,
     private val unitConfig: JsonField<ConversionRateUnitConfig>,
