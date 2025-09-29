@@ -39,6 +39,7 @@ internal class SubscriptionChangeServiceAsyncTest {
                 SubscriptionChangeApplyParams.builder()
                     .subscriptionChangeId("subscription_change_id")
                     .description("description")
+                    .markAsPaid(true)
                     .previouslyCollectedAmount("previously_collected_amount")
                     .build()
             )

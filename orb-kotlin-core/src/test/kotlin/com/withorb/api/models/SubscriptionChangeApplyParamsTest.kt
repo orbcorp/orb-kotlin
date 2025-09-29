@@ -12,6 +12,7 @@ internal class SubscriptionChangeApplyParamsTest {
         SubscriptionChangeApplyParams.builder()
             .subscriptionChangeId("subscription_change_id")
             .description("description")
+            .markAsPaid(true)
             .previouslyCollectedAmount("previously_collected_amount")
             .build()
     }
@@ -34,12 +35,14 @@ internal class SubscriptionChangeApplyParamsTest {
             SubscriptionChangeApplyParams.builder()
                 .subscriptionChangeId("subscription_change_id")
                 .description("description")
+                .markAsPaid(true)
                 .previouslyCollectedAmount("previously_collected_amount")
                 .build()
 
         val body = params._body()
 
         assertThat(body.description()).isEqualTo("description")
+        assertThat(body.markAsPaid()).isEqualTo(true)
         assertThat(body.previouslyCollectedAmount()).isEqualTo("previously_collected_amount")
     }
 

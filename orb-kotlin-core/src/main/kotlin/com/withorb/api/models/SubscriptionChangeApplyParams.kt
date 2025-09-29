@@ -41,7 +41,17 @@ private constructor(
     fun description(): String? = body.description()
 
     /**
-     * Amount already collected to apply to the customer's balance.
+     * Mark all pending invoices that are payable as paid. If amount is also provided, mark as paid
+     * and credit the difference to the customer's balance.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun markAsPaid(): Boolean? = body.markAsPaid()
+
+    /**
+     * Amount already collected to apply to the customer's balance. If mark_as_paid is also
+     * provided, credit the difference to the customer's balance.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -54,6 +64,13 @@ private constructor(
      * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _description(): JsonField<String> = body._description()
+
+    /**
+     * Returns the raw JSON value of [markAsPaid].
+     *
+     * Unlike [markAsPaid], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _markAsPaid(): JsonField<Boolean> = body._markAsPaid()
 
     /**
      * Returns the raw JSON value of [previouslyCollectedAmount].
@@ -109,6 +126,7 @@ private constructor(
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
          * - [description]
+         * - [markAsPaid]
          * - [previouslyCollectedAmount]
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
@@ -125,7 +143,32 @@ private constructor(
          */
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
-        /** Amount already collected to apply to the customer's balance. */
+        /**
+         * Mark all pending invoices that are payable as paid. If amount is also provided, mark as
+         * paid and credit the difference to the customer's balance.
+         */
+        fun markAsPaid(markAsPaid: Boolean?) = apply { body.markAsPaid(markAsPaid) }
+
+        /**
+         * Alias for [Builder.markAsPaid].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun markAsPaid(markAsPaid: Boolean) = markAsPaid(markAsPaid as Boolean?)
+
+        /**
+         * Sets [Builder.markAsPaid] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.markAsPaid] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun markAsPaid(markAsPaid: JsonField<Boolean>) = apply { body.markAsPaid(markAsPaid) }
+
+        /**
+         * Amount already collected to apply to the customer's balance. If mark_as_paid is also
+         * provided, credit the difference to the customer's balance.
+         */
         fun previouslyCollectedAmount(previouslyCollectedAmount: String?) = apply {
             body.previouslyCollectedAmount(previouslyCollectedAmount)
         }
@@ -288,6 +331,7 @@ private constructor(
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val description: JsonField<String>,
+        private val markAsPaid: JsonField<Boolean>,
         private val previouslyCollectedAmount: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
@@ -297,10 +341,13 @@ private constructor(
             @JsonProperty("description")
             @ExcludeMissing
             description: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("mark_as_paid")
+            @ExcludeMissing
+            markAsPaid: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("previously_collected_amount")
             @ExcludeMissing
             previouslyCollectedAmount: JsonField<String> = JsonMissing.of(),
-        ) : this(description, previouslyCollectedAmount, mutableMapOf())
+        ) : this(description, markAsPaid, previouslyCollectedAmount, mutableMapOf())
 
         /**
          * Description to apply to the balance transaction representing this credit.
@@ -311,7 +358,17 @@ private constructor(
         fun description(): String? = description.getNullable("description")
 
         /**
-         * Amount already collected to apply to the customer's balance.
+         * Mark all pending invoices that are payable as paid. If amount is also provided, mark as
+         * paid and credit the difference to the customer's balance.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun markAsPaid(): Boolean? = markAsPaid.getNullable("mark_as_paid")
+
+        /**
+         * Amount already collected to apply to the customer's balance. If mark_as_paid is also
+         * provided, credit the difference to the customer's balance.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -327,6 +384,15 @@ private constructor(
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
+
+        /**
+         * Returns the raw JSON value of [markAsPaid].
+         *
+         * Unlike [markAsPaid], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("mark_as_paid")
+        @ExcludeMissing
+        fun _markAsPaid(): JsonField<Boolean> = markAsPaid
 
         /**
          * Returns the raw JSON value of [previouslyCollectedAmount].
@@ -360,11 +426,13 @@ private constructor(
         class Builder internal constructor() {
 
             private var description: JsonField<String> = JsonMissing.of()
+            private var markAsPaid: JsonField<Boolean> = JsonMissing.of()
             private var previouslyCollectedAmount: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(body: Body) = apply {
                 description = body.description
+                markAsPaid = body.markAsPaid
                 previouslyCollectedAmount = body.previouslyCollectedAmount
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
@@ -383,7 +451,32 @@ private constructor(
                 this.description = description
             }
 
-            /** Amount already collected to apply to the customer's balance. */
+            /**
+             * Mark all pending invoices that are payable as paid. If amount is also provided, mark
+             * as paid and credit the difference to the customer's balance.
+             */
+            fun markAsPaid(markAsPaid: Boolean?) = markAsPaid(JsonField.ofNullable(markAsPaid))
+
+            /**
+             * Alias for [Builder.markAsPaid].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun markAsPaid(markAsPaid: Boolean) = markAsPaid(markAsPaid as Boolean?)
+
+            /**
+             * Sets [Builder.markAsPaid] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.markAsPaid] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun markAsPaid(markAsPaid: JsonField<Boolean>) = apply { this.markAsPaid = markAsPaid }
+
+            /**
+             * Amount already collected to apply to the customer's balance. If mark_as_paid is also
+             * provided, credit the difference to the customer's balance.
+             */
             fun previouslyCollectedAmount(previouslyCollectedAmount: String?) =
                 previouslyCollectedAmount(JsonField.ofNullable(previouslyCollectedAmount))
 
@@ -423,7 +516,12 @@ private constructor(
              * Further updates to this [Builder] will not mutate the returned instance.
              */
             fun build(): Body =
-                Body(description, previouslyCollectedAmount, additionalProperties.toMutableMap())
+                Body(
+                    description,
+                    markAsPaid,
+                    previouslyCollectedAmount,
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -434,6 +532,7 @@ private constructor(
             }
 
             description()
+            markAsPaid()
             previouslyCollectedAmount()
             validated = true
         }
@@ -454,6 +553,7 @@ private constructor(
          */
         internal fun validity(): Int =
             (if (description.asKnown() == null) 0 else 1) +
+                (if (markAsPaid.asKnown() == null) 0 else 1) +
                 (if (previouslyCollectedAmount.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
@@ -463,18 +563,19 @@ private constructor(
 
             return other is Body &&
                 description == other.description &&
+                markAsPaid == other.markAsPaid &&
                 previouslyCollectedAmount == other.previouslyCollectedAmount &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(description, previouslyCollectedAmount, additionalProperties)
+            Objects.hash(description, markAsPaid, previouslyCollectedAmount, additionalProperties)
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{description=$description, previouslyCollectedAmount=$previouslyCollectedAmount, additionalProperties=$additionalProperties}"
+            "Body{description=$description, markAsPaid=$markAsPaid, previouslyCollectedAmount=$previouslyCollectedAmount, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
