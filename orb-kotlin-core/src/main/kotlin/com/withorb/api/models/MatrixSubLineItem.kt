@@ -25,6 +25,7 @@ private constructor(
     private val name: JsonField<String>,
     private val quantity: JsonField<Double>,
     private val type: JsonField<Type>,
+    private val scaledQuantity: JsonField<Double>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -40,7 +41,10 @@ private constructor(
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
         @JsonProperty("quantity") @ExcludeMissing quantity: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
-    ) : this(amount, grouping, matrixConfig, name, quantity, type, mutableMapOf())
+        @JsonProperty("scaled_quantity")
+        @ExcludeMissing
+        scaledQuantity: JsonField<Double> = JsonMissing.of(),
+    ) : this(amount, grouping, matrixConfig, name, quantity, type, scaledQuantity, mutableMapOf())
 
     /**
      * The total amount for this sub line item.
@@ -79,6 +83,14 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun type(): Type = type.getRequired("type")
+
+    /**
+     * The scaled quantity for this line item for specific pricing structures
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun scaledQuantity(): Double? = scaledQuantity.getNullable("scaled_quantity")
 
     /**
      * Returns the raw JSON value of [amount].
@@ -126,6 +138,15 @@ private constructor(
      */
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
+    /**
+     * Returns the raw JSON value of [scaledQuantity].
+     *
+     * Unlike [scaledQuantity], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("scaled_quantity")
+    @ExcludeMissing
+    fun _scaledQuantity(): JsonField<Double> = scaledQuantity
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -165,6 +186,7 @@ private constructor(
         private var name: JsonField<String>? = null
         private var quantity: JsonField<Double>? = null
         private var type: JsonField<Type>? = null
+        private var scaledQuantity: JsonField<Double> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(matrixSubLineItem: MatrixSubLineItem) = apply {
@@ -174,6 +196,7 @@ private constructor(
             name = matrixSubLineItem.name
             quantity = matrixSubLineItem.quantity
             type = matrixSubLineItem.type
+            scaledQuantity = matrixSubLineItem.scaledQuantity
             additionalProperties = matrixSubLineItem.additionalProperties.toMutableMap()
         }
 
@@ -243,6 +266,28 @@ private constructor(
          */
         fun type(type: JsonField<Type>) = apply { this.type = type }
 
+        /** The scaled quantity for this line item for specific pricing structures */
+        fun scaledQuantity(scaledQuantity: Double?) =
+            scaledQuantity(JsonField.ofNullable(scaledQuantity))
+
+        /**
+         * Alias for [Builder.scaledQuantity].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun scaledQuantity(scaledQuantity: Double) = scaledQuantity(scaledQuantity as Double?)
+
+        /**
+         * Sets [Builder.scaledQuantity] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.scaledQuantity] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun scaledQuantity(scaledQuantity: JsonField<Double>) = apply {
+            this.scaledQuantity = scaledQuantity
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -287,6 +332,7 @@ private constructor(
                 checkRequired("name", name),
                 checkRequired("quantity", quantity),
                 checkRequired("type", type),
+                scaledQuantity,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -304,6 +350,7 @@ private constructor(
         name()
         quantity()
         type().validate()
+        scaledQuantity()
         validated = true
     }
 
@@ -326,7 +373,8 @@ private constructor(
             (matrixConfig.asKnown()?.validity() ?: 0) +
             (if (name.asKnown() == null) 0 else 1) +
             (if (quantity.asKnown() == null) 0 else 1) +
-            (type.asKnown()?.validity() ?: 0)
+            (type.asKnown()?.validity() ?: 0) +
+            (if (scaledQuantity.asKnown() == null) 0 else 1)
 
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -458,15 +506,25 @@ private constructor(
             name == other.name &&
             quantity == other.quantity &&
             type == other.type &&
+            scaledQuantity == other.scaledQuantity &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(amount, grouping, matrixConfig, name, quantity, type, additionalProperties)
+        Objects.hash(
+            amount,
+            grouping,
+            matrixConfig,
+            name,
+            quantity,
+            type,
+            scaledQuantity,
+            additionalProperties,
+        )
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "MatrixSubLineItem{amount=$amount, grouping=$grouping, matrixConfig=$matrixConfig, name=$name, quantity=$quantity, type=$type, additionalProperties=$additionalProperties}"
+        "MatrixSubLineItem{amount=$amount, grouping=$grouping, matrixConfig=$matrixConfig, name=$name, quantity=$quantity, type=$type, scaledQuantity=$scaledQuantity, additionalProperties=$additionalProperties}"
 }

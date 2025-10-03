@@ -19,6 +19,7 @@ internal class MatrixSubLineItemTest {
                 .name("Tier One")
                 .quantity(5.0)
                 .type(MatrixSubLineItem.Type.MATRIX)
+                .scaledQuantity(0.0)
                 .build()
 
         assertThat(matrixSubLineItem.amount()).isEqualTo("9.00")
@@ -29,6 +30,7 @@ internal class MatrixSubLineItemTest {
         assertThat(matrixSubLineItem.name()).isEqualTo("Tier One")
         assertThat(matrixSubLineItem.quantity()).isEqualTo(5.0)
         assertThat(matrixSubLineItem.type()).isEqualTo(MatrixSubLineItem.Type.MATRIX)
+        assertThat(matrixSubLineItem.scaledQuantity()).isEqualTo(0.0)
     }
 
     @Test
@@ -42,6 +44,7 @@ internal class MatrixSubLineItemTest {
                 .name("Tier One")
                 .quantity(5.0)
                 .type(MatrixSubLineItem.Type.MATRIX)
+                .scaledQuantity(0.0)
                 .build()
 
         val roundtrippedMatrixSubLineItem =
