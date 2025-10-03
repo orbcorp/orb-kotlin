@@ -11,16 +11,15 @@ internal class UnitConfigTest {
 
     @Test
     fun create() {
-        val unitConfig = UnitConfig.builder().unitAmount("unit_amount").scalingFactor(0.0).build()
+        val unitConfig = UnitConfig.builder().unitAmount("unit_amount").build()
 
         assertThat(unitConfig.unitAmount()).isEqualTo("unit_amount")
-        assertThat(unitConfig.scalingFactor()).isEqualTo(0.0)
     }
 
     @Test
     fun roundtrip() {
         val jsonMapper = jsonMapper()
-        val unitConfig = UnitConfig.builder().unitAmount("unit_amount").scalingFactor(0.0).build()
+        val unitConfig = UnitConfig.builder().unitAmount("unit_amount").build()
 
         val roundtrippedUnitConfig =
             jsonMapper.readValue(

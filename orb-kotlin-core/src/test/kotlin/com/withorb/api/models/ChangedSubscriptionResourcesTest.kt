@@ -405,10 +405,7 @@ internal class ChangedSubscriptionResourcesTest {
                                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                         .replacesPriceId("replaces_price_id")
                                         .unitConfig(
-                                            UnitConfig.builder()
-                                                .unitAmount("unit_amount")
-                                                .scalingFactor(0.0)
-                                                .build()
+                                            UnitConfig.builder().unitAmount("unit_amount").build()
                                         )
                                         .dimensionalPriceConfiguration(
                                             DimensionalPriceConfiguration.builder()
@@ -904,10 +901,7 @@ internal class ChangedSubscriptionResourcesTest {
                                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                         .replacesPriceId("replaces_price_id")
                                         .unitConfig(
-                                            UnitConfig.builder()
-                                                .unitAmount("unit_amount")
-                                                .scalingFactor(0.0)
-                                                .build()
+                                            UnitConfig.builder().unitAmount("unit_amount").build()
                                         )
                                         .dimensionalPriceConfiguration(
                                             DimensionalPriceConfiguration.builder()
@@ -1404,10 +1398,7 @@ internal class ChangedSubscriptionResourcesTest {
                                     .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                     .replacesPriceId("replaces_price_id")
                                     .unitConfig(
-                                        UnitConfig.builder()
-                                            .unitAmount("unit_amount")
-                                            .scalingFactor(0.0)
-                                            .build()
+                                        UnitConfig.builder().unitAmount("unit_amount").build()
                                     )
                                     .dimensionalPriceConfiguration(
                                         DimensionalPriceConfiguration.builder()
@@ -1890,10 +1881,7 @@ internal class ChangedSubscriptionResourcesTest {
                                     .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                     .replacesPriceId("replaces_price_id")
                                     .unitConfig(
-                                        UnitConfig.builder()
-                                            .unitAmount("unit_amount")
-                                            .scalingFactor(0.0)
-                                            .build()
+                                        UnitConfig.builder().unitAmount("unit_amount").build()
                                     )
                                     .dimensionalPriceConfiguration(
                                         DimensionalPriceConfiguration.builder()
@@ -2402,10 +2390,7 @@ internal class ChangedSubscriptionResourcesTest {
                                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                         .replacesPriceId("replaces_price_id")
                                         .unitConfig(
-                                            UnitConfig.builder()
-                                                .unitAmount("unit_amount")
-                                                .scalingFactor(0.0)
-                                                .build()
+                                            UnitConfig.builder().unitAmount("unit_amount").build()
                                         )
                                         .dimensionalPriceConfiguration(
                                             DimensionalPriceConfiguration.builder()
@@ -2901,10 +2886,7 @@ internal class ChangedSubscriptionResourcesTest {
                                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                         .replacesPriceId("replaces_price_id")
                                         .unitConfig(
-                                            UnitConfig.builder()
-                                                .unitAmount("unit_amount")
-                                                .scalingFactor(0.0)
-                                                .build()
+                                            UnitConfig.builder().unitAmount("unit_amount").build()
                                         )
                                         .dimensionalPriceConfiguration(
                                             DimensionalPriceConfiguration.builder()

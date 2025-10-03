@@ -60,10 +60,7 @@ internal class PlanServiceAsyncTest {
                                     .modelType(NewPlanUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
                                     .unitConfig(
-                                        UnitConfig.builder()
-                                            .unitAmount("unit_amount")
-                                            .scalingFactor(0.0)
-                                            .build()
+                                        UnitConfig.builder().unitAmount("unit_amount").build()
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
