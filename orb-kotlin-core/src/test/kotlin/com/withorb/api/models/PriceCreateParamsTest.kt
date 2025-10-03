@@ -18,9 +18,7 @@ internal class PriceCreateParamsTest {
                     .itemId("item_id")
                     .modelType(NewFloatingUnitPrice.ModelType.UNIT)
                     .name("Annual fee")
-                    .unitConfig(
-                        UnitConfig.builder().unitAmount("unit_amount").scalingFactor(0.0).build()
-                    )
+                    .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                     .billableMetricId("billable_metric_id")
                     .billedInAdvance(true)
                     .billingCycleConfiguration(
@@ -70,12 +68,7 @@ internal class PriceCreateParamsTest {
                         .itemId("item_id")
                         .modelType(NewFloatingUnitPrice.ModelType.UNIT)
                         .name("Annual fee")
-                        .unitConfig(
-                            UnitConfig.builder()
-                                .unitAmount("unit_amount")
-                                .scalingFactor(0.0)
-                                .build()
-                        )
+                        .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                         .billableMetricId("billable_metric_id")
                         .billedInAdvance(true)
                         .billingCycleConfiguration(
@@ -126,12 +119,7 @@ internal class PriceCreateParamsTest {
                         .itemId("item_id")
                         .modelType(NewFloatingUnitPrice.ModelType.UNIT)
                         .name("Annual fee")
-                        .unitConfig(
-                            UnitConfig.builder()
-                                .unitAmount("unit_amount")
-                                .scalingFactor(0.0)
-                                .build()
-                        )
+                        .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                         .billableMetricId("billable_metric_id")
                         .billedInAdvance(true)
                         .billingCycleConfiguration(

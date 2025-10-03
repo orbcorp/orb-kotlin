@@ -18,9 +18,7 @@ internal class NewPlanUnitPriceTest {
                 .itemId("item_id")
                 .modelType(NewPlanUnitPrice.ModelType.UNIT)
                 .name("Annual fee")
-                .unitConfig(
-                    UnitConfig.builder().unitAmount("unit_amount").scalingFactor(0.0).build()
-                )
+                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                 .billableMetricId("billable_metric_id")
                 .billedInAdvance(true)
                 .billingCycleConfiguration(
@@ -63,7 +61,7 @@ internal class NewPlanUnitPriceTest {
         assertThat(newPlanUnitPrice.modelType()).isEqualTo(NewPlanUnitPrice.ModelType.UNIT)
         assertThat(newPlanUnitPrice.name()).isEqualTo("Annual fee")
         assertThat(newPlanUnitPrice.unitConfig())
-            .isEqualTo(UnitConfig.builder().unitAmount("unit_amount").scalingFactor(0.0).build())
+            .isEqualTo(UnitConfig.builder().unitAmount("unit_amount").build())
         assertThat(newPlanUnitPrice.billableMetricId()).isEqualTo("billable_metric_id")
         assertThat(newPlanUnitPrice.billedInAdvance()).isEqualTo(true)
         assertThat(newPlanUnitPrice.billingCycleConfiguration())
@@ -122,9 +120,7 @@ internal class NewPlanUnitPriceTest {
                 .itemId("item_id")
                 .modelType(NewPlanUnitPrice.ModelType.UNIT)
                 .name("Annual fee")
-                .unitConfig(
-                    UnitConfig.builder().unitAmount("unit_amount").scalingFactor(0.0).build()
-                )
+                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
                 .billableMetricId("billable_metric_id")
                 .billedInAdvance(true)
                 .billingCycleConfiguration(

@@ -378,7 +378,6 @@ internal class CustomerCreditLedgerListByExternalIdPageResponseTest {
                                                 .unitConfig(
                                                     UnitConfig.builder()
                                                         .unitAmount("unit_amount")
-                                                        .scalingFactor(0.0)
                                                         .build()
                                                 )
                                                 .dimensionalPriceConfiguration(
@@ -871,7 +870,6 @@ internal class CustomerCreditLedgerListByExternalIdPageResponseTest {
                                                 .unitConfig(
                                                     UnitConfig.builder()
                                                         .unitAmount("unit_amount")
-                                                        .scalingFactor(0.0)
                                                         .build()
                                                 )
                                                 .dimensionalPriceConfiguration(
@@ -1367,7 +1365,6 @@ internal class CustomerCreditLedgerListByExternalIdPageResponseTest {
                                                 .unitConfig(
                                                     UnitConfig.builder()
                                                         .unitAmount("unit_amount")
-                                                        .scalingFactor(0.0)
                                                         .build()
                                                 )
                                                 .dimensionalPriceConfiguration(
