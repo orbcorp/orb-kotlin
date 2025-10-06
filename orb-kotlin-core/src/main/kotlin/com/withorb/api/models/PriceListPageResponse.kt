@@ -261,6 +261,9 @@ private constructor(
         /** Alias for calling [addData] with `Price.ofMinimum(minimum)`. */
         fun addData(minimum: Price.Minimum) = addData(Price.ofMinimum(minimum))
 
+        /** Alias for calling [addData] with `Price.ofEventOutput(eventOutput)`. */
+        fun addData(eventOutput: Price.EventOutput) = addData(Price.ofEventOutput(eventOutput))
+
         fun paginationMetadata(paginationMetadata: PaginationMetadata) =
             paginationMetadata(JsonField.of(paginationMetadata))
 

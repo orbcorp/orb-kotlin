@@ -294,6 +294,9 @@ private constructor(
         /** Alias for calling [price] with `Price.ofMinimum(minimum)`. */
         fun price(minimum: Price.Minimum) = price(Price.ofMinimum(minimum))
 
+        /** Alias for calling [price] with `Price.ofEventOutput(eventOutput)`. */
+        fun price(eventOutput: Price.EventOutput) = price(Price.ofEventOutput(eventOutput))
+
         /** The price the cost is associated with */
         fun priceId(priceId: String) = priceId(JsonField.of(priceId))
 

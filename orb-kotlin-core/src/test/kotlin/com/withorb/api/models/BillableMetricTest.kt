@@ -35,6 +35,7 @@ internal class BillableMetricTest {
                                 .build()
                         )
                         .name("name")
+                        .archivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
                 .metadata(
@@ -67,6 +68,7 @@ internal class BillableMetricTest {
                             .build()
                     )
                     .name("name")
+                    .archivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
         assertThat(billableMetric.metadata())
@@ -104,6 +106,7 @@ internal class BillableMetricTest {
                                 .build()
                         )
                         .name("name")
+                        .archivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
                 .metadata(
