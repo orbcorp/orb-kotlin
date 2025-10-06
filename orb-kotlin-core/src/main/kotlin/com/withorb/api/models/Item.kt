@@ -32,6 +32,7 @@ private constructor(
     private val externalConnections: JsonField<List<ExternalConnection>>,
     private val metadata: JsonField<Metadata>,
     private val name: JsonField<String>,
+    private val archivedAt: JsonField<OffsetDateTime>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -46,21 +47,31 @@ private constructor(
         externalConnections: JsonField<List<ExternalConnection>> = JsonMissing.of(),
         @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-    ) : this(id, createdAt, externalConnections, metadata, name, mutableMapOf())
+        @JsonProperty("archived_at")
+        @ExcludeMissing
+        archivedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    ) : this(id, createdAt, externalConnections, metadata, name, archivedAt, mutableMapOf())
 
     /**
+     * The Orb-assigned unique identifier for the item.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
 
     /**
+     * The time at which the item was created.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
     /**
+     * A list of external connections for this item, used to sync with external invoicing and tax
+     * systems.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -78,10 +89,20 @@ private constructor(
     fun metadata(): Metadata = metadata.getRequired("metadata")
 
     /**
+     * The name of the item.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun name(): String = name.getRequired("name")
+
+    /**
+     * The time at which the item was archived. If null, the item is not archived.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun archivedAt(): OffsetDateTime? = archivedAt.getNullable("archived_at")
 
     /**
      * Returns the raw JSON value of [id].
@@ -123,6 +144,15 @@ private constructor(
      */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
+    /**
+     * Returns the raw JSON value of [archivedAt].
+     *
+     * Unlike [archivedAt], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("archived_at")
+    @ExcludeMissing
+    fun _archivedAt(): JsonField<OffsetDateTime> = archivedAt
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -160,6 +190,7 @@ private constructor(
         private var externalConnections: JsonField<MutableList<ExternalConnection>>? = null
         private var metadata: JsonField<Metadata>? = null
         private var name: JsonField<String>? = null
+        private var archivedAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(item: Item) = apply {
@@ -168,9 +199,11 @@ private constructor(
             externalConnections = item.externalConnections.map { it.toMutableList() }
             metadata = item.metadata
             name = item.name
+            archivedAt = item.archivedAt
             additionalProperties = item.additionalProperties.toMutableMap()
         }
 
+        /** The Orb-assigned unique identifier for the item. */
         fun id(id: String) = id(JsonField.of(id))
 
         /**
@@ -181,6 +214,7 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
+        /** The time at which the item was created. */
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
         /**
@@ -192,6 +226,10 @@ private constructor(
          */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
+        /**
+         * A list of external connections for this item, used to sync with external invoicing and
+         * tax systems.
+         */
         fun externalConnections(externalConnections: List<ExternalConnection>) =
             externalConnections(JsonField.of(externalConnections))
 
@@ -234,6 +272,7 @@ private constructor(
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
+        /** The name of the item. */
         fun name(name: String) = name(JsonField.of(name))
 
         /**
@@ -243,6 +282,20 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
+
+        /** The time at which the item was archived. If null, the item is not archived. */
+        fun archivedAt(archivedAt: OffsetDateTime?) = archivedAt(JsonField.ofNullable(archivedAt))
+
+        /**
+         * Sets [Builder.archivedAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.archivedAt] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun archivedAt(archivedAt: JsonField<OffsetDateTime>) = apply {
+            this.archivedAt = archivedAt
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -286,6 +339,7 @@ private constructor(
                 checkRequired("externalConnections", externalConnections).map { it.toImmutable() },
                 checkRequired("metadata", metadata),
                 checkRequired("name", name),
+                archivedAt,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -302,6 +356,7 @@ private constructor(
         externalConnections().forEach { it.validate() }
         metadata().validate()
         name()
+        archivedAt()
         validated = true
     }
 
@@ -323,8 +378,13 @@ private constructor(
             (if (createdAt.asKnown() == null) 0 else 1) +
             (externalConnections.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (metadata.asKnown()?.validity() ?: 0) +
-            (if (name.asKnown() == null) 0 else 1)
+            (if (name.asKnown() == null) 0 else 1) +
+            (if (archivedAt.asKnown() == null) 0 else 1)
 
+    /**
+     * Represents a connection between an Item and an external system for invoicing or tax
+     * calculation purposes.
+     */
     class ExternalConnection
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
@@ -344,6 +404,8 @@ private constructor(
         ) : this(externalConnectionName, externalEntityId, mutableMapOf())
 
         /**
+         * The name of the external system this item is connected to.
+         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -351,6 +413,8 @@ private constructor(
             externalConnectionName.getRequired("external_connection_name")
 
         /**
+         * The identifier of this item in the external system.
+         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -415,6 +479,7 @@ private constructor(
                 additionalProperties = externalConnection.additionalProperties.toMutableMap()
             }
 
+            /** The name of the external system this item is connected to. */
             fun externalConnectionName(externalConnectionName: ExternalConnectionName) =
                 externalConnectionName(JsonField.of(externalConnectionName))
 
@@ -430,6 +495,7 @@ private constructor(
                     this.externalConnectionName = externalConnectionName
                 }
 
+            /** The identifier of this item in the external system. */
             fun externalEntityId(externalEntityId: String) =
                 externalEntityId(JsonField.of(externalEntityId))
 
@@ -514,6 +580,7 @@ private constructor(
             (externalConnectionName.asKnown()?.validity() ?: 0) +
                 (if (externalEntityId.asKnown() == null) 0 else 1)
 
+        /** The name of the external system this item is connected to. */
         class ExternalConnectionName
         @JsonCreator
         private constructor(private val value: JsonField<String>) : Enum {
@@ -816,15 +883,24 @@ private constructor(
             externalConnections == other.externalConnections &&
             metadata == other.metadata &&
             name == other.name &&
+            archivedAt == other.archivedAt &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(id, createdAt, externalConnections, metadata, name, additionalProperties)
+        Objects.hash(
+            id,
+            createdAt,
+            externalConnections,
+            metadata,
+            name,
+            archivedAt,
+            additionalProperties,
+        )
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Item{id=$id, createdAt=$createdAt, externalConnections=$externalConnections, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
+        "Item{id=$id, createdAt=$createdAt, externalConnections=$externalConnections, metadata=$metadata, name=$name, archivedAt=$archivedAt, additionalProperties=$additionalProperties}"
 }

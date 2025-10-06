@@ -601,6 +601,9 @@ private constructor(
         /** Alias for calling [price] with `Price.ofMinimum(minimum)`. */
         fun price(minimum: Price.Minimum) = price(Price.ofMinimum(minimum))
 
+        /** Alias for calling [price] with `Price.ofEventOutput(eventOutput)`. */
+        fun price(eventOutput: Price.EventOutput) = price(Price.ofEventOutput(eventOutput))
+
         /**
          * The start date of the price interval. This is the date that Orb starts billing for this
          * price.

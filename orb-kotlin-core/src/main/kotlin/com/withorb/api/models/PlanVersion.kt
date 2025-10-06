@@ -435,6 +435,9 @@ private constructor(
         /** Alias for calling [addPrice] with `Price.ofMinimum(minimum)`. */
         fun addPrice(minimum: Price.Minimum) = addPrice(Price.ofMinimum(minimum))
 
+        /** Alias for calling [addPrice] with `Price.ofEventOutput(eventOutput)`. */
+        fun addPrice(eventOutput: Price.EventOutput) = addPrice(Price.ofEventOutput(eventOutput))
+
         fun version(version: Long) = version(JsonField.of(version))
 
         /**

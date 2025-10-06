@@ -31,6 +31,7 @@ internal class ItemTest {
                         .build()
                 )
                 .name("name")
+                .archivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
 
         assertThat(item.id()).isEqualTo("id")
@@ -49,6 +50,7 @@ internal class ItemTest {
                     .build()
             )
         assertThat(item.name()).isEqualTo("name")
+        assertThat(item.archivedAt()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }
 
     @Test
@@ -72,6 +74,7 @@ internal class ItemTest {
                         .build()
                 )
                 .name("name")
+                .archivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
 
         val roundtrippedItem =

@@ -561,6 +561,10 @@ private constructor(
             "Body{externalConnections=$externalConnections, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * Represents a connection between an Item and an external system for invoicing or tax
+     * calculation purposes.
+     */
     class ExternalConnection
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
@@ -580,6 +584,8 @@ private constructor(
         ) : this(externalConnectionName, externalEntityId, mutableMapOf())
 
         /**
+         * The name of the external system this item is connected to.
+         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -587,6 +593,8 @@ private constructor(
             externalConnectionName.getRequired("external_connection_name")
 
         /**
+         * The identifier of this item in the external system.
+         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -651,6 +659,7 @@ private constructor(
                 additionalProperties = externalConnection.additionalProperties.toMutableMap()
             }
 
+            /** The name of the external system this item is connected to. */
             fun externalConnectionName(externalConnectionName: ExternalConnectionName) =
                 externalConnectionName(JsonField.of(externalConnectionName))
 
@@ -666,6 +675,7 @@ private constructor(
                     this.externalConnectionName = externalConnectionName
                 }
 
+            /** The identifier of this item in the external system. */
             fun externalEntityId(externalEntityId: String) =
                 externalEntityId(JsonField.of(externalEntityId))
 
@@ -750,6 +760,7 @@ private constructor(
             (externalConnectionName.asKnown()?.validity() ?: 0) +
                 (if (externalEntityId.asKnown() == null) 0 else 1)
 
+        /** The name of the external system this item is connected to. */
         class ExternalConnectionName
         @JsonCreator
         private constructor(private val value: JsonField<String>) : Enum {

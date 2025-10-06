@@ -15,6 +15,7 @@ import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Collections
 import java.util.Objects
 
+/** A minimal representation of an Item containing only the essential identifying information. */
 class ItemSlim
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
@@ -30,12 +31,16 @@ private constructor(
     ) : this(id, name, mutableMapOf())
 
     /**
+     * The Orb-assigned unique identifier for the item.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
 
     /**
+     * The name of the item.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -94,6 +99,7 @@ private constructor(
             additionalProperties = itemSlim.additionalProperties.toMutableMap()
         }
 
+        /** The Orb-assigned unique identifier for the item. */
         fun id(id: String) = id(JsonField.of(id))
 
         /**
@@ -104,6 +110,7 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
+        /** The name of the item. */
         fun name(name: String) = name(JsonField.of(name))
 
         /**
