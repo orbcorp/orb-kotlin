@@ -261,6 +261,9 @@ private constructor(
         /** Alias for calling [addData] with `Price.ofMinimum(minimum)`. */
         fun addData(minimum: Price.Minimum) = addData(Price.ofMinimum(minimum))
 
+        /** Alias for calling [addData] with `Price.ofPercent(percent)`. */
+        fun addData(percent: Price.Percent) = addData(Price.ofPercent(percent))
+
         /** Alias for calling [addData] with `Price.ofEventOutput(eventOutput)`. */
         fun addData(eventOutput: Price.EventOutput) = addData(Price.ofEventOutput(eventOutput))
 
