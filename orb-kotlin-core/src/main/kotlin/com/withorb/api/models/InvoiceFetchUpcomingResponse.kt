@@ -5033,6 +5033,9 @@ private constructor(
             /** Alias for calling [price] with `Price.ofMinimum(minimum)`. */
             fun price(minimum: Price.Minimum) = price(Price.ofMinimum(minimum))
 
+            /** Alias for calling [price] with `Price.ofPercent(percent)`. */
+            fun price(percent: Price.Percent) = price(Price.ofPercent(percent))
+
             /** Alias for calling [price] with `Price.ofEventOutput(eventOutput)`. */
             fun price(eventOutput: Price.EventOutput) = price(Price.ofEventOutput(eventOutput))
 
