@@ -310,6 +310,10 @@ private constructor(
         /** Alias for calling [addPrice] with `Price.ofBulk(bulk)`. */
         fun addPrice(bulk: Price.Bulk) = addPrice(Price.ofBulk(bulk))
 
+        /** Alias for calling [addPrice] with `Price.ofBulkWithFilters(bulkWithFilters)`. */
+        fun addPrice(bulkWithFilters: Price.BulkWithFilters) =
+            addPrice(Price.ofBulkWithFilters(bulkWithFilters))
+
         /** Alias for calling [addPrice] with `Price.ofPackage(package_)`. */
         fun addPrice(package_: Price.Package) = addPrice(Price.ofPackage(package_))
 
