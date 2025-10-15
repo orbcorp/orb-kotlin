@@ -1136,6 +1136,7 @@ private constructor(
                 private val netTerms: JsonField<Long>,
                 private val customDueDate: JsonField<CustomDueDate>,
                 private val invoiceDate: JsonField<InvoiceDate>,
+                private val itemId: JsonField<String>,
                 private val memo: JsonField<String>,
                 private val requireSuccessfulPayment: JsonField<Boolean>,
                 private val additionalProperties: MutableMap<String, JsonValue>,
@@ -1155,6 +1156,9 @@ private constructor(
                     @JsonProperty("invoice_date")
                     @ExcludeMissing
                     invoiceDate: JsonField<InvoiceDate> = JsonMissing.of(),
+                    @JsonProperty("item_id")
+                    @ExcludeMissing
+                    itemId: JsonField<String> = JsonMissing.of(),
                     @JsonProperty("memo")
                     @ExcludeMissing
                     memo: JsonField<String> = JsonMissing.of(),
@@ -1166,6 +1170,7 @@ private constructor(
                     netTerms,
                     customDueDate,
                     invoiceDate,
+                    itemId,
                     memo,
                     requireSuccessfulPayment,
                     mutableMapOf(),
@@ -1211,6 +1216,15 @@ private constructor(
                  *   the server responded with an unexpected value).
                  */
                 fun invoiceDate(): InvoiceDate? = invoiceDate.getNullable("invoice_date")
+
+                /**
+                 * The ID of the Item to be used for the invoice line item. If not provided, a
+                 * default 'Credits' item will be used.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun itemId(): String? = itemId.getNullable("item_id")
 
                 /**
                  * An optional memo to display on the invoice.
@@ -1271,6 +1285,14 @@ private constructor(
                 fun _invoiceDate(): JsonField<InvoiceDate> = invoiceDate
 
                 /**
+                 * Returns the raw JSON value of [itemId].
+                 *
+                 * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+
+                /**
                  * Returns the raw JSON value of [memo].
                  *
                  * Unlike [memo], this method doesn't throw if the JSON field has an unexpected
@@ -1321,6 +1343,7 @@ private constructor(
                     private var netTerms: JsonField<Long>? = null
                     private var customDueDate: JsonField<CustomDueDate> = JsonMissing.of()
                     private var invoiceDate: JsonField<InvoiceDate> = JsonMissing.of()
+                    private var itemId: JsonField<String> = JsonMissing.of()
                     private var memo: JsonField<String> = JsonMissing.of()
                     private var requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -1330,6 +1353,7 @@ private constructor(
                         netTerms = invoiceSettings.netTerms
                         customDueDate = invoiceSettings.customDueDate
                         invoiceDate = invoiceSettings.invoiceDate
+                        itemId = invoiceSettings.itemId
                         memo = invoiceSettings.memo
                         requireSuccessfulPayment = invoiceSettings.requireSuccessfulPayment
                         additionalProperties = invoiceSettings.additionalProperties.toMutableMap()
@@ -1432,6 +1456,21 @@ private constructor(
                     fun invoiceDate(dateTime: OffsetDateTime) =
                         invoiceDate(InvoiceDate.ofDateTime(dateTime))
 
+                    /**
+                     * The ID of the Item to be used for the invoice line item. If not provided, a
+                     * default 'Credits' item will be used.
+                     */
+                    fun itemId(itemId: String?) = itemId(JsonField.ofNullable(itemId))
+
+                    /**
+                     * Sets [Builder.itemId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.itemId] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
                     /** An optional memo to display on the invoice. */
                     fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
 
@@ -1504,6 +1543,7 @@ private constructor(
                             checkRequired("netTerms", netTerms),
                             customDueDate,
                             invoiceDate,
+                            itemId,
                             memo,
                             requireSuccessfulPayment,
                             additionalProperties.toMutableMap(),
@@ -1521,6 +1561,7 @@ private constructor(
                     netTerms()
                     customDueDate()?.validate()
                     invoiceDate()?.validate()
+                    itemId()
                     memo()
                     requireSuccessfulPayment()
                     validated = true
@@ -1545,6 +1586,7 @@ private constructor(
                         (if (netTerms.asKnown() == null) 0 else 1) +
                         (customDueDate.asKnown()?.validity() ?: 0) +
                         (invoiceDate.asKnown()?.validity() ?: 0) +
+                        (if (itemId.asKnown() == null) 0 else 1) +
                         (if (memo.asKnown() == null) 0 else 1) +
                         (if (requireSuccessfulPayment.asKnown() == null) 0 else 1)
 
@@ -1915,6 +1957,7 @@ private constructor(
                         netTerms == other.netTerms &&
                         customDueDate == other.customDueDate &&
                         invoiceDate == other.invoiceDate &&
+                        itemId == other.itemId &&
                         memo == other.memo &&
                         requireSuccessfulPayment == other.requireSuccessfulPayment &&
                         additionalProperties == other.additionalProperties
@@ -1926,6 +1969,7 @@ private constructor(
                         netTerms,
                         customDueDate,
                         invoiceDate,
+                        itemId,
                         memo,
                         requireSuccessfulPayment,
                         additionalProperties,
@@ -1935,7 +1979,7 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, customDueDate=$customDueDate, invoiceDate=$invoiceDate, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
+                    "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, customDueDate=$customDueDate, invoiceDate=$invoiceDate, itemId=$itemId, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
             }
 
             /**
