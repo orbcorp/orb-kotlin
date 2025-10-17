@@ -21,6 +21,13 @@ internal class ExpirationChangeLedgerEntryTest {
                 .creditBlock(
                     AffectedBlock.builder()
                         .id("id")
+                        .addBlockFilter(
+                            AffectedBlock.BlockFilter.builder()
+                                .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
+                                .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
@@ -54,6 +61,13 @@ internal class ExpirationChangeLedgerEntryTest {
             .isEqualTo(
                 AffectedBlock.builder()
                     .id("id")
+                    .addBlockFilter(
+                        AffectedBlock.BlockFilter.builder()
+                            .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
+                            .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
                     .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .perUnitCostBasis("per_unit_cost_basis")
                     .build()
@@ -95,6 +109,13 @@ internal class ExpirationChangeLedgerEntryTest {
                 .creditBlock(
                     AffectedBlock.builder()
                         .id("id")
+                        .addBlockFilter(
+                            AffectedBlock.BlockFilter.builder()
+                                .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
+                                .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()

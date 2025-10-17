@@ -27,7 +27,6 @@ import com.withorb.api.models.SubscriptionUnscheduleFixedFeeQuantityUpdatesParam
 import com.withorb.api.models.SubscriptionUpdateFixedFeeQuantityParams
 import com.withorb.api.models.SubscriptionUpdateParams
 import com.withorb.api.models.SubscriptionUpdateTrialParams
-import com.withorb.api.models.TransformPriceFilter
 import com.withorb.api.models.UnitConfig
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -65,9 +64,11 @@ internal class SubscriptionServiceTest {
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        NewPercentageDiscount.Filter.builder()
+                                            .field(NewPercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                NewPercentageDiscount.Filter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -223,9 +224,11 @@ internal class SubscriptionServiceTest {
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        NewPercentageDiscount.Filter.builder()
+                                            .field(NewPercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                NewPercentageDiscount.Filter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -593,9 +596,11 @@ internal class SubscriptionServiceTest {
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        NewPercentageDiscount.Filter.builder()
+                                            .field(NewPercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                NewPercentageDiscount.Filter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -691,9 +696,11 @@ internal class SubscriptionServiceTest {
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        NewPercentageDiscount.Filter.builder()
+                                            .field(NewPercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                NewPercentageDiscount.Filter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -840,9 +847,11 @@ internal class SubscriptionServiceTest {
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        NewPercentageDiscount.Filter.builder()
+                                            .field(NewPercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                NewPercentageDiscount.Filter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )

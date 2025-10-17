@@ -9239,6 +9239,7 @@ private constructor(
                 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
                 private constructor(
                     private val unitRatingKey: JsonField<String>,
+                    private val defaultUnitRate: JsonField<String>,
                     private val groupingKey: JsonField<String>,
                     private val additionalProperties: MutableMap<String, JsonValue>,
                 ) {
@@ -9248,10 +9249,13 @@ private constructor(
                         @JsonProperty("unit_rating_key")
                         @ExcludeMissing
                         unitRatingKey: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("default_unit_rate")
+                        @ExcludeMissing
+                        defaultUnitRate: JsonField<String> = JsonMissing.of(),
                         @JsonProperty("grouping_key")
                         @ExcludeMissing
                         groupingKey: JsonField<String> = JsonMissing.of(),
-                    ) : this(unitRatingKey, groupingKey, mutableMapOf())
+                    ) : this(unitRatingKey, defaultUnitRate, groupingKey, mutableMapOf())
 
                     /**
                      * The key in the event data to extract the unit rate from.
@@ -9261,6 +9265,17 @@ private constructor(
                      *   unexpected value).
                      */
                     fun unitRatingKey(): String = unitRatingKey.getRequired("unit_rating_key")
+
+                    /**
+                     * If provided, this amount will be used as the unit rate when an event does not
+                     * have a value for the `unit_rating_key`. If not provided, events missing a
+                     * unit rate will be ignored.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun defaultUnitRate(): String? =
+                        defaultUnitRate.getNullable("default_unit_rate")
 
                     /**
                      * An optional key in the event data to group by (e.g., event ID). All events
@@ -9280,6 +9295,16 @@ private constructor(
                     @JsonProperty("unit_rating_key")
                     @ExcludeMissing
                     fun _unitRatingKey(): JsonField<String> = unitRatingKey
+
+                    /**
+                     * Returns the raw JSON value of [defaultUnitRate].
+                     *
+                     * Unlike [defaultUnitRate], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("default_unit_rate")
+                    @ExcludeMissing
+                    fun _defaultUnitRate(): JsonField<String> = defaultUnitRate
 
                     /**
                      * Returns the raw JSON value of [groupingKey].
@@ -9321,12 +9346,14 @@ private constructor(
                     class Builder internal constructor() {
 
                         private var unitRatingKey: JsonField<String>? = null
+                        private var defaultUnitRate: JsonField<String> = JsonMissing.of()
                         private var groupingKey: JsonField<String> = JsonMissing.of()
                         private var additionalProperties: MutableMap<String, JsonValue> =
                             mutableMapOf()
 
                         internal fun from(eventOutputConfig: EventOutputConfig) = apply {
                             unitRatingKey = eventOutputConfig.unitRatingKey
+                            defaultUnitRate = eventOutputConfig.defaultUnitRate
                             groupingKey = eventOutputConfig.groupingKey
                             additionalProperties =
                                 eventOutputConfig.additionalProperties.toMutableMap()
@@ -9345,6 +9372,25 @@ private constructor(
                          */
                         fun unitRatingKey(unitRatingKey: JsonField<String>) = apply {
                             this.unitRatingKey = unitRatingKey
+                        }
+
+                        /**
+                         * If provided, this amount will be used as the unit rate when an event does
+                         * not have a value for the `unit_rating_key`. If not provided, events
+                         * missing a unit rate will be ignored.
+                         */
+                        fun defaultUnitRate(defaultUnitRate: String?) =
+                            defaultUnitRate(JsonField.ofNullable(defaultUnitRate))
+
+                        /**
+                         * Sets [Builder.defaultUnitRate] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.defaultUnitRate] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun defaultUnitRate(defaultUnitRate: JsonField<String>) = apply {
+                            this.defaultUnitRate = defaultUnitRate
                         }
 
                         /**
@@ -9402,6 +9448,7 @@ private constructor(
                         fun build(): EventOutputConfig =
                             EventOutputConfig(
                                 checkRequired("unitRatingKey", unitRatingKey),
+                                defaultUnitRate,
                                 groupingKey,
                                 additionalProperties.toMutableMap(),
                             )
@@ -9415,6 +9462,7 @@ private constructor(
                         }
 
                         unitRatingKey()
+                        defaultUnitRate()
                         groupingKey()
                         validated = true
                     }
@@ -9435,6 +9483,7 @@ private constructor(
                      */
                     internal fun validity(): Int =
                         (if (unitRatingKey.asKnown() == null) 0 else 1) +
+                            (if (defaultUnitRate.asKnown() == null) 0 else 1) +
                             (if (groupingKey.asKnown() == null) 0 else 1)
 
                     override fun equals(other: Any?): Boolean {
@@ -9444,18 +9493,24 @@ private constructor(
 
                         return other is EventOutputConfig &&
                             unitRatingKey == other.unitRatingKey &&
+                            defaultUnitRate == other.defaultUnitRate &&
                             groupingKey == other.groupingKey &&
                             additionalProperties == other.additionalProperties
                     }
 
                     private val hashCode: Int by lazy {
-                        Objects.hash(unitRatingKey, groupingKey, additionalProperties)
+                        Objects.hash(
+                            unitRatingKey,
+                            defaultUnitRate,
+                            groupingKey,
+                            additionalProperties,
+                        )
                     }
 
                     override fun hashCode(): Int = hashCode
 
                     override fun toString() =
-                        "EventOutputConfig{unitRatingKey=$unitRatingKey, groupingKey=$groupingKey, additionalProperties=$additionalProperties}"
+                        "EventOutputConfig{unitRatingKey=$unitRatingKey, defaultUnitRate=$defaultUnitRate, groupingKey=$groupingKey, additionalProperties=$additionalProperties}"
                 }
 
                 /**

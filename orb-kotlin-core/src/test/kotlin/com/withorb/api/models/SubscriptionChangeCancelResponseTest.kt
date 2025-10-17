@@ -34,9 +34,15 @@ internal class SubscriptionChangeCancelResponseTest {
                                         )
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PlanPhaseUsageDiscountAdjustment.Filter.builder()
+                                                .field(
+                                                    PlanPhaseUsageDiscountAdjustment.Filter.Field
+                                                        .PRICE_ID
+                                                )
+                                                .operator(
+                                                    PlanPhaseUsageDiscountAdjustment.Filter.Operator
+                                                        .INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -164,9 +170,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                 .discountType(AmountDiscountInterval.DiscountType.AMOUNT)
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    AmountDiscountInterval.Filter.builder()
+                                        .field(AmountDiscountInterval.Filter.Field.PRICE_ID)
+                                        .operator(AmountDiscountInterval.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -188,9 +194,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                 .addAppliesToPriceIntervalId("string")
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    MaximumInterval.Filter.builder()
+                                        .field(MaximumInterval.Filter.Field.PRICE_ID)
+                                        .operator(MaximumInterval.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -208,9 +214,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                 .addAppliesToPriceIntervalId("string")
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    MinimumInterval.Filter.builder()
+                                        .field(MinimumInterval.Filter.Field.PRICE_ID)
+                                        .operator(MinimumInterval.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -235,9 +241,15 @@ internal class SubscriptionChangeCancelResponseTest {
                                         )
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PlanPhaseUsageDiscountAdjustment.Filter.builder()
+                                                .field(
+                                                    PlanPhaseUsageDiscountAdjustment.Filter.Field
+                                                        .PRICE_ID
+                                                )
+                                                .operator(
+                                                    PlanPhaseUsageDiscountAdjustment.Filter.Operator
+                                                        .INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -267,9 +279,11 @@ internal class SubscriptionChangeCancelResponseTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -282,9 +296,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                     Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Maximum.Filter.builder()
+                                                .field(Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Maximum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -301,9 +315,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                     Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Minimum.Filter.builder()
+                                                .field(Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Minimum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -326,10 +340,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -343,11 +360,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -359,11 +374,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -392,9 +405,14 @@ internal class SubscriptionChangeCancelResponseTest {
                                         .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Price.Unit.CompositePriceFilter.builder()
+                                                .field(
+                                                    Price.Unit.CompositePriceFilter.Field.PRICE_ID
+                                                )
+                                                .operator(
+                                                    Price.Unit.CompositePriceFilter.Operator
+                                                        .INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -429,10 +447,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -455,11 +476,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -479,11 +498,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -563,9 +580,14 @@ internal class SubscriptionChangeCancelResponseTest {
                                         .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Price.Unit.CompositePriceFilter.builder()
+                                                .field(
+                                                    Price.Unit.CompositePriceFilter.Field.PRICE_ID
+                                                )
+                                                .operator(
+                                                    Price.Unit.CompositePriceFilter.Operator
+                                                        .INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -600,10 +622,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -626,11 +651,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -650,11 +673,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -901,10 +922,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -950,13 +974,18 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         .amount("amount")
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            MonetaryUsageDiscountAdjustment.Filter
+                                                                .builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    MonetaryUsageDiscountAdjustment
+                                                                        .Filter
+                                                                        .Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    MonetaryUsageDiscountAdjustment
+                                                                        .Filter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -982,13 +1011,14 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            PercentageDiscount.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    PercentageDiscount.Filter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    PercentageDiscount.Filter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1008,14 +1038,12 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Maximum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Maximum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Maximum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -1028,14 +1056,12 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Minimum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Minimum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Minimum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -1069,13 +1095,16 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         )
                                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .addCompositePriceFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Price.Unit.CompositePriceFilter
+                                                                .builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    Price.Unit.CompositePriceFilter
+                                                                        .Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    Price.Unit.CompositePriceFilter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1123,14 +1152,17 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                     "7hfgtgjnbvc3ujkl"
                                                                 )
                                                                 .addFilter(
-                                                                    TransformPriceFilter.builder()
+                                                                    PercentageDiscount.Filter
+                                                                        .builder()
                                                                         .field(
-                                                                            TransformPriceFilter
+                                                                            PercentageDiscount
+                                                                                .Filter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            TransformPriceFilter
+                                                                            PercentageDiscount
+                                                                                .Filter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -1162,15 +1194,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                             Maximum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    TransformPriceFilter.builder()
+                                                                    Maximum.Filter.builder()
                                                                         .field(
-                                                                            TransformPriceFilter
-                                                                                .Field
+                                                                            Maximum.Filter.Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            TransformPriceFilter
-                                                                                .Operator
+                                                                            Maximum.Filter.Operator
                                                                                 .INCLUDES
                                                                         )
                                                                         .addValue("string")
@@ -1192,15 +1222,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                             Minimum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    TransformPriceFilter.builder()
+                                                                    Minimum.Filter.builder()
                                                                         .field(
-                                                                            TransformPriceFilter
-                                                                                .Field
+                                                                            Minimum.Filter.Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            TransformPriceFilter
-                                                                                .Operator
+                                                                            Minimum.Filter.Operator
                                                                                 .INCLUDES
                                                                         )
                                                                         .addValue("string")
@@ -1270,11 +1298,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -1296,11 +1322,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -1561,10 +1585,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -1604,13 +1631,18 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         .amount("amount")
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            MonetaryUsageDiscountAdjustment.Filter
+                                                                .builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    MonetaryUsageDiscountAdjustment
+                                                                        .Filter
+                                                                        .Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    MonetaryUsageDiscountAdjustment
+                                                                        .Filter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1636,13 +1668,14 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            PercentageDiscount.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    PercentageDiscount.Filter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    PercentageDiscount.Filter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1662,14 +1695,12 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Maximum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Maximum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Maximum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -1682,14 +1713,12 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Minimum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Minimum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Minimum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -1723,13 +1752,16 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         )
                                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .addCompositePriceFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Price.Unit.CompositePriceFilter
+                                                                .builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    Price.Unit.CompositePriceFilter
+                                                                        .Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    Price.Unit.CompositePriceFilter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1777,14 +1809,17 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                     "7hfgtgjnbvc3ujkl"
                                                                 )
                                                                 .addFilter(
-                                                                    TransformPriceFilter.builder()
+                                                                    PercentageDiscount.Filter
+                                                                        .builder()
                                                                         .field(
-                                                                            TransformPriceFilter
+                                                                            PercentageDiscount
+                                                                                .Filter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            TransformPriceFilter
+                                                                            PercentageDiscount
+                                                                                .Filter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -1816,15 +1851,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                             Maximum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    TransformPriceFilter.builder()
+                                                                    Maximum.Filter.builder()
                                                                         .field(
-                                                                            TransformPriceFilter
-                                                                                .Field
+                                                                            Maximum.Filter.Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            TransformPriceFilter
-                                                                                .Operator
+                                                                            Maximum.Filter.Operator
                                                                                 .INCLUDES
                                                                         )
                                                                         .addValue("string")
@@ -1846,15 +1879,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                             Minimum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    TransformPriceFilter.builder()
+                                                                    Minimum.Filter.builder()
                                                                         .field(
-                                                                            TransformPriceFilter
-                                                                                .Field
+                                                                            Minimum.Filter.Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            TransformPriceFilter
-                                                                                .Operator
+                                                                            Minimum.Filter.Operator
                                                                                 .INCLUDES
                                                                         )
                                                                         .addValue("string")
@@ -1924,11 +1955,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -1949,11 +1978,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -2043,9 +2070,15 @@ internal class SubscriptionChangeCancelResponseTest {
                                     )
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        PlanPhaseUsageDiscountAdjustment.Filter.builder()
+                                            .field(
+                                                PlanPhaseUsageDiscountAdjustment.Filter.Field
+                                                    .PRICE_ID
+                                            )
+                                            .operator(
+                                                PlanPhaseUsageDiscountAdjustment.Filter.Operator
+                                                    .INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -2165,9 +2198,9 @@ internal class SubscriptionChangeCancelResponseTest {
                             .discountType(AmountDiscountInterval.DiscountType.AMOUNT)
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                AmountDiscountInterval.Filter.builder()
+                                    .field(AmountDiscountInterval.Filter.Field.PRICE_ID)
+                                    .operator(AmountDiscountInterval.Filter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
@@ -2189,9 +2222,9 @@ internal class SubscriptionChangeCancelResponseTest {
                             .addAppliesToPriceIntervalId("string")
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                MaximumInterval.Filter.builder()
+                                    .field(MaximumInterval.Filter.Field.PRICE_ID)
+                                    .operator(MaximumInterval.Filter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
@@ -2209,9 +2242,9 @@ internal class SubscriptionChangeCancelResponseTest {
                             .addAppliesToPriceIntervalId("string")
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                MinimumInterval.Filter.builder()
+                                    .field(MinimumInterval.Filter.Field.PRICE_ID)
+                                    .operator(MinimumInterval.Filter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
@@ -2236,9 +2269,15 @@ internal class SubscriptionChangeCancelResponseTest {
                                     )
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        PlanPhaseUsageDiscountAdjustment.Filter.builder()
+                                            .field(
+                                                PlanPhaseUsageDiscountAdjustment.Filter.Field
+                                                    .PRICE_ID
+                                            )
+                                            .operator(
+                                                PlanPhaseUsageDiscountAdjustment.Filter.Operator
+                                                    .INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -2268,9 +2307,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        PercentageDiscount.Filter.builder()
+                                            .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(PercentageDiscount.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2283,9 +2322,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                 Maximum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Maximum.Filter.builder()
+                                            .field(Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Maximum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2302,9 +2341,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                 Minimum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Minimum.Filter.builder()
+                                            .field(Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Minimum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2327,10 +2366,10 @@ internal class SubscriptionChangeCancelResponseTest {
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                PercentageDiscount.Filter.builder()
+                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
                                                     .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
+                                                        PercentageDiscount.Filter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2344,11 +2383,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                         Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Maximum.Filter.builder()
+                                                    .field(Maximum.Filter.Field.PRICE_ID)
+                                                    .operator(Maximum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -2360,11 +2397,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                         Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Minimum.Filter.builder()
+                                                    .field(Minimum.Filter.Field.PRICE_ID)
+                                                    .operator(Minimum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -2391,9 +2426,11 @@ internal class SubscriptionChangeCancelResponseTest {
                                     .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                     .addCompositePriceFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Price.Unit.CompositePriceFilter.builder()
+                                            .field(Price.Unit.CompositePriceFilter.Field.PRICE_ID)
+                                            .operator(
+                                                Price.Unit.CompositePriceFilter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -2426,10 +2463,10 @@ internal class SubscriptionChangeCancelResponseTest {
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                PercentageDiscount.Filter.builder()
+                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
                                                     .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
+                                                        PercentageDiscount.Filter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2452,11 +2489,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                         Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Maximum.Filter.builder()
+                                                    .field(Maximum.Filter.Field.PRICE_ID)
+                                                    .operator(Maximum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -2473,11 +2508,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                         Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Minimum.Filter.builder()
+                                                    .field(Minimum.Filter.Field.PRICE_ID)
+                                                    .operator(Minimum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -2551,9 +2584,11 @@ internal class SubscriptionChangeCancelResponseTest {
                                     .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                     .addCompositePriceFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Price.Unit.CompositePriceFilter.builder()
+                                            .field(Price.Unit.CompositePriceFilter.Field.PRICE_ID)
+                                            .operator(
+                                                Price.Unit.CompositePriceFilter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -2586,10 +2621,10 @@ internal class SubscriptionChangeCancelResponseTest {
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                PercentageDiscount.Filter.builder()
+                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
                                                     .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
+                                                        PercentageDiscount.Filter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2612,11 +2647,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                         Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Maximum.Filter.builder()
+                                                    .field(Maximum.Filter.Field.PRICE_ID)
+                                                    .operator(Maximum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -2633,11 +2666,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                         Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Minimum.Filter.builder()
+                                                    .field(Minimum.Filter.Field.PRICE_ID)
+                                                    .operator(Minimum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -2869,10 +2900,10 @@ internal class SubscriptionChangeCancelResponseTest {
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                PercentageDiscount.Filter.builder()
+                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
                                                     .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
+                                                        PercentageDiscount.Filter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2913,12 +2944,18 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     .amount("amount")
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
+                                                        MonetaryUsageDiscountAdjustment.Filter
+                                                            .builder()
                                                             .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
+                                                                MonetaryUsageDiscountAdjustment
+                                                                    .Filter
+                                                                    .Field
+                                                                    .PRICE_ID
                                                             )
                                                             .operator(
-                                                                TransformPriceFilter.Operator
+                                                                MonetaryUsageDiscountAdjustment
+                                                                    .Filter
+                                                                    .Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -2941,12 +2978,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
+                                                        PercentageDiscount.Filter.builder()
                                                             .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
+                                                                PercentageDiscount.Filter.Field
+                                                                    .PRICE_ID
                                                             )
                                                             .operator(
-                                                                TransformPriceFilter.Operator
+                                                                PercentageDiscount.Filter.Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -2964,13 +3002,10 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 Maximum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
-                                                            .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
-                                                            )
+                                                        Maximum.Filter.builder()
+                                                            .field(Maximum.Filter.Field.PRICE_ID)
                                                             .operator(
-                                                                TransformPriceFilter.Operator
-                                                                    .INCLUDES
+                                                                Maximum.Filter.Operator.INCLUDES
                                                             )
                                                             .addValue("string")
                                                             .build()
@@ -2983,13 +3018,10 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 Minimum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
-                                                            .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
-                                                            )
+                                                        Minimum.Filter.builder()
+                                                            .field(Minimum.Filter.Field.PRICE_ID)
                                                             .operator(
-                                                                TransformPriceFilter.Operator
-                                                                    .INCLUDES
+                                                                Minimum.Filter.Operator.INCLUDES
                                                             )
                                                             .addValue("string")
                                                             .build()
@@ -3021,12 +3053,15 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                                     .addCompositePriceFilter(
-                                                        TransformPriceFilter.builder()
+                                                        Price.Unit.CompositePriceFilter.builder()
                                                             .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
+                                                                Price.Unit.CompositePriceFilter
+                                                                    .Field
+                                                                    .PRICE_ID
                                                             )
                                                             .operator(
-                                                                TransformPriceFilter.Operator
+                                                                Price.Unit.CompositePriceFilter
+                                                                    .Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -3070,13 +3105,14 @@ internal class SubscriptionChangeCancelResponseTest {
                                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                             .addFilter(
-                                                                TransformPriceFilter.builder()
+                                                                PercentageDiscount.Filter.builder()
                                                                     .field(
-                                                                        TransformPriceFilter.Field
+                                                                        PercentageDiscount.Filter
+                                                                            .Field
                                                                             .PRICE_ID
                                                                     )
                                                                     .operator(
-                                                                        TransformPriceFilter
+                                                                        PercentageDiscount.Filter
                                                                             .Operator
                                                                             .INCLUDES
                                                                     )
@@ -3108,14 +3144,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         Maximum.builder()
                                                             .addAppliesToPriceId("string")
                                                             .addFilter(
-                                                                TransformPriceFilter.builder()
+                                                                Maximum.Filter.builder()
                                                                     .field(
-                                                                        TransformPriceFilter.Field
+                                                                        Maximum.Filter.Field
                                                                             .PRICE_ID
                                                                     )
                                                                     .operator(
-                                                                        TransformPriceFilter
-                                                                            .Operator
+                                                                        Maximum.Filter.Operator
                                                                             .INCLUDES
                                                                     )
                                                                     .addValue("string")
@@ -3137,14 +3172,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         Minimum.builder()
                                                             .addAppliesToPriceId("string")
                                                             .addFilter(
-                                                                TransformPriceFilter.builder()
+                                                                Minimum.Filter.builder()
                                                                     .field(
-                                                                        TransformPriceFilter.Field
+                                                                        Minimum.Filter.Field
                                                                             .PRICE_ID
                                                                     )
                                                                     .operator(
-                                                                        TransformPriceFilter
-                                                                            .Operator
+                                                                        Minimum.Filter.Operator
                                                                             .INCLUDES
                                                                     )
                                                                     .addValue("string")
@@ -3212,11 +3246,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                         Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Maximum.Filter.builder()
+                                                    .field(Maximum.Filter.Field.PRICE_ID)
+                                                    .operator(Maximum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -3235,11 +3267,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                         Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Minimum.Filter.builder()
+                                                    .field(Minimum.Filter.Field.PRICE_ID)
+                                                    .operator(Minimum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -3481,10 +3511,10 @@ internal class SubscriptionChangeCancelResponseTest {
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                PercentageDiscount.Filter.builder()
+                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
                                                     .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
+                                                        PercentageDiscount.Filter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -3520,12 +3550,18 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     .amount("amount")
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
+                                                        MonetaryUsageDiscountAdjustment.Filter
+                                                            .builder()
                                                             .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
+                                                                MonetaryUsageDiscountAdjustment
+                                                                    .Filter
+                                                                    .Field
+                                                                    .PRICE_ID
                                                             )
                                                             .operator(
-                                                                TransformPriceFilter.Operator
+                                                                MonetaryUsageDiscountAdjustment
+                                                                    .Filter
+                                                                    .Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -3548,12 +3584,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
+                                                        PercentageDiscount.Filter.builder()
                                                             .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
+                                                                PercentageDiscount.Filter.Field
+                                                                    .PRICE_ID
                                                             )
                                                             .operator(
-                                                                TransformPriceFilter.Operator
+                                                                PercentageDiscount.Filter.Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -3571,13 +3608,10 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 Maximum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
-                                                            .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
-                                                            )
+                                                        Maximum.Filter.builder()
+                                                            .field(Maximum.Filter.Field.PRICE_ID)
                                                             .operator(
-                                                                TransformPriceFilter.Operator
-                                                                    .INCLUDES
+                                                                Maximum.Filter.Operator.INCLUDES
                                                             )
                                                             .addValue("string")
                                                             .build()
@@ -3590,13 +3624,10 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 Minimum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
-                                                            .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
-                                                            )
+                                                        Minimum.Filter.builder()
+                                                            .field(Minimum.Filter.Field.PRICE_ID)
                                                             .operator(
-                                                                TransformPriceFilter.Operator
-                                                                    .INCLUDES
+                                                                Minimum.Filter.Operator.INCLUDES
                                                             )
                                                             .addValue("string")
                                                             .build()
@@ -3628,12 +3659,15 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                                     .cadence(Price.Unit.Cadence.ONE_TIME)
                                                     .addCompositePriceFilter(
-                                                        TransformPriceFilter.builder()
+                                                        Price.Unit.CompositePriceFilter.builder()
                                                             .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
+                                                                Price.Unit.CompositePriceFilter
+                                                                    .Field
+                                                                    .PRICE_ID
                                                             )
                                                             .operator(
-                                                                TransformPriceFilter.Operator
+                                                                Price.Unit.CompositePriceFilter
+                                                                    .Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -3677,13 +3711,14 @@ internal class SubscriptionChangeCancelResponseTest {
                                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                             .addFilter(
-                                                                TransformPriceFilter.builder()
+                                                                PercentageDiscount.Filter.builder()
                                                                     .field(
-                                                                        TransformPriceFilter.Field
+                                                                        PercentageDiscount.Filter
+                                                                            .Field
                                                                             .PRICE_ID
                                                                     )
                                                                     .operator(
-                                                                        TransformPriceFilter
+                                                                        PercentageDiscount.Filter
                                                                             .Operator
                                                                             .INCLUDES
                                                                     )
@@ -3715,14 +3750,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         Maximum.builder()
                                                             .addAppliesToPriceId("string")
                                                             .addFilter(
-                                                                TransformPriceFilter.builder()
+                                                                Maximum.Filter.builder()
                                                                     .field(
-                                                                        TransformPriceFilter.Field
+                                                                        Maximum.Filter.Field
                                                                             .PRICE_ID
                                                                     )
                                                                     .operator(
-                                                                        TransformPriceFilter
-                                                                            .Operator
+                                                                        Maximum.Filter.Operator
                                                                             .INCLUDES
                                                                     )
                                                                     .addValue("string")
@@ -3744,14 +3778,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         Minimum.builder()
                                                             .addAppliesToPriceId("string")
                                                             .addFilter(
-                                                                TransformPriceFilter.builder()
+                                                                Minimum.Filter.builder()
                                                                     .field(
-                                                                        TransformPriceFilter.Field
+                                                                        Minimum.Filter.Field
                                                                             .PRICE_ID
                                                                     )
                                                                     .operator(
-                                                                        TransformPriceFilter
-                                                                            .Operator
+                                                                        Minimum.Filter.Operator
                                                                             .INCLUDES
                                                                     )
                                                                     .addValue("string")
@@ -3819,11 +3852,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                         Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Maximum.Filter.builder()
+                                                    .field(Maximum.Filter.Field.PRICE_ID)
+                                                    .operator(Maximum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -3841,11 +3872,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                         Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Minimum.Filter.builder()
+                                                    .field(Minimum.Filter.Field.PRICE_ID)
+                                                    .operator(Minimum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -3937,9 +3966,15 @@ internal class SubscriptionChangeCancelResponseTest {
                                         )
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PlanPhaseUsageDiscountAdjustment.Filter.builder()
+                                                .field(
+                                                    PlanPhaseUsageDiscountAdjustment.Filter.Field
+                                                        .PRICE_ID
+                                                )
+                                                .operator(
+                                                    PlanPhaseUsageDiscountAdjustment.Filter.Operator
+                                                        .INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4067,9 +4102,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                 .discountType(AmountDiscountInterval.DiscountType.AMOUNT)
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    AmountDiscountInterval.Filter.builder()
+                                        .field(AmountDiscountInterval.Filter.Field.PRICE_ID)
+                                        .operator(AmountDiscountInterval.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -4091,9 +4126,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                 .addAppliesToPriceIntervalId("string")
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    MaximumInterval.Filter.builder()
+                                        .field(MaximumInterval.Filter.Field.PRICE_ID)
+                                        .operator(MaximumInterval.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -4111,9 +4146,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                 .addAppliesToPriceIntervalId("string")
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    MinimumInterval.Filter.builder()
+                                        .field(MinimumInterval.Filter.Field.PRICE_ID)
+                                        .operator(MinimumInterval.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -4138,9 +4173,15 @@ internal class SubscriptionChangeCancelResponseTest {
                                         )
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PlanPhaseUsageDiscountAdjustment.Filter.builder()
+                                                .field(
+                                                    PlanPhaseUsageDiscountAdjustment.Filter.Field
+                                                        .PRICE_ID
+                                                )
+                                                .operator(
+                                                    PlanPhaseUsageDiscountAdjustment.Filter.Operator
+                                                        .INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4170,9 +4211,11 @@ internal class SubscriptionChangeCancelResponseTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4185,9 +4228,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                     Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Maximum.Filter.builder()
+                                                .field(Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Maximum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4204,9 +4247,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                     Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Minimum.Filter.builder()
+                                                .field(Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Minimum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4229,10 +4272,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4246,11 +4292,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -4262,11 +4306,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -4295,9 +4337,14 @@ internal class SubscriptionChangeCancelResponseTest {
                                         .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Price.Unit.CompositePriceFilter.builder()
+                                                .field(
+                                                    Price.Unit.CompositePriceFilter.Field.PRICE_ID
+                                                )
+                                                .operator(
+                                                    Price.Unit.CompositePriceFilter.Operator
+                                                        .INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4332,10 +4379,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4358,11 +4408,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -4382,11 +4430,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -4466,9 +4512,14 @@ internal class SubscriptionChangeCancelResponseTest {
                                         .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                         .addCompositePriceFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Price.Unit.CompositePriceFilter.builder()
+                                                .field(
+                                                    Price.Unit.CompositePriceFilter.Field.PRICE_ID
+                                                )
+                                                .operator(
+                                                    Price.Unit.CompositePriceFilter.Operator
+                                                        .INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4503,10 +4554,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4529,11 +4583,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -4553,11 +4605,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -4804,10 +4854,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4853,13 +4906,18 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         .amount("amount")
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            MonetaryUsageDiscountAdjustment.Filter
+                                                                .builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    MonetaryUsageDiscountAdjustment
+                                                                        .Filter
+                                                                        .Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    MonetaryUsageDiscountAdjustment
+                                                                        .Filter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -4885,13 +4943,14 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            PercentageDiscount.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    PercentageDiscount.Filter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    PercentageDiscount.Filter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -4911,14 +4970,12 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Maximum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Maximum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Maximum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -4931,14 +4988,12 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Minimum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Minimum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Minimum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -4972,13 +5027,16 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         )
                                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .addCompositePriceFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Price.Unit.CompositePriceFilter
+                                                                .builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    Price.Unit.CompositePriceFilter
+                                                                        .Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    Price.Unit.CompositePriceFilter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -5026,14 +5084,17 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                     "7hfgtgjnbvc3ujkl"
                                                                 )
                                                                 .addFilter(
-                                                                    TransformPriceFilter.builder()
+                                                                    PercentageDiscount.Filter
+                                                                        .builder()
                                                                         .field(
-                                                                            TransformPriceFilter
+                                                                            PercentageDiscount
+                                                                                .Filter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            TransformPriceFilter
+                                                                            PercentageDiscount
+                                                                                .Filter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -5065,15 +5126,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                             Maximum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    TransformPriceFilter.builder()
+                                                                    Maximum.Filter.builder()
                                                                         .field(
-                                                                            TransformPriceFilter
-                                                                                .Field
+                                                                            Maximum.Filter.Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            TransformPriceFilter
-                                                                                .Operator
+                                                                            Maximum.Filter.Operator
                                                                                 .INCLUDES
                                                                         )
                                                                         .addValue("string")
@@ -5095,15 +5154,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                             Minimum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    TransformPriceFilter.builder()
+                                                                    Minimum.Filter.builder()
                                                                         .field(
-                                                                            TransformPriceFilter
-                                                                                .Field
+                                                                            Minimum.Filter.Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            TransformPriceFilter
-                                                                                .Operator
+                                                                            Minimum.Filter.Operator
                                                                                 .INCLUDES
                                                                         )
                                                                         .addValue("string")
@@ -5173,11 +5230,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -5199,11 +5254,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -5464,10 +5517,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -5507,13 +5563,18 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         .amount("amount")
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            MonetaryUsageDiscountAdjustment.Filter
+                                                                .builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    MonetaryUsageDiscountAdjustment
+                                                                        .Filter
+                                                                        .Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    MonetaryUsageDiscountAdjustment
+                                                                        .Filter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -5539,13 +5600,14 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            PercentageDiscount.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    PercentageDiscount.Filter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    PercentageDiscount.Filter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -5565,14 +5627,12 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Maximum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Maximum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Maximum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -5585,14 +5645,12 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Minimum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Minimum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Minimum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -5626,13 +5684,16 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         )
                                                         .cadence(Price.Unit.Cadence.ONE_TIME)
                                                         .addCompositePriceFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Price.Unit.CompositePriceFilter
+                                                                .builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    Price.Unit.CompositePriceFilter
+                                                                        .Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    Price.Unit.CompositePriceFilter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -5680,14 +5741,17 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                     "7hfgtgjnbvc3ujkl"
                                                                 )
                                                                 .addFilter(
-                                                                    TransformPriceFilter.builder()
+                                                                    PercentageDiscount.Filter
+                                                                        .builder()
                                                                         .field(
-                                                                            TransformPriceFilter
+                                                                            PercentageDiscount
+                                                                                .Filter
                                                                                 .Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            TransformPriceFilter
+                                                                            PercentageDiscount
+                                                                                .Filter
                                                                                 .Operator
                                                                                 .INCLUDES
                                                                         )
@@ -5719,15 +5783,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                             Maximum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    TransformPriceFilter.builder()
+                                                                    Maximum.Filter.builder()
                                                                         .field(
-                                                                            TransformPriceFilter
-                                                                                .Field
+                                                                            Maximum.Filter.Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            TransformPriceFilter
-                                                                                .Operator
+                                                                            Maximum.Filter.Operator
                                                                                 .INCLUDES
                                                                         )
                                                                         .addValue("string")
@@ -5749,15 +5811,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                             Minimum.builder()
                                                                 .addAppliesToPriceId("string")
                                                                 .addFilter(
-                                                                    TransformPriceFilter.builder()
+                                                                    Minimum.Filter.builder()
                                                                         .field(
-                                                                            TransformPriceFilter
-                                                                                .Field
+                                                                            Minimum.Filter.Field
                                                                                 .PRICE_ID
                                                                         )
                                                                         .operator(
-                                                                            TransformPriceFilter
-                                                                                .Operator
+                                                                            Minimum.Filter.Operator
                                                                                 .INCLUDES
                                                                         )
                                                                         .addValue("string")
@@ -5827,11 +5887,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -5852,11 +5910,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )

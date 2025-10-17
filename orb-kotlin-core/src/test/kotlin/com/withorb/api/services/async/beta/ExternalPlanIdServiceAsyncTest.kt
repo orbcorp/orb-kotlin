@@ -15,7 +15,6 @@ import com.withorb.api.models.NewBillingCycleConfiguration
 import com.withorb.api.models.NewDimensionalPriceConfiguration
 import com.withorb.api.models.NewPercentageDiscount
 import com.withorb.api.models.NewPlanUnitPrice
-import com.withorb.api.models.TransformPriceFilter
 import com.withorb.api.models.UnitConfig
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -52,9 +51,11 @@ internal class ExternalPlanIdServiceAsyncTest {
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        NewPercentageDiscount.Filter.builder()
+                                            .field(NewPercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                NewPercentageDiscount.Filter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -165,9 +166,11 @@ internal class ExternalPlanIdServiceAsyncTest {
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        NewPercentageDiscount.Filter.builder()
+                                            .field(NewPercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                NewPercentageDiscount.Filter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
