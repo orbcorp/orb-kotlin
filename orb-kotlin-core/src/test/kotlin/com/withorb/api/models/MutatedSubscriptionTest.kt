@@ -28,9 +28,14 @@ internal class MutatedSubscriptionTest {
                                 )
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    PlanPhaseUsageDiscountAdjustment.Filter.builder()
+                                        .field(
+                                            PlanPhaseUsageDiscountAdjustment.Filter.Field.PRICE_ID
+                                        )
+                                        .operator(
+                                            PlanPhaseUsageDiscountAdjustment.Filter.Operator
+                                                .INCLUDES
+                                        )
                                         .addValue("string")
                                         .build()
                                 )
@@ -149,9 +154,9 @@ internal class MutatedSubscriptionTest {
                         .discountType(AmountDiscountInterval.DiscountType.AMOUNT)
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                            AmountDiscountInterval.Filter.builder()
+                                .field(AmountDiscountInterval.Filter.Field.PRICE_ID)
+                                .operator(AmountDiscountInterval.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
@@ -173,9 +178,9 @@ internal class MutatedSubscriptionTest {
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                            MaximumInterval.Filter.builder()
+                                .field(MaximumInterval.Filter.Field.PRICE_ID)
+                                .operator(MaximumInterval.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
@@ -193,9 +198,9 @@ internal class MutatedSubscriptionTest {
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                            MinimumInterval.Filter.builder()
+                                .field(MinimumInterval.Filter.Field.PRICE_ID)
+                                .operator(MinimumInterval.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
@@ -217,9 +222,14 @@ internal class MutatedSubscriptionTest {
                                 )
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    PlanPhaseUsageDiscountAdjustment.Filter.builder()
+                                        .field(
+                                            PlanPhaseUsageDiscountAdjustment.Filter.Field.PRICE_ID
+                                        )
+                                        .operator(
+                                            PlanPhaseUsageDiscountAdjustment.Filter.Operator
+                                                .INCLUDES
+                                        )
                                         .addValue("string")
                                         .build()
                                 )
@@ -249,9 +259,9 @@ internal class MutatedSubscriptionTest {
                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    PercentageDiscount.Filter.builder()
+                                        .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                        .operator(PercentageDiscount.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -264,9 +274,9 @@ internal class MutatedSubscriptionTest {
                             Maximum.builder()
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    Maximum.Filter.builder()
+                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -283,9 +293,9 @@ internal class MutatedSubscriptionTest {
                             Minimum.builder()
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    Minimum.Filter.builder()
+                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -306,9 +316,11 @@ internal class MutatedSubscriptionTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -321,9 +333,9 @@ internal class MutatedSubscriptionTest {
                                     Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Maximum.Filter.builder()
+                                                .field(Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Maximum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -335,9 +347,9 @@ internal class MutatedSubscriptionTest {
                                     Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Minimum.Filter.builder()
+                                                .field(Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Minimum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -362,9 +374,9 @@ internal class MutatedSubscriptionTest {
                                 .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                 .cadence(Price.Unit.Cadence.ONE_TIME)
                                 .addCompositePriceFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    Price.Unit.CompositePriceFilter.builder()
+                                        .field(Price.Unit.CompositePriceFilter.Field.PRICE_ID)
+                                        .operator(Price.Unit.CompositePriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -395,9 +407,11 @@ internal class MutatedSubscriptionTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -417,9 +431,9 @@ internal class MutatedSubscriptionTest {
                                     Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Maximum.Filter.builder()
+                                                .field(Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Maximum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -436,9 +450,9 @@ internal class MutatedSubscriptionTest {
                                     Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Minimum.Filter.builder()
+                                                .field(Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Minimum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -508,9 +522,9 @@ internal class MutatedSubscriptionTest {
                                 .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                 .cadence(Price.Unit.Cadence.ONE_TIME)
                                 .addCompositePriceFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    Price.Unit.CompositePriceFilter.builder()
+                                        .field(Price.Unit.CompositePriceFilter.Field.PRICE_ID)
+                                        .operator(Price.Unit.CompositePriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -541,9 +555,11 @@ internal class MutatedSubscriptionTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -563,9 +579,9 @@ internal class MutatedSubscriptionTest {
                                     Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Maximum.Filter.builder()
+                                                .field(Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Maximum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -582,9 +598,9 @@ internal class MutatedSubscriptionTest {
                                     Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Minimum.Filter.builder()
+                                                .field(Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Minimum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -807,9 +823,11 @@ internal class MutatedSubscriptionTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -845,10 +863,16 @@ internal class MutatedSubscriptionTest {
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    MonetaryUsageDiscountAdjustment.Filter.builder()
+                                                        .field(
+                                                            MonetaryUsageDiscountAdjustment.Filter
+                                                                .Field
+                                                                .PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            MonetaryUsageDiscountAdjustment.Filter
+                                                                .Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -870,10 +894,13 @@ internal class MutatedSubscriptionTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -888,11 +915,9 @@ internal class MutatedSubscriptionTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -904,11 +929,9 @@ internal class MutatedSubscriptionTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -936,10 +959,14 @@ internal class MutatedSubscriptionTest {
                                                 .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                                 .cadence(Price.Unit.Cadence.ONE_TIME)
                                                 .addCompositePriceFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    Price.Unit.CompositePriceFilter.builder()
+                                                        .field(
+                                                            Price.Unit.CompositePriceFilter.Field
+                                                                .PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            Price.Unit.CompositePriceFilter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -979,13 +1006,14 @@ internal class MutatedSubscriptionTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            PercentageDiscount.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    PercentageDiscount.Filter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    PercentageDiscount.Filter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1012,14 +1040,12 @@ internal class MutatedSubscriptionTest {
                                                     Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Maximum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Maximum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Maximum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -1040,14 +1066,12 @@ internal class MutatedSubscriptionTest {
                                                     Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Minimum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Minimum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Minimum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -1114,9 +1138,9 @@ internal class MutatedSubscriptionTest {
                                     Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Maximum.Filter.builder()
+                                                .field(Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Maximum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -1134,9 +1158,9 @@ internal class MutatedSubscriptionTest {
                                     Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Minimum.Filter.builder()
+                                                .field(Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Minimum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -1360,9 +1384,11 @@ internal class MutatedSubscriptionTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -1394,10 +1420,16 @@ internal class MutatedSubscriptionTest {
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    MonetaryUsageDiscountAdjustment.Filter.builder()
+                                                        .field(
+                                                            MonetaryUsageDiscountAdjustment.Filter
+                                                                .Field
+                                                                .PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            MonetaryUsageDiscountAdjustment.Filter
+                                                                .Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -1419,10 +1451,13 @@ internal class MutatedSubscriptionTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -1437,11 +1472,9 @@ internal class MutatedSubscriptionTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -1453,11 +1486,9 @@ internal class MutatedSubscriptionTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -1485,10 +1516,14 @@ internal class MutatedSubscriptionTest {
                                                 .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                                 .cadence(Price.Unit.Cadence.ONE_TIME)
                                                 .addCompositePriceFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    Price.Unit.CompositePriceFilter.builder()
+                                                        .field(
+                                                            Price.Unit.CompositePriceFilter.Field
+                                                                .PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            Price.Unit.CompositePriceFilter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -1528,13 +1563,14 @@ internal class MutatedSubscriptionTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            PercentageDiscount.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    PercentageDiscount.Filter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    PercentageDiscount.Filter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -1561,14 +1597,12 @@ internal class MutatedSubscriptionTest {
                                                     Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Maximum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Maximum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Maximum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -1589,14 +1623,12 @@ internal class MutatedSubscriptionTest {
                                                     Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Minimum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Minimum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Minimum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -1663,9 +1695,9 @@ internal class MutatedSubscriptionTest {
                                     Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Maximum.Filter.builder()
+                                                .field(Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Maximum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -1683,9 +1715,9 @@ internal class MutatedSubscriptionTest {
                                     Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Minimum.Filter.builder()
+                                                .field(Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Minimum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -1751,9 +1783,11 @@ internal class MutatedSubscriptionTest {
                             )
                             .addAppliesToPriceId("string")
                             .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                PlanPhaseUsageDiscountAdjustment.Filter.builder()
+                                    .field(PlanPhaseUsageDiscountAdjustment.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        PlanPhaseUsageDiscountAdjustment.Filter.Operator.INCLUDES
+                                    )
                                     .addValue("string")
                                     .build()
                             )
@@ -1876,9 +1910,9 @@ internal class MutatedSubscriptionTest {
                         .discountType(AmountDiscountInterval.DiscountType.AMOUNT)
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                            AmountDiscountInterval.Filter.builder()
+                                .field(AmountDiscountInterval.Filter.Field.PRICE_ID)
+                                .operator(AmountDiscountInterval.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
@@ -1904,9 +1938,9 @@ internal class MutatedSubscriptionTest {
                     .addAppliesToPriceIntervalId("string")
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addFilter(
-                        TransformPriceFilter.builder()
-                            .field(TransformPriceFilter.Field.PRICE_ID)
-                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                        MaximumInterval.Filter.builder()
+                            .field(MaximumInterval.Filter.Field.PRICE_ID)
+                            .operator(MaximumInterval.Filter.Operator.INCLUDES)
                             .addValue("string")
                             .build()
                     )
@@ -1926,9 +1960,9 @@ internal class MutatedSubscriptionTest {
                     .addAppliesToPriceIntervalId("string")
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addFilter(
-                        TransformPriceFilter.builder()
-                            .field(TransformPriceFilter.Field.PRICE_ID)
-                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                        MinimumInterval.Filter.builder()
+                            .field(MinimumInterval.Filter.Field.PRICE_ID)
+                            .operator(MinimumInterval.Filter.Operator.INCLUDES)
                             .addValue("string")
                             .build()
                     )
@@ -1952,9 +1986,11 @@ internal class MutatedSubscriptionTest {
                             )
                             .addAppliesToPriceId("string")
                             .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                PlanPhaseUsageDiscountAdjustment.Filter.builder()
+                                    .field(PlanPhaseUsageDiscountAdjustment.Filter.Field.PRICE_ID)
+                                    .operator(
+                                        PlanPhaseUsageDiscountAdjustment.Filter.Operator.INCLUDES
+                                    )
                                     .addValue("string")
                                     .build()
                             )
@@ -1984,9 +2020,9 @@ internal class MutatedSubscriptionTest {
                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                PercentageDiscount.Filter.builder()
+                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                    .operator(PercentageDiscount.Filter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
@@ -1999,9 +2035,9 @@ internal class MutatedSubscriptionTest {
                         Maximum.builder()
                             .addAppliesToPriceId("string")
                             .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                Maximum.Filter.builder()
+                                    .field(Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Maximum.Filter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
@@ -2018,9 +2054,9 @@ internal class MutatedSubscriptionTest {
                         Minimum.builder()
                             .addAppliesToPriceId("string")
                             .addFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                Minimum.Filter.builder()
+                                    .field(Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Minimum.Filter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
@@ -2041,9 +2077,9 @@ internal class MutatedSubscriptionTest {
                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        PercentageDiscount.Filter.builder()
+                                            .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(PercentageDiscount.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2056,9 +2092,9 @@ internal class MutatedSubscriptionTest {
                                 Maximum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Maximum.Filter.builder()
+                                            .field(Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Maximum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2070,9 +2106,9 @@ internal class MutatedSubscriptionTest {
                                 Minimum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Minimum.Filter.builder()
+                                            .field(Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Minimum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2097,9 +2133,9 @@ internal class MutatedSubscriptionTest {
                             .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                             .cadence(Price.Unit.Cadence.ONE_TIME)
                             .addCompositePriceFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                Price.Unit.CompositePriceFilter.builder()
+                                    .field(Price.Unit.CompositePriceFilter.Field.PRICE_ID)
+                                    .operator(Price.Unit.CompositePriceFilter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
@@ -2128,9 +2164,9 @@ internal class MutatedSubscriptionTest {
                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        PercentageDiscount.Filter.builder()
+                                            .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(PercentageDiscount.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2150,9 +2186,9 @@ internal class MutatedSubscriptionTest {
                                 Maximum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Maximum.Filter.builder()
+                                            .field(Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Maximum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2169,9 +2205,9 @@ internal class MutatedSubscriptionTest {
                                 Minimum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Minimum.Filter.builder()
+                                            .field(Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Minimum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2238,9 +2274,9 @@ internal class MutatedSubscriptionTest {
                             .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                             .cadence(Price.Unit.Cadence.ONE_TIME)
                             .addCompositePriceFilter(
-                                TransformPriceFilter.builder()
-                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                    .operator(TransformPriceFilter.Operator.INCLUDES)
+                                Price.Unit.CompositePriceFilter.builder()
+                                    .field(Price.Unit.CompositePriceFilter.Field.PRICE_ID)
+                                    .operator(Price.Unit.CompositePriceFilter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
@@ -2269,9 +2305,9 @@ internal class MutatedSubscriptionTest {
                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        PercentageDiscount.Filter.builder()
+                                            .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(PercentageDiscount.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2291,9 +2327,9 @@ internal class MutatedSubscriptionTest {
                                 Maximum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Maximum.Filter.builder()
+                                            .field(Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Maximum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2310,9 +2346,9 @@ internal class MutatedSubscriptionTest {
                                 Minimum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Minimum.Filter.builder()
+                                            .field(Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Minimum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2529,9 +2565,9 @@ internal class MutatedSubscriptionTest {
                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        PercentageDiscount.Filter.builder()
+                                            .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(PercentageDiscount.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2567,10 +2603,15 @@ internal class MutatedSubscriptionTest {
                                             .amount("amount")
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                MonetaryUsageDiscountAdjustment.Filter.builder()
+                                                    .field(
+                                                        MonetaryUsageDiscountAdjustment.Filter.Field
+                                                            .PRICE_ID
+                                                    )
                                                     .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
+                                                        MonetaryUsageDiscountAdjustment.Filter
+                                                            .Operator
+                                                            .INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2592,10 +2633,10 @@ internal class MutatedSubscriptionTest {
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                PercentageDiscount.Filter.builder()
+                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
                                                     .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
+                                                        PercentageDiscount.Filter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2610,11 +2651,9 @@ internal class MutatedSubscriptionTest {
                                         Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Maximum.Filter.builder()
+                                                    .field(Maximum.Filter.Field.PRICE_ID)
+                                                    .operator(Maximum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -2626,11 +2665,9 @@ internal class MutatedSubscriptionTest {
                                         Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Minimum.Filter.builder()
+                                                    .field(Minimum.Filter.Field.PRICE_ID)
+                                                    .operator(Minimum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -2657,10 +2694,14 @@ internal class MutatedSubscriptionTest {
                                             .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                             .cadence(Price.Unit.Cadence.ONE_TIME)
                                             .addCompositePriceFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                Price.Unit.CompositePriceFilter.builder()
+                                                    .field(
+                                                        Price.Unit.CompositePriceFilter.Field
+                                                            .PRICE_ID
+                                                    )
                                                     .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
+                                                        Price.Unit.CompositePriceFilter.Operator
+                                                            .INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -2698,12 +2739,13 @@ internal class MutatedSubscriptionTest {
                                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
+                                                        PercentageDiscount.Filter.builder()
                                                             .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
+                                                                PercentageDiscount.Filter.Field
+                                                                    .PRICE_ID
                                                             )
                                                             .operator(
-                                                                TransformPriceFilter.Operator
+                                                                PercentageDiscount.Filter.Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -2727,13 +2769,10 @@ internal class MutatedSubscriptionTest {
                                                 Maximum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
-                                                            .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
-                                                            )
+                                                        Maximum.Filter.builder()
+                                                            .field(Maximum.Filter.Field.PRICE_ID)
                                                             .operator(
-                                                                TransformPriceFilter.Operator
-                                                                    .INCLUDES
+                                                                Maximum.Filter.Operator.INCLUDES
                                                             )
                                                             .addValue("string")
                                                             .build()
@@ -2754,13 +2793,10 @@ internal class MutatedSubscriptionTest {
                                                 Minimum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
-                                                            .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
-                                                            )
+                                                        Minimum.Filter.builder()
+                                                            .field(Minimum.Filter.Field.PRICE_ID)
                                                             .operator(
-                                                                TransformPriceFilter.Operator
-                                                                    .INCLUDES
+                                                                Minimum.Filter.Operator.INCLUDES
                                                             )
                                                             .addValue("string")
                                                             .build()
@@ -2825,9 +2861,9 @@ internal class MutatedSubscriptionTest {
                                 Maximum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Maximum.Filter.builder()
+                                            .field(Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Maximum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -2845,9 +2881,9 @@ internal class MutatedSubscriptionTest {
                                 Minimum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Minimum.Filter.builder()
+                                            .field(Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Minimum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -3059,9 +3095,9 @@ internal class MutatedSubscriptionTest {
                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        PercentageDiscount.Filter.builder()
+                                            .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(PercentageDiscount.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -3093,10 +3129,15 @@ internal class MutatedSubscriptionTest {
                                             .amount("amount")
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                MonetaryUsageDiscountAdjustment.Filter.builder()
+                                                    .field(
+                                                        MonetaryUsageDiscountAdjustment.Filter.Field
+                                                            .PRICE_ID
+                                                    )
                                                     .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
+                                                        MonetaryUsageDiscountAdjustment.Filter
+                                                            .Operator
+                                                            .INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -3118,10 +3159,10 @@ internal class MutatedSubscriptionTest {
                                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                             .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                PercentageDiscount.Filter.builder()
+                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
                                                     .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
+                                                        PercentageDiscount.Filter.Operator.INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -3136,11 +3177,9 @@ internal class MutatedSubscriptionTest {
                                         Maximum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Maximum.Filter.builder()
+                                                    .field(Maximum.Filter.Field.PRICE_ID)
+                                                    .operator(Maximum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -3152,11 +3191,9 @@ internal class MutatedSubscriptionTest {
                                         Minimum.builder()
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
+                                                Minimum.Filter.builder()
+                                                    .field(Minimum.Filter.Field.PRICE_ID)
+                                                    .operator(Minimum.Filter.Operator.INCLUDES)
                                                     .addValue("string")
                                                     .build()
                                             )
@@ -3183,10 +3220,14 @@ internal class MutatedSubscriptionTest {
                                             .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                             .cadence(Price.Unit.Cadence.ONE_TIME)
                                             .addCompositePriceFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                Price.Unit.CompositePriceFilter.builder()
+                                                    .field(
+                                                        Price.Unit.CompositePriceFilter.Field
+                                                            .PRICE_ID
+                                                    )
                                                     .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
+                                                        Price.Unit.CompositePriceFilter.Operator
+                                                            .INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -3224,12 +3265,13 @@ internal class MutatedSubscriptionTest {
                                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
+                                                        PercentageDiscount.Filter.builder()
                                                             .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
+                                                                PercentageDiscount.Filter.Field
+                                                                    .PRICE_ID
                                                             )
                                                             .operator(
-                                                                TransformPriceFilter.Operator
+                                                                PercentageDiscount.Filter.Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -3253,13 +3295,10 @@ internal class MutatedSubscriptionTest {
                                                 Maximum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
-                                                            .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
-                                                            )
+                                                        Maximum.Filter.builder()
+                                                            .field(Maximum.Filter.Field.PRICE_ID)
                                                             .operator(
-                                                                TransformPriceFilter.Operator
-                                                                    .INCLUDES
+                                                                Maximum.Filter.Operator.INCLUDES
                                                             )
                                                             .addValue("string")
                                                             .build()
@@ -3280,13 +3319,10 @@ internal class MutatedSubscriptionTest {
                                                 Minimum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
-                                                            .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
-                                                            )
+                                                        Minimum.Filter.builder()
+                                                            .field(Minimum.Filter.Field.PRICE_ID)
                                                             .operator(
-                                                                TransformPriceFilter.Operator
-                                                                    .INCLUDES
+                                                                Minimum.Filter.Operator.INCLUDES
                                                             )
                                                             .addValue("string")
                                                             .build()
@@ -3351,9 +3387,9 @@ internal class MutatedSubscriptionTest {
                                 Maximum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Maximum.Filter.builder()
+                                            .field(Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Maximum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -3371,9 +3407,9 @@ internal class MutatedSubscriptionTest {
                                 Minimum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Minimum.Filter.builder()
+                                            .field(Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Minimum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -3441,9 +3477,14 @@ internal class MutatedSubscriptionTest {
                                 )
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    PlanPhaseUsageDiscountAdjustment.Filter.builder()
+                                        .field(
+                                            PlanPhaseUsageDiscountAdjustment.Filter.Field.PRICE_ID
+                                        )
+                                        .operator(
+                                            PlanPhaseUsageDiscountAdjustment.Filter.Operator
+                                                .INCLUDES
+                                        )
                                         .addValue("string")
                                         .build()
                                 )
@@ -3562,9 +3603,9 @@ internal class MutatedSubscriptionTest {
                         .discountType(AmountDiscountInterval.DiscountType.AMOUNT)
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                            AmountDiscountInterval.Filter.builder()
+                                .field(AmountDiscountInterval.Filter.Field.PRICE_ID)
+                                .operator(AmountDiscountInterval.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
@@ -3586,9 +3627,9 @@ internal class MutatedSubscriptionTest {
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                            MaximumInterval.Filter.builder()
+                                .field(MaximumInterval.Filter.Field.PRICE_ID)
+                                .operator(MaximumInterval.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
@@ -3606,9 +3647,9 @@ internal class MutatedSubscriptionTest {
                         .addAppliesToPriceIntervalId("string")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFilter(
-                            TransformPriceFilter.builder()
-                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                            MinimumInterval.Filter.builder()
+                                .field(MinimumInterval.Filter.Field.PRICE_ID)
+                                .operator(MinimumInterval.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
@@ -3630,9 +3671,14 @@ internal class MutatedSubscriptionTest {
                                 )
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    PlanPhaseUsageDiscountAdjustment.Filter.builder()
+                                        .field(
+                                            PlanPhaseUsageDiscountAdjustment.Filter.Field.PRICE_ID
+                                        )
+                                        .operator(
+                                            PlanPhaseUsageDiscountAdjustment.Filter.Operator
+                                                .INCLUDES
+                                        )
                                         .addValue("string")
                                         .build()
                                 )
@@ -3662,9 +3708,9 @@ internal class MutatedSubscriptionTest {
                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    PercentageDiscount.Filter.builder()
+                                        .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                        .operator(PercentageDiscount.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -3677,9 +3723,9 @@ internal class MutatedSubscriptionTest {
                             Maximum.builder()
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    Maximum.Filter.builder()
+                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -3696,9 +3742,9 @@ internal class MutatedSubscriptionTest {
                             Minimum.builder()
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    Minimum.Filter.builder()
+                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -3719,9 +3765,11 @@ internal class MutatedSubscriptionTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -3734,9 +3782,9 @@ internal class MutatedSubscriptionTest {
                                     Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Maximum.Filter.builder()
+                                                .field(Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Maximum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -3748,9 +3796,9 @@ internal class MutatedSubscriptionTest {
                                     Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Minimum.Filter.builder()
+                                                .field(Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Minimum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -3775,9 +3823,9 @@ internal class MutatedSubscriptionTest {
                                 .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                 .cadence(Price.Unit.Cadence.ONE_TIME)
                                 .addCompositePriceFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    Price.Unit.CompositePriceFilter.builder()
+                                        .field(Price.Unit.CompositePriceFilter.Field.PRICE_ID)
+                                        .operator(Price.Unit.CompositePriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -3808,9 +3856,11 @@ internal class MutatedSubscriptionTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -3830,9 +3880,9 @@ internal class MutatedSubscriptionTest {
                                     Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Maximum.Filter.builder()
+                                                .field(Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Maximum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -3849,9 +3899,9 @@ internal class MutatedSubscriptionTest {
                                     Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Minimum.Filter.builder()
+                                                .field(Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Minimum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -3921,9 +3971,9 @@ internal class MutatedSubscriptionTest {
                                 .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                 .cadence(Price.Unit.Cadence.ONE_TIME)
                                 .addCompositePriceFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    Price.Unit.CompositePriceFilter.builder()
+                                        .field(Price.Unit.CompositePriceFilter.Field.PRICE_ID)
+                                        .operator(Price.Unit.CompositePriceFilter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -3954,9 +4004,11 @@ internal class MutatedSubscriptionTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -3976,9 +4028,9 @@ internal class MutatedSubscriptionTest {
                                     Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Maximum.Filter.builder()
+                                                .field(Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Maximum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -3995,9 +4047,9 @@ internal class MutatedSubscriptionTest {
                                     Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Minimum.Filter.builder()
+                                                .field(Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Minimum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4220,9 +4272,11 @@ internal class MutatedSubscriptionTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4258,10 +4312,16 @@ internal class MutatedSubscriptionTest {
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    MonetaryUsageDiscountAdjustment.Filter.builder()
+                                                        .field(
+                                                            MonetaryUsageDiscountAdjustment.Filter
+                                                                .Field
+                                                                .PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            MonetaryUsageDiscountAdjustment.Filter
+                                                                .Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4283,10 +4343,13 @@ internal class MutatedSubscriptionTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4301,11 +4364,9 @@ internal class MutatedSubscriptionTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -4317,11 +4378,9 @@ internal class MutatedSubscriptionTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -4349,10 +4408,14 @@ internal class MutatedSubscriptionTest {
                                                 .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                                 .cadence(Price.Unit.Cadence.ONE_TIME)
                                                 .addCompositePriceFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    Price.Unit.CompositePriceFilter.builder()
+                                                        .field(
+                                                            Price.Unit.CompositePriceFilter.Field
+                                                                .PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            Price.Unit.CompositePriceFilter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4392,13 +4455,14 @@ internal class MutatedSubscriptionTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            PercentageDiscount.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    PercentageDiscount.Filter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    PercentageDiscount.Filter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -4425,14 +4489,12 @@ internal class MutatedSubscriptionTest {
                                                     Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Maximum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Maximum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Maximum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -4453,14 +4515,12 @@ internal class MutatedSubscriptionTest {
                                                     Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Minimum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Minimum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Minimum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -4527,9 +4587,9 @@ internal class MutatedSubscriptionTest {
                                     Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Maximum.Filter.builder()
+                                                .field(Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Maximum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4547,9 +4607,9 @@ internal class MutatedSubscriptionTest {
                                     Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Minimum.Filter.builder()
+                                                .field(Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Minimum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4773,9 +4833,11 @@ internal class MutatedSubscriptionTest {
                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            PercentageDiscount.Filter.builder()
+                                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                                .operator(
+                                                    PercentageDiscount.Filter.Operator.INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -4807,10 +4869,16 @@ internal class MutatedSubscriptionTest {
                                                 .amount("amount")
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    MonetaryUsageDiscountAdjustment.Filter.builder()
+                                                        .field(
+                                                            MonetaryUsageDiscountAdjustment.Filter
+                                                                .Field
+                                                                .PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            MonetaryUsageDiscountAdjustment.Filter
+                                                                .Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4832,10 +4900,13 @@ internal class MutatedSubscriptionTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4850,11 +4921,9 @@ internal class MutatedSubscriptionTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -4866,11 +4935,9 @@ internal class MutatedSubscriptionTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -4898,10 +4965,14 @@ internal class MutatedSubscriptionTest {
                                                 .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
                                                 .cadence(Price.Unit.Cadence.ONE_TIME)
                                                 .addCompositePriceFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    Price.Unit.CompositePriceFilter.builder()
+                                                        .field(
+                                                            Price.Unit.CompositePriceFilter.Field
+                                                                .PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            Price.Unit.CompositePriceFilter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -4941,13 +5012,14 @@ internal class MutatedSubscriptionTest {
                                                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            PercentageDiscount.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
+                                                                    PercentageDiscount.Filter.Field
                                                                         .PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
+                                                                    PercentageDiscount.Filter
+                                                                        .Operator
                                                                         .INCLUDES
                                                                 )
                                                                 .addValue("string")
@@ -4974,14 +5046,12 @@ internal class MutatedSubscriptionTest {
                                                     Maximum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Maximum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Maximum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Maximum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -5002,14 +5072,12 @@ internal class MutatedSubscriptionTest {
                                                     Minimum.builder()
                                                         .addAppliesToPriceId("string")
                                                         .addFilter(
-                                                            TransformPriceFilter.builder()
+                                                            Minimum.Filter.builder()
                                                                 .field(
-                                                                    TransformPriceFilter.Field
-                                                                        .PRICE_ID
+                                                                    Minimum.Filter.Field.PRICE_ID
                                                                 )
                                                                 .operator(
-                                                                    TransformPriceFilter.Operator
-                                                                        .INCLUDES
+                                                                    Minimum.Filter.Operator.INCLUDES
                                                                 )
                                                                 .addValue("string")
                                                                 .build()
@@ -5076,9 +5144,9 @@ internal class MutatedSubscriptionTest {
                                     Maximum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Maximum.Filter.builder()
+                                                .field(Maximum.Filter.Field.PRICE_ID)
+                                                .operator(Maximum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -5096,9 +5164,9 @@ internal class MutatedSubscriptionTest {
                                     Minimum.builder()
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            Minimum.Filter.builder()
+                                                .field(Minimum.Filter.Field.PRICE_ID)
+                                                .operator(Minimum.Filter.Operator.INCLUDES)
                                                 .addValue("string")
                                                 .build()
                                         )
