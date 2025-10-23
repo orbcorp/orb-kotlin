@@ -5,6 +5,7 @@ package com.withorb.api.services.async
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.models.SubscriptionChangeApplyParams
+import java.time.LocalDate
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -40,6 +41,9 @@ internal class SubscriptionChangeServiceAsyncTest {
                     .subscriptionChangeId("subscription_change_id")
                     .description("description")
                     .markAsPaid(true)
+                    .paymentExternalId("payment_external_id")
+                    .paymentNotes("payment_notes")
+                    .paymentReceivedDate(LocalDate.parse("2019-12-27"))
                     .previouslyCollectedAmount("previously_collected_amount")
                     .build()
             )
