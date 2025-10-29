@@ -15,12 +15,14 @@ internal class NewAvalaraTaxConfigurationTest {
             NewAvalaraTaxConfiguration.builder()
                 .taxExempt(true)
                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                .automaticTaxEnabled(true)
                 .taxExemptionCode("tax_exemption_code")
                 .build()
 
         assertThat(newAvalaraTaxConfiguration.taxExempt()).isEqualTo(true)
         assertThat(newAvalaraTaxConfiguration.taxProvider())
             .isEqualTo(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+        assertThat(newAvalaraTaxConfiguration.automaticTaxEnabled()).isEqualTo(true)
         assertThat(newAvalaraTaxConfiguration.taxExemptionCode()).isEqualTo("tax_exemption_code")
     }
 
@@ -31,6 +33,7 @@ internal class NewAvalaraTaxConfigurationTest {
             NewAvalaraTaxConfiguration.builder()
                 .taxExempt(true)
                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                .automaticTaxEnabled(true)
                 .taxExemptionCode("tax_exemption_code")
                 .build()
 

@@ -23,8 +23,8 @@ class AffectedBlock
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
-    private val blockFilters: JsonField<List<BlockFilter>>,
     private val expiryDate: JsonField<OffsetDateTime>,
+    private val filters: JsonField<List<Filter>>,
     private val perUnitCostBasis: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -32,16 +32,16 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("block_filters")
-        @ExcludeMissing
-        blockFilters: JsonField<List<BlockFilter>> = JsonMissing.of(),
         @JsonProperty("expiry_date")
         @ExcludeMissing
         expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("filters")
+        @ExcludeMissing
+        filters: JsonField<List<Filter>> = JsonMissing.of(),
         @JsonProperty("per_unit_cost_basis")
         @ExcludeMissing
         perUnitCostBasis: JsonField<String> = JsonMissing.of(),
-    ) : this(id, blockFilters, expiryDate, perUnitCostBasis, mutableMapOf())
+    ) : this(id, expiryDate, filters, perUnitCostBasis, mutableMapOf())
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -53,13 +53,13 @@ private constructor(
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
-    fun blockFilters(): List<BlockFilter>? = blockFilters.getNullable("block_filters")
+    fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
 
     /**
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
-     *   responded with an unexpected value).
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
+    fun filters(): List<Filter> = filters.getRequired("filters")
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
@@ -75,15 +75,6 @@ private constructor(
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
-     * Returns the raw JSON value of [blockFilters].
-     *
-     * Unlike [blockFilters], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("block_filters")
-    @ExcludeMissing
-    fun _blockFilters(): JsonField<List<BlockFilter>> = blockFilters
-
-    /**
      * Returns the raw JSON value of [expiryDate].
      *
      * Unlike [expiryDate], this method doesn't throw if the JSON field has an unexpected type.
@@ -91,6 +82,13 @@ private constructor(
     @JsonProperty("expiry_date")
     @ExcludeMissing
     fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
+
+    /**
+     * Returns the raw JSON value of [filters].
+     *
+     * Unlike [filters], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("filters") @ExcludeMissing fun _filters(): JsonField<List<Filter>> = filters
 
     /**
      * Returns the raw JSON value of [perUnitCostBasis].
@@ -122,8 +120,8 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .id()
-         * .blockFilters()
          * .expiryDate()
+         * .filters()
          * .perUnitCostBasis()
          * ```
          */
@@ -134,15 +132,15 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var blockFilters: JsonField<MutableList<BlockFilter>>? = null
         private var expiryDate: JsonField<OffsetDateTime>? = null
+        private var filters: JsonField<MutableList<Filter>>? = null
         private var perUnitCostBasis: JsonField<String>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(affectedBlock: AffectedBlock) = apply {
             id = affectedBlock.id
-            blockFilters = affectedBlock.blockFilters.map { it.toMutableList() }
             expiryDate = affectedBlock.expiryDate
+            filters = affectedBlock.filters.map { it.toMutableList() }
             perUnitCostBasis = affectedBlock.perUnitCostBasis
             additionalProperties = affectedBlock.additionalProperties.toMutableMap()
         }
@@ -157,32 +155,6 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        fun blockFilters(blockFilters: List<BlockFilter>?) =
-            blockFilters(JsonField.ofNullable(blockFilters))
-
-        /**
-         * Sets [Builder.blockFilters] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.blockFilters] with a well-typed `List<BlockFilter>`
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        fun blockFilters(blockFilters: JsonField<List<BlockFilter>>) = apply {
-            this.blockFilters = blockFilters.map { it.toMutableList() }
-        }
-
-        /**
-         * Adds a single [BlockFilter] to [blockFilters].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addBlockFilter(blockFilter: BlockFilter) = apply {
-            blockFilters =
-                (blockFilters ?: JsonField.of(mutableListOf())).also {
-                    checkKnown("blockFilters", it).add(blockFilter)
-                }
-        }
-
         fun expiryDate(expiryDate: OffsetDateTime?) = expiryDate(JsonField.ofNullable(expiryDate))
 
         /**
@@ -194,6 +166,31 @@ private constructor(
          */
         fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
             this.expiryDate = expiryDate
+        }
+
+        fun filters(filters: List<Filter>) = filters(JsonField.of(filters))
+
+        /**
+         * Sets [Builder.filters] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.filters] with a well-typed `List<Filter>` value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun filters(filters: JsonField<List<Filter>>) = apply {
+            this.filters = filters.map { it.toMutableList() }
+        }
+
+        /**
+         * Adds a single [Filter] to [filters].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addFilter(filter: Filter) = apply {
+            filters =
+                (filters ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("filters", it).add(filter)
+                }
         }
 
         fun perUnitCostBasis(perUnitCostBasis: String?) =
@@ -237,8 +234,8 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .id()
-         * .blockFilters()
          * .expiryDate()
+         * .filters()
          * .perUnitCostBasis()
          * ```
          *
@@ -247,8 +244,8 @@ private constructor(
         fun build(): AffectedBlock =
             AffectedBlock(
                 checkRequired("id", id),
-                checkRequired("blockFilters", blockFilters).map { it.toImmutable() },
                 checkRequired("expiryDate", expiryDate),
+                checkRequired("filters", filters).map { it.toImmutable() },
                 checkRequired("perUnitCostBasis", perUnitCostBasis),
                 additionalProperties.toMutableMap(),
             )
@@ -262,8 +259,8 @@ private constructor(
         }
 
         id()
-        blockFilters()?.forEach { it.validate() }
         expiryDate()
+        filters().forEach { it.validate() }
         perUnitCostBasis()
         validated = true
     }
@@ -283,11 +280,11 @@ private constructor(
      */
     internal fun validity(): Int =
         (if (id.asKnown() == null) 0 else 1) +
-            (blockFilters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (expiryDate.asKnown() == null) 0 else 1) +
+            (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (perUnitCostBasis.asKnown() == null) 0 else 1)
 
-    class BlockFilter
+    class Filter
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val field: JsonField<Field>,
@@ -367,7 +364,7 @@ private constructor(
         companion object {
 
             /**
-             * Returns a mutable builder for constructing an instance of [BlockFilter].
+             * Returns a mutable builder for constructing an instance of [Filter].
              *
              * The following fields are required:
              * ```kotlin
@@ -379,7 +376,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [BlockFilter]. */
+        /** A builder for [Filter]. */
         class Builder internal constructor() {
 
             private var field: JsonField<Field>? = null
@@ -387,11 +384,11 @@ private constructor(
             private var values: JsonField<MutableList<String>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(blockFilter: BlockFilter) = apply {
-                field = blockFilter.field
-                operator = blockFilter.operator
-                values = blockFilter.values.map { it.toMutableList() }
-                additionalProperties = blockFilter.additionalProperties.toMutableMap()
+            internal fun from(filter: Filter) = apply {
+                field = filter.field
+                operator = filter.operator
+                values = filter.values.map { it.toMutableList() }
+                additionalProperties = filter.additionalProperties.toMutableMap()
             }
 
             /** The property of the price to filter on. */
@@ -464,7 +461,7 @@ private constructor(
             }
 
             /**
-             * Returns an immutable instance of [BlockFilter].
+             * Returns an immutable instance of [Filter].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              *
@@ -477,8 +474,8 @@ private constructor(
              *
              * @throws IllegalStateException if any required field is unset.
              */
-            fun build(): BlockFilter =
-                BlockFilter(
+            fun build(): Filter =
+                Filter(
                     checkRequired("field", field),
                     checkRequired("operator", operator),
                     checkRequired("values", values).map { it.toImmutable() },
@@ -488,7 +485,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): BlockFilter = apply {
+        fun validate(): Filter = apply {
             if (validated) {
                 return@apply
             }
@@ -798,7 +795,7 @@ private constructor(
                 return true
             }
 
-            return other is BlockFilter &&
+            return other is Filter &&
                 field == other.field &&
                 operator == other.operator &&
                 values == other.values &&
@@ -812,7 +809,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "BlockFilter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
+            "Filter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -822,18 +819,18 @@ private constructor(
 
         return other is AffectedBlock &&
             id == other.id &&
-            blockFilters == other.blockFilters &&
             expiryDate == other.expiryDate &&
+            filters == other.filters &&
             perUnitCostBasis == other.perUnitCostBasis &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(id, blockFilters, expiryDate, perUnitCostBasis, additionalProperties)
+        Objects.hash(id, expiryDate, filters, perUnitCostBasis, additionalProperties)
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AffectedBlock{id=$id, blockFilters=$blockFilters, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
+        "AffectedBlock{id=$id, expiryDate=$expiryDate, filters=$filters, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
 }

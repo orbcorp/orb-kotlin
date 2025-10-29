@@ -62,6 +62,7 @@ private constructor(
     private val taxId: JsonField<CustomerTaxId>,
     private val timezone: JsonField<String>,
     private val accountingSyncConfiguration: JsonField<AccountingSyncConfiguration>,
+    private val automaticTaxEnabled: JsonField<Boolean>,
     private val reportingConfiguration: JsonField<ReportingConfiguration>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -116,6 +117,9 @@ private constructor(
         @JsonProperty("accounting_sync_configuration")
         @ExcludeMissing
         accountingSyncConfiguration: JsonField<AccountingSyncConfiguration> = JsonMissing.of(),
+        @JsonProperty("automatic_tax_enabled")
+        @ExcludeMissing
+        automaticTaxEnabled: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("reporting_configuration")
         @ExcludeMissing
         reportingConfiguration: JsonField<ReportingConfiguration> = JsonMissing.of(),
@@ -142,6 +146,7 @@ private constructor(
         taxId,
         timezone,
         accountingSyncConfiguration,
+        automaticTaxEnabled,
         reportingConfiguration,
         mutableMapOf(),
     )
@@ -456,6 +461,15 @@ private constructor(
         accountingSyncConfiguration.getNullable("accounting_sync_configuration")
 
     /**
+     * Whether automatic tax calculation is enabled for this customer. This field is nullable for
+     * backwards compatibility but will always return a boolean value.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun automaticTaxEnabled(): Boolean? = automaticTaxEnabled.getNullable("automatic_tax_enabled")
+
+    /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
@@ -647,6 +661,16 @@ private constructor(
         accountingSyncConfiguration
 
     /**
+     * Returns the raw JSON value of [automaticTaxEnabled].
+     *
+     * Unlike [automaticTaxEnabled], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("automatic_tax_enabled")
+    @ExcludeMissing
+    fun _automaticTaxEnabled(): JsonField<Boolean> = automaticTaxEnabled
+
+    /**
      * Returns the raw JSON value of [reportingConfiguration].
      *
      * Unlike [reportingConfiguration], this method doesn't throw if the JSON field has an
@@ -727,6 +751,7 @@ private constructor(
         private var timezone: JsonField<String>? = null
         private var accountingSyncConfiguration: JsonField<AccountingSyncConfiguration> =
             JsonMissing.of()
+        private var automaticTaxEnabled: JsonField<Boolean> = JsonMissing.of()
         private var reportingConfiguration: JsonField<ReportingConfiguration> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -753,6 +778,7 @@ private constructor(
             taxId = customer.taxId
             timezone = customer.timezone
             accountingSyncConfiguration = customer.accountingSyncConfiguration
+            automaticTaxEnabled = customer.automaticTaxEnabled
             reportingConfiguration = customer.reportingConfiguration
             additionalProperties = customer.additionalProperties.toMutableMap()
         }
@@ -1230,6 +1256,32 @@ private constructor(
             accountingSyncConfiguration: JsonField<AccountingSyncConfiguration>
         ) = apply { this.accountingSyncConfiguration = accountingSyncConfiguration }
 
+        /**
+         * Whether automatic tax calculation is enabled for this customer. This field is nullable
+         * for backwards compatibility but will always return a boolean value.
+         */
+        fun automaticTaxEnabled(automaticTaxEnabled: Boolean?) =
+            automaticTaxEnabled(JsonField.ofNullable(automaticTaxEnabled))
+
+        /**
+         * Alias for [Builder.automaticTaxEnabled].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun automaticTaxEnabled(automaticTaxEnabled: Boolean) =
+            automaticTaxEnabled(automaticTaxEnabled as Boolean?)
+
+        /**
+         * Sets [Builder.automaticTaxEnabled] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.automaticTaxEnabled] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun automaticTaxEnabled(automaticTaxEnabled: JsonField<Boolean>) = apply {
+            this.automaticTaxEnabled = automaticTaxEnabled
+        }
+
         fun reportingConfiguration(reportingConfiguration: ReportingConfiguration?) =
             reportingConfiguration(JsonField.ofNullable(reportingConfiguration))
 
@@ -1320,6 +1372,7 @@ private constructor(
                 checkRequired("taxId", taxId),
                 checkRequired("timezone", timezone),
                 accountingSyncConfiguration,
+                automaticTaxEnabled,
                 reportingConfiguration,
                 additionalProperties.toMutableMap(),
             )
@@ -1354,6 +1407,7 @@ private constructor(
         taxId()?.validate()
         timezone()
         accountingSyncConfiguration()?.validate()
+        automaticTaxEnabled()
         reportingConfiguration()?.validate()
         validated = true
     }
@@ -1394,6 +1448,7 @@ private constructor(
             (taxId.asKnown()?.validity() ?: 0) +
             (if (timezone.asKnown() == null) 0 else 1) +
             (accountingSyncConfiguration.asKnown()?.validity() ?: 0) +
+            (if (automaticTaxEnabled.asKnown() == null) 0 else 1) +
             (reportingConfiguration.asKnown()?.validity() ?: 0)
 
     /** The hierarchical relationships for this customer. */
@@ -2607,6 +2662,7 @@ private constructor(
             taxId == other.taxId &&
             timezone == other.timezone &&
             accountingSyncConfiguration == other.accountingSyncConfiguration &&
+            automaticTaxEnabled == other.automaticTaxEnabled &&
             reportingConfiguration == other.reportingConfiguration &&
             additionalProperties == other.additionalProperties
     }
@@ -2635,6 +2691,7 @@ private constructor(
             taxId,
             timezone,
             accountingSyncConfiguration,
+            automaticTaxEnabled,
             reportingConfiguration,
             additionalProperties,
         )
@@ -2643,5 +2700,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Customer{id=$id, additionalEmails=$additionalEmails, autoCollection=$autoCollection, autoIssuance=$autoIssuance, balance=$balance, billingAddress=$billingAddress, createdAt=$createdAt, currency=$currency, email=$email, emailDelivery=$emailDelivery, exemptFromAutomatedTax=$exemptFromAutomatedTax, externalCustomerId=$externalCustomerId, hierarchy=$hierarchy, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, portalUrl=$portalUrl, shippingAddress=$shippingAddress, taxId=$taxId, timezone=$timezone, accountingSyncConfiguration=$accountingSyncConfiguration, reportingConfiguration=$reportingConfiguration, additionalProperties=$additionalProperties}"
+        "Customer{id=$id, additionalEmails=$additionalEmails, autoCollection=$autoCollection, autoIssuance=$autoIssuance, balance=$balance, billingAddress=$billingAddress, createdAt=$createdAt, currency=$currency, email=$email, emailDelivery=$emailDelivery, exemptFromAutomatedTax=$exemptFromAutomatedTax, externalCustomerId=$externalCustomerId, hierarchy=$hierarchy, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, portalUrl=$portalUrl, shippingAddress=$shippingAddress, taxId=$taxId, timezone=$timezone, accountingSyncConfiguration=$accountingSyncConfiguration, automaticTaxEnabled=$automaticTaxEnabled, reportingConfiguration=$reportingConfiguration, additionalProperties=$additionalProperties}"
 }

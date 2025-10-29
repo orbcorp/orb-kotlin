@@ -157,6 +157,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .excluded(true)
                                         .build()
                                 )
+                                .automaticTaxEnabled(true)
                                 .reportingConfiguration(
                                     Customer.ReportingConfiguration.builder().exempt(true).build()
                                 )
@@ -435,6 +436,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         )
                                                         .build()
                                                 )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .build()
                                         )
                                         .currency("currency")
@@ -608,6 +618,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .durationUnit(
                                                             CustomExpiration.DurationUnit.DAY
                                                         )
+                                                        .build()
+                                                )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
                                                         .build()
                                                 )
                                                 .build()
@@ -1133,6 +1152,20 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                                 .DurationUnit
                                                                                 .DAY
                                                                         )
+                                                                        .build()
+                                                                )
+                                                                .addFilter(
+                                                                    Allocation.Filter.builder()
+                                                                        .field(
+                                                                            Allocation.Filter.Field
+                                                                                .PRICE_ID
+                                                                        )
+                                                                        .operator(
+                                                                            Allocation.Filter
+                                                                                .Operator
+                                                                                .INCLUDES
+                                                                        )
+                                                                        .addValue("string")
                                                                         .build()
                                                                 )
                                                                 .build()
@@ -1792,6 +1825,20 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                         )
                                                                         .build()
                                                                 )
+                                                                .addFilter(
+                                                                    Allocation.Filter.builder()
+                                                                        .field(
+                                                                            Allocation.Filter.Field
+                                                                                .PRICE_ID
+                                                                        )
+                                                                        .operator(
+                                                                            Allocation.Filter
+                                                                                .Operator
+                                                                                .INCLUDES
+                                                                        )
+                                                                        .addValue("string")
+                                                                        .build()
+                                                                )
                                                                 .build()
                                                         )
                                                         .currency("currency")
@@ -2185,6 +2232,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .excluded(true)
                                     .build()
                             )
+                            .automaticTaxEnabled(true)
                             .reportingConfiguration(
                                 Customer.ReportingConfiguration.builder().exempt(true).build()
                             )
@@ -2451,6 +2499,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                     .durationUnit(CustomExpiration.DurationUnit.DAY)
                                                     .build()
                                             )
+                                            .addFilter(
+                                                Allocation.Filter.builder()
+                                                    .field(Allocation.Filter.Field.PRICE_ID)
+                                                    .operator(Allocation.Filter.Operator.INCLUDES)
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .build()
                                     )
                                     .currency("currency")
@@ -2607,6 +2662,13 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 CustomExpiration.builder()
                                                     .duration(0L)
                                                     .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                                    .build()
+                                            )
+                                            .addFilter(
+                                                Allocation.Filter.builder()
+                                                    .field(Allocation.Filter.Field.PRICE_ID)
+                                                    .operator(Allocation.Filter.Operator.INCLUDES)
+                                                    .addValue("string")
                                                     .build()
                                             )
                                             .build()
@@ -3090,6 +3152,19 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                             .DurationUnit
                                                                             .DAY
                                                                     )
+                                                                    .build()
+                                                            )
+                                                            .addFilter(
+                                                                Allocation.Filter.builder()
+                                                                    .field(
+                                                                        Allocation.Filter.Field
+                                                                            .PRICE_ID
+                                                                    )
+                                                                    .operator(
+                                                                        Allocation.Filter.Operator
+                                                                            .INCLUDES
+                                                                    )
+                                                                    .addValue("string")
                                                                     .build()
                                                             )
                                                             .build()
@@ -3698,6 +3773,19 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                     )
                                                                     .build()
                                                             )
+                                                            .addFilter(
+                                                                Allocation.Filter.builder()
+                                                                    .field(
+                                                                        Allocation.Filter.Field
+                                                                            .PRICE_ID
+                                                                    )
+                                                                    .operator(
+                                                                        Allocation.Filter.Operator
+                                                                            .INCLUDES
+                                                                    )
+                                                                    .addValue("string")
+                                                                    .build()
+                                                            )
                                                             .build()
                                                     )
                                                     .currency("currency")
@@ -4089,6 +4177,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .excluded(true)
                                         .build()
                                 )
+                                .automaticTaxEnabled(true)
                                 .reportingConfiguration(
                                     Customer.ReportingConfiguration.builder().exempt(true).build()
                                 )
@@ -4367,6 +4456,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         )
                                                         .build()
                                                 )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .build()
                                         )
                                         .currency("currency")
@@ -4540,6 +4638,15 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                         .durationUnit(
                                                             CustomExpiration.DurationUnit.DAY
                                                         )
+                                                        .build()
+                                                )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
                                                         .build()
                                                 )
                                                 .build()
@@ -5065,6 +5172,20 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                                 .DurationUnit
                                                                                 .DAY
                                                                         )
+                                                                        .build()
+                                                                )
+                                                                .addFilter(
+                                                                    Allocation.Filter.builder()
+                                                                        .field(
+                                                                            Allocation.Filter.Field
+                                                                                .PRICE_ID
+                                                                        )
+                                                                        .operator(
+                                                                            Allocation.Filter
+                                                                                .Operator
+                                                                                .INCLUDES
+                                                                        )
+                                                                        .addValue("string")
                                                                         .build()
                                                                 )
                                                                 .build()
@@ -5722,6 +5843,20 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                                                 .DurationUnit
                                                                                 .DAY
                                                                         )
+                                                                        .build()
+                                                                )
+                                                                .addFilter(
+                                                                    Allocation.Filter.builder()
+                                                                        .field(
+                                                                            Allocation.Filter.Field
+                                                                                .PRICE_ID
+                                                                        )
+                                                                        .operator(
+                                                                            Allocation.Filter
+                                                                                .Operator
+                                                                                .INCLUDES
+                                                                        )
+                                                                        .addValue("string")
                                                                         .build()
                                                                 )
                                                                 .build()

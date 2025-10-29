@@ -66,6 +66,15 @@ internal class CustomerCostListResponseTest {
                                                         )
                                                         .build()
                                                 )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .build()
                                         )
                                         .currency("currency")
@@ -213,6 +222,13 @@ internal class CustomerCostListResponseTest {
                                                 CustomExpiration.builder()
                                                     .duration(0L)
                                                     .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                                    .build()
+                                            )
+                                            .addFilter(
+                                                Allocation.Filter.builder()
+                                                    .field(Allocation.Filter.Field.PRICE_ID)
+                                                    .operator(Allocation.Filter.Operator.INCLUDES)
+                                                    .addValue("string")
                                                     .build()
                                             )
                                             .build()
@@ -365,6 +381,15 @@ internal class CustomerCostListResponseTest {
                                                         .durationUnit(
                                                             CustomExpiration.DurationUnit.DAY
                                                         )
+                                                        .build()
+                                                )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
                                                         .build()
                                                 )
                                                 .build()

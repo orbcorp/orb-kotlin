@@ -141,6 +141,7 @@ internal class MutatedSubscriptionTest {
                                 .excluded(true)
                                 .build()
                         )
+                        .automaticTaxEnabled(true)
                         .reportingConfiguration(
                             Customer.ReportingConfiguration.builder().exempt(true).build()
                         )
@@ -397,6 +398,13 @@ internal class MutatedSubscriptionTest {
                                                 .durationUnit(CustomExpiration.DurationUnit.DAY)
                                                 .build()
                                         )
+                                        .addFilter(
+                                            Allocation.Filter.builder()
+                                                .field(Allocation.Filter.Field.PRICE_ID)
+                                                .operator(Allocation.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .build()
                                 )
                                 .currency("currency")
@@ -543,6 +551,13 @@ internal class MutatedSubscriptionTest {
                                             CustomExpiration.builder()
                                                 .duration(0L)
                                                 .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                                .build()
+                                        )
+                                        .addFilter(
+                                            Allocation.Filter.builder()
+                                                .field(Allocation.Filter.Field.PRICE_ID)
+                                                .operator(Allocation.Filter.Operator.INCLUDES)
+                                                .addValue("string")
                                                 .build()
                                         )
                                         .build()
@@ -991,6 +1006,18 @@ internal class MutatedSubscriptionTest {
                                                                     CustomExpiration.DurationUnit
                                                                         .DAY
                                                                 )
+                                                                .build()
+                                                        )
+                                                        .addFilter(
+                                                            Allocation.Filter.builder()
+                                                                .field(
+                                                                    Allocation.Filter.Field.PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Allocation.Filter.Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
                                                                 .build()
                                                         )
                                                         .build()
@@ -1550,6 +1577,18 @@ internal class MutatedSubscriptionTest {
                                                                 )
                                                                 .build()
                                                         )
+                                                        .addFilter(
+                                                            Allocation.Filter.builder()
+                                                                .field(
+                                                                    Allocation.Filter.Field.PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Allocation.Filter.Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
+                                                                .build()
+                                                        )
                                                         .build()
                                                 )
                                                 .currency("currency")
@@ -1895,6 +1934,7 @@ internal class MutatedSubscriptionTest {
                             .excluded(true)
                             .build()
                     )
+                    .automaticTaxEnabled(true)
                     .reportingConfiguration(
                         Customer.ReportingConfiguration.builder().exempt(true).build()
                     )
@@ -2154,6 +2194,13 @@ internal class MutatedSubscriptionTest {
                                             .durationUnit(CustomExpiration.DurationUnit.DAY)
                                             .build()
                                     )
+                                    .addFilter(
+                                        Allocation.Filter.builder()
+                                            .field(Allocation.Filter.Field.PRICE_ID)
+                                            .operator(Allocation.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .build()
                             )
                             .currency("currency")
@@ -2293,6 +2340,13 @@ internal class MutatedSubscriptionTest {
                                         CustomExpiration.builder()
                                             .duration(0L)
                                             .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                            .build()
+                                    )
+                                    .addFilter(
+                                        Allocation.Filter.builder()
+                                            .field(Allocation.Filter.Field.PRICE_ID)
+                                            .operator(Allocation.Filter.Operator.INCLUDES)
+                                            .addValue("string")
                                             .build()
                                     )
                                     .build()
@@ -2725,6 +2779,15 @@ internal class MutatedSubscriptionTest {
                                                             .durationUnit(
                                                                 CustomExpiration.DurationUnit.DAY
                                                             )
+                                                            .build()
+                                                    )
+                                                    .addFilter(
+                                                        Allocation.Filter.builder()
+                                                            .field(Allocation.Filter.Field.PRICE_ID)
+                                                            .operator(
+                                                                Allocation.Filter.Operator.INCLUDES
+                                                            )
+                                                            .addValue("string")
                                                             .build()
                                                     )
                                                     .build()
@@ -3253,6 +3316,15 @@ internal class MutatedSubscriptionTest {
                                                             )
                                                             .build()
                                                     )
+                                                    .addFilter(
+                                                        Allocation.Filter.builder()
+                                                            .field(Allocation.Filter.Field.PRICE_ID)
+                                                            .operator(
+                                                                Allocation.Filter.Operator.INCLUDES
+                                                            )
+                                                            .addValue("string")
+                                                            .build()
+                                                    )
                                                     .build()
                                             )
                                             .currency("currency")
@@ -3590,6 +3662,7 @@ internal class MutatedSubscriptionTest {
                                 .excluded(true)
                                 .build()
                         )
+                        .automaticTaxEnabled(true)
                         .reportingConfiguration(
                             Customer.ReportingConfiguration.builder().exempt(true).build()
                         )
@@ -3846,6 +3919,13 @@ internal class MutatedSubscriptionTest {
                                                 .durationUnit(CustomExpiration.DurationUnit.DAY)
                                                 .build()
                                         )
+                                        .addFilter(
+                                            Allocation.Filter.builder()
+                                                .field(Allocation.Filter.Field.PRICE_ID)
+                                                .operator(Allocation.Filter.Operator.INCLUDES)
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .build()
                                 )
                                 .currency("currency")
@@ -3992,6 +4072,13 @@ internal class MutatedSubscriptionTest {
                                             CustomExpiration.builder()
                                                 .duration(0L)
                                                 .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                                .build()
+                                        )
+                                        .addFilter(
+                                            Allocation.Filter.builder()
+                                                .field(Allocation.Filter.Field.PRICE_ID)
+                                                .operator(Allocation.Filter.Operator.INCLUDES)
+                                                .addValue("string")
                                                 .build()
                                         )
                                         .build()
@@ -4440,6 +4527,18 @@ internal class MutatedSubscriptionTest {
                                                                     CustomExpiration.DurationUnit
                                                                         .DAY
                                                                 )
+                                                                .build()
+                                                        )
+                                                        .addFilter(
+                                                            Allocation.Filter.builder()
+                                                                .field(
+                                                                    Allocation.Filter.Field.PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Allocation.Filter.Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
                                                                 .build()
                                                         )
                                                         .build()
@@ -4997,6 +5096,18 @@ internal class MutatedSubscriptionTest {
                                                                     CustomExpiration.DurationUnit
                                                                         .DAY
                                                                 )
+                                                                .build()
+                                                        )
+                                                        .addFilter(
+                                                            Allocation.Filter.builder()
+                                                                .field(
+                                                                    Allocation.Filter.Field.PRICE_ID
+                                                                )
+                                                                .operator(
+                                                                    Allocation.Filter.Operator
+                                                                        .INCLUDES
+                                                                )
+                                                                .addValue("string")
                                                                 .build()
                                                         )
                                                         .build()

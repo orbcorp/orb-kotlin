@@ -94,6 +94,7 @@ internal class CustomerTest {
                         .excluded(true)
                         .build()
                 )
+                .automaticTaxEnabled(true)
                 .reportingConfiguration(
                     Customer.ReportingConfiguration.builder().exempt(true).build()
                 )
@@ -183,6 +184,7 @@ internal class CustomerTest {
                     .excluded(true)
                     .build()
             )
+        assertThat(customer.automaticTaxEnabled()).isEqualTo(true)
         assertThat(customer.reportingConfiguration())
             .isEqualTo(Customer.ReportingConfiguration.builder().exempt(true).build())
     }
@@ -271,6 +273,7 @@ internal class CustomerTest {
                         .excluded(true)
                         .build()
                 )
+                .automaticTaxEnabled(true)
                 .reportingConfiguration(
                     Customer.ReportingConfiguration.builder().exempt(true).build()
                 )

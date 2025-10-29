@@ -339,6 +339,15 @@ internal class ChangedSubscriptionResourcesTest {
                                                         )
                                                         .build()
                                                 )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .build()
                                         )
                                         .currency("currency")
@@ -846,6 +855,15 @@ internal class ChangedSubscriptionResourcesTest {
                                                         .durationUnit(
                                                             CustomExpiration.DurationUnit.DAY
                                                         )
+                                                        .build()
+                                                )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
                                                         .build()
                                                 )
                                                 .build()
@@ -1356,6 +1374,13 @@ internal class ChangedSubscriptionResourcesTest {
                                                     .durationUnit(CustomExpiration.DurationUnit.DAY)
                                                     .build()
                                             )
+                                            .addFilter(
+                                                Allocation.Filter.builder()
+                                                    .field(Allocation.Filter.Field.PRICE_ID)
+                                                    .operator(Allocation.Filter.Operator.INCLUDES)
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .build()
                                     )
                                     .currency("currency")
@@ -1842,6 +1867,13 @@ internal class ChangedSubscriptionResourcesTest {
                                                 CustomExpiration.builder()
                                                     .duration(0L)
                                                     .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                                    .build()
+                                            )
+                                            .addFilter(
+                                                Allocation.Filter.builder()
+                                                    .field(Allocation.Filter.Field.PRICE_ID)
+                                                    .operator(Allocation.Filter.Operator.INCLUDES)
+                                                    .addValue("string")
                                                     .build()
                                             )
                                             .build()
@@ -2360,6 +2392,15 @@ internal class ChangedSubscriptionResourcesTest {
                                                         )
                                                         .build()
                                                 )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .build()
                                         )
                                         .currency("currency")
@@ -2867,6 +2908,15 @@ internal class ChangedSubscriptionResourcesTest {
                                                         .durationUnit(
                                                             CustomExpiration.DurationUnit.DAY
                                                         )
+                                                        .build()
+                                                )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
                                                         .build()
                                                 )
                                                 .build()
