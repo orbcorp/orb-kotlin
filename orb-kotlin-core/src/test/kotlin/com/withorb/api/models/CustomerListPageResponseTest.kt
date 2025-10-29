@@ -97,6 +97,7 @@ internal class CustomerListPageResponseTest {
                                 .excluded(true)
                                 .build()
                         )
+                        .automaticTaxEnabled(true)
                         .reportingConfiguration(
                             Customer.ReportingConfiguration.builder().exempt(true).build()
                         )
@@ -189,6 +190,7 @@ internal class CustomerListPageResponseTest {
                             .excluded(true)
                             .build()
                     )
+                    .automaticTaxEnabled(true)
                     .reportingConfiguration(
                         Customer.ReportingConfiguration.builder().exempt(true).build()
                     )
@@ -285,6 +287,7 @@ internal class CustomerListPageResponseTest {
                                 .excluded(true)
                                 .build()
                         )
+                        .automaticTaxEnabled(true)
                         .reportingConfiguration(
                             Customer.ReportingConfiguration.builder().exempt(true).build()
                         )

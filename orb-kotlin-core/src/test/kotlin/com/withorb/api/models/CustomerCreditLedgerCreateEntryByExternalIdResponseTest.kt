@@ -25,14 +25,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                 .creditBlock(
                     AffectedBlock.builder()
                         .id("id")
-                        .addBlockFilter(
-                            AffectedBlock.BlockFilter.builder()
-                                .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
-                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -280,6 +280,15 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                                                         )
                                                         .build()
                                                 )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .build()
                                         )
                                         .currency("currency")
@@ -500,14 +509,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                     .creditBlock(
                         AffectedBlock.builder()
                             .id("id")
-                            .addBlockFilter(
-                                AffectedBlock.BlockFilter.builder()
-                                    .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                    .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
-                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
@@ -761,6 +770,15 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                                                             )
                                                             .build()
                                                     )
+                                                    .addFilter(
+                                                        Allocation.Filter.builder()
+                                                            .field(Allocation.Filter.Field.PRICE_ID)
+                                                            .operator(
+                                                                Allocation.Filter.Operator.INCLUDES
+                                                            )
+                                                            .addValue("string")
+                                                            .build()
+                                                    )
                                                     .build()
                                             )
                                             .currency("currency")
@@ -986,14 +1004,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                 .creditBlock(
                     AffectedBlock.builder()
                         .id("id")
-                        .addBlockFilter(
-                            AffectedBlock.BlockFilter.builder()
-                                .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
-                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -1045,14 +1063,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                     .creditBlock(
                         AffectedBlock.builder()
                             .id("id")
-                            .addBlockFilter(
-                                AffectedBlock.BlockFilter.builder()
-                                    .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                    .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
-                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
@@ -1100,14 +1118,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                 .creditBlock(
                     AffectedBlock.builder()
                         .id("id")
-                        .addBlockFilter(
-                            AffectedBlock.BlockFilter.builder()
-                                .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
-                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -1157,14 +1175,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                     .creditBlock(
                         AffectedBlock.builder()
                             .id("id")
-                            .addBlockFilter(
-                                AffectedBlock.BlockFilter.builder()
-                                    .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                    .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
-                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
@@ -1210,14 +1228,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                 .creditBlock(
                     AffectedBlock.builder()
                         .id("id")
-                        .addBlockFilter(
-                            AffectedBlock.BlockFilter.builder()
-                                .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
-                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -1268,14 +1286,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                     .creditBlock(
                         AffectedBlock.builder()
                             .id("id")
-                            .addBlockFilter(
-                                AffectedBlock.BlockFilter.builder()
-                                    .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                    .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
-                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
@@ -1320,14 +1338,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                 .creditBlock(
                     AffectedBlock.builder()
                         .id("id")
-                        .addBlockFilter(
-                            AffectedBlock.BlockFilter.builder()
-                                .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
-                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -1377,14 +1395,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                     .creditBlock(
                         AffectedBlock.builder()
                             .id("id")
-                            .addBlockFilter(
-                                AffectedBlock.BlockFilter.builder()
-                                    .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                    .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
-                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
@@ -1431,14 +1449,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                 .creditBlock(
                     AffectedBlock.builder()
                         .id("id")
-                        .addBlockFilter(
-                            AffectedBlock.BlockFilter.builder()
-                                .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
-                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -1490,14 +1508,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                     .creditBlock(
                         AffectedBlock.builder()
                             .id("id")
-                            .addBlockFilter(
-                                AffectedBlock.BlockFilter.builder()
-                                    .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                    .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
-                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
@@ -1545,14 +1563,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                 .creditBlock(
                     AffectedBlock.builder()
                         .id("id")
-                        .addBlockFilter(
-                            AffectedBlock.BlockFilter.builder()
-                                .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
                         )
-                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -1601,14 +1619,14 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                     .creditBlock(
                         AffectedBlock.builder()
                             .id("id")
-                            .addBlockFilter(
-                                AffectedBlock.BlockFilter.builder()
-                                    .field(AffectedBlock.BlockFilter.Field.PRICE_ID)
-                                    .operator(AffectedBlock.BlockFilter.Operator.INCLUDES)
+                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
                                     .addValue("string")
                                     .build()
                             )
-                            .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )

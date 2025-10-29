@@ -154,6 +154,7 @@ internal class SubscriptionsTest {
                                         .excluded(true)
                                         .build()
                                 )
+                                .automaticTaxEnabled(true)
                                 .reportingConfiguration(
                                     Customer.ReportingConfiguration.builder().exempt(true).build()
                                 )
@@ -432,6 +433,15 @@ internal class SubscriptionsTest {
                                                         )
                                                         .build()
                                                 )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .build()
                                         )
                                         .currency("currency")
@@ -605,6 +615,15 @@ internal class SubscriptionsTest {
                                                         .durationUnit(
                                                             CustomExpiration.DurationUnit.DAY
                                                         )
+                                                        .build()
+                                                )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
                                                         .build()
                                                 )
                                                 .build()
@@ -854,6 +873,7 @@ internal class SubscriptionsTest {
                                     .excluded(true)
                                     .build()
                             )
+                            .automaticTaxEnabled(true)
                             .reportingConfiguration(
                                 Customer.ReportingConfiguration.builder().exempt(true).build()
                             )
@@ -1120,6 +1140,13 @@ internal class SubscriptionsTest {
                                                     .durationUnit(CustomExpiration.DurationUnit.DAY)
                                                     .build()
                                             )
+                                            .addFilter(
+                                                Allocation.Filter.builder()
+                                                    .field(Allocation.Filter.Field.PRICE_ID)
+                                                    .operator(Allocation.Filter.Operator.INCLUDES)
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .build()
                                     )
                                     .currency("currency")
@@ -1276,6 +1303,13 @@ internal class SubscriptionsTest {
                                                 CustomExpiration.builder()
                                                     .duration(0L)
                                                     .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                                    .build()
+                                            )
+                                            .addFilter(
+                                                Allocation.Filter.builder()
+                                                    .field(Allocation.Filter.Field.PRICE_ID)
+                                                    .operator(Allocation.Filter.Operator.INCLUDES)
+                                                    .addValue("string")
                                                     .build()
                                             )
                                             .build()
@@ -1528,6 +1562,7 @@ internal class SubscriptionsTest {
                                         .excluded(true)
                                         .build()
                                 )
+                                .automaticTaxEnabled(true)
                                 .reportingConfiguration(
                                     Customer.ReportingConfiguration.builder().exempt(true).build()
                                 )
@@ -1806,6 +1841,15 @@ internal class SubscriptionsTest {
                                                         )
                                                         .build()
                                                 )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .build()
                                         )
                                         .currency("currency")
@@ -1979,6 +2023,15 @@ internal class SubscriptionsTest {
                                                         .durationUnit(
                                                             CustomExpiration.DurationUnit.DAY
                                                         )
+                                                        .build()
+                                                )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
                                                         .build()
                                                 )
                                                 .build()
