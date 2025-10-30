@@ -14,6 +14,7 @@ internal class InvoiceUpdateParamsTest {
         InvoiceUpdateParams.builder()
             .invoiceId("invoice_id")
             .dueDate(LocalDate.parse("2023-09-22"))
+            .invoiceDate(LocalDate.parse("2023-09-22"))
             .metadata(
                 InvoiceUpdateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -38,6 +39,7 @@ internal class InvoiceUpdateParamsTest {
             InvoiceUpdateParams.builder()
                 .invoiceId("invoice_id")
                 .dueDate(LocalDate.parse("2023-09-22"))
+                .invoiceDate(LocalDate.parse("2023-09-22"))
                 .metadata(
                     InvoiceUpdateParams.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -50,6 +52,8 @@ internal class InvoiceUpdateParamsTest {
 
         assertThat(body.dueDate())
             .isEqualTo(InvoiceUpdateParams.DueDate.ofDate(LocalDate.parse("2023-09-22")))
+        assertThat(body.invoiceDate())
+            .isEqualTo(InvoiceUpdateParams.InvoiceDate.ofDate(LocalDate.parse("2023-09-22")))
         assertThat(body.metadata())
             .isEqualTo(
                 InvoiceUpdateParams.Metadata.builder()
