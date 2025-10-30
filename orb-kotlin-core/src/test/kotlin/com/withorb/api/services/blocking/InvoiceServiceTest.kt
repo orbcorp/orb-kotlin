@@ -92,6 +92,7 @@ internal class InvoiceServiceTest {
                 InvoiceUpdateParams.builder()
                     .invoiceId("invoice_id")
                     .dueDate(LocalDate.parse("2023-09-22"))
+                    .invoiceDate(LocalDate.parse("2023-09-22"))
                     .metadata(
                         InvoiceUpdateParams.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
