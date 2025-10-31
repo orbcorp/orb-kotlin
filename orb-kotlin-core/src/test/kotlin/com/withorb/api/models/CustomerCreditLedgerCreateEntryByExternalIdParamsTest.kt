@@ -21,6 +21,24 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
                     .description("description")
                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .addFilter(
+                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment.Filter
+                            .builder()
+                            .field(
+                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
+                                    .Filter
+                                    .Field
+                                    .ITEM_ID
+                            )
+                            .operator(
+                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
+                                    .Filter
+                                    .Operator
+                                    .INCLUDES
+                            )
+                            .addValue("string")
+                            .build()
+                    )
                     .invoiceSettings(
                         CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
                             .InvoiceSettings
@@ -71,6 +89,24 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
                         .description("description")
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment.Filter
+                                .builder()
+                                .field(
+                                    CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
+                                        .Filter
+                                        .Field
+                                        .ITEM_ID
+                                )
+                                .operator(
+                                    CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
+                                        .Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .invoiceSettings(
                             CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
                                 .InvoiceSettings
@@ -107,6 +143,24 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
                         .description("description")
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment.Filter
+                                .builder()
+                                .field(
+                                    CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
+                                        .Filter
+                                        .Field
+                                        .ITEM_ID
+                                )
+                                .operator(
+                                    CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
+                                        .Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .invoiceSettings(
                             CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
                                 .InvoiceSettings
