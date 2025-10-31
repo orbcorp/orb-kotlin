@@ -21,6 +21,19 @@ internal class CustomerCreditLedgerCreateEntryParamsTest {
                     .description("description")
                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .addFilter(
+                        CustomerCreditLedgerCreateEntryParams.Body.Increment.Filter.builder()
+                            .field(
+                                CustomerCreditLedgerCreateEntryParams.Body.Increment.Filter.Field
+                                    .ITEM_ID
+                            )
+                            .operator(
+                                CustomerCreditLedgerCreateEntryParams.Body.Increment.Filter.Operator
+                                    .INCLUDES
+                            )
+                            .addValue("string")
+                            .build()
+                    )
                     .invoiceSettings(
                         CustomerCreditLedgerCreateEntryParams.Body.Increment.InvoiceSettings
                             .builder()
@@ -69,6 +82,21 @@ internal class CustomerCreditLedgerCreateEntryParamsTest {
                         .description("description")
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            CustomerCreditLedgerCreateEntryParams.Body.Increment.Filter.builder()
+                                .field(
+                                    CustomerCreditLedgerCreateEntryParams.Body.Increment.Filter
+                                        .Field
+                                        .ITEM_ID
+                                )
+                                .operator(
+                                    CustomerCreditLedgerCreateEntryParams.Body.Increment.Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .invoiceSettings(
                             CustomerCreditLedgerCreateEntryParams.Body.Increment.InvoiceSettings
                                 .builder()
@@ -102,6 +130,21 @@ internal class CustomerCreditLedgerCreateEntryParamsTest {
                         .description("description")
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            CustomerCreditLedgerCreateEntryParams.Body.Increment.Filter.builder()
+                                .field(
+                                    CustomerCreditLedgerCreateEntryParams.Body.Increment.Filter
+                                        .Field
+                                        .ITEM_ID
+                                )
+                                .operator(
+                                    CustomerCreditLedgerCreateEntryParams.Body.Increment.Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .invoiceSettings(
                             CustomerCreditLedgerCreateEntryParams.Body.Increment.InvoiceSettings
                                 .builder()

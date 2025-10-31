@@ -49,6 +49,13 @@ internal class PlanServiceTest {
                                             .build()
                                     )
                                     .expiresAtEndOfCadence(true)
+                                    .addFilter(
+                                        NewAllocationPrice.Filter.builder()
+                                            .field(NewAllocationPrice.Filter.Field.ITEM_ID)
+                                            .operator(NewAllocationPrice.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
                                     .build()
                             )
                             .planPhaseOrder(0L)
