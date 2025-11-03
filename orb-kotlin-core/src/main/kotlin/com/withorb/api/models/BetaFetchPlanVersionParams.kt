@@ -9,9 +9,6 @@ import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
 /**
- * This API endpoint is in beta and its interface may change. It is recommended for use only in test
- * mode.
- *
  * This endpoint is used to fetch a plan version. It returns the phases, prices, and adjustments
  * present on this version of the plan.
  */

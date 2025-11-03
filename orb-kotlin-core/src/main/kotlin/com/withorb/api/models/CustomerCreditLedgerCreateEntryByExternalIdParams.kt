@@ -1727,11 +1727,11 @@ private constructor(
             @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val autoCollection: JsonField<Boolean>,
-                private val netTerms: JsonField<Long>,
                 private val customDueDate: JsonField<CustomDueDate>,
                 private val invoiceDate: JsonField<InvoiceDate>,
                 private val itemId: JsonField<String>,
                 private val memo: JsonField<String>,
+                private val netTerms: JsonField<Long>,
                 private val requireSuccessfulPayment: JsonField<Boolean>,
                 private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
@@ -1741,9 +1741,6 @@ private constructor(
                     @JsonProperty("auto_collection")
                     @ExcludeMissing
                     autoCollection: JsonField<Boolean> = JsonMissing.of(),
-                    @JsonProperty("net_terms")
-                    @ExcludeMissing
-                    netTerms: JsonField<Long> = JsonMissing.of(),
                     @JsonProperty("custom_due_date")
                     @ExcludeMissing
                     customDueDate: JsonField<CustomDueDate> = JsonMissing.of(),
@@ -1756,16 +1753,19 @@ private constructor(
                     @JsonProperty("memo")
                     @ExcludeMissing
                     memo: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("net_terms")
+                    @ExcludeMissing
+                    netTerms: JsonField<Long> = JsonMissing.of(),
                     @JsonProperty("require_successful_payment")
                     @ExcludeMissing
                     requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of(),
                 ) : this(
                     autoCollection,
-                    netTerms,
                     customDueDate,
                     invoiceDate,
                     itemId,
                     memo,
+                    netTerms,
                     requireSuccessfulPayment,
                     mutableMapOf(),
                 )
@@ -1779,18 +1779,6 @@ private constructor(
                  *   value).
                  */
                 fun autoCollection(): Boolean = autoCollection.getRequired("auto_collection")
-
-                /**
-                 * The net terms determines the due date of the invoice. Due date is calculated
-                 * based on the invoice or issuance date, depending on the account's configured due
-                 * date calculation method. A value of '0' here represents that the invoice is due
-                 * on issue, whereas a value of '30' represents that the customer has 30 days to pay
-                 * the invoice. Do not set this field if you want to set a custom due date.
-                 *
-                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
-                 *   the server responded with an unexpected value).
-                 */
-                fun netTerms(): Long? = netTerms.getNullable("net_terms")
 
                 /**
                  * An optional custom due date for the invoice. If not set, the due date will be
@@ -1829,6 +1817,18 @@ private constructor(
                 fun memo(): String? = memo.getNullable("memo")
 
                 /**
+                 * The net terms determines the due date of the invoice. Due date is calculated
+                 * based on the invoice or issuance date, depending on the account's configured due
+                 * date calculation method. A value of '0' here represents that the invoice is due
+                 * on issue, whereas a value of '30' represents that the customer has 30 days to pay
+                 * the invoice. Do not set this field if you want to set a custom due date.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun netTerms(): Long? = netTerms.getNullable("net_terms")
+
+                /**
                  * If true, the new credit block will require that the corresponding invoice is paid
                  * before it can be drawn down from.
                  *
@@ -1847,16 +1847,6 @@ private constructor(
                 @JsonProperty("auto_collection")
                 @ExcludeMissing
                 fun _autoCollection(): JsonField<Boolean> = autoCollection
-
-                /**
-                 * Returns the raw JSON value of [netTerms].
-                 *
-                 * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected
-                 * type.
-                 */
-                @JsonProperty("net_terms")
-                @ExcludeMissing
-                fun _netTerms(): JsonField<Long> = netTerms
 
                 /**
                  * Returns the raw JSON value of [customDueDate].
@@ -1895,6 +1885,16 @@ private constructor(
                 @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
 
                 /**
+                 * Returns the raw JSON value of [netTerms].
+                 *
+                 * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("net_terms")
+                @ExcludeMissing
+                fun _netTerms(): JsonField<Long> = netTerms
+
+                /**
                  * Returns the raw JSON value of [requireSuccessfulPayment].
                  *
                  * Unlike [requireSuccessfulPayment], this method doesn't throw if the JSON field
@@ -1924,7 +1924,6 @@ private constructor(
                      * The following fields are required:
                      * ```kotlin
                      * .autoCollection()
-                     * .netTerms()
                      * ```
                      */
                     fun builder() = Builder()
@@ -1934,21 +1933,21 @@ private constructor(
                 class Builder internal constructor() {
 
                     private var autoCollection: JsonField<Boolean>? = null
-                    private var netTerms: JsonField<Long>? = null
                     private var customDueDate: JsonField<CustomDueDate> = JsonMissing.of()
                     private var invoiceDate: JsonField<InvoiceDate> = JsonMissing.of()
                     private var itemId: JsonField<String> = JsonMissing.of()
                     private var memo: JsonField<String> = JsonMissing.of()
+                    private var netTerms: JsonField<Long> = JsonMissing.of()
                     private var requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(invoiceSettings: InvoiceSettings) = apply {
                         autoCollection = invoiceSettings.autoCollection
-                        netTerms = invoiceSettings.netTerms
                         customDueDate = invoiceSettings.customDueDate
                         invoiceDate = invoiceSettings.invoiceDate
                         itemId = invoiceSettings.itemId
                         memo = invoiceSettings.memo
+                        netTerms = invoiceSettings.netTerms
                         requireSuccessfulPayment = invoiceSettings.requireSuccessfulPayment
                         additionalProperties = invoiceSettings.additionalProperties.toMutableMap()
                     }
@@ -1970,32 +1969,6 @@ private constructor(
                     fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
                         this.autoCollection = autoCollection
                     }
-
-                    /**
-                     * The net terms determines the due date of the invoice. Due date is calculated
-                     * based on the invoice or issuance date, depending on the account's configured
-                     * due date calculation method. A value of '0' here represents that the invoice
-                     * is due on issue, whereas a value of '30' represents that the customer has 30
-                     * days to pay the invoice. Do not set this field if you want to set a custom
-                     * due date.
-                     */
-                    fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
-
-                    /**
-                     * Alias for [Builder.netTerms].
-                     *
-                     * This unboxed primitive overload exists for backwards compatibility.
-                     */
-                    fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
-
-                    /**
-                     * Sets [Builder.netTerms] to an arbitrary JSON value.
-                     *
-                     * You should usually call [Builder.netTerms] with a well-typed [Long] value
-                     * instead. This method is primarily for setting the field to an undocumented or
-                     * not yet supported value.
-                     */
-                    fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
 
                     /**
                      * An optional custom due date for the invoice. If not set, the due date will be
@@ -2078,6 +2051,32 @@ private constructor(
                     fun memo(memo: JsonField<String>) = apply { this.memo = memo }
 
                     /**
+                     * The net terms determines the due date of the invoice. Due date is calculated
+                     * based on the invoice or issuance date, depending on the account's configured
+                     * due date calculation method. A value of '0' here represents that the invoice
+                     * is due on issue, whereas a value of '30' represents that the customer has 30
+                     * days to pay the invoice. Do not set this field if you want to set a custom
+                     * due date.
+                     */
+                    fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
+
+                    /**
+                     * Alias for [Builder.netTerms].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
+
+                    /**
+                     * Sets [Builder.netTerms] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.netTerms] with a well-typed [Long] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
+
+                    /**
                      * If true, the new credit block will require that the corresponding invoice is
                      * paid before it can be drawn down from.
                      */
@@ -2126,7 +2125,6 @@ private constructor(
                      * The following fields are required:
                      * ```kotlin
                      * .autoCollection()
-                     * .netTerms()
                      * ```
                      *
                      * @throws IllegalStateException if any required field is unset.
@@ -2134,11 +2132,11 @@ private constructor(
                     fun build(): InvoiceSettings =
                         InvoiceSettings(
                             checkRequired("autoCollection", autoCollection),
-                            checkRequired("netTerms", netTerms),
                             customDueDate,
                             invoiceDate,
                             itemId,
                             memo,
+                            netTerms,
                             requireSuccessfulPayment,
                             additionalProperties.toMutableMap(),
                         )
@@ -2152,11 +2150,11 @@ private constructor(
                     }
 
                     autoCollection()
-                    netTerms()
                     customDueDate()?.validate()
                     invoiceDate()?.validate()
                     itemId()
                     memo()
+                    netTerms()
                     requireSuccessfulPayment()
                     validated = true
                 }
@@ -2177,11 +2175,11 @@ private constructor(
                  */
                 internal fun validity(): Int =
                     (if (autoCollection.asKnown() == null) 0 else 1) +
-                        (if (netTerms.asKnown() == null) 0 else 1) +
                         (customDueDate.asKnown()?.validity() ?: 0) +
                         (invoiceDate.asKnown()?.validity() ?: 0) +
                         (if (itemId.asKnown() == null) 0 else 1) +
                         (if (memo.asKnown() == null) 0 else 1) +
+                        (if (netTerms.asKnown() == null) 0 else 1) +
                         (if (requireSuccessfulPayment.asKnown() == null) 0 else 1)
 
                 /**
@@ -2548,11 +2546,11 @@ private constructor(
 
                     return other is InvoiceSettings &&
                         autoCollection == other.autoCollection &&
-                        netTerms == other.netTerms &&
                         customDueDate == other.customDueDate &&
                         invoiceDate == other.invoiceDate &&
                         itemId == other.itemId &&
                         memo == other.memo &&
+                        netTerms == other.netTerms &&
                         requireSuccessfulPayment == other.requireSuccessfulPayment &&
                         additionalProperties == other.additionalProperties
                 }
@@ -2560,11 +2558,11 @@ private constructor(
                 private val hashCode: Int by lazy {
                     Objects.hash(
                         autoCollection,
-                        netTerms,
                         customDueDate,
                         invoiceDate,
                         itemId,
                         memo,
+                        netTerms,
                         requireSuccessfulPayment,
                         additionalProperties,
                     )
@@ -2573,7 +2571,7 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, customDueDate=$customDueDate, invoiceDate=$invoiceDate, itemId=$itemId, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
+                    "InvoiceSettings{autoCollection=$autoCollection, customDueDate=$customDueDate, invoiceDate=$invoiceDate, itemId=$itemId, memo=$memo, netTerms=$netTerms, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
             }
 
             /**
