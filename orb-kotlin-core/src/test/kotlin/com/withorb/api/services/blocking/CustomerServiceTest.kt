@@ -137,7 +137,6 @@ internal class CustomerServiceTest {
                     .addAdditionalEmail("string")
                     .autoCollection(true)
                     .autoIssuance(true)
-                    .automaticTaxEnabled(true)
                     .billingAddress(
                         AddressInput.builder()
                             .city("city")
@@ -305,7 +304,6 @@ internal class CustomerServiceTest {
                     .addAdditionalEmail("string")
                     .autoCollection(true)
                     .autoIssuance(true)
-                    .automaticTaxEnabled(true)
                     .billingAddress(
                         AddressInput.builder()
                             .city("city")
