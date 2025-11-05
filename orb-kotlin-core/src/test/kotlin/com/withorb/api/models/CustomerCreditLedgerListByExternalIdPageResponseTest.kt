@@ -405,6 +405,7 @@ internal class CustomerCreditLedgerListByExternalIdPageResponseTest {
                                                 .unitConfig(
                                                     UnitConfig.builder()
                                                         .unitAmount("unit_amount")
+                                                        .prorated(true)
                                                         .build()
                                                 )
                                                 .dimensionalPriceConfiguration(
@@ -925,6 +926,7 @@ internal class CustomerCreditLedgerListByExternalIdPageResponseTest {
                                                 .unitConfig(
                                                     UnitConfig.builder()
                                                         .unitAmount("unit_amount")
+                                                        .prorated(true)
                                                         .build()
                                                 )
                                                 .dimensionalPriceConfiguration(
@@ -1448,6 +1450,7 @@ internal class CustomerCreditLedgerListByExternalIdPageResponseTest {
                                                 .unitConfig(
                                                     UnitConfig.builder()
                                                         .unitAmount("unit_amount")
+                                                        .prorated(true)
                                                         .build()
                                                 )
                                                 .dimensionalPriceConfiguration(

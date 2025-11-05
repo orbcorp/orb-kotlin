@@ -84,7 +84,12 @@ internal class SubscriptionCreateParamsTest {
                             .itemId("item_id")
                             .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
@@ -239,7 +244,12 @@ internal class SubscriptionCreateParamsTest {
                             .itemId("item_id")
                             .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
@@ -364,7 +374,12 @@ internal class SubscriptionCreateParamsTest {
                                 .itemId("item_id")
                                 .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                                 .name("Annual fee")
-                                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                                .unitConfig(
+                                    UnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .prorated(true)
+                                        .build()
+                                )
                                 .billableMetricId("billable_metric_id")
                                 .billedInAdvance(true)
                                 .billingCycleConfiguration(
@@ -521,7 +536,12 @@ internal class SubscriptionCreateParamsTest {
                                 .itemId("item_id")
                                 .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                                 .name("Annual fee")
-                                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                                .unitConfig(
+                                    UnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .prorated(true)
+                                        .build()
+                                )
                                 .billableMetricId("billable_metric_id")
                                 .billedInAdvance(true)
                                 .billingCycleConfiguration(
@@ -647,7 +667,12 @@ internal class SubscriptionCreateParamsTest {
                             .itemId("item_id")
                             .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
@@ -808,7 +833,12 @@ internal class SubscriptionCreateParamsTest {
                             .itemId("item_id")
                             .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(

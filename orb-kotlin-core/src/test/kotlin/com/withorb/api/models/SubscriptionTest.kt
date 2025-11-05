@@ -472,7 +472,12 @@ internal class SubscriptionTest {
                                 .planPhaseOrder(0L)
                                 .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                 .replacesPriceId("replaces_price_id")
-                                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                                .unitConfig(
+                                    UnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .prorated(true)
+                                        .build()
+                                )
                                 .dimensionalPriceConfiguration(
                                     DimensionalPriceConfiguration.builder()
                                         .addDimensionValue("string")
@@ -502,6 +507,7 @@ internal class SubscriptionTest {
                     PriceInterval.builder()
                         .id("id")
                         .billingCycleDay(0L)
+                        .canDeferBilling(true)
                         .currentBillingPeriodEndDate(
                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                         )
@@ -627,7 +633,12 @@ internal class SubscriptionTest {
                                 .planPhaseOrder(0L)
                                 .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                 .replacesPriceId("replaces_price_id")
-                                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                                .unitConfig(
+                                    UnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .prorated(true)
+                                        .build()
+                                )
                                 .dimensionalPriceConfiguration(
                                     DimensionalPriceConfiguration.builder()
                                         .addDimensionValue("string")
@@ -1114,7 +1125,12 @@ internal class SubscriptionTest {
                             .planPhaseOrder(0L)
                             .priceType(Price.Unit.PriceType.USAGE_PRICE)
                             .replacesPriceId("replaces_price_id")
-                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
                             .dimensionalPriceConfiguration(
                                 DimensionalPriceConfiguration.builder()
                                     .addDimensionValue("string")
@@ -1145,6 +1161,7 @@ internal class SubscriptionTest {
                 PriceInterval.builder()
                     .id("id")
                     .billingCycleDay(0L)
+                    .canDeferBilling(true)
                     .currentBillingPeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .currentBillingPeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1262,7 +1279,12 @@ internal class SubscriptionTest {
                             .planPhaseOrder(0L)
                             .priceType(Price.Unit.PriceType.USAGE_PRICE)
                             .replacesPriceId("replaces_price_id")
-                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
                             .dimensionalPriceConfiguration(
                                 DimensionalPriceConfiguration.builder()
                                     .addDimensionValue("string")
@@ -1756,7 +1778,12 @@ internal class SubscriptionTest {
                                 .planPhaseOrder(0L)
                                 .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                 .replacesPriceId("replaces_price_id")
-                                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                                .unitConfig(
+                                    UnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .prorated(true)
+                                        .build()
+                                )
                                 .dimensionalPriceConfiguration(
                                     DimensionalPriceConfiguration.builder()
                                         .addDimensionValue("string")
@@ -1786,6 +1813,7 @@ internal class SubscriptionTest {
                     PriceInterval.builder()
                         .id("id")
                         .billingCycleDay(0L)
+                        .canDeferBilling(true)
                         .currentBillingPeriodEndDate(
                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                         )
@@ -1911,7 +1939,12 @@ internal class SubscriptionTest {
                                 .planPhaseOrder(0L)
                                 .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                 .replacesPriceId("replaces_price_id")
-                                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                                .unitConfig(
+                                    UnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .prorated(true)
+                                        .build()
+                                )
                                 .dimensionalPriceConfiguration(
                                     DimensionalPriceConfiguration.builder()
                                         .addDimensionValue("string")
