@@ -97,7 +97,10 @@ internal class ExternalPlanIdServiceAsyncTest {
                                     .modelType(NewPlanUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
                                     .unitConfig(
-                                        UnitConfig.builder().unitAmount("unit_amount").build()
+                                        UnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .prorated(true)
+                                            .build()
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
@@ -221,7 +224,10 @@ internal class ExternalPlanIdServiceAsyncTest {
                                     .modelType(NewPlanUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
                                     .unitConfig(
-                                        UnitConfig.builder().unitAmount("unit_amount").build()
+                                        UnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .prorated(true)
+                                            .build()
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)

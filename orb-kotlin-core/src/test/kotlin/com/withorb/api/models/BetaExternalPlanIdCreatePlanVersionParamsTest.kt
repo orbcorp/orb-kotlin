@@ -71,7 +71,12 @@ internal class BetaExternalPlanIdCreatePlanVersionParamsTest {
                             .itemId("item_id")
                             .modelType(NewPlanUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
@@ -185,7 +190,12 @@ internal class BetaExternalPlanIdCreatePlanVersionParamsTest {
                             .itemId("item_id")
                             .modelType(NewPlanUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
@@ -308,7 +318,12 @@ internal class BetaExternalPlanIdCreatePlanVersionParamsTest {
                                 .itemId("item_id")
                                 .modelType(NewPlanUnitPrice.ModelType.UNIT)
                                 .name("Annual fee")
-                                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                                .unitConfig(
+                                    UnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .prorated(true)
+                                        .build()
+                                )
                                 .billableMetricId("billable_metric_id")
                                 .billedInAdvance(true)
                                 .billingCycleConfiguration(
@@ -424,7 +439,12 @@ internal class BetaExternalPlanIdCreatePlanVersionParamsTest {
                                 .itemId("item_id")
                                 .modelType(NewPlanUnitPrice.ModelType.UNIT)
                                 .name("Annual fee")
-                                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                                .unitConfig(
+                                    UnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .prorated(true)
+                                        .build()
+                                )
                                 .billableMetricId("billable_metric_id")
                                 .billedInAdvance(true)
                                 .billingCycleConfiguration(
@@ -534,7 +554,12 @@ internal class BetaExternalPlanIdCreatePlanVersionParamsTest {
                             .itemId("item_id")
                             .modelType(NewPlanUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(
@@ -652,7 +677,12 @@ internal class BetaExternalPlanIdCreatePlanVersionParamsTest {
                             .itemId("item_id")
                             .modelType(NewPlanUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
-                            .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
                             .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .billingCycleConfiguration(

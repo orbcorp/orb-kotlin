@@ -27,6 +27,7 @@ class PriceInterval
 private constructor(
     private val id: JsonField<String>,
     private val billingCycleDay: JsonField<Long>,
+    private val canDeferBilling: JsonField<Boolean>,
     private val currentBillingPeriodEndDate: JsonField<OffsetDateTime>,
     private val currentBillingPeriodStartDate: JsonField<OffsetDateTime>,
     private val endDate: JsonField<OffsetDateTime>,
@@ -44,6 +45,9 @@ private constructor(
         @JsonProperty("billing_cycle_day")
         @ExcludeMissing
         billingCycleDay: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("can_defer_billing")
+        @ExcludeMissing
+        canDeferBilling: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("current_billing_period_end_date")
         @ExcludeMissing
         currentBillingPeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -67,6 +71,7 @@ private constructor(
     ) : this(
         id,
         billingCycleDay,
+        canDeferBilling,
         currentBillingPeriodEndDate,
         currentBillingPeriodStartDate,
         endDate,
@@ -91,6 +96,15 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun billingCycleDay(): Long = billingCycleDay.getRequired("billing_cycle_day")
+
+    /**
+     * For in-arrears prices. If true, and the price interval ends mid-cycle, the final line item
+     * will be deferred to the next scheduled invoice instead of being billed mid-cycle.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun canDeferBilling(): Boolean = canDeferBilling.getRequired("can_defer_billing")
 
     /**
      * The end of the current billing period. This is an exclusive timestamp, such that the instant
@@ -192,6 +206,15 @@ private constructor(
     fun _billingCycleDay(): JsonField<Long> = billingCycleDay
 
     /**
+     * Returns the raw JSON value of [canDeferBilling].
+     *
+     * Unlike [canDeferBilling], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("can_defer_billing")
+    @ExcludeMissing
+    fun _canDeferBilling(): JsonField<Boolean> = canDeferBilling
+
+    /**
      * Returns the raw JSON value of [currentBillingPeriodEndDate].
      *
      * Unlike [currentBillingPeriodEndDate], this method doesn't throw if the JSON field has an
@@ -283,6 +306,7 @@ private constructor(
          * ```kotlin
          * .id()
          * .billingCycleDay()
+         * .canDeferBilling()
          * .currentBillingPeriodEndDate()
          * .currentBillingPeriodStartDate()
          * .endDate()
@@ -301,6 +325,7 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var billingCycleDay: JsonField<Long>? = null
+        private var canDeferBilling: JsonField<Boolean>? = null
         private var currentBillingPeriodEndDate: JsonField<OffsetDateTime>? = null
         private var currentBillingPeriodStartDate: JsonField<OffsetDateTime>? = null
         private var endDate: JsonField<OffsetDateTime>? = null
@@ -316,6 +341,7 @@ private constructor(
         internal fun from(priceInterval: PriceInterval) = apply {
             id = priceInterval.id
             billingCycleDay = priceInterval.billingCycleDay
+            canDeferBilling = priceInterval.canDeferBilling
             currentBillingPeriodEndDate = priceInterval.currentBillingPeriodEndDate
             currentBillingPeriodStartDate = priceInterval.currentBillingPeriodStartDate
             endDate = priceInterval.endDate
@@ -350,6 +376,24 @@ private constructor(
          */
         fun billingCycleDay(billingCycleDay: JsonField<Long>) = apply {
             this.billingCycleDay = billingCycleDay
+        }
+
+        /**
+         * For in-arrears prices. If true, and the price interval ends mid-cycle, the final line
+         * item will be deferred to the next scheduled invoice instead of being billed mid-cycle.
+         */
+        fun canDeferBilling(canDeferBilling: Boolean) =
+            canDeferBilling(JsonField.of(canDeferBilling))
+
+        /**
+         * Sets [Builder.canDeferBilling] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.canDeferBilling] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun canDeferBilling(canDeferBilling: JsonField<Boolean>) = apply {
+            this.canDeferBilling = canDeferBilling
         }
 
         /**
@@ -684,6 +728,7 @@ private constructor(
          * ```kotlin
          * .id()
          * .billingCycleDay()
+         * .canDeferBilling()
          * .currentBillingPeriodEndDate()
          * .currentBillingPeriodStartDate()
          * .endDate()
@@ -700,6 +745,7 @@ private constructor(
             PriceInterval(
                 checkRequired("id", id),
                 checkRequired("billingCycleDay", billingCycleDay),
+                checkRequired("canDeferBilling", canDeferBilling),
                 checkRequired("currentBillingPeriodEndDate", currentBillingPeriodEndDate),
                 checkRequired("currentBillingPeriodStartDate", currentBillingPeriodStartDate),
                 checkRequired("endDate", endDate),
@@ -723,6 +769,7 @@ private constructor(
 
         id()
         billingCycleDay()
+        canDeferBilling()
         currentBillingPeriodEndDate()
         currentBillingPeriodStartDate()
         endDate()
@@ -750,6 +797,7 @@ private constructor(
     internal fun validity(): Int =
         (if (id.asKnown() == null) 0 else 1) +
             (if (billingCycleDay.asKnown() == null) 0 else 1) +
+            (if (canDeferBilling.asKnown() == null) 0 else 1) +
             (if (currentBillingPeriodEndDate.asKnown() == null) 0 else 1) +
             (if (currentBillingPeriodStartDate.asKnown() == null) 0 else 1) +
             (if (endDate.asKnown() == null) 0 else 1) +
@@ -767,6 +815,7 @@ private constructor(
         return other is PriceInterval &&
             id == other.id &&
             billingCycleDay == other.billingCycleDay &&
+            canDeferBilling == other.canDeferBilling &&
             currentBillingPeriodEndDate == other.currentBillingPeriodEndDate &&
             currentBillingPeriodStartDate == other.currentBillingPeriodStartDate &&
             endDate == other.endDate &&
@@ -782,6 +831,7 @@ private constructor(
         Objects.hash(
             id,
             billingCycleDay,
+            canDeferBilling,
             currentBillingPeriodEndDate,
             currentBillingPeriodStartDate,
             endDate,
@@ -797,5 +847,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PriceInterval{id=$id, billingCycleDay=$billingCycleDay, currentBillingPeriodEndDate=$currentBillingPeriodEndDate, currentBillingPeriodStartDate=$currentBillingPeriodStartDate, endDate=$endDate, filter=$filter, fixedFeeQuantityTransitions=$fixedFeeQuantityTransitions, price=$price, startDate=$startDate, usageCustomerIds=$usageCustomerIds, additionalProperties=$additionalProperties}"
+        "PriceInterval{id=$id, billingCycleDay=$billingCycleDay, canDeferBilling=$canDeferBilling, currentBillingPeriodEndDate=$currentBillingPeriodEndDate, currentBillingPeriodStartDate=$currentBillingPeriodStartDate, endDate=$endDate, filter=$filter, fixedFeeQuantityTransitions=$fixedFeeQuantityTransitions, price=$price, startDate=$startDate, usageCustomerIds=$usageCustomerIds, additionalProperties=$additionalProperties}"
 }

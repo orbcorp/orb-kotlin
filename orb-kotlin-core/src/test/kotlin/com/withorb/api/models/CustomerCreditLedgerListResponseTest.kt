@@ -367,7 +367,10 @@ internal class CustomerCreditLedgerListResponseTest {
                                         .priceType(Price.Unit.PriceType.USAGE_PRICE)
                                         .replacesPriceId("replaces_price_id")
                                         .unitConfig(
-                                            UnitConfig.builder().unitAmount("unit_amount").build()
+                                            UnitConfig.builder()
+                                                .unitAmount("unit_amount")
+                                                .prorated(true)
+                                                .build()
                                         )
                                         .dimensionalPriceConfiguration(
                                             DimensionalPriceConfiguration.builder()
@@ -863,6 +866,7 @@ internal class CustomerCreditLedgerListResponseTest {
                                             .unitConfig(
                                                 UnitConfig.builder()
                                                     .unitAmount("unit_amount")
+                                                    .prorated(true)
                                                     .build()
                                             )
                                             .dimensionalPriceConfiguration(
