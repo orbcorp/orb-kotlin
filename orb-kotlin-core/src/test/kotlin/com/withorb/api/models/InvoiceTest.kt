@@ -182,7 +182,7 @@ internal class InvoiceTest {
                         .name("Fixed Fee")
                         .partiallyInvoicedAmount("4.00")
                         .price(
-                            Price.Unit.builder()
+                            Price.UnitPrice.builder()
                                 .id("id")
                                 .billableMetric(BillableMetricTiny.builder().id("id").build())
                                 .billingCycleConfiguration(
@@ -191,12 +191,14 @@ internal class InvoiceTest {
                                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                                         .build()
                                 )
-                                .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
-                                .cadence(Price.Unit.Cadence.ONE_TIME)
+                                .billingMode(Price.UnitPrice.BillingMode.IN_ADVANCE)
+                                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
                                 .addCompositePriceFilter(
-                                    Price.Unit.CompositePriceFilter.builder()
-                                        .field(Price.Unit.CompositePriceFilter.Field.PRICE_ID)
-                                        .operator(Price.Unit.CompositePriceFilter.Operator.INCLUDES)
+                                    Price.UnitPrice.CompositePriceFilter.builder()
+                                        .field(Price.UnitPrice.CompositePriceFilter.Field.PRICE_ID)
+                                        .operator(
+                                            Price.UnitPrice.CompositePriceFilter.Operator.INCLUDES
+                                        )
                                         .addValue("string")
                                         .build()
                                 )
@@ -269,7 +271,7 @@ internal class InvoiceTest {
                                 )
                                 .maximumAmount("maximum_amount")
                                 .metadata(
-                                    Price.Unit.Metadata.builder()
+                                    Price.UnitPrice.Metadata.builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
@@ -289,7 +291,7 @@ internal class InvoiceTest {
                                 .minimumAmount("minimum_amount")
                                 .name("name")
                                 .planPhaseOrder(0L)
-                                .priceType(Price.Unit.PriceType.USAGE_PRICE)
+                                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                 .replacesPriceId("replaces_price_id")
                                 .unitConfig(
                                     UnitConfig.builder()
@@ -587,7 +589,7 @@ internal class InvoiceTest {
                     .name("Fixed Fee")
                     .partiallyInvoicedAmount("4.00")
                     .price(
-                        Price.Unit.builder()
+                        Price.UnitPrice.builder()
                             .id("id")
                             .billableMetric(BillableMetricTiny.builder().id("id").build())
                             .billingCycleConfiguration(
@@ -596,12 +598,14 @@ internal class InvoiceTest {
                                     .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                                     .build()
                             )
-                            .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
-                            .cadence(Price.Unit.Cadence.ONE_TIME)
+                            .billingMode(Price.UnitPrice.BillingMode.IN_ADVANCE)
+                            .cadence(Price.UnitPrice.Cadence.ONE_TIME)
                             .addCompositePriceFilter(
-                                Price.Unit.CompositePriceFilter.builder()
-                                    .field(Price.Unit.CompositePriceFilter.Field.PRICE_ID)
-                                    .operator(Price.Unit.CompositePriceFilter.Operator.INCLUDES)
+                                Price.UnitPrice.CompositePriceFilter.builder()
+                                    .field(Price.UnitPrice.CompositePriceFilter.Field.PRICE_ID)
+                                    .operator(
+                                        Price.UnitPrice.CompositePriceFilter.Operator.INCLUDES
+                                    )
                                     .addValue("string")
                                     .build()
                             )
@@ -670,7 +674,7 @@ internal class InvoiceTest {
                             )
                             .maximumAmount("maximum_amount")
                             .metadata(
-                                Price.Unit.Metadata.builder()
+                                Price.UnitPrice.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
@@ -690,7 +694,7 @@ internal class InvoiceTest {
                             .minimumAmount("minimum_amount")
                             .name("name")
                             .planPhaseOrder(0L)
-                            .priceType(Price.Unit.PriceType.USAGE_PRICE)
+                            .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                             .replacesPriceId("replaces_price_id")
                             .unitConfig(
                                 UnitConfig.builder()
@@ -988,7 +992,7 @@ internal class InvoiceTest {
                         .name("Fixed Fee")
                         .partiallyInvoicedAmount("4.00")
                         .price(
-                            Price.Unit.builder()
+                            Price.UnitPrice.builder()
                                 .id("id")
                                 .billableMetric(BillableMetricTiny.builder().id("id").build())
                                 .billingCycleConfiguration(
@@ -997,12 +1001,14 @@ internal class InvoiceTest {
                                         .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
                                         .build()
                                 )
-                                .billingMode(Price.Unit.BillingMode.IN_ADVANCE)
-                                .cadence(Price.Unit.Cadence.ONE_TIME)
+                                .billingMode(Price.UnitPrice.BillingMode.IN_ADVANCE)
+                                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
                                 .addCompositePriceFilter(
-                                    Price.Unit.CompositePriceFilter.builder()
-                                        .field(Price.Unit.CompositePriceFilter.Field.PRICE_ID)
-                                        .operator(Price.Unit.CompositePriceFilter.Operator.INCLUDES)
+                                    Price.UnitPrice.CompositePriceFilter.builder()
+                                        .field(Price.UnitPrice.CompositePriceFilter.Field.PRICE_ID)
+                                        .operator(
+                                            Price.UnitPrice.CompositePriceFilter.Operator.INCLUDES
+                                        )
                                         .addValue("string")
                                         .build()
                                 )
@@ -1075,7 +1081,7 @@ internal class InvoiceTest {
                                 )
                                 .maximumAmount("maximum_amount")
                                 .metadata(
-                                    Price.Unit.Metadata.builder()
+                                    Price.UnitPrice.Metadata.builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
@@ -1095,7 +1101,7 @@ internal class InvoiceTest {
                                 .minimumAmount("minimum_amount")
                                 .name("name")
                                 .planPhaseOrder(0L)
-                                .priceType(Price.Unit.PriceType.USAGE_PRICE)
+                                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                 .replacesPriceId("replaces_price_id")
                                 .unitConfig(
                                     UnitConfig.builder()
