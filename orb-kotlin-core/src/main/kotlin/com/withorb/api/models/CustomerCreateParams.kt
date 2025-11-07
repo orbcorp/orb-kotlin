@@ -931,6 +931,23 @@ private constructor(
             body.anrokTaxConfiguration(taxExempt)
         }
 
+        /** Alias for calling [taxConfiguration] with `TaxConfiguration.ofStripe(stripe)`. */
+        fun taxConfiguration(stripe: TaxConfiguration.Stripe) = apply {
+            body.taxConfiguration(stripe)
+        }
+
+        /**
+         * Alias for calling [taxConfiguration] with the following:
+         * ```kotlin
+         * TaxConfiguration.Stripe.builder()
+         *     .taxExempt(taxExempt)
+         *     .build()
+         * ```
+         */
+        fun stripeTaxConfiguration(taxExempt: Boolean) = apply {
+            body.stripeTaxConfiguration(taxExempt)
+        }
+
         /**
          * Tax IDs are commonly required to be displayed on customer invoices, which are added to
          * the headers of invoices.
@@ -2295,6 +2312,21 @@ private constructor(
             fun anrokTaxConfiguration(taxExempt: Boolean) =
                 taxConfiguration(TaxConfiguration.Anrok.builder().taxExempt(taxExempt).build())
 
+            /** Alias for calling [taxConfiguration] with `TaxConfiguration.ofStripe(stripe)`. */
+            fun taxConfiguration(stripe: TaxConfiguration.Stripe) =
+                taxConfiguration(TaxConfiguration.ofStripe(stripe))
+
+            /**
+             * Alias for calling [taxConfiguration] with the following:
+             * ```kotlin
+             * TaxConfiguration.Stripe.builder()
+             *     .taxExempt(taxExempt)
+             *     .build()
+             * ```
+             */
+            fun stripeTaxConfiguration(taxExempt: Boolean) =
+                taxConfiguration(TaxConfiguration.Stripe.builder().taxExempt(taxExempt).build())
+
             /**
              * Tax IDs are commonly required to be displayed on customer invoices, which are added
              * to the headers of invoices.
@@ -2908,6 +2940,7 @@ private constructor(
         private val sphere: NewSphereConfiguration? = null,
         private val numeral: Numeral? = null,
         private val anrok: Anrok? = null,
+        private val stripe: Stripe? = null,
         private val _json: JsonValue? = null,
     ) {
 
@@ -2921,6 +2954,8 @@ private constructor(
 
         fun anrok(): Anrok? = anrok
 
+        fun stripe(): Stripe? = stripe
+
         fun isAvalara(): Boolean = avalara != null
 
         fun isTaxjar(): Boolean = taxjar != null
@@ -2930,6 +2965,8 @@ private constructor(
         fun isNumeral(): Boolean = numeral != null
 
         fun isAnrok(): Boolean = anrok != null
+
+        fun isStripe(): Boolean = stripe != null
 
         fun asAvalara(): NewAvalaraTaxConfiguration = avalara.getOrThrow("avalara")
 
@@ -2941,6 +2978,8 @@ private constructor(
 
         fun asAnrok(): Anrok = anrok.getOrThrow("anrok")
 
+        fun asStripe(): Stripe = stripe.getOrThrow("stripe")
+
         fun _json(): JsonValue? = _json
 
         fun <T> accept(visitor: Visitor<T>): T =
@@ -2950,6 +2989,7 @@ private constructor(
                 sphere != null -> visitor.visitSphere(sphere)
                 numeral != null -> visitor.visitNumeral(numeral)
                 anrok != null -> visitor.visitAnrok(anrok)
+                stripe != null -> visitor.visitStripe(stripe)
                 else -> visitor.unknown(_json)
             }
 
@@ -2980,6 +3020,10 @@ private constructor(
 
                     override fun visitAnrok(anrok: Anrok) {
                         anrok.validate()
+                    }
+
+                    override fun visitStripe(stripe: Stripe) {
+                        stripe.validate()
                     }
                 }
             )
@@ -3014,6 +3058,8 @@ private constructor(
 
                     override fun visitAnrok(anrok: Anrok) = anrok.validity()
 
+                    override fun visitStripe(stripe: Stripe) = stripe.validity()
+
                     override fun unknown(json: JsonValue?) = 0
                 }
             )
@@ -3028,10 +3074,11 @@ private constructor(
                 taxjar == other.taxjar &&
                 sphere == other.sphere &&
                 numeral == other.numeral &&
-                anrok == other.anrok
+                anrok == other.anrok &&
+                stripe == other.stripe
         }
 
-        override fun hashCode(): Int = Objects.hash(avalara, taxjar, sphere, numeral, anrok)
+        override fun hashCode(): Int = Objects.hash(avalara, taxjar, sphere, numeral, anrok, stripe)
 
         override fun toString(): String =
             when {
@@ -3040,6 +3087,7 @@ private constructor(
                 sphere != null -> "TaxConfiguration{sphere=$sphere}"
                 numeral != null -> "TaxConfiguration{numeral=$numeral}"
                 anrok != null -> "TaxConfiguration{anrok=$anrok}"
+                stripe != null -> "TaxConfiguration{stripe=$stripe}"
                 _json != null -> "TaxConfiguration{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid TaxConfiguration")
             }
@@ -3055,6 +3103,8 @@ private constructor(
             fun ofNumeral(numeral: Numeral) = TaxConfiguration(numeral = numeral)
 
             fun ofAnrok(anrok: Anrok) = TaxConfiguration(anrok = anrok)
+
+            fun ofStripe(stripe: Stripe) = TaxConfiguration(stripe = stripe)
         }
 
         /**
@@ -3072,6 +3122,8 @@ private constructor(
             fun visitNumeral(numeral: Numeral): T
 
             fun visitAnrok(anrok: Anrok): T
+
+            fun visitStripe(stripe: Stripe): T
 
             /**
              * Maps an unknown variant of [TaxConfiguration] to a value of type [T].
@@ -3120,6 +3172,11 @@ private constructor(
                             TaxConfiguration(anrok = it, _json = json)
                         } ?: TaxConfiguration(_json = json)
                     }
+                    "stripe" -> {
+                        return tryDeserialize(node, jacksonTypeRef<Stripe>())?.let {
+                            TaxConfiguration(stripe = it, _json = json)
+                        } ?: TaxConfiguration(_json = json)
+                    }
                 }
 
                 return TaxConfiguration(_json = json)
@@ -3139,6 +3196,7 @@ private constructor(
                     value.sphere != null -> generator.writeObject(value.sphere)
                     value.numeral != null -> generator.writeObject(value.numeral)
                     value.anrok != null -> generator.writeObject(value.anrok)
+                    value.stripe != null -> generator.writeObject(value.stripe)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid TaxConfiguration")
                 }
@@ -3671,6 +3729,270 @@ private constructor(
 
             override fun toString() =
                 "Anrok{taxExempt=$taxExempt, taxProvider=$taxProvider, automaticTaxEnabled=$automaticTaxEnabled, additionalProperties=$additionalProperties}"
+        }
+
+        class Stripe
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val taxExempt: JsonField<Boolean>,
+            private val taxProvider: JsonValue,
+            private val automaticTaxEnabled: JsonField<Boolean>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("tax_exempt")
+                @ExcludeMissing
+                taxExempt: JsonField<Boolean> = JsonMissing.of(),
+                @JsonProperty("tax_provider")
+                @ExcludeMissing
+                taxProvider: JsonValue = JsonMissing.of(),
+                @JsonProperty("automatic_tax_enabled")
+                @ExcludeMissing
+                automaticTaxEnabled: JsonField<Boolean> = JsonMissing.of(),
+            ) : this(taxExempt, taxProvider, automaticTaxEnabled, mutableMapOf())
+
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun taxExempt(): Boolean = taxExempt.getRequired("tax_exempt")
+
+            /**
+             * Expected to always return the following:
+             * ```kotlin
+             * JsonValue.from("stripe")
+             * ```
+             *
+             * However, this method can be useful for debugging and logging (e.g. if the server
+             * responded with an unexpected value).
+             */
+            @JsonProperty("tax_provider")
+            @ExcludeMissing
+            fun _taxProvider(): JsonValue = taxProvider
+
+            /**
+             * Whether to automatically calculate tax for this customer. When null, inherits from
+             * account-level setting. When true or false, overrides the account setting.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun automaticTaxEnabled(): Boolean? =
+                automaticTaxEnabled.getNullable("automatic_tax_enabled")
+
+            /**
+             * Returns the raw JSON value of [taxExempt].
+             *
+             * Unlike [taxExempt], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("tax_exempt")
+            @ExcludeMissing
+            fun _taxExempt(): JsonField<Boolean> = taxExempt
+
+            /**
+             * Returns the raw JSON value of [automaticTaxEnabled].
+             *
+             * Unlike [automaticTaxEnabled], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("automatic_tax_enabled")
+            @ExcludeMissing
+            fun _automaticTaxEnabled(): JsonField<Boolean> = automaticTaxEnabled
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [Stripe].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .taxExempt()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Stripe]. */
+            class Builder internal constructor() {
+
+                private var taxExempt: JsonField<Boolean>? = null
+                private var taxProvider: JsonValue = JsonValue.from("stripe")
+                private var automaticTaxEnabled: JsonField<Boolean> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(stripe: Stripe) = apply {
+                    taxExempt = stripe.taxExempt
+                    taxProvider = stripe.taxProvider
+                    automaticTaxEnabled = stripe.automaticTaxEnabled
+                    additionalProperties = stripe.additionalProperties.toMutableMap()
+                }
+
+                fun taxExempt(taxExempt: Boolean) = taxExempt(JsonField.of(taxExempt))
+
+                /**
+                 * Sets [Builder.taxExempt] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.taxExempt] with a well-typed [Boolean] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun taxExempt(taxExempt: JsonField<Boolean>) = apply { this.taxExempt = taxExempt }
+
+                /**
+                 * Sets the field to an arbitrary JSON value.
+                 *
+                 * It is usually unnecessary to call this method because the field defaults to the
+                 * following:
+                 * ```kotlin
+                 * JsonValue.from("stripe")
+                 * ```
+                 *
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun taxProvider(taxProvider: JsonValue) = apply { this.taxProvider = taxProvider }
+
+                /**
+                 * Whether to automatically calculate tax for this customer. When null, inherits
+                 * from account-level setting. When true or false, overrides the account setting.
+                 */
+                fun automaticTaxEnabled(automaticTaxEnabled: Boolean?) =
+                    automaticTaxEnabled(JsonField.ofNullable(automaticTaxEnabled))
+
+                /**
+                 * Alias for [Builder.automaticTaxEnabled].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun automaticTaxEnabled(automaticTaxEnabled: Boolean) =
+                    automaticTaxEnabled(automaticTaxEnabled as Boolean?)
+
+                /**
+                 * Sets [Builder.automaticTaxEnabled] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.automaticTaxEnabled] with a well-typed [Boolean]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun automaticTaxEnabled(automaticTaxEnabled: JsonField<Boolean>) = apply {
+                    this.automaticTaxEnabled = automaticTaxEnabled
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [Stripe].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .taxExempt()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): Stripe =
+                    Stripe(
+                        checkRequired("taxExempt", taxExempt),
+                        taxProvider,
+                        automaticTaxEnabled,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Stripe = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                taxExempt()
+                _taxProvider().let {
+                    if (it != JsonValue.from("stripe")) {
+                        throw OrbInvalidDataException("'taxProvider' is invalid, received $it")
+                    }
+                }
+                automaticTaxEnabled()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (taxExempt.asKnown() == null) 0 else 1) +
+                    taxProvider.let { if (it == JsonValue.from("stripe")) 1 else 0 } +
+                    (if (automaticTaxEnabled.asKnown() == null) 0 else 1)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Stripe &&
+                    taxExempt == other.taxExempt &&
+                    taxProvider == other.taxProvider &&
+                    automaticTaxEnabled == other.automaticTaxEnabled &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(taxExempt, taxProvider, automaticTaxEnabled, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "Stripe{taxExempt=$taxExempt, taxProvider=$taxProvider, automaticTaxEnabled=$automaticTaxEnabled, additionalProperties=$additionalProperties}"
         }
     }
 
