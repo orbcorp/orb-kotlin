@@ -22,7 +22,7 @@ internal class CustomerCreditListPageResponseTest {
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFilter(
                             CustomerCreditListResponse.Filter.builder()
-                                .field(CustomerCreditListResponse.Filter.Field.PRICE_ID)
+                                .field(CustomerCreditListResponse.Filter.Field.ITEM_ID)
                                 .operator(CustomerCreditListResponse.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
@@ -46,7 +46,7 @@ internal class CustomerCreditListPageResponseTest {
                     .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addFilter(
                         CustomerCreditListResponse.Filter.builder()
-                            .field(CustomerCreditListResponse.Filter.Field.PRICE_ID)
+                            .field(CustomerCreditListResponse.Filter.Field.ITEM_ID)
                             .operator(CustomerCreditListResponse.Filter.Operator.INCLUDES)
                             .addValue("string")
                             .build()
@@ -73,7 +73,7 @@ internal class CustomerCreditListPageResponseTest {
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFilter(
                             CustomerCreditListResponse.Filter.builder()
-                                .field(CustomerCreditListResponse.Filter.Field.PRICE_ID)
+                                .field(CustomerCreditListResponse.Filter.Field.ITEM_ID)
                                 .operator(CustomerCreditListResponse.Filter.Operator.INCLUDES)
                                 .addValue("string")
                                 .build()
