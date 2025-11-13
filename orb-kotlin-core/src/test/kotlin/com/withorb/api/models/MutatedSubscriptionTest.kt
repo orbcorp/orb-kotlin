@@ -915,60 +915,9 @@ internal class MutatedSubscriptionTest {
                                         )
                                         .amount("7.00")
                                         .creditsApplied("6.00")
-                                        .discount(
-                                            PercentageDiscount.builder()
-                                                .discountType(
-                                                    PercentageDiscount.DiscountType.PERCENTAGE
-                                                )
-                                                .percentageDiscount(0.15)
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                                                .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
-                                                        .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
-                                                        )
-                                                        .addValue("string")
-                                                        .build()
-                                                )
-                                                .reason("reason")
-                                                .build()
-                                        )
                                         .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                                         .filter("filter")
                                         .grouping("grouping")
-                                        .maximum(
-                                            Maximum.builder()
-                                                .addAppliesToPriceId("string")
-                                                .addFilter(
-                                                    Maximum.Filter.builder()
-                                                        .field(Maximum.Filter.Field.PRICE_ID)
-                                                        .operator(Maximum.Filter.Operator.INCLUDES)
-                                                        .addValue("string")
-                                                        .build()
-                                                )
-                                                .maximumAmount("maximum_amount")
-                                                .build()
-                                        )
-                                        .maximumAmount("maximum_amount")
-                                        .minimum(
-                                            Minimum.builder()
-                                                .addAppliesToPriceId("string")
-                                                .addFilter(
-                                                    Minimum.Filter.builder()
-                                                        .field(Minimum.Filter.Field.PRICE_ID)
-                                                        .operator(Minimum.Filter.Operator.INCLUDES)
-                                                        .addValue("string")
-                                                        .build()
-                                                )
-                                                .minimumAmount("minimum_amount")
-                                                .build()
-                                        )
-                                        .minimumAmount("minimum_amount")
                                         .name("Fixed Fee")
                                         .partiallyInvoicedAmount("4.00")
                                         .price(
@@ -1487,60 +1436,9 @@ internal class MutatedSubscriptionTest {
                                         )
                                         .amount("7.00")
                                         .creditsApplied("6.00")
-                                        .discount(
-                                            PercentageDiscount.builder()
-                                                .discountType(
-                                                    PercentageDiscount.DiscountType.PERCENTAGE
-                                                )
-                                                .percentageDiscount(0.15)
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                                                .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
-                                                        .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
-                                                        )
-                                                        .addValue("string")
-                                                        .build()
-                                                )
-                                                .reason("reason")
-                                                .build()
-                                        )
                                         .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                                         .filter("filter")
                                         .grouping("grouping")
-                                        .maximum(
-                                            Maximum.builder()
-                                                .addAppliesToPriceId("string")
-                                                .addFilter(
-                                                    Maximum.Filter.builder()
-                                                        .field(Maximum.Filter.Field.PRICE_ID)
-                                                        .operator(Maximum.Filter.Operator.INCLUDES)
-                                                        .addValue("string")
-                                                        .build()
-                                                )
-                                                .maximumAmount("maximum_amount")
-                                                .build()
-                                        )
-                                        .maximumAmount("maximum_amount")
-                                        .minimum(
-                                            Minimum.builder()
-                                                .addAppliesToPriceId("string")
-                                                .addFilter(
-                                                    Minimum.Filter.builder()
-                                                        .field(Minimum.Filter.Field.PRICE_ID)
-                                                        .operator(Minimum.Filter.Operator.INCLUDES)
-                                                        .addValue("string")
-                                                        .build()
-                                                )
-                                                .minimumAmount("minimum_amount")
-                                                .build()
-                                        )
-                                        .minimumAmount("minimum_amount")
                                         .name("Fixed Fee")
                                         .partiallyInvoicedAmount("4.00")
                                         .price(
@@ -2714,57 +2612,9 @@ internal class MutatedSubscriptionTest {
                                     )
                                     .amount("7.00")
                                     .creditsApplied("6.00")
-                                    .discount(
-                                        PercentageDiscount.builder()
-                                            .discountType(
-                                                PercentageDiscount.DiscountType.PERCENTAGE
-                                            )
-                                            .percentageDiscount(0.15)
-                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                                            .addFilter(
-                                                PercentageDiscount.Filter.builder()
-                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
-                                                    .operator(
-                                                        PercentageDiscount.Filter.Operator.INCLUDES
-                                                    )
-                                                    .addValue("string")
-                                                    .build()
-                                            )
-                                            .reason("reason")
-                                            .build()
-                                    )
                                     .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                                     .filter("filter")
                                     .grouping("grouping")
-                                    .maximum(
-                                        Maximum.builder()
-                                            .addAppliesToPriceId("string")
-                                            .addFilter(
-                                                Maximum.Filter.builder()
-                                                    .field(Maximum.Filter.Field.PRICE_ID)
-                                                    .operator(Maximum.Filter.Operator.INCLUDES)
-                                                    .addValue("string")
-                                                    .build()
-                                            )
-                                            .maximumAmount("maximum_amount")
-                                            .build()
-                                    )
-                                    .maximumAmount("maximum_amount")
-                                    .minimum(
-                                        Minimum.builder()
-                                            .addAppliesToPriceId("string")
-                                            .addFilter(
-                                                Minimum.Filter.builder()
-                                                    .field(Minimum.Filter.Field.PRICE_ID)
-                                                    .operator(Minimum.Filter.Operator.INCLUDES)
-                                                    .addValue("string")
-                                                    .build()
-                                            )
-                                            .minimumAmount("minimum_amount")
-                                            .build()
-                                    )
-                                    .minimumAmount("minimum_amount")
                                     .name("Fixed Fee")
                                     .partiallyInvoicedAmount("4.00")
                                     .price(
@@ -3251,57 +3101,9 @@ internal class MutatedSubscriptionTest {
                                     )
                                     .amount("7.00")
                                     .creditsApplied("6.00")
-                                    .discount(
-                                        PercentageDiscount.builder()
-                                            .discountType(
-                                                PercentageDiscount.DiscountType.PERCENTAGE
-                                            )
-                                            .percentageDiscount(0.15)
-                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                                            .addFilter(
-                                                PercentageDiscount.Filter.builder()
-                                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
-                                                    .operator(
-                                                        PercentageDiscount.Filter.Operator.INCLUDES
-                                                    )
-                                                    .addValue("string")
-                                                    .build()
-                                            )
-                                            .reason("reason")
-                                            .build()
-                                    )
                                     .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                                     .filter("filter")
                                     .grouping("grouping")
-                                    .maximum(
-                                        Maximum.builder()
-                                            .addAppliesToPriceId("string")
-                                            .addFilter(
-                                                Maximum.Filter.builder()
-                                                    .field(Maximum.Filter.Field.PRICE_ID)
-                                                    .operator(Maximum.Filter.Operator.INCLUDES)
-                                                    .addValue("string")
-                                                    .build()
-                                            )
-                                            .maximumAmount("maximum_amount")
-                                            .build()
-                                    )
-                                    .maximumAmount("maximum_amount")
-                                    .minimum(
-                                        Minimum.builder()
-                                            .addAppliesToPriceId("string")
-                                            .addFilter(
-                                                Minimum.Filter.builder()
-                                                    .field(Minimum.Filter.Field.PRICE_ID)
-                                                    .operator(Minimum.Filter.Operator.INCLUDES)
-                                                    .addValue("string")
-                                                    .build()
-                                            )
-                                            .minimumAmount("minimum_amount")
-                                            .build()
-                                    )
-                                    .minimumAmount("minimum_amount")
                                     .name("Fixed Fee")
                                     .partiallyInvoicedAmount("4.00")
                                     .price(
@@ -4476,60 +4278,9 @@ internal class MutatedSubscriptionTest {
                                         )
                                         .amount("7.00")
                                         .creditsApplied("6.00")
-                                        .discount(
-                                            PercentageDiscount.builder()
-                                                .discountType(
-                                                    PercentageDiscount.DiscountType.PERCENTAGE
-                                                )
-                                                .percentageDiscount(0.15)
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                                                .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
-                                                        .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
-                                                        )
-                                                        .addValue("string")
-                                                        .build()
-                                                )
-                                                .reason("reason")
-                                                .build()
-                                        )
                                         .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                                         .filter("filter")
                                         .grouping("grouping")
-                                        .maximum(
-                                            Maximum.builder()
-                                                .addAppliesToPriceId("string")
-                                                .addFilter(
-                                                    Maximum.Filter.builder()
-                                                        .field(Maximum.Filter.Field.PRICE_ID)
-                                                        .operator(Maximum.Filter.Operator.INCLUDES)
-                                                        .addValue("string")
-                                                        .build()
-                                                )
-                                                .maximumAmount("maximum_amount")
-                                                .build()
-                                        )
-                                        .maximumAmount("maximum_amount")
-                                        .minimum(
-                                            Minimum.builder()
-                                                .addAppliesToPriceId("string")
-                                                .addFilter(
-                                                    Minimum.Filter.builder()
-                                                        .field(Minimum.Filter.Field.PRICE_ID)
-                                                        .operator(Minimum.Filter.Operator.INCLUDES)
-                                                        .addValue("string")
-                                                        .build()
-                                                )
-                                                .minimumAmount("minimum_amount")
-                                                .build()
-                                        )
-                                        .minimumAmount("minimum_amount")
                                         .name("Fixed Fee")
                                         .partiallyInvoicedAmount("4.00")
                                         .price(
@@ -5048,60 +4799,9 @@ internal class MutatedSubscriptionTest {
                                         )
                                         .amount("7.00")
                                         .creditsApplied("6.00")
-                                        .discount(
-                                            PercentageDiscount.builder()
-                                                .discountType(
-                                                    PercentageDiscount.DiscountType.PERCENTAGE
-                                                )
-                                                .percentageDiscount(0.15)
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                                                .addFilter(
-                                                    PercentageDiscount.Filter.builder()
-                                                        .field(
-                                                            PercentageDiscount.Filter.Field.PRICE_ID
-                                                        )
-                                                        .operator(
-                                                            PercentageDiscount.Filter.Operator
-                                                                .INCLUDES
-                                                        )
-                                                        .addValue("string")
-                                                        .build()
-                                                )
-                                                .reason("reason")
-                                                .build()
-                                        )
                                         .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                                         .filter("filter")
                                         .grouping("grouping")
-                                        .maximum(
-                                            Maximum.builder()
-                                                .addAppliesToPriceId("string")
-                                                .addFilter(
-                                                    Maximum.Filter.builder()
-                                                        .field(Maximum.Filter.Field.PRICE_ID)
-                                                        .operator(Maximum.Filter.Operator.INCLUDES)
-                                                        .addValue("string")
-                                                        .build()
-                                                )
-                                                .maximumAmount("maximum_amount")
-                                                .build()
-                                        )
-                                        .maximumAmount("maximum_amount")
-                                        .minimum(
-                                            Minimum.builder()
-                                                .addAppliesToPriceId("string")
-                                                .addFilter(
-                                                    Minimum.Filter.builder()
-                                                        .field(Minimum.Filter.Field.PRICE_ID)
-                                                        .operator(Minimum.Filter.Operator.INCLUDES)
-                                                        .addValue("string")
-                                                        .build()
-                                                )
-                                                .minimumAmount("minimum_amount")
-                                                .build()
-                                        )
-                                        .minimumAmount("minimum_amount")
                                         .name("Fixed Fee")
                                         .partiallyInvoicedAmount("4.00")
                                         .price(
