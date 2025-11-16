@@ -39,8 +39,6 @@ class Plan
 private constructor(
     private val id: JsonField<String>,
     private val adjustments: JsonField<List<Adjustment>>,
-    private val basePlan: JsonField<BasePlan>,
-    private val basePlanId: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
     private val currency: JsonField<String>,
     private val defaultInvoiceMemo: JsonField<String>,
@@ -61,6 +59,8 @@ private constructor(
     private val status: JsonField<Status>,
     private val trialConfig: JsonField<TrialConfig>,
     private val version: JsonField<Long>,
+    private val basePlan: JsonField<BasePlan>,
+    private val basePlanId: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -70,10 +70,6 @@ private constructor(
         @JsonProperty("adjustments")
         @ExcludeMissing
         adjustments: JsonField<List<Adjustment>> = JsonMissing.of(),
-        @JsonProperty("base_plan") @ExcludeMissing basePlan: JsonField<BasePlan> = JsonMissing.of(),
-        @JsonProperty("base_plan_id")
-        @ExcludeMissing
-        basePlanId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("created_at")
         @ExcludeMissing
         createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -112,11 +108,13 @@ private constructor(
         @ExcludeMissing
         trialConfig: JsonField<TrialConfig> = JsonMissing.of(),
         @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("base_plan") @ExcludeMissing basePlan: JsonField<BasePlan> = JsonMissing.of(),
+        @JsonProperty("base_plan_id")
+        @ExcludeMissing
+        basePlanId: JsonField<String> = JsonMissing.of(),
     ) : this(
         id,
         adjustments,
-        basePlan,
-        basePlanId,
         createdAt,
         currency,
         defaultInvoiceMemo,
@@ -137,6 +135,8 @@ private constructor(
         status,
         trialConfig,
         version,
+        basePlan,
+        basePlanId,
         mutableMapOf(),
     )
 
@@ -154,21 +154,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun adjustments(): List<Adjustment> = adjustments.getRequired("adjustments")
-
-    /**
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
-     *   responded with an unexpected value).
-     */
-    fun basePlan(): BasePlan? = basePlan.getNullable("base_plan")
-
-    /**
-     * The parent plan id if the given plan was created by overriding one or more of the parent's
-     * prices
-     *
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
-     *   responded with an unexpected value).
-     */
-    fun basePlanId(): String? = basePlanId.getNullable("base_plan_id")
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -316,6 +301,21 @@ private constructor(
     fun version(): Long = version.getRequired("version")
 
     /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun basePlan(): BasePlan? = basePlan.getNullable("base_plan")
+
+    /**
+     * The parent plan id if the given plan was created by overriding one or more of the parent's
+     * prices
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun basePlanId(): String? = basePlanId.getNullable("base_plan_id")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
@@ -330,20 +330,6 @@ private constructor(
     @JsonProperty("adjustments")
     @ExcludeMissing
     fun _adjustments(): JsonField<List<Adjustment>> = adjustments
-
-    /**
-     * Returns the raw JSON value of [basePlan].
-     *
-     * Unlike [basePlan], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("base_plan") @ExcludeMissing fun _basePlan(): JsonField<BasePlan> = basePlan
-
-    /**
-     * Returns the raw JSON value of [basePlanId].
-     *
-     * Unlike [basePlanId], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("base_plan_id") @ExcludeMissing fun _basePlanId(): JsonField<String> = basePlanId
 
     /**
      * Returns the raw JSON value of [createdAt].
@@ -517,6 +503,20 @@ private constructor(
      */
     @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
+    /**
+     * Returns the raw JSON value of [basePlan].
+     *
+     * Unlike [basePlan], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("base_plan") @ExcludeMissing fun _basePlan(): JsonField<BasePlan> = basePlan
+
+    /**
+     * Returns the raw JSON value of [basePlanId].
+     *
+     * Unlike [basePlanId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("base_plan_id") @ExcludeMissing fun _basePlanId(): JsonField<String> = basePlanId
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -538,8 +538,6 @@ private constructor(
          * ```kotlin
          * .id()
          * .adjustments()
-         * .basePlan()
-         * .basePlanId()
          * .createdAt()
          * .currency()
          * .defaultInvoiceMemo()
@@ -570,8 +568,6 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var adjustments: JsonField<MutableList<Adjustment>>? = null
-        private var basePlan: JsonField<BasePlan>? = null
-        private var basePlanId: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var currency: JsonField<String>? = null
         private var defaultInvoiceMemo: JsonField<String>? = null
@@ -592,13 +588,13 @@ private constructor(
         private var status: JsonField<Status>? = null
         private var trialConfig: JsonField<TrialConfig>? = null
         private var version: JsonField<Long>? = null
+        private var basePlan: JsonField<BasePlan> = JsonMissing.of()
+        private var basePlanId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(plan: Plan) = apply {
             id = plan.id
             adjustments = plan.adjustments.map { it.toMutableList() }
-            basePlan = plan.basePlan
-            basePlanId = plan.basePlanId
             createdAt = plan.createdAt
             currency = plan.currency
             defaultInvoiceMemo = plan.defaultInvoiceMemo
@@ -619,6 +615,8 @@ private constructor(
             status = plan.status
             trialConfig = plan.trialConfig
             version = plan.version
+            basePlan = plan.basePlan
+            basePlanId = plan.basePlanId
             additionalProperties = plan.additionalProperties.toMutableMap()
         }
 
@@ -683,32 +681,6 @@ private constructor(
         /** Alias for calling [addAdjustment] with `Adjustment.ofMaximum(maximum)`. */
         fun addAdjustment(maximum: PlanPhaseMaximumAdjustment) =
             addAdjustment(Adjustment.ofMaximum(maximum))
-
-        fun basePlan(basePlan: BasePlan?) = basePlan(JsonField.ofNullable(basePlan))
-
-        /**
-         * Sets [Builder.basePlan] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.basePlan] with a well-typed [BasePlan] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun basePlan(basePlan: JsonField<BasePlan>) = apply { this.basePlan = basePlan }
-
-        /**
-         * The parent plan id if the given plan was created by overriding one or more of the
-         * parent's prices
-         */
-        fun basePlanId(basePlanId: String?) = basePlanId(JsonField.ofNullable(basePlanId))
-
-        /**
-         * Sets [Builder.basePlanId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.basePlanId] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun basePlanId(basePlanId: JsonField<String>) = apply { this.basePlanId = basePlanId }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -1178,6 +1150,13 @@ private constructor(
         fun addPrice(cumulativeGroupedBulk: Price.CumulativeGroupedBulk) =
             addPrice(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
+        /**
+         * Alias for calling [addPrice] with
+         * `Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation)`.
+         */
+        fun addPrice(cumulativeGroupedAllocation: Price.CumulativeGroupedAllocation) =
+            addPrice(Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation))
+
         /** Alias for calling [addPrice] with `Price.ofMinimum(minimum)`. */
         fun addPrice(minimum: Price.Minimum) = addPrice(Price.ofMinimum(minimum))
 
@@ -1230,6 +1209,32 @@ private constructor(
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
+        fun basePlan(basePlan: BasePlan?) = basePlan(JsonField.ofNullable(basePlan))
+
+        /**
+         * Sets [Builder.basePlan] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.basePlan] with a well-typed [BasePlan] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun basePlan(basePlan: JsonField<BasePlan>) = apply { this.basePlan = basePlan }
+
+        /**
+         * The parent plan id if the given plan was created by overriding one or more of the
+         * parent's prices
+         */
+        fun basePlanId(basePlanId: String?) = basePlanId(JsonField.ofNullable(basePlanId))
+
+        /**
+         * Sets [Builder.basePlanId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.basePlanId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun basePlanId(basePlanId: JsonField<String>) = apply { this.basePlanId = basePlanId }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -1258,8 +1263,6 @@ private constructor(
          * ```kotlin
          * .id()
          * .adjustments()
-         * .basePlan()
-         * .basePlanId()
          * .createdAt()
          * .currency()
          * .defaultInvoiceMemo()
@@ -1288,8 +1291,6 @@ private constructor(
             Plan(
                 checkRequired("id", id),
                 checkRequired("adjustments", adjustments).map { it.toImmutable() },
-                checkRequired("basePlan", basePlan),
-                checkRequired("basePlanId", basePlanId),
                 checkRequired("createdAt", createdAt),
                 checkRequired("currency", currency),
                 checkRequired("defaultInvoiceMemo", defaultInvoiceMemo),
@@ -1310,6 +1311,8 @@ private constructor(
                 checkRequired("status", status),
                 checkRequired("trialConfig", trialConfig),
                 checkRequired("version", version),
+                basePlan,
+                basePlanId,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -1323,8 +1326,6 @@ private constructor(
 
         id()
         adjustments().forEach { it.validate() }
-        basePlan()?.validate()
-        basePlanId()
         createdAt()
         currency()
         defaultInvoiceMemo()
@@ -1345,6 +1346,8 @@ private constructor(
         status().validate()
         trialConfig().validate()
         version()
+        basePlan()?.validate()
+        basePlanId()
         validated = true
     }
 
@@ -1364,8 +1367,6 @@ private constructor(
     internal fun validity(): Int =
         (if (id.asKnown() == null) 0 else 1) +
             (adjustments.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
-            (basePlan.asKnown()?.validity() ?: 0) +
-            (if (basePlanId.asKnown() == null) 0 else 1) +
             (if (createdAt.asKnown() == null) 0 else 1) +
             (if (currency.asKnown() == null) 0 else 1) +
             (if (defaultInvoiceMemo.asKnown() == null) 0 else 1) +
@@ -1385,7 +1386,9 @@ private constructor(
             (product.asKnown()?.validity() ?: 0) +
             (status.asKnown()?.validity() ?: 0) +
             (trialConfig.asKnown()?.validity() ?: 0) +
-            (if (version.asKnown() == null) 0 else 1)
+            (if (version.asKnown() == null) 0 else 1) +
+            (basePlan.asKnown()?.validity() ?: 0) +
+            (if (basePlanId.asKnown() == null) 0 else 1)
 
     @JsonDeserialize(using = Adjustment.Deserializer::class)
     @JsonSerialize(using = Adjustment.Serializer::class)
@@ -1663,249 +1666,6 @@ private constructor(
                 }
             }
         }
-    }
-
-    class BasePlan
-    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
-    private constructor(
-        private val id: JsonField<String>,
-        private val externalPlanId: JsonField<String>,
-        private val name: JsonField<String>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
-
-        @JsonCreator
-        private constructor(
-            @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("external_plan_id")
-            @ExcludeMissing
-            externalPlanId: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(id, externalPlanId, name, mutableMapOf())
-
-        /**
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun id(): String? = id.getNullable("id")
-
-        /**
-         * An optional user-defined ID for this plan resource, used throughout the system as an
-         * alias for this Plan. Use this field to identify a plan by an existing identifier in your
-         * system.
-         *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun externalPlanId(): String? = externalPlanId.getNullable("external_plan_id")
-
-        /**
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun name(): String? = name.getNullable("name")
-
-        /**
-         * Returns the raw JSON value of [id].
-         *
-         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-        /**
-         * Returns the raw JSON value of [externalPlanId].
-         *
-         * Unlike [externalPlanId], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("external_plan_id")
-        @ExcludeMissing
-        fun _externalPlanId(): JsonField<String> = externalPlanId
-
-        /**
-         * Returns the raw JSON value of [name].
-         *
-         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of [BasePlan].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .id()
-             * .externalPlanId()
-             * .name()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [BasePlan]. */
-        class Builder internal constructor() {
-
-            private var id: JsonField<String>? = null
-            private var externalPlanId: JsonField<String>? = null
-            private var name: JsonField<String>? = null
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(basePlan: BasePlan) = apply {
-                id = basePlan.id
-                externalPlanId = basePlan.externalPlanId
-                name = basePlan.name
-                additionalProperties = basePlan.additionalProperties.toMutableMap()
-            }
-
-            fun id(id: String?) = id(JsonField.ofNullable(id))
-
-            /**
-             * Sets [Builder.id] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.id] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            /**
-             * An optional user-defined ID for this plan resource, used throughout the system as an
-             * alias for this Plan. Use this field to identify a plan by an existing identifier in
-             * your system.
-             */
-            fun externalPlanId(externalPlanId: String?) =
-                externalPlanId(JsonField.ofNullable(externalPlanId))
-
-            /**
-             * Sets [Builder.externalPlanId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.externalPlanId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun externalPlanId(externalPlanId: JsonField<String>) = apply {
-                this.externalPlanId = externalPlanId
-            }
-
-            fun name(name: String?) = name(JsonField.ofNullable(name))
-
-            /**
-             * Sets [Builder.name] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.name] with a well-typed [String] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun name(name: JsonField<String>) = apply { this.name = name }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [BasePlan].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .id()
-             * .externalPlanId()
-             * .name()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): BasePlan =
-                BasePlan(
-                    checkRequired("id", id),
-                    checkRequired("externalPlanId", externalPlanId),
-                    checkRequired("name", name),
-                    additionalProperties.toMutableMap(),
-                )
-        }
-
-        private var validated: Boolean = false
-
-        fun validate(): BasePlan = apply {
-            if (validated) {
-                return@apply
-            }
-
-            id()
-            externalPlanId()
-            name()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: OrbInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        internal fun validity(): Int =
-            (if (id.asKnown() == null) 0 else 1) +
-                (if (externalPlanId.asKnown() == null) 0 else 1) +
-                (if (name.asKnown() == null) 0 else 1)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is BasePlan &&
-                id == other.id &&
-                externalPlanId == other.externalPlanId &&
-                name == other.name &&
-                additionalProperties == other.additionalProperties
-        }
-
-        private val hashCode: Int by lazy {
-            Objects.hash(id, externalPlanId, name, additionalProperties)
-        }
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "BasePlan{id=$id, externalPlanId=$externalPlanId, name=$name, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -3491,6 +3251,249 @@ private constructor(
             "TrialConfig{trialPeriod=$trialPeriod, trialPeriodUnit=$trialPeriodUnit, additionalProperties=$additionalProperties}"
     }
 
+    class BasePlan
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val id: JsonField<String>,
+        private val externalPlanId: JsonField<String>,
+        private val name: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_plan_id")
+            @ExcludeMissing
+            externalPlanId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        ) : this(id, externalPlanId, name, mutableMapOf())
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun id(): String? = id.getNullable("id")
+
+        /**
+         * An optional user-defined ID for this plan resource, used throughout the system as an
+         * alias for this Plan. Use this field to identify a plan by an existing identifier in your
+         * system.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun externalPlanId(): String? = externalPlanId.getNullable("external_plan_id")
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun name(): String? = name.getNullable("name")
+
+        /**
+         * Returns the raw JSON value of [id].
+         *
+         * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
+        /**
+         * Returns the raw JSON value of [externalPlanId].
+         *
+         * Unlike [externalPlanId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("external_plan_id")
+        @ExcludeMissing
+        fun _externalPlanId(): JsonField<String> = externalPlanId
+
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [BasePlan].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .externalPlanId()
+             * .name()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [BasePlan]. */
+        class Builder internal constructor() {
+
+            private var id: JsonField<String>? = null
+            private var externalPlanId: JsonField<String>? = null
+            private var name: JsonField<String>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(basePlan: BasePlan) = apply {
+                id = basePlan.id
+                externalPlanId = basePlan.externalPlanId
+                name = basePlan.name
+                additionalProperties = basePlan.additionalProperties.toMutableMap()
+            }
+
+            fun id(id: String?) = id(JsonField.ofNullable(id))
+
+            /**
+             * Sets [Builder.id] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.id] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun id(id: JsonField<String>) = apply { this.id = id }
+
+            /**
+             * An optional user-defined ID for this plan resource, used throughout the system as an
+             * alias for this Plan. Use this field to identify a plan by an existing identifier in
+             * your system.
+             */
+            fun externalPlanId(externalPlanId: String?) =
+                externalPlanId(JsonField.ofNullable(externalPlanId))
+
+            /**
+             * Sets [Builder.externalPlanId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalPlanId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalPlanId(externalPlanId: JsonField<String>) = apply {
+                this.externalPlanId = externalPlanId
+            }
+
+            fun name(name: String?) = name(JsonField.ofNullable(name))
+
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun name(name: JsonField<String>) = apply { this.name = name }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [BasePlan].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .externalPlanId()
+             * .name()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): BasePlan =
+                BasePlan(
+                    checkRequired("id", id),
+                    checkRequired("externalPlanId", externalPlanId),
+                    checkRequired("name", name),
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): BasePlan = apply {
+            if (validated) {
+                return@apply
+            }
+
+            id()
+            externalPlanId()
+            name()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (id.asKnown() == null) 0 else 1) +
+                (if (externalPlanId.asKnown() == null) 0 else 1) +
+                (if (name.asKnown() == null) 0 else 1)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is BasePlan &&
+                id == other.id &&
+                externalPlanId == other.externalPlanId &&
+                name == other.name &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy {
+            Objects.hash(id, externalPlanId, name, additionalProperties)
+        }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "BasePlan{id=$id, externalPlanId=$externalPlanId, name=$name, additionalProperties=$additionalProperties}"
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -3499,8 +3502,6 @@ private constructor(
         return other is Plan &&
             id == other.id &&
             adjustments == other.adjustments &&
-            basePlan == other.basePlan &&
-            basePlanId == other.basePlanId &&
             createdAt == other.createdAt &&
             currency == other.currency &&
             defaultInvoiceMemo == other.defaultInvoiceMemo &&
@@ -3521,6 +3522,8 @@ private constructor(
             status == other.status &&
             trialConfig == other.trialConfig &&
             version == other.version &&
+            basePlan == other.basePlan &&
+            basePlanId == other.basePlanId &&
             additionalProperties == other.additionalProperties
     }
 
@@ -3528,8 +3531,6 @@ private constructor(
         Objects.hash(
             id,
             adjustments,
-            basePlan,
-            basePlanId,
             createdAt,
             currency,
             defaultInvoiceMemo,
@@ -3550,6 +3551,8 @@ private constructor(
             status,
             trialConfig,
             version,
+            basePlan,
+            basePlanId,
             additionalProperties,
         )
     }
@@ -3557,5 +3560,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Plan{id=$id, adjustments=$adjustments, basePlan=$basePlan, basePlanId=$basePlanId, createdAt=$createdAt, currency=$currency, defaultInvoiceMemo=$defaultInvoiceMemo, description=$description, discount=$discount, externalPlanId=$externalPlanId, invoicingCurrency=$invoicingCurrency, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, name=$name, netTerms=$netTerms, planPhases=$planPhases, prices=$prices, product=$product, status=$status, trialConfig=$trialConfig, version=$version, additionalProperties=$additionalProperties}"
+        "Plan{id=$id, adjustments=$adjustments, createdAt=$createdAt, currency=$currency, defaultInvoiceMemo=$defaultInvoiceMemo, description=$description, discount=$discount, externalPlanId=$externalPlanId, invoicingCurrency=$invoicingCurrency, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, name=$name, netTerms=$netTerms, planPhases=$planPhases, prices=$prices, product=$product, status=$status, trialConfig=$trialConfig, version=$version, basePlan=$basePlan, basePlanId=$basePlanId, additionalProperties=$additionalProperties}"
 }
