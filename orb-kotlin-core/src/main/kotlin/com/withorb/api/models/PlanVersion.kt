@@ -436,6 +436,13 @@ private constructor(
         fun addPrice(cumulativeGroupedBulk: Price.CumulativeGroupedBulk) =
             addPrice(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
 
+        /**
+         * Alias for calling [addPrice] with
+         * `Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation)`.
+         */
+        fun addPrice(cumulativeGroupedAllocation: Price.CumulativeGroupedAllocation) =
+            addPrice(Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation))
+
         /** Alias for calling [addPrice] with `Price.ofMinimum(minimum)`. */
         fun addPrice(minimum: Price.Minimum) = addPrice(Price.ofMinimum(minimum))
 
