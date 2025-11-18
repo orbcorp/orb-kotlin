@@ -156,19 +156,22 @@ private constructor(
     fun adjustments(): List<Adjustment> = adjustments.getRequired("adjustments")
 
     /**
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
-     *   responded with an unexpected value).
-     */
-    fun basePlan(): BasePlan? = basePlan.getNullable("base_plan")
-
-    /**
-     * The parent plan id if the given plan was created by overriding one or more of the parent's
-     * prices
+     * Legacy field representing the parent plan if the current plan is a 'child plan', overriding
+     * prices from the parent.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
-    fun basePlanId(): String? = basePlanId.getNullable("base_plan_id")
+    @Deprecated("deprecated") fun basePlan(): BasePlan? = basePlan.getNullable("base_plan")
+
+    /**
+     * Legacy field representing the parent plan ID if the current plan is a 'child plan',
+     * overriding prices from the parent.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    @Deprecated("deprecated") fun basePlanId(): String? = basePlanId.getNullable("base_plan_id")
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -336,14 +339,20 @@ private constructor(
      *
      * Unlike [basePlan], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("base_plan") @ExcludeMissing fun _basePlan(): JsonField<BasePlan> = basePlan
+    @Deprecated("deprecated")
+    @JsonProperty("base_plan")
+    @ExcludeMissing
+    fun _basePlan(): JsonField<BasePlan> = basePlan
 
     /**
      * Returns the raw JSON value of [basePlanId].
      *
      * Unlike [basePlanId], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("base_plan_id") @ExcludeMissing fun _basePlanId(): JsonField<String> = basePlanId
+    @Deprecated("deprecated")
+    @JsonProperty("base_plan_id")
+    @ExcludeMissing
+    fun _basePlanId(): JsonField<String> = basePlanId
 
     /**
      * Returns the raw JSON value of [createdAt].
@@ -684,6 +693,11 @@ private constructor(
         fun addAdjustment(maximum: PlanPhaseMaximumAdjustment) =
             addAdjustment(Adjustment.ofMaximum(maximum))
 
+        /**
+         * Legacy field representing the parent plan if the current plan is a 'child plan',
+         * overriding prices from the parent.
+         */
+        @Deprecated("deprecated")
         fun basePlan(basePlan: BasePlan?) = basePlan(JsonField.ofNullable(basePlan))
 
         /**
@@ -693,12 +707,14 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
+        @Deprecated("deprecated")
         fun basePlan(basePlan: JsonField<BasePlan>) = apply { this.basePlan = basePlan }
 
         /**
-         * The parent plan id if the given plan was created by overriding one or more of the
-         * parent's prices
+         * Legacy field representing the parent plan ID if the current plan is a 'child plan',
+         * overriding prices from the parent.
          */
+        @Deprecated("deprecated")
         fun basePlanId(basePlanId: String?) = basePlanId(JsonField.ofNullable(basePlanId))
 
         /**
@@ -708,6 +724,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
+        @Deprecated("deprecated")
         fun basePlanId(basePlanId: JsonField<String>) = apply { this.basePlanId = basePlanId }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
@@ -1672,6 +1689,11 @@ private constructor(
         }
     }
 
+    /**
+     * Legacy field representing the parent plan if the current plan is a 'child plan', overriding
+     * prices from the parent.
+     */
+    @Deprecated("deprecated")
     class BasePlan
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
