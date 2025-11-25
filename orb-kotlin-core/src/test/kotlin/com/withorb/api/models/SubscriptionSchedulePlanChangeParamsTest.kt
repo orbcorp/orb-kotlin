@@ -65,6 +65,8 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     .addValue("string")
                                     .build()
                             )
+                            .itemId("item_id")
+                            .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
                     .addDiscount(
@@ -217,6 +219,8 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     .addValue("string")
                                     .build()
                             )
+                            .itemId("item_id")
+                            .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
                     .addDiscount(
@@ -360,6 +364,8 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                         .addValue("string")
                                         .build()
                                 )
+                                .itemId("item_id")
+                                .perUnitCostBasis("per_unit_cost_basis")
                                 .build()
                         )
                         .addDiscount(
@@ -514,6 +520,8 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                         .addValue("string")
                                         .build()
                                 )
+                                .itemId("item_id")
+                                .perUnitCostBasis("per_unit_cost_basis")
                                 .build()
                         )
                         .addDiscount(
@@ -645,6 +653,8 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     .addValue("string")
                                     .build()
                             )
+                            .itemId("item_id")
+                            .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
                     .addDiscount(
@@ -799,6 +809,8 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     .addValue("string")
                                     .build()
                             )
+                            .itemId("item_id")
+                            .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
                     .addDiscount(
