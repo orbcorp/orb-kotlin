@@ -56,6 +56,8 @@ internal class PlanServiceAsyncTest {
                                             .addValue("string")
                                             .build()
                                     )
+                                    .itemId("item_id")
+                                    .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )
                             .planPhaseOrder(0L)

@@ -27,6 +27,8 @@ private constructor(
     private val customExpiration: JsonField<CustomExpiration>,
     private val expiresAtEndOfCadence: JsonField<Boolean>,
     private val filters: JsonField<List<Filter>>,
+    private val itemId: JsonField<String>,
+    private val perUnitCostBasis: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -41,7 +43,13 @@ private constructor(
         @JsonProperty("expires_at_end_of_cadence")
         @ExcludeMissing
         expiresAtEndOfCadence: JsonField<Boolean> = JsonMissing.of(),
-        @JsonProperty("filters") @ExcludeMissing filters: JsonField<List<Filter>> = JsonMissing.of(),
+        @JsonProperty("filters")
+        @ExcludeMissing
+        filters: JsonField<List<Filter>> = JsonMissing.of(),
+        @JsonProperty("item_id") @ExcludeMissing itemId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("per_unit_cost_basis")
+        @ExcludeMissing
+        perUnitCostBasis: JsonField<String> = JsonMissing.of(),
     ) : this(
         amount,
         cadence,
@@ -49,6 +57,8 @@ private constructor(
         customExpiration,
         expiresAtEndOfCadence,
         filters,
+        itemId,
+        perUnitCostBasis,
         mutableMapOf(),
     )
 
@@ -103,6 +113,25 @@ private constructor(
     fun filters(): List<Filter>? = filters.getNullable("filters")
 
     /**
+     * The item ID that line items representing charges for this allocation will be associated with.
+     * If not provided, the default allocation item for the currency will be used (e.g. 'Included
+     * Allocation (USD)').
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun itemId(): String? = itemId.getNullable("item_id")
+
+    /**
+     * The (per-unit) cost basis of each created block. If non-zero, a customer will be invoiced
+     * according to the quantity and per unit cost basis specified for the allocation each cadence.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun perUnitCostBasis(): String? = perUnitCostBasis.getNullable("per_unit_cost_basis")
+
+    /**
      * Returns the raw JSON value of [amount].
      *
      * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
@@ -150,6 +179,23 @@ private constructor(
      */
     @JsonProperty("filters") @ExcludeMissing fun _filters(): JsonField<List<Filter>> = filters
 
+    /**
+     * Returns the raw JSON value of [itemId].
+     *
+     * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+
+    /**
+     * Returns the raw JSON value of [perUnitCostBasis].
+     *
+     * Unlike [perUnitCostBasis], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("per_unit_cost_basis")
+    @ExcludeMissing
+    fun _perUnitCostBasis(): JsonField<String> = perUnitCostBasis
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -186,6 +232,8 @@ private constructor(
         private var customExpiration: JsonField<CustomExpiration> = JsonMissing.of()
         private var expiresAtEndOfCadence: JsonField<Boolean> = JsonMissing.of()
         private var filters: JsonField<MutableList<Filter>>? = null
+        private var itemId: JsonField<String> = JsonMissing.of()
+        private var perUnitCostBasis: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(newAllocationPrice: NewAllocationPrice) = apply {
@@ -195,6 +243,8 @@ private constructor(
             customExpiration = newAllocationPrice.customExpiration
             expiresAtEndOfCadence = newAllocationPrice.expiresAtEndOfCadence
             filters = newAllocationPrice.filters.map { it.toMutableList() }
+            itemId = newAllocationPrice.itemId
+            perUnitCostBasis = newAllocationPrice.perUnitCostBasis
             additionalProperties = newAllocationPrice.additionalProperties.toMutableMap()
         }
 
@@ -301,6 +351,40 @@ private constructor(
                 }
         }
 
+        /**
+         * The item ID that line items representing charges for this allocation will be associated
+         * with. If not provided, the default allocation item for the currency will be used (e.g.
+         * 'Included Allocation (USD)').
+         */
+        fun itemId(itemId: String?) = itemId(JsonField.ofNullable(itemId))
+
+        /**
+         * Sets [Builder.itemId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.itemId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
+        /**
+         * The (per-unit) cost basis of each created block. If non-zero, a customer will be invoiced
+         * according to the quantity and per unit cost basis specified for the allocation each
+         * cadence.
+         */
+        fun perUnitCostBasis(perUnitCostBasis: String) =
+            perUnitCostBasis(JsonField.of(perUnitCostBasis))
+
+        /**
+         * Sets [Builder.perUnitCostBasis] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.perUnitCostBasis] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
+            this.perUnitCostBasis = perUnitCostBasis
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -342,6 +426,8 @@ private constructor(
                 customExpiration,
                 expiresAtEndOfCadence,
                 (filters ?: JsonMissing.of()).map { it.toImmutable() },
+                itemId,
+                perUnitCostBasis,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -359,6 +445,8 @@ private constructor(
         customExpiration()?.validate()
         expiresAtEndOfCadence()
         filters()?.forEach { it.validate() }
+        itemId()
+        perUnitCostBasis()
         validated = true
     }
 
@@ -381,7 +469,9 @@ private constructor(
             (if (currency.asKnown() == null) 0 else 1) +
             (customExpiration.asKnown()?.validity() ?: 0) +
             (if (expiresAtEndOfCadence.asKnown() == null) 0 else 1) +
-            (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+            (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (itemId.asKnown() == null) 0 else 1) +
+            (if (perUnitCostBasis.asKnown() == null) 0 else 1)
 
     /** The cadence at which to allocate the amount to the customer. */
     class Cadence @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -1043,6 +1133,8 @@ private constructor(
             customExpiration == other.customExpiration &&
             expiresAtEndOfCadence == other.expiresAtEndOfCadence &&
             filters == other.filters &&
+            itemId == other.itemId &&
+            perUnitCostBasis == other.perUnitCostBasis &&
             additionalProperties == other.additionalProperties
     }
 
@@ -1054,6 +1146,8 @@ private constructor(
             customExpiration,
             expiresAtEndOfCadence,
             filters,
+            itemId,
+            perUnitCostBasis,
             additionalProperties,
         )
     }
@@ -1061,5 +1155,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "NewAllocationPrice{amount=$amount, cadence=$cadence, currency=$currency, customExpiration=$customExpiration, expiresAtEndOfCadence=$expiresAtEndOfCadence, filters=$filters, additionalProperties=$additionalProperties}"
+        "NewAllocationPrice{amount=$amount, cadence=$cadence, currency=$currency, customExpiration=$customExpiration, expiresAtEndOfCadence=$expiresAtEndOfCadence, filters=$filters, itemId=$itemId, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
 }
