@@ -295,13 +295,13 @@ The SDK uses the standard [OkHttp logging interceptor](https://github.com/square
 Enable logging by setting the `ORB_LOG` environment variable to `info`:
 
 ```sh
-$ export ORB_LOG=info
+export ORB_LOG=info
 ```
 
 Or to `debug` for more verbose logging:
 
 ```sh
-$ export ORB_LOG=debug
+export ORB_LOG=debug
 ```
 
 ## ProGuard and R8
