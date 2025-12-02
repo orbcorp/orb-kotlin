@@ -261,6 +261,9 @@ import java.util.Objects
  * threshold billing, pass in an `invoicing_threshold`, which is specified in the subscription's
  * invoicing currency, when creating a subscription. E.g. pass in `10.00` to issue an invoice when
  * usage amounts hit \$10.00 for a subscription that invoices in USD.
+ *
+ * ## Limits
+ * By default, Orb limits the number of subscriptions per customer to 100.
  */
 class SubscriptionCreateParams
 private constructor(
