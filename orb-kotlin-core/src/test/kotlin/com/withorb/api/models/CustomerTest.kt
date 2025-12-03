@@ -95,6 +95,19 @@ internal class CustomerTest {
                         .build()
                 )
                 .automaticTaxEnabled(true)
+                .paymentConfiguration(
+                    Customer.PaymentConfiguration.builder()
+                        .addPaymentProvider(
+                            Customer.PaymentConfiguration.PaymentProvider.builder()
+                                .providerType(
+                                    Customer.PaymentConfiguration.PaymentProvider.ProviderType
+                                        .STRIPE
+                                )
+                                .addExcludedPaymentMethodType("string")
+                                .build()
+                        )
+                        .build()
+                )
                 .reportingConfiguration(
                     Customer.ReportingConfiguration.builder().exempt(true).build()
                 )
@@ -185,6 +198,19 @@ internal class CustomerTest {
                     .build()
             )
         assertThat(customer.automaticTaxEnabled()).isEqualTo(true)
+        assertThat(customer.paymentConfiguration())
+            .isEqualTo(
+                Customer.PaymentConfiguration.builder()
+                    .addPaymentProvider(
+                        Customer.PaymentConfiguration.PaymentProvider.builder()
+                            .providerType(
+                                Customer.PaymentConfiguration.PaymentProvider.ProviderType.STRIPE
+                            )
+                            .addExcludedPaymentMethodType("string")
+                            .build()
+                    )
+                    .build()
+            )
         assertThat(customer.reportingConfiguration())
             .isEqualTo(Customer.ReportingConfiguration.builder().exempt(true).build())
     }
@@ -274,6 +300,19 @@ internal class CustomerTest {
                         .build()
                 )
                 .automaticTaxEnabled(true)
+                .paymentConfiguration(
+                    Customer.PaymentConfiguration.builder()
+                        .addPaymentProvider(
+                            Customer.PaymentConfiguration.PaymentProvider.builder()
+                                .providerType(
+                                    Customer.PaymentConfiguration.PaymentProvider.ProviderType
+                                        .STRIPE
+                                )
+                                .addExcludedPaymentMethodType("string")
+                                .build()
+                        )
+                        .build()
+                )
                 .reportingConfiguration(
                     Customer.ReportingConfiguration.builder().exempt(true).build()
                 )
