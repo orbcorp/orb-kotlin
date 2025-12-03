@@ -152,6 +152,15 @@ private constructor(
     fun name(): String? = body.name()
 
     /**
+     * Payment configuration for the customer, applicable when using Orb Invoicing with a supported
+     * payment provider such as Stripe.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun paymentConfiguration(): PaymentConfiguration? = body.paymentConfiguration()
+
+    /**
      * This is used for creating charges or invoices in an external system via Orb. When not in test
      * mode:
      * - the connection must first be configured in the Orb webapp.
@@ -427,6 +436,14 @@ private constructor(
      * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _name(): JsonField<String> = body._name()
+
+    /**
+     * Returns the raw JSON value of [paymentConfiguration].
+     *
+     * Unlike [paymentConfiguration], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    fun _paymentConfiguration(): JsonField<PaymentConfiguration> = body._paymentConfiguration()
 
     /**
      * Returns the raw JSON value of [paymentProvider].
@@ -739,6 +756,25 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun name(name: JsonField<String>) = apply { body.name(name) }
+
+        /**
+         * Payment configuration for the customer, applicable when using Orb Invoicing with a
+         * supported payment provider such as Stripe.
+         */
+        fun paymentConfiguration(paymentConfiguration: PaymentConfiguration?) = apply {
+            body.paymentConfiguration(paymentConfiguration)
+        }
+
+        /**
+         * Sets [Builder.paymentConfiguration] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.paymentConfiguration] with a well-typed
+         * [PaymentConfiguration] value instead. This method is primarily for setting the field to
+         * an undocumented or not yet supported value.
+         */
+        fun paymentConfiguration(paymentConfiguration: JsonField<PaymentConfiguration>) = apply {
+            body.paymentConfiguration(paymentConfiguration)
+        }
 
         /**
          * This is used for creating charges or invoices in an external system via Orb. When not in
@@ -1244,6 +1280,7 @@ private constructor(
         private val hierarchy: JsonField<CustomerHierarchyConfig>,
         private val metadata: JsonField<Metadata>,
         private val name: JsonField<String>,
+        private val paymentConfiguration: JsonField<PaymentConfiguration>,
         private val paymentProvider: JsonField<PaymentProvider>,
         private val paymentProviderId: JsonField<String>,
         private val reportingConfiguration: JsonField<NewReportingConfiguration>,
@@ -1288,6 +1325,9 @@ private constructor(
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("payment_configuration")
+            @ExcludeMissing
+            paymentConfiguration: JsonField<PaymentConfiguration> = JsonMissing.of(),
             @JsonProperty("payment_provider")
             @ExcludeMissing
             paymentProvider: JsonField<PaymentProvider> = JsonMissing.of(),
@@ -1319,6 +1359,7 @@ private constructor(
             hierarchy,
             metadata,
             name,
+            paymentConfiguration,
             paymentProvider,
             paymentProviderId,
             reportingConfiguration,
@@ -1431,6 +1472,16 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun name(): String? = name.getNullable("name")
+
+        /**
+         * Payment configuration for the customer, applicable when using Orb Invoicing with a
+         * supported payment provider such as Stripe.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun paymentConfiguration(): PaymentConfiguration? =
+            paymentConfiguration.getNullable("payment_configuration")
 
         /**
          * This is used for creating charges or invoices in an external system via Orb. When not in
@@ -1732,6 +1783,16 @@ private constructor(
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
+         * Returns the raw JSON value of [paymentConfiguration].
+         *
+         * Unlike [paymentConfiguration], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("payment_configuration")
+        @ExcludeMissing
+        fun _paymentConfiguration(): JsonField<PaymentConfiguration> = paymentConfiguration
+
+        /**
          * Returns the raw JSON value of [paymentProvider].
          *
          * Unlike [paymentProvider], this method doesn't throw if the JSON field has an unexpected
@@ -1822,6 +1883,7 @@ private constructor(
             private var hierarchy: JsonField<CustomerHierarchyConfig> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var name: JsonField<String> = JsonMissing.of()
+            private var paymentConfiguration: JsonField<PaymentConfiguration> = JsonMissing.of()
             private var paymentProvider: JsonField<PaymentProvider> = JsonMissing.of()
             private var paymentProviderId: JsonField<String> = JsonMissing.of()
             private var reportingConfiguration: JsonField<NewReportingConfiguration> =
@@ -1844,6 +1906,7 @@ private constructor(
                 hierarchy = body.hierarchy
                 metadata = body.metadata
                 name = body.name
+                paymentConfiguration = body.paymentConfiguration
                 paymentProvider = body.paymentProvider
                 paymentProviderId = body.paymentProviderId
                 reportingConfiguration = body.reportingConfiguration
@@ -2076,6 +2139,25 @@ private constructor(
              * value.
              */
             fun name(name: JsonField<String>) = apply { this.name = name }
+
+            /**
+             * Payment configuration for the customer, applicable when using Orb Invoicing with a
+             * supported payment provider such as Stripe.
+             */
+            fun paymentConfiguration(paymentConfiguration: PaymentConfiguration?) =
+                paymentConfiguration(JsonField.ofNullable(paymentConfiguration))
+
+            /**
+             * Sets [Builder.paymentConfiguration] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.paymentConfiguration] with a well-typed
+             * [PaymentConfiguration] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun paymentConfiguration(paymentConfiguration: JsonField<PaymentConfiguration>) =
+                apply {
+                    this.paymentConfiguration = paymentConfiguration
+                }
 
             /**
              * This is used for creating charges or invoices in an external system via Orb. When not
@@ -2461,6 +2543,7 @@ private constructor(
                     hierarchy,
                     metadata,
                     name,
+                    paymentConfiguration,
                     paymentProvider,
                     paymentProviderId,
                     reportingConfiguration,
@@ -2490,6 +2573,7 @@ private constructor(
             hierarchy()?.validate()
             metadata()?.validate()
             name()
+            paymentConfiguration()?.validate()
             paymentProvider()?.validate()
             paymentProviderId()
             reportingConfiguration()?.validate()
@@ -2526,6 +2610,7 @@ private constructor(
                 (hierarchy.asKnown()?.validity() ?: 0) +
                 (metadata.asKnown()?.validity() ?: 0) +
                 (if (name.asKnown() == null) 0 else 1) +
+                (paymentConfiguration.asKnown()?.validity() ?: 0) +
                 (paymentProvider.asKnown()?.validity() ?: 0) +
                 (if (paymentProviderId.asKnown() == null) 0 else 1) +
                 (reportingConfiguration.asKnown()?.validity() ?: 0) +
@@ -2551,6 +2636,7 @@ private constructor(
                 hierarchy == other.hierarchy &&
                 metadata == other.metadata &&
                 name == other.name &&
+                paymentConfiguration == other.paymentConfiguration &&
                 paymentProvider == other.paymentProvider &&
                 paymentProviderId == other.paymentProviderId &&
                 reportingConfiguration == other.reportingConfiguration &&
@@ -2574,6 +2660,7 @@ private constructor(
                 hierarchy,
                 metadata,
                 name,
+                paymentConfiguration,
                 paymentProvider,
                 paymentProviderId,
                 reportingConfiguration,
@@ -2587,7 +2674,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, autoIssuance=$autoIssuance, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, hierarchy=$hierarchy, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, additionalProperties=$additionalProperties}"
+            "Body{accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, autoIssuance=$autoIssuance, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, hierarchy=$hierarchy, metadata=$metadata, name=$name, paymentConfiguration=$paymentConfiguration, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -2690,6 +2777,546 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+    }
+
+    /**
+     * Payment configuration for the customer, applicable when using Orb Invoicing with a supported
+     * payment provider such as Stripe.
+     */
+    class PaymentConfiguration
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val paymentProviders: JsonField<List<PaymentProvider>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("payment_providers")
+            @ExcludeMissing
+            paymentProviders: JsonField<List<PaymentProvider>> = JsonMissing.of()
+        ) : this(paymentProviders, mutableMapOf())
+
+        /**
+         * Provider-specific payment configuration.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun paymentProviders(): List<PaymentProvider>? =
+            paymentProviders.getNullable("payment_providers")
+
+        /**
+         * Returns the raw JSON value of [paymentProviders].
+         *
+         * Unlike [paymentProviders], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("payment_providers")
+        @ExcludeMissing
+        fun _paymentProviders(): JsonField<List<PaymentProvider>> = paymentProviders
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [PaymentConfiguration]. */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [PaymentConfiguration]. */
+        class Builder internal constructor() {
+
+            private var paymentProviders: JsonField<MutableList<PaymentProvider>>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(paymentConfiguration: PaymentConfiguration) = apply {
+                paymentProviders = paymentConfiguration.paymentProviders.map { it.toMutableList() }
+                additionalProperties = paymentConfiguration.additionalProperties.toMutableMap()
+            }
+
+            /** Provider-specific payment configuration. */
+            fun paymentProviders(paymentProviders: List<PaymentProvider>) =
+                paymentProviders(JsonField.of(paymentProviders))
+
+            /**
+             * Sets [Builder.paymentProviders] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.paymentProviders] with a well-typed
+             * `List<PaymentProvider>` value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun paymentProviders(paymentProviders: JsonField<List<PaymentProvider>>) = apply {
+                this.paymentProviders = paymentProviders.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [PaymentProvider] to [paymentProviders].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addPaymentProvider(paymentProvider: PaymentProvider) = apply {
+                paymentProviders =
+                    (paymentProviders ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("paymentProviders", it).add(paymentProvider)
+                    }
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [PaymentConfiguration].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): PaymentConfiguration =
+                PaymentConfiguration(
+                    (paymentProviders ?: JsonMissing.of()).map { it.toImmutable() },
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): PaymentConfiguration = apply {
+            if (validated) {
+                return@apply
+            }
+
+            paymentProviders()?.forEach { it.validate() }
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (paymentProviders.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+
+        class PaymentProvider
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val providerType: JsonField<ProviderType>,
+            private val excludedPaymentMethodTypes: JsonField<List<String>>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("provider_type")
+                @ExcludeMissing
+                providerType: JsonField<ProviderType> = JsonMissing.of(),
+                @JsonProperty("excluded_payment_method_types")
+                @ExcludeMissing
+                excludedPaymentMethodTypes: JsonField<List<String>> = JsonMissing.of(),
+            ) : this(providerType, excludedPaymentMethodTypes, mutableMapOf())
+
+            /**
+             * The payment provider to configure.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun providerType(): ProviderType = providerType.getRequired("provider_type")
+
+            /**
+             * List of Stripe payment method types to exclude for this customer. Excluded payment
+             * methods will not be available for the customer to select during payment, and will not
+             * be used for auto-collection. If a customer's default payment method becomes excluded,
+             * Orb will attempt to use the next available compatible payment method for
+             * auto-collection.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun excludedPaymentMethodTypes(): List<String>? =
+                excludedPaymentMethodTypes.getNullable("excluded_payment_method_types")
+
+            /**
+             * Returns the raw JSON value of [providerType].
+             *
+             * Unlike [providerType], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("provider_type")
+            @ExcludeMissing
+            fun _providerType(): JsonField<ProviderType> = providerType
+
+            /**
+             * Returns the raw JSON value of [excludedPaymentMethodTypes].
+             *
+             * Unlike [excludedPaymentMethodTypes], this method doesn't throw if the JSON field has
+             * an unexpected type.
+             */
+            @JsonProperty("excluded_payment_method_types")
+            @ExcludeMissing
+            fun _excludedPaymentMethodTypes(): JsonField<List<String>> = excludedPaymentMethodTypes
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [PaymentProvider].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .providerType()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [PaymentProvider]. */
+            class Builder internal constructor() {
+
+                private var providerType: JsonField<ProviderType>? = null
+                private var excludedPaymentMethodTypes: JsonField<MutableList<String>>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(paymentProvider: PaymentProvider) = apply {
+                    providerType = paymentProvider.providerType
+                    excludedPaymentMethodTypes =
+                        paymentProvider.excludedPaymentMethodTypes.map { it.toMutableList() }
+                    additionalProperties = paymentProvider.additionalProperties.toMutableMap()
+                }
+
+                /** The payment provider to configure. */
+                fun providerType(providerType: ProviderType) =
+                    providerType(JsonField.of(providerType))
+
+                /**
+                 * Sets [Builder.providerType] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.providerType] with a well-typed [ProviderType]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun providerType(providerType: JsonField<ProviderType>) = apply {
+                    this.providerType = providerType
+                }
+
+                /**
+                 * List of Stripe payment method types to exclude for this customer. Excluded
+                 * payment methods will not be available for the customer to select during payment,
+                 * and will not be used for auto-collection. If a customer's default payment method
+                 * becomes excluded, Orb will attempt to use the next available compatible payment
+                 * method for auto-collection.
+                 */
+                fun excludedPaymentMethodTypes(excludedPaymentMethodTypes: List<String>) =
+                    excludedPaymentMethodTypes(JsonField.of(excludedPaymentMethodTypes))
+
+                /**
+                 * Sets [Builder.excludedPaymentMethodTypes] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.excludedPaymentMethodTypes] with a well-typed
+                 * `List<String>` value instead. This method is primarily for setting the field to
+                 * an undocumented or not yet supported value.
+                 */
+                fun excludedPaymentMethodTypes(
+                    excludedPaymentMethodTypes: JsonField<List<String>>
+                ) = apply {
+                    this.excludedPaymentMethodTypes =
+                        excludedPaymentMethodTypes.map { it.toMutableList() }
+                }
+
+                /**
+                 * Adds a single [String] to [excludedPaymentMethodTypes].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
+                fun addExcludedPaymentMethodType(excludedPaymentMethodType: String) = apply {
+                    excludedPaymentMethodTypes =
+                        (excludedPaymentMethodTypes ?: JsonField.of(mutableListOf())).also {
+                            checkKnown("excludedPaymentMethodTypes", it)
+                                .add(excludedPaymentMethodType)
+                        }
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [PaymentProvider].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .providerType()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): PaymentProvider =
+                    PaymentProvider(
+                        checkRequired("providerType", providerType),
+                        (excludedPaymentMethodTypes ?: JsonMissing.of()).map { it.toImmutable() },
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): PaymentProvider = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                providerType().validate()
+                excludedPaymentMethodTypes()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (providerType.asKnown()?.validity() ?: 0) +
+                    (excludedPaymentMethodTypes.asKnown()?.size ?: 0)
+
+            /** The payment provider to configure. */
+            class ProviderType
+            @JsonCreator
+            private constructor(private val value: JsonField<String>) : Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val STRIPE = of("stripe")
+
+                    fun of(value: String) = ProviderType(JsonField.of(value))
+                }
+
+                /** An enum containing [ProviderType]'s known values. */
+                enum class Known {
+                    STRIPE
+                }
+
+                /**
+                 * An enum containing [ProviderType]'s known values, as well as an [_UNKNOWN]
+                 * member.
+                 *
+                 * An instance of [ProviderType] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    STRIPE,
+                    /**
+                     * An enum member indicating that [ProviderType] was instantiated with an
+                     * unknown value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        STRIPE -> Value.STRIPE
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        STRIPE -> Known.STRIPE
+                        else -> throw OrbInvalidDataException("Unknown ProviderType: $value")
+                    }
+
+                /**
+                 * Returns this class instance's primitive wire representation.
+                 *
+                 * This differs from the [toString] method because that method is primarily for
+                 * debugging and generally doesn't throw.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value does not have the
+                 *   expected primitive type.
+                 */
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ProviderType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is ProviderType && value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is PaymentProvider &&
+                    providerType == other.providerType &&
+                    excludedPaymentMethodTypes == other.excludedPaymentMethodTypes &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(providerType, excludedPaymentMethodTypes, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "PaymentProvider{providerType=$providerType, excludedPaymentMethodTypes=$excludedPaymentMethodTypes, additionalProperties=$additionalProperties}"
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is PaymentConfiguration &&
+                paymentProviders == other.paymentProviders &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(paymentProviders, additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "PaymentConfiguration{paymentProviders=$paymentProviders, additionalProperties=$additionalProperties}"
     }
 
     /**

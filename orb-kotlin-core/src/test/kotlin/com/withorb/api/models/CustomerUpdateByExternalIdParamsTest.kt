@@ -52,6 +52,22 @@ internal class CustomerUpdateByExternalIdParamsTest {
                     .build()
             )
             .name("name")
+            .paymentConfiguration(
+                CustomerUpdateByExternalIdParams.PaymentConfiguration.builder()
+                    .addPaymentProvider(
+                        CustomerUpdateByExternalIdParams.PaymentConfiguration.PaymentProvider
+                            .builder()
+                            .providerType(
+                                CustomerUpdateByExternalIdParams.PaymentConfiguration
+                                    .PaymentProvider
+                                    .ProviderType
+                                    .STRIPE
+                            )
+                            .addExcludedPaymentMethodType("string")
+                            .build()
+                    )
+                    .build()
+            )
             .paymentProvider(CustomerUpdateByExternalIdParams.PaymentProvider.QUICKBOOKS)
             .paymentProviderId("payment_provider_id")
             .reportingConfiguration(NewReportingConfiguration.builder().exempt(true).build())
@@ -137,6 +153,22 @@ internal class CustomerUpdateByExternalIdParamsTest {
                         .build()
                 )
                 .name("name")
+                .paymentConfiguration(
+                    CustomerUpdateByExternalIdParams.PaymentConfiguration.builder()
+                        .addPaymentProvider(
+                            CustomerUpdateByExternalIdParams.PaymentConfiguration.PaymentProvider
+                                .builder()
+                                .providerType(
+                                    CustomerUpdateByExternalIdParams.PaymentConfiguration
+                                        .PaymentProvider
+                                        .ProviderType
+                                        .STRIPE
+                                )
+                                .addExcludedPaymentMethodType("string")
+                                .build()
+                        )
+                        .build()
+                )
                 .paymentProvider(CustomerUpdateByExternalIdParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(NewReportingConfiguration.builder().exempt(true).build())
@@ -213,6 +245,23 @@ internal class CustomerUpdateByExternalIdParamsTest {
                     .build()
             )
         assertThat(body.name()).isEqualTo("name")
+        assertThat(body.paymentConfiguration())
+            .isEqualTo(
+                CustomerUpdateByExternalIdParams.PaymentConfiguration.builder()
+                    .addPaymentProvider(
+                        CustomerUpdateByExternalIdParams.PaymentConfiguration.PaymentProvider
+                            .builder()
+                            .providerType(
+                                CustomerUpdateByExternalIdParams.PaymentConfiguration
+                                    .PaymentProvider
+                                    .ProviderType
+                                    .STRIPE
+                            )
+                            .addExcludedPaymentMethodType("string")
+                            .build()
+                    )
+                    .build()
+            )
         assertThat(body.paymentProvider())
             .isEqualTo(CustomerUpdateByExternalIdParams.PaymentProvider.QUICKBOOKS)
         assertThat(body.paymentProviderId()).isEqualTo("payment_provider_id")

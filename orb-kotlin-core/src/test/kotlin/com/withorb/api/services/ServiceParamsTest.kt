@@ -89,6 +89,20 @@ internal class ServiceParamsTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .paymentConfiguration(
+                    CustomerCreateParams.PaymentConfiguration.builder()
+                        .addPaymentProvider(
+                            CustomerCreateParams.PaymentConfiguration.PaymentProvider.builder()
+                                .providerType(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .ProviderType
+                                        .STRIPE
+                                )
+                                .addExcludedPaymentMethodType("string")
+                                .build()
+                        )
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(NewReportingConfiguration.builder().exempt(true).build())

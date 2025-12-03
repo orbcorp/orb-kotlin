@@ -155,6 +155,20 @@ internal class SubscriptionsTest {
                                         .build()
                                 )
                                 .automaticTaxEnabled(true)
+                                .paymentConfiguration(
+                                    Customer.PaymentConfiguration.builder()
+                                        .addPaymentProvider(
+                                            Customer.PaymentConfiguration.PaymentProvider.builder()
+                                                .providerType(
+                                                    Customer.PaymentConfiguration.PaymentProvider
+                                                        .ProviderType
+                                                        .STRIPE
+                                                )
+                                                .addExcludedPaymentMethodType("string")
+                                                .build()
+                                        )
+                                        .build()
+                                )
                                 .reportingConfiguration(
                                     Customer.ReportingConfiguration.builder().exempt(true).build()
                                 )
@@ -883,6 +897,20 @@ internal class SubscriptionsTest {
                                     .build()
                             )
                             .automaticTaxEnabled(true)
+                            .paymentConfiguration(
+                                Customer.PaymentConfiguration.builder()
+                                    .addPaymentProvider(
+                                        Customer.PaymentConfiguration.PaymentProvider.builder()
+                                            .providerType(
+                                                Customer.PaymentConfiguration.PaymentProvider
+                                                    .ProviderType
+                                                    .STRIPE
+                                            )
+                                            .addExcludedPaymentMethodType("string")
+                                            .build()
+                                    )
+                                    .build()
+                            )
                             .reportingConfiguration(
                                 Customer.ReportingConfiguration.builder().exempt(true).build()
                             )
@@ -1585,6 +1613,20 @@ internal class SubscriptionsTest {
                                         .build()
                                 )
                                 .automaticTaxEnabled(true)
+                                .paymentConfiguration(
+                                    Customer.PaymentConfiguration.builder()
+                                        .addPaymentProvider(
+                                            Customer.PaymentConfiguration.PaymentProvider.builder()
+                                                .providerType(
+                                                    Customer.PaymentConfiguration.PaymentProvider
+                                                        .ProviderType
+                                                        .STRIPE
+                                                )
+                                                .addExcludedPaymentMethodType("string")
+                                                .build()
+                                        )
+                                        .build()
+                                )
                                 .reportingConfiguration(
                                     Customer.ReportingConfiguration.builder().exempt(true).build()
                                 )
