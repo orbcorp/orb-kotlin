@@ -1044,7 +1044,7 @@ private constructor(
         }
 
         /** Alias for calling [addPrice] with `Price.ofUnit(unit)`. */
-        fun addPrice(unit: Price.Unit) = addPrice(Price.ofUnit(unit))
+        fun addPrice(unit: Price.UnitPrice) = addPrice(Price.ofUnit(unit))
 
         /** Alias for calling [addPrice] with `Price.ofTiered(tiered)`. */
         fun addPrice(tiered: Price.Tiered) = addPrice(Price.ofTiered(tiered))

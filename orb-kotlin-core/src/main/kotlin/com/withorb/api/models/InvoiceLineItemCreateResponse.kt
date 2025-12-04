@@ -953,7 +953,7 @@ private constructor(
         fun price(price: JsonField<Price>) = apply { this.price = price }
 
         /** Alias for calling [price] with `Price.ofUnit(unit)`. */
-        fun price(unit: Price.Unit) = price(Price.ofUnit(unit))
+        fun price(unit: Price.UnitPrice) = price(Price.ofUnit(unit))
 
         /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
         fun price(tiered: Price.Tiered) = price(Price.ofTiered(tiered))
