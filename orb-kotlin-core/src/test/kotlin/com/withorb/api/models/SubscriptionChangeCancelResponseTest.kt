@@ -16,6 +16,7 @@ internal class SubscriptionChangeCancelResponseTest {
         val subscriptionChangeCancelResponse =
             SubscriptionChangeCancelResponse.builder()
                 .id("id")
+                .changeType("change_type")
                 .expirationTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(SubscriptionChangeCancelResponse.Status.PENDING)
                 .subscription(
@@ -2001,10 +2002,15 @@ internal class SubscriptionChangeCancelResponseTest {
                         .build()
                 )
                 .appliedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .billingCycleAlignment("billing_cycle_alignment")
                 .cancelledAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .changeOption("change_option")
+                .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .planId("plan_id")
                 .build()
 
         assertThat(subscriptionChangeCancelResponse.id()).isEqualTo("id")
+        assertThat(subscriptionChangeCancelResponse.changeType()).isEqualTo("change_type")
         assertThat(subscriptionChangeCancelResponse.expirationTime())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(subscriptionChangeCancelResponse.status())
@@ -3862,8 +3868,14 @@ internal class SubscriptionChangeCancelResponseTest {
             )
         assertThat(subscriptionChangeCancelResponse.appliedAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionChangeCancelResponse.billingCycleAlignment())
+            .isEqualTo("billing_cycle_alignment")
         assertThat(subscriptionChangeCancelResponse.cancelledAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionChangeCancelResponse.changeOption()).isEqualTo("change_option")
+        assertThat(subscriptionChangeCancelResponse.effectiveDate())
+            .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionChangeCancelResponse.planId()).isEqualTo("plan_id")
     }
 
     @Test
@@ -3872,6 +3884,7 @@ internal class SubscriptionChangeCancelResponseTest {
         val subscriptionChangeCancelResponse =
             SubscriptionChangeCancelResponse.builder()
                 .id("id")
+                .changeType("change_type")
                 .expirationTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(SubscriptionChangeCancelResponse.Status.PENDING)
                 .subscription(
@@ -5857,7 +5870,11 @@ internal class SubscriptionChangeCancelResponseTest {
                         .build()
                 )
                 .appliedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .billingCycleAlignment("billing_cycle_alignment")
                 .cancelledAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .changeOption("change_option")
+                .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .planId("plan_id")
                 .build()
 
         val roundtrippedSubscriptionChangeCancelResponse =
