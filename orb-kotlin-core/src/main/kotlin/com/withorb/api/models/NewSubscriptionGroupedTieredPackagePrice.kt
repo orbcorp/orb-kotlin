@@ -1141,8 +1141,6 @@ private constructor(
         fun groupingKey(): String = groupingKey.getRequired("grouping_key")
 
         /**
-         * Package size
-         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -1240,7 +1238,6 @@ private constructor(
                 this.groupingKey = groupingKey
             }
 
-            /** Package size */
             fun packageSize(packageSize: String) = packageSize(JsonField.of(packageSize))
 
             /**
@@ -1377,7 +1374,7 @@ private constructor(
             ) : this(perUnit, tierLowerBound, mutableMapOf())
 
             /**
-             * Price per package
+             * Per package
              *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
@@ -1386,8 +1383,6 @@ private constructor(
             fun perUnit(): String = perUnit.getRequired("per_unit")
 
             /**
-             * Tier lower bound
-             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
@@ -1450,7 +1445,7 @@ private constructor(
                     additionalProperties = tier.additionalProperties.toMutableMap()
                 }
 
-                /** Price per package */
+                /** Per package */
                 fun perUnit(perUnit: String) = perUnit(JsonField.of(perUnit))
 
                 /**
@@ -1462,7 +1457,6 @@ private constructor(
                  */
                 fun perUnit(perUnit: JsonField<String>) = apply { this.perUnit = perUnit }
 
-                /** Tier lower bound */
                 fun tierLowerBound(tierLowerBound: String) =
                     tierLowerBound(JsonField.of(tierLowerBound))
 

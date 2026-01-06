@@ -1614,8 +1614,6 @@ private constructor(
             ) : this(firstDimensionValue, scalingFactor, secondDimensionValue, mutableMapOf())
 
             /**
-             * First dimension value
-             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
@@ -1624,8 +1622,6 @@ private constructor(
                 firstDimensionValue.getRequired("first_dimension_value")
 
             /**
-             * Scaling factor
-             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
@@ -1633,8 +1629,6 @@ private constructor(
             fun scalingFactor(): String = scalingFactor.getRequired("scaling_factor")
 
             /**
-             * Second dimension value (optional)
-             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
              *   server responded with an unexpected value).
              */
@@ -1712,7 +1706,6 @@ private constructor(
                     additionalProperties = matrixScalingFactor.additionalProperties.toMutableMap()
                 }
 
-                /** First dimension value */
                 fun firstDimensionValue(firstDimensionValue: String) =
                     firstDimensionValue(JsonField.of(firstDimensionValue))
 
@@ -1727,7 +1720,6 @@ private constructor(
                     this.firstDimensionValue = firstDimensionValue
                 }
 
-                /** Scaling factor */
                 fun scalingFactor(scalingFactor: String) =
                     scalingFactor(JsonField.of(scalingFactor))
 
@@ -1742,7 +1734,6 @@ private constructor(
                     this.scalingFactor = scalingFactor
                 }
 
-                /** Second dimension value (optional) */
                 fun secondDimensionValue(secondDimensionValue: String?) =
                     secondDimensionValue(JsonField.ofNullable(secondDimensionValue))
 

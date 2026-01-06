@@ -1210,24 +1210,18 @@ private constructor(
         ) : this(allocation, packageAmount, packageSize, mutableMapOf())
 
         /**
-         * Usage allocation
-         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun allocation(): String = allocation.getRequired("allocation")
 
         /**
-         * Price per package
-         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun packageAmount(): String = packageAmount.getRequired("package_amount")
 
         /**
-         * Package size
-         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -1305,7 +1299,6 @@ private constructor(
                     packageWithAllocationConfig.additionalProperties.toMutableMap()
             }
 
-            /** Usage allocation */
             fun allocation(allocation: String) = allocation(JsonField.of(allocation))
 
             /**
@@ -1317,7 +1310,6 @@ private constructor(
              */
             fun allocation(allocation: JsonField<String>) = apply { this.allocation = allocation }
 
-            /** Price per package */
             fun packageAmount(packageAmount: String) = packageAmount(JsonField.of(packageAmount))
 
             /**
@@ -1331,7 +1323,6 @@ private constructor(
                 this.packageAmount = packageAmount
             }
 
-            /** Package size */
             fun packageSize(packageSize: String) = packageSize(JsonField.of(packageSize))
 
             /**
