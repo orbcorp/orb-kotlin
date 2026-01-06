@@ -1254,8 +1254,6 @@ private constructor(
         ) : this(packageSize, tiers, mutableMapOf())
 
         /**
-         * Package size
-         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -1328,7 +1326,6 @@ private constructor(
                         tieredPackageWithMinimumConfig.additionalProperties.toMutableMap()
                 }
 
-            /** Package size */
             fun packageSize(packageSize: Double) = packageSize(JsonField.of(packageSize))
 
             /**
@@ -1465,8 +1462,6 @@ private constructor(
             ) : this(minimumAmount, perUnit, tierLowerBound, mutableMapOf())
 
             /**
-             * Minimum amount
-             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
@@ -1474,8 +1469,6 @@ private constructor(
             fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
 
             /**
-             * Price per package
-             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
@@ -1483,8 +1476,6 @@ private constructor(
             fun perUnit(): String = perUnit.getRequired("per_unit")
 
             /**
-             * Tier lower bound
-             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
@@ -1560,7 +1551,6 @@ private constructor(
                     additionalProperties = tier.additionalProperties.toMutableMap()
                 }
 
-                /** Minimum amount */
                 fun minimumAmount(minimumAmount: String) =
                     minimumAmount(JsonField.of(minimumAmount))
 
@@ -1575,7 +1565,6 @@ private constructor(
                     this.minimumAmount = minimumAmount
                 }
 
-                /** Price per package */
                 fun perUnit(perUnit: String) = perUnit(JsonField.of(perUnit))
 
                 /**
@@ -1587,7 +1576,6 @@ private constructor(
                  */
                 fun perUnit(perUnit: JsonField<String>) = apply { this.perUnit = perUnit }
 
-                /** Tier lower bound */
                 fun tierLowerBound(tierLowerBound: String) =
                     tierLowerBound(JsonField.of(tierLowerBound))
 

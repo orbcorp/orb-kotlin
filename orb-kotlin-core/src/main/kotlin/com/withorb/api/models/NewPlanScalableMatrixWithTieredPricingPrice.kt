@@ -1290,8 +1290,6 @@ private constructor(
             matrixScalingFactors.getRequired("matrix_scaling_factors")
 
         /**
-         * Tier pricing structure
-         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -1436,7 +1434,6 @@ private constructor(
                     }
             }
 
-            /** Tier pricing structure */
             fun tiers(tiers: List<Tier>) = tiers(JsonField.of(tiers))
 
             /**
@@ -1580,8 +1577,6 @@ private constructor(
             ) : this(firstDimensionValue, scalingFactor, secondDimensionValue, mutableMapOf())
 
             /**
-             * First dimension value
-             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
@@ -1590,8 +1585,6 @@ private constructor(
                 firstDimensionValue.getRequired("first_dimension_value")
 
             /**
-             * Scaling factor
-             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
@@ -1599,8 +1592,6 @@ private constructor(
             fun scalingFactor(): String = scalingFactor.getRequired("scaling_factor")
 
             /**
-             * Second dimension value (optional)
-             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
              *   server responded with an unexpected value).
              */
@@ -1678,7 +1669,6 @@ private constructor(
                     additionalProperties = matrixScalingFactor.additionalProperties.toMutableMap()
                 }
 
-                /** First dimension value */
                 fun firstDimensionValue(firstDimensionValue: String) =
                     firstDimensionValue(JsonField.of(firstDimensionValue))
 
@@ -1693,7 +1683,6 @@ private constructor(
                     this.firstDimensionValue = firstDimensionValue
                 }
 
-                /** Scaling factor */
                 fun scalingFactor(scalingFactor: String) =
                     scalingFactor(JsonField.of(scalingFactor))
 
@@ -1708,7 +1697,6 @@ private constructor(
                     this.scalingFactor = scalingFactor
                 }
 
-                /** Second dimension value (optional) */
                 fun secondDimensionValue(secondDimensionValue: String?) =
                     secondDimensionValue(JsonField.ofNullable(secondDimensionValue))
 
@@ -1846,8 +1834,6 @@ private constructor(
             ) : this(tierLowerBound, unitAmount, mutableMapOf())
 
             /**
-             * Tier lower bound
-             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
@@ -1855,8 +1841,6 @@ private constructor(
             fun tierLowerBound(): String = tierLowerBound.getRequired("tier_lower_bound")
 
             /**
-             * Per unit amount
-             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
@@ -1922,7 +1906,6 @@ private constructor(
                     additionalProperties = tier.additionalProperties.toMutableMap()
                 }
 
-                /** Tier lower bound */
                 fun tierLowerBound(tierLowerBound: String) =
                     tierLowerBound(JsonField.of(tierLowerBound))
 
@@ -1937,7 +1920,6 @@ private constructor(
                     this.tierLowerBound = tierLowerBound
                 }
 
-                /** Per unit amount */
                 fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
 
                 /**

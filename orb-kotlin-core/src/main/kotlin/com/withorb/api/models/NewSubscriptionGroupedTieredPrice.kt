@@ -1328,8 +1328,6 @@ private constructor(
             ) : this(tierLowerBound, unitAmount, mutableMapOf())
 
             /**
-             * Tier lower bound
-             *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
@@ -1404,7 +1402,6 @@ private constructor(
                     additionalProperties = tier.additionalProperties.toMutableMap()
                 }
 
-                /** Tier lower bound */
                 fun tierLowerBound(tierLowerBound: String) =
                     tierLowerBound(JsonField.of(tierLowerBound))
 
