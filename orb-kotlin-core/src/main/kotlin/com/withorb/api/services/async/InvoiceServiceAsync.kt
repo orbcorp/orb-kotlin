@@ -5,15 +5,19 @@ package com.withorb.api.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Invoice
 import com.withorb.api.models.InvoiceCreateParams
+import com.withorb.api.models.InvoiceDeleteLineItemParams
 import com.withorb.api.models.InvoiceFetchParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceFetchUpcomingResponse
 import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceListPageAsync
 import com.withorb.api.models.InvoiceListParams
+import com.withorb.api.models.InvoiceListSummaryPageAsync
+import com.withorb.api.models.InvoiceListSummaryParams
 import com.withorb.api.models.InvoiceMarkPaidParams
 import com.withorb.api.models.InvoicePayParams
 import com.withorb.api.models.InvoiceUpdateParams
@@ -88,6 +92,24 @@ interface InvoiceServiceAsync {
         list(InvoiceListParams.none(), requestOptions)
 
     /**
+     * This endpoint deletes an invoice line item from a draft invoice.
+     *
+     * This endpoint only allows deletion of one-off line items (not subscription-based line items).
+     * The invoice must be in a draft status for this operation to succeed.
+     */
+    suspend fun deleteLineItem(
+        lineItemId: String,
+        params: InvoiceDeleteLineItemParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ) = deleteLineItem(params.toBuilder().lineItemId(lineItemId).build(), requestOptions)
+
+    /** @see deleteLineItem */
+    suspend fun deleteLineItem(
+        params: InvoiceDeleteLineItemParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    )
+
+    /**
      * This endpoint is used to fetch an [`Invoice`](/core-concepts#invoice) given an identifier.
      */
     suspend fun fetch(
@@ -137,6 +159,32 @@ interface InvoiceServiceAsync {
     /** @see issue */
     suspend fun issue(invoiceId: String, requestOptions: RequestOptions): Invoice =
         issue(invoiceId, InvoiceIssueParams.none(), requestOptions)
+
+    /**
+     * This is a lighter-weight endpoint that returns a list of all
+     * [`Invoice`](/core-concepts#invoice) summaries for an account in a list format.
+     *
+     * These invoice summaries do not include line item details, minimums, maximums, and discounts,
+     * making this endpoint more efficient.
+     *
+     * The list of invoices is ordered starting from the most recently issued invoice date. The
+     * response also includes [`pagination_metadata`](/api-reference/pagination), which lets the
+     * caller retrieve the next page of results if they exist.
+     *
+     * By default, this only returns invoices that are `issued`, `paid`, or `synced`.
+     *
+     * When fetching any `draft` invoices, this returns the last-computed invoice values for each
+     * draft invoice, which may not always be up-to-date since Orb regularly refreshes invoices
+     * asynchronously.
+     */
+    suspend fun listSummary(
+        params: InvoiceListSummaryParams = InvoiceListSummaryParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): InvoiceListSummaryPageAsync
+
+    /** @see listSummary */
+    suspend fun listSummary(requestOptions: RequestOptions): InvoiceListSummaryPageAsync =
+        listSummary(InvoiceListSummaryParams.none(), requestOptions)
 
     /**
      * This endpoint allows an invoice's status to be set to the `paid` status. This can only be
@@ -268,6 +316,26 @@ interface InvoiceServiceAsync {
             list(InvoiceListParams.none(), requestOptions)
 
         /**
+         * Returns a raw HTTP response for `delete
+         * /invoices/{invoice_id}/invoice_line_items/{line_item_id}`, but is otherwise the same as
+         * [InvoiceServiceAsync.deleteLineItem].
+         */
+        @MustBeClosed
+        suspend fun deleteLineItem(
+            lineItemId: String,
+            params: InvoiceDeleteLineItemParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse =
+            deleteLineItem(params.toBuilder().lineItemId(lineItemId).build(), requestOptions)
+
+        /** @see deleteLineItem */
+        @MustBeClosed
+        suspend fun deleteLineItem(
+            params: InvoiceDeleteLineItemParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
+
+        /**
          * Returns a raw HTTP response for `get /invoices/{invoice_id}`, but is otherwise the same
          * as [InvoiceServiceAsync.fetch].
          */
@@ -328,6 +396,23 @@ interface InvoiceServiceAsync {
             invoiceId: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Invoice> = issue(invoiceId, InvoiceIssueParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `get /invoices/summary`, but is otherwise the same as
+         * [InvoiceServiceAsync.listSummary].
+         */
+        @MustBeClosed
+        suspend fun listSummary(
+            params: InvoiceListSummaryParams = InvoiceListSummaryParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<InvoiceListSummaryPageAsync>
+
+        /** @see listSummary */
+        @MustBeClosed
+        suspend fun listSummary(
+            requestOptions: RequestOptions
+        ): HttpResponseFor<InvoiceListSummaryPageAsync> =
+            listSummary(InvoiceListSummaryParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /invoices/{invoice_id}/mark_paid`, but is otherwise

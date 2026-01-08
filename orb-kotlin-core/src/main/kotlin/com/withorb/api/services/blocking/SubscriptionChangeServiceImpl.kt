@@ -20,6 +20,9 @@ import com.withorb.api.models.SubscriptionChangeApplyParams
 import com.withorb.api.models.SubscriptionChangeApplyResponse
 import com.withorb.api.models.SubscriptionChangeCancelParams
 import com.withorb.api.models.SubscriptionChangeCancelResponse
+import com.withorb.api.models.SubscriptionChangeListPage
+import com.withorb.api.models.SubscriptionChangeListPageResponse
+import com.withorb.api.models.SubscriptionChangeListParams
 import com.withorb.api.models.SubscriptionChangeRetrieveParams
 import com.withorb.api.models.SubscriptionChangeRetrieveResponse
 
@@ -41,6 +44,13 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
     ): SubscriptionChangeRetrieveResponse =
         // get /subscription_changes/{subscription_change_id}
         withRawResponse().retrieve(params, requestOptions).parse()
+
+    override fun list(
+        params: SubscriptionChangeListParams,
+        requestOptions: RequestOptions,
+    ): SubscriptionChangeListPage =
+        // get /subscription_changes
+        withRawResponse().list(params, requestOptions).parse()
 
     override fun apply(
         params: SubscriptionChangeApplyParams,
@@ -95,6 +105,40 @@ class SubscriptionChangeServiceImpl internal constructor(private val clientOptio
                         if (requestOptions.responseValidation!!) {
                             it.validate()
                         }
+                    }
+            }
+        }
+
+        private val listHandler: Handler<SubscriptionChangeListPageResponse> =
+            jsonHandler<SubscriptionChangeListPageResponse>(clientOptions.jsonMapper)
+
+        override fun list(
+            params: SubscriptionChangeListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SubscriptionChangeListPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("subscription_changes")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        SubscriptionChangeListPage.builder()
+                            .service(SubscriptionChangeServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

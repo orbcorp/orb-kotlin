@@ -6,6 +6,7 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.InvoiceCreateParams
+import com.withorb.api.models.InvoiceDeleteLineItemParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceMarkPaidParams
@@ -125,6 +126,23 @@ internal class InvoiceServiceTest {
     }
 
     @Test
+    fun deleteLineItem() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val invoiceService = client.invoices()
+
+        invoiceService.deleteLineItem(
+            InvoiceDeleteLineItemParams.builder()
+                .invoiceId("invoice_id")
+                .lineItemId("line_item_id")
+                .build()
+        )
+    }
+
+    @Test
     fun fetch() {
         val client =
             OrbOkHttpClient.builder()
@@ -170,6 +188,20 @@ internal class InvoiceServiceTest {
             )
 
         invoice.validate()
+    }
+
+    @Test
+    fun listSummary() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val invoiceService = client.invoices()
+
+        val page = invoiceService.listSummary()
+
+        page.response().validate()
     }
 
     @Test

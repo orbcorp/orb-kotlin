@@ -6,6 +6,7 @@ import com.withorb.api.core.ClientOptions
 import com.withorb.api.services.blocking.AlertService
 import com.withorb.api.services.blocking.BetaService
 import com.withorb.api.services.blocking.CouponService
+import com.withorb.api.services.blocking.CreditBlockService
 import com.withorb.api.services.blocking.CreditNoteService
 import com.withorb.api.services.blocking.CustomerService
 import com.withorb.api.services.blocking.DimensionalPriceGroupService
@@ -91,6 +92,8 @@ interface OrbClient {
 
     fun webhooks(): WebhookService
 
+    fun creditBlocks(): CreditBlockService
+
     /**
      * Closes this client, relinquishing any underlying resources.
      *
@@ -145,5 +148,7 @@ interface OrbClient {
         fun dimensionalPriceGroups(): DimensionalPriceGroupService.WithRawResponse
 
         fun subscriptionChanges(): SubscriptionChangeService.WithRawResponse
+
+        fun creditBlocks(): CreditBlockService.WithRawResponse
     }
 }

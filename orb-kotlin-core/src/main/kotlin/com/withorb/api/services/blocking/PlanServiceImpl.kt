@@ -25,6 +25,8 @@ import com.withorb.api.models.PlanListParams
 import com.withorb.api.models.PlanUpdateParams
 import com.withorb.api.services.blocking.plans.ExternalPlanIdService
 import com.withorb.api.services.blocking.plans.ExternalPlanIdServiceImpl
+import com.withorb.api.services.blocking.plans.MigrationService
+import com.withorb.api.services.blocking.plans.MigrationServiceImpl
 
 class PlanServiceImpl internal constructor(private val clientOptions: ClientOptions) : PlanService {
 
@@ -36,12 +38,16 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
         ExternalPlanIdServiceImpl(clientOptions)
     }
 
+    private val migrations: MigrationService by lazy { MigrationServiceImpl(clientOptions) }
+
     override fun withRawResponse(): PlanService.WithRawResponse = withRawResponse
 
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PlanService =
         PlanServiceImpl(clientOptions.toBuilder().apply(modifier).build())
 
     override fun externalPlanId(): ExternalPlanIdService = externalPlanId
+
+    override fun migrations(): MigrationService = migrations
 
     override fun create(params: PlanCreateParams, requestOptions: RequestOptions): Plan =
         // post /plans
@@ -69,12 +75,18 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             ExternalPlanIdServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val migrations: MigrationService.WithRawResponse by lazy {
+            MigrationServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): PlanService.WithRawResponse =
             PlanServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun externalPlanId(): ExternalPlanIdService.WithRawResponse = externalPlanId
+
+        override fun migrations(): MigrationService.WithRawResponse = migrations
 
         private val createHandler: Handler<Plan> = jsonHandler<Plan>(clientOptions.jsonMapper)
 
