@@ -25,6 +25,8 @@ import com.withorb.api.models.PlanListParams
 import com.withorb.api.models.PlanUpdateParams
 import com.withorb.api.services.async.plans.ExternalPlanIdServiceAsync
 import com.withorb.api.services.async.plans.ExternalPlanIdServiceAsyncImpl
+import com.withorb.api.services.async.plans.MigrationServiceAsync
+import com.withorb.api.services.async.plans.MigrationServiceAsyncImpl
 
 class PlanServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     PlanServiceAsync {
@@ -37,12 +39,18 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
         ExternalPlanIdServiceAsyncImpl(clientOptions)
     }
 
+    private val migrations: MigrationServiceAsync by lazy {
+        MigrationServiceAsyncImpl(clientOptions)
+    }
+
     override fun withRawResponse(): PlanServiceAsync.WithRawResponse = withRawResponse
 
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PlanServiceAsync =
         PlanServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
 
     override fun externalPlanId(): ExternalPlanIdServiceAsync = externalPlanId
+
+    override fun migrations(): MigrationServiceAsync = migrations
 
     override suspend fun create(params: PlanCreateParams, requestOptions: RequestOptions): Plan =
         // post /plans
@@ -73,6 +81,10 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             ExternalPlanIdServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val migrations: MigrationServiceAsync.WithRawResponse by lazy {
+            MigrationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): PlanServiceAsync.WithRawResponse =
@@ -81,6 +93,8 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             )
 
         override fun externalPlanId(): ExternalPlanIdServiceAsync.WithRawResponse = externalPlanId
+
+        override fun migrations(): MigrationServiceAsync.WithRawResponse = migrations
 
         private val createHandler: Handler<Plan> = jsonHandler<Plan>(clientOptions.jsonMapper)
 

@@ -10,6 +10,8 @@ import com.withorb.api.services.blocking.BetaService
 import com.withorb.api.services.blocking.BetaServiceImpl
 import com.withorb.api.services.blocking.CouponService
 import com.withorb.api.services.blocking.CouponServiceImpl
+import com.withorb.api.services.blocking.CreditBlockService
+import com.withorb.api.services.blocking.CreditBlockServiceImpl
 import com.withorb.api.services.blocking.CreditNoteService
 import com.withorb.api.services.blocking.CreditNoteServiceImpl
 import com.withorb.api.services.blocking.CustomerService
@@ -100,6 +102,10 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
         SubscriptionChangeServiceImpl(clientOptionsWithUserAgent)
     }
 
+    private val creditBlocks: CreditBlockService by lazy {
+        CreditBlockServiceImpl(clientOptionsWithUserAgent)
+    }
+
     override fun async(): OrbClientAsync = async
 
     override fun withRawResponse(): OrbClient.WithRawResponse = withRawResponse
@@ -138,6 +144,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
     override fun dimensionalPriceGroups(): DimensionalPriceGroupService = dimensionalPriceGroups
 
     override fun subscriptionChanges(): SubscriptionChangeService = subscriptionChanges
+
+    override fun creditBlocks(): CreditBlockService = creditBlocks
 
     override fun close() = clientOptions.close()
 
@@ -208,6 +216,10 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
             SubscriptionChangeServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val creditBlocks: CreditBlockService.WithRawResponse by lazy {
+            CreditBlockServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): OrbClient.WithRawResponse =
@@ -246,5 +258,7 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
 
         override fun subscriptionChanges(): SubscriptionChangeService.WithRawResponse =
             subscriptionChanges
+
+        override fun creditBlocks(): CreditBlockService.WithRawResponse = creditBlocks
     }
 }

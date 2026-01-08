@@ -13,6 +13,7 @@ import com.withorb.api.models.PlanListPage
 import com.withorb.api.models.PlanListParams
 import com.withorb.api.models.PlanUpdateParams
 import com.withorb.api.services.blocking.plans.ExternalPlanIdService
+import com.withorb.api.services.blocking.plans.MigrationService
 
 interface PlanService {
 
@@ -29,6 +30,8 @@ interface PlanService {
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PlanService
 
     fun externalPlanId(): ExternalPlanIdService
+
+    fun migrations(): MigrationService
 
     /** This endpoint allows creation of plans including their prices. */
     fun create(
@@ -113,6 +116,8 @@ interface PlanService {
         fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PlanService.WithRawResponse
 
         fun externalPlanId(): ExternalPlanIdService.WithRawResponse
+
+        fun migrations(): MigrationService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /plans`, but is otherwise the same as

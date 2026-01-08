@@ -6,6 +6,7 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.InvoiceCreateParams
+import com.withorb.api.models.InvoiceDeleteLineItemParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceMarkPaidParams
@@ -125,6 +126,23 @@ internal class InvoiceServiceAsyncTest {
     }
 
     @Test
+    suspend fun deleteLineItem() {
+        val client =
+            OrbOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val invoiceServiceAsync = client.invoices()
+
+        invoiceServiceAsync.deleteLineItem(
+            InvoiceDeleteLineItemParams.builder()
+                .invoiceId("invoice_id")
+                .lineItemId("line_item_id")
+                .build()
+        )
+    }
+
+    @Test
     suspend fun fetch() {
         val client =
             OrbOkHttpClientAsync.builder()
@@ -170,6 +188,20 @@ internal class InvoiceServiceAsyncTest {
             )
 
         invoice.validate()
+    }
+
+    @Test
+    suspend fun listSummary() {
+        val client =
+            OrbOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val invoiceServiceAsync = client.invoices()
+
+        val page = invoiceServiceAsync.listSummary()
+
+        page.response().validate()
     }
 
     @Test
