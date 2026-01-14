@@ -4767,6 +4767,10 @@ private constructor(
             /** Alias for calling [price] with `Price.ofMinimum(minimum)`. */
             fun price(minimum: Price.Minimum) = price(Price.ofMinimum(minimum))
 
+            /** Alias for calling [price] with `Price.ofMinimumComposite(minimumComposite)`. */
+            fun price(minimumComposite: Price.MinimumComposite) =
+                price(Price.ofMinimumComposite(minimumComposite))
+
             /** Alias for calling [price] with `Price.ofPercent(percent)`. */
             fun price(percent: Price.Percent) = price(Price.ofPercent(percent))
 
