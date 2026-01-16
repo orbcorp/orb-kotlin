@@ -2331,7 +2331,7 @@ private constructor(
                             return when (bestMatches.size) {
                                 // This can happen if what we're deserializing is completely
                                 // incompatible with all the possible variants (e.g. deserializing
-                                // from object).
+                                // from boolean).
                                 0 -> CustomDueDate(_json = json)
                                 1 -> bestMatches.single()
                                 // If there's more than one match with the highest validity, then
@@ -2510,7 +2510,7 @@ private constructor(
                             return when (bestMatches.size) {
                                 // This can happen if what we're deserializing is completely
                                 // incompatible with all the possible variants (e.g. deserializing
-                                // from object).
+                                // from boolean).
                                 0 -> InvoiceDate(_json = json)
                                 1 -> bestMatches.single()
                                 // If there's more than one match with the highest validity, then
