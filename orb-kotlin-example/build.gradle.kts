@@ -4,7 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":orb-kotlin"))
+    implementation(project(":orb-kotlin-core"))
+    implementation(project(":orb-kotlin-client-okhttp"))
 }
 
 application {
