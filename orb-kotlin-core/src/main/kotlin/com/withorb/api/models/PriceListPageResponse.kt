@@ -269,9 +269,6 @@ private constructor(
         fun addData(cumulativeGroupedAllocation: Price.CumulativeGroupedAllocation) =
             addData(Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation))
 
-        /** Alias for calling [addData] with `Price.ofMinimum(minimum)`. */
-        fun addData(minimum: Price.Minimum) = addData(Price.ofMinimum(minimum))
-
         /** Alias for calling [addData] with `Price.ofMinimumComposite(minimumComposite)`. */
         fun addData(minimumComposite: Price.MinimumComposite) =
             addData(Price.ofMinimumComposite(minimumComposite))

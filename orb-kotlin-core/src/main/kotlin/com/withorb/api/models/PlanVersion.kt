@@ -443,9 +443,6 @@ private constructor(
         fun addPrice(cumulativeGroupedAllocation: Price.CumulativeGroupedAllocation) =
             addPrice(Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation))
 
-        /** Alias for calling [addPrice] with `Price.ofMinimum(minimum)`. */
-        fun addPrice(minimum: Price.Minimum) = addPrice(Price.ofMinimum(minimum))
-
         /** Alias for calling [addPrice] with `Price.ofMinimumComposite(minimumComposite)`. */
         fun addPrice(minimumComposite: Price.MinimumComposite) =
             addPrice(Price.ofMinimumComposite(minimumComposite))
