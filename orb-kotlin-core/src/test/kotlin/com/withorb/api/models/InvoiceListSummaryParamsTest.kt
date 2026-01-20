@@ -30,7 +30,7 @@ internal class InvoiceListSummaryParamsTest {
             .invoiceDateLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .isRecurring(true)
             .limit(1L)
-            .status(InvoiceListSummaryParams.Status.DRAFT)
+            .addStatus(InvoiceListSummaryParams.Status.DRAFT)
             .subscriptionId("subscription_id")
             .build()
     }
@@ -56,7 +56,7 @@ internal class InvoiceListSummaryParamsTest {
                 .invoiceDateLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .isRecurring(true)
                 .limit(1L)
-                .status(InvoiceListSummaryParams.Status.DRAFT)
+                .addStatus(InvoiceListSummaryParams.Status.DRAFT)
                 .subscriptionId("subscription_id")
                 .build()
 
@@ -82,7 +82,7 @@ internal class InvoiceListSummaryParamsTest {
                     .put("invoice_date[lte]", "2019-12-27T18:11:19.117Z")
                     .put("is_recurring", "true")
                     .put("limit", "1")
-                    .put("status", "draft")
+                    .put("status[]", "draft")
                     .put("subscription_id", "subscription_id")
                     .build()
             )
