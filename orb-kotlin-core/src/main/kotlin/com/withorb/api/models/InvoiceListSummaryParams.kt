@@ -8,6 +8,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.Params
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -50,7 +51,7 @@ private constructor(
     private val invoiceDateLte: OffsetDateTime?,
     private val isRecurring: Boolean?,
     private val limit: Long?,
-    private val status: Status?,
+    private val status: List<Status>?,
     private val subscriptionId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -100,7 +101,7 @@ private constructor(
     /** The number of items to fetch. Defaults to 20. */
     fun limit(): Long? = limit
 
-    fun status(): Status? = status
+    fun status(): List<Status>? = status
 
     fun subscriptionId(): String? = subscriptionId
 
@@ -140,7 +141,7 @@ private constructor(
         private var invoiceDateLte: OffsetDateTime? = null
         private var isRecurring: Boolean? = null
         private var limit: Long? = null
-        private var status: Status? = null
+        private var status: MutableList<Status>? = null
         private var subscriptionId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
@@ -163,7 +164,7 @@ private constructor(
             invoiceDateLte = invoiceListSummaryParams.invoiceDateLte
             isRecurring = invoiceListSummaryParams.isRecurring
             limit = invoiceListSummaryParams.limit
-            status = invoiceListSummaryParams.status
+            status = invoiceListSummaryParams.status?.toMutableList()
             subscriptionId = invoiceListSummaryParams.subscriptionId
             additionalHeaders = invoiceListSummaryParams.additionalHeaders.toBuilder()
             additionalQueryParams = invoiceListSummaryParams.additionalQueryParams.toBuilder()
@@ -237,7 +238,16 @@ private constructor(
          */
         fun limit(limit: Long) = limit(limit as Long?)
 
-        fun status(status: Status?) = apply { this.status = status }
+        fun status(status: List<Status>?) = apply { this.status = status?.toMutableList() }
+
+        /**
+         * Adds a single [Status] to [Builder.status].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addStatus(status: Status) = apply {
+            this.status = (this.status ?: mutableListOf()).apply { add(status) }
+        }
 
         fun subscriptionId(subscriptionId: String?) = apply { this.subscriptionId = subscriptionId }
 
@@ -363,7 +373,7 @@ private constructor(
                 invoiceDateLte,
                 isRecurring,
                 limit,
-                status,
+                status?.toImmutable(),
                 subscriptionId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -400,7 +410,7 @@ private constructor(
                 }
                 isRecurring?.let { put("is_recurring", it.toString()) }
                 limit?.let { put("limit", it.toString()) }
-                status?.let { put("status", it.toString()) }
+                status?.forEach { put("status[]", it.toString()) }
                 subscriptionId?.let { put("subscription_id", it) }
                 putAll(additionalQueryParams)
             }
