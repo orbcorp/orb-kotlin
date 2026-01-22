@@ -448,6 +448,11 @@ private constructor(
     /**
      * This field is deprecated in favor of `discounts`. If a `discounts` list is provided, the
      * first discount in the list will be returned. If the list is empty, `None` will be returned.
+     *
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```kotlin
+     * val myObject: MyClass = invoice.discount().convert(MyClass::class.java)
+     * ```
      */
     @Deprecated("deprecated")
     @JsonProperty("discount")
