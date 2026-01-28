@@ -28,7 +28,6 @@ import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
-import kotlin.Unit as KUnit
 
 /**
  * The Price resource represents a price that can be billed on a subscription, resulting in a charge
