@@ -6,28 +6,19 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Collections
 import java.util.Objects
 
 class NewSubscriptionUnitWithPercentPrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val cadence: JsonField<Cadence>,
     private val itemId: JsonField<String>,
@@ -136,6 +127,8 @@ private constructor(
     fun itemId(): String = itemId.getRequired("item_id")
 
     /**
+     * The pricing model type
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -150,6 +143,8 @@ private constructor(
     fun name(): String = name.getRequired("name")
 
     /**
+     * Configuration for unit_with_percent pricing
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -537,6 +532,7 @@ private constructor(
          */
         fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
+        /** The pricing model type */
         fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
         /**
@@ -559,6 +555,7 @@ private constructor(
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
+        /** Configuration for unit_with_percent pricing */
         fun unitWithPercentConfig(unitWithPercentConfig: UnitWithPercentConfig) =
             unitWithPercentConfig(JsonField.of(unitWithPercentConfig))
 
@@ -1103,7 +1100,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Cadence && value == other.value /* spotless:on */
+            return other is Cadence && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1111,6 +1108,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The pricing model type */
     class ModelType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -1223,7 +1221,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ModelType && value == other.value /* spotless:on */
+            return other is ModelType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1231,16 +1229,64 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Configuration for unit_with_percent pricing */
     class UnitWithPercentConfig
-    @JsonCreator
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+        private val percent: JsonField<String>,
+        private val unitAmount: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("percent") @ExcludeMissing percent: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("unit_amount")
+            @ExcludeMissing
+            unitAmount: JsonField<String> = JsonMissing.of(),
+        ) : this(percent, unitAmount, mutableMapOf())
+
+        /**
+         * What percent, out of 100, of the calculated total to charge
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun percent(): String = percent.getRequired("percent")
+
+        /**
+         * Rate per unit of usage
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun unitAmount(): String = unitAmount.getRequired("unit_amount")
+
+        /**
+         * Returns the raw JSON value of [percent].
+         *
+         * Unlike [percent], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("percent") @ExcludeMissing fun _percent(): JsonField<String> = percent
+
+        /**
+         * Returns the raw JSON value of [unitAmount].
+         *
+         * Unlike [unitAmount], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("unit_amount")
+        @ExcludeMissing
+        fun _unitAmount(): JsonField<String> = unitAmount
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1248,6 +1294,12 @@ private constructor(
 
             /**
              * Returns a mutable builder for constructing an instance of [UnitWithPercentConfig].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .percent()
+             * .unitAmount()
+             * ```
              */
             fun builder() = Builder()
         }
@@ -1255,11 +1307,39 @@ private constructor(
         /** A builder for [UnitWithPercentConfig]. */
         class Builder internal constructor() {
 
+            private var percent: JsonField<String>? = null
+            private var unitAmount: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(unitWithPercentConfig: UnitWithPercentConfig) = apply {
+                percent = unitWithPercentConfig.percent
+                unitAmount = unitWithPercentConfig.unitAmount
                 additionalProperties = unitWithPercentConfig.additionalProperties.toMutableMap()
             }
+
+            /** What percent, out of 100, of the calculated total to charge */
+            fun percent(percent: String) = percent(JsonField.of(percent))
+
+            /**
+             * Sets [Builder.percent] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.percent] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun percent(percent: JsonField<String>) = apply { this.percent = percent }
+
+            /** Rate per unit of usage */
+            fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
+
+            /**
+             * Sets [Builder.unitAmount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.unitAmount] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun unitAmount(unitAmount: JsonField<String>) = apply { this.unitAmount = unitAmount }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1284,9 +1364,21 @@ private constructor(
              * Returns an immutable instance of [UnitWithPercentConfig].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .percent()
+             * .unitAmount()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): UnitWithPercentConfig =
-                UnitWithPercentConfig(additionalProperties.toImmutable())
+                UnitWithPercentConfig(
+                    checkRequired("percent", percent),
+                    checkRequired("unitAmount", unitAmount),
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1296,6 +1388,8 @@ private constructor(
                 return@apply
             }
 
+            percent()
+            unitAmount()
             validated = true
         }
 
@@ -1314,193 +1408,27 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+            (if (percent.asKnown() == null) 0 else 1) + (if (unitAmount.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is UnitWithPercentConfig && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is UnitWithPercentConfig &&
+                percent == other.percent &&
+                unitAmount == other.unitAmount &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(percent, unitAmount, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "UnitWithPercentConfig{additionalProperties=$additionalProperties}"
-    }
-
-    /** The configuration for the rate of the price currency to the invoicing currency. */
-    @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
-    @JsonSerialize(using = ConversionRateConfig.Serializer::class)
-    class ConversionRateConfig
-    private constructor(
-        private val unit: UnitConversionRateConfig? = null,
-        private val tiered: TieredConversionRateConfig? = null,
-        private val _json: JsonValue? = null,
-    ) {
-
-        fun unit(): UnitConversionRateConfig? = unit
-
-        fun tiered(): TieredConversionRateConfig? = tiered
-
-        fun isUnit(): Boolean = unit != null
-
-        fun isTiered(): Boolean = tiered != null
-
-        fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
-
-        fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
-
-        fun _json(): JsonValue? = _json
-
-        fun <T> accept(visitor: Visitor<T>): T =
-            when {
-                unit != null -> visitor.visitUnit(unit)
-                tiered != null -> visitor.visitTiered(tiered)
-                else -> visitor.unknown(_json)
-            }
-
-        private var validated: Boolean = false
-
-        fun validate(): ConversionRateConfig = apply {
-            if (validated) {
-                return@apply
-            }
-
-            accept(
-                object : Visitor<Unit> {
-                    override fun visitUnit(unit: UnitConversionRateConfig) {
-                        unit.validate()
-                    }
-
-                    override fun visitTiered(tiered: TieredConversionRateConfig) {
-                        tiered.validate()
-                    }
-                }
-            )
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: OrbInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        internal fun validity(): Int =
-            accept(
-                object : Visitor<Int> {
-                    override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
-
-                    override fun visitTiered(tiered: TieredConversionRateConfig) = tiered.validity()
-
-                    override fun unknown(json: JsonValue?) = 0
-                }
-            )
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
-        }
-
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
-
-        override fun toString(): String =
-            when {
-                unit != null -> "ConversionRateConfig{unit=$unit}"
-                tiered != null -> "ConversionRateConfig{tiered=$tiered}"
-                _json != null -> "ConversionRateConfig{_unknown=$_json}"
-                else -> throw IllegalStateException("Invalid ConversionRateConfig")
-            }
-
-        companion object {
-
-            fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
-
-            fun ofTiered(tiered: TieredConversionRateConfig) = ConversionRateConfig(tiered = tiered)
-        }
-
-        /**
-         * An interface that defines how to map each variant of [ConversionRateConfig] to a value of
-         * type [T].
-         */
-        interface Visitor<out T> {
-
-            fun visitUnit(unit: UnitConversionRateConfig): T
-
-            fun visitTiered(tiered: TieredConversionRateConfig): T
-
-            /**
-             * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
-             *
-             * An instance of [ConversionRateConfig] can contain an unknown variant if it was
-             * deserialized from data that doesn't match any known variant. For example, if the SDK
-             * is on an older version than the API, then the API may respond with new variants that
-             * the SDK is unaware of.
-             *
-             * @throws OrbInvalidDataException in the default implementation.
-             */
-            fun unknown(json: JsonValue?): T {
-                throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
-            }
-        }
-
-        internal class Deserializer :
-            BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
-
-            override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
-                val json = JsonValue.fromJsonNode(node)
-                val conversionRateType = json.asObject()?.get("conversion_rate_type")?.asString()
-
-                when (conversionRateType) {
-                    "unit" -> {
-                        return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
-                            ?.let { ConversionRateConfig(unit = it, _json = json) }
-                            ?: ConversionRateConfig(_json = json)
-                    }
-                    "tiered" -> {
-                        return tryDeserialize(node, jacksonTypeRef<TieredConversionRateConfig>())
-                            ?.let { ConversionRateConfig(tiered = it, _json = json) }
-                            ?: ConversionRateConfig(_json = json)
-                    }
-                }
-
-                return ConversionRateConfig(_json = json)
-            }
-        }
-
-        internal class Serializer :
-            BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
-
-            override fun serialize(
-                value: ConversionRateConfig,
-                generator: JsonGenerator,
-                provider: SerializerProvider,
-            ) {
-                when {
-                    value.unit != null -> generator.writeObject(value.unit)
-                    value.tiered != null -> generator.writeObject(value.tiered)
-                    value._json != null -> generator.writeObject(value._json)
-                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
-                }
-            }
-        }
+            "UnitWithPercentConfig{percent=$percent, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -1595,12 +1523,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1612,12 +1538,51 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is NewSubscriptionUnitWithPercentPrice && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && unitWithPercentConfig == other.unitWithPercentConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && referenceId == other.referenceId && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is NewSubscriptionUnitWithPercentPrice &&
+            cadence == other.cadence &&
+            itemId == other.itemId &&
+            modelType == other.modelType &&
+            name == other.name &&
+            unitWithPercentConfig == other.unitWithPercentConfig &&
+            billableMetricId == other.billableMetricId &&
+            billedInAdvance == other.billedInAdvance &&
+            billingCycleConfiguration == other.billingCycleConfiguration &&
+            conversionRate == other.conversionRate &&
+            conversionRateConfig == other.conversionRateConfig &&
+            currency == other.currency &&
+            dimensionalPriceConfiguration == other.dimensionalPriceConfiguration &&
+            externalPriceId == other.externalPriceId &&
+            fixedPriceQuantity == other.fixedPriceQuantity &&
+            invoiceGroupingKey == other.invoiceGroupingKey &&
+            invoicingCycleConfiguration == other.invoicingCycleConfiguration &&
+            metadata == other.metadata &&
+            referenceId == other.referenceId &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, unitWithPercentConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, conversionRateConfig, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, referenceId, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            cadence,
+            itemId,
+            modelType,
+            name,
+            unitWithPercentConfig,
+            billableMetricId,
+            billedInAdvance,
+            billingCycleConfiguration,
+            conversionRate,
+            conversionRateConfig,
+            currency,
+            dimensionalPriceConfiguration,
+            externalPriceId,
+            fixedPriceQuantity,
+            invoiceGroupingKey,
+            invoicingCycleConfiguration,
+            metadata,
+            referenceId,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

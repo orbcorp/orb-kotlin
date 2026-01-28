@@ -43,11 +43,14 @@ import java.util.Objects
  * for that customer. If neither is specified, the backfill will affect all customers.
  *
  * When `replace_existing_events` is `true`, this indicates that existing events in the timeframe
- * should no longer be counted towards invoiced usage. In this scenario, the parameter `filter` can
- * be optionally added which enables filtering using
+ * should no longer be counted towards invoiced usage. In this scenario, the parameter
+ * `deprecation_filter` can be optionally added which enables filtering using
  * [computed properties](/extensibility/advanced-metrics#computed-properties). The expressiveness of
  * computed properties allows you to deprecate existing events based on both a period of time and
  * specific property values.
+ *
+ * You may not have multiple backfills in a pending or pending_revert state with overlapping
+ * timeframes.
  */
 class EventBackfillCreateParams
 private constructor(
@@ -496,6 +499,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val timeframeEnd: JsonField<OffsetDateTime>,
         private val timeframeStart: JsonField<OffsetDateTime>,
@@ -940,12 +944,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && closeTime == other.closeTime && customerId == other.customerId && deprecationFilter == other.deprecationFilter && externalCustomerId == other.externalCustomerId && replaceExistingEvents == other.replaceExistingEvents && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                timeframeEnd == other.timeframeEnd &&
+                timeframeStart == other.timeframeStart &&
+                closeTime == other.closeTime &&
+                customerId == other.customerId &&
+                deprecationFilter == other.deprecationFilter &&
+                externalCustomerId == other.externalCustomerId &&
+                replaceExistingEvents == other.replaceExistingEvents &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(timeframeEnd, timeframeStart, closeTime, customerId, deprecationFilter, externalCustomerId, replaceExistingEvents, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                timeframeEnd,
+                timeframeStart,
+                closeTime,
+                customerId,
+                deprecationFilter,
+                externalCustomerId,
+                replaceExistingEvents,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -958,10 +979,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventBackfillCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is EventBackfillCreateParams &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "EventBackfillCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

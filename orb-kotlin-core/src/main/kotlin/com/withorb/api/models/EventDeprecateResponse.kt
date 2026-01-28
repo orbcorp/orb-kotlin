@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class EventDeprecateResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val deprecated: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -158,12 +159,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventDeprecateResponse && deprecated == other.deprecated && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is EventDeprecateResponse &&
+            deprecated == other.deprecated &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(deprecated, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

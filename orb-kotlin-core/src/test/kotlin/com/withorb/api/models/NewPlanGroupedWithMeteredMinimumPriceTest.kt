@@ -17,7 +17,26 @@ internal class NewPlanGroupedWithMeteredMinimumPriceTest {
                 .cadence(NewPlanGroupedWithMeteredMinimumPrice.Cadence.ANNUAL)
                 .groupedWithMeteredMinimumConfig(
                     NewPlanGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .minimumUnitAmount("minimum_unit_amount")
+                        .pricingKey("pricing_key")
+                        .addScalingFactor(
+                            NewPlanGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
+                                .ScalingFactor
+                                .builder()
+                                .scalingFactor("scaling_factor")
+                                .scalingValue("scaling_value")
+                                .build()
+                        )
+                        .scalingKey("scaling_key")
+                        .addUnitAmount(
+                            NewPlanGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
+                                .UnitAmount
+                                .builder()
+                                .pricingValue("pricing_value")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .itemId("item_id")
@@ -67,7 +86,26 @@ internal class NewPlanGroupedWithMeteredMinimumPriceTest {
         assertThat(newPlanGroupedWithMeteredMinimumPrice.groupedWithMeteredMinimumConfig())
             .isEqualTo(
                 NewPlanGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .groupingKey("x")
+                    .minimumUnitAmount("minimum_unit_amount")
+                    .pricingKey("pricing_key")
+                    .addScalingFactor(
+                        NewPlanGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
+                            .ScalingFactor
+                            .builder()
+                            .scalingFactor("scaling_factor")
+                            .scalingValue("scaling_value")
+                            .build()
+                    )
+                    .scalingKey("scaling_key")
+                    .addUnitAmount(
+                        NewPlanGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
+                            .UnitAmount
+                            .builder()
+                            .pricingValue("pricing_value")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newPlanGroupedWithMeteredMinimumPrice.itemId()).isEqualTo("item_id")
@@ -87,7 +125,7 @@ internal class NewPlanGroupedWithMeteredMinimumPriceTest {
         assertThat(newPlanGroupedWithMeteredMinimumPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanGroupedWithMeteredMinimumPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanGroupedWithMeteredMinimumPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -133,7 +171,26 @@ internal class NewPlanGroupedWithMeteredMinimumPriceTest {
                 .cadence(NewPlanGroupedWithMeteredMinimumPrice.Cadence.ANNUAL)
                 .groupedWithMeteredMinimumConfig(
                     NewPlanGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .minimumUnitAmount("minimum_unit_amount")
+                        .pricingKey("pricing_key")
+                        .addScalingFactor(
+                            NewPlanGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
+                                .ScalingFactor
+                                .builder()
+                                .scalingFactor("scaling_factor")
+                                .scalingValue("scaling_value")
+                                .build()
+                        )
+                        .scalingKey("scaling_key")
+                        .addUnitAmount(
+                            NewPlanGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
+                                .UnitAmount
+                                .builder()
+                                .pricingValue("pricing_value")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .itemId("item_id")

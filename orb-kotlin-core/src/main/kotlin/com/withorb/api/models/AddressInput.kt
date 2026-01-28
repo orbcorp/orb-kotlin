@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AddressInput
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val city: JsonField<String>,
     private val country: JsonField<String>,
@@ -293,12 +294,19 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AddressInput && city == other.city && country == other.country && line1 == other.line1 && line2 == other.line2 && postalCode == other.postalCode && state == other.state && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AddressInput &&
+            city == other.city &&
+            country == other.country &&
+            line1 == other.line1 &&
+            line2 == other.line2 &&
+            postalCode == other.postalCode &&
+            state == other.state &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(city, country, line1, line2, postalCode, state, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(city, country, line1, line2, postalCode, state, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

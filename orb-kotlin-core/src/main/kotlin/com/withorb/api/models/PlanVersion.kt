@@ -33,6 +33,7 @@ import java.util.Objects
  * plan.
  */
 class PlanVersion
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val adjustments: JsonField<List<Adjustment>>,
     private val createdAt: JsonField<OffsetDateTime>,
@@ -301,28 +302,23 @@ private constructor(
         }
 
         /** Alias for calling [addPrice] with `Price.ofUnit(unit)`. */
-        fun addPrice(unit: Price.Unit) = addPrice(Price.ofUnit(unit))
+        fun addPrice(unit: Price.UnitPrice) = addPrice(Price.ofUnit(unit))
+
+        /** Alias for calling [addPrice] with `Price.ofTiered(tiered)`. */
+        fun addPrice(tiered: Price.Tiered) = addPrice(Price.ofTiered(tiered))
+
+        /** Alias for calling [addPrice] with `Price.ofBulk(bulk)`. */
+        fun addPrice(bulk: Price.Bulk) = addPrice(Price.ofBulk(bulk))
+
+        /** Alias for calling [addPrice] with `Price.ofBulkWithFilters(bulkWithFilters)`. */
+        fun addPrice(bulkWithFilters: Price.BulkWithFilters) =
+            addPrice(Price.ofBulkWithFilters(bulkWithFilters))
 
         /** Alias for calling [addPrice] with `Price.ofPackage(package_)`. */
         fun addPrice(package_: Price.Package) = addPrice(Price.ofPackage(package_))
 
         /** Alias for calling [addPrice] with `Price.ofMatrix(matrix)`. */
         fun addPrice(matrix: Price.Matrix) = addPrice(Price.ofMatrix(matrix))
-
-        /** Alias for calling [addPrice] with `Price.ofTiered(tiered)`. */
-        fun addPrice(tiered: Price.Tiered) = addPrice(Price.ofTiered(tiered))
-
-        /** Alias for calling [addPrice] with `Price.ofTieredBps(tieredBps)`. */
-        fun addPrice(tieredBps: Price.TieredBps) = addPrice(Price.ofTieredBps(tieredBps))
-
-        /** Alias for calling [addPrice] with `Price.ofBps(bps)`. */
-        fun addPrice(bps: Price.Bps) = addPrice(Price.ofBps(bps))
-
-        /** Alias for calling [addPrice] with `Price.ofBulkBps(bulkBps)`. */
-        fun addPrice(bulkBps: Price.BulkBps) = addPrice(Price.ofBulkBps(bulkBps))
-
-        /** Alias for calling [addPrice] with `Price.ofBulk(bulk)`. */
-        fun addPrice(bulk: Price.Bulk) = addPrice(Price.ofBulk(bulk))
 
         /**
          * Alias for calling [addPrice] with `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
@@ -334,13 +330,13 @@ private constructor(
         fun addPrice(tieredPackage: Price.TieredPackage) =
             addPrice(Price.ofTieredPackage(tieredPackage))
 
-        /** Alias for calling [addPrice] with `Price.ofGroupedTiered(groupedTiered)`. */
-        fun addPrice(groupedTiered: Price.GroupedTiered) =
-            addPrice(Price.ofGroupedTiered(groupedTiered))
-
         /** Alias for calling [addPrice] with `Price.ofTieredWithMinimum(tieredWithMinimum)`. */
         fun addPrice(tieredWithMinimum: Price.TieredWithMinimum) =
             addPrice(Price.ofTieredWithMinimum(tieredWithMinimum))
+
+        /** Alias for calling [addPrice] with `Price.ofGroupedTiered(groupedTiered)`. */
+        fun addPrice(groupedTiered: Price.GroupedTiered) =
+            addPrice(Price.ofGroupedTiered(groupedTiered))
 
         /**
          * Alias for calling [addPrice] with
@@ -377,6 +373,10 @@ private constructor(
         fun addPrice(groupedAllocation: Price.GroupedAllocation) =
             addPrice(Price.ofGroupedAllocation(groupedAllocation))
 
+        /** Alias for calling [addPrice] with `Price.ofBulkWithProration(bulkWithProration)`. */
+        fun addPrice(bulkWithProration: Price.BulkWithProration) =
+            addPrice(Price.ofBulkWithProration(bulkWithProration))
+
         /**
          * Alias for calling [addPrice] with
          * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
@@ -392,14 +392,17 @@ private constructor(
             addPrice(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
         /**
+         * Alias for calling [addPrice] with
+         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         */
+        fun addPrice(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
+            addPrice(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+
+        /**
          * Alias for calling [addPrice] with `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
          */
         fun addPrice(matrixWithDisplayName: Price.MatrixWithDisplayName) =
             addPrice(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
-
-        /** Alias for calling [addPrice] with `Price.ofBulkWithProration(bulkWithProration)`. */
-        fun addPrice(bulkWithProration: Price.BulkWithProration) =
-            addPrice(Price.ofBulkWithProration(bulkWithProration))
 
         /**
          * Alias for calling [addPrice] with `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
@@ -435,10 +438,20 @@ private constructor(
 
         /**
          * Alias for calling [addPrice] with
-         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         * `Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation)`.
          */
-        fun addPrice(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
-            addPrice(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+        fun addPrice(cumulativeGroupedAllocation: Price.CumulativeGroupedAllocation) =
+            addPrice(Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation))
+
+        /** Alias for calling [addPrice] with `Price.ofMinimumComposite(minimumComposite)`. */
+        fun addPrice(minimumComposite: Price.MinimumComposite) =
+            addPrice(Price.ofMinimumComposite(minimumComposite))
+
+        /** Alias for calling [addPrice] with `Price.ofPercent(percent)`. */
+        fun addPrice(percent: Price.Percent) = addPrice(Price.ofPercent(percent))
+
+        /** Alias for calling [addPrice] with `Price.ofEventOutput(eventOutput)`. */
+        fun addPrice(eventOutput: Price.EventOutput) = addPrice(Price.ofEventOutput(eventOutput))
 
         fun version(version: Long) = version(JsonField.of(version))
 
@@ -671,10 +684,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Adjustment && usageDiscount == other.usageDiscount && amountDiscount == other.amountDiscount && percentageDiscount == other.percentageDiscount && minimum == other.minimum && maximum == other.maximum /* spotless:on */
+            return other is Adjustment &&
+                usageDiscount == other.usageDiscount &&
+                amountDiscount == other.amountDiscount &&
+                percentageDiscount == other.percentageDiscount &&
+                minimum == other.minimum &&
+                maximum == other.maximum
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum) /* spotless:on */
+        override fun hashCode(): Int =
+            Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum)
 
         override fun toString(): String =
             when {
@@ -808,12 +827,18 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanVersion && adjustments == other.adjustments && createdAt == other.createdAt && planPhases == other.planPhases && prices == other.prices && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PlanVersion &&
+            adjustments == other.adjustments &&
+            createdAt == other.createdAt &&
+            planPhases == other.planPhases &&
+            prices == other.prices &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(adjustments, createdAt, planPhases, prices, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(adjustments, createdAt, planPhases, prices, version, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

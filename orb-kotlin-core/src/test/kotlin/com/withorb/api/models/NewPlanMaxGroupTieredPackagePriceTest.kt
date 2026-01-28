@@ -18,7 +18,22 @@ internal class NewPlanMaxGroupTieredPackagePriceTest {
                 .itemId("item_id")
                 .maxGroupTieredPackageConfig(
                     NewPlanMaxGroupTieredPackagePrice.MaxGroupTieredPackageConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .packageSize("package_size")
+                        .addTier(
+                            NewPlanMaxGroupTieredPackagePrice.MaxGroupTieredPackageConfig.Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .addTier(
+                            NewPlanMaxGroupTieredPackagePrice.MaxGroupTieredPackageConfig.Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .modelType(NewPlanMaxGroupTieredPackagePrice.ModelType.MAX_GROUP_TIERED_PACKAGE)
@@ -66,7 +81,20 @@ internal class NewPlanMaxGroupTieredPackagePriceTest {
         assertThat(newPlanMaxGroupTieredPackagePrice.maxGroupTieredPackageConfig())
             .isEqualTo(
                 NewPlanMaxGroupTieredPackagePrice.MaxGroupTieredPackageConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .groupingKey("x")
+                    .packageSize("package_size")
+                    .addTier(
+                        NewPlanMaxGroupTieredPackagePrice.MaxGroupTieredPackageConfig.Tier.builder()
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .addTier(
+                        NewPlanMaxGroupTieredPackagePrice.MaxGroupTieredPackageConfig.Tier.builder()
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newPlanMaxGroupTieredPackagePrice.modelType())
@@ -85,7 +113,7 @@ internal class NewPlanMaxGroupTieredPackagePriceTest {
         assertThat(newPlanMaxGroupTieredPackagePrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanMaxGroupTieredPackagePrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanMaxGroupTieredPackagePrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -132,7 +160,22 @@ internal class NewPlanMaxGroupTieredPackagePriceTest {
                 .itemId("item_id")
                 .maxGroupTieredPackageConfig(
                     NewPlanMaxGroupTieredPackagePrice.MaxGroupTieredPackageConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .packageSize("package_size")
+                        .addTier(
+                            NewPlanMaxGroupTieredPackagePrice.MaxGroupTieredPackageConfig.Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .addTier(
+                            NewPlanMaxGroupTieredPackagePrice.MaxGroupTieredPackageConfig.Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .modelType(NewPlanMaxGroupTieredPackagePrice.ModelType.MAX_GROUP_TIERED_PACKAGE)

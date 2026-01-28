@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class FixedFeeQuantityScheduleEntry
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val endDate: JsonField<OffsetDateTime>,
     private val priceId: JsonField<String>,
@@ -261,12 +262,17 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is FixedFeeQuantityScheduleEntry && endDate == other.endDate && priceId == other.priceId && quantity == other.quantity && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is FixedFeeQuantityScheduleEntry &&
+            endDate == other.endDate &&
+            priceId == other.priceId &&
+            quantity == other.quantity &&
+            startDate == other.startDate &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(endDate, priceId, quantity, startDate, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(endDate, priceId, quantity, startDate, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

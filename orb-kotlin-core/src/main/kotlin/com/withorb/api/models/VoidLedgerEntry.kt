@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class VoidLedgerEntry
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val amount: JsonField<Double>,
@@ -807,7 +808,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
+            return other is EntryStatus && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -927,7 +928,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
+            return other is EntryType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1027,12 +1028,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1044,12 +1043,45 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is VoidLedgerEntry && id == other.id && amount == other.amount && createdAt == other.createdAt && creditBlock == other.creditBlock && currency == other.currency && customer == other.customer && description == other.description && endingBalance == other.endingBalance && entryStatus == other.entryStatus && entryType == other.entryType && ledgerSequenceNumber == other.ledgerSequenceNumber && metadata == other.metadata && startingBalance == other.startingBalance && voidAmount == other.voidAmount && voidReason == other.voidReason && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is VoidLedgerEntry &&
+            id == other.id &&
+            amount == other.amount &&
+            createdAt == other.createdAt &&
+            creditBlock == other.creditBlock &&
+            currency == other.currency &&
+            customer == other.customer &&
+            description == other.description &&
+            endingBalance == other.endingBalance &&
+            entryStatus == other.entryStatus &&
+            entryType == other.entryType &&
+            ledgerSequenceNumber == other.ledgerSequenceNumber &&
+            metadata == other.metadata &&
+            startingBalance == other.startingBalance &&
+            voidAmount == other.voidAmount &&
+            voidReason == other.voidReason &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, amount, createdAt, creditBlock, currency, customer, description, endingBalance, entryStatus, entryType, ledgerSequenceNumber, metadata, startingBalance, voidAmount, voidReason, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            amount,
+            createdAt,
+            creditBlock,
+            currency,
+            customer,
+            description,
+            endingBalance,
+            entryStatus,
+            entryType,
+            ledgerSequenceNumber,
+            metadata,
+            startingBalance,
+            voidAmount,
+            voidReason,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

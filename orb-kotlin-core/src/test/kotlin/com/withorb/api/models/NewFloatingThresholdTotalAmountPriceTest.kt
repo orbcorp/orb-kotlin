@@ -21,7 +21,23 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
                 .name("Annual fee")
                 .thresholdTotalAmountConfig(
                     NewFloatingThresholdTotalAmountPrice.ThresholdTotalAmountConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addConsumptionTable(
+                            NewFloatingThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                                .ConsumptionTable
+                                .builder()
+                                .threshold("threshold")
+                                .totalAmount("total_amount")
+                                .build()
+                        )
+                        .addConsumptionTable(
+                            NewFloatingThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                                .ConsumptionTable
+                                .builder()
+                                .threshold("threshold")
+                                .totalAmount("total_amount")
+                                .build()
+                        )
+                        .prorate(true)
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -69,7 +85,23 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
         assertThat(newFloatingThresholdTotalAmountPrice.thresholdTotalAmountConfig())
             .isEqualTo(
                 NewFloatingThresholdTotalAmountPrice.ThresholdTotalAmountConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .addConsumptionTable(
+                        NewFloatingThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                            .ConsumptionTable
+                            .builder()
+                            .threshold("threshold")
+                            .totalAmount("total_amount")
+                            .build()
+                    )
+                    .addConsumptionTable(
+                        NewFloatingThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                            .ConsumptionTable
+                            .builder()
+                            .threshold("threshold")
+                            .totalAmount("total_amount")
+                            .build()
+                    )
+                    .prorate(true)
                     .build()
             )
         assertThat(newFloatingThresholdTotalAmountPrice.billableMetricId())
@@ -85,7 +117,7 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
         assertThat(newFloatingThresholdTotalAmountPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newFloatingThresholdTotalAmountPrice.conversionRateConfig())
             .isEqualTo(
-                NewFloatingThresholdTotalAmountPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -133,7 +165,23 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
                 .name("Annual fee")
                 .thresholdTotalAmountConfig(
                     NewFloatingThresholdTotalAmountPrice.ThresholdTotalAmountConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addConsumptionTable(
+                            NewFloatingThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                                .ConsumptionTable
+                                .builder()
+                                .threshold("threshold")
+                                .totalAmount("total_amount")
+                                .build()
+                        )
+                        .addConsumptionTable(
+                            NewFloatingThresholdTotalAmountPrice.ThresholdTotalAmountConfig
+                                .ConsumptionTable
+                                .builder()
+                                .threshold("threshold")
+                                .totalAmount("total_amount")
+                                .build()
+                        )
+                        .prorate(true)
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

@@ -20,7 +20,7 @@ internal class NewPlanUnitWithProrationPriceTest {
                 .name("Annual fee")
                 .unitWithProrationConfig(
                     NewPlanUnitWithProrationPrice.UnitWithProrationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .unitAmount("unit_amount")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -69,7 +69,7 @@ internal class NewPlanUnitWithProrationPriceTest {
         assertThat(newPlanUnitWithProrationPrice.unitWithProrationConfig())
             .isEqualTo(
                 NewPlanUnitWithProrationPrice.UnitWithProrationConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .unitAmount("unit_amount")
                     .build()
             )
         assertThat(newPlanUnitWithProrationPrice.billableMetricId()).isEqualTo("billable_metric_id")
@@ -84,7 +84,7 @@ internal class NewPlanUnitWithProrationPriceTest {
         assertThat(newPlanUnitWithProrationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanUnitWithProrationPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanUnitWithProrationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -132,7 +132,7 @@ internal class NewPlanUnitWithProrationPriceTest {
                 .name("Annual fee")
                 .unitWithProrationConfig(
                     NewPlanUnitWithProrationPrice.UnitWithProrationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .unitAmount("unit_amount")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

@@ -18,7 +18,28 @@ internal class NewSubscriptionGroupedWithMeteredMinimumPriceTest {
                 .groupedWithMeteredMinimumConfig(
                     NewSubscriptionGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .minimumUnitAmount("minimum_unit_amount")
+                        .pricingKey("pricing_key")
+                        .addScalingFactor(
+                            NewSubscriptionGroupedWithMeteredMinimumPrice
+                                .GroupedWithMeteredMinimumConfig
+                                .ScalingFactor
+                                .builder()
+                                .scalingFactor("scaling_factor")
+                                .scalingValue("scaling_value")
+                                .build()
+                        )
+                        .scalingKey("scaling_key")
+                        .addUnitAmount(
+                            NewSubscriptionGroupedWithMeteredMinimumPrice
+                                .GroupedWithMeteredMinimumConfig
+                                .UnitAmount
+                                .builder()
+                                .pricingValue("pricing_value")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .itemId("item_id")
@@ -70,7 +91,28 @@ internal class NewSubscriptionGroupedWithMeteredMinimumPriceTest {
             .isEqualTo(
                 NewSubscriptionGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
                     .builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .groupingKey("x")
+                    .minimumUnitAmount("minimum_unit_amount")
+                    .pricingKey("pricing_key")
+                    .addScalingFactor(
+                        NewSubscriptionGroupedWithMeteredMinimumPrice
+                            .GroupedWithMeteredMinimumConfig
+                            .ScalingFactor
+                            .builder()
+                            .scalingFactor("scaling_factor")
+                            .scalingValue("scaling_value")
+                            .build()
+                    )
+                    .scalingKey("scaling_key")
+                    .addUnitAmount(
+                        NewSubscriptionGroupedWithMeteredMinimumPrice
+                            .GroupedWithMeteredMinimumConfig
+                            .UnitAmount
+                            .builder()
+                            .pricingValue("pricing_value")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newSubscriptionGroupedWithMeteredMinimumPrice.itemId()).isEqualTo("item_id")
@@ -92,7 +134,7 @@ internal class NewSubscriptionGroupedWithMeteredMinimumPriceTest {
         assertThat(newSubscriptionGroupedWithMeteredMinimumPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionGroupedWithMeteredMinimumPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionGroupedWithMeteredMinimumPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -142,7 +184,28 @@ internal class NewSubscriptionGroupedWithMeteredMinimumPriceTest {
                 .groupedWithMeteredMinimumConfig(
                     NewSubscriptionGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .minimumUnitAmount("minimum_unit_amount")
+                        .pricingKey("pricing_key")
+                        .addScalingFactor(
+                            NewSubscriptionGroupedWithMeteredMinimumPrice
+                                .GroupedWithMeteredMinimumConfig
+                                .ScalingFactor
+                                .builder()
+                                .scalingFactor("scaling_factor")
+                                .scalingValue("scaling_value")
+                                .build()
+                        )
+                        .scalingKey("scaling_key")
+                        .addUnitAmount(
+                            NewSubscriptionGroupedWithMeteredMinimumPrice
+                                .GroupedWithMeteredMinimumConfig
+                                .UnitAmount
+                                .builder()
+                                .pricingValue("pricing_value")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .itemId("item_id")

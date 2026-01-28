@@ -321,6 +321,7 @@ private constructor(
      * replace the existing item mappings.
      */
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val externalConnections: JsonField<List<ExternalConnection>>,
         private val metadata: JsonField<Metadata>,
@@ -543,12 +544,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && externalConnections == other.externalConnections && metadata == other.metadata && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                externalConnections == other.externalConnections &&
+                metadata == other.metadata &&
+                name == other.name &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(externalConnections, metadata, name, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(externalConnections, metadata, name, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -556,7 +561,12 @@ private constructor(
             "Body{externalConnections=$externalConnections, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * Represents a connection between an Item and an external system for invoicing or tax
+     * calculation purposes.
+     */
     class ExternalConnection
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val externalConnectionName: JsonField<ExternalConnectionName>,
         private val externalEntityId: JsonField<String>,
@@ -574,6 +584,8 @@ private constructor(
         ) : this(externalConnectionName, externalEntityId, mutableMapOf())
 
         /**
+         * The name of the external system this item is connected to.
+         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -581,6 +593,8 @@ private constructor(
             externalConnectionName.getRequired("external_connection_name")
 
         /**
+         * The identifier of this item in the external system.
+         *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -645,6 +659,7 @@ private constructor(
                 additionalProperties = externalConnection.additionalProperties.toMutableMap()
             }
 
+            /** The name of the external system this item is connected to. */
             fun externalConnectionName(externalConnectionName: ExternalConnectionName) =
                 externalConnectionName(JsonField.of(externalConnectionName))
 
@@ -660,6 +675,7 @@ private constructor(
                     this.externalConnectionName = externalConnectionName
                 }
 
+            /** The identifier of this item in the external system. */
             fun externalEntityId(externalEntityId: String) =
                 externalEntityId(JsonField.of(externalEntityId))
 
@@ -744,6 +760,7 @@ private constructor(
             (externalConnectionName.asKnown()?.validity() ?: 0) +
                 (if (externalEntityId.asKnown() == null) 0 else 1)
 
+        /** The name of the external system this item is connected to. */
         class ExternalConnectionName
         @JsonCreator
         private constructor(private val value: JsonField<String>) : Enum {
@@ -774,6 +791,8 @@ private constructor(
 
                 val ANROK = of("anrok")
 
+                val NUMERAL = of("numeral")
+
                 fun of(value: String) = ExternalConnectionName(JsonField.of(value))
             }
 
@@ -786,6 +805,7 @@ private constructor(
                 TAXJAR,
                 AVALARA,
                 ANROK,
+                NUMERAL,
             }
 
             /**
@@ -807,6 +827,7 @@ private constructor(
                 TAXJAR,
                 AVALARA,
                 ANROK,
+                NUMERAL,
                 /**
                  * An enum member indicating that [ExternalConnectionName] was instantiated with an
                  * unknown value.
@@ -830,6 +851,7 @@ private constructor(
                     TAXJAR -> Value.TAXJAR
                     AVALARA -> Value.AVALARA
                     ANROK -> Value.ANROK
+                    NUMERAL -> Value.NUMERAL
                     else -> Value._UNKNOWN
                 }
 
@@ -851,6 +873,7 @@ private constructor(
                     TAXJAR -> Known.TAXJAR
                     AVALARA -> Known.AVALARA
                     ANROK -> Known.ANROK
+                    NUMERAL -> Known.NUMERAL
                     else -> throw OrbInvalidDataException("Unknown ExternalConnectionName: $value")
                 }
 
@@ -898,7 +921,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is ExternalConnectionName && value == other.value /* spotless:on */
+                return other is ExternalConnectionName && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -911,12 +934,15 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExternalConnection && externalConnectionName == other.externalConnectionName && externalEntityId == other.externalEntityId && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is ExternalConnection &&
+                externalConnectionName == other.externalConnectionName &&
+                externalEntityId == other.externalEntityId &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(externalConnectionName, externalEntityId, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(externalConnectionName, externalEntityId, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1016,12 +1042,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1033,10 +1057,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ItemUpdateParams && itemId == other.itemId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ItemUpdateParams &&
+            itemId == other.itemId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(itemId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(itemId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "ItemUpdateParams{itemId=$itemId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

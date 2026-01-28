@@ -15,9 +15,12 @@ import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Collections
 import java.util.Objects
 
+/** Configuration for unit pricing */
 class UnitConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val unitAmount: JsonField<String>,
+    private val prorated: JsonField<Boolean>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -25,8 +28,9 @@ private constructor(
     private constructor(
         @JsonProperty("unit_amount")
         @ExcludeMissing
-        unitAmount: JsonField<String> = JsonMissing.of()
-    ) : this(unitAmount, mutableMapOf())
+        unitAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("prorated") @ExcludeMissing prorated: JsonField<Boolean> = JsonMissing.of(),
+    ) : this(unitAmount, prorated, mutableMapOf())
 
     /**
      * Rate per unit of usage
@@ -37,11 +41,26 @@ private constructor(
     fun unitAmount(): String = unitAmount.getRequired("unit_amount")
 
     /**
+     * If true, subtotals from this price are prorated based on the service period
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun prorated(): Boolean? = prorated.getNullable("prorated")
+
+    /**
      * Returns the raw JSON value of [unitAmount].
      *
      * Unlike [unitAmount], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("unit_amount") @ExcludeMissing fun _unitAmount(): JsonField<String> = unitAmount
+
+    /**
+     * Returns the raw JSON value of [prorated].
+     *
+     * Unlike [prorated], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("prorated") @ExcludeMissing fun _prorated(): JsonField<Boolean> = prorated
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -72,10 +91,12 @@ private constructor(
     class Builder internal constructor() {
 
         private var unitAmount: JsonField<String>? = null
+        private var prorated: JsonField<Boolean> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(unitConfig: UnitConfig) = apply {
             unitAmount = unitConfig.unitAmount
+            prorated = unitConfig.prorated
             additionalProperties = unitConfig.additionalProperties.toMutableMap()
         }
 
@@ -90,6 +111,18 @@ private constructor(
          * value.
          */
         fun unitAmount(unitAmount: JsonField<String>) = apply { this.unitAmount = unitAmount }
+
+        /** If true, subtotals from this price are prorated based on the service period */
+        fun prorated(prorated: Boolean) = prorated(JsonField.of(prorated))
+
+        /**
+         * Sets [Builder.prorated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.prorated] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun prorated(prorated: JsonField<Boolean>) = apply { this.prorated = prorated }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -123,7 +156,11 @@ private constructor(
          * @throws IllegalStateException if any required field is unset.
          */
         fun build(): UnitConfig =
-            UnitConfig(checkRequired("unitAmount", unitAmount), additionalProperties.toMutableMap())
+            UnitConfig(
+                checkRequired("unitAmount", unitAmount),
+                prorated,
+                additionalProperties.toMutableMap(),
+            )
     }
 
     private var validated: Boolean = false
@@ -134,6 +171,7 @@ private constructor(
         }
 
         unitAmount()
+        prorated()
         validated = true
     }
 
@@ -150,22 +188,24 @@ private constructor(
      *
      * Used for best match union deserialization.
      */
-    internal fun validity(): Int = (if (unitAmount.asKnown() == null) 0 else 1)
+    internal fun validity(): Int =
+        (if (unitAmount.asKnown() == null) 0 else 1) + (if (prorated.asKnown() == null) 0 else 1)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is UnitConfig && unitAmount == other.unitAmount && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is UnitConfig &&
+            unitAmount == other.unitAmount &&
+            prorated == other.prorated &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(unitAmount, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy { Objects.hash(unitAmount, prorated, additionalProperties) }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "UnitConfig{unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
+        "UnitConfig{unitAmount=$unitAmount, prorated=$prorated, additionalProperties=$additionalProperties}"
 }

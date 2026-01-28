@@ -94,6 +94,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -118,6 +119,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -137,6 +154,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -186,6 +204,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -210,6 +229,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -229,6 +264,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -278,6 +314,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -302,6 +339,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -321,6 +374,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -370,6 +424,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -394,6 +449,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -413,6 +484,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -462,6 +534,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -486,6 +559,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -505,6 +594,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -554,6 +644,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -578,6 +669,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -597,6 +704,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -646,6 +754,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -670,6 +779,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -689,6 +814,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -738,6 +864,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -762,6 +889,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -781,6 +924,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -830,6 +974,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -854,6 +999,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -873,6 +1034,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -922,6 +1084,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -946,6 +1109,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -965,6 +1144,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -1014,6 +1194,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1038,6 +1219,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -1057,6 +1254,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -1106,6 +1304,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1130,6 +1329,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -1149,6 +1364,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -1198,6 +1414,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1222,6 +1439,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -1241,6 +1474,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -1290,6 +1524,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1314,6 +1549,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -1333,6 +1584,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -1382,6 +1634,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1406,6 +1659,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -1425,6 +1694,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -1474,6 +1744,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1498,6 +1769,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -1517,6 +1804,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )
@@ -1564,6 +1852,7 @@ internal class ErrorHandlingTest {
                         )
                         .addAdditionalEmail("dev@stainless.com")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
                                 .city("city")
@@ -1588,6 +1877,22 @@ internal class ErrorHandlingTest {
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
                                 .build()
                         )
+                        .paymentConfiguration(
+                            CustomerCreateParams.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .builder()
+                                        .providerType(
+                                            CustomerCreateParams.PaymentConfiguration
+                                                .PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
                         .reportingConfiguration(
@@ -1607,6 +1912,7 @@ internal class ErrorHandlingTest {
                             NewAvalaraTaxConfiguration.builder()
                                 .taxExempt(true)
                                 .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                                .automaticTaxEnabled(true)
                                 .taxExemptionCode("tax_exemption_code")
                                 .build()
                         )

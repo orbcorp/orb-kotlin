@@ -21,7 +21,22 @@ internal class NewFloatingTieredWithMinimumPriceTest {
                 .name("Annual fee")
                 .tieredWithMinimumConfig(
                     NewFloatingTieredWithMinimumPrice.TieredWithMinimumConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addTier(
+                            NewFloatingTieredWithMinimumPrice.TieredWithMinimumConfig.Tier.builder()
+                                .minimumAmount("minimum_amount")
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .addTier(
+                            NewFloatingTieredWithMinimumPrice.TieredWithMinimumConfig.Tier.builder()
+                                .minimumAmount("minimum_amount")
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .hideZeroAmountTiers(true)
+                        .prorate(true)
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -69,7 +84,22 @@ internal class NewFloatingTieredWithMinimumPriceTest {
         assertThat(newFloatingTieredWithMinimumPrice.tieredWithMinimumConfig())
             .isEqualTo(
                 NewFloatingTieredWithMinimumPrice.TieredWithMinimumConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .addTier(
+                        NewFloatingTieredWithMinimumPrice.TieredWithMinimumConfig.Tier.builder()
+                            .minimumAmount("minimum_amount")
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .addTier(
+                        NewFloatingTieredWithMinimumPrice.TieredWithMinimumConfig.Tier.builder()
+                            .minimumAmount("minimum_amount")
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .hideZeroAmountTiers(true)
+                    .prorate(true)
                     .build()
             )
         assertThat(newFloatingTieredWithMinimumPrice.billableMetricId())
@@ -85,7 +115,7 @@ internal class NewFloatingTieredWithMinimumPriceTest {
         assertThat(newFloatingTieredWithMinimumPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newFloatingTieredWithMinimumPrice.conversionRateConfig())
             .isEqualTo(
-                NewFloatingTieredWithMinimumPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -133,7 +163,22 @@ internal class NewFloatingTieredWithMinimumPriceTest {
                 .name("Annual fee")
                 .tieredWithMinimumConfig(
                     NewFloatingTieredWithMinimumPrice.TieredWithMinimumConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addTier(
+                            NewFloatingTieredWithMinimumPrice.TieredWithMinimumConfig.Tier.builder()
+                                .minimumAmount("minimum_amount")
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .addTier(
+                            NewFloatingTieredWithMinimumPrice.TieredWithMinimumConfig.Tier.builder()
+                                .minimumAmount("minimum_amount")
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .hideZeroAmountTiers(true)
+                        .prorate(true)
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

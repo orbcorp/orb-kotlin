@@ -26,6 +26,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     AffectedBlock.builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -121,9 +128,9 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    PercentageDiscount.Filter.builder()
+                                        .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                        .operator(PercentageDiscount.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -155,9 +162,15 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                         .amount("amount")
                                         .addAppliesToPriceId("string")
                                         .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
+                                            MonetaryUsageDiscountAdjustment.Filter.builder()
+                                                .field(
+                                                    MonetaryUsageDiscountAdjustment.Filter.Field
+                                                        .PRICE_ID
+                                                )
+                                                .operator(
+                                                    MonetaryUsageDiscountAdjustment.Filter.Operator
+                                                        .INCLUDES
+                                                )
                                                 .addValue("string")
                                                 .build()
                                         )
@@ -169,57 +182,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                 )
                                 .amount("7.00")
                                 .creditsApplied("6.00")
-                                .discount(
-                                    PercentageDiscount.builder()
-                                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                        .percentageDiscount(0.15)
-                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                                        .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
-                                                .addValue("string")
-                                                .build()
-                                        )
-                                        .reason("reason")
-                                        .build()
-                                )
                                 .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                                 .filter("filter")
                                 .grouping("grouping")
-                                .maximum(
-                                    Maximum.builder()
-                                        .addAppliesToPriceId("string")
-                                        .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
-                                                .addValue("string")
-                                                .build()
-                                        )
-                                        .maximumAmount("maximum_amount")
-                                        .build()
-                                )
-                                .maximumAmount("maximum_amount")
-                                .minimum(
-                                    Minimum.builder()
-                                        .addAppliesToPriceId("string")
-                                        .addFilter(
-                                            TransformPriceFilter.builder()
-                                                .field(TransformPriceFilter.Field.PRICE_ID)
-                                                .operator(TransformPriceFilter.Operator.INCLUDES)
-                                                .addValue("string")
-                                                .build()
-                                        )
-                                        .minimumAmount("minimum_amount")
-                                        .build()
-                                )
-                                .minimumAmount("minimum_amount")
                                 .name("Fixed Fee")
                                 .partiallyInvoicedAmount("4.00")
                                 .price(
-                                    Price.Unit.builder()
+                                    Price.UnitPrice.builder()
                                         .id("id")
                                         .billableMetric(
                                             BillableMetricTiny.builder().id("id").build()
@@ -232,7 +201,21 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                                 )
                                                 .build()
                                         )
-                                        .cadence(Price.Unit.Cadence.ONE_TIME)
+                                        .billingMode(Price.UnitPrice.BillingMode.IN_ADVANCE)
+                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                        .addCompositePriceFilter(
+                                            Price.UnitPrice.CompositePriceFilter.builder()
+                                                .field(
+                                                    Price.UnitPrice.CompositePriceFilter.Field
+                                                        .PRICE_ID
+                                                )
+                                                .operator(
+                                                    Price.UnitPrice.CompositePriceFilter.Operator
+                                                        .INCLUDES
+                                                )
+                                                .addValue("string")
+                                                .build()
+                                        )
                                         .conversionRate(0.0)
                                         .unitConversionRateConfig(
                                             ConversionRateUnitConfig.builder()
@@ -252,6 +235,15 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                                         )
                                                         .build()
                                                 )
+                                                .addFilter(
+                                                    Allocation.Filter.builder()
+                                                        .field(Allocation.Filter.Field.PRICE_ID)
+                                                        .operator(
+                                                            Allocation.Filter.Operator.INCLUDES
+                                                        )
+                                                        .addValue("string")
+                                                        .build()
+                                                )
                                                 .build()
                                         )
                                         .currency("currency")
@@ -264,10 +256,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                 .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
+                                                    PercentageDiscount.Filter.builder()
+                                                        .field(
+                                                            PercentageDiscount.Filter.Field.PRICE_ID
+                                                        )
                                                         .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
+                                                            PercentageDiscount.Filter.Operator
+                                                                .INCLUDES
                                                         )
                                                         .addValue("string")
                                                         .build()
@@ -290,11 +285,9 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                             Maximum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Maximum.Filter.builder()
+                                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -303,7 +296,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                         )
                                         .maximumAmount("maximum_amount")
                                         .metadata(
-                                            Price.Unit.Metadata.builder()
+                                            Price.UnitPrice.Metadata.builder()
                                                 .putAdditionalProperty(
                                                     "foo",
                                                     JsonValue.from("string"),
@@ -314,11 +307,9 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                             Minimum.builder()
                                                 .addAppliesToPriceId("string")
                                                 .addFilter(
-                                                    TransformPriceFilter.builder()
-                                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                                        .operator(
-                                                            TransformPriceFilter.Operator.INCLUDES
-                                                        )
+                                                    Minimum.Filter.builder()
+                                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                                         .addValue("string")
                                                         .build()
                                                 )
@@ -328,10 +319,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                         .minimumAmount("minimum_amount")
                                         .name("name")
                                         .planPhaseOrder(0L)
-                                        .priceType(Price.Unit.PriceType.USAGE_PRICE)
+                                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                         .replacesPriceId("replaces_price_id")
                                         .unitConfig(
-                                            UnitConfig.builder().unitAmount("unit_amount").build()
+                                            UnitConfig.builder()
+                                                .unitAmount("unit_amount")
+                                                .prorated(true)
+                                                .build()
                                         )
                                         .dimensionalPriceConfiguration(
                                             DimensionalPriceConfiguration.builder()
@@ -362,6 +356,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                         .name("Tier One")
                                         .quantity(5.0)
                                         .type(MatrixSubLineItem.Type.MATRIX)
+                                        .scaledQuantity(0.0)
                                         .build()
                                 )
                                 .subtotal("9.00")
@@ -379,9 +374,9 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                             Maximum.builder()
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    Maximum.Filter.builder()
+                                        .field(Maximum.Filter.Field.PRICE_ID)
+                                        .operator(Maximum.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -399,9 +394,9 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                             Minimum.builder()
                                 .addAppliesToPriceId("string")
                                 .addFilter(
-                                    TransformPriceFilter.builder()
-                                        .field(TransformPriceFilter.Field.PRICE_ID)
-                                        .operator(TransformPriceFilter.Operator.INCLUDES)
+                                    Minimum.Filter.builder()
+                                        .field(Minimum.Filter.Field.PRICE_ID)
+                                        .operator(Minimum.Filter.Operator.INCLUDES)
                                         .addValue("string")
                                         .build()
                                 )
@@ -417,6 +412,9 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .paymentProvider(Invoice.PaymentAttempt.PaymentProvider.STRIPE)
                                 .paymentProviderId("payment_provider_id")
+                                .receiptPdf(
+                                    "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                                )
                                 .succeeded(true)
                                 .build()
                         )
@@ -469,6 +467,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                         AffectedBlock.builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
@@ -564,9 +569,9 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        PercentageDiscount.Filter.builder()
+                                            .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(PercentageDiscount.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -598,10 +603,15 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                             .amount("amount")
                                             .addAppliesToPriceId("string")
                                             .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
+                                                MonetaryUsageDiscountAdjustment.Filter.builder()
+                                                    .field(
+                                                        MonetaryUsageDiscountAdjustment.Filter.Field
+                                                            .PRICE_ID
+                                                    )
                                                     .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
+                                                        MonetaryUsageDiscountAdjustment.Filter
+                                                            .Operator
+                                                            .INCLUDES
                                                     )
                                                     .addValue("string")
                                                     .build()
@@ -614,65 +624,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                     )
                                     .amount("7.00")
                                     .creditsApplied("6.00")
-                                    .discount(
-                                        PercentageDiscount.builder()
-                                            .discountType(
-                                                PercentageDiscount.DiscountType.PERCENTAGE
-                                            )
-                                            .percentageDiscount(0.15)
-                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                                            .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
-                                                    .addValue("string")
-                                                    .build()
-                                            )
-                                            .reason("reason")
-                                            .build()
-                                    )
                                     .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                                     .filter("filter")
                                     .grouping("grouping")
-                                    .maximum(
-                                        Maximum.builder()
-                                            .addAppliesToPriceId("string")
-                                            .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
-                                                    .addValue("string")
-                                                    .build()
-                                            )
-                                            .maximumAmount("maximum_amount")
-                                            .build()
-                                    )
-                                    .maximumAmount("maximum_amount")
-                                    .minimum(
-                                        Minimum.builder()
-                                            .addAppliesToPriceId("string")
-                                            .addFilter(
-                                                TransformPriceFilter.builder()
-                                                    .field(TransformPriceFilter.Field.PRICE_ID)
-                                                    .operator(
-                                                        TransformPriceFilter.Operator.INCLUDES
-                                                    )
-                                                    .addValue("string")
-                                                    .build()
-                                            )
-                                            .minimumAmount("minimum_amount")
-                                            .build()
-                                    )
-                                    .minimumAmount("minimum_amount")
                                     .name("Fixed Fee")
                                     .partiallyInvoicedAmount("4.00")
                                     .price(
-                                        Price.Unit.builder()
+                                        Price.UnitPrice.builder()
                                             .id("id")
                                             .billableMetric(
                                                 BillableMetricTiny.builder().id("id").build()
@@ -685,7 +643,22 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                                     )
                                                     .build()
                                             )
-                                            .cadence(Price.Unit.Cadence.ONE_TIME)
+                                            .billingMode(Price.UnitPrice.BillingMode.IN_ADVANCE)
+                                            .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                            .addCompositePriceFilter(
+                                                Price.UnitPrice.CompositePriceFilter.builder()
+                                                    .field(
+                                                        Price.UnitPrice.CompositePriceFilter.Field
+                                                            .PRICE_ID
+                                                    )
+                                                    .operator(
+                                                        Price.UnitPrice.CompositePriceFilter
+                                                            .Operator
+                                                            .INCLUDES
+                                                    )
+                                                    .addValue("string")
+                                                    .build()
+                                            )
                                             .conversionRate(0.0)
                                             .unitConversionRateConfig(
                                                 ConversionRateUnitConfig.builder()
@@ -707,6 +680,15 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                                             )
                                                             .build()
                                                     )
+                                                    .addFilter(
+                                                        Allocation.Filter.builder()
+                                                            .field(Allocation.Filter.Field.PRICE_ID)
+                                                            .operator(
+                                                                Allocation.Filter.Operator.INCLUDES
+                                                            )
+                                                            .addValue("string")
+                                                            .build()
+                                                    )
                                                     .build()
                                             )
                                             .currency("currency")
@@ -719,12 +701,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                                     .addAppliesToPriceId("h74gfhdjvn7ujokd")
                                                     .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
+                                                        PercentageDiscount.Filter.builder()
                                                             .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
+                                                                PercentageDiscount.Filter.Field
+                                                                    .PRICE_ID
                                                             )
                                                             .operator(
-                                                                TransformPriceFilter.Operator
+                                                                PercentageDiscount.Filter.Operator
                                                                     .INCLUDES
                                                             )
                                                             .addValue("string")
@@ -748,13 +731,10 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                                 Maximum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
-                                                            .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
-                                                            )
+                                                        Maximum.Filter.builder()
+                                                            .field(Maximum.Filter.Field.PRICE_ID)
                                                             .operator(
-                                                                TransformPriceFilter.Operator
-                                                                    .INCLUDES
+                                                                Maximum.Filter.Operator.INCLUDES
                                                             )
                                                             .addValue("string")
                                                             .build()
@@ -764,7 +744,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                             )
                                             .maximumAmount("maximum_amount")
                                             .metadata(
-                                                Price.Unit.Metadata.builder()
+                                                Price.UnitPrice.Metadata.builder()
                                                     .putAdditionalProperty(
                                                         "foo",
                                                         JsonValue.from("string"),
@@ -775,13 +755,10 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                                 Minimum.builder()
                                                     .addAppliesToPriceId("string")
                                                     .addFilter(
-                                                        TransformPriceFilter.builder()
-                                                            .field(
-                                                                TransformPriceFilter.Field.PRICE_ID
-                                                            )
+                                                        Minimum.Filter.builder()
+                                                            .field(Minimum.Filter.Field.PRICE_ID)
                                                             .operator(
-                                                                TransformPriceFilter.Operator
-                                                                    .INCLUDES
+                                                                Minimum.Filter.Operator.INCLUDES
                                                             )
                                                             .addValue("string")
                                                             .build()
@@ -792,11 +769,12 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                             .minimumAmount("minimum_amount")
                                             .name("name")
                                             .planPhaseOrder(0L)
-                                            .priceType(Price.Unit.PriceType.USAGE_PRICE)
+                                            .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                             .replacesPriceId("replaces_price_id")
                                             .unitConfig(
                                                 UnitConfig.builder()
                                                     .unitAmount("unit_amount")
+                                                    .prorated(true)
                                                     .build()
                                             )
                                             .dimensionalPriceConfiguration(
@@ -828,6 +806,7 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                             .name("Tier One")
                                             .quantity(5.0)
                                             .type(MatrixSubLineItem.Type.MATRIX)
+                                            .scaledQuantity(0.0)
                                             .build()
                                     )
                                     .subtotal("9.00")
@@ -845,9 +824,9 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                 Maximum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Maximum.Filter.builder()
+                                            .field(Maximum.Filter.Field.PRICE_ID)
+                                            .operator(Maximum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -865,9 +844,9 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                 Minimum.builder()
                                     .addAppliesToPriceId("string")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        Minimum.Filter.builder()
+                                            .field(Minimum.Filter.Field.PRICE_ID)
+                                            .operator(Minimum.Filter.Operator.INCLUDES)
                                             .addValue("string")
                                             .build()
                                     )
@@ -883,6 +862,9 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .paymentProvider(Invoice.PaymentAttempt.PaymentProvider.STRIPE)
                                     .paymentProviderId("payment_provider_id")
+                                    .receiptPdf(
+                                        "https://assets.withorb.com/receipt/rUHdhmg45vY45DX/qEAeuYePaphGMdFb"
+                                    )
                                     .succeeded(true)
                                     .build()
                             )
@@ -934,6 +916,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     AffectedBlock.builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -985,6 +974,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                         AffectedBlock.builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
@@ -1033,6 +1029,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     AffectedBlock.builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -1083,6 +1086,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                         AffectedBlock.builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
@@ -1129,6 +1139,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     AffectedBlock.builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -1178,6 +1195,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                         AffectedBlock.builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
@@ -1223,6 +1247,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     AffectedBlock.builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -1273,6 +1304,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                         AffectedBlock.builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
@@ -1320,6 +1358,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     AffectedBlock.builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -1372,6 +1417,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                         AffectedBlock.builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
@@ -1420,6 +1472,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                     AffectedBlock.builder()
                         .id("id")
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            AffectedBlock.Filter.builder()
+                                .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
                         .perUnitCostBasis("per_unit_cost_basis")
                         .build()
                 )
@@ -1468,6 +1527,13 @@ internal class CustomerCreditLedgerListByExternalIdResponseTest {
                         AffectedBlock.builder()
                             .id("id")
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                AffectedBlock.Filter.builder()
+                                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )

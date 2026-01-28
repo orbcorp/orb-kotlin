@@ -89,9 +89,9 @@ import java.util.Objects
  * |Ireland               |`eu_vat`    |European VAT Number                                                                                    |
  * |Israel                |`il_vat`    |Israel VAT                                                                                             |
  * |Italy                 |`eu_vat`    |European VAT Number                                                                                    |
- * |Japan                 |`jp_cn`     |Japanese Corporate Number (_Hōjin Bangō_)                                                              |
- * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (_Tōroku Kokugai Jigyōsha no Tōroku Bangō_)|
- * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (_Tōroku Bangō_)                                                      |
+ * |Japan                 |`jp_cn`     |Japanese Corporate Number (*Hōjin Bangō*)                                                              |
+ * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (*Tōroku Kokugai Jigyōsha no Tōroku Bangō*)|
+ * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (*Tōroku Bangō*)                                                      |
  * |Kazakhstan            |`kz_bin`    |Kazakhstani Business Identification Number                                                             |
  * |Kenya                 |`ke_pin`    |Kenya Revenue Authority Personal Identification Number                                                 |
  * |Kyrgyzstan            |`kg_tin`    |Kyrgyzstan Tax Identification Number                                                                   |
@@ -122,6 +122,7 @@ import java.util.Objects
  * |Peru                  |`pe_ruc`    |Peruvian RUC Number                                                                                    |
  * |Philippines           |`ph_tin`    |Philippines Tax Identification Number                                                                  |
  * |Poland                |`eu_vat`    |European VAT Number                                                                                    |
+ * |Poland                |`pl_nip`    |Polish Tax ID Number                                                                                   |
  * |Portugal              |`eu_vat`    |European VAT Number                                                                                    |
  * |Romania               |`eu_vat`    |European VAT Number                                                                                    |
  * |Romania               |`ro_tin`    |Romanian Tax ID Number                                                                                 |
@@ -162,6 +163,7 @@ import java.util.Objects
  * |Zimbabwe              |`zw_tin`    |Zimbabwe Tax Identification Number                                                                     |
  */
 class CustomerTaxId
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val country: JsonField<Country>,
     private val type: JsonField<Type>,
@@ -1136,7 +1138,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Country && value == other.value /* spotless:on */
+            return other is Country && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1324,6 +1326,8 @@ private constructor(
 
             val PH_TIN = of("ph_tin")
 
+            val PL_NIP = of("pl_nip")
+
             val RO_TIN = of("ro_tin")
 
             val RS_PIB = of("rs_pib")
@@ -1466,6 +1470,7 @@ private constructor(
             OM_VAT,
             PE_RUC,
             PH_TIN,
+            PL_NIP,
             RO_TIN,
             RS_PIB,
             RU_INN,
@@ -1588,6 +1593,7 @@ private constructor(
             OM_VAT,
             PE_RUC,
             PH_TIN,
+            PL_NIP,
             RO_TIN,
             RS_PIB,
             RU_INN,
@@ -1711,6 +1717,7 @@ private constructor(
                 OM_VAT -> Value.OM_VAT
                 PE_RUC -> Value.PE_RUC
                 PH_TIN -> Value.PH_TIN
+                PL_NIP -> Value.PL_NIP
                 RO_TIN -> Value.RO_TIN
                 RS_PIB -> Value.RS_PIB
                 RU_INN -> Value.RU_INN
@@ -1834,6 +1841,7 @@ private constructor(
                 OM_VAT -> Known.OM_VAT
                 PE_RUC -> Known.PE_RUC
                 PH_TIN -> Known.PH_TIN
+                PL_NIP -> Known.PL_NIP
                 RO_TIN -> Known.RO_TIN
                 RS_PIB -> Known.RS_PIB
                 RU_INN -> Known.RU_INN
@@ -1908,7 +1916,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1921,12 +1929,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerTaxId && country == other.country && type == other.type && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CustomerTaxId &&
+            country == other.country &&
+            type == other.type &&
+            value == other.value &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(country, type, value, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

@@ -17,7 +17,9 @@ internal class NewPlanGroupedAllocationPriceTest {
                 .cadence(NewPlanGroupedAllocationPrice.Cadence.ANNUAL)
                 .groupedAllocationConfig(
                     NewPlanGroupedAllocationPrice.GroupedAllocationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .allocation("allocation")
+                        .groupingKey("x")
+                        .overageUnitRate("overage_unit_rate")
                         .build()
                 )
                 .itemId("item_id")
@@ -65,7 +67,9 @@ internal class NewPlanGroupedAllocationPriceTest {
         assertThat(newPlanGroupedAllocationPrice.groupedAllocationConfig())
             .isEqualTo(
                 NewPlanGroupedAllocationPrice.GroupedAllocationConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .allocation("allocation")
+                    .groupingKey("x")
+                    .overageUnitRate("overage_unit_rate")
                     .build()
             )
         assertThat(newPlanGroupedAllocationPrice.itemId()).isEqualTo("item_id")
@@ -84,7 +88,7 @@ internal class NewPlanGroupedAllocationPriceTest {
         assertThat(newPlanGroupedAllocationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanGroupedAllocationPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanGroupedAllocationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -129,7 +133,9 @@ internal class NewPlanGroupedAllocationPriceTest {
                 .cadence(NewPlanGroupedAllocationPrice.Cadence.ANNUAL)
                 .groupedAllocationConfig(
                     NewPlanGroupedAllocationPrice.GroupedAllocationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .allocation("allocation")
+                        .groupingKey("x")
+                        .overageUnitRate("overage_unit_rate")
                         .build()
                 )
                 .itemId("item_id")

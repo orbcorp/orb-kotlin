@@ -27,6 +27,7 @@ internal class NewPlanTieredPriceTest {
                                 .lastUnit(0.0)
                                 .build()
                         )
+                        .prorated(true)
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -80,6 +81,7 @@ internal class NewPlanTieredPriceTest {
                             .lastUnit(0.0)
                             .build()
                     )
+                    .prorated(true)
                     .build()
             )
         assertThat(newPlanTieredPrice.billableMetricId()).isEqualTo("billable_metric_id")
@@ -94,7 +96,7 @@ internal class NewPlanTieredPriceTest {
         assertThat(newPlanTieredPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanTieredPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanTieredPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -149,6 +151,7 @@ internal class NewPlanTieredPriceTest {
                                 .lastUnit(0.0)
                                 .build()
                         )
+                        .prorated(true)
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

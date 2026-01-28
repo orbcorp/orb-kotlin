@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class DimensionalPriceConfiguration
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val dimensionValues: JsonField<List<String>>,
     private val dimensionalPriceGroupId: JsonField<String>,
@@ -221,12 +222,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DimensionalPriceConfiguration &&
+            dimensionValues == other.dimensionValues &&
+            dimensionalPriceGroupId == other.dimensionalPriceGroupId &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(dimensionValues, dimensionalPriceGroupId, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -49,13 +49,31 @@ internal class LedgerServiceTest {
                             .description("description")
                             .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                CustomerCreditLedgerCreateEntryParams.Body.Increment.Filter
+                                    .builder()
+                                    .field(
+                                        CustomerCreditLedgerCreateEntryParams.Body.Increment.Filter
+                                            .Field
+                                            .ITEM_ID
+                                    )
+                                    .operator(
+                                        CustomerCreditLedgerCreateEntryParams.Body.Increment.Filter
+                                            .Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .invoiceSettings(
                                 CustomerCreditLedgerCreateEntryParams.Body.Increment.InvoiceSettings
                                     .builder()
                                     .autoCollection(true)
-                                    .netTerms(0L)
+                                    .customDueDate(LocalDate.parse("2019-12-27"))
                                     .invoiceDate(LocalDate.parse("2019-12-27"))
+                                    .itemId("item_id")
                                     .memo("memo")
+                                    .netTerms(0L)
                                     .requireSuccessfulPayment(true)
                                     .build()
                             )
@@ -94,14 +112,37 @@ internal class LedgerServiceTest {
                             .description("description")
                             .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addFilter(
+                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
+                                    .Filter
+                                    .builder()
+                                    .field(
+                                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body
+                                            .Increment
+                                            .Filter
+                                            .Field
+                                            .ITEM_ID
+                                    )
+                                    .operator(
+                                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body
+                                            .Increment
+                                            .Filter
+                                            .Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
                             .invoiceSettings(
                                 CustomerCreditLedgerCreateEntryByExternalIdParams.Body.Increment
                                     .InvoiceSettings
                                     .builder()
                                     .autoCollection(true)
-                                    .netTerms(0L)
+                                    .customDueDate(LocalDate.parse("2019-12-27"))
                                     .invoiceDate(LocalDate.parse("2019-12-27"))
+                                    .itemId("item_id")
                                     .memo("memo")
+                                    .netTerms(0L)
                                     .requireSuccessfulPayment(true)
                                     .build()
                             )

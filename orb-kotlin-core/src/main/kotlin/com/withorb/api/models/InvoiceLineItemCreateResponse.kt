@@ -29,20 +29,16 @@ import java.util.Collections
 import java.util.Objects
 
 class InvoiceLineItemCreateResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val adjustedSubtotal: JsonField<String>,
     private val adjustments: JsonField<List<Adjustment>>,
     private val amount: JsonField<String>,
     private val creditsApplied: JsonField<String>,
-    private val discount: JsonField<Discount>,
     private val endDate: JsonField<OffsetDateTime>,
     private val filter: JsonField<String>,
     private val grouping: JsonField<String>,
-    private val maximum: JsonField<Maximum>,
-    private val maximumAmount: JsonField<String>,
-    private val minimum: JsonField<Minimum>,
-    private val minimumAmount: JsonField<String>,
     private val name: JsonField<String>,
     private val partiallyInvoicedAmount: JsonField<String>,
     private val price: JsonField<Price>,
@@ -68,20 +64,11 @@ private constructor(
         @JsonProperty("credits_applied")
         @ExcludeMissing
         creditsApplied: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("discount") @ExcludeMissing discount: JsonField<Discount> = JsonMissing.of(),
         @JsonProperty("end_date")
         @ExcludeMissing
         endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("filter") @ExcludeMissing filter: JsonField<String> = JsonMissing.of(),
         @JsonProperty("grouping") @ExcludeMissing grouping: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("maximum") @ExcludeMissing maximum: JsonField<Maximum> = JsonMissing.of(),
-        @JsonProperty("maximum_amount")
-        @ExcludeMissing
-        maximumAmount: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("minimum") @ExcludeMissing minimum: JsonField<Minimum> = JsonMissing.of(),
-        @JsonProperty("minimum_amount")
-        @ExcludeMissing
-        minimumAmount: JsonField<String> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
         @JsonProperty("partially_invoiced_amount")
         @ExcludeMissing
@@ -107,14 +94,9 @@ private constructor(
         adjustments,
         amount,
         creditsApplied,
-        discount,
         endDate,
         filter,
         grouping,
-        maximum,
-        maximumAmount,
-        minimum,
-        minimumAmount,
         name,
         partiallyInvoicedAmount,
         price,
@@ -172,14 +154,6 @@ private constructor(
     fun creditsApplied(): String = creditsApplied.getRequired("credits_applied")
 
     /**
-     * This field is deprecated in favor of `adjustments`
-     *
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
-     *   responded with an unexpected value).
-     */
-    @Deprecated("deprecated") fun discount(): Discount? = discount.getNullable("discount")
-
-    /**
      * The end date of the range of time applied for this line item's price.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -204,40 +178,6 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun grouping(): String? = grouping.getNullable("grouping")
-
-    /**
-     * This field is deprecated in favor of `adjustments`.
-     *
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
-     *   responded with an unexpected value).
-     */
-    @Deprecated("deprecated") fun maximum(): Maximum? = maximum.getNullable("maximum")
-
-    /**
-     * This field is deprecated in favor of `adjustments`.
-     *
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
-     *   responded with an unexpected value).
-     */
-    @Deprecated("deprecated")
-    fun maximumAmount(): String? = maximumAmount.getNullable("maximum_amount")
-
-    /**
-     * This field is deprecated in favor of `adjustments`.
-     *
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
-     *   responded with an unexpected value).
-     */
-    @Deprecated("deprecated") fun minimum(): Minimum? = minimum.getNullable("minimum")
-
-    /**
-     * This field is deprecated in favor of `adjustments`.
-     *
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
-     *   responded with an unexpected value).
-     */
-    @Deprecated("deprecated")
-    fun minimumAmount(): String? = minimumAmount.getNullable("minimum_amount")
 
     /**
      * The name of the price associated with this line item.
@@ -298,7 +238,7 @@ private constructor(
     fun subLineItems(): List<SubLineItem> = subLineItems.getRequired("sub_line_items")
 
     /**
-     * The line amount before before any adjustments.
+     * The line amount before any adjustments.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -365,16 +305,6 @@ private constructor(
     fun _creditsApplied(): JsonField<String> = creditsApplied
 
     /**
-     * Returns the raw JSON value of [discount].
-     *
-     * Unlike [discount], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @Deprecated("deprecated")
-    @JsonProperty("discount")
-    @ExcludeMissing
-    fun _discount(): JsonField<Discount> = discount
-
-    /**
      * Returns the raw JSON value of [endDate].
      *
      * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
@@ -394,46 +324,6 @@ private constructor(
      * Unlike [grouping], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("grouping") @ExcludeMissing fun _grouping(): JsonField<String> = grouping
-
-    /**
-     * Returns the raw JSON value of [maximum].
-     *
-     * Unlike [maximum], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @Deprecated("deprecated")
-    @JsonProperty("maximum")
-    @ExcludeMissing
-    fun _maximum(): JsonField<Maximum> = maximum
-
-    /**
-     * Returns the raw JSON value of [maximumAmount].
-     *
-     * Unlike [maximumAmount], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @Deprecated("deprecated")
-    @JsonProperty("maximum_amount")
-    @ExcludeMissing
-    fun _maximumAmount(): JsonField<String> = maximumAmount
-
-    /**
-     * Returns the raw JSON value of [minimum].
-     *
-     * Unlike [minimum], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @Deprecated("deprecated")
-    @JsonProperty("minimum")
-    @ExcludeMissing
-    fun _minimum(): JsonField<Minimum> = minimum
-
-    /**
-     * Returns the raw JSON value of [minimumAmount].
-     *
-     * Unlike [minimumAmount], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @Deprecated("deprecated")
-    @JsonProperty("minimum_amount")
-    @ExcludeMissing
-    fun _minimumAmount(): JsonField<String> = minimumAmount
 
     /**
      * Returns the raw JSON value of [name].
@@ -535,14 +425,9 @@ private constructor(
          * .adjustments()
          * .amount()
          * .creditsApplied()
-         * .discount()
          * .endDate()
          * .filter()
          * .grouping()
-         * .maximum()
-         * .maximumAmount()
-         * .minimum()
-         * .minimumAmount()
          * .name()
          * .partiallyInvoicedAmount()
          * .price()
@@ -565,14 +450,9 @@ private constructor(
         private var adjustments: JsonField<MutableList<Adjustment>>? = null
         private var amount: JsonField<String>? = null
         private var creditsApplied: JsonField<String>? = null
-        private var discount: JsonField<Discount>? = null
         private var endDate: JsonField<OffsetDateTime>? = null
         private var filter: JsonField<String>? = null
         private var grouping: JsonField<String>? = null
-        private var maximum: JsonField<Maximum>? = null
-        private var maximumAmount: JsonField<String>? = null
-        private var minimum: JsonField<Minimum>? = null
-        private var minimumAmount: JsonField<String>? = null
         private var name: JsonField<String>? = null
         private var partiallyInvoicedAmount: JsonField<String>? = null
         private var price: JsonField<Price>? = null
@@ -590,14 +470,9 @@ private constructor(
             adjustments = invoiceLineItemCreateResponse.adjustments.map { it.toMutableList() }
             amount = invoiceLineItemCreateResponse.amount
             creditsApplied = invoiceLineItemCreateResponse.creditsApplied
-            discount = invoiceLineItemCreateResponse.discount
             endDate = invoiceLineItemCreateResponse.endDate
             filter = invoiceLineItemCreateResponse.filter
             grouping = invoiceLineItemCreateResponse.grouping
-            maximum = invoiceLineItemCreateResponse.maximum
-            maximumAmount = invoiceLineItemCreateResponse.maximumAmount
-            minimum = invoiceLineItemCreateResponse.minimum
-            minimumAmount = invoiceLineItemCreateResponse.minimumAmount
             name = invoiceLineItemCreateResponse.name
             partiallyInvoicedAmount = invoiceLineItemCreateResponse.partiallyInvoicedAmount
             price = invoiceLineItemCreateResponse.price
@@ -721,90 +596,6 @@ private constructor(
             this.creditsApplied = creditsApplied
         }
 
-        /** This field is deprecated in favor of `adjustments` */
-        @Deprecated("deprecated")
-        fun discount(discount: Discount?) = discount(JsonField.ofNullable(discount))
-
-        /**
-         * Sets [Builder.discount] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.discount] with a well-typed [Discount] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        @Deprecated("deprecated")
-        fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
-
-        /** Alias for calling [discount] with `Discount.ofPercentage(percentage)`. */
-        @Deprecated("deprecated")
-        fun discount(percentage: PercentageDiscount) = discount(Discount.ofPercentage(percentage))
-
-        /**
-         * Alias for calling [discount] with the following:
-         * ```kotlin
-         * PercentageDiscount.builder()
-         *     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-         *     .percentageDiscount(percentageDiscount)
-         *     .build()
-         * ```
-         */
-        @Deprecated("deprecated")
-        fun percentageDiscount(percentageDiscount: Double) =
-            discount(
-                PercentageDiscount.builder()
-                    .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                    .percentageDiscount(percentageDiscount)
-                    .build()
-            )
-
-        /** Alias for calling [discount] with `Discount.ofTrial(trial)`. */
-        @Deprecated("deprecated")
-        fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
-
-        /** Alias for calling [discount] with `Discount.ofUsage(usage)`. */
-        @Deprecated("deprecated")
-        fun discount(usage: UsageDiscount) = discount(Discount.ofUsage(usage))
-
-        /**
-         * Alias for calling [discount] with the following:
-         * ```kotlin
-         * UsageDiscount.builder()
-         *     .discountType(UsageDiscount.DiscountType.USAGE)
-         *     .usageDiscount(usageDiscount)
-         *     .build()
-         * ```
-         */
-        @Deprecated("deprecated")
-        fun usageDiscount(usageDiscount: Double) =
-            discount(
-                UsageDiscount.builder()
-                    .discountType(UsageDiscount.DiscountType.USAGE)
-                    .usageDiscount(usageDiscount)
-                    .build()
-            )
-
-        /** Alias for calling [discount] with `Discount.ofAmount(amount)`. */
-        @Deprecated("deprecated")
-        fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
-
-        /**
-         * Alias for calling [discount] with the following:
-         * ```kotlin
-         * AmountDiscount.builder()
-         *     .discountType(AmountDiscount.DiscountType.AMOUNT)
-         *     .amountDiscount(amountDiscount)
-         *     .build()
-         * ```
-         */
-        @Deprecated("deprecated")
-        fun amountDiscount(amountDiscount: String) =
-            discount(
-                AmountDiscount.builder()
-                    .discountType(AmountDiscount.DiscountType.AMOUNT)
-                    .amountDiscount(amountDiscount)
-                    .build()
-            )
-
         /** The end date of the range of time applied for this line item's price. */
         fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
@@ -842,66 +633,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun grouping(grouping: JsonField<String>) = apply { this.grouping = grouping }
-
-        /** This field is deprecated in favor of `adjustments`. */
-        @Deprecated("deprecated")
-        fun maximum(maximum: Maximum?) = maximum(JsonField.ofNullable(maximum))
-
-        /**
-         * Sets [Builder.maximum] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.maximum] with a well-typed [Maximum] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        @Deprecated("deprecated")
-        fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
-
-        /** This field is deprecated in favor of `adjustments`. */
-        @Deprecated("deprecated")
-        fun maximumAmount(maximumAmount: String?) =
-            maximumAmount(JsonField.ofNullable(maximumAmount))
-
-        /**
-         * Sets [Builder.maximumAmount] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.maximumAmount] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        @Deprecated("deprecated")
-        fun maximumAmount(maximumAmount: JsonField<String>) = apply {
-            this.maximumAmount = maximumAmount
-        }
-
-        /** This field is deprecated in favor of `adjustments`. */
-        @Deprecated("deprecated")
-        fun minimum(minimum: Minimum?) = minimum(JsonField.ofNullable(minimum))
-
-        /**
-         * Sets [Builder.minimum] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.minimum] with a well-typed [Minimum] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        @Deprecated("deprecated")
-        fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
-
-        /** This field is deprecated in favor of `adjustments`. */
-        @Deprecated("deprecated")
-        fun minimumAmount(minimumAmount: String?) =
-            minimumAmount(JsonField.ofNullable(minimumAmount))
-
-        /**
-         * Sets [Builder.minimumAmount] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.minimumAmount] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        @Deprecated("deprecated")
-        fun minimumAmount(minimumAmount: JsonField<String>) = apply {
-            this.minimumAmount = minimumAmount
-        }
 
         /** The name of the price associated with this line item. */
         fun name(name: String) = name(JsonField.of(name))
@@ -952,28 +683,23 @@ private constructor(
         fun price(price: JsonField<Price>) = apply { this.price = price }
 
         /** Alias for calling [price] with `Price.ofUnit(unit)`. */
-        fun price(unit: Price.Unit) = price(Price.ofUnit(unit))
+        fun price(unit: Price.UnitPrice) = price(Price.ofUnit(unit))
+
+        /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
+        fun price(tiered: Price.Tiered) = price(Price.ofTiered(tiered))
+
+        /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
+        fun price(bulk: Price.Bulk) = price(Price.ofBulk(bulk))
+
+        /** Alias for calling [price] with `Price.ofBulkWithFilters(bulkWithFilters)`. */
+        fun price(bulkWithFilters: Price.BulkWithFilters) =
+            price(Price.ofBulkWithFilters(bulkWithFilters))
 
         /** Alias for calling [price] with `Price.ofPackage(package_)`. */
         fun price(package_: Price.Package) = price(Price.ofPackage(package_))
 
         /** Alias for calling [price] with `Price.ofMatrix(matrix)`. */
         fun price(matrix: Price.Matrix) = price(Price.ofMatrix(matrix))
-
-        /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
-        fun price(tiered: Price.Tiered) = price(Price.ofTiered(tiered))
-
-        /** Alias for calling [price] with `Price.ofTieredBps(tieredBps)`. */
-        fun price(tieredBps: Price.TieredBps) = price(Price.ofTieredBps(tieredBps))
-
-        /** Alias for calling [price] with `Price.ofBps(bps)`. */
-        fun price(bps: Price.Bps) = price(Price.ofBps(bps))
-
-        /** Alias for calling [price] with `Price.ofBulkBps(bulkBps)`. */
-        fun price(bulkBps: Price.BulkBps) = price(Price.ofBulkBps(bulkBps))
-
-        /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
-        fun price(bulk: Price.Bulk) = price(Price.ofBulk(bulk))
 
         /** Alias for calling [price] with `Price.ofThresholdTotalAmount(thresholdTotalAmount)`. */
         fun price(thresholdTotalAmount: Price.ThresholdTotalAmount) =
@@ -982,12 +708,12 @@ private constructor(
         /** Alias for calling [price] with `Price.ofTieredPackage(tieredPackage)`. */
         fun price(tieredPackage: Price.TieredPackage) = price(Price.ofTieredPackage(tieredPackage))
 
-        /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
-        fun price(groupedTiered: Price.GroupedTiered) = price(Price.ofGroupedTiered(groupedTiered))
-
         /** Alias for calling [price] with `Price.ofTieredWithMinimum(tieredWithMinimum)`. */
         fun price(tieredWithMinimum: Price.TieredWithMinimum) =
             price(Price.ofTieredWithMinimum(tieredWithMinimum))
+
+        /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
+        fun price(groupedTiered: Price.GroupedTiered) = price(Price.ofGroupedTiered(groupedTiered))
 
         /**
          * Alias for calling [price] with
@@ -1022,6 +748,10 @@ private constructor(
         fun price(groupedAllocation: Price.GroupedAllocation) =
             price(Price.ofGroupedAllocation(groupedAllocation))
 
+        /** Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`. */
+        fun price(bulkWithProration: Price.BulkWithProration) =
+            price(Price.ofBulkWithProration(bulkWithProration))
+
         /**
          * Alias for calling [price] with
          * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
@@ -1037,14 +767,17 @@ private constructor(
             price(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
         /**
+         * Alias for calling [price] with
+         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         */
+        fun price(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
+            price(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+
+        /**
          * Alias for calling [price] with `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
          */
         fun price(matrixWithDisplayName: Price.MatrixWithDisplayName) =
             price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
-
-        /** Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`. */
-        fun price(bulkWithProration: Price.BulkWithProration) =
-            price(Price.ofBulkWithProration(bulkWithProration))
 
         /** Alias for calling [price] with `Price.ofGroupedTieredPackage(groupedTieredPackage)`. */
         fun price(groupedTieredPackage: Price.GroupedTieredPackage) =
@@ -1078,10 +811,20 @@ private constructor(
 
         /**
          * Alias for calling [price] with
-         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         * `Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation)`.
          */
-        fun price(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
-            price(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+        fun price(cumulativeGroupedAllocation: Price.CumulativeGroupedAllocation) =
+            price(Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation))
+
+        /** Alias for calling [price] with `Price.ofMinimumComposite(minimumComposite)`. */
+        fun price(minimumComposite: Price.MinimumComposite) =
+            price(Price.ofMinimumComposite(minimumComposite))
+
+        /** Alias for calling [price] with `Price.ofPercent(percent)`. */
+        fun price(percent: Price.Percent) = price(Price.ofPercent(percent))
+
+        /** Alias for calling [price] with `Price.ofEventOutput(eventOutput)`. */
+        fun price(eventOutput: Price.EventOutput) = price(Price.ofEventOutput(eventOutput))
 
         /** Either the fixed fee quantity or the usage during the service period. */
         fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
@@ -1144,7 +887,7 @@ private constructor(
         /** Alias for calling [addSubLineItem] with `SubLineItem.ofNull(null_)`. */
         fun addSubLineItem(null_: OtherSubLineItem) = addSubLineItem(SubLineItem.ofNull(null_))
 
-        /** The line amount before before any adjustments. */
+        /** The line amount before any adjustments. */
         fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
 
         /**
@@ -1242,14 +985,9 @@ private constructor(
          * .adjustments()
          * .amount()
          * .creditsApplied()
-         * .discount()
          * .endDate()
          * .filter()
          * .grouping()
-         * .maximum()
-         * .maximumAmount()
-         * .minimum()
-         * .minimumAmount()
          * .name()
          * .partiallyInvoicedAmount()
          * .price()
@@ -1270,14 +1008,9 @@ private constructor(
                 checkRequired("adjustments", adjustments).map { it.toImmutable() },
                 checkRequired("amount", amount),
                 checkRequired("creditsApplied", creditsApplied),
-                checkRequired("discount", discount),
                 checkRequired("endDate", endDate),
                 checkRequired("filter", filter),
                 checkRequired("grouping", grouping),
-                checkRequired("maximum", maximum),
-                checkRequired("maximumAmount", maximumAmount),
-                checkRequired("minimum", minimum),
-                checkRequired("minimumAmount", minimumAmount),
                 checkRequired("name", name),
                 checkRequired("partiallyInvoicedAmount", partiallyInvoicedAmount),
                 checkRequired("price", price),
@@ -1303,14 +1036,9 @@ private constructor(
         adjustments().forEach { it.validate() }
         amount()
         creditsApplied()
-        discount()?.validate()
         endDate()
         filter()
         grouping()
-        maximum()?.validate()
-        maximumAmount()
-        minimum()?.validate()
-        minimumAmount()
         name()
         partiallyInvoicedAmount()
         price().validate()
@@ -1342,14 +1070,9 @@ private constructor(
             (adjustments.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (amount.asKnown() == null) 0 else 1) +
             (if (creditsApplied.asKnown() == null) 0 else 1) +
-            (discount.asKnown()?.validity() ?: 0) +
             (if (endDate.asKnown() == null) 0 else 1) +
             (if (filter.asKnown() == null) 0 else 1) +
             (if (grouping.asKnown() == null) 0 else 1) +
-            (maximum.asKnown()?.validity() ?: 0) +
-            (if (maximumAmount.asKnown() == null) 0 else 1) +
-            (minimum.asKnown()?.validity() ?: 0) +
-            (if (minimumAmount.asKnown() == null) 0 else 1) +
             (if (name.asKnown() == null) 0 else 1) +
             (if (partiallyInvoicedAmount.asKnown() == null) 0 else 1) +
             (price.asKnown()?.validity() ?: 0) +
@@ -1500,10 +1223,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Adjustment && usageDiscount == other.usageDiscount && amountDiscount == other.amountDiscount && percentageDiscount == other.percentageDiscount && minimum == other.minimum && maximum == other.maximum /* spotless:on */
+            return other is Adjustment &&
+                usageDiscount == other.usageDiscount &&
+                amountDiscount == other.amountDiscount &&
+                percentageDiscount == other.percentageDiscount &&
+                minimum == other.minimum &&
+                maximum == other.maximum
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum) /* spotless:on */
+        override fun hashCode(): Int =
+            Objects.hash(usageDiscount, amountDiscount, percentageDiscount, minimum, maximum)
 
         override fun toString(): String =
             when {
@@ -1725,10 +1454,13 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubLineItem && matrix == other.matrix && tier == other.tier && null_ == other.null_ /* spotless:on */
+            return other is SubLineItem &&
+                matrix == other.matrix &&
+                tier == other.tier &&
+                null_ == other.null_
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(matrix, tier, null_) /* spotless:on */
+        override fun hashCode(): Int = Objects.hash(matrix, tier, null_)
 
         override fun toString(): String =
             when {
@@ -1826,15 +1558,52 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceLineItemCreateResponse && id == other.id && adjustedSubtotal == other.adjustedSubtotal && adjustments == other.adjustments && amount == other.amount && creditsApplied == other.creditsApplied && discount == other.discount && endDate == other.endDate && filter == other.filter && grouping == other.grouping && maximum == other.maximum && maximumAmount == other.maximumAmount && minimum == other.minimum && minimumAmount == other.minimumAmount && name == other.name && partiallyInvoicedAmount == other.partiallyInvoicedAmount && price == other.price && quantity == other.quantity && startDate == other.startDate && subLineItems == other.subLineItems && subtotal == other.subtotal && taxAmounts == other.taxAmounts && usageCustomerIds == other.usageCustomerIds && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is InvoiceLineItemCreateResponse &&
+            id == other.id &&
+            adjustedSubtotal == other.adjustedSubtotal &&
+            adjustments == other.adjustments &&
+            amount == other.amount &&
+            creditsApplied == other.creditsApplied &&
+            endDate == other.endDate &&
+            filter == other.filter &&
+            grouping == other.grouping &&
+            name == other.name &&
+            partiallyInvoicedAmount == other.partiallyInvoicedAmount &&
+            price == other.price &&
+            quantity == other.quantity &&
+            startDate == other.startDate &&
+            subLineItems == other.subLineItems &&
+            subtotal == other.subtotal &&
+            taxAmounts == other.taxAmounts &&
+            usageCustomerIds == other.usageCustomerIds &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, adjustedSubtotal, adjustments, amount, creditsApplied, discount, endDate, filter, grouping, maximum, maximumAmount, minimum, minimumAmount, name, partiallyInvoicedAmount, price, quantity, startDate, subLineItems, subtotal, taxAmounts, usageCustomerIds, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            adjustedSubtotal,
+            adjustments,
+            amount,
+            creditsApplied,
+            endDate,
+            filter,
+            grouping,
+            name,
+            partiallyInvoicedAmount,
+            price,
+            quantity,
+            startDate,
+            subLineItems,
+            subtotal,
+            taxAmounts,
+            usageCustomerIds,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "InvoiceLineItemCreateResponse{id=$id, adjustedSubtotal=$adjustedSubtotal, adjustments=$adjustments, amount=$amount, creditsApplied=$creditsApplied, discount=$discount, endDate=$endDate, filter=$filter, grouping=$grouping, maximum=$maximum, maximumAmount=$maximumAmount, minimum=$minimum, minimumAmount=$minimumAmount, name=$name, partiallyInvoicedAmount=$partiallyInvoicedAmount, price=$price, quantity=$quantity, startDate=$startDate, subLineItems=$subLineItems, subtotal=$subtotal, taxAmounts=$taxAmounts, usageCustomerIds=$usageCustomerIds, additionalProperties=$additionalProperties}"
+        "InvoiceLineItemCreateResponse{id=$id, adjustedSubtotal=$adjustedSubtotal, adjustments=$adjustments, amount=$amount, creditsApplied=$creditsApplied, endDate=$endDate, filter=$filter, grouping=$grouping, name=$name, partiallyInvoicedAmount=$partiallyInvoicedAmount, price=$price, quantity=$quantity, startDate=$startDate, subLineItems=$subLineItems, subtotal=$subtotal, taxAmounts=$taxAmounts, usageCustomerIds=$usageCustomerIds, additionalProperties=$additionalProperties}"
 }

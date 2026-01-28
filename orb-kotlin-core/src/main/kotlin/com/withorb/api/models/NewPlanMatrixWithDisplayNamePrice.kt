@@ -6,28 +6,20 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
-import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Collections
 import java.util.Objects
 
 class NewPlanMatrixWithDisplayNamePrice
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val cadence: JsonField<Cadence>,
     private val itemId: JsonField<String>,
@@ -136,6 +128,8 @@ private constructor(
     fun itemId(): String = itemId.getRequired("item_id")
 
     /**
+     * Configuration for matrix_with_display_name pricing
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -143,6 +137,8 @@ private constructor(
         matrixWithDisplayNameConfig.getRequired("matrix_with_display_name_config")
 
     /**
+     * The pricing model type
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -538,6 +534,7 @@ private constructor(
          */
         fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
+        /** Configuration for matrix_with_display_name pricing */
         fun matrixWithDisplayNameConfig(matrixWithDisplayNameConfig: MatrixWithDisplayNameConfig) =
             matrixWithDisplayNameConfig(JsonField.of(matrixWithDisplayNameConfig))
 
@@ -552,6 +549,7 @@ private constructor(
             matrixWithDisplayNameConfig: JsonField<MatrixWithDisplayNameConfig>
         ) = apply { this.matrixWithDisplayNameConfig = matrixWithDisplayNameConfig }
 
+        /** The pricing model type */
         fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
         /**
@@ -1104,7 +1102,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Cadence && value == other.value /* spotless:on */
+            return other is Cadence && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1112,16 +1110,66 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Configuration for matrix_with_display_name pricing */
     class MatrixWithDisplayNameConfig
-    @JsonCreator
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
+        private val dimension: JsonField<String>,
+        private val unitAmounts: JsonField<List<UnitAmount>>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("dimension")
+            @ExcludeMissing
+            dimension: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("unit_amounts")
+            @ExcludeMissing
+            unitAmounts: JsonField<List<UnitAmount>> = JsonMissing.of(),
+        ) : this(dimension, unitAmounts, mutableMapOf())
+
+        /**
+         * Used to determine the unit rate
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun dimension(): String = dimension.getRequired("dimension")
+
+        /**
+         * Apply per unit pricing to each dimension value
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun unitAmounts(): List<UnitAmount> = unitAmounts.getRequired("unit_amounts")
+
+        /**
+         * Returns the raw JSON value of [dimension].
+         *
+         * Unlike [dimension], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("dimension") @ExcludeMissing fun _dimension(): JsonField<String> = dimension
+
+        /**
+         * Returns the raw JSON value of [unitAmounts].
+         *
+         * Unlike [unitAmounts], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("unit_amounts")
+        @ExcludeMissing
+        fun _unitAmounts(): JsonField<List<UnitAmount>> = unitAmounts
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
 
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1130,6 +1178,12 @@ private constructor(
             /**
              * Returns a mutable builder for constructing an instance of
              * [MatrixWithDisplayNameConfig].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .dimension()
+             * .unitAmounts()
+             * ```
              */
             fun builder() = Builder()
         }
@@ -1137,11 +1191,53 @@ private constructor(
         /** A builder for [MatrixWithDisplayNameConfig]. */
         class Builder internal constructor() {
 
+            private var dimension: JsonField<String>? = null
+            private var unitAmounts: JsonField<MutableList<UnitAmount>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(matrixWithDisplayNameConfig: MatrixWithDisplayNameConfig) = apply {
+                dimension = matrixWithDisplayNameConfig.dimension
+                unitAmounts = matrixWithDisplayNameConfig.unitAmounts.map { it.toMutableList() }
                 additionalProperties =
                     matrixWithDisplayNameConfig.additionalProperties.toMutableMap()
+            }
+
+            /** Used to determine the unit rate */
+            fun dimension(dimension: String) = dimension(JsonField.of(dimension))
+
+            /**
+             * Sets [Builder.dimension] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.dimension] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun dimension(dimension: JsonField<String>) = apply { this.dimension = dimension }
+
+            /** Apply per unit pricing to each dimension value */
+            fun unitAmounts(unitAmounts: List<UnitAmount>) = unitAmounts(JsonField.of(unitAmounts))
+
+            /**
+             * Sets [Builder.unitAmounts] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.unitAmounts] with a well-typed `List<UnitAmount>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun unitAmounts(unitAmounts: JsonField<List<UnitAmount>>) = apply {
+                this.unitAmounts = unitAmounts.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [UnitAmount] to [unitAmounts].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addUnitAmount(unitAmount: UnitAmount) = apply {
+                unitAmounts =
+                    (unitAmounts ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("unitAmounts", it).add(unitAmount)
+                    }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1167,9 +1263,21 @@ private constructor(
              * Returns an immutable instance of [MatrixWithDisplayNameConfig].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .dimension()
+             * .unitAmounts()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): MatrixWithDisplayNameConfig =
-                MatrixWithDisplayNameConfig(additionalProperties.toImmutable())
+                MatrixWithDisplayNameConfig(
+                    checkRequired("dimension", dimension),
+                    checkRequired("unitAmounts", unitAmounts).map { it.toImmutable() },
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1179,6 +1287,8 @@ private constructor(
                 return@apply
             }
 
+            dimension()
+            unitAmounts().forEach { it.validate() }
             validated = true
         }
 
@@ -1197,26 +1307,295 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+            (if (dimension.asKnown() == null) 0 else 1) +
+                (unitAmounts.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+
+        /** Configuration for a unit amount item */
+        class UnitAmount
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val dimensionValue: JsonField<String>,
+            private val displayName: JsonField<String>,
+            private val unitAmount: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("dimension_value")
+                @ExcludeMissing
+                dimensionValue: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("display_name")
+                @ExcludeMissing
+                displayName: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("unit_amount")
+                @ExcludeMissing
+                unitAmount: JsonField<String> = JsonMissing.of(),
+            ) : this(dimensionValue, displayName, unitAmount, mutableMapOf())
+
+            /**
+             * The dimension value
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun dimensionValue(): String = dimensionValue.getRequired("dimension_value")
+
+            /**
+             * Display name for this dimension value
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun displayName(): String = displayName.getRequired("display_name")
+
+            /**
+             * Per unit amount
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun unitAmount(): String = unitAmount.getRequired("unit_amount")
+
+            /**
+             * Returns the raw JSON value of [dimensionValue].
+             *
+             * Unlike [dimensionValue], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("dimension_value")
+            @ExcludeMissing
+            fun _dimensionValue(): JsonField<String> = dimensionValue
+
+            /**
+             * Returns the raw JSON value of [displayName].
+             *
+             * Unlike [displayName], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("display_name")
+            @ExcludeMissing
+            fun _displayName(): JsonField<String> = displayName
+
+            /**
+             * Returns the raw JSON value of [unitAmount].
+             *
+             * Unlike [unitAmount], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("unit_amount")
+            @ExcludeMissing
+            fun _unitAmount(): JsonField<String> = unitAmount
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [UnitAmount].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .dimensionValue()
+                 * .displayName()
+                 * .unitAmount()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [UnitAmount]. */
+            class Builder internal constructor() {
+
+                private var dimensionValue: JsonField<String>? = null
+                private var displayName: JsonField<String>? = null
+                private var unitAmount: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(unitAmount: UnitAmount) = apply {
+                    dimensionValue = unitAmount.dimensionValue
+                    displayName = unitAmount.displayName
+                    this.unitAmount = unitAmount.unitAmount
+                    additionalProperties = unitAmount.additionalProperties.toMutableMap()
+                }
+
+                /** The dimension value */
+                fun dimensionValue(dimensionValue: String) =
+                    dimensionValue(JsonField.of(dimensionValue))
+
+                /**
+                 * Sets [Builder.dimensionValue] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.dimensionValue] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun dimensionValue(dimensionValue: JsonField<String>) = apply {
+                    this.dimensionValue = dimensionValue
+                }
+
+                /** Display name for this dimension value */
+                fun displayName(displayName: String) = displayName(JsonField.of(displayName))
+
+                /**
+                 * Sets [Builder.displayName] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.displayName] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun displayName(displayName: JsonField<String>) = apply {
+                    this.displayName = displayName
+                }
+
+                /** Per unit amount */
+                fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
+
+                /**
+                 * Sets [Builder.unitAmount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.unitAmount] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun unitAmount(unitAmount: JsonField<String>) = apply {
+                    this.unitAmount = unitAmount
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [UnitAmount].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .dimensionValue()
+                 * .displayName()
+                 * .unitAmount()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): UnitAmount =
+                    UnitAmount(
+                        checkRequired("dimensionValue", dimensionValue),
+                        checkRequired("displayName", displayName),
+                        checkRequired("unitAmount", unitAmount),
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): UnitAmount = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                dimensionValue()
+                displayName()
+                unitAmount()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (dimensionValue.asKnown() == null) 0 else 1) +
+                    (if (displayName.asKnown() == null) 0 else 1) +
+                    (if (unitAmount.asKnown() == null) 0 else 1)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is UnitAmount &&
+                    dimensionValue == other.dimensionValue &&
+                    displayName == other.displayName &&
+                    unitAmount == other.unitAmount &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(dimensionValue, displayName, unitAmount, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "UnitAmount{dimensionValue=$dimensionValue, displayName=$displayName, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
+        }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is MatrixWithDisplayNameConfig && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is MatrixWithDisplayNameConfig &&
+                dimension == other.dimension &&
+                unitAmounts == other.unitAmounts &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(dimension, unitAmounts, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "MatrixWithDisplayNameConfig{additionalProperties=$additionalProperties}"
+            "MatrixWithDisplayNameConfig{dimension=$dimension, unitAmounts=$unitAmounts, additionalProperties=$additionalProperties}"
     }
 
+    /** The pricing model type */
     class ModelType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -1329,181 +1708,12 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ModelType && value == other.value /* spotless:on */
+            return other is ModelType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
 
         override fun toString() = value.toString()
-    }
-
-    /** The configuration for the rate of the price currency to the invoicing currency. */
-    @JsonDeserialize(using = ConversionRateConfig.Deserializer::class)
-    @JsonSerialize(using = ConversionRateConfig.Serializer::class)
-    class ConversionRateConfig
-    private constructor(
-        private val unit: UnitConversionRateConfig? = null,
-        private val tiered: TieredConversionRateConfig? = null,
-        private val _json: JsonValue? = null,
-    ) {
-
-        fun unit(): UnitConversionRateConfig? = unit
-
-        fun tiered(): TieredConversionRateConfig? = tiered
-
-        fun isUnit(): Boolean = unit != null
-
-        fun isTiered(): Boolean = tiered != null
-
-        fun asUnit(): UnitConversionRateConfig = unit.getOrThrow("unit")
-
-        fun asTiered(): TieredConversionRateConfig = tiered.getOrThrow("tiered")
-
-        fun _json(): JsonValue? = _json
-
-        fun <T> accept(visitor: Visitor<T>): T =
-            when {
-                unit != null -> visitor.visitUnit(unit)
-                tiered != null -> visitor.visitTiered(tiered)
-                else -> visitor.unknown(_json)
-            }
-
-        private var validated: Boolean = false
-
-        fun validate(): ConversionRateConfig = apply {
-            if (validated) {
-                return@apply
-            }
-
-            accept(
-                object : Visitor<Unit> {
-                    override fun visitUnit(unit: UnitConversionRateConfig) {
-                        unit.validate()
-                    }
-
-                    override fun visitTiered(tiered: TieredConversionRateConfig) {
-                        tiered.validate()
-                    }
-                }
-            )
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: OrbInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        internal fun validity(): Int =
-            accept(
-                object : Visitor<Int> {
-                    override fun visitUnit(unit: UnitConversionRateConfig) = unit.validity()
-
-                    override fun visitTiered(tiered: TieredConversionRateConfig) = tiered.validity()
-
-                    override fun unknown(json: JsonValue?) = 0
-                }
-            )
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is ConversionRateConfig && unit == other.unit && tiered == other.tiered /* spotless:on */
-        }
-
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, tiered) /* spotless:on */
-
-        override fun toString(): String =
-            when {
-                unit != null -> "ConversionRateConfig{unit=$unit}"
-                tiered != null -> "ConversionRateConfig{tiered=$tiered}"
-                _json != null -> "ConversionRateConfig{_unknown=$_json}"
-                else -> throw IllegalStateException("Invalid ConversionRateConfig")
-            }
-
-        companion object {
-
-            fun ofUnit(unit: UnitConversionRateConfig) = ConversionRateConfig(unit = unit)
-
-            fun ofTiered(tiered: TieredConversionRateConfig) = ConversionRateConfig(tiered = tiered)
-        }
-
-        /**
-         * An interface that defines how to map each variant of [ConversionRateConfig] to a value of
-         * type [T].
-         */
-        interface Visitor<out T> {
-
-            fun visitUnit(unit: UnitConversionRateConfig): T
-
-            fun visitTiered(tiered: TieredConversionRateConfig): T
-
-            /**
-             * Maps an unknown variant of [ConversionRateConfig] to a value of type [T].
-             *
-             * An instance of [ConversionRateConfig] can contain an unknown variant if it was
-             * deserialized from data that doesn't match any known variant. For example, if the SDK
-             * is on an older version than the API, then the API may respond with new variants that
-             * the SDK is unaware of.
-             *
-             * @throws OrbInvalidDataException in the default implementation.
-             */
-            fun unknown(json: JsonValue?): T {
-                throw OrbInvalidDataException("Unknown ConversionRateConfig: $json")
-            }
-        }
-
-        internal class Deserializer :
-            BaseDeserializer<ConversionRateConfig>(ConversionRateConfig::class) {
-
-            override fun ObjectCodec.deserialize(node: JsonNode): ConversionRateConfig {
-                val json = JsonValue.fromJsonNode(node)
-                val conversionRateType = json.asObject()?.get("conversion_rate_type")?.asString()
-
-                when (conversionRateType) {
-                    "unit" -> {
-                        return tryDeserialize(node, jacksonTypeRef<UnitConversionRateConfig>())
-                            ?.let { ConversionRateConfig(unit = it, _json = json) }
-                            ?: ConversionRateConfig(_json = json)
-                    }
-                    "tiered" -> {
-                        return tryDeserialize(node, jacksonTypeRef<TieredConversionRateConfig>())
-                            ?.let { ConversionRateConfig(tiered = it, _json = json) }
-                            ?: ConversionRateConfig(_json = json)
-                    }
-                }
-
-                return ConversionRateConfig(_json = json)
-            }
-        }
-
-        internal class Serializer :
-            BaseSerializer<ConversionRateConfig>(ConversionRateConfig::class) {
-
-            override fun serialize(
-                value: ConversionRateConfig,
-                generator: JsonGenerator,
-                provider: SerializerProvider,
-            ) {
-                when {
-                    value.unit != null -> generator.writeObject(value.unit)
-                    value.tiered != null -> generator.writeObject(value.tiered)
-                    value._json != null -> generator.writeObject(value._json)
-                    else -> throw IllegalStateException("Invalid ConversionRateConfig")
-                }
-            }
-        }
     }
 
     /**
@@ -1598,12 +1808,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1615,12 +1823,51 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is NewPlanMatrixWithDisplayNamePrice && cadence == other.cadence && itemId == other.itemId && matrixWithDisplayNameConfig == other.matrixWithDisplayNameConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && conversionRateConfig == other.conversionRateConfig && currency == other.currency && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && referenceId == other.referenceId && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is NewPlanMatrixWithDisplayNamePrice &&
+            cadence == other.cadence &&
+            itemId == other.itemId &&
+            matrixWithDisplayNameConfig == other.matrixWithDisplayNameConfig &&
+            modelType == other.modelType &&
+            name == other.name &&
+            billableMetricId == other.billableMetricId &&
+            billedInAdvance == other.billedInAdvance &&
+            billingCycleConfiguration == other.billingCycleConfiguration &&
+            conversionRate == other.conversionRate &&
+            conversionRateConfig == other.conversionRateConfig &&
+            currency == other.currency &&
+            dimensionalPriceConfiguration == other.dimensionalPriceConfiguration &&
+            externalPriceId == other.externalPriceId &&
+            fixedPriceQuantity == other.fixedPriceQuantity &&
+            invoiceGroupingKey == other.invoiceGroupingKey &&
+            invoicingCycleConfiguration == other.invoicingCycleConfiguration &&
+            metadata == other.metadata &&
+            referenceId == other.referenceId &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(cadence, itemId, matrixWithDisplayNameConfig, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, conversionRateConfig, currency, dimensionalPriceConfiguration, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, referenceId, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            cadence,
+            itemId,
+            matrixWithDisplayNameConfig,
+            modelType,
+            name,
+            billableMetricId,
+            billedInAdvance,
+            billingCycleConfiguration,
+            conversionRate,
+            conversionRateConfig,
+            currency,
+            dimensionalPriceConfiguration,
+            externalPriceId,
+            fixedPriceQuantity,
+            invoiceGroupingKey,
+            invoicingCycleConfiguration,
+            metadata,
+            referenceId,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

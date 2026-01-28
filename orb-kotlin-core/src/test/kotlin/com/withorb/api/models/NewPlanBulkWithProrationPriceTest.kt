@@ -16,7 +16,18 @@ internal class NewPlanBulkWithProrationPriceTest {
             NewPlanBulkWithProrationPrice.builder()
                 .bulkWithProrationConfig(
                     NewPlanBulkWithProrationPrice.BulkWithProrationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addTier(
+                            NewPlanBulkWithProrationPrice.BulkWithProrationConfig.Tier.builder()
+                                .unitAmount("unit_amount")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
+                        .addTier(
+                            NewPlanBulkWithProrationPrice.BulkWithProrationConfig.Tier.builder()
+                                .unitAmount("unit_amount")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
                         .build()
                 )
                 .cadence(NewPlanBulkWithProrationPrice.Cadence.ANNUAL)
@@ -63,7 +74,18 @@ internal class NewPlanBulkWithProrationPriceTest {
         assertThat(newPlanBulkWithProrationPrice.bulkWithProrationConfig())
             .isEqualTo(
                 NewPlanBulkWithProrationPrice.BulkWithProrationConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .addTier(
+                        NewPlanBulkWithProrationPrice.BulkWithProrationConfig.Tier.builder()
+                            .unitAmount("unit_amount")
+                            .tierLowerBound("tier_lower_bound")
+                            .build()
+                    )
+                    .addTier(
+                        NewPlanBulkWithProrationPrice.BulkWithProrationConfig.Tier.builder()
+                            .unitAmount("unit_amount")
+                            .tierLowerBound("tier_lower_bound")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newPlanBulkWithProrationPrice.cadence())
@@ -84,7 +106,7 @@ internal class NewPlanBulkWithProrationPriceTest {
         assertThat(newPlanBulkWithProrationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanBulkWithProrationPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanBulkWithProrationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -128,7 +150,18 @@ internal class NewPlanBulkWithProrationPriceTest {
             NewPlanBulkWithProrationPrice.builder()
                 .bulkWithProrationConfig(
                     NewPlanBulkWithProrationPrice.BulkWithProrationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addTier(
+                            NewPlanBulkWithProrationPrice.BulkWithProrationConfig.Tier.builder()
+                                .unitAmount("unit_amount")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
+                        .addTier(
+                            NewPlanBulkWithProrationPrice.BulkWithProrationConfig.Tier.builder()
+                                .unitAmount("unit_amount")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
                         .build()
                 )
                 .cadence(NewPlanBulkWithProrationPrice.Cadence.ANNUAL)

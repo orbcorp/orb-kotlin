@@ -18,6 +18,7 @@ internal class CustomerTest {
                 .id("id")
                 .addAdditionalEmail("string")
                 .autoCollection(true)
+                .autoIssuance(true)
                 .balance("balance")
                 .billingAddress(
                     Address.builder()
@@ -93,6 +94,20 @@ internal class CustomerTest {
                         .excluded(true)
                         .build()
                 )
+                .automaticTaxEnabled(true)
+                .paymentConfiguration(
+                    Customer.PaymentConfiguration.builder()
+                        .addPaymentProvider(
+                            Customer.PaymentConfiguration.PaymentProvider.builder()
+                                .providerType(
+                                    Customer.PaymentConfiguration.PaymentProvider.ProviderType
+                                        .STRIPE
+                                )
+                                .addExcludedPaymentMethodType("string")
+                                .build()
+                        )
+                        .build()
+                )
                 .reportingConfiguration(
                     Customer.ReportingConfiguration.builder().exempt(true).build()
                 )
@@ -101,6 +116,7 @@ internal class CustomerTest {
         assertThat(customer.id()).isEqualTo("id")
         assertThat(customer.additionalEmails()).containsExactly("string")
         assertThat(customer.autoCollection()).isEqualTo(true)
+        assertThat(customer.autoIssuance()).isEqualTo(true)
         assertThat(customer.balance()).isEqualTo("balance")
         assertThat(customer.billingAddress())
             .isEqualTo(
@@ -181,6 +197,20 @@ internal class CustomerTest {
                     .excluded(true)
                     .build()
             )
+        assertThat(customer.automaticTaxEnabled()).isEqualTo(true)
+        assertThat(customer.paymentConfiguration())
+            .isEqualTo(
+                Customer.PaymentConfiguration.builder()
+                    .addPaymentProvider(
+                        Customer.PaymentConfiguration.PaymentProvider.builder()
+                            .providerType(
+                                Customer.PaymentConfiguration.PaymentProvider.ProviderType.STRIPE
+                            )
+                            .addExcludedPaymentMethodType("string")
+                            .build()
+                    )
+                    .build()
+            )
         assertThat(customer.reportingConfiguration())
             .isEqualTo(Customer.ReportingConfiguration.builder().exempt(true).build())
     }
@@ -193,6 +223,7 @@ internal class CustomerTest {
                 .id("id")
                 .addAdditionalEmail("string")
                 .autoCollection(true)
+                .autoIssuance(true)
                 .balance("balance")
                 .billingAddress(
                     Address.builder()
@@ -266,6 +297,20 @@ internal class CustomerTest {
                                 .build()
                         )
                         .excluded(true)
+                        .build()
+                )
+                .automaticTaxEnabled(true)
+                .paymentConfiguration(
+                    Customer.PaymentConfiguration.builder()
+                        .addPaymentProvider(
+                            Customer.PaymentConfiguration.PaymentProvider.builder()
+                                .providerType(
+                                    Customer.PaymentConfiguration.PaymentProvider.ProviderType
+                                        .STRIPE
+                                )
+                                .addExcludedPaymentMethodType("string")
+                                .build()
+                        )
                         .build()
                 )
                 .reportingConfiguration(

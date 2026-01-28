@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class MetricListPageResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<List<BillableMetric>>,
     private val paginationMetadata: JsonField<PaginationMetadata>,
@@ -216,12 +217,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is MetricListPageResponse && data == other.data && paginationMetadata == other.paginationMetadata && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is MetricListPageResponse &&
+            data == other.data &&
+            paginationMetadata == other.paginationMetadata &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(data, paginationMetadata, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(data, paginationMetadata, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

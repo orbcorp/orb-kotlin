@@ -29,6 +29,7 @@ import java.util.Collections
 import java.util.Objects
 
 class EvaluatePriceGroup
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val amount: JsonField<String>,
     private val groupingValues: JsonField<List<GroupingValue>>,
@@ -354,10 +355,13 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is GroupingValue && string == other.string && double == other.double && boolean == other.boolean /* spotless:on */
+            return other is GroupingValue &&
+                string == other.string &&
+                double == other.double &&
+                boolean == other.boolean
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(string, double, boolean) /* spotless:on */
+        override fun hashCode(): Int = Objects.hash(string, double, boolean)
 
         override fun toString(): String =
             when {
@@ -460,12 +464,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EvaluatePriceGroup && amount == other.amount && groupingValues == other.groupingValues && quantity == other.quantity && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is EvaluatePriceGroup &&
+            amount == other.amount &&
+            groupingValues == other.groupingValues &&
+            quantity == other.quantity &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(amount, groupingValues, quantity, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(amount, groupingValues, quantity, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -16,7 +16,20 @@ internal class NewSubscriptionBulkWithProrationPriceTest {
             NewSubscriptionBulkWithProrationPrice.builder()
                 .bulkWithProrationConfig(
                     NewSubscriptionBulkWithProrationPrice.BulkWithProrationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addTier(
+                            NewSubscriptionBulkWithProrationPrice.BulkWithProrationConfig.Tier
+                                .builder()
+                                .unitAmount("unit_amount")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
+                        .addTier(
+                            NewSubscriptionBulkWithProrationPrice.BulkWithProrationConfig.Tier
+                                .builder()
+                                .unitAmount("unit_amount")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
                         .build()
                 )
                 .cadence(NewSubscriptionBulkWithProrationPrice.Cadence.ANNUAL)
@@ -63,7 +76,18 @@ internal class NewSubscriptionBulkWithProrationPriceTest {
         assertThat(newSubscriptionBulkWithProrationPrice.bulkWithProrationConfig())
             .isEqualTo(
                 NewSubscriptionBulkWithProrationPrice.BulkWithProrationConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .addTier(
+                        NewSubscriptionBulkWithProrationPrice.BulkWithProrationConfig.Tier.builder()
+                            .unitAmount("unit_amount")
+                            .tierLowerBound("tier_lower_bound")
+                            .build()
+                    )
+                    .addTier(
+                        NewSubscriptionBulkWithProrationPrice.BulkWithProrationConfig.Tier.builder()
+                            .unitAmount("unit_amount")
+                            .tierLowerBound("tier_lower_bound")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newSubscriptionBulkWithProrationPrice.cadence())
@@ -85,7 +109,7 @@ internal class NewSubscriptionBulkWithProrationPriceTest {
         assertThat(newSubscriptionBulkWithProrationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionBulkWithProrationPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionBulkWithProrationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -130,7 +154,20 @@ internal class NewSubscriptionBulkWithProrationPriceTest {
             NewSubscriptionBulkWithProrationPrice.builder()
                 .bulkWithProrationConfig(
                     NewSubscriptionBulkWithProrationPrice.BulkWithProrationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .addTier(
+                            NewSubscriptionBulkWithProrationPrice.BulkWithProrationConfig.Tier
+                                .builder()
+                                .unitAmount("unit_amount")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
+                        .addTier(
+                            NewSubscriptionBulkWithProrationPrice.BulkWithProrationConfig.Tier
+                                .builder()
+                                .unitAmount("unit_amount")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
                         .build()
                 )
                 .cadence(NewSubscriptionBulkWithProrationPrice.Cadence.ANNUAL)

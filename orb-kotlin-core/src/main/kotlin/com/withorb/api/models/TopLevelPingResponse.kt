@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class TopLevelPingResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val response: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -154,12 +155,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is TopLevelPingResponse && response == other.response && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is TopLevelPingResponse &&
+            response == other.response &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(response, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

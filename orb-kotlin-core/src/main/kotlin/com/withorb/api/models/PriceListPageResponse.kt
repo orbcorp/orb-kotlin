@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class PriceListPageResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<List<Price>>,
     private val paginationMetadata: JsonField<PaginationMetadata>,
@@ -127,28 +128,23 @@ private constructor(
         }
 
         /** Alias for calling [addData] with `Price.ofUnit(unit)`. */
-        fun addData(unit: Price.Unit) = addData(Price.ofUnit(unit))
+        fun addData(unit: Price.UnitPrice) = addData(Price.ofUnit(unit))
+
+        /** Alias for calling [addData] with `Price.ofTiered(tiered)`. */
+        fun addData(tiered: Price.Tiered) = addData(Price.ofTiered(tiered))
+
+        /** Alias for calling [addData] with `Price.ofBulk(bulk)`. */
+        fun addData(bulk: Price.Bulk) = addData(Price.ofBulk(bulk))
+
+        /** Alias for calling [addData] with `Price.ofBulkWithFilters(bulkWithFilters)`. */
+        fun addData(bulkWithFilters: Price.BulkWithFilters) =
+            addData(Price.ofBulkWithFilters(bulkWithFilters))
 
         /** Alias for calling [addData] with `Price.ofPackage(package_)`. */
         fun addData(package_: Price.Package) = addData(Price.ofPackage(package_))
 
         /** Alias for calling [addData] with `Price.ofMatrix(matrix)`. */
         fun addData(matrix: Price.Matrix) = addData(Price.ofMatrix(matrix))
-
-        /** Alias for calling [addData] with `Price.ofTiered(tiered)`. */
-        fun addData(tiered: Price.Tiered) = addData(Price.ofTiered(tiered))
-
-        /** Alias for calling [addData] with `Price.ofTieredBps(tieredBps)`. */
-        fun addData(tieredBps: Price.TieredBps) = addData(Price.ofTieredBps(tieredBps))
-
-        /** Alias for calling [addData] with `Price.ofBps(bps)`. */
-        fun addData(bps: Price.Bps) = addData(Price.ofBps(bps))
-
-        /** Alias for calling [addData] with `Price.ofBulkBps(bulkBps)`. */
-        fun addData(bulkBps: Price.BulkBps) = addData(Price.ofBulkBps(bulkBps))
-
-        /** Alias for calling [addData] with `Price.ofBulk(bulk)`. */
-        fun addData(bulk: Price.Bulk) = addData(Price.ofBulk(bulk))
 
         /**
          * Alias for calling [addData] with `Price.ofThresholdTotalAmount(thresholdTotalAmount)`.
@@ -160,13 +156,13 @@ private constructor(
         fun addData(tieredPackage: Price.TieredPackage) =
             addData(Price.ofTieredPackage(tieredPackage))
 
-        /** Alias for calling [addData] with `Price.ofGroupedTiered(groupedTiered)`. */
-        fun addData(groupedTiered: Price.GroupedTiered) =
-            addData(Price.ofGroupedTiered(groupedTiered))
-
         /** Alias for calling [addData] with `Price.ofTieredWithMinimum(tieredWithMinimum)`. */
         fun addData(tieredWithMinimum: Price.TieredWithMinimum) =
             addData(Price.ofTieredWithMinimum(tieredWithMinimum))
+
+        /** Alias for calling [addData] with `Price.ofGroupedTiered(groupedTiered)`. */
+        fun addData(groupedTiered: Price.GroupedTiered) =
+            addData(Price.ofGroupedTiered(groupedTiered))
 
         /**
          * Alias for calling [addData] with
@@ -203,6 +199,10 @@ private constructor(
         fun addData(groupedAllocation: Price.GroupedAllocation) =
             addData(Price.ofGroupedAllocation(groupedAllocation))
 
+        /** Alias for calling [addData] with `Price.ofBulkWithProration(bulkWithProration)`. */
+        fun addData(bulkWithProration: Price.BulkWithProration) =
+            addData(Price.ofBulkWithProration(bulkWithProration))
+
         /**
          * Alias for calling [addData] with
          * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
@@ -218,14 +218,17 @@ private constructor(
             addData(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
         /**
+         * Alias for calling [addData] with
+         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         */
+        fun addData(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
+            addData(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+
+        /**
          * Alias for calling [addData] with `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
          */
         fun addData(matrixWithDisplayName: Price.MatrixWithDisplayName) =
             addData(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
-
-        /** Alias for calling [addData] with `Price.ofBulkWithProration(bulkWithProration)`. */
-        fun addData(bulkWithProration: Price.BulkWithProration) =
-            addData(Price.ofBulkWithProration(bulkWithProration))
 
         /**
          * Alias for calling [addData] with `Price.ofGroupedTieredPackage(groupedTieredPackage)`.
@@ -261,10 +264,20 @@ private constructor(
 
         /**
          * Alias for calling [addData] with
-         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         * `Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation)`.
          */
-        fun addData(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
-            addData(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+        fun addData(cumulativeGroupedAllocation: Price.CumulativeGroupedAllocation) =
+            addData(Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation))
+
+        /** Alias for calling [addData] with `Price.ofMinimumComposite(minimumComposite)`. */
+        fun addData(minimumComposite: Price.MinimumComposite) =
+            addData(Price.ofMinimumComposite(minimumComposite))
+
+        /** Alias for calling [addData] with `Price.ofPercent(percent)`. */
+        fun addData(percent: Price.Percent) = addData(Price.ofPercent(percent))
+
+        /** Alias for calling [addData] with `Price.ofEventOutput(eventOutput)`. */
+        fun addData(eventOutput: Price.EventOutput) = addData(Price.ofEventOutput(eventOutput))
 
         fun paginationMetadata(paginationMetadata: PaginationMetadata) =
             paginationMetadata(JsonField.of(paginationMetadata))
@@ -354,12 +367,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PriceListPageResponse && data == other.data && paginationMetadata == other.paginationMetadata && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PriceListPageResponse &&
+            data == other.data &&
+            paginationMetadata == other.paginationMetadata &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(data, paginationMetadata, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(data, paginationMetadata, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

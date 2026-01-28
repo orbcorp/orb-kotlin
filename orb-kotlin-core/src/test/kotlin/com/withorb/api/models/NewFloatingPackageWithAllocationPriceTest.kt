@@ -21,7 +21,9 @@ internal class NewFloatingPackageWithAllocationPriceTest {
                 .name("Annual fee")
                 .packageWithAllocationConfig(
                     NewFloatingPackageWithAllocationPrice.PackageWithAllocationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .allocation("allocation")
+                        .packageAmount("package_amount")
+                        .packageSize("package_size")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -69,7 +71,9 @@ internal class NewFloatingPackageWithAllocationPriceTest {
         assertThat(newFloatingPackageWithAllocationPrice.packageWithAllocationConfig())
             .isEqualTo(
                 NewFloatingPackageWithAllocationPrice.PackageWithAllocationConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .allocation("allocation")
+                    .packageAmount("package_amount")
+                    .packageSize("package_size")
                     .build()
             )
         assertThat(newFloatingPackageWithAllocationPrice.billableMetricId())
@@ -85,7 +89,7 @@ internal class NewFloatingPackageWithAllocationPriceTest {
         assertThat(newFloatingPackageWithAllocationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newFloatingPackageWithAllocationPrice.conversionRateConfig())
             .isEqualTo(
-                NewFloatingPackageWithAllocationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -133,7 +137,9 @@ internal class NewFloatingPackageWithAllocationPriceTest {
                 .name("Annual fee")
                 .packageWithAllocationConfig(
                     NewFloatingPackageWithAllocationPrice.PackageWithAllocationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .allocation("allocation")
+                        .packageAmount("package_amount")
+                        .packageSize("package_size")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

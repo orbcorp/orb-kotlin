@@ -18,11 +18,11 @@ internal class NewPlanMatrixWithAllocationPriceTest {
                 .itemId("item_id")
                 .matrixWithAllocationConfig(
                     MatrixWithAllocationConfig.builder()
-                        .allocation(0.0)
+                        .allocation("allocation")
                         .defaultUnitAmount("default_unit_amount")
                         .addDimension("string")
                         .addMatrixValue(
-                            MatrixValue.builder()
+                            MatrixWithAllocationConfig.MatrixValue.builder()
                                 .addDimensionValue("string")
                                 .unitAmount("unit_amount")
                                 .build()
@@ -74,11 +74,11 @@ internal class NewPlanMatrixWithAllocationPriceTest {
         assertThat(newPlanMatrixWithAllocationPrice.matrixWithAllocationConfig())
             .isEqualTo(
                 MatrixWithAllocationConfig.builder()
-                    .allocation(0.0)
+                    .allocation("allocation")
                     .defaultUnitAmount("default_unit_amount")
                     .addDimension("string")
                     .addMatrixValue(
-                        MatrixValue.builder()
+                        MatrixWithAllocationConfig.MatrixValue.builder()
                             .addDimensionValue("string")
                             .unitAmount("unit_amount")
                             .build()
@@ -101,7 +101,7 @@ internal class NewPlanMatrixWithAllocationPriceTest {
         assertThat(newPlanMatrixWithAllocationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanMatrixWithAllocationPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanMatrixWithAllocationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -148,11 +148,11 @@ internal class NewPlanMatrixWithAllocationPriceTest {
                 .itemId("item_id")
                 .matrixWithAllocationConfig(
                     MatrixWithAllocationConfig.builder()
-                        .allocation(0.0)
+                        .allocation("allocation")
                         .defaultUnitAmount("default_unit_amount")
                         .addDimension("string")
                         .addMatrixValue(
-                            MatrixValue.builder()
+                            MatrixWithAllocationConfig.MatrixValue.builder()
                                 .addDimensionValue("string")
                                 .unitAmount("unit_amount")
                                 .build()

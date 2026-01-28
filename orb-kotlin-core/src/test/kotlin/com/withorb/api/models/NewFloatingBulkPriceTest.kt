@@ -84,7 +84,7 @@ internal class NewFloatingBulkPriceTest {
         assertThat(newFloatingBulkPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newFloatingBulkPrice.conversionRateConfig())
             .isEqualTo(
-                NewFloatingBulkPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(

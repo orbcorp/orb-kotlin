@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class PlanVersionPhase
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val description: JsonField<String>,
@@ -476,7 +477,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+            return other is DurationUnit && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -489,12 +490,19 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanVersionPhase && id == other.id && description == other.description && duration == other.duration && durationUnit == other.durationUnit && name == other.name && order == other.order && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PlanVersionPhase &&
+            id == other.id &&
+            description == other.description &&
+            duration == other.duration &&
+            durationUnit == other.durationUnit &&
+            name == other.name &&
+            order == other.order &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, description, duration, durationUnit, name, order, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(id, description, duration, durationUnit, name, order, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

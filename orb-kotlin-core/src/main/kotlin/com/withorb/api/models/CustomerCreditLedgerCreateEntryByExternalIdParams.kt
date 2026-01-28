@@ -22,6 +22,7 @@ import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.Params
 import com.withorb.api.core.allMaxBy
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
@@ -48,7 +49,6 @@ import java.util.Objects
  *    credits (based on `amount` and `per_unit_cost_basis`).
  *
  * ## Adding credits
- *
  * Adding credits is done by creating an entry of type `increment`. This requires the caller to
  * specify a number of credits as well as an optional expiry date in `YYYY-MM-DD` format. Orb also
  * recommends specifying a description to assist with auditing. When adding credits, the caller can
@@ -72,7 +72,6 @@ import java.util.Objects
  * before adding the remaining amount to the desired credit block.
  *
  * ### Invoicing for credits
- *
  * By default, Orb manipulates the credit ledger but does not charge for credits. However, if you
  * pass `invoice_settings` in the body of this request, Orb will also generate a one-off invoice for
  * the customer for the credits pre-purchase. Note that you _must_ provide the
@@ -80,7 +79,6 @@ import java.util.Objects
  * cost basis with the number of credit units added.
  *
  * ## Deducting Credits
- *
  * Orb allows you to deduct credits from a customer by creating an entry of type `decrement`. Orb
  * matches the algorithm for automatic deductions for determining which credit blocks to decrement
  * from. In the case that the deduction leads to multiple ledger entries, the response from this
@@ -98,7 +96,6 @@ import java.util.Objects
  * ```
  *
  * ## Changing credits expiry
- *
  * If you'd like to change when existing credits expire, you should create a ledger entry of type
  * `expiration_change`. For this entry, the required parameter `expiry_date` identifies the
  * _originating_ block, and the required parameter `target_expiry_date` identifies when the
@@ -498,10 +495,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && increment == other.increment && decrement == other.decrement && expirationChange == other.expirationChange && void == other.void && amendment == other.amendment /* spotless:on */
+            return other is Body &&
+                increment == other.increment &&
+                decrement == other.decrement &&
+                expirationChange == other.expirationChange &&
+                void == other.void &&
+                amendment == other.amendment
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(increment, decrement, expirationChange, void, amendment) /* spotless:on */
+        override fun hashCode(): Int =
+            Objects.hash(increment, decrement, expirationChange, void, amendment)
 
         override fun toString(): String =
             when {
@@ -613,6 +616,7 @@ private constructor(
         }
 
         class Increment
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val amount: JsonField<Double>,
             private val entryType: JsonValue,
@@ -620,6 +624,7 @@ private constructor(
             private val description: JsonField<String>,
             private val effectiveDate: JsonField<OffsetDateTime>,
             private val expiryDate: JsonField<OffsetDateTime>,
+            private val filters: JsonField<List<Filter>>,
             private val invoiceSettings: JsonField<InvoiceSettings>,
             private val metadata: JsonField<Metadata>,
             private val perUnitCostBasis: JsonField<String>,
@@ -644,6 +649,9 @@ private constructor(
                 @JsonProperty("expiry_date")
                 @ExcludeMissing
                 expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+                @JsonProperty("filters")
+                @ExcludeMissing
+                filters: JsonField<List<Filter>> = JsonMissing.of(),
                 @JsonProperty("invoice_settings")
                 @ExcludeMissing
                 invoiceSettings: JsonField<InvoiceSettings> = JsonMissing.of(),
@@ -660,6 +668,7 @@ private constructor(
                 description,
                 effectiveDate,
                 expiryDate,
+                filters,
                 invoiceSettings,
                 metadata,
                 perUnitCostBasis,
@@ -722,6 +731,15 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
+
+            /**
+             * Optional filter to specify which items this credit block applies to. If not
+             * specified, the block will apply to all items for the pricing unit.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun filters(): List<Filter>? = filters.getNullable("filters")
 
             /**
              * Passing `invoice_settings` automatically generates an invoice for the newly added
@@ -799,6 +817,15 @@ private constructor(
             fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
 
             /**
+             * Returns the raw JSON value of [filters].
+             *
+             * Unlike [filters], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("filters")
+            @ExcludeMissing
+            fun _filters(): JsonField<List<Filter>> = filters
+
+            /**
              * Returns the raw JSON value of [invoiceSettings].
              *
              * Unlike [invoiceSettings], this method doesn't throw if the JSON field has an
@@ -862,6 +889,7 @@ private constructor(
                 private var description: JsonField<String> = JsonMissing.of()
                 private var effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of()
                 private var expiryDate: JsonField<OffsetDateTime> = JsonMissing.of()
+                private var filters: JsonField<MutableList<Filter>>? = null
                 private var invoiceSettings: JsonField<InvoiceSettings> = JsonMissing.of()
                 private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var perUnitCostBasis: JsonField<String> = JsonMissing.of()
@@ -874,6 +902,7 @@ private constructor(
                     description = increment.description
                     effectiveDate = increment.effectiveDate
                     expiryDate = increment.expiryDate
+                    filters = increment.filters.map { it.toMutableList() }
                     invoiceSettings = increment.invoiceSettings
                     metadata = increment.metadata
                     perUnitCostBasis = increment.perUnitCostBasis
@@ -977,6 +1006,35 @@ private constructor(
                 }
 
                 /**
+                 * Optional filter to specify which items this credit block applies to. If not
+                 * specified, the block will apply to all items for the pricing unit.
+                 */
+                fun filters(filters: List<Filter>?) = filters(JsonField.ofNullable(filters))
+
+                /**
+                 * Sets [Builder.filters] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.filters] with a well-typed `List<Filter>` value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun filters(filters: JsonField<List<Filter>>) = apply {
+                    this.filters = filters.map { it.toMutableList() }
+                }
+
+                /**
+                 * Adds a single [Filter] to [filters].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
+                fun addFilter(filter: Filter) = apply {
+                    filters =
+                        (filters ?: JsonField.of(mutableListOf())).also {
+                            checkKnown("filters", it).add(filter)
+                        }
+                }
+
+                /**
                  * Passing `invoice_settings` automatically generates an invoice for the newly added
                  * credits. If `invoice_settings` is passed, you must specify per_unit_cost_basis,
                  * as the calculation of the invoice total is done on that basis.
@@ -1071,6 +1129,7 @@ private constructor(
                         description,
                         effectiveDate,
                         expiryDate,
+                        (filters ?: JsonMissing.of()).map { it.toImmutable() },
                         invoiceSettings,
                         metadata,
                         perUnitCostBasis,
@@ -1095,6 +1154,7 @@ private constructor(
                 description()
                 effectiveDate()
                 expiryDate()
+                filters()?.forEach { it.validate() }
                 invoiceSettings()?.validate()
                 metadata()?.validate()
                 perUnitCostBasis()
@@ -1122,9 +1182,541 @@ private constructor(
                     (if (description.asKnown() == null) 0 else 1) +
                     (if (effectiveDate.asKnown() == null) 0 else 1) +
                     (if (expiryDate.asKnown() == null) 0 else 1) +
+                    (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                     (invoiceSettings.asKnown()?.validity() ?: 0) +
                     (metadata.asKnown()?.validity() ?: 0) +
                     (if (perUnitCostBasis.asKnown() == null) 0 else 1)
+
+            /** A PriceFilter that only allows item_id field for block filters. */
+            class Filter
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+            private constructor(
+                private val field: JsonField<Field>,
+                private val operator: JsonField<Operator>,
+                private val values: JsonField<List<String>>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("field")
+                    @ExcludeMissing
+                    field: JsonField<Field> = JsonMissing.of(),
+                    @JsonProperty("operator")
+                    @ExcludeMissing
+                    operator: JsonField<Operator> = JsonMissing.of(),
+                    @JsonProperty("values")
+                    @ExcludeMissing
+                    values: JsonField<List<String>> = JsonMissing.of(),
+                ) : this(field, operator, values, mutableMapOf())
+
+                /**
+                 * The property of the price the block applies to. Only item_id is supported.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun field(): Field = field.getRequired("field")
+
+                /**
+                 * Should prices that match the filter be included or excluded.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun operator(): Operator = operator.getRequired("operator")
+
+                /**
+                 * The IDs or values that match this filter.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun values(): List<String> = values.getRequired("values")
+
+                /**
+                 * Returns the raw JSON value of [field].
+                 *
+                 * Unlike [field], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("field") @ExcludeMissing fun _field(): JsonField<Field> = field
+
+                /**
+                 * Returns the raw JSON value of [operator].
+                 *
+                 * Unlike [operator], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("operator")
+                @ExcludeMissing
+                fun _operator(): JsonField<Operator> = operator
+
+                /**
+                 * Returns the raw JSON value of [values].
+                 *
+                 * Unlike [values], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("values")
+                @ExcludeMissing
+                fun _values(): JsonField<List<String>> = values
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of [Filter].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .field()
+                     * .operator()
+                     * .values()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [Filter]. */
+                class Builder internal constructor() {
+
+                    private var field: JsonField<Field>? = null
+                    private var operator: JsonField<Operator>? = null
+                    private var values: JsonField<MutableList<String>>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(filter: Filter) = apply {
+                        field = filter.field
+                        operator = filter.operator
+                        values = filter.values.map { it.toMutableList() }
+                        additionalProperties = filter.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * The property of the price the block applies to. Only item_id is supported.
+                     */
+                    fun field(field: Field) = field(JsonField.of(field))
+
+                    /**
+                     * Sets [Builder.field] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.field] with a well-typed [Field] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun field(field: JsonField<Field>) = apply { this.field = field }
+
+                    /** Should prices that match the filter be included or excluded. */
+                    fun operator(operator: Operator) = operator(JsonField.of(operator))
+
+                    /**
+                     * Sets [Builder.operator] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.operator] with a well-typed [Operator] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun operator(operator: JsonField<Operator>) = apply { this.operator = operator }
+
+                    /** The IDs or values that match this filter. */
+                    fun values(values: List<String>) = values(JsonField.of(values))
+
+                    /**
+                     * Sets [Builder.values] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.values] with a well-typed `List<String>`
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun values(values: JsonField<List<String>>) = apply {
+                        this.values = values.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [String] to [values].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addValue(value: String) = apply {
+                        values =
+                            (values ?: JsonField.of(mutableListOf())).also {
+                                checkKnown("values", it).add(value)
+                            }
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [Filter].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .field()
+                     * .operator()
+                     * .values()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): Filter =
+                        Filter(
+                            checkRequired("field", field),
+                            checkRequired("operator", operator),
+                            checkRequired("values", values).map { it.toImmutable() },
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Filter = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    field().validate()
+                    operator().validate()
+                    values()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (field.asKnown()?.validity() ?: 0) +
+                        (operator.asKnown()?.validity() ?: 0) +
+                        (values.asKnown()?.size ?: 0)
+
+                /** The property of the price the block applies to. Only item_id is supported. */
+                class Field @JsonCreator private constructor(private val value: JsonField<String>) :
+                    Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val ITEM_ID = of("item_id")
+
+                        fun of(value: String) = Field(JsonField.of(value))
+                    }
+
+                    /** An enum containing [Field]'s known values. */
+                    enum class Known {
+                        ITEM_ID
+                    }
+
+                    /**
+                     * An enum containing [Field]'s known values, as well as an [_UNKNOWN] member.
+                     *
+                     * An instance of [Field] can contain an unknown value in a couple of cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        ITEM_ID,
+                        /**
+                         * An enum member indicating that [Field] was instantiated with an unknown
+                         * value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            ITEM_ID -> Value.ITEM_ID
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            ITEM_ID -> Known.ITEM_ID
+                            else -> throw OrbInvalidDataException("Unknown Field: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Field = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is Field && value == other.value
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                /** Should prices that match the filter be included or excluded. */
+                class Operator
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val INCLUDES = of("includes")
+
+                        val EXCLUDES = of("excludes")
+
+                        fun of(value: String) = Operator(JsonField.of(value))
+                    }
+
+                    /** An enum containing [Operator]'s known values. */
+                    enum class Known {
+                        INCLUDES,
+                        EXCLUDES,
+                    }
+
+                    /**
+                     * An enum containing [Operator]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [Operator] can contain an unknown value in a couple of cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        INCLUDES,
+                        EXCLUDES,
+                        /**
+                         * An enum member indicating that [Operator] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            INCLUDES -> Value.INCLUDES
+                            EXCLUDES -> Value.EXCLUDES
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            INCLUDES -> Known.INCLUDES
+                            EXCLUDES -> Known.EXCLUDES
+                            else -> throw OrbInvalidDataException("Unknown Operator: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Operator = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is Operator && value == other.value
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Filter &&
+                        field == other.field &&
+                        operator == other.operator &&
+                        values == other.values &&
+                        additionalProperties == other.additionalProperties
+                }
+
+                private val hashCode: Int by lazy {
+                    Objects.hash(field, operator, values, additionalProperties)
+                }
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "Filter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
+            }
 
             /**
              * Passing `invoice_settings` automatically generates an invoice for the newly added
@@ -1132,11 +1724,14 @@ private constructor(
              * the calculation of the invoice total is done on that basis.
              */
             class InvoiceSettings
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val autoCollection: JsonField<Boolean>,
-                private val netTerms: JsonField<Long>,
+                private val customDueDate: JsonField<CustomDueDate>,
                 private val invoiceDate: JsonField<InvoiceDate>,
+                private val itemId: JsonField<String>,
                 private val memo: JsonField<String>,
+                private val netTerms: JsonField<Long>,
                 private val requireSuccessfulPayment: JsonField<Boolean>,
                 private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
@@ -1146,23 +1741,31 @@ private constructor(
                     @JsonProperty("auto_collection")
                     @ExcludeMissing
                     autoCollection: JsonField<Boolean> = JsonMissing.of(),
-                    @JsonProperty("net_terms")
+                    @JsonProperty("custom_due_date")
                     @ExcludeMissing
-                    netTerms: JsonField<Long> = JsonMissing.of(),
+                    customDueDate: JsonField<CustomDueDate> = JsonMissing.of(),
                     @JsonProperty("invoice_date")
                     @ExcludeMissing
                     invoiceDate: JsonField<InvoiceDate> = JsonMissing.of(),
+                    @JsonProperty("item_id")
+                    @ExcludeMissing
+                    itemId: JsonField<String> = JsonMissing.of(),
                     @JsonProperty("memo")
                     @ExcludeMissing
                     memo: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("net_terms")
+                    @ExcludeMissing
+                    netTerms: JsonField<Long> = JsonMissing.of(),
                     @JsonProperty("require_successful_payment")
                     @ExcludeMissing
                     requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of(),
                 ) : this(
                     autoCollection,
-                    netTerms,
+                    customDueDate,
                     invoiceDate,
+                    itemId,
                     memo,
+                    netTerms,
                     requireSuccessfulPayment,
                     mutableMapOf(),
                 )
@@ -1178,14 +1781,13 @@ private constructor(
                 fun autoCollection(): Boolean = autoCollection.getRequired("auto_collection")
 
                 /**
-                 * The net terms determines the difference between the invoice date and the issue
-                 * date for the invoice. If you intend the invoice to be due on issue, set this
-                 * to 0.
+                 * An optional custom due date for the invoice. If not set, the due date will be
+                 * calculated based on the `net_terms` value.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
                  */
-                fun netTerms(): Long? = netTerms.getNullable("net_terms")
+                fun customDueDate(): CustomDueDate? = customDueDate.getNullable("custom_due_date")
 
                 /**
                  * An ISO 8601 format date that denotes when this invoice should be dated in the
@@ -1198,12 +1800,33 @@ private constructor(
                 fun invoiceDate(): InvoiceDate? = invoiceDate.getNullable("invoice_date")
 
                 /**
+                 * The ID of the Item to be used for the invoice line item. If not provided, a
+                 * default 'Credits' item will be used.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun itemId(): String? = itemId.getNullable("item_id")
+
+                /**
                  * An optional memo to display on the invoice.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
                  */
                 fun memo(): String? = memo.getNullable("memo")
+
+                /**
+                 * The net terms determines the due date of the invoice. Due date is calculated
+                 * based on the invoice or issuance date, depending on the account's configured due
+                 * date calculation method. A value of '0' here represents that the invoice is due
+                 * on issue, whereas a value of '30' represents that the customer has 30 days to pay
+                 * the invoice. Do not set this field if you want to set a custom due date.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun netTerms(): Long? = netTerms.getNullable("net_terms")
 
                 /**
                  * If true, the new credit block will require that the corresponding invoice is paid
@@ -1226,14 +1849,14 @@ private constructor(
                 fun _autoCollection(): JsonField<Boolean> = autoCollection
 
                 /**
-                 * Returns the raw JSON value of [netTerms].
+                 * Returns the raw JSON value of [customDueDate].
                  *
-                 * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected
-                 * type.
+                 * Unlike [customDueDate], this method doesn't throw if the JSON field has an
+                 * unexpected type.
                  */
-                @JsonProperty("net_terms")
+                @JsonProperty("custom_due_date")
                 @ExcludeMissing
-                fun _netTerms(): JsonField<Long> = netTerms
+                fun _customDueDate(): JsonField<CustomDueDate> = customDueDate
 
                 /**
                  * Returns the raw JSON value of [invoiceDate].
@@ -1246,12 +1869,30 @@ private constructor(
                 fun _invoiceDate(): JsonField<InvoiceDate> = invoiceDate
 
                 /**
+                 * Returns the raw JSON value of [itemId].
+                 *
+                 * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+
+                /**
                  * Returns the raw JSON value of [memo].
                  *
                  * Unlike [memo], this method doesn't throw if the JSON field has an unexpected
                  * type.
                  */
                 @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
+
+                /**
+                 * Returns the raw JSON value of [netTerms].
+                 *
+                 * Unlike [netTerms], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("net_terms")
+                @ExcludeMissing
+                fun _netTerms(): JsonField<Long> = netTerms
 
                 /**
                  * Returns the raw JSON value of [requireSuccessfulPayment].
@@ -1283,7 +1924,6 @@ private constructor(
                      * The following fields are required:
                      * ```kotlin
                      * .autoCollection()
-                     * .netTerms()
                      * ```
                      */
                     fun builder() = Builder()
@@ -1293,17 +1933,21 @@ private constructor(
                 class Builder internal constructor() {
 
                     private var autoCollection: JsonField<Boolean>? = null
-                    private var netTerms: JsonField<Long>? = null
+                    private var customDueDate: JsonField<CustomDueDate> = JsonMissing.of()
                     private var invoiceDate: JsonField<InvoiceDate> = JsonMissing.of()
+                    private var itemId: JsonField<String> = JsonMissing.of()
                     private var memo: JsonField<String> = JsonMissing.of()
+                    private var netTerms: JsonField<Long> = JsonMissing.of()
                     private var requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(invoiceSettings: InvoiceSettings) = apply {
                         autoCollection = invoiceSettings.autoCollection
-                        netTerms = invoiceSettings.netTerms
+                        customDueDate = invoiceSettings.customDueDate
                         invoiceDate = invoiceSettings.invoiceDate
+                        itemId = invoiceSettings.itemId
                         memo = invoiceSettings.memo
+                        netTerms = invoiceSettings.netTerms
                         requireSuccessfulPayment = invoiceSettings.requireSuccessfulPayment
                         additionalProperties = invoiceSettings.additionalProperties.toMutableMap()
                     }
@@ -1327,27 +1971,31 @@ private constructor(
                     }
 
                     /**
-                     * The net terms determines the difference between the invoice date and the
-                     * issue date for the invoice. If you intend the invoice to be due on issue, set
-                     * this to 0.
+                     * An optional custom due date for the invoice. If not set, the due date will be
+                     * calculated based on the `net_terms` value.
                      */
-                    fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
+                    fun customDueDate(customDueDate: CustomDueDate?) =
+                        customDueDate(JsonField.ofNullable(customDueDate))
 
                     /**
-                     * Alias for [Builder.netTerms].
+                     * Sets [Builder.customDueDate] to an arbitrary JSON value.
                      *
-                     * This unboxed primitive overload exists for backwards compatibility.
+                     * You should usually call [Builder.customDueDate] with a well-typed
+                     * [CustomDueDate] value instead. This method is primarily for setting the field
+                     * to an undocumented or not yet supported value.
                      */
-                    fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
+                    fun customDueDate(customDueDate: JsonField<CustomDueDate>) = apply {
+                        this.customDueDate = customDueDate
+                    }
+
+                    /** Alias for calling [customDueDate] with `CustomDueDate.ofDate(date)`. */
+                    fun customDueDate(date: LocalDate) = customDueDate(CustomDueDate.ofDate(date))
 
                     /**
-                     * Sets [Builder.netTerms] to an arbitrary JSON value.
-                     *
-                     * You should usually call [Builder.netTerms] with a well-typed [Long] value
-                     * instead. This method is primarily for setting the field to an undocumented or
-                     * not yet supported value.
+                     * Alias for calling [customDueDate] with `CustomDueDate.ofDateTime(dateTime)`.
                      */
-                    fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
+                    fun customDueDate(dateTime: OffsetDateTime) =
+                        customDueDate(CustomDueDate.ofDateTime(dateTime))
 
                     /**
                      * An ISO 8601 format date that denotes when this invoice should be dated in the
@@ -1375,6 +2023,21 @@ private constructor(
                     fun invoiceDate(dateTime: OffsetDateTime) =
                         invoiceDate(InvoiceDate.ofDateTime(dateTime))
 
+                    /**
+                     * The ID of the Item to be used for the invoice line item. If not provided, a
+                     * default 'Credits' item will be used.
+                     */
+                    fun itemId(itemId: String?) = itemId(JsonField.ofNullable(itemId))
+
+                    /**
+                     * Sets [Builder.itemId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.itemId] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
                     /** An optional memo to display on the invoice. */
                     fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
 
@@ -1386,6 +2049,32 @@ private constructor(
                      * not yet supported value.
                      */
                     fun memo(memo: JsonField<String>) = apply { this.memo = memo }
+
+                    /**
+                     * The net terms determines the due date of the invoice. Due date is calculated
+                     * based on the invoice or issuance date, depending on the account's configured
+                     * due date calculation method. A value of '0' here represents that the invoice
+                     * is due on issue, whereas a value of '30' represents that the customer has 30
+                     * days to pay the invoice. Do not set this field if you want to set a custom
+                     * due date.
+                     */
+                    fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
+
+                    /**
+                     * Alias for [Builder.netTerms].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
+
+                    /**
+                     * Sets [Builder.netTerms] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.netTerms] with a well-typed [Long] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
 
                     /**
                      * If true, the new credit block will require that the corresponding invoice is
@@ -1436,7 +2125,6 @@ private constructor(
                      * The following fields are required:
                      * ```kotlin
                      * .autoCollection()
-                     * .netTerms()
                      * ```
                      *
                      * @throws IllegalStateException if any required field is unset.
@@ -1444,9 +2132,11 @@ private constructor(
                     fun build(): InvoiceSettings =
                         InvoiceSettings(
                             checkRequired("autoCollection", autoCollection),
-                            checkRequired("netTerms", netTerms),
+                            customDueDate,
                             invoiceDate,
+                            itemId,
                             memo,
+                            netTerms,
                             requireSuccessfulPayment,
                             additionalProperties.toMutableMap(),
                         )
@@ -1460,9 +2150,11 @@ private constructor(
                     }
 
                     autoCollection()
-                    netTerms()
+                    customDueDate()?.validate()
                     invoiceDate()?.validate()
+                    itemId()
                     memo()
+                    netTerms()
                     requireSuccessfulPayment()
                     validated = true
                 }
@@ -1483,10 +2175,191 @@ private constructor(
                  */
                 internal fun validity(): Int =
                     (if (autoCollection.asKnown() == null) 0 else 1) +
-                        (if (netTerms.asKnown() == null) 0 else 1) +
+                        (customDueDate.asKnown()?.validity() ?: 0) +
                         (invoiceDate.asKnown()?.validity() ?: 0) +
+                        (if (itemId.asKnown() == null) 0 else 1) +
                         (if (memo.asKnown() == null) 0 else 1) +
+                        (if (netTerms.asKnown() == null) 0 else 1) +
                         (if (requireSuccessfulPayment.asKnown() == null) 0 else 1)
+
+                /**
+                 * An optional custom due date for the invoice. If not set, the due date will be
+                 * calculated based on the `net_terms` value.
+                 */
+                @JsonDeserialize(using = CustomDueDate.Deserializer::class)
+                @JsonSerialize(using = CustomDueDate.Serializer::class)
+                class CustomDueDate
+                private constructor(
+                    private val date: LocalDate? = null,
+                    private val dateTime: OffsetDateTime? = null,
+                    private val _json: JsonValue? = null,
+                ) {
+
+                    fun date(): LocalDate? = date
+
+                    fun dateTime(): OffsetDateTime? = dateTime
+
+                    fun isDate(): Boolean = date != null
+
+                    fun isDateTime(): Boolean = dateTime != null
+
+                    fun asDate(): LocalDate = date.getOrThrow("date")
+
+                    fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
+
+                    fun _json(): JsonValue? = _json
+
+                    fun <T> accept(visitor: Visitor<T>): T =
+                        when {
+                            date != null -> visitor.visitDate(date)
+                            dateTime != null -> visitor.visitDateTime(dateTime)
+                            else -> visitor.unknown(_json)
+                        }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): CustomDueDate = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        accept(
+                            object : Visitor<Unit> {
+                                override fun visitDate(date: LocalDate) {}
+
+                                override fun visitDateTime(dateTime: OffsetDateTime) {}
+                            }
+                        )
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        accept(
+                            object : Visitor<Int> {
+                                override fun visitDate(date: LocalDate) = 1
+
+                                override fun visitDateTime(dateTime: OffsetDateTime) = 1
+
+                                override fun unknown(json: JsonValue?) = 0
+                            }
+                        )
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is CustomDueDate &&
+                            date == other.date &&
+                            dateTime == other.dateTime
+                    }
+
+                    override fun hashCode(): Int = Objects.hash(date, dateTime)
+
+                    override fun toString(): String =
+                        when {
+                            date != null -> "CustomDueDate{date=$date}"
+                            dateTime != null -> "CustomDueDate{dateTime=$dateTime}"
+                            _json != null -> "CustomDueDate{_unknown=$_json}"
+                            else -> throw IllegalStateException("Invalid CustomDueDate")
+                        }
+
+                    companion object {
+
+                        fun ofDate(date: LocalDate) = CustomDueDate(date = date)
+
+                        fun ofDateTime(dateTime: OffsetDateTime) =
+                            CustomDueDate(dateTime = dateTime)
+                    }
+
+                    /**
+                     * An interface that defines how to map each variant of [CustomDueDate] to a
+                     * value of type [T].
+                     */
+                    interface Visitor<out T> {
+
+                        fun visitDate(date: LocalDate): T
+
+                        fun visitDateTime(dateTime: OffsetDateTime): T
+
+                        /**
+                         * Maps an unknown variant of [CustomDueDate] to a value of type [T].
+                         *
+                         * An instance of [CustomDueDate] can contain an unknown variant if it was
+                         * deserialized from data that doesn't match any known variant. For example,
+                         * if the SDK is on an older version than the API, then the API may respond
+                         * with new variants that the SDK is unaware of.
+                         *
+                         * @throws OrbInvalidDataException in the default implementation.
+                         */
+                        fun unknown(json: JsonValue?): T {
+                            throw OrbInvalidDataException("Unknown CustomDueDate: $json")
+                        }
+                    }
+
+                    internal class Deserializer :
+                        BaseDeserializer<CustomDueDate>(CustomDueDate::class) {
+
+                        override fun ObjectCodec.deserialize(node: JsonNode): CustomDueDate {
+                            val json = JsonValue.fromJsonNode(node)
+
+                            val bestMatches =
+                                sequenceOf(
+                                        tryDeserialize(node, jacksonTypeRef<LocalDate>())?.let {
+                                            CustomDueDate(date = it, _json = json)
+                                        },
+                                        tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())
+                                            ?.let { CustomDueDate(dateTime = it, _json = json) },
+                                    )
+                                    .filterNotNull()
+                                    .allMaxBy { it.validity() }
+                                    .toList()
+                            return when (bestMatches.size) {
+                                // This can happen if what we're deserializing is completely
+                                // incompatible with all the possible variants (e.g. deserializing
+                                // from boolean).
+                                0 -> CustomDueDate(_json = json)
+                                1 -> bestMatches.single()
+                                // If there's more than one match with the highest validity, then
+                                // use the first completely valid match, or simply the first match
+                                // if none are completely valid.
+                                else ->
+                                    bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
+                            }
+                        }
+                    }
+
+                    internal class Serializer :
+                        BaseSerializer<CustomDueDate>(CustomDueDate::class) {
+
+                        override fun serialize(
+                            value: CustomDueDate,
+                            generator: JsonGenerator,
+                            provider: SerializerProvider,
+                        ) {
+                            when {
+                                value.date != null -> generator.writeObject(value.date)
+                                value.dateTime != null -> generator.writeObject(value.dateTime)
+                                value._json != null -> generator.writeObject(value._json)
+                                else -> throw IllegalStateException("Invalid CustomDueDate")
+                            }
+                        }
+                    }
+                }
 
                 /**
                  * An ISO 8601 format date that denotes when this invoice should be dated in the
@@ -1570,10 +2443,12 @@ private constructor(
                             return true
                         }
 
-                        return /* spotless:off */ other is InvoiceDate && date == other.date && dateTime == other.dateTime /* spotless:on */
+                        return other is InvoiceDate &&
+                            date == other.date &&
+                            dateTime == other.dateTime
                     }
 
-                    override fun hashCode(): Int = /* spotless:off */ Objects.hash(date, dateTime) /* spotless:on */
+                    override fun hashCode(): Int = Objects.hash(date, dateTime)
 
                     override fun toString(): String =
                         when {
@@ -1635,7 +2510,7 @@ private constructor(
                             return when (bestMatches.size) {
                                 // This can happen if what we're deserializing is completely
                                 // incompatible with all the possible variants (e.g. deserializing
-                                // from object).
+                                // from boolean).
                                 0 -> InvoiceDate(_json = json)
                                 1 -> bestMatches.single()
                                 // If there's more than one match with the highest validity, then
@@ -1669,17 +2544,34 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is InvoiceSettings && autoCollection == other.autoCollection && netTerms == other.netTerms && invoiceDate == other.invoiceDate && memo == other.memo && requireSuccessfulPayment == other.requireSuccessfulPayment && additionalProperties == other.additionalProperties /* spotless:on */
+                    return other is InvoiceSettings &&
+                        autoCollection == other.autoCollection &&
+                        customDueDate == other.customDueDate &&
+                        invoiceDate == other.invoiceDate &&
+                        itemId == other.itemId &&
+                        memo == other.memo &&
+                        netTerms == other.netTerms &&
+                        requireSuccessfulPayment == other.requireSuccessfulPayment &&
+                        additionalProperties == other.additionalProperties
                 }
 
-                /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(autoCollection, netTerms, invoiceDate, memo, requireSuccessfulPayment, additionalProperties) }
-                /* spotless:on */
+                private val hashCode: Int by lazy {
+                    Objects.hash(
+                        autoCollection,
+                        customDueDate,
+                        invoiceDate,
+                        itemId,
+                        memo,
+                        netTerms,
+                        requireSuccessfulPayment,
+                        additionalProperties,
+                    )
+                }
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, invoiceDate=$invoiceDate, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
+                    "InvoiceSettings{autoCollection=$autoCollection, customDueDate=$customDueDate, invoiceDate=$invoiceDate, itemId=$itemId, memo=$memo, netTerms=$netTerms, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
             }
 
             /**
@@ -1779,12 +2671,10 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return other is Metadata && additionalProperties == other.additionalProperties
                 }
 
-                /* spotless:off */
                 private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-                /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
@@ -1796,20 +2686,44 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Increment && amount == other.amount && entryType == other.entryType && currency == other.currency && description == other.description && effectiveDate == other.effectiveDate && expiryDate == other.expiryDate && invoiceSettings == other.invoiceSettings && metadata == other.metadata && perUnitCostBasis == other.perUnitCostBasis && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Increment &&
+                    amount == other.amount &&
+                    entryType == other.entryType &&
+                    currency == other.currency &&
+                    description == other.description &&
+                    effectiveDate == other.effectiveDate &&
+                    expiryDate == other.expiryDate &&
+                    filters == other.filters &&
+                    invoiceSettings == other.invoiceSettings &&
+                    metadata == other.metadata &&
+                    perUnitCostBasis == other.perUnitCostBasis &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(amount, entryType, currency, description, effectiveDate, expiryDate, invoiceSettings, metadata, perUnitCostBasis, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(
+                    amount,
+                    entryType,
+                    currency,
+                    description,
+                    effectiveDate,
+                    expiryDate,
+                    filters,
+                    invoiceSettings,
+                    metadata,
+                    perUnitCostBasis,
+                    additionalProperties,
+                )
+            }
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "Increment{amount=$amount, entryType=$entryType, currency=$currency, description=$description, effectiveDate=$effectiveDate, expiryDate=$expiryDate, invoiceSettings=$invoiceSettings, metadata=$metadata, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
+                "Increment{amount=$amount, entryType=$entryType, currency=$currency, description=$description, effectiveDate=$effectiveDate, expiryDate=$expiryDate, filters=$filters, invoiceSettings=$invoiceSettings, metadata=$metadata, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
         }
 
         class Decrement
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val amount: JsonField<Double>,
             private val entryType: JsonValue,
@@ -2226,12 +3140,10 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return other is Metadata && additionalProperties == other.additionalProperties
                 }
 
-                /* spotless:off */
                 private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-                /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
@@ -2243,12 +3155,25 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Decrement && amount == other.amount && entryType == other.entryType && currency == other.currency && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Decrement &&
+                    amount == other.amount &&
+                    entryType == other.entryType &&
+                    currency == other.currency &&
+                    description == other.description &&
+                    metadata == other.metadata &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(amount, entryType, currency, description, metadata, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(
+                    amount,
+                    entryType,
+                    currency,
+                    description,
+                    metadata,
+                    additionalProperties,
+                )
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -2257,6 +3182,7 @@ private constructor(
         }
 
         class ExpirationChange
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val entryType: JsonValue,
             private val targetExpiryDate: JsonField<LocalDate>,
@@ -2821,12 +3747,10 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return other is Metadata && additionalProperties == other.additionalProperties
                 }
 
-                /* spotless:off */
                 private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-                /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
@@ -2838,12 +3762,31 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is ExpirationChange && entryType == other.entryType && targetExpiryDate == other.targetExpiryDate && amount == other.amount && blockId == other.blockId && currency == other.currency && description == other.description && expiryDate == other.expiryDate && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is ExpirationChange &&
+                    entryType == other.entryType &&
+                    targetExpiryDate == other.targetExpiryDate &&
+                    amount == other.amount &&
+                    blockId == other.blockId &&
+                    currency == other.currency &&
+                    description == other.description &&
+                    expiryDate == other.expiryDate &&
+                    metadata == other.metadata &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(entryType, targetExpiryDate, amount, blockId, currency, description, expiryDate, metadata, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(
+                    entryType,
+                    targetExpiryDate,
+                    amount,
+                    blockId,
+                    currency,
+                    description,
+                    expiryDate,
+                    metadata,
+                    additionalProperties,
+                )
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -2852,6 +3795,7 @@ private constructor(
         }
 
         class Void
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val amount: JsonField<Double>,
             private val blockId: JsonField<String>,
@@ -3358,12 +4302,10 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return other is Metadata && additionalProperties == other.additionalProperties
                 }
 
-                /* spotless:off */
                 private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-                /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
@@ -3487,7 +4429,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is VoidReason && value == other.value /* spotless:on */
+                    return other is VoidReason && value == other.value
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -3500,12 +4442,29 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Void && amount == other.amount && blockId == other.blockId && entryType == other.entryType && currency == other.currency && description == other.description && metadata == other.metadata && voidReason == other.voidReason && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Void &&
+                    amount == other.amount &&
+                    blockId == other.blockId &&
+                    entryType == other.entryType &&
+                    currency == other.currency &&
+                    description == other.description &&
+                    metadata == other.metadata &&
+                    voidReason == other.voidReason &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(amount, blockId, entryType, currency, description, metadata, voidReason, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(
+                    amount,
+                    blockId,
+                    entryType,
+                    currency,
+                    description,
+                    metadata,
+                    voidReason,
+                    additionalProperties,
+                )
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -3514,6 +4473,7 @@ private constructor(
         }
 
         class Amendment
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val amount: JsonField<Double>,
             private val blockId: JsonField<String>,
@@ -3969,12 +4929,10 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return other is Metadata && additionalProperties == other.additionalProperties
                 }
 
-                /* spotless:off */
                 private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-                /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
@@ -3986,12 +4944,27 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Amendment && amount == other.amount && blockId == other.blockId && entryType == other.entryType && currency == other.currency && description == other.description && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Amendment &&
+                    amount == other.amount &&
+                    blockId == other.blockId &&
+                    entryType == other.entryType &&
+                    currency == other.currency &&
+                    description == other.description &&
+                    metadata == other.metadata &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(amount, blockId, entryType, currency, description, metadata, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(
+                    amount,
+                    blockId,
+                    entryType,
+                    currency,
+                    description,
+                    metadata,
+                    additionalProperties,
+                )
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -4005,10 +4978,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditLedgerCreateEntryByExternalIdParams && externalCustomerId == other.externalCustomerId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CustomerCreditLedgerCreateEntryByExternalIdParams &&
+            externalCustomerId == other.externalCustomerId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(externalCustomerId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CustomerCreditLedgerCreateEntryByExternalIdParams{externalCustomerId=$externalCustomerId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

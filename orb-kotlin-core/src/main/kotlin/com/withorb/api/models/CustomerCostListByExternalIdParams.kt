@@ -33,7 +33,6 @@ import java.util.Objects
  *    committed spend.
  *
  * ## Fetching subscriptions
- *
  * By default, this endpoint fetches the currently active subscription for the customer, and returns
  * cost information for the subscription's current billing period, broken down by each participating
  * price. If there are no currently active subscriptions, this will instead default to the most
@@ -46,17 +45,15 @@ import java.util.Objects
  * and prices for both subscriptions will be included in the breakdown.
  *
  * ## Prepaid plans
- *
  * For plans that include prices which deduct credits rather than accrue in-arrears charges in a
  * billable currency, this endpoint will return the total deduction amount, in credits, for the
  * specified timeframe.
  *
  * ## Cumulative subtotals and totals
- *
  * Since the subtotal and total must factor in any billing-period level discounts and minimums, it's
  * most meaningful to consider costs relative to the start of the subscription's billing period. As
  * a result, by default this endpoint returns cumulative totals since the beginning of the billing
- * period. In particular, the `timeframe_start` of a returned timeframe window is _always_ the
+ * period. In particular, the `timeframe_start` of a returned timeframe window is *always* the
  * beginning of the billing period and `timeframe_end` is incremented one day at a time to build the
  * result.
  *
@@ -74,7 +71,6 @@ import java.util.Objects
  * | 2023-02-01      | 2023-02-06    | 36               | \$90.00  | \$90.00                  |
  *
  * ### Periodic values
- *
  * When the query parameter `view_mode=periodic` is specified, Orb will return an incremental
  * day-by-day view of costs. In this case, there will always be a one-day difference between
  * `timeframe_start` and `timeframe_end` for the timeframes returned. This is a transform on top of
@@ -84,7 +80,6 @@ import java.util.Objects
  * cost.
  *
  * ## Timeframe bounds
- *
  * For an active subscription, both timeframes should be specified in the request. If a subscription
  * starts or ends within the timeframe, the response will only include windows where the
  * subscription is active. If a subscription has ended, no timeframe bounds need to be specified and
@@ -115,7 +110,6 @@ import java.util.Objects
  * You can see this sliced timeframe visualized [here](https://i.imgur.com/TXhYgme.png).
  *
  * ### Matrix prices
- *
  * When a price uses matrix pricing, it's important to view costs grouped by those matrix
  * dimensions. Orb will return `price_groups` with the `grouping_key` and `secondary_grouping_key`
  * based on the matrix price definition, for each `grouping_value` and `secondary_grouping_value`
@@ -473,7 +467,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ViewMode && value == other.value /* spotless:on */
+            return other is ViewMode && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -486,10 +480,26 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCostListByExternalIdParams && externalCustomerId == other.externalCustomerId && currency == other.currency && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && viewMode == other.viewMode && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CustomerCostListByExternalIdParams &&
+            externalCustomerId == other.externalCustomerId &&
+            currency == other.currency &&
+            timeframeEnd == other.timeframeEnd &&
+            timeframeStart == other.timeframeStart &&
+            viewMode == other.viewMode &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, currency, timeframeEnd, timeframeStart, viewMode, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            externalCustomerId,
+            currency,
+            timeframeEnd,
+            timeframeStart,
+            viewMode,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "CustomerCostListByExternalIdParams{externalCustomerId=$externalCustomerId, currency=$currency, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

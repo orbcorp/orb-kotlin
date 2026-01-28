@@ -19,6 +19,8 @@ private constructor(
      * The HTTP client to use in the SDK.
      *
      * Use the one published in `orb-kotlin-client-okhttp` or implement your own.
+     *
+     * This class takes ownership of the client and closes it when closed.
      */
     val httpClient: HttpClient,
     /**
@@ -36,6 +38,16 @@ private constructor(
      * needs to be overridden.
      */
     val jsonMapper: JsonMapper,
+    /**
+     * The interface to use for delaying execution, like during retries.
+     *
+     * This is primarily useful for using fake delays in tests.
+     *
+     * Defaults to real execution delays.
+     *
+     * This class takes ownership of the sleeper and closes it when closed.
+     */
+    val sleeper: Sleeper,
     /**
      * The clock to use for operations that require timing, like retries.
      *
@@ -127,6 +139,7 @@ private constructor(
         private var httpClient: HttpClient? = null
         private var checkJacksonVersionCompatibility: Boolean = true
         private var jsonMapper: JsonMapper = jsonMapper()
+        private var sleeper: Sleeper? = null
         private var clock: Clock = Clock.systemUTC()
         private var baseUrl: String? = null
         private var headers: Headers.Builder = Headers.builder()
@@ -141,6 +154,7 @@ private constructor(
             httpClient = clientOptions.originalHttpClient
             checkJacksonVersionCompatibility = clientOptions.checkJacksonVersionCompatibility
             jsonMapper = clientOptions.jsonMapper
+            sleeper = clientOptions.sleeper
             clock = clientOptions.clock
             baseUrl = clientOptions.baseUrl
             headers = clientOptions.headers.toBuilder()
@@ -156,6 +170,8 @@ private constructor(
          * The HTTP client to use in the SDK.
          *
          * Use the one published in `orb-kotlin-client-okhttp` or implement your own.
+         *
+         * This class takes ownership of the client and closes it when closed.
          */
         fun httpClient(httpClient: HttpClient) = apply {
             this.httpClient = PhantomReachableClosingHttpClient(httpClient)
@@ -179,6 +195,17 @@ private constructor(
          * rarely needs to be overridden.
          */
         fun jsonMapper(jsonMapper: JsonMapper) = apply { this.jsonMapper = jsonMapper }
+
+        /**
+         * The interface to use for delaying execution, like during retries.
+         *
+         * This is primarily useful for using fake delays in tests.
+         *
+         * Defaults to real execution delays.
+         *
+         * This class takes ownership of the sleeper and closes it when closed.
+         */
+        fun sleeper(sleeper: Sleeper) = apply { this.sleeper = PhantomReachableSleeper(sleeper) }
 
         /**
          * The clock to use for operations that require timing, like retries.
@@ -364,6 +391,7 @@ private constructor(
          */
         fun build(): ClientOptions {
             val httpClient = checkRequired("httpClient", httpClient)
+            val sleeper = sleeper ?: PhantomReachableSleeper(DefaultSleeper())
             val apiKey = checkRequired("apiKey", apiKey)
 
             val headers = Headers.builder()
@@ -375,6 +403,7 @@ private constructor(
             headers.put("X-Stainless-Package-Version", getPackageVersion())
             headers.put("X-Stainless-Runtime", "JRE")
             headers.put("X-Stainless-Runtime-Version", getJavaVersion())
+            headers.put("X-Stainless-Kotlin-Version", KotlinVersion.CURRENT.toString())
             apiKey.let {
                 if (!it.isEmpty()) {
                     headers.put("Authorization", "Bearer $it")
@@ -387,12 +416,14 @@ private constructor(
                 httpClient,
                 RetryingHttpClient.builder()
                     .httpClient(httpClient)
+                    .sleeper(sleeper)
                     .clock(clock)
                     .maxRetries(maxRetries)
                     .idempotencyHeader("Idempotency-Key")
                     .build(),
                 checkJacksonVersionCompatibility,
                 jsonMapper,
+                sleeper,
                 clock,
                 baseUrl,
                 headers.build(),
@@ -404,5 +435,20 @@ private constructor(
                 webhookSecret,
             )
         }
+    }
+
+    /**
+     * Closes these client options, relinquishing any underlying resources.
+     *
+     * This is purposefully not inherited from [AutoCloseable] because the client options are
+     * long-lived and usually should not be synchronously closed via try-with-resources.
+     *
+     * It's also usually not necessary to call this method at all. the default client automatically
+     * releases threads and connections if they remain idle, but if you are writing an application
+     * that needs to aggressively release unused resources, then you may call this method.
+     */
+    fun close() {
+        httpClient.close()
+        sleeper.close()
     }
 }

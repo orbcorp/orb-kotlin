@@ -26,7 +26,36 @@ internal class NewFloatingScalableMatrixWithTieredPricingPriceTest {
                     NewFloatingScalableMatrixWithTieredPricingPrice
                         .ScalableMatrixWithTieredPricingConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .firstDimension("first_dimension")
+                        .addMatrixScalingFactor(
+                            NewFloatingScalableMatrixWithTieredPricingPrice
+                                .ScalableMatrixWithTieredPricingConfig
+                                .MatrixScalingFactor
+                                .builder()
+                                .firstDimensionValue("first_dimension_value")
+                                .scalingFactor("scaling_factor")
+                                .secondDimensionValue("second_dimension_value")
+                                .build()
+                        )
+                        .addTier(
+                            NewFloatingScalableMatrixWithTieredPricingPrice
+                                .ScalableMatrixWithTieredPricingConfig
+                                .Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .addTier(
+                            NewFloatingScalableMatrixWithTieredPricingPrice
+                                .ScalableMatrixWithTieredPricingConfig
+                                .Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .secondDimension("second_dimension")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -82,7 +111,36 @@ internal class NewFloatingScalableMatrixWithTieredPricingPriceTest {
                 NewFloatingScalableMatrixWithTieredPricingPrice
                     .ScalableMatrixWithTieredPricingConfig
                     .builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .firstDimension("first_dimension")
+                    .addMatrixScalingFactor(
+                        NewFloatingScalableMatrixWithTieredPricingPrice
+                            .ScalableMatrixWithTieredPricingConfig
+                            .MatrixScalingFactor
+                            .builder()
+                            .firstDimensionValue("first_dimension_value")
+                            .scalingFactor("scaling_factor")
+                            .secondDimensionValue("second_dimension_value")
+                            .build()
+                    )
+                    .addTier(
+                        NewFloatingScalableMatrixWithTieredPricingPrice
+                            .ScalableMatrixWithTieredPricingConfig
+                            .Tier
+                            .builder()
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .addTier(
+                        NewFloatingScalableMatrixWithTieredPricingPrice
+                            .ScalableMatrixWithTieredPricingConfig
+                            .Tier
+                            .builder()
+                            .tierLowerBound("tier_lower_bound")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .secondDimension("second_dimension")
                     .build()
             )
         assertThat(newFloatingScalableMatrixWithTieredPricingPrice.billableMetricId())
@@ -99,7 +157,7 @@ internal class NewFloatingScalableMatrixWithTieredPricingPriceTest {
         assertThat(newFloatingScalableMatrixWithTieredPricingPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newFloatingScalableMatrixWithTieredPricingPrice.conversionRateConfig())
             .isEqualTo(
-                NewFloatingScalableMatrixWithTieredPricingPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -154,7 +212,36 @@ internal class NewFloatingScalableMatrixWithTieredPricingPriceTest {
                     NewFloatingScalableMatrixWithTieredPricingPrice
                         .ScalableMatrixWithTieredPricingConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .firstDimension("first_dimension")
+                        .addMatrixScalingFactor(
+                            NewFloatingScalableMatrixWithTieredPricingPrice
+                                .ScalableMatrixWithTieredPricingConfig
+                                .MatrixScalingFactor
+                                .builder()
+                                .firstDimensionValue("first_dimension_value")
+                                .scalingFactor("scaling_factor")
+                                .secondDimensionValue("second_dimension_value")
+                                .build()
+                        )
+                        .addTier(
+                            NewFloatingScalableMatrixWithTieredPricingPrice
+                                .ScalableMatrixWithTieredPricingConfig
+                                .Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .addTier(
+                            NewFloatingScalableMatrixWithTieredPricingPrice
+                                .ScalableMatrixWithTieredPricingConfig
+                                .Tier
+                                .builder()
+                                .tierLowerBound("tier_lower_bound")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .secondDimension("second_dimension")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

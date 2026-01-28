@@ -20,6 +20,15 @@ internal class CustomerCreditListByExternalIdPageResponseTest {
                         .balance(0.0)
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            CustomerCreditListByExternalIdResponse.Filter.builder()
+                                .field(CustomerCreditListByExternalIdResponse.Filter.Field.ITEM_ID)
+                                .operator(
+                                    CustomerCreditListByExternalIdResponse.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumInitialBalance(0.0)
                         .perUnitCostBasis("per_unit_cost_basis")
                         .status(CustomerCreditListByExternalIdResponse.Status.ACTIVE)
@@ -37,6 +46,15 @@ internal class CustomerCreditListByExternalIdPageResponseTest {
                     .balance(0.0)
                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .addFilter(
+                        CustomerCreditListByExternalIdResponse.Filter.builder()
+                            .field(CustomerCreditListByExternalIdResponse.Filter.Field.ITEM_ID)
+                            .operator(
+                                CustomerCreditListByExternalIdResponse.Filter.Operator.INCLUDES
+                            )
+                            .addValue("string")
+                            .build()
+                    )
                     .maximumInitialBalance(0.0)
                     .perUnitCostBasis("per_unit_cost_basis")
                     .status(CustomerCreditListByExternalIdResponse.Status.ACTIVE)
@@ -57,6 +75,15 @@ internal class CustomerCreditListByExternalIdPageResponseTest {
                         .balance(0.0)
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            CustomerCreditListByExternalIdResponse.Filter.builder()
+                                .field(CustomerCreditListByExternalIdResponse.Filter.Field.ITEM_ID)
+                                .operator(
+                                    CustomerCreditListByExternalIdResponse.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
                         .maximumInitialBalance(0.0)
                         .perUnitCostBasis("per_unit_cost_basis")
                         .status(CustomerCreditListByExternalIdResponse.Status.ACTIVE)

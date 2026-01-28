@@ -15,11 +15,13 @@ internal class NewTaxJarConfigurationTest {
             NewTaxJarConfiguration.builder()
                 .taxExempt(true)
                 .taxProvider(NewTaxJarConfiguration.TaxProvider.TAXJAR)
+                .automaticTaxEnabled(true)
                 .build()
 
         assertThat(newTaxJarConfiguration.taxExempt()).isEqualTo(true)
         assertThat(newTaxJarConfiguration.taxProvider())
             .isEqualTo(NewTaxJarConfiguration.TaxProvider.TAXJAR)
+        assertThat(newTaxJarConfiguration.automaticTaxEnabled()).isEqualTo(true)
     }
 
     @Test
@@ -29,6 +31,7 @@ internal class NewTaxJarConfigurationTest {
             NewTaxJarConfiguration.builder()
                 .taxExempt(true)
                 .taxProvider(NewTaxJarConfiguration.TaxProvider.TAXJAR)
+                .automaticTaxEnabled(true)
                 .build()
 
         val roundtrippedNewTaxJarConfiguration =

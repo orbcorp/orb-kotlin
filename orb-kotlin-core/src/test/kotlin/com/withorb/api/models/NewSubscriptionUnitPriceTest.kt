@@ -18,7 +18,7 @@ internal class NewSubscriptionUnitPriceTest {
                 .itemId("item_id")
                 .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                 .name("Annual fee")
-                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").prorated(true).build())
                 .billableMetricId("billable_metric_id")
                 .billedInAdvance(true)
                 .billingCycleConfiguration(
@@ -63,7 +63,7 @@ internal class NewSubscriptionUnitPriceTest {
             .isEqualTo(NewSubscriptionUnitPrice.ModelType.UNIT)
         assertThat(newSubscriptionUnitPrice.name()).isEqualTo("Annual fee")
         assertThat(newSubscriptionUnitPrice.unitConfig())
-            .isEqualTo(UnitConfig.builder().unitAmount("unit_amount").build())
+            .isEqualTo(UnitConfig.builder().unitAmount("unit_amount").prorated(true).build())
         assertThat(newSubscriptionUnitPrice.billableMetricId()).isEqualTo("billable_metric_id")
         assertThat(newSubscriptionUnitPrice.billedInAdvance()).isEqualTo(true)
         assertThat(newSubscriptionUnitPrice.billingCycleConfiguration())
@@ -76,7 +76,7 @@ internal class NewSubscriptionUnitPriceTest {
         assertThat(newSubscriptionUnitPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionUnitPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionUnitPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -122,7 +122,7 @@ internal class NewSubscriptionUnitPriceTest {
                 .itemId("item_id")
                 .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                 .name("Annual fee")
-                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").build())
+                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").prorated(true).build())
                 .billableMetricId("billable_metric_id")
                 .billedInAdvance(true)
                 .billingCycleConfiguration(

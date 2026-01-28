@@ -25,7 +25,20 @@ internal class NewSubscriptionScalableMatrixWithUnitPricingPriceTest {
                     NewSubscriptionScalableMatrixWithUnitPricingPrice
                         .ScalableMatrixWithUnitPricingConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .firstDimension("first_dimension")
+                        .addMatrixScalingFactor(
+                            NewSubscriptionScalableMatrixWithUnitPricingPrice
+                                .ScalableMatrixWithUnitPricingConfig
+                                .MatrixScalingFactor
+                                .builder()
+                                .firstDimensionValue("first_dimension_value")
+                                .scalingFactor("scaling_factor")
+                                .secondDimensionValue("second_dimension_value")
+                                .build()
+                        )
+                        .unitPrice("unit_price")
+                        .prorate(true)
+                        .secondDimension("second_dimension")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -82,7 +95,20 @@ internal class NewSubscriptionScalableMatrixWithUnitPricingPriceTest {
                 NewSubscriptionScalableMatrixWithUnitPricingPrice
                     .ScalableMatrixWithUnitPricingConfig
                     .builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .firstDimension("first_dimension")
+                    .addMatrixScalingFactor(
+                        NewSubscriptionScalableMatrixWithUnitPricingPrice
+                            .ScalableMatrixWithUnitPricingConfig
+                            .MatrixScalingFactor
+                            .builder()
+                            .firstDimensionValue("first_dimension_value")
+                            .scalingFactor("scaling_factor")
+                            .secondDimensionValue("second_dimension_value")
+                            .build()
+                    )
+                    .unitPrice("unit_price")
+                    .prorate(true)
+                    .secondDimension("second_dimension")
                     .build()
             )
         assertThat(newSubscriptionScalableMatrixWithUnitPricingPrice.billableMetricId())
@@ -100,7 +126,7 @@ internal class NewSubscriptionScalableMatrixWithUnitPricingPriceTest {
             .isEqualTo(0.0)
         assertThat(newSubscriptionScalableMatrixWithUnitPricingPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionScalableMatrixWithUnitPricingPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -160,7 +186,20 @@ internal class NewSubscriptionScalableMatrixWithUnitPricingPriceTest {
                     NewSubscriptionScalableMatrixWithUnitPricingPrice
                         .ScalableMatrixWithUnitPricingConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .firstDimension("first_dimension")
+                        .addMatrixScalingFactor(
+                            NewSubscriptionScalableMatrixWithUnitPricingPrice
+                                .ScalableMatrixWithUnitPricingConfig
+                                .MatrixScalingFactor
+                                .builder()
+                                .firstDimensionValue("first_dimension_value")
+                                .scalingFactor("scaling_factor")
+                                .secondDimensionValue("second_dimension_value")
+                                .build()
+                        )
+                        .unitPrice("unit_price")
+                        .prorate(true)
+                        .secondDimension("second_dimension")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

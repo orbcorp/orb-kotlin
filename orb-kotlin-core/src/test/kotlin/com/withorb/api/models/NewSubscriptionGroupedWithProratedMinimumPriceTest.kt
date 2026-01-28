@@ -18,7 +18,9 @@ internal class NewSubscriptionGroupedWithProratedMinimumPriceTest {
                 .groupedWithProratedMinimumConfig(
                     NewSubscriptionGroupedWithProratedMinimumPrice.GroupedWithProratedMinimumConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .minimum("minimum")
+                        .unitRate("unit_rate")
                         .build()
                 )
                 .itemId("item_id")
@@ -72,7 +74,9 @@ internal class NewSubscriptionGroupedWithProratedMinimumPriceTest {
             .isEqualTo(
                 NewSubscriptionGroupedWithProratedMinimumPrice.GroupedWithProratedMinimumConfig
                     .builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .groupingKey("x")
+                    .minimum("minimum")
+                    .unitRate("unit_rate")
                     .build()
             )
         assertThat(newSubscriptionGroupedWithProratedMinimumPrice.itemId()).isEqualTo("item_id")
@@ -95,7 +99,7 @@ internal class NewSubscriptionGroupedWithProratedMinimumPriceTest {
         assertThat(newSubscriptionGroupedWithProratedMinimumPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionGroupedWithProratedMinimumPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionGroupedWithProratedMinimumPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -145,7 +149,9 @@ internal class NewSubscriptionGroupedWithProratedMinimumPriceTest {
                 .groupedWithProratedMinimumConfig(
                     NewSubscriptionGroupedWithProratedMinimumPrice.GroupedWithProratedMinimumConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .groupingKey("x")
+                        .minimum("minimum")
+                        .unitRate("unit_rate")
                         .build()
                 )
                 .itemId("item_id")

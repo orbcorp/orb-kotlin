@@ -21,6 +21,13 @@ internal class AllocationTest {
                         .durationUnit(CustomExpiration.DurationUnit.DAY)
                         .build()
                 )
+                .addFilter(
+                    Allocation.Filter.builder()
+                        .field(Allocation.Filter.Field.PRICE_ID)
+                        .operator(Allocation.Filter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .build()
 
         assertThat(allocation.allowsRollover()).isEqualTo(true)
@@ -30,6 +37,14 @@ internal class AllocationTest {
                 CustomExpiration.builder()
                     .duration(0L)
                     .durationUnit(CustomExpiration.DurationUnit.DAY)
+                    .build()
+            )
+        assertThat(allocation.filters())
+            .containsExactly(
+                Allocation.Filter.builder()
+                    .field(Allocation.Filter.Field.PRICE_ID)
+                    .operator(Allocation.Filter.Operator.INCLUDES)
+                    .addValue("string")
                     .build()
             )
     }
@@ -45,6 +60,13 @@ internal class AllocationTest {
                     CustomExpiration.builder()
                         .duration(0L)
                         .durationUnit(CustomExpiration.DurationUnit.DAY)
+                        .build()
+                )
+                .addFilter(
+                    Allocation.Filter.builder()
+                        .field(Allocation.Filter.Field.PRICE_ID)
+                        .operator(Allocation.Filter.Operator.INCLUDES)
+                        .addValue("string")
                         .build()
                 )
                 .build()

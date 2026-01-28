@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
+import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,11 +13,14 @@ internal class InvoiceUpdateParamsTest {
     fun create() {
         InvoiceUpdateParams.builder()
             .invoiceId("invoice_id")
+            .dueDate(LocalDate.parse("2023-09-22"))
+            .invoiceDate(LocalDate.parse("2023-09-22"))
             .metadata(
                 InvoiceUpdateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+            .netTerms(0L)
             .build()
     }
 
@@ -34,21 +38,29 @@ internal class InvoiceUpdateParamsTest {
         val params =
             InvoiceUpdateParams.builder()
                 .invoiceId("invoice_id")
+                .dueDate(LocalDate.parse("2023-09-22"))
+                .invoiceDate(LocalDate.parse("2023-09-22"))
                 .metadata(
                     InvoiceUpdateParams.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .netTerms(0L)
                 .build()
 
         val body = params._body()
 
+        assertThat(body.dueDate())
+            .isEqualTo(InvoiceUpdateParams.DueDate.ofDate(LocalDate.parse("2023-09-22")))
+        assertThat(body.invoiceDate())
+            .isEqualTo(InvoiceUpdateParams.InvoiceDate.ofDate(LocalDate.parse("2023-09-22")))
         assertThat(body.metadata())
             .isEqualTo(
                 InvoiceUpdateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(body.netTerms()).isEqualTo(0L)
     }
 
     @Test

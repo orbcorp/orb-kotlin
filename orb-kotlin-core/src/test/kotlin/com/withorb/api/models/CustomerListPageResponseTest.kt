@@ -20,6 +20,7 @@ internal class CustomerListPageResponseTest {
                         .id("id")
                         .addAdditionalEmail("string")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .balance("balance")
                         .billingAddress(
                             Address.builder()
@@ -96,6 +97,21 @@ internal class CustomerListPageResponseTest {
                                 .excluded(true)
                                 .build()
                         )
+                        .automaticTaxEnabled(true)
+                        .paymentConfiguration(
+                            Customer.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    Customer.PaymentConfiguration.PaymentProvider.builder()
+                                        .providerType(
+                                            Customer.PaymentConfiguration.PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .reportingConfiguration(
                             Customer.ReportingConfiguration.builder().exempt(true).build()
                         )
@@ -112,6 +128,7 @@ internal class CustomerListPageResponseTest {
                     .id("id")
                     .addAdditionalEmail("string")
                     .autoCollection(true)
+                    .autoIssuance(true)
                     .balance("balance")
                     .billingAddress(
                         Address.builder()
@@ -187,6 +204,20 @@ internal class CustomerListPageResponseTest {
                             .excluded(true)
                             .build()
                     )
+                    .automaticTaxEnabled(true)
+                    .paymentConfiguration(
+                        Customer.PaymentConfiguration.builder()
+                            .addPaymentProvider(
+                                Customer.PaymentConfiguration.PaymentProvider.builder()
+                                    .providerType(
+                                        Customer.PaymentConfiguration.PaymentProvider.ProviderType
+                                            .STRIPE
+                                    )
+                                    .addExcludedPaymentMethodType("string")
+                                    .build()
+                            )
+                            .build()
+                    )
                     .reportingConfiguration(
                         Customer.ReportingConfiguration.builder().exempt(true).build()
                     )
@@ -206,6 +237,7 @@ internal class CustomerListPageResponseTest {
                         .id("id")
                         .addAdditionalEmail("string")
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .balance("balance")
                         .billingAddress(
                             Address.builder()
@@ -280,6 +312,21 @@ internal class CustomerListPageResponseTest {
                                         .build()
                                 )
                                 .excluded(true)
+                                .build()
+                        )
+                        .automaticTaxEnabled(true)
+                        .paymentConfiguration(
+                            Customer.PaymentConfiguration.builder()
+                                .addPaymentProvider(
+                                    Customer.PaymentConfiguration.PaymentProvider.builder()
+                                        .providerType(
+                                            Customer.PaymentConfiguration.PaymentProvider
+                                                .ProviderType
+                                                .STRIPE
+                                        )
+                                        .addExcludedPaymentMethodType("string")
+                                        .build()
+                                )
                                 .build()
                         )
                         .reportingConfiguration(

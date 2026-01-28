@@ -25,6 +25,7 @@ internal class CustomerUpdateParamsTest {
             )
             .addAdditionalEmail("string")
             .autoCollection(true)
+            .autoIssuance(true)
             .billingAddress(
                 AddressInput.builder()
                     .city("city")
@@ -51,6 +52,20 @@ internal class CustomerUpdateParamsTest {
                     .build()
             )
             .name("name")
+            .paymentConfiguration(
+                CustomerUpdateParams.PaymentConfiguration.builder()
+                    .addPaymentProvider(
+                        CustomerUpdateParams.PaymentConfiguration.PaymentProvider.builder()
+                            .providerType(
+                                CustomerUpdateParams.PaymentConfiguration.PaymentProvider
+                                    .ProviderType
+                                    .STRIPE
+                            )
+                            .addExcludedPaymentMethodType("string")
+                            .build()
+                    )
+                    .build()
+            )
             .paymentProvider(CustomerUpdateParams.PaymentProvider.QUICKBOOKS)
             .paymentProviderId("payment_provider_id")
             .reportingConfiguration(NewReportingConfiguration.builder().exempt(true).build())
@@ -68,6 +83,7 @@ internal class CustomerUpdateParamsTest {
                 NewAvalaraTaxConfiguration.builder()
                     .taxExempt(true)
                     .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                    .automaticTaxEnabled(true)
                     .taxExemptionCode("tax_exemption_code")
                     .build()
             )
@@ -108,6 +124,7 @@ internal class CustomerUpdateParamsTest {
                 )
                 .addAdditionalEmail("string")
                 .autoCollection(true)
+                .autoIssuance(true)
                 .billingAddress(
                     AddressInput.builder()
                         .city("city")
@@ -134,6 +151,20 @@ internal class CustomerUpdateParamsTest {
                         .build()
                 )
                 .name("name")
+                .paymentConfiguration(
+                    CustomerUpdateParams.PaymentConfiguration.builder()
+                        .addPaymentProvider(
+                            CustomerUpdateParams.PaymentConfiguration.PaymentProvider.builder()
+                                .providerType(
+                                    CustomerUpdateParams.PaymentConfiguration.PaymentProvider
+                                        .ProviderType
+                                        .STRIPE
+                                )
+                                .addExcludedPaymentMethodType("string")
+                                .build()
+                        )
+                        .build()
+                )
                 .paymentProvider(CustomerUpdateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(NewReportingConfiguration.builder().exempt(true).build())
@@ -151,6 +182,7 @@ internal class CustomerUpdateParamsTest {
                     NewAvalaraTaxConfiguration.builder()
                         .taxExempt(true)
                         .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                        .automaticTaxEnabled(true)
                         .taxExemptionCode("tax_exemption_code")
                         .build()
                 )
@@ -179,6 +211,7 @@ internal class CustomerUpdateParamsTest {
             )
         assertThat(body.additionalEmails()).containsExactly("string")
         assertThat(body.autoCollection()).isEqualTo(true)
+        assertThat(body.autoIssuance()).isEqualTo(true)
         assertThat(body.billingAddress())
             .isEqualTo(
                 AddressInput.builder()
@@ -208,6 +241,21 @@ internal class CustomerUpdateParamsTest {
                     .build()
             )
         assertThat(body.name()).isEqualTo("name")
+        assertThat(body.paymentConfiguration())
+            .isEqualTo(
+                CustomerUpdateParams.PaymentConfiguration.builder()
+                    .addPaymentProvider(
+                        CustomerUpdateParams.PaymentConfiguration.PaymentProvider.builder()
+                            .providerType(
+                                CustomerUpdateParams.PaymentConfiguration.PaymentProvider
+                                    .ProviderType
+                                    .STRIPE
+                            )
+                            .addExcludedPaymentMethodType("string")
+                            .build()
+                    )
+                    .build()
+            )
         assertThat(body.paymentProvider())
             .isEqualTo(CustomerUpdateParams.PaymentProvider.QUICKBOOKS)
         assertThat(body.paymentProviderId()).isEqualTo("payment_provider_id")
@@ -230,6 +278,7 @@ internal class CustomerUpdateParamsTest {
                     NewAvalaraTaxConfiguration.builder()
                         .taxExempt(true)
                         .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                        .automaticTaxEnabled(true)
                         .taxExemptionCode("tax_exemption_code")
                         .build()
                 )

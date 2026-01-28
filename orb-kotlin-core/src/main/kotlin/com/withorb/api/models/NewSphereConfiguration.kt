@@ -17,9 +17,11 @@ import java.util.Collections
 import java.util.Objects
 
 class NewSphereConfiguration
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val taxExempt: JsonField<Boolean>,
     private val taxProvider: JsonField<TaxProvider>,
+    private val automaticTaxEnabled: JsonField<Boolean>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -31,7 +33,10 @@ private constructor(
         @JsonProperty("tax_provider")
         @ExcludeMissing
         taxProvider: JsonField<TaxProvider> = JsonMissing.of(),
-    ) : this(taxExempt, taxProvider, mutableMapOf())
+        @JsonProperty("automatic_tax_enabled")
+        @ExcludeMissing
+        automaticTaxEnabled: JsonField<Boolean> = JsonMissing.of(),
+    ) : this(taxExempt, taxProvider, automaticTaxEnabled, mutableMapOf())
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -44,6 +49,15 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun taxProvider(): TaxProvider = taxProvider.getRequired("tax_provider")
+
+    /**
+     * Whether to automatically calculate tax for this customer. When null, inherits from
+     * account-level setting. When true or false, overrides the account setting.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun automaticTaxEnabled(): Boolean? = automaticTaxEnabled.getNullable("automatic_tax_enabled")
 
     /**
      * Returns the raw JSON value of [taxExempt].
@@ -60,6 +74,16 @@ private constructor(
     @JsonProperty("tax_provider")
     @ExcludeMissing
     fun _taxProvider(): JsonField<TaxProvider> = taxProvider
+
+    /**
+     * Returns the raw JSON value of [automaticTaxEnabled].
+     *
+     * Unlike [automaticTaxEnabled], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("automatic_tax_enabled")
+    @ExcludeMissing
+    fun _automaticTaxEnabled(): JsonField<Boolean> = automaticTaxEnabled
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -92,11 +116,13 @@ private constructor(
 
         private var taxExempt: JsonField<Boolean>? = null
         private var taxProvider: JsonField<TaxProvider>? = null
+        private var automaticTaxEnabled: JsonField<Boolean> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(newSphereConfiguration: NewSphereConfiguration) = apply {
             taxExempt = newSphereConfiguration.taxExempt
             taxProvider = newSphereConfiguration.taxProvider
+            automaticTaxEnabled = newSphereConfiguration.automaticTaxEnabled
             additionalProperties = newSphereConfiguration.additionalProperties.toMutableMap()
         }
 
@@ -122,6 +148,32 @@ private constructor(
          */
         fun taxProvider(taxProvider: JsonField<TaxProvider>) = apply {
             this.taxProvider = taxProvider
+        }
+
+        /**
+         * Whether to automatically calculate tax for this customer. When null, inherits from
+         * account-level setting. When true or false, overrides the account setting.
+         */
+        fun automaticTaxEnabled(automaticTaxEnabled: Boolean?) =
+            automaticTaxEnabled(JsonField.ofNullable(automaticTaxEnabled))
+
+        /**
+         * Alias for [Builder.automaticTaxEnabled].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun automaticTaxEnabled(automaticTaxEnabled: Boolean) =
+            automaticTaxEnabled(automaticTaxEnabled as Boolean?)
+
+        /**
+         * Sets [Builder.automaticTaxEnabled] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.automaticTaxEnabled] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun automaticTaxEnabled(automaticTaxEnabled: JsonField<Boolean>) = apply {
+            this.automaticTaxEnabled = automaticTaxEnabled
         }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -160,6 +212,7 @@ private constructor(
             NewSphereConfiguration(
                 checkRequired("taxExempt", taxExempt),
                 checkRequired("taxProvider", taxProvider),
+                automaticTaxEnabled,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -173,6 +226,7 @@ private constructor(
 
         taxExempt()
         taxProvider().validate()
+        automaticTaxEnabled()
         validated = true
     }
 
@@ -190,7 +244,9 @@ private constructor(
      * Used for best match union deserialization.
      */
     internal fun validity(): Int =
-        (if (taxExempt.asKnown() == null) 0 else 1) + (taxProvider.asKnown()?.validity() ?: 0)
+        (if (taxExempt.asKnown() == null) 0 else 1) +
+            (taxProvider.asKnown()?.validity() ?: 0) +
+            (if (automaticTaxEnabled.asKnown() == null) 0 else 1)
 
     class TaxProvider @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -305,7 +361,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TaxProvider && value == other.value /* spotless:on */
+            return other is TaxProvider && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -318,15 +374,19 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is NewSphereConfiguration && taxExempt == other.taxExempt && taxProvider == other.taxProvider && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is NewSphereConfiguration &&
+            taxExempt == other.taxExempt &&
+            taxProvider == other.taxProvider &&
+            automaticTaxEnabled == other.automaticTaxEnabled &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(taxExempt, taxProvider, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(taxExempt, taxProvider, automaticTaxEnabled, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "NewSphereConfiguration{taxExempt=$taxExempt, taxProvider=$taxProvider, additionalProperties=$additionalProperties}"
+        "NewSphereConfiguration{taxExempt=$taxExempt, taxProvider=$taxProvider, automaticTaxEnabled=$automaticTaxEnabled, additionalProperties=$additionalProperties}"
 }

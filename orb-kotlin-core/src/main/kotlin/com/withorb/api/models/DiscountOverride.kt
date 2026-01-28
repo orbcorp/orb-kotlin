@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class DiscountOverride
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val discountType: JsonField<DiscountType>,
     private val amountDiscount: JsonField<String>,
@@ -425,7 +426,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
+            return other is DiscountType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -438,12 +439,23 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DiscountOverride && discountType == other.discountType && amountDiscount == other.amountDiscount && percentageDiscount == other.percentageDiscount && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DiscountOverride &&
+            discountType == other.discountType &&
+            amountDiscount == other.amountDiscount &&
+            percentageDiscount == other.percentageDiscount &&
+            usageDiscount == other.usageDiscount &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(discountType, amountDiscount, percentageDiscount, usageDiscount, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            discountType,
+            amountDiscount,
+            percentageDiscount,
+            usageDiscount,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

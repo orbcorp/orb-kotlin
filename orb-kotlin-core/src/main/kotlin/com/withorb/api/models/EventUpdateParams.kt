@@ -33,8 +33,8 @@ import java.util.Objects
  *
  * This is a powerful and audit-safe mechanism to retroactively update a single event in cases where
  * you need to:
- * - update an event with new metadata as you iterate on your pricing model
- * - update an event based on the result of an external API call (e.g. call to a payment gateway
+ * * update an event with new metadata as you iterate on your pricing model
+ * * update an event based on the result of an external API call (e.g. call to a payment gateway
  *   succeeded or failed)
  *
  * This amendment API is always audit-safe. The process will still retain the original event, though
@@ -42,21 +42,21 @@ import java.util.Objects
  * overwrites or permanently deletes ingested usage data.
  *
  * ## Request validation
- * - The `timestamp` of the new event must match the `timestamp` of the existing event already
+ * * The `timestamp` of the new event must match the `timestamp` of the existing event already
  *   ingested. As with ingestion, all timestamps must be sent in ISO8601 format with UTC timezone
  *   offset.
- * - The `customer_id` or `external_customer_id` of the new event must match the `customer_id` or
+ * * The `customer_id` or `external_customer_id` of the new event must match the `customer_id` or
  *   `external_customer_id` of the existing event already ingested. Exactly one of `customer_id` and
  *   `external_customer_id` should be specified, and similar to ingestion, the ID must identify a
  *   Customer resource within Orb. Unlike ingestion, for event amendment, we strictly enforce that
  *   the Customer must be in the Orb system, even during the initial integration period. We do not
  *   allow updating the `Customer` an event is associated with.
- * - Orb does not accept an `idempotency_key` with the event in this endpoint, since this request is
+ * * Orb does not accept an `idempotency_key` with the event in this endpoint, since this request is
  *   by design idempotent. On retryable errors, you should retry the request and assume the
  *   amendment operation has not succeeded until receipt of a 2xx.
- * - The event's `timestamp` must fall within the customer's current subscription's billing period,
+ * * The event's `timestamp` must fall within the customer's current subscription's billing period,
  *   or within the grace period of the customer's current subscription's previous billing period.
- * - By default, no more than 100 events can be amended for a single customer in a 100 day period.
+ * * By default, no more than 100 events can be amended for a single customer in a 100 day period.
  *   For higher volume updates, consider using the [event backfill](create-backfill) endpoint.
  */
 class EventUpdateParams
@@ -428,6 +428,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val eventName: JsonField<String>,
         private val properties: JsonField<Properties>,
@@ -750,12 +751,25 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && eventName == other.eventName && properties == other.properties && timestamp == other.timestamp && customerId == other.customerId && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                eventName == other.eventName &&
+                properties == other.properties &&
+                timestamp == other.timestamp &&
+                customerId == other.customerId &&
+                externalCustomerId == other.externalCustomerId &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(eventName, properties, timestamp, customerId, externalCustomerId, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                eventName,
+                properties,
+                timestamp,
+                customerId,
+                externalCustomerId,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -854,12 +868,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Properties && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Properties && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -871,10 +883,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventUpdateParams && eventId == other.eventId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is EventUpdateParams &&
+            eventId == other.eventId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(eventId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "EventUpdateParams{eventId=$eventId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

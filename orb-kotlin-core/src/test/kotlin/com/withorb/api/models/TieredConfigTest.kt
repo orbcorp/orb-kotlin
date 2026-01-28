@@ -16,12 +16,14 @@ internal class TieredConfigTest {
                 .addTier(
                     Tier.builder().firstUnit(0.0).unitAmount("unit_amount").lastUnit(0.0).build()
                 )
+                .prorated(true)
                 .build()
 
         assertThat(tieredConfig.tiers())
             .containsExactly(
                 Tier.builder().firstUnit(0.0).unitAmount("unit_amount").lastUnit(0.0).build()
             )
+        assertThat(tieredConfig.prorated()).isEqualTo(true)
     }
 
     @Test
@@ -32,6 +34,7 @@ internal class TieredConfigTest {
                 .addTier(
                     Tier.builder().firstUnit(0.0).unitAmount("unit_amount").lastUnit(0.0).build()
                 )
+                .prorated(true)
                 .build()
 
         val roundtrippedTieredConfig =

@@ -16,12 +16,27 @@ internal class AffectedBlockTest {
             AffectedBlock.builder()
                 .id("id")
                 .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .addFilter(
+                    AffectedBlock.Filter.builder()
+                        .field(AffectedBlock.Filter.Field.PRICE_ID)
+                        .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .perUnitCostBasis("per_unit_cost_basis")
                 .build()
 
         assertThat(affectedBlock.id()).isEqualTo("id")
         assertThat(affectedBlock.expiryDate())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(affectedBlock.filters())
+            .containsExactly(
+                AffectedBlock.Filter.builder()
+                    .field(AffectedBlock.Filter.Field.PRICE_ID)
+                    .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                    .addValue("string")
+                    .build()
+            )
         assertThat(affectedBlock.perUnitCostBasis()).isEqualTo("per_unit_cost_basis")
     }
 
@@ -32,6 +47,13 @@ internal class AffectedBlockTest {
             AffectedBlock.builder()
                 .id("id")
                 .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .addFilter(
+                    AffectedBlock.Filter.builder()
+                        .field(AffectedBlock.Filter.Field.PRICE_ID)
+                        .operator(AffectedBlock.Filter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .perUnitCostBasis("per_unit_cost_basis")
                 .build()
 

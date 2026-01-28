@@ -1,0 +1,741 @@
+// File generated from our OpenAPI spec by Stainless.
+
+package com.withorb.api.models
+
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.withorb.api.core.Enum
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.Params
+import com.withorb.api.core.http.Headers
+import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Objects
+
+/**
+ * This is a lighter-weight endpoint that returns a list of all [`Invoice`](/core-concepts#invoice)
+ * summaries for an account in a list format.
+ *
+ * These invoice summaries do not include line item details, minimums, maximums, and discounts,
+ * making this endpoint more efficient.
+ *
+ * The list of invoices is ordered starting from the most recently issued invoice date. The response
+ * also includes [`pagination_metadata`](/api-reference/pagination), which lets the caller retrieve
+ * the next page of results if they exist.
+ *
+ * By default, this only returns invoices that are `issued`, `paid`, or `synced`.
+ *
+ * When fetching any `draft` invoices, this returns the last-computed invoice values for each draft
+ * invoice, which may not always be up-to-date since Orb regularly refreshes invoices
+ * asynchronously.
+ */
+class InvoiceListSummaryParams
+private constructor(
+    private val amount: String?,
+    private val amountGt: String?,
+    private val amountLt: String?,
+    private val cursor: String?,
+    private val customerId: String?,
+    private val dateType: DateType?,
+    private val dueDate: LocalDate?,
+    private val dueDateWindow: String?,
+    private val dueDateGt: LocalDate?,
+    private val dueDateLt: LocalDate?,
+    private val externalCustomerId: String?,
+    private val invoiceDateGt: OffsetDateTime?,
+    private val invoiceDateGte: OffsetDateTime?,
+    private val invoiceDateLt: OffsetDateTime?,
+    private val invoiceDateLte: OffsetDateTime?,
+    private val isRecurring: Boolean?,
+    private val limit: Long?,
+    private val status: List<Status>?,
+    private val subscriptionId: String?,
+    private val additionalHeaders: Headers,
+    private val additionalQueryParams: QueryParams,
+) : Params {
+
+    fun amount(): String? = amount
+
+    fun amountGt(): String? = amountGt
+
+    fun amountLt(): String? = amountLt
+
+    /**
+     * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
+     * initial request.
+     */
+    fun cursor(): String? = cursor
+
+    fun customerId(): String? = customerId
+
+    fun dateType(): DateType? = dateType
+
+    fun dueDate(): LocalDate? = dueDate
+
+    /**
+     * Filters invoices by their due dates within a specific time range in the past. Specify the
+     * range as a number followed by 'd' (days) or 'm' (months). For example, '7d' filters invoices
+     * due in the last 7 days, and '2m' filters those due in the last 2 months.
+     */
+    fun dueDateWindow(): String? = dueDateWindow
+
+    fun dueDateGt(): LocalDate? = dueDateGt
+
+    fun dueDateLt(): LocalDate? = dueDateLt
+
+    fun externalCustomerId(): String? = externalCustomerId
+
+    fun invoiceDateGt(): OffsetDateTime? = invoiceDateGt
+
+    fun invoiceDateGte(): OffsetDateTime? = invoiceDateGte
+
+    fun invoiceDateLt(): OffsetDateTime? = invoiceDateLt
+
+    fun invoiceDateLte(): OffsetDateTime? = invoiceDateLte
+
+    fun isRecurring(): Boolean? = isRecurring
+
+    /** The number of items to fetch. Defaults to 20. */
+    fun limit(): Long? = limit
+
+    fun status(): List<Status>? = status
+
+    fun subscriptionId(): String? = subscriptionId
+
+    /** Additional headers to send with the request. */
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    /** Additional query param to send with the request. */
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun toBuilder() = Builder().from(this)
+
+    companion object {
+
+        fun none(): InvoiceListSummaryParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [InvoiceListSummaryParams]. */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [InvoiceListSummaryParams]. */
+    class Builder internal constructor() {
+
+        private var amount: String? = null
+        private var amountGt: String? = null
+        private var amountLt: String? = null
+        private var cursor: String? = null
+        private var customerId: String? = null
+        private var dateType: DateType? = null
+        private var dueDate: LocalDate? = null
+        private var dueDateWindow: String? = null
+        private var dueDateGt: LocalDate? = null
+        private var dueDateLt: LocalDate? = null
+        private var externalCustomerId: String? = null
+        private var invoiceDateGt: OffsetDateTime? = null
+        private var invoiceDateGte: OffsetDateTime? = null
+        private var invoiceDateLt: OffsetDateTime? = null
+        private var invoiceDateLte: OffsetDateTime? = null
+        private var isRecurring: Boolean? = null
+        private var limit: Long? = null
+        private var status: MutableList<Status>? = null
+        private var subscriptionId: String? = null
+        private var additionalHeaders: Headers.Builder = Headers.builder()
+        private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
+
+        internal fun from(invoiceListSummaryParams: InvoiceListSummaryParams) = apply {
+            amount = invoiceListSummaryParams.amount
+            amountGt = invoiceListSummaryParams.amountGt
+            amountLt = invoiceListSummaryParams.amountLt
+            cursor = invoiceListSummaryParams.cursor
+            customerId = invoiceListSummaryParams.customerId
+            dateType = invoiceListSummaryParams.dateType
+            dueDate = invoiceListSummaryParams.dueDate
+            dueDateWindow = invoiceListSummaryParams.dueDateWindow
+            dueDateGt = invoiceListSummaryParams.dueDateGt
+            dueDateLt = invoiceListSummaryParams.dueDateLt
+            externalCustomerId = invoiceListSummaryParams.externalCustomerId
+            invoiceDateGt = invoiceListSummaryParams.invoiceDateGt
+            invoiceDateGte = invoiceListSummaryParams.invoiceDateGte
+            invoiceDateLt = invoiceListSummaryParams.invoiceDateLt
+            invoiceDateLte = invoiceListSummaryParams.invoiceDateLte
+            isRecurring = invoiceListSummaryParams.isRecurring
+            limit = invoiceListSummaryParams.limit
+            status = invoiceListSummaryParams.status?.toMutableList()
+            subscriptionId = invoiceListSummaryParams.subscriptionId
+            additionalHeaders = invoiceListSummaryParams.additionalHeaders.toBuilder()
+            additionalQueryParams = invoiceListSummaryParams.additionalQueryParams.toBuilder()
+        }
+
+        fun amount(amount: String?) = apply { this.amount = amount }
+
+        fun amountGt(amountGt: String?) = apply { this.amountGt = amountGt }
+
+        fun amountLt(amountLt: String?) = apply { this.amountLt = amountLt }
+
+        /**
+         * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
+         * initial request.
+         */
+        fun cursor(cursor: String?) = apply { this.cursor = cursor }
+
+        fun customerId(customerId: String?) = apply { this.customerId = customerId }
+
+        fun dateType(dateType: DateType?) = apply { this.dateType = dateType }
+
+        fun dueDate(dueDate: LocalDate?) = apply { this.dueDate = dueDate }
+
+        /**
+         * Filters invoices by their due dates within a specific time range in the past. Specify the
+         * range as a number followed by 'd' (days) or 'm' (months). For example, '7d' filters
+         * invoices due in the last 7 days, and '2m' filters those due in the last 2 months.
+         */
+        fun dueDateWindow(dueDateWindow: String?) = apply { this.dueDateWindow = dueDateWindow }
+
+        fun dueDateGt(dueDateGt: LocalDate?) = apply { this.dueDateGt = dueDateGt }
+
+        fun dueDateLt(dueDateLt: LocalDate?) = apply { this.dueDateLt = dueDateLt }
+
+        fun externalCustomerId(externalCustomerId: String?) = apply {
+            this.externalCustomerId = externalCustomerId
+        }
+
+        fun invoiceDateGt(invoiceDateGt: OffsetDateTime?) = apply {
+            this.invoiceDateGt = invoiceDateGt
+        }
+
+        fun invoiceDateGte(invoiceDateGte: OffsetDateTime?) = apply {
+            this.invoiceDateGte = invoiceDateGte
+        }
+
+        fun invoiceDateLt(invoiceDateLt: OffsetDateTime?) = apply {
+            this.invoiceDateLt = invoiceDateLt
+        }
+
+        fun invoiceDateLte(invoiceDateLte: OffsetDateTime?) = apply {
+            this.invoiceDateLte = invoiceDateLte
+        }
+
+        fun isRecurring(isRecurring: Boolean?) = apply { this.isRecurring = isRecurring }
+
+        /**
+         * Alias for [Builder.isRecurring].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun isRecurring(isRecurring: Boolean) = isRecurring(isRecurring as Boolean?)
+
+        /** The number of items to fetch. Defaults to 20. */
+        fun limit(limit: Long?) = apply { this.limit = limit }
+
+        /**
+         * Alias for [Builder.limit].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun limit(limit: Long) = limit(limit as Long?)
+
+        fun status(status: List<Status>?) = apply { this.status = status?.toMutableList() }
+
+        /**
+         * Adds a single [Status] to [Builder.status].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addStatus(status: Status) = apply {
+            this.status = (this.status ?: mutableListOf()).apply { add(status) }
+        }
+
+        fun subscriptionId(subscriptionId: String?) = apply { this.subscriptionId = subscriptionId }
+
+        fun additionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
+
+        fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
+        }
+
+        fun putAdditionalHeader(name: String, value: String) = apply {
+            additionalHeaders.put(name, value)
+        }
+
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.put(name, values)
+        }
+
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
+
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
+
+        fun replaceAdditionalHeaders(name: String, value: String) = apply {
+            additionalHeaders.replace(name, value)
+        }
+
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.replace(name, values)
+        }
+
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
+
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
+
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+
+        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
+            additionalHeaders.removeAll(names)
+        }
+
+        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
+
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
+
+        fun putAdditionalQueryParam(key: String, value: String) = apply {
+            additionalQueryParams.put(key, value)
+        }
+
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.put(key, values)
+        }
+
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.putAll(additionalQueryParams)
+        }
+
+        fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
+
+        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
+            additionalQueryParams.replace(key, value)
+        }
+
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.replace(key, values)
+        }
+
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.replaceAll(additionalQueryParams)
+        }
+
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
+
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+
+        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
+            additionalQueryParams.removeAll(keys)
+        }
+
+        /**
+         * Returns an immutable instance of [InvoiceListSummaryParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
+        fun build(): InvoiceListSummaryParams =
+            InvoiceListSummaryParams(
+                amount,
+                amountGt,
+                amountLt,
+                cursor,
+                customerId,
+                dateType,
+                dueDate,
+                dueDateWindow,
+                dueDateGt,
+                dueDateLt,
+                externalCustomerId,
+                invoiceDateGt,
+                invoiceDateGte,
+                invoiceDateLt,
+                invoiceDateLte,
+                isRecurring,
+                limit,
+                status?.toImmutable(),
+                subscriptionId,
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
+            )
+    }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                amount?.let { put("amount", it) }
+                amountGt?.let { put("amount[gt]", it) }
+                amountLt?.let { put("amount[lt]", it) }
+                cursor?.let { put("cursor", it) }
+                customerId?.let { put("customer_id", it) }
+                dateType?.let { put("date_type", it.toString()) }
+                dueDate?.let { put("due_date", it.toString()) }
+                dueDateWindow?.let { put("due_date_window", it) }
+                dueDateGt?.let { put("due_date[gt]", it.toString()) }
+                dueDateLt?.let { put("due_date[lt]", it.toString()) }
+                externalCustomerId?.let { put("external_customer_id", it) }
+                invoiceDateGt?.let {
+                    put("invoice_date[gt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                invoiceDateGte?.let {
+                    put("invoice_date[gte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                invoiceDateLt?.let {
+                    put("invoice_date[lt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                invoiceDateLte?.let {
+                    put("invoice_date[lte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                isRecurring?.let { put("is_recurring", it.toString()) }
+                limit?.let { put("limit", it.toString()) }
+                status?.forEach { put("status[]", it.toString()) }
+                subscriptionId?.let { put("subscription_id", it) }
+                putAll(additionalQueryParams)
+            }
+            .build()
+
+    class DateType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            val DUE_DATE = of("due_date")
+
+            val INVOICE_DATE = of("invoice_date")
+
+            fun of(value: String) = DateType(JsonField.of(value))
+        }
+
+        /** An enum containing [DateType]'s known values. */
+        enum class Known {
+            DUE_DATE,
+            INVOICE_DATE,
+        }
+
+        /**
+         * An enum containing [DateType]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [DateType] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            DUE_DATE,
+            INVOICE_DATE,
+            /** An enum member indicating that [DateType] was instantiated with an unknown value. */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                DUE_DATE -> Value.DUE_DATE
+                INVOICE_DATE -> Value.INVOICE_DATE
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
+         */
+        fun known(): Known =
+            when (this) {
+                DUE_DATE -> Known.DUE_DATE
+                INVOICE_DATE -> Known.INVOICE_DATE
+                else -> throw OrbInvalidDataException("Unknown DateType: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws OrbInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
+         */
+        fun asString(): String =
+            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): DateType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is DateType && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
+
+    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            val DRAFT = of("draft")
+
+            val ISSUED = of("issued")
+
+            val PAID = of("paid")
+
+            val SYNCED = of("synced")
+
+            val VOID = of("void")
+
+            fun of(value: String) = Status(JsonField.of(value))
+        }
+
+        /** An enum containing [Status]'s known values. */
+        enum class Known {
+            DRAFT,
+            ISSUED,
+            PAID,
+            SYNCED,
+            VOID,
+        }
+
+        /**
+         * An enum containing [Status]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [Status] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            DRAFT,
+            ISSUED,
+            PAID,
+            SYNCED,
+            VOID,
+            /** An enum member indicating that [Status] was instantiated with an unknown value. */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                DRAFT -> Value.DRAFT
+                ISSUED -> Value.ISSUED
+                PAID -> Value.PAID
+                SYNCED -> Value.SYNCED
+                VOID -> Value.VOID
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
+         */
+        fun known(): Known =
+            when (this) {
+                DRAFT -> Known.DRAFT
+                ISSUED -> Known.ISSUED
+                PAID -> Known.PAID
+                SYNCED -> Known.SYNCED
+                VOID -> Known.VOID
+                else -> throw OrbInvalidDataException("Unknown Status: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws OrbInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
+         */
+        fun asString(): String =
+            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Status && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is InvoiceListSummaryParams &&
+            amount == other.amount &&
+            amountGt == other.amountGt &&
+            amountLt == other.amountLt &&
+            cursor == other.cursor &&
+            customerId == other.customerId &&
+            dateType == other.dateType &&
+            dueDate == other.dueDate &&
+            dueDateWindow == other.dueDateWindow &&
+            dueDateGt == other.dueDateGt &&
+            dueDateLt == other.dueDateLt &&
+            externalCustomerId == other.externalCustomerId &&
+            invoiceDateGt == other.invoiceDateGt &&
+            invoiceDateGte == other.invoiceDateGte &&
+            invoiceDateLt == other.invoiceDateLt &&
+            invoiceDateLte == other.invoiceDateLte &&
+            isRecurring == other.isRecurring &&
+            limit == other.limit &&
+            status == other.status &&
+            subscriptionId == other.subscriptionId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
+    }
+
+    override fun hashCode(): Int =
+        Objects.hash(
+            amount,
+            amountGt,
+            amountLt,
+            cursor,
+            customerId,
+            dateType,
+            dueDate,
+            dueDateWindow,
+            dueDateGt,
+            dueDateLt,
+            externalCustomerId,
+            invoiceDateGt,
+            invoiceDateGte,
+            invoiceDateLt,
+            invoiceDateLte,
+            isRecurring,
+            limit,
+            status,
+            subscriptionId,
+            additionalHeaders,
+            additionalQueryParams,
+        )
+
+    override fun toString() =
+        "InvoiceListSummaryParams{amount=$amount, amountGt=$amountGt, amountLt=$amountLt, cursor=$cursor, customerId=$customerId, dateType=$dateType, dueDate=$dueDate, dueDateWindow=$dueDateWindow, dueDateGt=$dueDateGt, dueDateLt=$dueDateLt, externalCustomerId=$externalCustomerId, invoiceDateGt=$invoiceDateGt, invoiceDateGte=$invoiceDateGte, invoiceDateLt=$invoiceDateLt, invoiceDateLte=$invoiceDateLte, isRecurring=$isRecurring, limit=$limit, status=$status, subscriptionId=$subscriptionId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+}

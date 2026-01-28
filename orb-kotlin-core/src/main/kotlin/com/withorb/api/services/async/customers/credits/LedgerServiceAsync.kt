@@ -41,33 +41,29 @@ interface LedgerServiceAsync {
      * There are four major types of modifications to credit balance, detailed below.
      *
      * ## Increment
-     *
      * Credits (which optionally expire on a future date) can be added via the API ([Add Ledger
      * Entry](create-ledger-entry)). The ledger entry for such an action will always contain the
      * total eligible starting and ending balance for the customer at the time the entry was added
      * to the ledger.
      *
      * ## Decrement
-     *
      * Deductions can occur as a result of an API call to create a ledger entry (see
      * [Add Ledger Entry](create-ledger-entry)), or automatically as a result of incurring usage.
      * Both ledger entries present the `decrement` entry type.
      *
      * As usage for a customer is reported into Orb, credits may be deducted according to the
      * customer's plan configuration. An automated deduction of this type will result in a ledger
-     * entry, also with a starting and ending balance. In order to provide better tracing
-     * capabilities for automatic deductions, Orb always associates each automatic deduction with
-     * the `event_id` at the time of ingestion, used to pinpoint _why_ credit deduction took place
-     * and to ensure that credits are never deducted without an associated usage event.
+     * entry, also with a starting and ending balance. Each day's usage for a particular price,
+     * invoice, and block will be grouped into a single entry.
      *
-     * By default, Orb uses an algorithm that automatically deducts from the _soonest expiring
-     * credit block_ first in order to ensure that all credits are utilized appropriately. As an
+     * By default, Orb uses an algorithm that automatically deducts from the *soonest expiring
+     * credit block* first in order to ensure that all credits are utilized appropriately. As an
      * example, if trial credits with an expiration date of 2 weeks from now are present for a
      * customer, they will be used before any deductions take place from a non-expiring credit
      * block.
      *
      * If there are multiple blocks with the same expiration date, Orb will deduct from the block
-     * with the _lower cost basis_ first (e.g. trial credits with a \$0 cost basis before paid
+     * with the *lower cost basis* first (e.g. trial credits with a \$0 cost basis before paid
      * credits with a \$5.00 cost basis).
      *
      * It's also possible for a single usage event's deduction to _span_ credit blocks. In this
@@ -77,34 +73,29 @@ interface LedgerServiceAsync {
      * can be negative as a result of a decrement.
      *
      * ## Expiration change
-     *
      * The expiry of credits can be changed as a result of the API (See
      * [Add Ledger Entry](create-ledger-entry)). This will create a ledger entry that specifies the
      * balance as well as the initial and target expiry dates.
      *
      * Note that for this entry type, `starting_balance` will equal `ending_balance`, and the
      * `amount` represents the balance transferred. The credit block linked to the ledger entry is
-     * the source credit block from which there was an expiration change
+     * the source credit block from which there was an expiration change.
      *
      * ## Credits expiry
-     *
      * When a set of credits expire on pre-set expiration date, the customer's balance automatically
      * reflects this change and adds an entry to the ledger indicating this event. Note that credit
      * expiry should always happen close to a date boundary in the customer's timezone.
      *
      * ## Void initiated
-     *
      * Credit blocks can be voided via the API. The `amount` on this entry corresponds to the number
      * of credits that were remaining in the block at time of void. `void_reason` will be populated
      * if the void is created with a reason.
      *
      * ## Void
-     *
      * When a set of credits is voided, the customer's balance automatically reflects this change
      * and adds an entry to the ledger indicating this event.
      *
      * ## Amendment
-     *
      * When credits are added to a customer's balance as a result of a correction, this entry will
      * be added to the ledger to indicate the adjustment of credits.
      */
@@ -144,7 +135,6 @@ interface LedgerServiceAsync {
      *    the credits (based on `amount` and `per_unit_cost_basis`).
      *
      * ## Adding credits
-     *
      * Adding credits is done by creating an entry of type `increment`. This requires the caller to
      * specify a number of credits as well as an optional expiry date in `YYYY-MM-DD` format. Orb
      * also recommends specifying a description to assist with auditing. When adding credits, the
@@ -168,7 +158,6 @@ interface LedgerServiceAsync {
      * blocks before adding the remaining amount to the desired credit block.
      *
      * ### Invoicing for credits
-     *
      * By default, Orb manipulates the credit ledger but does not charge for credits. However, if
      * you pass `invoice_settings` in the body of this request, Orb will also generate a one-off
      * invoice for the customer for the credits pre-purchase. Note that you _must_ provide the
@@ -176,7 +165,6 @@ interface LedgerServiceAsync {
      * the cost basis with the number of credit units added.
      *
      * ## Deducting Credits
-     *
      * Orb allows you to deduct credits from a customer by creating an entry of type `decrement`.
      * Orb matches the algorithm for automatic deductions for determining which credit blocks to
      * decrement from. In the case that the deduction leads to multiple ledger entries, the response
@@ -194,7 +182,6 @@ interface LedgerServiceAsync {
      * ```
      *
      * ## Changing credits expiry
-     *
      * If you'd like to change when existing credits expire, you should create a ledger entry of
      * type `expiration_change`. For this entry, the required parameter `expiry_date` identifies the
      * _originating_ block, and the required parameter `target_expiry_date` identifies when the
@@ -260,7 +247,6 @@ interface LedgerServiceAsync {
      *    the credits (based on `amount` and `per_unit_cost_basis`).
      *
      * ## Adding credits
-     *
      * Adding credits is done by creating an entry of type `increment`. This requires the caller to
      * specify a number of credits as well as an optional expiry date in `YYYY-MM-DD` format. Orb
      * also recommends specifying a description to assist with auditing. When adding credits, the
@@ -284,7 +270,6 @@ interface LedgerServiceAsync {
      * blocks before adding the remaining amount to the desired credit block.
      *
      * ### Invoicing for credits
-     *
      * By default, Orb manipulates the credit ledger but does not charge for credits. However, if
      * you pass `invoice_settings` in the body of this request, Orb will also generate a one-off
      * invoice for the customer for the credits pre-purchase. Note that you _must_ provide the
@@ -292,7 +277,6 @@ interface LedgerServiceAsync {
      * the cost basis with the number of credit units added.
      *
      * ## Deducting Credits
-     *
      * Orb allows you to deduct credits from a customer by creating an entry of type `decrement`.
      * Orb matches the algorithm for automatic deductions for determining which credit blocks to
      * decrement from. In the case that the deduction leads to multiple ledger entries, the response
@@ -310,7 +294,6 @@ interface LedgerServiceAsync {
      * ```
      *
      * ## Changing credits expiry
-     *
      * If you'd like to change when existing credits expire, you should create a ledger entry of
      * type `expiration_change`. For this entry, the required parameter `expiry_date` identifies the
      * _originating_ block, and the required parameter `target_expiry_date` identifies when the
@@ -375,33 +358,29 @@ interface LedgerServiceAsync {
      * There are four major types of modifications to credit balance, detailed below.
      *
      * ## Increment
-     *
      * Credits (which optionally expire on a future date) can be added via the API ([Add Ledger
      * Entry](create-ledger-entry)). The ledger entry for such an action will always contain the
      * total eligible starting and ending balance for the customer at the time the entry was added
      * to the ledger.
      *
      * ## Decrement
-     *
      * Deductions can occur as a result of an API call to create a ledger entry (see
      * [Add Ledger Entry](create-ledger-entry)), or automatically as a result of incurring usage.
      * Both ledger entries present the `decrement` entry type.
      *
      * As usage for a customer is reported into Orb, credits may be deducted according to the
      * customer's plan configuration. An automated deduction of this type will result in a ledger
-     * entry, also with a starting and ending balance. In order to provide better tracing
-     * capabilities for automatic deductions, Orb always associates each automatic deduction with
-     * the `event_id` at the time of ingestion, used to pinpoint _why_ credit deduction took place
-     * and to ensure that credits are never deducted without an associated usage event.
+     * entry, also with a starting and ending balance. Each day's usage for a particular price,
+     * invoice, and block will be grouped into a single entry.
      *
-     * By default, Orb uses an algorithm that automatically deducts from the _soonest expiring
-     * credit block_ first in order to ensure that all credits are utilized appropriately. As an
+     * By default, Orb uses an algorithm that automatically deducts from the *soonest expiring
+     * credit block* first in order to ensure that all credits are utilized appropriately. As an
      * example, if trial credits with an expiration date of 2 weeks from now are present for a
      * customer, they will be used before any deductions take place from a non-expiring credit
      * block.
      *
      * If there are multiple blocks with the same expiration date, Orb will deduct from the block
-     * with the _lower cost basis_ first (e.g. trial credits with a \$0 cost basis before paid
+     * with the *lower cost basis* first (e.g. trial credits with a \$0 cost basis before paid
      * credits with a \$5.00 cost basis).
      *
      * It's also possible for a single usage event's deduction to _span_ credit blocks. In this
@@ -411,34 +390,29 @@ interface LedgerServiceAsync {
      * can be negative as a result of a decrement.
      *
      * ## Expiration change
-     *
      * The expiry of credits can be changed as a result of the API (See
      * [Add Ledger Entry](create-ledger-entry)). This will create a ledger entry that specifies the
      * balance as well as the initial and target expiry dates.
      *
      * Note that for this entry type, `starting_balance` will equal `ending_balance`, and the
      * `amount` represents the balance transferred. The credit block linked to the ledger entry is
-     * the source credit block from which there was an expiration change
+     * the source credit block from which there was an expiration change.
      *
      * ## Credits expiry
-     *
      * When a set of credits expire on pre-set expiration date, the customer's balance automatically
      * reflects this change and adds an entry to the ledger indicating this event. Note that credit
      * expiry should always happen close to a date boundary in the customer's timezone.
      *
      * ## Void initiated
-     *
      * Credit blocks can be voided via the API. The `amount` on this entry corresponds to the number
      * of credits that were remaining in the block at time of void. `void_reason` will be populated
      * if the void is created with a reason.
      *
      * ## Void
-     *
      * When a set of credits is voided, the customer's balance automatically reflects this change
      * and adds an entry to the ledger indicating this event.
      *
      * ## Amendment
-     *
      * When credits are added to a customer's balance as a result of a correction, this entry will
      * be added to the ledger to indicate the adjustment of credits.
      */

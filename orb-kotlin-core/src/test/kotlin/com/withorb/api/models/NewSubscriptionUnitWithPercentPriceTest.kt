@@ -20,7 +20,8 @@ internal class NewSubscriptionUnitWithPercentPriceTest {
                 .name("Annual fee")
                 .unitWithPercentConfig(
                     NewSubscriptionUnitWithPercentPrice.UnitWithPercentConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .percent("percent")
+                        .unitAmount("unit_amount")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -69,7 +70,8 @@ internal class NewSubscriptionUnitWithPercentPriceTest {
         assertThat(newSubscriptionUnitWithPercentPrice.unitWithPercentConfig())
             .isEqualTo(
                 NewSubscriptionUnitWithPercentPrice.UnitWithPercentConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .percent("percent")
+                    .unitAmount("unit_amount")
                     .build()
             )
         assertThat(newSubscriptionUnitWithPercentPrice.billableMetricId())
@@ -85,7 +87,7 @@ internal class NewSubscriptionUnitWithPercentPriceTest {
         assertThat(newSubscriptionUnitWithPercentPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionUnitWithPercentPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionUnitWithPercentPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -134,7 +136,8 @@ internal class NewSubscriptionUnitWithPercentPriceTest {
                 .name("Annual fee")
                 .unitWithPercentConfig(
                     NewSubscriptionUnitWithPercentPrice.UnitWithPercentConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .percent("percent")
+                        .unitAmount("unit_amount")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

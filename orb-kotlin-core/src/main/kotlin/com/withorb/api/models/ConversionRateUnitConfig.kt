@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class ConversionRateUnitConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val unitAmount: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -160,12 +161,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ConversionRateUnitConfig && unitAmount == other.unitAmount && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is ConversionRateUnitConfig &&
+            unitAmount == other.unitAmount &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(unitAmount, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

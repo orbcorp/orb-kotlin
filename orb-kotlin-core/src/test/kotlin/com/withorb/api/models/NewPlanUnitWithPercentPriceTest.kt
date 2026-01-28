@@ -20,7 +20,8 @@ internal class NewPlanUnitWithPercentPriceTest {
                 .name("Annual fee")
                 .unitWithPercentConfig(
                     NewPlanUnitWithPercentPrice.UnitWithPercentConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .percent("percent")
+                        .unitAmount("unit_amount")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -69,7 +70,8 @@ internal class NewPlanUnitWithPercentPriceTest {
         assertThat(newPlanUnitWithPercentPrice.unitWithPercentConfig())
             .isEqualTo(
                 NewPlanUnitWithPercentPrice.UnitWithPercentConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .percent("percent")
+                    .unitAmount("unit_amount")
                     .build()
             )
         assertThat(newPlanUnitWithPercentPrice.billableMetricId()).isEqualTo("billable_metric_id")
@@ -84,7 +86,7 @@ internal class NewPlanUnitWithPercentPriceTest {
         assertThat(newPlanUnitWithPercentPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanUnitWithPercentPrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanUnitWithPercentPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -132,7 +134,8 @@ internal class NewPlanUnitWithPercentPriceTest {
                 .name("Annual fee")
                 .unitWithPercentConfig(
                     NewPlanUnitWithPercentPrice.UnitWithPercentConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .percent("percent")
+                        .unitAmount("unit_amount")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

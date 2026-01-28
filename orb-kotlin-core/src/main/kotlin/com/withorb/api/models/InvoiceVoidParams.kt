@@ -10,7 +10,7 @@ import com.withorb.api.core.toImmutable
 import java.util.Objects
 
 /**
- * This endpoint allows an invoice's status to be set the `void` status. This can only be done to
+ * This endpoint allows an invoice's status to be set to the `void` status. This can only be done to
  * invoices that are in the `issued` status.
  *
  * If the associated invoice has used the customer balance to change the amount due, the customer
@@ -217,10 +217,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceVoidParams && invoiceId == other.invoiceId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return other is InvoiceVoidParams &&
+            invoiceId == other.invoiceId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams &&
+            additionalBodyProperties == other.additionalBodyProperties
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(invoiceId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(invoiceId, additionalHeaders, additionalQueryParams, additionalBodyProperties)
 
     override fun toString() =
         "InvoiceVoidParams{invoiceId=$invoiceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"

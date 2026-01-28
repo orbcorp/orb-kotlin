@@ -22,6 +22,7 @@ import java.util.Objects
  * dimensions. Prices in a price group must specify the parition used to derive their usage.
  */
 class DimensionalPriceGroup
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val billableMetricId: JsonField<String>,
@@ -481,12 +482,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -498,12 +497,27 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DimensionalPriceGroup && id == other.id && billableMetricId == other.billableMetricId && dimensions == other.dimensions && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && metadata == other.metadata && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DimensionalPriceGroup &&
+            id == other.id &&
+            billableMetricId == other.billableMetricId &&
+            dimensions == other.dimensions &&
+            externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId &&
+            metadata == other.metadata &&
+            name == other.name &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, billableMetricId, dimensions, externalDimensionalPriceGroupId, metadata, name, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            billableMetricId,
+            dimensions,
+            externalDimensionalPriceGroupId,
+            metadata,
+            name,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

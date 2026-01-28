@@ -15,11 +15,13 @@ internal class NewSphereConfigurationTest {
             NewSphereConfiguration.builder()
                 .taxExempt(true)
                 .taxProvider(NewSphereConfiguration.TaxProvider.SPHERE)
+                .automaticTaxEnabled(true)
                 .build()
 
         assertThat(newSphereConfiguration.taxExempt()).isEqualTo(true)
         assertThat(newSphereConfiguration.taxProvider())
             .isEqualTo(NewSphereConfiguration.TaxProvider.SPHERE)
+        assertThat(newSphereConfiguration.automaticTaxEnabled()).isEqualTo(true)
     }
 
     @Test
@@ -29,6 +31,7 @@ internal class NewSphereConfigurationTest {
             NewSphereConfiguration.builder()
                 .taxExempt(true)
                 .taxProvider(NewSphereConfiguration.TaxProvider.SPHERE)
+                .automaticTaxEnabled(true)
                 .build()
 
         val roundtrippedNewSphereConfiguration =

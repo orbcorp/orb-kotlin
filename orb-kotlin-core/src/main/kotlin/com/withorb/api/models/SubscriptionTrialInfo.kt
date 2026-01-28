@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class SubscriptionTrialInfo
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val endDate: JsonField<OffsetDateTime>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -158,12 +159,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionTrialInfo && endDate == other.endDate && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is SubscriptionTrialInfo &&
+            endDate == other.endDate &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(endDate, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

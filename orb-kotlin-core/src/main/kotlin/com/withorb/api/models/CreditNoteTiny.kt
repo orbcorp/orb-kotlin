@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class CreditNoteTiny
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -154,12 +155,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CreditNoteTiny && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CreditNoteTiny &&
+            id == other.id &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(id, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

@@ -177,10 +177,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionFetchParams && subscriptionId == other.subscriptionId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is SubscriptionFetchParams &&
+            subscriptionId == other.subscriptionId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(subscriptionId, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "SubscriptionFetchParams{subscriptionId=$subscriptionId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

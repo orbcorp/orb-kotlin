@@ -18,11 +18,11 @@ internal class NewSubscriptionMatrixWithAllocationPriceTest {
                 .itemId("item_id")
                 .matrixWithAllocationConfig(
                     MatrixWithAllocationConfig.builder()
-                        .allocation(0.0)
+                        .allocation("allocation")
                         .defaultUnitAmount("default_unit_amount")
                         .addDimension("string")
                         .addMatrixValue(
-                            MatrixValue.builder()
+                            MatrixWithAllocationConfig.MatrixValue.builder()
                                 .addDimensionValue("string")
                                 .unitAmount("unit_amount")
                                 .build()
@@ -76,11 +76,11 @@ internal class NewSubscriptionMatrixWithAllocationPriceTest {
         assertThat(newSubscriptionMatrixWithAllocationPrice.matrixWithAllocationConfig())
             .isEqualTo(
                 MatrixWithAllocationConfig.builder()
-                    .allocation(0.0)
+                    .allocation("allocation")
                     .defaultUnitAmount("default_unit_amount")
                     .addDimension("string")
                     .addMatrixValue(
-                        MatrixValue.builder()
+                        MatrixWithAllocationConfig.MatrixValue.builder()
                             .addDimensionValue("string")
                             .unitAmount("unit_amount")
                             .build()
@@ -103,7 +103,7 @@ internal class NewSubscriptionMatrixWithAllocationPriceTest {
         assertThat(newSubscriptionMatrixWithAllocationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionMatrixWithAllocationPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionMatrixWithAllocationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -150,11 +150,11 @@ internal class NewSubscriptionMatrixWithAllocationPriceTest {
                 .itemId("item_id")
                 .matrixWithAllocationConfig(
                     MatrixWithAllocationConfig.builder()
-                        .allocation(0.0)
+                        .allocation("allocation")
                         .defaultUnitAmount("default_unit_amount")
                         .addDimension("string")
                         .addMatrixValue(
-                            MatrixValue.builder()
+                            MatrixWithAllocationConfig.MatrixValue.builder()
                                 .addDimensionValue("string")
                                 .unitAmount("unit_amount")
                                 .build()

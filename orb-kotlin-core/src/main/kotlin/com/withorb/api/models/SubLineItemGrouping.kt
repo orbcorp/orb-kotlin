@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class SubLineItemGrouping
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val key: JsonField<String>,
     private val value: JsonField<String>,
@@ -189,12 +190,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubLineItemGrouping && key == other.key && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is SubLineItemGrouping &&
+            key == other.key &&
+            value == other.value &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(key, value, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

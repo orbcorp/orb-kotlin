@@ -27,6 +27,7 @@ internal class NewSubscriptionTieredPriceTest {
                                 .lastUnit(0.0)
                                 .build()
                         )
+                        .prorated(true)
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -82,6 +83,7 @@ internal class NewSubscriptionTieredPriceTest {
                             .lastUnit(0.0)
                             .build()
                     )
+                    .prorated(true)
                     .build()
             )
         assertThat(newSubscriptionTieredPrice.billableMetricId()).isEqualTo("billable_metric_id")
@@ -96,7 +98,7 @@ internal class NewSubscriptionTieredPriceTest {
         assertThat(newSubscriptionTieredPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionTieredPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionTieredPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -151,6 +153,7 @@ internal class NewSubscriptionTieredPriceTest {
                                 .lastUnit(0.0)
                                 .build()
                         )
+                        .prorated(true)
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

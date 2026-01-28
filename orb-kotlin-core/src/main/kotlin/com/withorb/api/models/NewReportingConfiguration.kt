@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class NewReportingConfiguration
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val exempt: JsonField<Boolean>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -154,12 +155,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is NewReportingConfiguration && exempt == other.exempt && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is NewReportingConfiguration &&
+            exempt == other.exempt &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(exempt, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

@@ -26,6 +26,7 @@ internal class CustomerCreateParamsTest {
             )
             .addAdditionalEmail("dev@stainless.com")
             .autoCollection(true)
+            .autoIssuance(true)
             .billingAddress(
                 AddressInput.builder()
                     .city("city")
@@ -50,6 +51,20 @@ internal class CustomerCreateParamsTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+            .paymentConfiguration(
+                CustomerCreateParams.PaymentConfiguration.builder()
+                    .addPaymentProvider(
+                        CustomerCreateParams.PaymentConfiguration.PaymentProvider.builder()
+                            .providerType(
+                                CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                    .ProviderType
+                                    .STRIPE
+                            )
+                            .addExcludedPaymentMethodType("string")
+                            .build()
+                    )
+                    .build()
+            )
             .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
             .paymentProviderId("payment_provider_id")
             .reportingConfiguration(NewReportingConfiguration.builder().exempt(true).build())
@@ -67,6 +82,7 @@ internal class CustomerCreateParamsTest {
                 NewAvalaraTaxConfiguration.builder()
                     .taxExempt(true)
                     .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                    .automaticTaxEnabled(true)
                     .taxExemptionCode("tax_exemption_code")
                     .build()
             )
@@ -100,6 +116,7 @@ internal class CustomerCreateParamsTest {
                 )
                 .addAdditionalEmail("dev@stainless.com")
                 .autoCollection(true)
+                .autoIssuance(true)
                 .billingAddress(
                     AddressInput.builder()
                         .city("city")
@@ -124,6 +141,20 @@ internal class CustomerCreateParamsTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .paymentConfiguration(
+                    CustomerCreateParams.PaymentConfiguration.builder()
+                        .addPaymentProvider(
+                            CustomerCreateParams.PaymentConfiguration.PaymentProvider.builder()
+                                .providerType(
+                                    CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                        .ProviderType
+                                        .STRIPE
+                                )
+                                .addExcludedPaymentMethodType("string")
+                                .build()
+                        )
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(NewReportingConfiguration.builder().exempt(true).build())
@@ -141,6 +172,7 @@ internal class CustomerCreateParamsTest {
                     NewAvalaraTaxConfiguration.builder()
                         .taxExempt(true)
                         .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                        .automaticTaxEnabled(true)
                         .taxExemptionCode("tax_exemption_code")
                         .build()
                 )
@@ -172,6 +204,7 @@ internal class CustomerCreateParamsTest {
             )
         assertThat(body.additionalEmails()).containsExactly("dev@stainless.com")
         assertThat(body.autoCollection()).isEqualTo(true)
+        assertThat(body.autoIssuance()).isEqualTo(true)
         assertThat(body.billingAddress())
             .isEqualTo(
                 AddressInput.builder()
@@ -199,6 +232,21 @@ internal class CustomerCreateParamsTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(body.paymentConfiguration())
+            .isEqualTo(
+                CustomerCreateParams.PaymentConfiguration.builder()
+                    .addPaymentProvider(
+                        CustomerCreateParams.PaymentConfiguration.PaymentProvider.builder()
+                            .providerType(
+                                CustomerCreateParams.PaymentConfiguration.PaymentProvider
+                                    .ProviderType
+                                    .STRIPE
+                            )
+                            .addExcludedPaymentMethodType("string")
+                            .build()
+                    )
+                    .build()
+            )
         assertThat(body.paymentProvider())
             .isEqualTo(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
         assertThat(body.paymentProviderId()).isEqualTo("payment_provider_id")
@@ -221,6 +269,7 @@ internal class CustomerCreateParamsTest {
                     NewAvalaraTaxConfiguration.builder()
                         .taxExempt(true)
                         .taxProvider(NewAvalaraTaxConfiguration.TaxProvider.AVALARA)
+                        .automaticTaxEnabled(true)
                         .taxExemptionCode("tax_exemption_code")
                         .build()
                 )

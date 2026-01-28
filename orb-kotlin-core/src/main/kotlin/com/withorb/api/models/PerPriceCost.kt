@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class PerPriceCost
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val price: JsonField<Price>,
     private val priceId: JsonField<String>,
@@ -168,28 +169,23 @@ private constructor(
         fun price(price: JsonField<Price>) = apply { this.price = price }
 
         /** Alias for calling [price] with `Price.ofUnit(unit)`. */
-        fun price(unit: Price.Unit) = price(Price.ofUnit(unit))
+        fun price(unit: Price.UnitPrice) = price(Price.ofUnit(unit))
+
+        /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
+        fun price(tiered: Price.Tiered) = price(Price.ofTiered(tiered))
+
+        /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
+        fun price(bulk: Price.Bulk) = price(Price.ofBulk(bulk))
+
+        /** Alias for calling [price] with `Price.ofBulkWithFilters(bulkWithFilters)`. */
+        fun price(bulkWithFilters: Price.BulkWithFilters) =
+            price(Price.ofBulkWithFilters(bulkWithFilters))
 
         /** Alias for calling [price] with `Price.ofPackage(package_)`. */
         fun price(package_: Price.Package) = price(Price.ofPackage(package_))
 
         /** Alias for calling [price] with `Price.ofMatrix(matrix)`. */
         fun price(matrix: Price.Matrix) = price(Price.ofMatrix(matrix))
-
-        /** Alias for calling [price] with `Price.ofTiered(tiered)`. */
-        fun price(tiered: Price.Tiered) = price(Price.ofTiered(tiered))
-
-        /** Alias for calling [price] with `Price.ofTieredBps(tieredBps)`. */
-        fun price(tieredBps: Price.TieredBps) = price(Price.ofTieredBps(tieredBps))
-
-        /** Alias for calling [price] with `Price.ofBps(bps)`. */
-        fun price(bps: Price.Bps) = price(Price.ofBps(bps))
-
-        /** Alias for calling [price] with `Price.ofBulkBps(bulkBps)`. */
-        fun price(bulkBps: Price.BulkBps) = price(Price.ofBulkBps(bulkBps))
-
-        /** Alias for calling [price] with `Price.ofBulk(bulk)`. */
-        fun price(bulk: Price.Bulk) = price(Price.ofBulk(bulk))
 
         /** Alias for calling [price] with `Price.ofThresholdTotalAmount(thresholdTotalAmount)`. */
         fun price(thresholdTotalAmount: Price.ThresholdTotalAmount) =
@@ -198,12 +194,12 @@ private constructor(
         /** Alias for calling [price] with `Price.ofTieredPackage(tieredPackage)`. */
         fun price(tieredPackage: Price.TieredPackage) = price(Price.ofTieredPackage(tieredPackage))
 
-        /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
-        fun price(groupedTiered: Price.GroupedTiered) = price(Price.ofGroupedTiered(groupedTiered))
-
         /** Alias for calling [price] with `Price.ofTieredWithMinimum(tieredWithMinimum)`. */
         fun price(tieredWithMinimum: Price.TieredWithMinimum) =
             price(Price.ofTieredWithMinimum(tieredWithMinimum))
+
+        /** Alias for calling [price] with `Price.ofGroupedTiered(groupedTiered)`. */
+        fun price(groupedTiered: Price.GroupedTiered) = price(Price.ofGroupedTiered(groupedTiered))
 
         /**
          * Alias for calling [price] with
@@ -238,6 +234,10 @@ private constructor(
         fun price(groupedAllocation: Price.GroupedAllocation) =
             price(Price.ofGroupedAllocation(groupedAllocation))
 
+        /** Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`. */
+        fun price(bulkWithProration: Price.BulkWithProration) =
+            price(Price.ofBulkWithProration(bulkWithProration))
+
         /**
          * Alias for calling [price] with
          * `Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum)`.
@@ -253,14 +253,17 @@ private constructor(
             price(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
         /**
+         * Alias for calling [price] with
+         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         */
+        fun price(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
+            price(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+
+        /**
          * Alias for calling [price] with `Price.ofMatrixWithDisplayName(matrixWithDisplayName)`.
          */
         fun price(matrixWithDisplayName: Price.MatrixWithDisplayName) =
             price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
-
-        /** Alias for calling [price] with `Price.ofBulkWithProration(bulkWithProration)`. */
-        fun price(bulkWithProration: Price.BulkWithProration) =
-            price(Price.ofBulkWithProration(bulkWithProration))
 
         /** Alias for calling [price] with `Price.ofGroupedTieredPackage(groupedTieredPackage)`. */
         fun price(groupedTieredPackage: Price.GroupedTieredPackage) =
@@ -294,10 +297,20 @@ private constructor(
 
         /**
          * Alias for calling [price] with
-         * `Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds)`.
+         * `Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation)`.
          */
-        fun price(groupedWithMinMaxThresholds: Price.GroupedWithMinMaxThresholds) =
-            price(Price.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds))
+        fun price(cumulativeGroupedAllocation: Price.CumulativeGroupedAllocation) =
+            price(Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation))
+
+        /** Alias for calling [price] with `Price.ofMinimumComposite(minimumComposite)`. */
+        fun price(minimumComposite: Price.MinimumComposite) =
+            price(Price.ofMinimumComposite(minimumComposite))
+
+        /** Alias for calling [price] with `Price.ofPercent(percent)`. */
+        fun price(percent: Price.Percent) = price(Price.ofPercent(percent))
+
+        /** Alias for calling [price] with `Price.ofEventOutput(eventOutput)`. */
+        fun price(eventOutput: Price.EventOutput) = price(Price.ofEventOutput(eventOutput))
 
         /** The price the cost is associated with */
         fun priceId(priceId: String) = priceId(JsonField.of(priceId))
@@ -435,12 +448,18 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PerPriceCost && price == other.price && priceId == other.priceId && subtotal == other.subtotal && total == other.total && quantity == other.quantity && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PerPriceCost &&
+            price == other.price &&
+            priceId == other.priceId &&
+            subtotal == other.subtotal &&
+            total == other.total &&
+            quantity == other.quantity &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(price, priceId, subtotal, total, quantity, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(price, priceId, subtotal, total, quantity, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -24,7 +24,27 @@ internal class NewSubscriptionTieredPackageWithMinimumPriceTest {
                 .tieredPackageWithMinimumConfig(
                     NewSubscriptionTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .packageSize(0.0)
+                        .addTier(
+                            NewSubscriptionTieredPackageWithMinimumPrice
+                                .TieredPackageWithMinimumConfig
+                                .Tier
+                                .builder()
+                                .minimumAmount("minimum_amount")
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
+                        .addTier(
+                            NewSubscriptionTieredPackageWithMinimumPrice
+                                .TieredPackageWithMinimumConfig
+                                .Tier
+                                .builder()
+                                .minimumAmount("minimum_amount")
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -76,7 +96,25 @@ internal class NewSubscriptionTieredPackageWithMinimumPriceTest {
             .isEqualTo(
                 NewSubscriptionTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig
                     .builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .packageSize(0.0)
+                    .addTier(
+                        NewSubscriptionTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig
+                            .Tier
+                            .builder()
+                            .minimumAmount("minimum_amount")
+                            .perUnit("per_unit")
+                            .tierLowerBound("tier_lower_bound")
+                            .build()
+                    )
+                    .addTier(
+                        NewSubscriptionTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig
+                            .Tier
+                            .builder()
+                            .minimumAmount("minimum_amount")
+                            .perUnit("per_unit")
+                            .tierLowerBound("tier_lower_bound")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newSubscriptionTieredPackageWithMinimumPrice.billableMetricId())
@@ -92,7 +130,7 @@ internal class NewSubscriptionTieredPackageWithMinimumPriceTest {
         assertThat(newSubscriptionTieredPackageWithMinimumPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionTieredPackageWithMinimumPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionTieredPackageWithMinimumPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -146,7 +184,27 @@ internal class NewSubscriptionTieredPackageWithMinimumPriceTest {
                 .tieredPackageWithMinimumConfig(
                     NewSubscriptionTieredPackageWithMinimumPrice.TieredPackageWithMinimumConfig
                         .builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .packageSize(0.0)
+                        .addTier(
+                            NewSubscriptionTieredPackageWithMinimumPrice
+                                .TieredPackageWithMinimumConfig
+                                .Tier
+                                .builder()
+                                .minimumAmount("minimum_amount")
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
+                        .addTier(
+                            NewSubscriptionTieredPackageWithMinimumPrice
+                                .TieredPackageWithMinimumConfig
+                                .Tier
+                                .builder()
+                                .minimumAmount("minimum_amount")
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

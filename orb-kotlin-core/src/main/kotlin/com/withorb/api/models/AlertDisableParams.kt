@@ -229,10 +229,22 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AlertDisableParams && alertConfigurationId == other.alertConfigurationId && subscriptionId == other.subscriptionId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return other is AlertDisableParams &&
+            alertConfigurationId == other.alertConfigurationId &&
+            subscriptionId == other.subscriptionId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams &&
+            additionalBodyProperties == other.additionalBodyProperties
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(alertConfigurationId, subscriptionId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            alertConfigurationId,
+            subscriptionId,
+            additionalHeaders,
+            additionalQueryParams,
+            additionalBodyProperties,
+        )
 
     override fun toString() =
         "AlertDisableParams{alertConfigurationId=$alertConfigurationId, subscriptionId=$subscriptionId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"

@@ -17,7 +17,9 @@ internal class NewSubscriptionGroupedAllocationPriceTest {
                 .cadence(NewSubscriptionGroupedAllocationPrice.Cadence.ANNUAL)
                 .groupedAllocationConfig(
                     NewSubscriptionGroupedAllocationPrice.GroupedAllocationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .allocation("allocation")
+                        .groupingKey("x")
+                        .overageUnitRate("overage_unit_rate")
                         .build()
                 )
                 .itemId("item_id")
@@ -65,7 +67,9 @@ internal class NewSubscriptionGroupedAllocationPriceTest {
         assertThat(newSubscriptionGroupedAllocationPrice.groupedAllocationConfig())
             .isEqualTo(
                 NewSubscriptionGroupedAllocationPrice.GroupedAllocationConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .allocation("allocation")
+                    .groupingKey("x")
+                    .overageUnitRate("overage_unit_rate")
                     .build()
             )
         assertThat(newSubscriptionGroupedAllocationPrice.itemId()).isEqualTo("item_id")
@@ -85,7 +89,7 @@ internal class NewSubscriptionGroupedAllocationPriceTest {
         assertThat(newSubscriptionGroupedAllocationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionGroupedAllocationPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionGroupedAllocationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -131,7 +135,9 @@ internal class NewSubscriptionGroupedAllocationPriceTest {
                 .cadence(NewSubscriptionGroupedAllocationPrice.Cadence.ANNUAL)
                 .groupedAllocationConfig(
                     NewSubscriptionGroupedAllocationPrice.GroupedAllocationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .allocation("allocation")
+                        .groupingKey("x")
+                        .overageUnitRate("overage_unit_rate")
                         .build()
                 )
                 .itemId("item_id")

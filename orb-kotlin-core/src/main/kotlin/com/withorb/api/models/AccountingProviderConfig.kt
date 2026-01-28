@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AccountingProviderConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val externalProviderId: JsonField<String>,
     private val providerType: JsonField<String>,
@@ -203,12 +204,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountingProviderConfig && externalProviderId == other.externalProviderId && providerType == other.providerType && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AccountingProviderConfig &&
+            externalProviderId == other.externalProviderId &&
+            providerType == other.providerType &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(externalProviderId, providerType, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(externalProviderId, providerType, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

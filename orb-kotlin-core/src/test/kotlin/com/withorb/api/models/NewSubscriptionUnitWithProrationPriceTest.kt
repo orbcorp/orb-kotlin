@@ -20,7 +20,7 @@ internal class NewSubscriptionUnitWithProrationPriceTest {
                 .name("Annual fee")
                 .unitWithProrationConfig(
                     NewSubscriptionUnitWithProrationPrice.UnitWithProrationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .unitAmount("unit_amount")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -69,7 +69,7 @@ internal class NewSubscriptionUnitWithProrationPriceTest {
         assertThat(newSubscriptionUnitWithProrationPrice.unitWithProrationConfig())
             .isEqualTo(
                 NewSubscriptionUnitWithProrationPrice.UnitWithProrationConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .unitAmount("unit_amount")
                     .build()
             )
         assertThat(newSubscriptionUnitWithProrationPrice.billableMetricId())
@@ -85,7 +85,7 @@ internal class NewSubscriptionUnitWithProrationPriceTest {
         assertThat(newSubscriptionUnitWithProrationPrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionUnitWithProrationPrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionUnitWithProrationPrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -134,7 +134,7 @@ internal class NewSubscriptionUnitWithProrationPriceTest {
                 .name("Annual fee")
                 .unitWithProrationConfig(
                     NewSubscriptionUnitWithProrationPrice.UnitWithProrationConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .unitAmount("unit_amount")
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

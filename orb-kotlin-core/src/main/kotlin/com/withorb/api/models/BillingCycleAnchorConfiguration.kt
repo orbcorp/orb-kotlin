@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class BillingCycleAnchorConfiguration
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val day: JsonField<Long>,
     private val month: JsonField<Long>,
@@ -256,12 +257,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillingCycleAnchorConfiguration && day == other.day && month == other.month && year == other.year && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is BillingCycleAnchorConfiguration &&
+            day == other.day &&
+            month == other.month &&
+            year == other.year &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(day, month, year, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

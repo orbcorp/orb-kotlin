@@ -18,7 +18,15 @@ internal class NewPlanMatrixWithDisplayNamePriceTest {
                 .itemId("item_id")
                 .matrixWithDisplayNameConfig(
                     NewPlanMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .dimension("dimension")
+                        .addUnitAmount(
+                            NewPlanMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.UnitAmount
+                                .builder()
+                                .dimensionValue("dimension_value")
+                                .displayName("display_name")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .modelType(NewPlanMatrixWithDisplayNamePrice.ModelType.MATRIX_WITH_DISPLAY_NAME)
@@ -66,7 +74,15 @@ internal class NewPlanMatrixWithDisplayNamePriceTest {
         assertThat(newPlanMatrixWithDisplayNamePrice.matrixWithDisplayNameConfig())
             .isEqualTo(
                 NewPlanMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .dimension("dimension")
+                    .addUnitAmount(
+                        NewPlanMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.UnitAmount
+                            .builder()
+                            .dimensionValue("dimension_value")
+                            .displayName("display_name")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newPlanMatrixWithDisplayNamePrice.modelType())
@@ -85,7 +101,7 @@ internal class NewPlanMatrixWithDisplayNamePriceTest {
         assertThat(newPlanMatrixWithDisplayNamePrice.conversionRate()).isEqualTo(0.0)
         assertThat(newPlanMatrixWithDisplayNamePrice.conversionRateConfig())
             .isEqualTo(
-                NewPlanMatrixWithDisplayNamePrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -132,7 +148,15 @@ internal class NewPlanMatrixWithDisplayNamePriceTest {
                 .itemId("item_id")
                 .matrixWithDisplayNameConfig(
                     NewPlanMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .dimension("dimension")
+                        .addUnitAmount(
+                            NewPlanMatrixWithDisplayNamePrice.MatrixWithDisplayNameConfig.UnitAmount
+                                .builder()
+                                .dimensionValue("dimension_value")
+                                .displayName("display_name")
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
                         .build()
                 )
                 .modelType(NewPlanMatrixWithDisplayNamePrice.ModelType.MATRIX_WITH_DISPLAY_NAME)

@@ -186,7 +186,6 @@ interface SubscriptionService {
      * cadence, type, and name of a price can not be overridden.
      *
      * ### Maximums and Minimums
-     *
      * Minimums and maximums, much like price overrides, can be useful when a new customer has
      * negotiated a new or different minimum or maximum spend cap than the default for a given
      * price. If one exists for a price and null is provided for the minimum/maximum override on
@@ -231,7 +230,6 @@ interface SubscriptionService {
      * ```
      *
      * ### Discounts
-     *
      * Discounts, like price overrides, can be useful when a new customer has negotiated a new or
      * different discount than the default for a price. If a discount exists for a price and a null
      * discount is provided on creation, then there will be no discount on the new subscription.
@@ -281,6 +279,9 @@ interface SubscriptionService {
      * enable threshold billing, pass in an `invoicing_threshold`, which is specified in the
      * subscription's invoicing currency, when creating a subscription. E.g. pass in `10.00` to
      * issue an invoice when usage amounts hit \$10.00 for a subscription that invoices in USD.
+     *
+     * ## Limits
+     * By default, Orb limits the number of subscriptions per customer to 100.
      */
     fun create(
         params: SubscriptionCreateParams = SubscriptionCreateParams.none(),
@@ -376,7 +377,6 @@ interface SubscriptionService {
      * `end_date` equal to the `start_date` upon cancellation.
      *
      * ## Backdated cancellations
-     *
      * Orb allows you to cancel a subscription in the past as long as there are no paid invoices
      * between the `requested_date` and the current time. If the cancellation is after the latest
      * issued invoice, Orb will generate a balance refund for the current period. If the
@@ -485,7 +485,6 @@ interface SubscriptionService {
      * of the customer's billing period.
      *
      * ### Default response shape
-     *
      * Orb returns a `data` array with an object corresponding to each billable metric. Nested
      * within this object is a `usage` array which has a `quantity` value and a corresponding
      * `timeframe_start` and `timeframe_end`. The `quantity` value represents the calculated usage
@@ -502,7 +501,6 @@ interface SubscriptionService {
      * conjunction_ with each other, e.g. to display grouped usage on a custom timeframe.
      *
      * ## Custom timeframe
-     *
      * In order to view usage for a custom timeframe rather than the current billing period, specify
      * a `timeframe_start` and `timeframe_end`. This will calculate quantities for usage incurred
      * between timeframe_start (inclusive) and timeframe_end (exclusive), i.e. `[timeframe_start,
@@ -514,7 +512,6 @@ interface SubscriptionService {
      * - Both parameters must be specified if either is specified.
      *
      * ## Grouping by custom attributes
-     *
      * In order to view a single metric grouped by a specific _attribute_ that each event is tagged
      * with (e.g. `cluster`), you must additionally specify a `billable_metric_id` and a `group_by`
      * key. The `group_by` key denotes the event property on which to group.
@@ -564,7 +561,6 @@ interface SubscriptionService {
      * ```
      *
      * ## Windowed usage
-     *
      * The `granularity` parameter can be used to _window_ the usage `quantity` value into periods.
      * When not specified, usage is returned for the entirety of the time range.
      *
@@ -619,7 +615,6 @@ interface SubscriptionService {
      * ```
      *
      * ## Decomposable vs. non-decomposable metrics
-     *
      * Billable metrics fall into one of two categories: decomposable and non-decomposable. A
      * decomposable billable metric, such as a sum or a count, can be displayed and aggregated
      * across arbitrary timescales. On the other hand, a non-decomposable metric is not meaningful
@@ -638,7 +633,6 @@ interface SubscriptionService {
      *   key. If no invoice grouping key is present, the metric does not support `group_by`.
      *
      * ## Matrix prices
-     *
      * When a billable metric is attached to a price that uses matrix pricing, it's important to
      * view usage grouped by those matrix dimensions. In this case, use the query parameters
      * `first_dimension_key`, `first_dimension_value` and `second_dimension_key`,
@@ -718,7 +712,6 @@ interface SubscriptionService {
      * `start_date`.
      *
      * ## Fixed fee quantity transitions
-     *
      * The fixed fee quantity transitions for a fixed fee price interval can also be specified when
      * adding or editing by passing an array for `fixed_fee_quantity_transitions`. A fixed fee
      * quantity transition must have a `quantity` and an `effective_date`, which is the date after
@@ -773,8 +766,8 @@ interface SubscriptionService {
      * This endpoint can be used to change an existing subscription's plan. It returns the
      * serialized updated subscription object.
      *
-     * The body parameter `change_option` determines when the plan change occurrs. Orb supports
-     * three options:
+     * The body parameter `change_option` determines when the plan change occurs. Orb supports three
+     * options:
      * - `end_of_subscription_term`: changes the plan at the end of the existing plan's term.
      *     - Issuing this plan change request for a monthly subscription will keep the existing plan
      *       active until the start of the subsequent month. Issuing this plan change request for a
@@ -917,7 +910,6 @@ interface SubscriptionService {
      * cadence, type, and name of a price can not be overridden.
      *
      * ### Maximums, and minimums
-     *
      * Price overrides are used to update some or all prices in the target plan. Minimums and
      * maximums, much like price overrides, can be useful when a new customer has negotiated a new
      * or different minimum or maximum spend cap than the default for the plan. The request format
@@ -925,12 +917,10 @@ interface SubscriptionService {
      * [subscription creation](create-subscription).
      *
      * ## Scheduling multiple plan changes
-     *
      * When scheduling multiple plan changes with the same date, the latest plan change on that day
      * takes effect.
      *
      * ## Prorations for in-advance fees
-     *
      * By default, Orb calculates the prorated difference in any fixed fees when making a plan
      * change, adjusting the customer balance as needed. For details on this behavior, see
      * [Modifying subscriptions](/product-catalog/modifying-subscriptions#prorations-for-in-advance-fees).

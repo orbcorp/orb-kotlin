@@ -22,6 +22,7 @@ import java.util.Objects
  * timeframe.
  */
 class EventBackfillListResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val closeTime: JsonField<OffsetDateTime>,
@@ -716,7 +717,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -729,12 +730,37 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventBackfillListResponse && id == other.id && closeTime == other.closeTime && createdAt == other.createdAt && customerId == other.customerId && eventsIngested == other.eventsIngested && replaceExistingEvents == other.replaceExistingEvents && revertedAt == other.revertedAt && status == other.status && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && deprecationFilter == other.deprecationFilter && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is EventBackfillListResponse &&
+            id == other.id &&
+            closeTime == other.closeTime &&
+            createdAt == other.createdAt &&
+            customerId == other.customerId &&
+            eventsIngested == other.eventsIngested &&
+            replaceExistingEvents == other.replaceExistingEvents &&
+            revertedAt == other.revertedAt &&
+            status == other.status &&
+            timeframeEnd == other.timeframeEnd &&
+            timeframeStart == other.timeframeStart &&
+            deprecationFilter == other.deprecationFilter &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, closeTime, createdAt, customerId, eventsIngested, replaceExistingEvents, revertedAt, status, timeframeEnd, timeframeStart, deprecationFilter, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            closeTime,
+            createdAt,
+            customerId,
+            eventsIngested,
+            replaceExistingEvents,
+            revertedAt,
+            status,
+            timeframeEnd,
+            timeframeStart,
+            deprecationFilter,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

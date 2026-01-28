@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class TieredConversionRateConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val conversionRateType: JsonField<ConversionRateType>,
     private val tieredConfig: JsonField<ConversionRateTieredConfig>,
@@ -315,7 +316,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ConversionRateType && value == other.value /* spotless:on */
+            return other is ConversionRateType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -328,12 +329,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is TieredConversionRateConfig && conversionRateType == other.conversionRateType && tieredConfig == other.tieredConfig && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is TieredConversionRateConfig &&
+            conversionRateType == other.conversionRateType &&
+            tieredConfig == other.tieredConfig &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(conversionRateType, tieredConfig, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(conversionRateType, tieredConfig, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

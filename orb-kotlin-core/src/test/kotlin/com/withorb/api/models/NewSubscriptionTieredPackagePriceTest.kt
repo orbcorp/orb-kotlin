@@ -20,7 +20,19 @@ internal class NewSubscriptionTieredPackagePriceTest {
                 .name("Annual fee")
                 .tieredPackageConfig(
                     NewSubscriptionTieredPackagePrice.TieredPackageConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .packageSize("package_size")
+                        .addTier(
+                            NewSubscriptionTieredPackagePrice.TieredPackageConfig.Tier.builder()
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
+                        .addTier(
+                            NewSubscriptionTieredPackagePrice.TieredPackageConfig.Tier.builder()
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
                         .build()
                 )
                 .billableMetricId("billable_metric_id")
@@ -69,7 +81,19 @@ internal class NewSubscriptionTieredPackagePriceTest {
         assertThat(newSubscriptionTieredPackagePrice.tieredPackageConfig())
             .isEqualTo(
                 NewSubscriptionTieredPackagePrice.TieredPackageConfig.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .packageSize("package_size")
+                    .addTier(
+                        NewSubscriptionTieredPackagePrice.TieredPackageConfig.Tier.builder()
+                            .perUnit("per_unit")
+                            .tierLowerBound("tier_lower_bound")
+                            .build()
+                    )
+                    .addTier(
+                        NewSubscriptionTieredPackagePrice.TieredPackageConfig.Tier.builder()
+                            .perUnit("per_unit")
+                            .tierLowerBound("tier_lower_bound")
+                            .build()
+                    )
                     .build()
             )
         assertThat(newSubscriptionTieredPackagePrice.billableMetricId())
@@ -85,7 +109,7 @@ internal class NewSubscriptionTieredPackagePriceTest {
         assertThat(newSubscriptionTieredPackagePrice.conversionRate()).isEqualTo(0.0)
         assertThat(newSubscriptionTieredPackagePrice.conversionRateConfig())
             .isEqualTo(
-                NewSubscriptionTieredPackagePrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -134,7 +158,19 @@ internal class NewSubscriptionTieredPackagePriceTest {
                 .name("Annual fee")
                 .tieredPackageConfig(
                     NewSubscriptionTieredPackagePrice.TieredPackageConfig.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .packageSize("package_size")
+                        .addTier(
+                            NewSubscriptionTieredPackagePrice.TieredPackageConfig.Tier.builder()
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
+                        .addTier(
+                            NewSubscriptionTieredPackagePrice.TieredPackageConfig.Tier.builder()
+                                .perUnit("per_unit")
+                                .tierLowerBound("tier_lower_bound")
+                                .build()
+                        )
                         .build()
                 )
                 .billableMetricId("billable_metric_id")

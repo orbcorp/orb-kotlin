@@ -5,6 +5,7 @@ package com.withorb.api.services.blocking
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.handlers.emptyHandler
 import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
@@ -18,6 +19,7 @@ import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.models.Invoice
 import com.withorb.api.models.InvoiceCreateParams
+import com.withorb.api.models.InvoiceDeleteLineItemParams
 import com.withorb.api.models.InvoiceFetchParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceFetchUpcomingResponse
@@ -25,6 +27,9 @@ import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceListPage
 import com.withorb.api.models.InvoiceListPageResponse
 import com.withorb.api.models.InvoiceListParams
+import com.withorb.api.models.InvoiceListSummaryPage
+import com.withorb.api.models.InvoiceListSummaryPageResponse
+import com.withorb.api.models.InvoiceListSummaryParams
 import com.withorb.api.models.InvoiceMarkPaidParams
 import com.withorb.api.models.InvoicePayParams
 import com.withorb.api.models.InvoiceUpdateParams
@@ -54,6 +59,14 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
         // get /invoices
         withRawResponse().list(params, requestOptions).parse()
 
+    override fun deleteLineItem(
+        params: InvoiceDeleteLineItemParams,
+        requestOptions: RequestOptions,
+    ) {
+        // delete /invoices/{invoice_id}/invoice_line_items/{line_item_id}
+        withRawResponse().deleteLineItem(params, requestOptions)
+    }
+
     override fun fetch(params: InvoiceFetchParams, requestOptions: RequestOptions): Invoice =
         // get /invoices/{invoice_id}
         withRawResponse().fetch(params, requestOptions).parse()
@@ -68,6 +81,13 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
     override fun issue(params: InvoiceIssueParams, requestOptions: RequestOptions): Invoice =
         // post /invoices/{invoice_id}/issue
         withRawResponse().issue(params, requestOptions).parse()
+
+    override fun listSummary(
+        params: InvoiceListSummaryParams,
+        requestOptions: RequestOptions,
+    ): InvoiceListSummaryPage =
+        // get /invoices/summary
+        withRawResponse().listSummary(params, requestOptions).parse()
 
     override fun markPaid(params: InvoiceMarkPaidParams, requestOptions: RequestOptions): Invoice =
         // post /invoices/{invoice_id}/mark_paid
@@ -185,6 +205,35 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
+        private val deleteLineItemHandler: Handler<Void?> = emptyHandler()
+
+        override fun deleteLineItem(
+            params: InvoiceDeleteLineItemParams,
+            requestOptions: RequestOptions,
+        ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("lineItemId", params.lineItemId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments(
+                        "invoices",
+                        params._pathParam(0),
+                        "invoice_line_items",
+                        params._pathParam(1),
+                    )
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response.use { deleteLineItemHandler.handle(it) }
+            }
+        }
+
         private val fetchHandler: Handler<Invoice> = jsonHandler<Invoice>(clientOptions.jsonMapper)
 
         override fun fetch(
@@ -267,6 +316,40 @@ class InvoiceServiceImpl internal constructor(private val clientOptions: ClientO
                         if (requestOptions.responseValidation!!) {
                             it.validate()
                         }
+                    }
+            }
+        }
+
+        private val listSummaryHandler: Handler<InvoiceListSummaryPageResponse> =
+            jsonHandler<InvoiceListSummaryPageResponse>(clientOptions.jsonMapper)
+
+        override fun listSummary(
+            params: InvoiceListSummaryParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<InvoiceListSummaryPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("invoices", "summary")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { listSummaryHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        InvoiceListSummaryPage.builder()
+                            .service(InvoiceServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

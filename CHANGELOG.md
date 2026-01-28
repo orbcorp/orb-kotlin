@@ -1,5 +1,110 @@
 # Changelog
 
+## 1.12.0 (2026-01-28)
+
+Full Changelog: [v1.11.0...v1.12.0](https://github.com/orbcorp/orb-kotlin/compare/v1.11.0...v1.12.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** define shared model ConversionRateConfig
+
+### Features
+
+* add retryable exception ([6bf3387](https://github.com/orbcorp/orb-kotlin/commit/6bf3387e9efe151b2db48c51a454f4ac9abb03e1))
+* **api:** api update ([7b92638](https://github.com/orbcorp/orb-kotlin/commit/7b926380be0717e06f9c7f18d8591b7715f84170))
+* **api:** api update ([c78174c](https://github.com/orbcorp/orb-kotlin/commit/c78174cea1082e170bc881aae0cd83497911ca93))
+* **api:** api update ([2083dc4](https://github.com/orbcorp/orb-kotlin/commit/2083dc482e8abe757c27787d4bfcf5f6c57eab60))
+* **api:** api update ([37266cb](https://github.com/orbcorp/orb-kotlin/commit/37266cbf0016edc7772f318e810d6fd443988e77))
+* **api:** api update ([4278e1b](https://github.com/orbcorp/orb-kotlin/commit/4278e1be6a6e2c64d64c0f7c01c4cef1df6366f4))
+* **api:** api update ([e4e8d24](https://github.com/orbcorp/orb-kotlin/commit/e4e8d24b25879216965e7c55c5e23ab3bbbc69f8))
+* **api:** api update ([68203a3](https://github.com/orbcorp/orb-kotlin/commit/68203a34d2c36b47aecb227b408452f65f4db572))
+* **api:** api update ([012b348](https://github.com/orbcorp/orb-kotlin/commit/012b348959220609a650011f38e967b55aa6c906))
+* **api:** api update ([bbe220c](https://github.com/orbcorp/orb-kotlin/commit/bbe220c8813cd6a5c491da043f0b39cffe06edca))
+* **api:** api update ([cfe2c88](https://github.com/orbcorp/orb-kotlin/commit/cfe2c8868aead2144f69f0b04e304de948adbf8d))
+* **api:** api update ([74b29ea](https://github.com/orbcorp/orb-kotlin/commit/74b29eac5934c4d52380859df2df42a5c6b8db46))
+* **api:** api update ([af8a41f](https://github.com/orbcorp/orb-kotlin/commit/af8a41f71ca341c4ca6362158c555810a217ec49))
+* **api:** api update ([0f366e8](https://github.com/orbcorp/orb-kotlin/commit/0f366e8c6196b679186999278cb93686eda3c6a9))
+* **api:** api update ([2eb59cf](https://github.com/orbcorp/orb-kotlin/commit/2eb59cfcbe3b452746ef31a5f7c89f43276cffe5))
+* **api:** api update ([99993b1](https://github.com/orbcorp/orb-kotlin/commit/99993b17f65917b21e1f87b14699f5ac5cb63e1e))
+* **api:** api update ([914623a](https://github.com/orbcorp/orb-kotlin/commit/914623ae6f05e8ea28761331aba3b36676f10a99))
+* **api:** api update ([fd82100](https://github.com/orbcorp/orb-kotlin/commit/fd821005e293869c0199d3d5261f3a806df74e41))
+* **api:** api update ([9c2441e](https://github.com/orbcorp/orb-kotlin/commit/9c2441e3488e02d6e3f130dbbc1e1a9c821ac15d))
+* **api:** api update ([680265b](https://github.com/orbcorp/orb-kotlin/commit/680265b0add2f0c05eee02f1410cda5d14bd758b))
+* **api:** api update ([a1a92f4](https://github.com/orbcorp/orb-kotlin/commit/a1a92f48d35131e22f8e4e9ce51f6a31c8445277))
+* **api:** api update ([83ad00c](https://github.com/orbcorp/orb-kotlin/commit/83ad00cb56d547e695b01e7e02e923247856f3c8))
+* **api:** api update ([42c2d10](https://github.com/orbcorp/orb-kotlin/commit/42c2d10e801b46d82791cb26511cc237c5a9614a))
+* **api:** api update ([f6987c9](https://github.com/orbcorp/orb-kotlin/commit/f6987c9fd19277bfdb124bf896a74584ae69090b))
+* **api:** api update ([a58f47b](https://github.com/orbcorp/orb-kotlin/commit/a58f47b9e018a45680b2819cbc6ff9945779573d))
+* **api:** api update ([0285f3a](https://github.com/orbcorp/orb-kotlin/commit/0285f3a1dd36ff49e345c862ac5dd8e714019df1))
+* **api:** api update ([6d42811](https://github.com/orbcorp/orb-kotlin/commit/6d42811246f63cd57f9c2b9917a291ba9ef5b6ae))
+* **api:** api update ([93761f0](https://github.com/orbcorp/orb-kotlin/commit/93761f0a10e3a553c7ca56701f746de784ee2516))
+* **api:** api update ([4c2a026](https://github.com/orbcorp/orb-kotlin/commit/4c2a026cdd5327b5d58a42f2ae81975b5a8b6821))
+* **api:** api update ([11cfcca](https://github.com/orbcorp/orb-kotlin/commit/11cfcca024a9abce1fbe8d3097c3d3aeb66eee34))
+* **api:** api update ([a9326c1](https://github.com/orbcorp/orb-kotlin/commit/a9326c1fc925f51377493ccb1d50cdbcd444df07))
+* **api:** api update ([c427776](https://github.com/orbcorp/orb-kotlin/commit/c427776d050d0cc71128bbd7c1f985bf70df342c))
+* **api:** api update ([c4c96c6](https://github.com/orbcorp/orb-kotlin/commit/c4c96c6e42c74985376828b8efe6d03e0dcb91b5))
+* **api:** api update ([a05fab4](https://github.com/orbcorp/orb-kotlin/commit/a05fab462983dba1d6c3755e1e1a65d24a527f60))
+* **api:** api update ([d631c4d](https://github.com/orbcorp/orb-kotlin/commit/d631c4dd6dbf3657a11731eebdb772ed770ad154))
+* **api:** api update ([f06d033](https://github.com/orbcorp/orb-kotlin/commit/f06d033e7331f839b77ae33d33b878be2c797e5f))
+* **api:** api update ([e2b7b1e](https://github.com/orbcorp/orb-kotlin/commit/e2b7b1ee8a2594a363552c3289326b63a87112ec))
+* **api:** api update ([a790d45](https://github.com/orbcorp/orb-kotlin/commit/a790d458789e5a7336dc8510510b593b0d36ce73))
+* **api:** api update ([ee76ab8](https://github.com/orbcorp/orb-kotlin/commit/ee76ab871131d964501afbc390d2ba11595003bd))
+* **api:** api update ([6180a95](https://github.com/orbcorp/orb-kotlin/commit/6180a95d21214a3bf90989d6a80e55cf2c066fc8))
+* **api:** api update ([d43255b](https://github.com/orbcorp/orb-kotlin/commit/d43255b2f3030d1575c1c88898e1e1be202a13b6))
+* **api:** define shared model ConversionRateConfig ([32b3512](https://github.com/orbcorp/orb-kotlin/commit/32b35124936f5fea58bf91d92313b242f0d56e97))
+* **api:** manual updates ([1ec4c6b](https://github.com/orbcorp/orb-kotlin/commit/1ec4c6b71a96563a7943fa9a9cbfb9337806d647))
+* **client:** add `HttpRequest#url()` method ([6ff8fa8](https://github.com/orbcorp/orb-kotlin/commit/6ff8fa800e9cf96b3909f9485196ad2d54d14831))
+* **client:** allow configuring dispatcher executor service ([35cce30](https://github.com/orbcorp/orb-kotlin/commit/35cce30b77c1646ca05db5d4db97b7c2bb026b83))
+* **client:** ensure compat with proguard ([a21fc50](https://github.com/orbcorp/orb-kotlin/commit/a21fc50739926011c56bb30b47999d83bf7462e1))
+* **client:** expose sleeper option ([1bc7983](https://github.com/orbcorp/orb-kotlin/commit/1bc798369b1883ba86b50ac4829ccb9f5331bca5))
+* **client:** send `X-Stainless-Kotlin-Version` header ([df19ef4](https://github.com/orbcorp/orb-kotlin/commit/df19ef4a3d120cf68692e92f1350e7fdb9820238))
+* extract minimum composite to type ([c89ade2](https://github.com/orbcorp/orb-kotlin/commit/c89ade2708c48dfd327c4260ab1afe01e051e8c9))
+
+
+### Bug Fixes
+
+* **ci:** use java-version 21 for publish step ([efc7891](https://github.com/orbcorp/orb-kotlin/commit/efc789114af507dd96e591c18696a07dffad9af6))
+* **client:** deserialization of empty objects ([d4ef4ac](https://github.com/orbcorp/orb-kotlin/commit/d4ef4acd10993041451835b56cf0d1ce4d145f71))
+* **client:** disallow coercion from float to int ([29a6000](https://github.com/orbcorp/orb-kotlin/commit/29a600001fc06a197c87627576dea4b32b7d954a))
+* **client:** ensure single timer is created per client ([1bc7983](https://github.com/orbcorp/orb-kotlin/commit/1bc798369b1883ba86b50ac4829ccb9f5331bca5))
+* **client:** fully respect max retries ([bea76d1](https://github.com/orbcorp/orb-kotlin/commit/bea76d1b226e4930c34de360dfb9fc47fc129a83))
+* **client:** incorrect `getPackageVersion` impl ([1612dd1](https://github.com/orbcorp/orb-kotlin/commit/1612dd121630d64f7d0ba6cfad7807e38765eda3))
+* **client:** multi-value header serialization ([bdc7d3a](https://github.com/orbcorp/orb-kotlin/commit/bdc7d3aa262fe9d79e9ce81dbc79b4ad7ac748eb))
+* **client:** preserve time zone in lenient date-time parsing ([a47bca4](https://github.com/orbcorp/orb-kotlin/commit/a47bca4ed6b4e9015e94031fcdb343c0bef28051))
+* **client:** r8 support ([4d46e62](https://github.com/orbcorp/orb-kotlin/commit/4d46e6201e6bf0a1963f05e3982ecc97bcb9519c))
+* **client:** send retry count header for max retries 0 ([bea76d1](https://github.com/orbcorp/orb-kotlin/commit/bea76d1b226e4930c34de360dfb9fc47fc129a83))
+* date time deserialization leniency ([d36ec82](https://github.com/orbcorp/orb-kotlin/commit/d36ec8270c5dba2740bd26f13a733d78304970bd))
+* **schema:** Rename unit price type to avoid naming conflict ([25c6f8c](https://github.com/orbcorp/orb-kotlin/commit/25c6f8c58010e5c2dd909f8161c8fee5465f2847))
+
+
+### Chores
+
+* **ci:** upgrade `actions/setup-java` ([836c0b6](https://github.com/orbcorp/orb-kotlin/commit/836c0b6321ef4493bdcac0aab2f5fbac08e130ae))
+* formatting ([d925332](https://github.com/orbcorp/orb-kotlin/commit/d9253323f70a39eb5d1f31e64e3547a5efef2a99))
+* **internal:** bump ci test timeout ([c9b431a](https://github.com/orbcorp/orb-kotlin/commit/c9b431af1e09f27dd08de5d1b247b72f70d160ae))
+* **internal:** change some comment formatting ([537aba1](https://github.com/orbcorp/orb-kotlin/commit/537aba177c709243ce291115eb15e8c1fd0adfa4))
+* **internal:** codegen related update ([ee2f754](https://github.com/orbcorp/orb-kotlin/commit/ee2f754acd19233c0e2fef2fb506d605e69b2641))
+* **internal:** codegen related update ([b249265](https://github.com/orbcorp/orb-kotlin/commit/b249265e115c5fe2c0e1740d448d311c7910c23f))
+* **internal:** codegen related update ([703e12a](https://github.com/orbcorp/orb-kotlin/commit/703e12ac4a7cfd7fe58c1f3445869a3eac022002))
+* **internal:** codegen related update ([b0ad475](https://github.com/orbcorp/orb-kotlin/commit/b0ad475dd5023f009b7d8a9a111a1b09c2e9f433))
+* **internal:** codegen related update ([844eb52](https://github.com/orbcorp/orb-kotlin/commit/844eb52c3959f68a8c6230accf8e570edcd553e4))
+* **internal:** codegen related update ([3239df5](https://github.com/orbcorp/orb-kotlin/commit/3239df52ca72a667fccc76f7bdf4799644b8322b))
+* **internal:** codegen related update ([b604e38](https://github.com/orbcorp/orb-kotlin/commit/b604e38e11b64d22569de6c59c7e40c02e048b9e))
+* **internal:** codegen related update ([936fe66](https://github.com/orbcorp/orb-kotlin/commit/936fe660fab9ecefb656d1db54b3288ec14fb235))
+* **internal:** codegen related update ([d06f656](https://github.com/orbcorp/orb-kotlin/commit/d06f6564fcaeaf124295a7cc5db061e7092e4771))
+* **internal:** correct cache invalidation for `SKIP_MOCK_TESTS` ([41aaa54](https://github.com/orbcorp/orb-kotlin/commit/41aaa543a20ca711f733d6b052de382826e92ff1))
+* **internal:** depend on packages directly in example ([bea76d1](https://github.com/orbcorp/orb-kotlin/commit/bea76d1b226e4930c34de360dfb9fc47fc129a83))
+* **internal:** reduce proguard ci logging ([ba337ee](https://github.com/orbcorp/orb-kotlin/commit/ba337ee683dea8296441855e1c5583c86bfa7f04))
+* **internal:** refactor build files to support future stainless package uploads ([bc7560c](https://github.com/orbcorp/orb-kotlin/commit/bc7560c0a5ab894808fd2b1d3a07b1541dad5046))
+* **internal:** update `actions/checkout` version ([e68ea00](https://github.com/orbcorp/orb-kotlin/commit/e68ea009d22a529d50990b88ebf79064aed30f4b))
+* test on Jackson 2.14.0 to avoid encountering FasterXML/jackson-databind[#3240](https://github.com/orbcorp/orb-kotlin/issues/3240) in tests ([d36ec82](https://github.com/orbcorp/orb-kotlin/commit/d36ec8270c5dba2740bd26f13a733d78304970bd))
+
+
+### Documentation
+
+* add comment for arbitrary value fields ([2d38893](https://github.com/orbcorp/orb-kotlin/commit/2d388931e3847669540ec236e30c924b7d34fca5))
+* remove `$` for better copy-pasteabality ([7e95cda](https://github.com/orbcorp/orb-kotlin/commit/7e95cda57ad7eef980190010d8c68db1fb7f9eb3))
+
 ## 1.11.0 (2025-07-26)
 
 Full Changelog: [v1.10.0...v1.11.0](https://github.com/orbcorp/orb-kotlin/compare/v1.10.0...v1.11.0)

@@ -20,7 +20,7 @@ internal class NewFloatingPackagePriceTest {
                 .modelType(NewFloatingPackagePrice.ModelType.PACKAGE)
                 .name("Annual fee")
                 .packageConfig(
-                    PackageConfig.builder().packageAmount("package_amount").packageSize(0L).build()
+                    PackageConfig.builder().packageAmount("package_amount").packageSize(1L).build()
                 )
                 .billableMetricId("billable_metric_id")
                 .billedInAdvance(true)
@@ -66,7 +66,7 @@ internal class NewFloatingPackagePriceTest {
         assertThat(newFloatingPackagePrice.name()).isEqualTo("Annual fee")
         assertThat(newFloatingPackagePrice.packageConfig())
             .isEqualTo(
-                PackageConfig.builder().packageAmount("package_amount").packageSize(0L).build()
+                PackageConfig.builder().packageAmount("package_amount").packageSize(1L).build()
             )
         assertThat(newFloatingPackagePrice.billableMetricId()).isEqualTo("billable_metric_id")
         assertThat(newFloatingPackagePrice.billedInAdvance()).isEqualTo(true)
@@ -80,7 +80,7 @@ internal class NewFloatingPackagePriceTest {
         assertThat(newFloatingPackagePrice.conversionRate()).isEqualTo(0.0)
         assertThat(newFloatingPackagePrice.conversionRateConfig())
             .isEqualTo(
-                NewFloatingPackagePrice.ConversionRateConfig.ofUnit(
+                ConversionRateConfig.ofUnit(
                     UnitConversionRateConfig.builder()
                         .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
                         .unitConfig(
@@ -126,7 +126,7 @@ internal class NewFloatingPackagePriceTest {
                 .modelType(NewFloatingPackagePrice.ModelType.PACKAGE)
                 .name("Annual fee")
                 .packageConfig(
-                    PackageConfig.builder().packageAmount("package_amount").packageSize(0L).build()
+                    PackageConfig.builder().packageAmount("package_amount").packageSize(1L).build()
                 )
                 .billableMetricId("billable_metric_id")
                 .billedInAdvance(true)

@@ -450,6 +450,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val timeframeEnd: JsonField<OffsetDateTime>,
         private val timeframeStart: JsonField<OffsetDateTime>,
@@ -831,12 +832,27 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && customerId == other.customerId && externalCustomerId == other.externalCustomerId && filter == other.filter && groupingKeys == other.groupingKeys && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                timeframeEnd == other.timeframeEnd &&
+                timeframeStart == other.timeframeStart &&
+                customerId == other.customerId &&
+                externalCustomerId == other.externalCustomerId &&
+                filter == other.filter &&
+                groupingKeys == other.groupingKeys &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(timeframeEnd, timeframeStart, customerId, externalCustomerId, filter, groupingKeys, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                timeframeEnd,
+                timeframeStart,
+                customerId,
+                externalCustomerId,
+                filter,
+                groupingKeys,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -849,10 +865,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PriceEvaluateParams && priceId == other.priceId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is PriceEvaluateParams &&
+            priceId == other.priceId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(priceId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(priceId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "PriceEvaluateParams{priceId=$priceId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

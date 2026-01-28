@@ -27,7 +27,6 @@ import com.withorb.api.models.SubscriptionUnscheduleFixedFeeQuantityUpdatesParam
 import com.withorb.api.models.SubscriptionUpdateFixedFeeQuantityParams
 import com.withorb.api.models.SubscriptionUpdateParams
 import com.withorb.api.models.SubscriptionUpdateTrialParams
-import com.withorb.api.models.TransformPriceFilter
 import com.withorb.api.models.UnitConfig
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -65,9 +64,11 @@ internal class SubscriptionServiceTest {
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        NewPercentageDiscount.Filter.builder()
+                                            .field(NewPercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                NewPercentageDiscount.Filter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -94,6 +95,15 @@ internal class SubscriptionServiceTest {
                                             .build()
                                     )
                                     .expiresAtEndOfCadence(true)
+                                    .addFilter(
+                                        NewAllocationPrice.Filter.builder()
+                                            .field(NewAllocationPrice.Filter.Field.ITEM_ID)
+                                            .operator(NewAllocationPrice.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
+                                    .itemId("item_id")
+                                    .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )
                             .addDiscount(
@@ -116,7 +126,10 @@ internal class SubscriptionServiceTest {
                                     .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
                                     .unitConfig(
-                                        UnitConfig.builder().unitAmount("unit_amount").build()
+                                        UnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .prorated(true)
+                                            .build()
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
@@ -223,9 +236,11 @@ internal class SubscriptionServiceTest {
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        NewPercentageDiscount.Filter.builder()
+                                            .field(NewPercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                NewPercentageDiscount.Filter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -251,6 +266,15 @@ internal class SubscriptionServiceTest {
                                             .build()
                                     )
                                     .expiresAtEndOfCadence(true)
+                                    .addFilter(
+                                        NewAllocationPrice.Filter.builder()
+                                            .field(NewAllocationPrice.Filter.Field.ITEM_ID)
+                                            .operator(NewAllocationPrice.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
+                                    .itemId("item_id")
+                                    .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )
                             .addDiscount(
@@ -272,7 +296,10 @@ internal class SubscriptionServiceTest {
                                     .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
                                     .unitConfig(
-                                        UnitConfig.builder().unitAmount("unit_amount").build()
+                                        UnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .prorated(true)
+                                            .build()
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
@@ -505,8 +532,18 @@ internal class SubscriptionServiceTest {
                                             .build()
                                     )
                                     .expiresAtEndOfCadence(true)
+                                    .addFilter(
+                                        NewAllocationPrice.Filter.builder()
+                                            .field(NewAllocationPrice.Filter.Field.ITEM_ID)
+                                            .operator(NewAllocationPrice.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
+                                    .itemId("item_id")
+                                    .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )
+                            .canDeferBilling(true)
                             .addAmountDiscount(0.0)
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .externalPriceId("external_price_id")
@@ -528,7 +565,10 @@ internal class SubscriptionServiceTest {
                                     .modelType(NewFloatingUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
                                     .unitConfig(
-                                        UnitConfig.builder().unitAmount("unit_amount").build()
+                                        UnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .prorated(true)
+                                            .build()
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
@@ -579,6 +619,7 @@ internal class SubscriptionServiceTest {
                     )
                     .addAddAdjustment(
                         SubscriptionPriceIntervalsParams.AddAdjustment.builder()
+                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .adjustment(
                                 NewPercentageDiscount.builder()
                                     .adjustmentType(
@@ -592,9 +633,11 @@ internal class SubscriptionServiceTest {
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        NewPercentageDiscount.Filter.builder()
+                                            .field(NewPercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                NewPercentageDiscount.Filter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -602,15 +645,17 @@ internal class SubscriptionServiceTest {
                                     .priceType(NewPercentageDiscount.PriceType.USAGE)
                                     .build()
                             )
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .adjustmentId("h74gfhdjvn7ujokd")
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
                     .allowInvoiceCreditOrVoid(true)
+                    .canDeferBilling(true)
                     .addEdit(
                         SubscriptionPriceIntervalsParams.Edit.builder()
                             .priceIntervalId("sdfs6wdjvn7ujokd")
                             .billingCycleDay(0L)
+                            .canDeferBilling(true)
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .filter("my_property > 100 AND my_other_property = 'bar'")
                             .addFixedFeeQuantityTransition(
@@ -690,9 +735,11 @@ internal class SubscriptionServiceTest {
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        NewPercentageDiscount.Filter.builder()
+                                            .field(NewPercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                NewPercentageDiscount.Filter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -719,6 +766,15 @@ internal class SubscriptionServiceTest {
                                             .build()
                                     )
                                     .expiresAtEndOfCadence(true)
+                                    .addFilter(
+                                        NewAllocationPrice.Filter.builder()
+                                            .field(NewAllocationPrice.Filter.Field.ITEM_ID)
+                                            .operator(NewAllocationPrice.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
+                                    .itemId("item_id")
+                                    .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )
                             .addDiscount(
@@ -741,7 +797,10 @@ internal class SubscriptionServiceTest {
                                     .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
                                     .unitConfig(
-                                        UnitConfig.builder().unitAmount("unit_amount").build()
+                                        UnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .prorated(true)
+                                            .build()
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
@@ -839,9 +898,11 @@ internal class SubscriptionServiceTest {
                                     .addAppliesToPriceId("price_2")
                                     .currency("currency")
                                     .addFilter(
-                                        TransformPriceFilter.builder()
-                                            .field(TransformPriceFilter.Field.PRICE_ID)
-                                            .operator(TransformPriceFilter.Operator.INCLUDES)
+                                        NewPercentageDiscount.Filter.builder()
+                                            .field(NewPercentageDiscount.Filter.Field.PRICE_ID)
+                                            .operator(
+                                                NewPercentageDiscount.Filter.Operator.INCLUDES
+                                            )
                                             .addValue("string")
                                             .build()
                                     )
@@ -867,6 +928,15 @@ internal class SubscriptionServiceTest {
                                             .build()
                                     )
                                     .expiresAtEndOfCadence(true)
+                                    .addFilter(
+                                        NewAllocationPrice.Filter.builder()
+                                            .field(NewAllocationPrice.Filter.Field.ITEM_ID)
+                                            .operator(NewAllocationPrice.Filter.Operator.INCLUDES)
+                                            .addValue("string")
+                                            .build()
+                                    )
+                                    .itemId("item_id")
+                                    .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )
                             .addDiscount(
@@ -888,7 +958,10 @@ internal class SubscriptionServiceTest {
                                     .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
                                     .unitConfig(
-                                        UnitConfig.builder().unitAmount("unit_amount").build()
+                                        UnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .prorated(true)
+                                            .build()
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)

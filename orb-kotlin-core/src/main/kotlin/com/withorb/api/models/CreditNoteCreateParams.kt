@@ -401,6 +401,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val lineItems: JsonField<List<LineItem>>,
         private val reason: JsonField<Reason>,
@@ -720,12 +721,18 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && lineItems == other.lineItems && reason == other.reason && endDate == other.endDate && memo == other.memo && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                lineItems == other.lineItems &&
+                reason == other.reason &&
+                endDate == other.endDate &&
+                memo == other.memo &&
+                startDate == other.startDate &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(lineItems, reason, endDate, memo, startDate, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(lineItems, reason, endDate, memo, startDate, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -734,6 +741,7 @@ private constructor(
     }
 
     class LineItem
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val amount: JsonField<String>,
         private val invoiceLineItemId: JsonField<String>,
@@ -1012,12 +1020,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItem && amount == other.amount && invoiceLineItemId == other.invoiceLineItemId && endDate == other.endDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is LineItem &&
+                amount == other.amount &&
+                invoiceLineItemId == other.invoiceLineItemId &&
+                endDate == other.endDate &&
+                startDate == other.startDate &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, invoiceLineItemId, endDate, startDate, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(amount, invoiceLineItemId, endDate, startDate, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1154,7 +1167,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Reason && value == other.value /* spotless:on */
+            return other is Reason && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1167,10 +1180,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CreditNoteCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CreditNoteCreateParams &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CreditNoteCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

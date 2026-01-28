@@ -17,7 +17,9 @@ import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Collections
 import java.util.Objects
 
+/** Configuration for a single matrix value */
 class MatrixValue
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val dimensionValues: JsonField<List<String?>>,
     private val unitAmount: JsonField<String>,
@@ -35,9 +37,7 @@ private constructor(
     ) : this(dimensionValues, unitAmount, mutableMapOf())
 
     /**
-     * One or two matrix keys to filter usage to this Matrix value by. For example,
-     * ["region", "tier"] could be used to filter cloud usage by a cloud region and an instance
-     * tier.
+     * One or two matrix keys to filter usage to this Matrix value by
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -107,11 +107,7 @@ private constructor(
             additionalProperties = matrixValue.additionalProperties.toMutableMap()
         }
 
-        /**
-         * One or two matrix keys to filter usage to this Matrix value by. For example,
-         * ["region", "tier"] could be used to filter cloud usage by a cloud region and an instance
-         * tier.
-         */
+        /** One or two matrix keys to filter usage to this Matrix value by */
         fun dimensionValues(dimensionValues: List<String?>) =
             dimensionValues(JsonField.of(dimensionValues))
 
@@ -224,12 +220,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is MatrixValue && dimensionValues == other.dimensionValues && unitAmount == other.unitAmount && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is MatrixValue &&
+            dimensionValues == other.dimensionValues &&
+            unitAmount == other.unitAmount &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(dimensionValues, unitAmount, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(dimensionValues, unitAmount, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 
