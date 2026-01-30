@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.12.1 (2026-01-30)
+
+Full Changelog: [v1.12.0...v1.12.1](https://github.com/orbcorp/orb-kotlin/compare/v1.12.0...v1.12.1)
+
+### Chores
+
+* **internal:** allow passing args to `./scripts/test` ([8b61c22](https://github.com/orbcorp/orb-kotlin/commit/8b61c22ee33f728ae31d37c535280c2ca0c6a364))
+
 ## 1.12.0 (2026-01-28)
 
 Full Changelog: [v1.11.0...v1.12.0](https://github.com/orbcorp/orb-kotlin/compare/v1.11.0...v1.12.0)
