@@ -44,6 +44,7 @@ internal class AlertListPageResponseTest {
                                 .thresholdValue(0.0)
                                 .build()
                         )
+                        .licenseType(Alert.LicenseType.builder().id("id").build())
                         .build()
                 )
                 .paginationMetadata(
@@ -79,6 +80,7 @@ internal class AlertListPageResponseTest {
                     .addBalanceAlertStatus(
                         Alert.BalanceAlertStatus.builder().inAlert(true).thresholdValue(0.0).build()
                     )
+                    .licenseType(Alert.LicenseType.builder().id("id").build())
                     .build()
             )
         assertThat(alertListPageResponse.paginationMetadata())
@@ -120,6 +122,7 @@ internal class AlertListPageResponseTest {
                                 .thresholdValue(0.0)
                                 .build()
                         )
+                        .licenseType(Alert.LicenseType.builder().id("id").build())
                         .build()
                 )
                 .paginationMetadata(
