@@ -25,6 +25,7 @@ private constructor(
     private val currency: JsonField<String>,
     private val customExpiration: JsonField<CustomExpiration>,
     private val filters: JsonField<List<Filter>>,
+    private val licenseTypeId: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -37,8 +38,13 @@ private constructor(
         @JsonProperty("custom_expiration")
         @ExcludeMissing
         customExpiration: JsonField<CustomExpiration> = JsonMissing.of(),
-        @JsonProperty("filters") @ExcludeMissing filters: JsonField<List<Filter>> = JsonMissing.of(),
-    ) : this(allowsRollover, currency, customExpiration, filters, mutableMapOf())
+        @JsonProperty("filters")
+        @ExcludeMissing
+        filters: JsonField<List<Filter>> = JsonMissing.of(),
+        @JsonProperty("license_type_id")
+        @ExcludeMissing
+        licenseTypeId: JsonField<String> = JsonMissing.of(),
+    ) : this(allowsRollover, currency, customExpiration, filters, licenseTypeId, mutableMapOf())
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -63,6 +69,12 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun filters(): List<Filter>? = filters.getNullable("filters")
+
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun licenseTypeId(): String? = licenseTypeId.getNullable("license_type_id")
 
     /**
      * Returns the raw JSON value of [allowsRollover].
@@ -96,6 +108,15 @@ private constructor(
      * Unlike [filters], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("filters") @ExcludeMissing fun _filters(): JsonField<List<Filter>> = filters
+
+    /**
+     * Returns the raw JSON value of [licenseTypeId].
+     *
+     * Unlike [licenseTypeId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("license_type_id")
+    @ExcludeMissing
+    fun _licenseTypeId(): JsonField<String> = licenseTypeId
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -131,6 +152,7 @@ private constructor(
         private var currency: JsonField<String>? = null
         private var customExpiration: JsonField<CustomExpiration>? = null
         private var filters: JsonField<MutableList<Filter>>? = null
+        private var licenseTypeId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(allocation: Allocation) = apply {
@@ -138,6 +160,7 @@ private constructor(
             currency = allocation.currency
             customExpiration = allocation.customExpiration
             filters = allocation.filters.map { it.toMutableList() }
+            licenseTypeId = allocation.licenseTypeId
             additionalProperties = allocation.additionalProperties.toMutableMap()
         }
 
@@ -203,6 +226,20 @@ private constructor(
                 }
         }
 
+        fun licenseTypeId(licenseTypeId: String?) =
+            licenseTypeId(JsonField.ofNullable(licenseTypeId))
+
+        /**
+         * Sets [Builder.licenseTypeId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.licenseTypeId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun licenseTypeId(licenseTypeId: JsonField<String>) = apply {
+            this.licenseTypeId = licenseTypeId
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -242,6 +279,7 @@ private constructor(
                 checkRequired("currency", currency),
                 checkRequired("customExpiration", customExpiration),
                 (filters ?: JsonMissing.of()).map { it.toImmutable() },
+                licenseTypeId,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -257,6 +295,7 @@ private constructor(
         currency()
         customExpiration()?.validate()
         filters()?.forEach { it.validate() }
+        licenseTypeId()
         validated = true
     }
 
@@ -277,7 +316,8 @@ private constructor(
         (if (allowsRollover.asKnown() == null) 0 else 1) +
             (if (currency.asKnown() == null) 0 else 1) +
             (customExpiration.asKnown()?.validity() ?: 0) +
-            (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+            (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (licenseTypeId.asKnown() == null) 0 else 1)
 
     class Filter
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
@@ -817,15 +857,23 @@ private constructor(
             currency == other.currency &&
             customExpiration == other.customExpiration &&
             filters == other.filters &&
+            licenseTypeId == other.licenseTypeId &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(allowsRollover, currency, customExpiration, filters, additionalProperties)
+        Objects.hash(
+            allowsRollover,
+            currency,
+            customExpiration,
+            filters,
+            licenseTypeId,
+            additionalProperties,
+        )
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Allocation{allowsRollover=$allowsRollover, currency=$currency, customExpiration=$customExpiration, filters=$filters, additionalProperties=$additionalProperties}"
+        "Allocation{allowsRollover=$allowsRollover, currency=$currency, customExpiration=$customExpiration, filters=$filters, licenseTypeId=$licenseTypeId, additionalProperties=$additionalProperties}"
 }

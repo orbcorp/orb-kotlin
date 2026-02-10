@@ -244,6 +244,7 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                                                         .addValue("string")
                                                         .build()
                                                 )
+                                                .licenseTypeId("license_type_id")
                                                 .build()
                                         )
                                         .currency("currency")
@@ -333,6 +334,13 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
                                                 )
+                                                .build()
+                                        )
+                                        .licenseType(
+                                            Price.UnitPrice.LicenseType.builder()
+                                                .id("id")
+                                                .groupingKey("grouping_key")
+                                                .name("name")
                                                 .build()
                                         )
                                         .build()
@@ -690,6 +698,7 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                                                             .addValue("string")
                                                             .build()
                                                     )
+                                                    .licenseTypeId("license_type_id")
                                                     .build()
                                             )
                                             .currency("currency")
@@ -784,6 +793,13 @@ internal class CustomerCreditLedgerCreateEntryByExternalIdResponseTest {
                                                     .dimensionalPriceGroupId(
                                                         "dimensional_price_group_id"
                                                     )
+                                                    .build()
+                                            )
+                                            .licenseType(
+                                                Price.UnitPrice.LicenseType.builder()
+                                                    .id("id")
+                                                    .groupingKey("grouping_key")
+                                                    .name("name")
                                                     .build()
                                             )
                                             .build()

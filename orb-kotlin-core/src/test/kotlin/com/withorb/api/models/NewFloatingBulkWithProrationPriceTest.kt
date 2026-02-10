@@ -63,6 +63,7 @@ internal class NewFloatingBulkWithProrationPriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewFloatingBulkWithProrationPrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -135,6 +136,7 @@ internal class NewFloatingBulkWithProrationPriceTest {
                     .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                     .build()
             )
+        assertThat(newFloatingBulkWithProrationPrice.licenseTypeId()).isEqualTo("license_type_id")
         assertThat(newFloatingBulkWithProrationPrice.metadata())
             .isEqualTo(
                 NewFloatingBulkWithProrationPrice.Metadata.builder()
@@ -197,6 +199,7 @@ internal class NewFloatingBulkWithProrationPriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewFloatingBulkWithProrationPrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))

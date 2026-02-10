@@ -77,6 +77,7 @@ internal class PriceServiceTest {
                                     .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                     .build()
                             )
+                            .licenseTypeId("license_type_id")
                             .metadata(
                                 NewFloatingUnitPrice.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -225,6 +226,7 @@ internal class PriceServiceTest {
                                             )
                                             .build()
                                     )
+                                    .licenseTypeId("license_type_id")
                                     .metadata(
                                         NewFloatingUnitPrice.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -326,6 +328,7 @@ internal class PriceServiceTest {
                                             )
                                             .build()
                                     )
+                                    .licenseTypeId("license_type_id")
                                     .metadata(
                                         NewFloatingUnitPrice.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))

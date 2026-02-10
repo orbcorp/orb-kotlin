@@ -303,6 +303,7 @@ internal class ChangedSubscriptionResourcesTest {
                                                         .addValue("string")
                                                         .build()
                                                 )
+                                                .licenseTypeId("license_type_id")
                                                 .build()
                                         )
                                         .currency("currency")
@@ -392,6 +393,13 @@ internal class ChangedSubscriptionResourcesTest {
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
                                                 )
+                                                .build()
+                                        )
+                                        .licenseType(
+                                            Price.UnitPrice.LicenseType.builder()
+                                                .id("id")
+                                                .groupingKey("grouping_key")
+                                                .name("name")
                                                 .build()
                                         )
                                         .build()
@@ -779,6 +787,7 @@ internal class ChangedSubscriptionResourcesTest {
                                                         .addValue("string")
                                                         .build()
                                                 )
+                                                .licenseTypeId("license_type_id")
                                                 .build()
                                         )
                                         .currency("currency")
@@ -868,6 +877,13 @@ internal class ChangedSubscriptionResourcesTest {
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
                                                 )
+                                                .build()
+                                        )
+                                        .licenseType(
+                                            Price.UnitPrice.LicenseType.builder()
+                                                .id("id")
+                                                .groupingKey("grouping_key")
+                                                .name("name")
                                                 .build()
                                         )
                                         .build()
@@ -1256,6 +1272,7 @@ internal class ChangedSubscriptionResourcesTest {
                                                     .addValue("string")
                                                     .build()
                                             )
+                                            .licenseTypeId("license_type_id")
                                             .build()
                                     )
                                     .currency("currency")
@@ -1337,6 +1354,13 @@ internal class ChangedSubscriptionResourcesTest {
                                         DimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
+                                            .build()
+                                    )
+                                    .licenseType(
+                                        Price.UnitPrice.LicenseType.builder()
+                                            .id("id")
+                                            .groupingKey("grouping_key")
+                                            .name("name")
                                             .build()
                                     )
                                     .build()
@@ -1713,6 +1737,7 @@ internal class ChangedSubscriptionResourcesTest {
                                                     .addValue("string")
                                                     .build()
                                             )
+                                            .licenseTypeId("license_type_id")
                                             .build()
                                     )
                                     .currency("currency")
@@ -1794,6 +1819,13 @@ internal class ChangedSubscriptionResourcesTest {
                                         DimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
+                                            .build()
+                                    )
+                                    .licenseType(
+                                        Price.UnitPrice.LicenseType.builder()
+                                            .id("id")
+                                            .groupingKey("grouping_key")
+                                            .name("name")
                                             .build()
                                     )
                                     .build()
@@ -2196,6 +2228,7 @@ internal class ChangedSubscriptionResourcesTest {
                                                         .addValue("string")
                                                         .build()
                                                 )
+                                                .licenseTypeId("license_type_id")
                                                 .build()
                                         )
                                         .currency("currency")
@@ -2285,6 +2318,13 @@ internal class ChangedSubscriptionResourcesTest {
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
                                                 )
+                                                .build()
+                                        )
+                                        .licenseType(
+                                            Price.UnitPrice.LicenseType.builder()
+                                                .id("id")
+                                                .groupingKey("grouping_key")
+                                                .name("name")
                                                 .build()
                                         )
                                         .build()
@@ -2672,6 +2712,7 @@ internal class ChangedSubscriptionResourcesTest {
                                                         .addValue("string")
                                                         .build()
                                                 )
+                                                .licenseTypeId("license_type_id")
                                                 .build()
                                         )
                                         .currency("currency")
@@ -2761,6 +2802,13 @@ internal class ChangedSubscriptionResourcesTest {
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
                                                 )
+                                                .build()
+                                        )
+                                        .licenseType(
+                                            Price.UnitPrice.LicenseType.builder()
+                                                .id("id")
+                                                .groupingKey("grouping_key")
+                                                .name("name")
                                                 .build()
                                         )
                                         .build()

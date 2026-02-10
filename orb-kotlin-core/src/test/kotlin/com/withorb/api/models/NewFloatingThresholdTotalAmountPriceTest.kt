@@ -68,6 +68,7 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewFloatingThresholdTotalAmountPrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -145,6 +146,8 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
                     .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                     .build()
             )
+        assertThat(newFloatingThresholdTotalAmountPrice.licenseTypeId())
+            .isEqualTo("license_type_id")
         assertThat(newFloatingThresholdTotalAmountPrice.metadata())
             .isEqualTo(
                 NewFloatingThresholdTotalAmountPrice.Metadata.builder()
@@ -212,6 +215,7 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewFloatingThresholdTotalAmountPrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))

@@ -461,6 +461,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         .addValue("string")
                                                         .build()
                                                 )
+                                                .licenseTypeId("license_type_id")
                                                 .build()
                                         )
                                         .currency("currency")
@@ -550,6 +551,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
                                                 )
+                                                .build()
+                                        )
+                                        .licenseType(
+                                            Price.UnitPrice.LicenseType.builder()
+                                                .id("id")
+                                                .groupingKey("grouping_key")
+                                                .name("name")
                                                 .build()
                                         )
                                         .build()
@@ -650,6 +658,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         .addValue("string")
                                                         .build()
                                                 )
+                                                .licenseTypeId("license_type_id")
                                                 .build()
                                         )
                                         .currency("currency")
@@ -739,6 +748,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
                                                 )
+                                                .build()
+                                        )
+                                        .licenseType(
+                                            Price.UnitPrice.LicenseType.builder()
+                                                .id("id")
+                                                .groupingKey("grouping_key")
+                                                .name("name")
                                                 .build()
                                         )
                                         .build()
@@ -1132,6 +1148,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                         .addValue("string")
                                                                         .build()
                                                                 )
+                                                                .licenseTypeId("license_type_id")
                                                                 .build()
                                                         )
                                                         .currency("currency")
@@ -1253,6 +1270,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                 .dimensionalPriceGroupId(
                                                                     "dimensional_price_group_id"
                                                                 )
+                                                                .build()
+                                                        )
+                                                        .licenseType(
+                                                            Price.UnitPrice.LicenseType.builder()
+                                                                .id("id")
+                                                                .groupingKey("grouping_key")
+                                                                .name("name")
                                                                 .build()
                                                         )
                                                         .build()
@@ -1746,6 +1770,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                         .addValue("string")
                                                                         .build()
                                                                 )
+                                                                .licenseTypeId("license_type_id")
                                                                 .build()
                                                         )
                                                         .currency("currency")
@@ -1867,6 +1892,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                 .dimensionalPriceGroupId(
                                                                     "dimensional_price_group_id"
                                                                 )
+                                                                .build()
+                                                        )
+                                                        .licenseType(
+                                                            Price.UnitPrice.LicenseType.builder()
+                                                                .id("id")
+                                                                .groupingKey("grouping_key")
+                                                                .name("name")
                                                                 .build()
                                                         )
                                                         .build()
@@ -2438,6 +2470,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     .addValue("string")
                                                     .build()
                                             )
+                                            .licenseTypeId("license_type_id")
                                             .build()
                                     )
                                     .currency("currency")
@@ -2519,6 +2552,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                         DimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
+                                            .build()
+                                    )
+                                    .licenseType(
+                                        Price.UnitPrice.LicenseType.builder()
+                                            .id("id")
+                                            .groupingKey("grouping_key")
+                                            .name("name")
                                             .build()
                                     )
                                     .build()
@@ -2610,6 +2650,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     .addValue("string")
                                                     .build()
                                             )
+                                            .licenseTypeId("license_type_id")
                                             .build()
                                     )
                                     .currency("currency")
@@ -2691,6 +2732,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                         DimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
+                                            .build()
+                                    )
+                                    .licenseType(
+                                        Price.UnitPrice.LicenseType.builder()
+                                            .id("id")
+                                            .groupingKey("grouping_key")
+                                            .name("name")
                                             .build()
                                     )
                                     .build()
@@ -3056,6 +3104,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                     .addValue("string")
                                                                     .build()
                                                             )
+                                                            .licenseTypeId("license_type_id")
                                                             .build()
                                                     )
                                                     .currency("currency")
@@ -3170,6 +3219,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                             .dimensionalPriceGroupId(
                                                                 "dimensional_price_group_id"
                                                             )
+                                                            .build()
+                                                    )
+                                                    .licenseType(
+                                                        Price.UnitPrice.LicenseType.builder()
+                                                            .id("id")
+                                                            .groupingKey("grouping_key")
+                                                            .name("name")
                                                             .build()
                                                     )
                                                     .build()
@@ -3625,6 +3681,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                     .addValue("string")
                                                                     .build()
                                                             )
+                                                            .licenseTypeId("license_type_id")
                                                             .build()
                                                     )
                                                     .currency("currency")
@@ -3739,6 +3796,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                             .dimensionalPriceGroupId(
                                                                 "dimensional_price_group_id"
                                                             )
+                                                            .build()
+                                                    )
+                                                    .licenseType(
+                                                        Price.UnitPrice.LicenseType.builder()
+                                                            .id("id")
+                                                            .groupingKey("grouping_key")
+                                                            .name("name")
                                                             .build()
                                                     )
                                                     .build()
@@ -4329,6 +4393,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         .addValue("string")
                                                         .build()
                                                 )
+                                                .licenseTypeId("license_type_id")
                                                 .build()
                                         )
                                         .currency("currency")
@@ -4418,6 +4483,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
                                                 )
+                                                .build()
+                                        )
+                                        .licenseType(
+                                            Price.UnitPrice.LicenseType.builder()
+                                                .id("id")
+                                                .groupingKey("grouping_key")
+                                                .name("name")
                                                 .build()
                                         )
                                         .build()
@@ -4518,6 +4590,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         .addValue("string")
                                                         .build()
                                                 )
+                                                .licenseTypeId("license_type_id")
                                                 .build()
                                         )
                                         .currency("currency")
@@ -4607,6 +4680,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
                                                 )
+                                                .build()
+                                        )
+                                        .licenseType(
+                                            Price.UnitPrice.LicenseType.builder()
+                                                .id("id")
+                                                .groupingKey("grouping_key")
+                                                .name("name")
                                                 .build()
                                         )
                                         .build()
@@ -5000,6 +5080,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                         .addValue("string")
                                                                         .build()
                                                                 )
+                                                                .licenseTypeId("license_type_id")
                                                                 .build()
                                                         )
                                                         .currency("currency")
@@ -5121,6 +5202,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                 .dimensionalPriceGroupId(
                                                                     "dimensional_price_group_id"
                                                                 )
+                                                                .build()
+                                                        )
+                                                        .licenseType(
+                                                            Price.UnitPrice.LicenseType.builder()
+                                                                .id("id")
+                                                                .groupingKey("grouping_key")
+                                                                .name("name")
                                                                 .build()
                                                         )
                                                         .build()
@@ -5614,6 +5702,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                         .addValue("string")
                                                                         .build()
                                                                 )
+                                                                .licenseTypeId("license_type_id")
                                                                 .build()
                                                         )
                                                         .currency("currency")
@@ -5735,6 +5824,13 @@ internal class SubscriptionChangeCancelResponseTest {
                                                                 .dimensionalPriceGroupId(
                                                                     "dimensional_price_group_id"
                                                                 )
+                                                                .build()
+                                                        )
+                                                        .licenseType(
+                                                            Price.UnitPrice.LicenseType.builder()
+                                                                .id("id")
+                                                                .groupingKey("grouping_key")
+                                                                .name("name")
                                                                 .build()
                                                         )
                                                         .build()
