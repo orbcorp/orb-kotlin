@@ -205,6 +205,7 @@ internal class InvoiceListPageResponseTest {
                                                         .addValue("string")
                                                         .build()
                                                 )
+                                                .licenseTypeId("license_type_id")
                                                 .build()
                                         )
                                         .currency("currency")
@@ -294,6 +295,13 @@ internal class InvoiceListPageResponseTest {
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
                                                 )
+                                                .build()
+                                        )
+                                        .licenseType(
+                                            Price.UnitPrice.LicenseType.builder()
+                                                .id("id")
+                                                .groupingKey("grouping_key")
+                                                .name("name")
                                                 .build()
                                         )
                                         .build()
@@ -586,6 +594,7 @@ internal class InvoiceListPageResponseTest {
                                                     .addValue("string")
                                                     .build()
                                             )
+                                            .licenseTypeId("license_type_id")
                                             .build()
                                     )
                                     .currency("currency")
@@ -667,6 +676,13 @@ internal class InvoiceListPageResponseTest {
                                         DimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
+                                            .build()
+                                    )
+                                    .licenseType(
+                                        Price.UnitPrice.LicenseType.builder()
+                                            .id("id")
+                                            .groupingKey("grouping_key")
+                                            .name("name")
                                             .build()
                                     )
                                     .build()
@@ -973,6 +989,7 @@ internal class InvoiceListPageResponseTest {
                                                         .addValue("string")
                                                         .build()
                                                 )
+                                                .licenseTypeId("license_type_id")
                                                 .build()
                                         )
                                         .currency("currency")
@@ -1062,6 +1079,13 @@ internal class InvoiceListPageResponseTest {
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
                                                 )
+                                                .build()
+                                        )
+                                        .licenseType(
+                                            Price.UnitPrice.LicenseType.builder()
+                                                .id("id")
+                                                .groupingKey("grouping_key")
+                                                .name("name")
                                                 .build()
                                         )
                                         .build()

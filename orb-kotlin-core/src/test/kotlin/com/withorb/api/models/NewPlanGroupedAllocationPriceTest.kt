@@ -54,6 +54,7 @@ internal class NewPlanGroupedAllocationPriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewPlanGroupedAllocationPrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -116,6 +117,7 @@ internal class NewPlanGroupedAllocationPriceTest {
                     .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                     .build()
             )
+        assertThat(newPlanGroupedAllocationPrice.licenseTypeId()).isEqualTo("license_type_id")
         assertThat(newPlanGroupedAllocationPrice.metadata())
             .isEqualTo(
                 NewPlanGroupedAllocationPrice.Metadata.builder()
@@ -170,6 +172,7 @@ internal class NewPlanGroupedAllocationPriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewPlanGroupedAllocationPrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))

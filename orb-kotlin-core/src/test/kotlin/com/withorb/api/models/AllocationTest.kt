@@ -28,6 +28,7 @@ internal class AllocationTest {
                         .addValue("string")
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .build()
 
         assertThat(allocation.allowsRollover()).isEqualTo(true)
@@ -47,6 +48,7 @@ internal class AllocationTest {
                     .addValue("string")
                     .build()
             )
+        assertThat(allocation.licenseTypeId()).isEqualTo("license_type_id")
     }
 
     @Test
@@ -69,6 +71,7 @@ internal class AllocationTest {
                         .addValue("string")
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .build()
 
         val roundtrippedAllocation =

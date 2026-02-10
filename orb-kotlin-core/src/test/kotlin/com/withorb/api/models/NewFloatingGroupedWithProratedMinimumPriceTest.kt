@@ -58,6 +58,7 @@ internal class NewFloatingGroupedWithProratedMinimumPriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewFloatingGroupedWithProratedMinimumPrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -124,6 +125,8 @@ internal class NewFloatingGroupedWithProratedMinimumPriceTest {
                     .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                     .build()
             )
+        assertThat(newFloatingGroupedWithProratedMinimumPrice.licenseTypeId())
+            .isEqualTo("license_type_id")
         assertThat(newFloatingGroupedWithProratedMinimumPrice.metadata())
             .isEqualTo(
                 NewFloatingGroupedWithProratedMinimumPrice.Metadata.builder()
@@ -181,6 +184,7 @@ internal class NewFloatingGroupedWithProratedMinimumPriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewFloatingGroupedWithProratedMinimumPrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
