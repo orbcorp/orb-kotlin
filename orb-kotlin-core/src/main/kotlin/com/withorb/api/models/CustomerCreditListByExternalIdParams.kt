@@ -5,6 +5,8 @@ package com.withorb.api.models
 import com.withorb.api.core.Params
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Objects
 
 /**
@@ -15,12 +17,21 @@ import java.util.Objects
  *
  * Note that `currency` defaults to credits if not specified. To use a real world currency, set
  * `currency` to an ISO 4217 string.
+ *
+ * Results can be filtered by the block's `effective_date` using the `effective_date[gte]`,
+ * `effective_date[gt]`, `effective_date[lt]`, and `effective_date[lte]` query parameters. This
+ * filters on when the credit block becomes effective, which may differ from creation time for
+ * backdated credits.
  */
 class CustomerCreditListByExternalIdParams
 private constructor(
     private val externalCustomerId: String?,
     private val currency: String?,
     private val cursor: String?,
+    private val effectiveDateGt: OffsetDateTime?,
+    private val effectiveDateGte: OffsetDateTime?,
+    private val effectiveDateLt: OffsetDateTime?,
+    private val effectiveDateLte: OffsetDateTime?,
     private val includeAllBlocks: Boolean?,
     private val limit: Long?,
     private val additionalHeaders: Headers,
@@ -37,6 +48,14 @@ private constructor(
      * initial request.
      */
     fun cursor(): String? = cursor
+
+    fun effectiveDateGt(): OffsetDateTime? = effectiveDateGt
+
+    fun effectiveDateGte(): OffsetDateTime? = effectiveDateGte
+
+    fun effectiveDateLt(): OffsetDateTime? = effectiveDateLt
+
+    fun effectiveDateLte(): OffsetDateTime? = effectiveDateLte
 
     /**
      * If set to True, all expired and depleted blocks, as well as active block will be returned.
@@ -71,6 +90,10 @@ private constructor(
         private var externalCustomerId: String? = null
         private var currency: String? = null
         private var cursor: String? = null
+        private var effectiveDateGt: OffsetDateTime? = null
+        private var effectiveDateGte: OffsetDateTime? = null
+        private var effectiveDateLt: OffsetDateTime? = null
+        private var effectiveDateLte: OffsetDateTime? = null
         private var includeAllBlocks: Boolean? = null
         private var limit: Long? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -82,6 +105,10 @@ private constructor(
             externalCustomerId = customerCreditListByExternalIdParams.externalCustomerId
             currency = customerCreditListByExternalIdParams.currency
             cursor = customerCreditListByExternalIdParams.cursor
+            effectiveDateGt = customerCreditListByExternalIdParams.effectiveDateGt
+            effectiveDateGte = customerCreditListByExternalIdParams.effectiveDateGte
+            effectiveDateLt = customerCreditListByExternalIdParams.effectiveDateLt
+            effectiveDateLte = customerCreditListByExternalIdParams.effectiveDateLte
             includeAllBlocks = customerCreditListByExternalIdParams.includeAllBlocks
             limit = customerCreditListByExternalIdParams.limit
             additionalHeaders = customerCreditListByExternalIdParams.additionalHeaders.toBuilder()
@@ -101,6 +128,22 @@ private constructor(
          * initial request.
          */
         fun cursor(cursor: String?) = apply { this.cursor = cursor }
+
+        fun effectiveDateGt(effectiveDateGt: OffsetDateTime?) = apply {
+            this.effectiveDateGt = effectiveDateGt
+        }
+
+        fun effectiveDateGte(effectiveDateGte: OffsetDateTime?) = apply {
+            this.effectiveDateGte = effectiveDateGte
+        }
+
+        fun effectiveDateLt(effectiveDateLt: OffsetDateTime?) = apply {
+            this.effectiveDateLt = effectiveDateLt
+        }
+
+        fun effectiveDateLte(effectiveDateLte: OffsetDateTime?) = apply {
+            this.effectiveDateLte = effectiveDateLte
+        }
 
         /**
          * If set to True, all expired and depleted blocks, as well as active block will be
@@ -236,6 +279,10 @@ private constructor(
                 externalCustomerId,
                 currency,
                 cursor,
+                effectiveDateGt,
+                effectiveDateGte,
+                effectiveDateLt,
+                effectiveDateLte,
                 includeAllBlocks,
                 limit,
                 additionalHeaders.build(),
@@ -256,6 +303,18 @@ private constructor(
             .apply {
                 currency?.let { put("currency", it) }
                 cursor?.let { put("cursor", it) }
+                effectiveDateGt?.let {
+                    put("effective_date[gt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                effectiveDateGte?.let {
+                    put("effective_date[gte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                effectiveDateLt?.let {
+                    put("effective_date[lt]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
+                effectiveDateLte?.let {
+                    put("effective_date[lte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                }
                 includeAllBlocks?.let { put("include_all_blocks", it.toString()) }
                 limit?.let { put("limit", it.toString()) }
                 putAll(additionalQueryParams)
@@ -271,6 +330,10 @@ private constructor(
             externalCustomerId == other.externalCustomerId &&
             currency == other.currency &&
             cursor == other.cursor &&
+            effectiveDateGt == other.effectiveDateGt &&
+            effectiveDateGte == other.effectiveDateGte &&
+            effectiveDateLt == other.effectiveDateLt &&
+            effectiveDateLte == other.effectiveDateLte &&
             includeAllBlocks == other.includeAllBlocks &&
             limit == other.limit &&
             additionalHeaders == other.additionalHeaders &&
@@ -282,6 +345,10 @@ private constructor(
             externalCustomerId,
             currency,
             cursor,
+            effectiveDateGt,
+            effectiveDateGte,
+            effectiveDateLt,
+            effectiveDateLte,
             includeAllBlocks,
             limit,
             additionalHeaders,
@@ -289,5 +356,5 @@ private constructor(
         )
 
     override fun toString() =
-        "CustomerCreditListByExternalIdParams{externalCustomerId=$externalCustomerId, currency=$currency, cursor=$cursor, includeAllBlocks=$includeAllBlocks, limit=$limit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "CustomerCreditListByExternalIdParams{externalCustomerId=$externalCustomerId, currency=$currency, cursor=$cursor, effectiveDateGt=$effectiveDateGt, effectiveDateGte=$effectiveDateGte, effectiveDateLt=$effectiveDateLt, effectiveDateLte=$effectiveDateLte, includeAllBlocks=$includeAllBlocks, limit=$limit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.withorb.api.core.JsonValue
 import com.withorb.api.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
@@ -28,6 +29,11 @@ internal class CustomerCreditListPageResponseTest {
                                 .build()
                         )
                         .maximumInitialBalance(0.0)
+                        .metadata(
+                            CustomerCreditListResponse.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .perUnitCostBasis("per_unit_cost_basis")
                         .status(CustomerCreditListResponse.Status.ACTIVE)
                         .build()
@@ -52,6 +58,11 @@ internal class CustomerCreditListPageResponseTest {
                             .build()
                     )
                     .maximumInitialBalance(0.0)
+                    .metadata(
+                        CustomerCreditListResponse.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .perUnitCostBasis("per_unit_cost_basis")
                     .status(CustomerCreditListResponse.Status.ACTIVE)
                     .build()
@@ -79,6 +90,11 @@ internal class CustomerCreditListPageResponseTest {
                                 .build()
                         )
                         .maximumInitialBalance(0.0)
+                        .metadata(
+                            CustomerCreditListResponse.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .perUnitCostBasis("per_unit_cost_basis")
                         .status(CustomerCreditListResponse.Status.ACTIVE)
                         .build()

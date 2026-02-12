@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.withorb.api.core.JsonValue
 import com.withorb.api.core.jsonMapper
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
@@ -26,6 +27,11 @@ internal class CreditBlockRetrieveResponseTest {
                         .build()
                 )
                 .maximumInitialBalance(0.0)
+                .metadata(
+                    CreditBlockRetrieveResponse.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .perUnitCostBasis("per_unit_cost_basis")
                 .status(CreditBlockRetrieveResponse.Status.ACTIVE)
                 .build()
@@ -45,6 +51,12 @@ internal class CreditBlockRetrieveResponseTest {
                     .build()
             )
         assertThat(creditBlockRetrieveResponse.maximumInitialBalance()).isEqualTo(0.0)
+        assertThat(creditBlockRetrieveResponse.metadata())
+            .isEqualTo(
+                CreditBlockRetrieveResponse.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(creditBlockRetrieveResponse.perUnitCostBasis()).isEqualTo("per_unit_cost_basis")
         assertThat(creditBlockRetrieveResponse.status())
             .isEqualTo(CreditBlockRetrieveResponse.Status.ACTIVE)
@@ -67,6 +79,11 @@ internal class CreditBlockRetrieveResponseTest {
                         .build()
                 )
                 .maximumInitialBalance(0.0)
+                .metadata(
+                    CreditBlockRetrieveResponse.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .perUnitCostBasis("per_unit_cost_basis")
                 .status(CreditBlockRetrieveResponse.Status.ACTIVE)
                 .build()
