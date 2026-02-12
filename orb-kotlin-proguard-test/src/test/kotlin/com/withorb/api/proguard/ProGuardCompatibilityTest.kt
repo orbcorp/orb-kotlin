@@ -68,6 +68,8 @@ internal class ProGuardCompatibilityTest {
         assertThat(client.dimensionalPriceGroups()).isNotNull()
         assertThat(client.subscriptionChanges()).isNotNull()
         assertThat(client.creditBlocks()).isNotNull()
+        assertThat(client.licenseTypes()).isNotNull()
+        assertThat(client.licenses()).isNotNull()
     }
 
     @Test

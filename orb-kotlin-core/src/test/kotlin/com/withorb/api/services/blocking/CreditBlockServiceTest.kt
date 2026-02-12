@@ -35,4 +35,18 @@ internal class CreditBlockServiceTest {
 
         creditBlockService.delete("block_id")
     }
+
+    @Test
+    fun listInvoices() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val creditBlockService = client.creditBlocks()
+
+        val response = creditBlockService.listInvoices("block_id")
+
+        response.validate()
+    }
 }

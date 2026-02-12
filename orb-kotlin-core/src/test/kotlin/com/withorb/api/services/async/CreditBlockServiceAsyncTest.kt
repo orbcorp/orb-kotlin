@@ -35,4 +35,18 @@ internal class CreditBlockServiceAsyncTest {
 
         creditBlockServiceAsync.delete("block_id")
     }
+
+    @Test
+    suspend fun listInvoices() {
+        val client =
+            OrbOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val creditBlockServiceAsync = client.creditBlocks()
+
+        val response = creditBlockServiceAsync.listInvoices("block_id")
+
+        response.validate()
+    }
 }

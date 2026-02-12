@@ -18,6 +18,8 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.models.CreditBlockDeleteParams
+import com.withorb.api.models.CreditBlockListInvoicesParams
+import com.withorb.api.models.CreditBlockListInvoicesResponse
 import com.withorb.api.models.CreditBlockRetrieveParams
 import com.withorb.api.models.CreditBlockRetrieveResponse
 
@@ -44,6 +46,13 @@ class CreditBlockServiceImpl internal constructor(private val clientOptions: Cli
         // delete /credit_blocks/{block_id}
         withRawResponse().delete(params, requestOptions)
     }
+
+    override fun listInvoices(
+        params: CreditBlockListInvoicesParams,
+        requestOptions: RequestOptions,
+    ): CreditBlockListInvoicesResponse =
+        // get /credit_blocks/{block_id}/invoices
+        withRawResponse().listInvoices(params, requestOptions).parse()
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         CreditBlockService.WithRawResponse {
@@ -109,6 +118,36 @@ class CreditBlockServiceImpl internal constructor(private val clientOptions: Cli
             val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response.use { deleteHandler.handle(it) }
+            }
+        }
+
+        private val listInvoicesHandler: Handler<CreditBlockListInvoicesResponse> =
+            jsonHandler<CreditBlockListInvoicesResponse>(clientOptions.jsonMapper)
+
+        override fun listInvoices(
+            params: CreditBlockListInvoicesParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CreditBlockListInvoicesResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("blockId", params.blockId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("credit_blocks", params._pathParam(0), "invoices")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { listInvoicesHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
         }
     }

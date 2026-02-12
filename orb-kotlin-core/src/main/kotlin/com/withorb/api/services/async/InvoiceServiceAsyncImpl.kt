@@ -24,6 +24,8 @@ import com.withorb.api.models.InvoiceFetchParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceFetchUpcomingResponse
 import com.withorb.api.models.InvoiceIssueParams
+import com.withorb.api.models.InvoiceIssueSummaryParams
+import com.withorb.api.models.InvoiceIssueSummaryResponse
 import com.withorb.api.models.InvoiceListPageAsync
 import com.withorb.api.models.InvoiceListPageResponse
 import com.withorb.api.models.InvoiceListParams
@@ -96,6 +98,13 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
     ): Invoice =
         // post /invoices/{invoice_id}/issue
         withRawResponse().issue(params, requestOptions).parse()
+
+    override suspend fun issueSummary(
+        params: InvoiceIssueSummaryParams,
+        requestOptions: RequestOptions,
+    ): InvoiceIssueSummaryResponse =
+        // post /invoices/summary/{invoice_id}/issue
+        withRawResponse().issueSummary(params, requestOptions).parse()
 
     override suspend fun listSummary(
         params: InvoiceListSummaryParams,
@@ -330,6 +339,37 @@ class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return errorHandler.handle(response).parseable {
                 response
                     .use { issueHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val issueSummaryHandler: Handler<InvoiceIssueSummaryResponse> =
+            jsonHandler<InvoiceIssueSummaryResponse>(clientOptions.jsonMapper)
+
+        override suspend fun issueSummary(
+            params: InvoiceIssueSummaryParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<InvoiceIssueSummaryResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("invoiceId", params.invoiceId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("invoices", "summary", params._pathParam(0), "issue")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { issueSummaryHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()

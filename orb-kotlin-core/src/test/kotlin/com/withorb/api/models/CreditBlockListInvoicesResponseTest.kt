@@ -1,0 +1,157 @@
+// File generated from our OpenAPI spec by Stainless.
+
+package com.withorb.api.models
+
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.jsonMapper
+import java.time.OffsetDateTime
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
+
+internal class CreditBlockListInvoicesResponseTest {
+
+    @Test
+    fun create() {
+        val creditBlockListInvoicesResponse =
+            CreditBlockListInvoicesResponse.builder()
+                .block(
+                    CreditBlockListInvoicesResponse.Block.builder()
+                        .id("id")
+                        .balance(0.0)
+                        .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            CreditBlockListInvoicesResponse.Block.Filter.builder()
+                                .field(CreditBlockListInvoicesResponse.Block.Filter.Field.PRICE_ID)
+                                .operator(
+                                    CreditBlockListInvoicesResponse.Block.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
+                        .maximumInitialBalance(0.0)
+                        .metadata(
+                            CreditBlockListInvoicesResponse.Block.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
+                        .perUnitCostBasis("per_unit_cost_basis")
+                        .status(CreditBlockListInvoicesResponse.Block.Status.ACTIVE)
+                        .build()
+                )
+                .addInvoice(
+                    CreditBlockListInvoicesResponse.Invoice.builder()
+                        .id("id")
+                        .customer(
+                            CustomerMinified.builder()
+                                .id("id")
+                                .externalCustomerId("external_customer_id")
+                                .build()
+                        )
+                        .invoiceNumber("invoice_number")
+                        .status(CreditBlockListInvoicesResponse.Invoice.Status.ISSUED)
+                        .subscription(SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build())
+                        .build()
+                )
+                .build()
+
+        assertThat(creditBlockListInvoicesResponse.block())
+            .isEqualTo(
+                CreditBlockListInvoicesResponse.Block.builder()
+                    .id("id")
+                    .balance(0.0)
+                    .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .addFilter(
+                        CreditBlockListInvoicesResponse.Block.Filter.builder()
+                            .field(CreditBlockListInvoicesResponse.Block.Filter.Field.PRICE_ID)
+                            .operator(
+                                CreditBlockListInvoicesResponse.Block.Filter.Operator.INCLUDES
+                            )
+                            .addValue("string")
+                            .build()
+                    )
+                    .maximumInitialBalance(0.0)
+                    .metadata(
+                        CreditBlockListInvoicesResponse.Block.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .perUnitCostBasis("per_unit_cost_basis")
+                    .status(CreditBlockListInvoicesResponse.Block.Status.ACTIVE)
+                    .build()
+            )
+        assertThat(creditBlockListInvoicesResponse.invoices())
+            .containsExactly(
+                CreditBlockListInvoicesResponse.Invoice.builder()
+                    .id("id")
+                    .customer(
+                        CustomerMinified.builder()
+                            .id("id")
+                            .externalCustomerId("external_customer_id")
+                            .build()
+                    )
+                    .invoiceNumber("invoice_number")
+                    .status(CreditBlockListInvoicesResponse.Invoice.Status.ISSUED)
+                    .subscription(SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build())
+                    .build()
+            )
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val creditBlockListInvoicesResponse =
+            CreditBlockListInvoicesResponse.builder()
+                .block(
+                    CreditBlockListInvoicesResponse.Block.builder()
+                        .id("id")
+                        .balance(0.0)
+                        .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFilter(
+                            CreditBlockListInvoicesResponse.Block.Filter.builder()
+                                .field(CreditBlockListInvoicesResponse.Block.Filter.Field.PRICE_ID)
+                                .operator(
+                                    CreditBlockListInvoicesResponse.Block.Filter.Operator.INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
+                        .maximumInitialBalance(0.0)
+                        .metadata(
+                            CreditBlockListInvoicesResponse.Block.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
+                        .perUnitCostBasis("per_unit_cost_basis")
+                        .status(CreditBlockListInvoicesResponse.Block.Status.ACTIVE)
+                        .build()
+                )
+                .addInvoice(
+                    CreditBlockListInvoicesResponse.Invoice.builder()
+                        .id("id")
+                        .customer(
+                            CustomerMinified.builder()
+                                .id("id")
+                                .externalCustomerId("external_customer_id")
+                                .build()
+                        )
+                        .invoiceNumber("invoice_number")
+                        .status(CreditBlockListInvoicesResponse.Invoice.Status.ISSUED)
+                        .subscription(SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build())
+                        .build()
+                )
+                .build()
+
+        val roundtrippedCreditBlockListInvoicesResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(creditBlockListInvoicesResponse),
+                jacksonTypeRef<CreditBlockListInvoicesResponse>(),
+            )
+
+        assertThat(roundtrippedCreditBlockListInvoicesResponse)
+            .isEqualTo(creditBlockListInvoicesResponse)
+    }
+}

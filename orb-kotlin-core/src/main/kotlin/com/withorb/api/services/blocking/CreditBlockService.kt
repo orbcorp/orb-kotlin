@@ -8,6 +8,8 @@ import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.CreditBlockDeleteParams
+import com.withorb.api.models.CreditBlockListInvoicesParams
+import com.withorb.api.models.CreditBlockListInvoicesResponse
 import com.withorb.api.models.CreditBlockRetrieveParams
 import com.withorb.api.models.CreditBlockRetrieveResponse
 
@@ -74,6 +76,41 @@ interface CreditBlockService {
         delete(blockId, CreditBlockDeleteParams.none(), requestOptions)
 
     /**
+     * This endpoint returns the credit block and its associated purchasing invoices.
+     *
+     * If a credit block was purchased (as opposed to being manually added or allocated from a
+     * subscription), this endpoint returns the invoices that were created to charge the customer
+     * for the credit block. For credit blocks with payment schedules spanning multiple periods
+     * (e.g., monthly payments over 12 months), multiple invoices will be returned.
+     *
+     * If the credit block was not purchased (e.g., manual increment, allocation), an empty invoices
+     * list is returned.
+     *
+     * **Note: This endpoint is currently experimental and its interface may change in future
+     * releases. Please contact support before building production integrations against this
+     * endpoint.**
+     */
+    fun listInvoices(
+        blockId: String,
+        params: CreditBlockListInvoicesParams = CreditBlockListInvoicesParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CreditBlockListInvoicesResponse =
+        listInvoices(params.toBuilder().blockId(blockId).build(), requestOptions)
+
+    /** @see listInvoices */
+    fun listInvoices(
+        params: CreditBlockListInvoicesParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CreditBlockListInvoicesResponse
+
+    /** @see listInvoices */
+    fun listInvoices(
+        blockId: String,
+        requestOptions: RequestOptions,
+    ): CreditBlockListInvoicesResponse =
+        listInvoices(blockId, CreditBlockListInvoicesParams.none(), requestOptions)
+
+    /**
      * A view of [CreditBlockService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
@@ -136,5 +173,32 @@ interface CreditBlockService {
         @MustBeClosed
         fun delete(blockId: String, requestOptions: RequestOptions): HttpResponse =
             delete(blockId, CreditBlockDeleteParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `get /credit_blocks/{block_id}/invoices`, but is
+         * otherwise the same as [CreditBlockService.listInvoices].
+         */
+        @MustBeClosed
+        fun listInvoices(
+            blockId: String,
+            params: CreditBlockListInvoicesParams = CreditBlockListInvoicesParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CreditBlockListInvoicesResponse> =
+            listInvoices(params.toBuilder().blockId(blockId).build(), requestOptions)
+
+        /** @see listInvoices */
+        @MustBeClosed
+        fun listInvoices(
+            params: CreditBlockListInvoicesParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CreditBlockListInvoicesResponse>
+
+        /** @see listInvoices */
+        @MustBeClosed
+        fun listInvoices(
+            blockId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CreditBlockListInvoicesResponse> =
+            listInvoices(blockId, CreditBlockListInvoicesParams.none(), requestOptions)
     }
 }
