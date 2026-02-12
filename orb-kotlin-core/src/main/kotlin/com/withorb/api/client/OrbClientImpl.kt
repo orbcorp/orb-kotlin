@@ -26,6 +26,10 @@ import com.withorb.api.services.blocking.InvoiceService
 import com.withorb.api.services.blocking.InvoiceServiceImpl
 import com.withorb.api.services.blocking.ItemService
 import com.withorb.api.services.blocking.ItemServiceImpl
+import com.withorb.api.services.blocking.LicenseService
+import com.withorb.api.services.blocking.LicenseServiceImpl
+import com.withorb.api.services.blocking.LicenseTypeService
+import com.withorb.api.services.blocking.LicenseTypeServiceImpl
 import com.withorb.api.services.blocking.MetricService
 import com.withorb.api.services.blocking.MetricServiceImpl
 import com.withorb.api.services.blocking.PlanService
@@ -106,6 +110,12 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
         CreditBlockServiceImpl(clientOptionsWithUserAgent)
     }
 
+    private val licenseTypes: LicenseTypeService by lazy {
+        LicenseTypeServiceImpl(clientOptionsWithUserAgent)
+    }
+
+    private val licenses: LicenseService by lazy { LicenseServiceImpl(clientOptionsWithUserAgent) }
+
     override fun async(): OrbClientAsync = async
 
     override fun withRawResponse(): OrbClient.WithRawResponse = withRawResponse
@@ -146,6 +156,10 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
     override fun subscriptionChanges(): SubscriptionChangeService = subscriptionChanges
 
     override fun creditBlocks(): CreditBlockService = creditBlocks
+
+    override fun licenseTypes(): LicenseTypeService = licenseTypes
+
+    override fun licenses(): LicenseService = licenses
 
     override fun close() = clientOptions.close()
 
@@ -220,6 +234,14 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
             CreditBlockServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val licenseTypes: LicenseTypeService.WithRawResponse by lazy {
+            LicenseTypeServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val licenses: LicenseService.WithRawResponse by lazy {
+            LicenseServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): OrbClient.WithRawResponse =
@@ -260,5 +282,9 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
             subscriptionChanges
 
         override fun creditBlocks(): CreditBlockService.WithRawResponse = creditBlocks
+
+        override fun licenseTypes(): LicenseTypeService.WithRawResponse = licenseTypes
+
+        override fun licenses(): LicenseService.WithRawResponse = licenses
     }
 }

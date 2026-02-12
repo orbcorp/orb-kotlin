@@ -14,6 +14,8 @@ import com.withorb.api.services.blocking.EventService
 import com.withorb.api.services.blocking.InvoiceLineItemService
 import com.withorb.api.services.blocking.InvoiceService
 import com.withorb.api.services.blocking.ItemService
+import com.withorb.api.services.blocking.LicenseService
+import com.withorb.api.services.blocking.LicenseTypeService
 import com.withorb.api.services.blocking.MetricService
 import com.withorb.api.services.blocking.PlanService
 import com.withorb.api.services.blocking.PriceService
@@ -91,6 +93,10 @@ interface OrbClient {
 
     fun creditBlocks(): CreditBlockService
 
+    fun licenseTypes(): LicenseTypeService
+
+    fun licenses(): LicenseService
+
     /**
      * Closes this client, relinquishing any underlying resources.
      *
@@ -147,5 +153,9 @@ interface OrbClient {
         fun subscriptionChanges(): SubscriptionChangeService.WithRawResponse
 
         fun creditBlocks(): CreditBlockService.WithRawResponse
+
+        fun licenseTypes(): LicenseTypeService.WithRawResponse
+
+        fun licenses(): LicenseService.WithRawResponse
     }
 }

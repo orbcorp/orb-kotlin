@@ -14,6 +14,8 @@ import com.withorb.api.models.InvoiceFetchParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceFetchUpcomingResponse
 import com.withorb.api.models.InvoiceIssueParams
+import com.withorb.api.models.InvoiceIssueSummaryParams
+import com.withorb.api.models.InvoiceIssueSummaryResponse
 import com.withorb.api.models.InvoiceListPage
 import com.withorb.api.models.InvoiceListParams
 import com.withorb.api.models.InvoiceListSummaryPage
@@ -159,6 +161,36 @@ interface InvoiceService {
     /** @see issue */
     fun issue(invoiceId: String, requestOptions: RequestOptions): Invoice =
         issue(invoiceId, InvoiceIssueParams.none(), requestOptions)
+
+    /**
+     * This endpoint allows an eligible invoice to be issued manually. This is only possible with
+     * invoices where status is `draft`, `will_auto_issue` is false, and an `eligible_to_issue_at`
+     * is a time in the past. Issuing an invoice could possibly trigger side effects, some of which
+     * could be customer-visible (e.g. sending emails, auto-collecting payment, syncing the invoice
+     * to external providers, etc).
+     *
+     * This is a lighter-weight alternative to the issue invoice endpoint, returning an invoice
+     * summary without any line item details.
+     */
+    fun issueSummary(
+        invoiceId: String,
+        params: InvoiceIssueSummaryParams = InvoiceIssueSummaryParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): InvoiceIssueSummaryResponse =
+        issueSummary(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+    /** @see issueSummary */
+    fun issueSummary(
+        params: InvoiceIssueSummaryParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): InvoiceIssueSummaryResponse
+
+    /** @see issueSummary */
+    fun issueSummary(
+        invoiceId: String,
+        requestOptions: RequestOptions,
+    ): InvoiceIssueSummaryResponse =
+        issueSummary(invoiceId, InvoiceIssueSummaryParams.none(), requestOptions)
 
     /**
      * This is a lighter-weight endpoint that returns a list of all
@@ -386,6 +418,33 @@ interface InvoiceService {
         @MustBeClosed
         fun issue(invoiceId: String, requestOptions: RequestOptions): HttpResponseFor<Invoice> =
             issue(invoiceId, InvoiceIssueParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /invoices/summary/{invoice_id}/issue`, but is
+         * otherwise the same as [InvoiceService.issueSummary].
+         */
+        @MustBeClosed
+        fun issueSummary(
+            invoiceId: String,
+            params: InvoiceIssueSummaryParams = InvoiceIssueSummaryParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<InvoiceIssueSummaryResponse> =
+            issueSummary(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
+
+        /** @see issueSummary */
+        @MustBeClosed
+        fun issueSummary(
+            params: InvoiceIssueSummaryParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<InvoiceIssueSummaryResponse>
+
+        /** @see issueSummary */
+        @MustBeClosed
+        fun issueSummary(
+            invoiceId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<InvoiceIssueSummaryResponse> =
+            issueSummary(invoiceId, InvoiceIssueSummaryParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /invoices/summary`, but is otherwise the same as
