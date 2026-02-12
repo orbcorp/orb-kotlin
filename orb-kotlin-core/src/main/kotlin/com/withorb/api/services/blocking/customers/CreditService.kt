@@ -39,6 +39,11 @@ interface CreditService {
      *
      * Note that `currency` defaults to credits if not specified. To use a real world currency, set
      * `currency` to an ISO 4217 string.
+     *
+     * Results can be filtered by the block's `effective_date` using the `effective_date[gte]`,
+     * `effective_date[gt]`, `effective_date[lt]`, and `effective_date[lte]` query parameters. This
+     * filters on when the credit block becomes effective, which may differ from creation time for
+     * backdated credits.
      */
     fun list(
         customerId: String,
@@ -65,6 +70,11 @@ interface CreditService {
      *
      * Note that `currency` defaults to credits if not specified. To use a real world currency, set
      * `currency` to an ISO 4217 string.
+     *
+     * Results can be filtered by the block's `effective_date` using the `effective_date[gte]`,
+     * `effective_date[gt]`, `effective_date[lt]`, and `effective_date[lte]` query parameters. This
+     * filters on when the credit block becomes effective, which may differ from creation time for
+     * backdated credits.
      */
     fun listByExternalId(
         externalCustomerId: String,

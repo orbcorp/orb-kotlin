@@ -28,6 +28,7 @@ private constructor(
     private val expiryDate: JsonField<OffsetDateTime>,
     private val filters: JsonField<List<Filter>>,
     private val maximumInitialBalance: JsonField<Double>,
+    private val metadata: JsonField<Metadata>,
     private val perUnitCostBasis: JsonField<String>,
     private val status: JsonField<Status>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -49,6 +50,7 @@ private constructor(
         @JsonProperty("maximum_initial_balance")
         @ExcludeMissing
         maximumInitialBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("per_unit_cost_basis")
         @ExcludeMissing
         perUnitCostBasis: JsonField<String> = JsonMissing.of(),
@@ -60,6 +62,7 @@ private constructor(
         expiryDate,
         filters,
         maximumInitialBalance,
+        metadata,
         perUnitCostBasis,
         status,
         mutableMapOf(),
@@ -101,6 +104,16 @@ private constructor(
      */
     fun maximumInitialBalance(): Double? =
         maximumInitialBalance.getNullable("maximum_initial_balance")
+
+    /**
+     * User specified key-value pairs for the resource. If not present, this defaults to an empty
+     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
+     * metadata mapping can be cleared by setting `metadata` to `null`.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun metadata(): Metadata = metadata.getRequired("metadata")
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
@@ -164,6 +177,13 @@ private constructor(
     fun _maximumInitialBalance(): JsonField<Double> = maximumInitialBalance
 
     /**
+     * Returns the raw JSON value of [metadata].
+     *
+     * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
+
+    /**
      * Returns the raw JSON value of [perUnitCostBasis].
      *
      * Unlike [perUnitCostBasis], this method doesn't throw if the JSON field has an unexpected
@@ -206,6 +226,7 @@ private constructor(
          * .expiryDate()
          * .filters()
          * .maximumInitialBalance()
+         * .metadata()
          * .perUnitCostBasis()
          * .status()
          * ```
@@ -222,6 +243,7 @@ private constructor(
         private var expiryDate: JsonField<OffsetDateTime>? = null
         private var filters: JsonField<MutableList<Filter>>? = null
         private var maximumInitialBalance: JsonField<Double>? = null
+        private var metadata: JsonField<Metadata>? = null
         private var perUnitCostBasis: JsonField<String>? = null
         private var status: JsonField<Status>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -235,6 +257,7 @@ private constructor(
             expiryDate = customerCreditListByExternalIdResponse.expiryDate
             filters = customerCreditListByExternalIdResponse.filters.map { it.toMutableList() }
             maximumInitialBalance = customerCreditListByExternalIdResponse.maximumInitialBalance
+            metadata = customerCreditListByExternalIdResponse.metadata
             perUnitCostBasis = customerCreditListByExternalIdResponse.perUnitCostBasis
             status = customerCreditListByExternalIdResponse.status
             additionalProperties =
@@ -335,6 +358,22 @@ private constructor(
             this.maximumInitialBalance = maximumInitialBalance
         }
 
+        /**
+         * User specified key-value pairs for the resource. If not present, this defaults to an
+         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
+         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         */
+        fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+        /**
+         * Sets [Builder.metadata] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.metadata] with a well-typed [Metadata] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
         fun perUnitCostBasis(perUnitCostBasis: String?) =
             perUnitCostBasis(JsonField.ofNullable(perUnitCostBasis))
 
@@ -391,6 +430,7 @@ private constructor(
          * .expiryDate()
          * .filters()
          * .maximumInitialBalance()
+         * .metadata()
          * .perUnitCostBasis()
          * .status()
          * ```
@@ -405,6 +445,7 @@ private constructor(
                 checkRequired("expiryDate", expiryDate),
                 checkRequired("filters", filters).map { it.toImmutable() },
                 checkRequired("maximumInitialBalance", maximumInitialBalance),
+                checkRequired("metadata", metadata),
                 checkRequired("perUnitCostBasis", perUnitCostBasis),
                 checkRequired("status", status),
                 additionalProperties.toMutableMap(),
@@ -424,6 +465,7 @@ private constructor(
         expiryDate()
         filters().forEach { it.validate() }
         maximumInitialBalance()
+        metadata().validate()
         perUnitCostBasis()
         status().validate()
         validated = true
@@ -449,6 +491,7 @@ private constructor(
             (if (expiryDate.asKnown() == null) 0 else 1) +
             (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (maximumInitialBalance.asKnown() == null) 0 else 1) +
+            (metadata.asKnown()?.validity() ?: 0) +
             (if (perUnitCostBasis.asKnown() == null) 0 else 1) +
             (status.asKnown()?.validity() ?: 0)
 
@@ -957,6 +1000,108 @@ private constructor(
             "Filter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * User specified key-value pairs for the resource. If not present, this defaults to an empty
+     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
+     * metadata mapping can be cleared by setting `metadata` to `null`.
+     */
+    class Metadata
+    @JsonCreator
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Metadata]. */
+        class Builder internal constructor() {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(metadata: Metadata) = apply {
+                additionalProperties = metadata.additionalProperties.toMutableMap()
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Metadata = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Metadata && additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+    }
+
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -1093,6 +1238,7 @@ private constructor(
             expiryDate == other.expiryDate &&
             filters == other.filters &&
             maximumInitialBalance == other.maximumInitialBalance &&
+            metadata == other.metadata &&
             perUnitCostBasis == other.perUnitCostBasis &&
             status == other.status &&
             additionalProperties == other.additionalProperties
@@ -1106,6 +1252,7 @@ private constructor(
             expiryDate,
             filters,
             maximumInitialBalance,
+            metadata,
             perUnitCostBasis,
             status,
             additionalProperties,
@@ -1115,5 +1262,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CustomerCreditListByExternalIdResponse{id=$id, balance=$balance, effectiveDate=$effectiveDate, expiryDate=$expiryDate, filters=$filters, maximumInitialBalance=$maximumInitialBalance, perUnitCostBasis=$perUnitCostBasis, status=$status, additionalProperties=$additionalProperties}"
+        "CustomerCreditListByExternalIdResponse{id=$id, balance=$balance, effectiveDate=$effectiveDate, expiryDate=$expiryDate, filters=$filters, maximumInitialBalance=$maximumInitialBalance, metadata=$metadata, perUnitCostBasis=$perUnitCostBasis, status=$status, additionalProperties=$additionalProperties}"
 }
