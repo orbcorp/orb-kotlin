@@ -1731,6 +1731,7 @@ private constructor(
                 private val customDueDate: JsonField<CustomDueDate>,
                 private val invoiceDate: JsonField<InvoiceDate>,
                 private val itemId: JsonField<String>,
+                private val markAsPaid: JsonField<Boolean>,
                 private val memo: JsonField<String>,
                 private val netTerms: JsonField<Long>,
                 private val requireSuccessfulPayment: JsonField<Boolean>,
@@ -1751,6 +1752,9 @@ private constructor(
                     @JsonProperty("item_id")
                     @ExcludeMissing
                     itemId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("mark_as_paid")
+                    @ExcludeMissing
+                    markAsPaid: JsonField<Boolean> = JsonMissing.of(),
                     @JsonProperty("memo")
                     @ExcludeMissing
                     memo: JsonField<String> = JsonMissing.of(),
@@ -1765,6 +1769,7 @@ private constructor(
                     customDueDate,
                     invoiceDate,
                     itemId,
+                    markAsPaid,
                     memo,
                     netTerms,
                     requireSuccessfulPayment,
@@ -1808,6 +1813,14 @@ private constructor(
                  *   the server responded with an unexpected value).
                  */
                 fun itemId(): String? = itemId.getNullable("item_id")
+
+                /**
+                 * If true, the new credits purchase invoice will be marked as paid.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun markAsPaid(): Boolean? = markAsPaid.getNullable("mark_as_paid")
 
                 /**
                  * An optional memo to display on the invoice.
@@ -1878,6 +1891,16 @@ private constructor(
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 /**
+                 * Returns the raw JSON value of [markAsPaid].
+                 *
+                 * Unlike [markAsPaid], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("mark_as_paid")
+                @ExcludeMissing
+                fun _markAsPaid(): JsonField<Boolean> = markAsPaid
+
+                /**
                  * Returns the raw JSON value of [memo].
                  *
                  * Unlike [memo], this method doesn't throw if the JSON field has an unexpected
@@ -1937,6 +1960,7 @@ private constructor(
                     private var customDueDate: JsonField<CustomDueDate> = JsonMissing.of()
                     private var invoiceDate: JsonField<InvoiceDate> = JsonMissing.of()
                     private var itemId: JsonField<String> = JsonMissing.of()
+                    private var markAsPaid: JsonField<Boolean> = JsonMissing.of()
                     private var memo: JsonField<String> = JsonMissing.of()
                     private var netTerms: JsonField<Long> = JsonMissing.of()
                     private var requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of()
@@ -1947,6 +1971,7 @@ private constructor(
                         customDueDate = invoiceSettings.customDueDate
                         invoiceDate = invoiceSettings.invoiceDate
                         itemId = invoiceSettings.itemId
+                        markAsPaid = invoiceSettings.markAsPaid
                         memo = invoiceSettings.memo
                         netTerms = invoiceSettings.netTerms
                         requireSuccessfulPayment = invoiceSettings.requireSuccessfulPayment
@@ -2038,6 +2063,20 @@ private constructor(
                      * not yet supported value.
                      */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
+                    /** If true, the new credits purchase invoice will be marked as paid. */
+                    fun markAsPaid(markAsPaid: Boolean) = markAsPaid(JsonField.of(markAsPaid))
+
+                    /**
+                     * Sets [Builder.markAsPaid] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.markAsPaid] with a well-typed [Boolean]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun markAsPaid(markAsPaid: JsonField<Boolean>) = apply {
+                        this.markAsPaid = markAsPaid
+                    }
 
                     /** An optional memo to display on the invoice. */
                     fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
@@ -2136,6 +2175,7 @@ private constructor(
                             customDueDate,
                             invoiceDate,
                             itemId,
+                            markAsPaid,
                             memo,
                             netTerms,
                             requireSuccessfulPayment,
@@ -2154,6 +2194,7 @@ private constructor(
                     customDueDate()?.validate()
                     invoiceDate()?.validate()
                     itemId()
+                    markAsPaid()
                     memo()
                     netTerms()
                     requireSuccessfulPayment()
@@ -2179,6 +2220,7 @@ private constructor(
                         (customDueDate.asKnown()?.validity() ?: 0) +
                         (invoiceDate.asKnown()?.validity() ?: 0) +
                         (if (itemId.asKnown() == null) 0 else 1) +
+                        (if (markAsPaid.asKnown() == null) 0 else 1) +
                         (if (memo.asKnown() == null) 0 else 1) +
                         (if (netTerms.asKnown() == null) 0 else 1) +
                         (if (requireSuccessfulPayment.asKnown() == null) 0 else 1)
@@ -2550,6 +2592,7 @@ private constructor(
                         customDueDate == other.customDueDate &&
                         invoiceDate == other.invoiceDate &&
                         itemId == other.itemId &&
+                        markAsPaid == other.markAsPaid &&
                         memo == other.memo &&
                         netTerms == other.netTerms &&
                         requireSuccessfulPayment == other.requireSuccessfulPayment &&
@@ -2562,6 +2605,7 @@ private constructor(
                         customDueDate,
                         invoiceDate,
                         itemId,
+                        markAsPaid,
                         memo,
                         netTerms,
                         requireSuccessfulPayment,
@@ -2572,7 +2616,7 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "InvoiceSettings{autoCollection=$autoCollection, customDueDate=$customDueDate, invoiceDate=$invoiceDate, itemId=$itemId, memo=$memo, netTerms=$netTerms, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
+                    "InvoiceSettings{autoCollection=$autoCollection, customDueDate=$customDueDate, invoiceDate=$invoiceDate, itemId=$itemId, markAsPaid=$markAsPaid, memo=$memo, netTerms=$netTerms, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
             }
 
             /**
