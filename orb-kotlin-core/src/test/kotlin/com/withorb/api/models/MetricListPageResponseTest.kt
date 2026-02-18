@@ -47,6 +47,11 @@ internal class MetricListPageResponseTest {
                         )
                         .name("name")
                         .status(BillableMetric.Status.ACTIVE)
+                        .addParameterDefinition(
+                            BillableMetric.ParameterDefinition.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                .build()
+                        )
                         .build()
                 )
                 .paginationMetadata(
@@ -87,6 +92,11 @@ internal class MetricListPageResponseTest {
                     )
                     .name("name")
                     .status(BillableMetric.Status.ACTIVE)
+                    .addParameterDefinition(
+                        BillableMetric.ParameterDefinition.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
                     .build()
             )
         assertThat(metricListPageResponse.paginationMetadata())
@@ -130,6 +140,11 @@ internal class MetricListPageResponseTest {
                         )
                         .name("name")
                         .status(BillableMetric.Status.ACTIVE)
+                        .addParameterDefinition(
+                            BillableMetric.ParameterDefinition.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                .build()
+                        )
                         .build()
                 )
                 .paginationMetadata(

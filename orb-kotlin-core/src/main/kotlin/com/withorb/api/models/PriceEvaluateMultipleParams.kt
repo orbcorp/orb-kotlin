@@ -792,6 +792,7 @@ private constructor(
         private val externalPriceId: JsonField<String>,
         private val filter: JsonField<String>,
         private val groupingKeys: JsonField<List<String>>,
+        private val metricParameterOverrides: JsonField<MetricParameterOverrides>,
         private val price: JsonField<Price>,
         private val priceId: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -806,9 +807,20 @@ private constructor(
             @JsonProperty("grouping_keys")
             @ExcludeMissing
             groupingKeys: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("metric_parameter_overrides")
+            @ExcludeMissing
+            metricParameterOverrides: JsonField<MetricParameterOverrides> = JsonMissing.of(),
             @JsonProperty("price") @ExcludeMissing price: JsonField<Price> = JsonMissing.of(),
             @JsonProperty("price_id") @ExcludeMissing priceId: JsonField<String> = JsonMissing.of(),
-        ) : this(externalPriceId, filter, groupingKeys, price, priceId, mutableMapOf())
+        ) : this(
+            externalPriceId,
+            filter,
+            groupingKeys,
+            metricParameterOverrides,
+            price,
+            priceId,
+            mutableMapOf(),
+        )
 
         /**
          * The external ID of a price to evaluate that exists in your Orb account.
@@ -836,6 +848,16 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun groupingKeys(): List<String>? = groupingKeys.getNullable("grouping_keys")
+
+        /**
+         * Optional overrides for parameterized billable metric parameters. If the metric has
+         * parameter definitions and no overrides are provided, defaults will be used.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun metricParameterOverrides(): MetricParameterOverrides? =
+            metricParameterOverrides.getNullable("metric_parameter_overrides")
 
         /**
          * New floating price request body params.
@@ -881,6 +903,17 @@ private constructor(
         fun _groupingKeys(): JsonField<List<String>> = groupingKeys
 
         /**
+         * Returns the raw JSON value of [metricParameterOverrides].
+         *
+         * Unlike [metricParameterOverrides], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("metric_parameter_overrides")
+        @ExcludeMissing
+        fun _metricParameterOverrides(): JsonField<MetricParameterOverrides> =
+            metricParameterOverrides
+
+        /**
          * Returns the raw JSON value of [price].
          *
          * Unlike [price], this method doesn't throw if the JSON field has an unexpected type.
@@ -918,6 +951,8 @@ private constructor(
             private var externalPriceId: JsonField<String> = JsonMissing.of()
             private var filter: JsonField<String> = JsonMissing.of()
             private var groupingKeys: JsonField<MutableList<String>>? = null
+            private var metricParameterOverrides: JsonField<MetricParameterOverrides> =
+                JsonMissing.of()
             private var price: JsonField<Price> = JsonMissing.of()
             private var priceId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -926,6 +961,7 @@ private constructor(
                 externalPriceId = priceEvaluation.externalPriceId
                 filter = priceEvaluation.filter
                 groupingKeys = priceEvaluation.groupingKeys.map { it.toMutableList() }
+                metricParameterOverrides = priceEvaluation.metricParameterOverrides
                 price = priceEvaluation.price
                 priceId = priceEvaluation.priceId
                 additionalProperties = priceEvaluation.additionalProperties.toMutableMap()
@@ -990,6 +1026,24 @@ private constructor(
                         checkKnown("groupingKeys", it).add(groupingKey)
                     }
             }
+
+            /**
+             * Optional overrides for parameterized billable metric parameters. If the metric has
+             * parameter definitions and no overrides are provided, defaults will be used.
+             */
+            fun metricParameterOverrides(metricParameterOverrides: MetricParameterOverrides?) =
+                metricParameterOverrides(JsonField.ofNullable(metricParameterOverrides))
+
+            /**
+             * Sets [Builder.metricParameterOverrides] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.metricParameterOverrides] with a well-typed
+             * [MetricParameterOverrides] value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
+             */
+            fun metricParameterOverrides(
+                metricParameterOverrides: JsonField<MetricParameterOverrides>
+            ) = apply { this.metricParameterOverrides = metricParameterOverrides }
 
             /** New floating price request body params. */
             fun price(price: Price?) = price(JsonField.ofNullable(price))
@@ -1204,6 +1258,7 @@ private constructor(
                     externalPriceId,
                     filter,
                     (groupingKeys ?: JsonMissing.of()).map { it.toImmutable() },
+                    metricParameterOverrides,
                     price,
                     priceId,
                     additionalProperties.toMutableMap(),
@@ -1220,6 +1275,7 @@ private constructor(
             externalPriceId()
             filter()
             groupingKeys()
+            metricParameterOverrides()?.validate()
             price()?.validate()
             priceId()
             validated = true
@@ -1243,8 +1299,120 @@ private constructor(
             (if (externalPriceId.asKnown() == null) 0 else 1) +
                 (if (filter.asKnown() == null) 0 else 1) +
                 (groupingKeys.asKnown()?.size ?: 0) +
+                (metricParameterOverrides.asKnown()?.validity() ?: 0) +
                 (price.asKnown()?.validity() ?: 0) +
                 (if (priceId.asKnown() == null) 0 else 1)
+
+        /**
+         * Optional overrides for parameterized billable metric parameters. If the metric has
+         * parameter definitions and no overrides are provided, defaults will be used.
+         */
+        class MetricParameterOverrides
+        @JsonCreator
+        private constructor(
+            @com.fasterxml.jackson.annotation.JsonValue
+            private val additionalProperties: Map<String, JsonValue>
+        ) {
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [MetricParameterOverrides].
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [MetricParameterOverrides]. */
+            class Builder internal constructor() {
+
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(metricParameterOverrides: MetricParameterOverrides) = apply {
+                    additionalProperties =
+                        metricParameterOverrides.additionalProperties.toMutableMap()
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [MetricParameterOverrides].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
+                fun build(): MetricParameterOverrides =
+                    MetricParameterOverrides(additionalProperties.toImmutable())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): MetricParameterOverrides = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is MetricParameterOverrides &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "MetricParameterOverrides{additionalProperties=$additionalProperties}"
+        }
 
         /** New floating price request body params. */
         @JsonDeserialize(using = Price.Deserializer::class)
@@ -11090,6 +11258,7 @@ private constructor(
                 externalPriceId == other.externalPriceId &&
                 filter == other.filter &&
                 groupingKeys == other.groupingKeys &&
+                metricParameterOverrides == other.metricParameterOverrides &&
                 price == other.price &&
                 priceId == other.priceId &&
                 additionalProperties == other.additionalProperties
@@ -11100,6 +11269,7 @@ private constructor(
                 externalPriceId,
                 filter,
                 groupingKeys,
+                metricParameterOverrides,
                 price,
                 priceId,
                 additionalProperties,
@@ -11109,7 +11279,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PriceEvaluation{externalPriceId=$externalPriceId, filter=$filter, groupingKeys=$groupingKeys, price=$price, priceId=$priceId, additionalProperties=$additionalProperties}"
+            "PriceEvaluation{externalPriceId=$externalPriceId, filter=$filter, groupingKeys=$groupingKeys, metricParameterOverrides=$metricParameterOverrides, price=$price, priceId=$priceId, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

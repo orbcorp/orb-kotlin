@@ -761,6 +761,11 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 )
                                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addUsageCustomerId("string")
+                                .metricParameterOverrides(
+                                    PriceInterval.MetricParameterOverrides.builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                        .build()
+                                )
                                 .build()
                         )
                         .redeemedCoupon(
@@ -2745,6 +2750,11 @@ internal class SubscriptionChangeRetrieveResponseTest {
                             )
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .addUsageCustomerId("string")
+                            .metricParameterOverrides(
+                                PriceInterval.MetricParameterOverrides.builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                    .build()
+                            )
                             .build()
                     )
                     .redeemedCoupon(
@@ -4693,6 +4703,11 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 )
                                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .addUsageCustomerId("string")
+                                .metricParameterOverrides(
+                                    PriceInterval.MetricParameterOverrides.builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                        .build()
+                                )
                                 .build()
                         )
                         .redeemedCoupon(
