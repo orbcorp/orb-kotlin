@@ -28,6 +28,7 @@ internal class InvoiceCreateParamsTest {
                     )
                     .build()
             )
+            .autoCollection(true)
             .customerId("4khy3nwzktxv7")
             .discount(
                 PercentageDiscount.builder()
@@ -77,6 +78,7 @@ internal class InvoiceCreateParamsTest {
                         )
                         .build()
                 )
+                .autoCollection(true)
                 .customerId("4khy3nwzktxv7")
                 .discount(
                     PercentageDiscount.builder()
@@ -124,6 +126,7 @@ internal class InvoiceCreateParamsTest {
                     )
                     .build()
             )
+        assertThat(body.autoCollection()).isEqualTo(true)
         assertThat(body.customerId()).isEqualTo("4khy3nwzktxv7")
         assertThat(body.discount())
             .isEqualTo(

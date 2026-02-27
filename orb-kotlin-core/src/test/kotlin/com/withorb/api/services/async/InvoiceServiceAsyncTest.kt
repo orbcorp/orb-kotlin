@@ -52,6 +52,7 @@ internal class InvoiceServiceAsyncTest {
                             )
                             .build()
                     )
+                    .autoCollection(true)
                     .customerId("4khy3nwzktxv7")
                     .discount(
                         PercentageDiscount.builder()
@@ -98,6 +99,7 @@ internal class InvoiceServiceAsyncTest {
             invoiceServiceAsync.update(
                 InvoiceUpdateParams.builder()
                     .invoiceId("invoice_id")
+                    .autoCollection(true)
                     .dueDate(LocalDate.parse("2023-09-22"))
                     .invoiceDate(LocalDate.parse("2023-09-22"))
                     .metadata(
