@@ -13,6 +13,10 @@ import com.withorb.api.models.CreditBlockListInvoicesResponse
 import com.withorb.api.models.CreditBlockRetrieveParams
 import com.withorb.api.models.CreditBlockRetrieveResponse
 
+/**
+ * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits within
+ * Orb.
+ */
 interface CreditBlockServiceAsync {
 
     /**

@@ -27,6 +27,10 @@ import com.withorb.api.models.CustomerCreditLedgerListPageAsync
 import com.withorb.api.models.CustomerCreditLedgerListPageResponse
 import com.withorb.api.models.CustomerCreditLedgerListParams
 
+/**
+ * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits within
+ * Orb.
+ */
 class LedgerServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     LedgerServiceAsync {
 

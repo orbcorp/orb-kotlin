@@ -13,6 +13,10 @@ import com.withorb.api.models.LicenseTypeListParams
 import com.withorb.api.models.LicenseTypeRetrieveParams
 import com.withorb.api.models.LicenseTypeRetrieveResponse
 
+/**
+ * The LicenseType resource represents a type of license that can be assigned to users. License
+ * types are used during billing by grouping metrics on the configured grouping key.
+ */
 interface LicenseTypeServiceAsync {
 
     /**

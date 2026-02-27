@@ -17,6 +17,11 @@ import com.withorb.api.models.EventUpdateResponse
 import com.withorb.api.services.async.events.BackfillServiceAsync
 import com.withorb.api.services.async.events.VolumeServiceAsync
 
+/**
+ * The [Event](/core-concepts#event) resource represents a usage event that has been created for a
+ * customer. Events are the core of Orb's usage-based billing model, and are used to calculate the
+ * usage charges for a given billing period.
+ */
 interface EventServiceAsync {
 
     /**
@@ -31,8 +36,18 @@ interface EventServiceAsync {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EventServiceAsync
 
+    /**
+     * The [Event](/core-concepts#event) resource represents a usage event that has been created for
+     * a customer. Events are the core of Orb's usage-based billing model, and are used to calculate
+     * the usage charges for a given billing period.
+     */
     fun backfills(): BackfillServiceAsync
 
+    /**
+     * The [Event](/core-concepts#event) resource represents a usage event that has been created for
+     * a customer. Events are the core of Orb's usage-based billing model, and are used to calculate
+     * the usage charges for a given billing period.
+     */
     fun volume(): VolumeServiceAsync
 
     /**
@@ -370,8 +385,18 @@ interface EventServiceAsync {
             modifier: (ClientOptions.Builder) -> Unit
         ): EventServiceAsync.WithRawResponse
 
+        /**
+         * The [Event](/core-concepts#event) resource represents a usage event that has been created
+         * for a customer. Events are the core of Orb's usage-based billing model, and are used to
+         * calculate the usage charges for a given billing period.
+         */
         fun backfills(): BackfillServiceAsync.WithRawResponse
 
+        /**
+         * The [Event](/core-concepts#event) resource represents a usage event that has been created
+         * for a customer. Events are the core of Orb's usage-based billing model, and are used to
+         * calculate the usage charges for a given billing period.
+         */
         fun volume(): VolumeServiceAsync.WithRawResponse
 
         /**

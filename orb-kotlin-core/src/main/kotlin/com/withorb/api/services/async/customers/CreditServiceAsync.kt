@@ -13,6 +13,10 @@ import com.withorb.api.models.CustomerCreditListParams
 import com.withorb.api.services.async.customers.credits.LedgerServiceAsync
 import com.withorb.api.services.async.customers.credits.TopUpServiceAsync
 
+/**
+ * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits within
+ * Orb.
+ */
 interface CreditServiceAsync {
 
     /**
@@ -27,8 +31,16 @@ interface CreditServiceAsync {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CreditServiceAsync
 
+    /**
+     * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits
+     * within Orb.
+     */
     fun ledger(): LedgerServiceAsync
 
+    /**
+     * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits
+     * within Orb.
+     */
     fun topUps(): TopUpServiceAsync
 
     /**
@@ -120,8 +132,16 @@ interface CreditServiceAsync {
             modifier: (ClientOptions.Builder) -> Unit
         ): CreditServiceAsync.WithRawResponse
 
+        /**
+         * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits
+         * within Orb.
+         */
         fun ledger(): LedgerServiceAsync.WithRawResponse
 
+        /**
+         * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits
+         * within Orb.
+         */
         fun topUps(): TopUpServiceAsync.WithRawResponse
 
         /**

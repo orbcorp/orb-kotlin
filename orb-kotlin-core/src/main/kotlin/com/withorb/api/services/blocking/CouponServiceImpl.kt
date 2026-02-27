@@ -26,6 +26,12 @@ import com.withorb.api.models.CouponListParams
 import com.withorb.api.services.blocking.coupons.SubscriptionService
 import com.withorb.api.services.blocking.coupons.SubscriptionServiceImpl
 
+/**
+ * A coupon represents a reusable discount configuration that can be applied either as a fixed or
+ * percentage amount to an invoice or subscription. Coupons are activated using a redemption code,
+ * which applies the discount to a subscription or invoice. The duration of a coupon determines how
+ * long it remains available for use by end users.
+ */
 class CouponServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     CouponService {
 
@@ -42,6 +48,12 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CouponService =
         CouponServiceImpl(clientOptions.toBuilder().apply(modifier).build())
 
+    /**
+     * A coupon represents a reusable discount configuration that can be applied either as a fixed
+     * or percentage amount to an invoice or subscription. Coupons are activated using a redemption
+     * code, which applies the discount to a subscription or invoice. The duration of a coupon
+     * determines how long it remains available for use by end users.
+     */
     override fun subscriptions(): SubscriptionService = subscriptions
 
     override fun create(params: CouponCreateParams, requestOptions: RequestOptions): Coupon =
@@ -75,6 +87,12 @@ class CouponServiceImpl internal constructor(private val clientOptions: ClientOp
         ): CouponService.WithRawResponse =
             CouponServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
+        /**
+         * A coupon represents a reusable discount configuration that can be applied either as a
+         * fixed or percentage amount to an invoice or subscription. Coupons are activated using a
+         * redemption code, which applies the discount to a subscription or invoice. The duration of
+         * a coupon determines how long it remains available for use by end users.
+         */
         override fun subscriptions(): SubscriptionService.WithRawResponse = subscriptions
 
         private val createHandler: Handler<Coupon> = jsonHandler<Coupon>(clientOptions.jsonMapper)

@@ -29,6 +29,11 @@ import com.withorb.api.services.blocking.events.BackfillServiceImpl
 import com.withorb.api.services.blocking.events.VolumeService
 import com.withorb.api.services.blocking.events.VolumeServiceImpl
 
+/**
+ * The [Event](/core-concepts#event) resource represents a usage event that has been created for a
+ * customer. Events are the core of Orb's usage-based billing model, and are used to calculate the
+ * usage charges for a given billing period.
+ */
 class EventServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     EventService {
 
@@ -45,8 +50,18 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EventService =
         EventServiceImpl(clientOptions.toBuilder().apply(modifier).build())
 
+    /**
+     * The [Event](/core-concepts#event) resource represents a usage event that has been created for
+     * a customer. Events are the core of Orb's usage-based billing model, and are used to calculate
+     * the usage charges for a given billing period.
+     */
     override fun backfills(): BackfillService = backfills
 
+    /**
+     * The [Event](/core-concepts#event) resource represents a usage event that has been created for
+     * a customer. Events are the core of Orb's usage-based billing model, and are used to calculate
+     * the usage charges for a given billing period.
+     */
     override fun volume(): VolumeService = volume
 
     override fun update(
@@ -96,8 +111,18 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
         ): EventService.WithRawResponse =
             EventServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
+        /**
+         * The [Event](/core-concepts#event) resource represents a usage event that has been created
+         * for a customer. Events are the core of Orb's usage-based billing model, and are used to
+         * calculate the usage charges for a given billing period.
+         */
         override fun backfills(): BackfillService.WithRawResponse = backfills
 
+        /**
+         * The [Event](/core-concepts#event) resource represents a usage event that has been created
+         * for a customer. Events are the core of Orb's usage-based billing model, and are used to
+         * calculate the usage charges for a given billing period.
+         */
         override fun volume(): VolumeService.WithRawResponse = volume
 
         private val updateHandler: Handler<EventUpdateResponse> =

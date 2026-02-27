@@ -22,6 +22,11 @@ import com.withorb.api.models.BetaExternalPlanIdSetDefaultPlanVersionParams
 import com.withorb.api.models.Plan
 import com.withorb.api.models.PlanVersion
 
+/**
+ * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed to by
+ * a customer. Plans define the billing behavior of the subscription. You can see more about how to
+ * configure prices in the [Price resource](/reference/price).
+ */
 class ExternalPlanIdServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     ExternalPlanIdService {
 

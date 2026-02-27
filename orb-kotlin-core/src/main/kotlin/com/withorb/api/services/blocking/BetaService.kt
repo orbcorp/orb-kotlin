@@ -13,6 +13,11 @@ import com.withorb.api.models.Plan
 import com.withorb.api.models.PlanVersion
 import com.withorb.api.services.blocking.beta.ExternalPlanIdService
 
+/**
+ * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed to by
+ * a customer. Plans define the billing behavior of the subscription. You can see more about how to
+ * configure prices in the [Price resource](/reference/price).
+ */
 interface BetaService {
 
     /**
@@ -27,6 +32,11 @@ interface BetaService {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BetaService
 
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
     fun externalPlanId(): ExternalPlanIdService
 
     /** This endpoint allows the creation of a new plan version for an existing plan. */
@@ -81,6 +91,11 @@ interface BetaService {
          */
         fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BetaService.WithRawResponse
 
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
         fun externalPlanId(): ExternalPlanIdService.WithRawResponse
 
         /**
