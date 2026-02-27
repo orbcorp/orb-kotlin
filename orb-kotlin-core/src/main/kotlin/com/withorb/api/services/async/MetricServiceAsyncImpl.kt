@@ -24,6 +24,10 @@ import com.withorb.api.models.MetricListPageResponse
 import com.withorb.api.models.MetricListParams
 import com.withorb.api.models.MetricUpdateParams
 
+/**
+ * The Metric resource represents a calculation of a quantity based on events. Metrics are defined
+ * by the query that transforms raw usage events into meaningful values for your customers.
+ */
 class MetricServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     MetricServiceAsync {
 

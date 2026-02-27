@@ -24,6 +24,11 @@ import com.withorb.api.models.PlanVersion
 import com.withorb.api.services.async.beta.ExternalPlanIdServiceAsync
 import com.withorb.api.services.async.beta.ExternalPlanIdServiceAsyncImpl
 
+/**
+ * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed to by
+ * a customer. Plans define the billing behavior of the subscription. You can see more about how to
+ * configure prices in the [Price resource](/reference/price).
+ */
 class BetaServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     BetaServiceAsync {
 
@@ -40,6 +45,11 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BetaServiceAsync =
         BetaServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
 
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
     override fun externalPlanId(): ExternalPlanIdServiceAsync = externalPlanId
 
     override suspend fun createPlanVersion(
@@ -80,6 +90,11 @@ class BetaServiceAsyncImpl internal constructor(private val clientOptions: Clien
                 clientOptions.toBuilder().apply(modifier).build()
             )
 
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
         override fun externalPlanId(): ExternalPlanIdServiceAsync.WithRawResponse = externalPlanId
 
         private val createPlanVersionHandler: Handler<PlanVersion> =

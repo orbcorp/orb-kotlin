@@ -26,6 +26,10 @@ import com.withorb.api.services.async.customers.credits.LedgerServiceAsyncImpl
 import com.withorb.api.services.async.customers.credits.TopUpServiceAsync
 import com.withorb.api.services.async.customers.credits.TopUpServiceAsyncImpl
 
+/**
+ * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits within
+ * Orb.
+ */
 class CreditServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     CreditServiceAsync {
 
@@ -42,8 +46,16 @@ class CreditServiceAsyncImpl internal constructor(private val clientOptions: Cli
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CreditServiceAsync =
         CreditServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
 
+    /**
+     * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits
+     * within Orb.
+     */
     override fun ledger(): LedgerServiceAsync = ledger
 
+    /**
+     * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits
+     * within Orb.
+     */
     override fun topUps(): TopUpServiceAsync = topUps
 
     override suspend fun list(
@@ -81,8 +93,16 @@ class CreditServiceAsyncImpl internal constructor(private val clientOptions: Cli
                 clientOptions.toBuilder().apply(modifier).build()
             )
 
+        /**
+         * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits
+         * within Orb.
+         */
         override fun ledger(): LedgerServiceAsync.WithRawResponse = ledger
 
+        /**
+         * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits
+         * within Orb.
+         */
         override fun topUps(): TopUpServiceAsync.WithRawResponse = topUps
 
         private val listHandler: Handler<CustomerCreditListPageResponse> =

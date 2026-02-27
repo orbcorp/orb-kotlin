@@ -23,6 +23,10 @@ import com.withorb.api.models.CreditNoteListPageAsync
 import com.withorb.api.models.CreditNoteListPageResponse
 import com.withorb.api.models.CreditNoteListParams
 
+/**
+ * The [Credit Note](/invoicing/credit-notes) resource represents a credit that has been applied to
+ * a particular invoice.
+ */
 class CreditNoteServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     CreditNoteServiceAsync {
 

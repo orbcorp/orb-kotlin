@@ -28,6 +28,12 @@ import com.withorb.api.models.AlertListParams
 import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
 
+/**
+ * [Alerts within Orb](/product-catalog/configuring-alerts) monitor spending, usage, or credit
+ * balance and trigger webhooks when a threshold is exceeded.
+ *
+ * Alerts created through the API can be scoped to either customers or subscriptions.
+ */
 class AlertServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     AlertServiceAsync {
 
