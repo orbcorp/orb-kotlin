@@ -67,6 +67,80 @@ internal class BetaExternalPlanIdCreatePlanVersionParamsTest {
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
+                    .licenseAllocationPrice(
+                        BetaExternalPlanIdCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                            .Unit
+                            .builder()
+                            .cadence(
+                                BetaExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
+                                    .Unit
+                                    .Cadence
+                                    .ANNUAL
+                            )
+                            .itemId("item_id")
+                            .addLicenseAllocation(
+                                BetaExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
+                                    .Unit
+                                    .LicenseAllocation
+                                    .builder()
+                                    .amount("amount")
+                                    .currency("currency")
+                                    .writeOffOverage(true)
+                                    .build()
+                            )
+                            .name("Annual fee")
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
+                            .billableMetricId("billable_metric_id")
+                            .billedInAdvance(true)
+                            .billingCycleConfiguration(
+                                NewBillingCycleConfiguration.builder()
+                                    .duration(0L)
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                    .build()
+                            )
+                            .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                            )
+                            .currency("currency")
+                            .dimensionalPriceConfiguration(
+                                NewDimensionalPriceConfiguration.builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
+                                    .externalDimensionalPriceGroupId(
+                                        "external_dimensional_price_group_id"
+                                    )
+                                    .build()
+                            )
+                            .externalPriceId("external_price_id")
+                            .fixedPriceQuantity(0.0)
+                            .invoiceGroupingKey("x")
+                            .invoicingCycleConfiguration(
+                                NewBillingCycleConfiguration.builder()
+                                    .duration(0L)
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                    .build()
+                            )
+                            .licenseTypeId("license_type_id")
+                            .metadata(
+                                BetaExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
+                                    .Unit
+                                    .Metadata
+                                    .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .referenceId("reference_id")
+                            .build()
+                    )
                     .planPhaseOrder(0L)
                     .price(
                         NewPlanUnitPrice.builder()
@@ -188,6 +262,81 @@ internal class BetaExternalPlanIdCreatePlanVersionParamsTest {
                             .itemId("item_id")
                             .licenseTypeId("license_type_id")
                             .perUnitCostBasis("per_unit_cost_basis")
+                            .build()
+                    )
+                    .licenseAllocationPrice(
+                        BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                            .LicenseAllocationPrice
+                            .Unit
+                            .builder()
+                            .cadence(
+                                BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
+                                    .Unit
+                                    .Cadence
+                                    .ANNUAL
+                            )
+                            .itemId("item_id")
+                            .addLicenseAllocation(
+                                BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
+                                    .Unit
+                                    .LicenseAllocation
+                                    .builder()
+                                    .amount("amount")
+                                    .currency("currency")
+                                    .writeOffOverage(true)
+                                    .build()
+                            )
+                            .name("Annual fee")
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
+                            .billableMetricId("billable_metric_id")
+                            .billedInAdvance(true)
+                            .billingCycleConfiguration(
+                                NewBillingCycleConfiguration.builder()
+                                    .duration(0L)
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                    .build()
+                            )
+                            .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                            )
+                            .currency("currency")
+                            .dimensionalPriceConfiguration(
+                                NewDimensionalPriceConfiguration.builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
+                                    .externalDimensionalPriceGroupId(
+                                        "external_dimensional_price_group_id"
+                                    )
+                                    .build()
+                            )
+                            .externalPriceId("external_price_id")
+                            .fixedPriceQuantity(0.0)
+                            .invoiceGroupingKey("x")
+                            .invoicingCycleConfiguration(
+                                NewBillingCycleConfiguration.builder()
+                                    .duration(0L)
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                    .build()
+                            )
+                            .licenseTypeId("license_type_id")
+                            .metadata(
+                                BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
+                                    .Unit
+                                    .Metadata
+                                    .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .referenceId("reference_id")
                             .build()
                     )
                     .planPhaseOrder(0L)
@@ -322,6 +471,83 @@ internal class BetaExternalPlanIdCreatePlanVersionParamsTest {
                                 .perUnitCostBasis("per_unit_cost_basis")
                                 .build()
                         )
+                        .licenseAllocationPrice(
+                            BetaExternalPlanIdCreatePlanVersionParams.AddPrice
+                                .LicenseAllocationPrice
+                                .Unit
+                                .builder()
+                                .cadence(
+                                    BetaExternalPlanIdCreatePlanVersionParams.AddPrice
+                                        .LicenseAllocationPrice
+                                        .Unit
+                                        .Cadence
+                                        .ANNUAL
+                                )
+                                .itemId("item_id")
+                                .addLicenseAllocation(
+                                    BetaExternalPlanIdCreatePlanVersionParams.AddPrice
+                                        .LicenseAllocationPrice
+                                        .Unit
+                                        .LicenseAllocation
+                                        .builder()
+                                        .amount("amount")
+                                        .currency("currency")
+                                        .writeOffOverage(true)
+                                        .build()
+                                )
+                                .name("Annual fee")
+                                .unitConfig(
+                                    UnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .prorated(true)
+                                        .build()
+                                )
+                                .billableMetricId("billable_metric_id")
+                                .billedInAdvance(true)
+                                .billingCycleConfiguration(
+                                    NewBillingCycleConfiguration.builder()
+                                        .duration(0L)
+                                        .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                        .build()
+                                )
+                                .conversionRate(0.0)
+                                .unitConversionRateConfig(
+                                    ConversionRateUnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .build()
+                                )
+                                .currency("currency")
+                                .dimensionalPriceConfiguration(
+                                    NewDimensionalPriceConfiguration.builder()
+                                        .addDimensionValue("string")
+                                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                                        .externalDimensionalPriceGroupId(
+                                            "external_dimensional_price_group_id"
+                                        )
+                                        .build()
+                                )
+                                .externalPriceId("external_price_id")
+                                .fixedPriceQuantity(0.0)
+                                .invoiceGroupingKey("x")
+                                .invoicingCycleConfiguration(
+                                    NewBillingCycleConfiguration.builder()
+                                        .duration(0L)
+                                        .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                        .build()
+                                )
+                                .licenseTypeId("license_type_id")
+                                .metadata(
+                                    BetaExternalPlanIdCreatePlanVersionParams.AddPrice
+                                        .LicenseAllocationPrice
+                                        .Unit
+                                        .Metadata
+                                        .builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                                        .build()
+                                )
+                                .referenceId("reference_id")
+                                .build()
+                        )
                         .planPhaseOrder(0L)
                         .price(
                             NewPlanUnitPrice.builder()
@@ -447,6 +673,83 @@ internal class BetaExternalPlanIdCreatePlanVersionParamsTest {
                                 .perUnitCostBasis("per_unit_cost_basis")
                                 .build()
                         )
+                        .licenseAllocationPrice(
+                            BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                .LicenseAllocationPrice
+                                .Unit
+                                .builder()
+                                .cadence(
+                                    BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                        .LicenseAllocationPrice
+                                        .Unit
+                                        .Cadence
+                                        .ANNUAL
+                                )
+                                .itemId("item_id")
+                                .addLicenseAllocation(
+                                    BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                        .LicenseAllocationPrice
+                                        .Unit
+                                        .LicenseAllocation
+                                        .builder()
+                                        .amount("amount")
+                                        .currency("currency")
+                                        .writeOffOverage(true)
+                                        .build()
+                                )
+                                .name("Annual fee")
+                                .unitConfig(
+                                    UnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .prorated(true)
+                                        .build()
+                                )
+                                .billableMetricId("billable_metric_id")
+                                .billedInAdvance(true)
+                                .billingCycleConfiguration(
+                                    NewBillingCycleConfiguration.builder()
+                                        .duration(0L)
+                                        .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                        .build()
+                                )
+                                .conversionRate(0.0)
+                                .unitConversionRateConfig(
+                                    ConversionRateUnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .build()
+                                )
+                                .currency("currency")
+                                .dimensionalPriceConfiguration(
+                                    NewDimensionalPriceConfiguration.builder()
+                                        .addDimensionValue("string")
+                                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                                        .externalDimensionalPriceGroupId(
+                                            "external_dimensional_price_group_id"
+                                        )
+                                        .build()
+                                )
+                                .externalPriceId("external_price_id")
+                                .fixedPriceQuantity(0.0)
+                                .invoiceGroupingKey("x")
+                                .invoicingCycleConfiguration(
+                                    NewBillingCycleConfiguration.builder()
+                                        .duration(0L)
+                                        .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                        .build()
+                                )
+                                .licenseTypeId("license_type_id")
+                                .metadata(
+                                    BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                        .LicenseAllocationPrice
+                                        .Unit
+                                        .Metadata
+                                        .builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                                        .build()
+                                )
+                                .referenceId("reference_id")
+                                .build()
+                        )
                         .planPhaseOrder(0L)
                         .price(
                             NewPlanUnitPrice.builder()
@@ -564,6 +867,80 @@ internal class BetaExternalPlanIdCreatePlanVersionParamsTest {
                             .itemId("item_id")
                             .licenseTypeId("license_type_id")
                             .perUnitCostBasis("per_unit_cost_basis")
+                            .build()
+                    )
+                    .licenseAllocationPrice(
+                        BetaExternalPlanIdCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                            .Unit
+                            .builder()
+                            .cadence(
+                                BetaExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
+                                    .Unit
+                                    .Cadence
+                                    .ANNUAL
+                            )
+                            .itemId("item_id")
+                            .addLicenseAllocation(
+                                BetaExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
+                                    .Unit
+                                    .LicenseAllocation
+                                    .builder()
+                                    .amount("amount")
+                                    .currency("currency")
+                                    .writeOffOverage(true)
+                                    .build()
+                            )
+                            .name("Annual fee")
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
+                            .billableMetricId("billable_metric_id")
+                            .billedInAdvance(true)
+                            .billingCycleConfiguration(
+                                NewBillingCycleConfiguration.builder()
+                                    .duration(0L)
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                    .build()
+                            )
+                            .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                            )
+                            .currency("currency")
+                            .dimensionalPriceConfiguration(
+                                NewDimensionalPriceConfiguration.builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
+                                    .externalDimensionalPriceGroupId(
+                                        "external_dimensional_price_group_id"
+                                    )
+                                    .build()
+                            )
+                            .externalPriceId("external_price_id")
+                            .fixedPriceQuantity(0.0)
+                            .invoiceGroupingKey("x")
+                            .invoicingCycleConfiguration(
+                                NewBillingCycleConfiguration.builder()
+                                    .duration(0L)
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                    .build()
+                            )
+                            .licenseTypeId("license_type_id")
+                            .metadata(
+                                BetaExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
+                                    .Unit
+                                    .Metadata
+                                    .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .referenceId("reference_id")
                             .build()
                     )
                     .planPhaseOrder(0L)
@@ -691,6 +1068,81 @@ internal class BetaExternalPlanIdCreatePlanVersionParamsTest {
                             .itemId("item_id")
                             .licenseTypeId("license_type_id")
                             .perUnitCostBasis("per_unit_cost_basis")
+                            .build()
+                    )
+                    .licenseAllocationPrice(
+                        BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                            .LicenseAllocationPrice
+                            .Unit
+                            .builder()
+                            .cadence(
+                                BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
+                                    .Unit
+                                    .Cadence
+                                    .ANNUAL
+                            )
+                            .itemId("item_id")
+                            .addLicenseAllocation(
+                                BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
+                                    .Unit
+                                    .LicenseAllocation
+                                    .builder()
+                                    .amount("amount")
+                                    .currency("currency")
+                                    .writeOffOverage(true)
+                                    .build()
+                            )
+                            .name("Annual fee")
+                            .unitConfig(
+                                UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .prorated(true)
+                                    .build()
+                            )
+                            .billableMetricId("billable_metric_id")
+                            .billedInAdvance(true)
+                            .billingCycleConfiguration(
+                                NewBillingCycleConfiguration.builder()
+                                    .duration(0L)
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                    .build()
+                            )
+                            .conversionRate(0.0)
+                            .unitConversionRateConfig(
+                                ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                            )
+                            .currency("currency")
+                            .dimensionalPriceConfiguration(
+                                NewDimensionalPriceConfiguration.builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
+                                    .externalDimensionalPriceGroupId(
+                                        "external_dimensional_price_group_id"
+                                    )
+                                    .build()
+                            )
+                            .externalPriceId("external_price_id")
+                            .fixedPriceQuantity(0.0)
+                            .invoiceGroupingKey("x")
+                            .invoicingCycleConfiguration(
+                                NewBillingCycleConfiguration.builder()
+                                    .duration(0L)
+                                    .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
+                                    .build()
+                            )
+                            .licenseTypeId("license_type_id")
+                            .metadata(
+                                BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
+                                    .Unit
+                                    .Metadata
+                                    .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .referenceId("reference_id")
                             .build()
                     )
                     .planPhaseOrder(0L)
