@@ -39,6 +39,7 @@ private constructor(
     private val thresholds: JsonField<List<Threshold>>,
     private val type: JsonField<Type>,
     private val balanceAlertStatus: JsonField<List<BalanceAlertStatus>>,
+    private val groupingKeys: JsonField<List<String>>,
     private val licenseType: JsonField<LicenseType>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -66,6 +67,9 @@ private constructor(
         @JsonProperty("balance_alert_status")
         @ExcludeMissing
         balanceAlertStatus: JsonField<List<BalanceAlertStatus>> = JsonMissing.of(),
+        @JsonProperty("grouping_keys")
+        @ExcludeMissing
+        groupingKeys: JsonField<List<String>> = JsonMissing.of(),
         @JsonProperty("license_type")
         @ExcludeMissing
         licenseType: JsonField<LicenseType> = JsonMissing.of(),
@@ -81,6 +85,7 @@ private constructor(
         thresholds,
         type,
         balanceAlertStatus,
+        groupingKeys,
         licenseType,
         mutableMapOf(),
     )
@@ -173,6 +178,15 @@ private constructor(
      */
     fun balanceAlertStatus(): List<BalanceAlertStatus>? =
         balanceAlertStatus.getNullable("balance_alert_status")
+
+    /**
+     * The property keys to group cost alerts by. Only present for cost alerts with grouping
+     * enabled.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun groupingKeys(): List<String>? = groupingKeys.getNullable("grouping_keys")
 
     /**
      * Minified license type for alert serialization.
@@ -271,6 +285,15 @@ private constructor(
     fun _balanceAlertStatus(): JsonField<List<BalanceAlertStatus>> = balanceAlertStatus
 
     /**
+     * Returns the raw JSON value of [groupingKeys].
+     *
+     * Unlike [groupingKeys], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("grouping_keys")
+    @ExcludeMissing
+    fun _groupingKeys(): JsonField<List<String>> = groupingKeys
+
+    /**
      * Returns the raw JSON value of [licenseType].
      *
      * Unlike [licenseType], this method doesn't throw if the JSON field has an unexpected type.
@@ -327,6 +350,7 @@ private constructor(
         private var thresholds: JsonField<MutableList<Threshold>>? = null
         private var type: JsonField<Type>? = null
         private var balanceAlertStatus: JsonField<MutableList<BalanceAlertStatus>>? = null
+        private var groupingKeys: JsonField<MutableList<String>>? = null
         private var licenseType: JsonField<LicenseType> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -342,6 +366,7 @@ private constructor(
             thresholds = alert.thresholds.map { it.toMutableList() }
             type = alert.type
             balanceAlertStatus = alert.balanceAlertStatus.map { it.toMutableList() }
+            groupingKeys = alert.groupingKeys.map { it.toMutableList() }
             licenseType = alert.licenseType
             additionalProperties = alert.additionalProperties.toMutableMap()
         }
@@ -506,6 +531,36 @@ private constructor(
                 }
         }
 
+        /**
+         * The property keys to group cost alerts by. Only present for cost alerts with grouping
+         * enabled.
+         */
+        fun groupingKeys(groupingKeys: List<String>?) =
+            groupingKeys(JsonField.ofNullable(groupingKeys))
+
+        /**
+         * Sets [Builder.groupingKeys] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.groupingKeys] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun groupingKeys(groupingKeys: JsonField<List<String>>) = apply {
+            this.groupingKeys = groupingKeys.map { it.toMutableList() }
+        }
+
+        /**
+         * Adds a single [String] to [groupingKeys].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addGroupingKey(groupingKey: String) = apply {
+            groupingKeys =
+                (groupingKeys ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("groupingKeys", it).add(groupingKey)
+                }
+        }
+
         /** Minified license type for alert serialization. */
         fun licenseType(licenseType: LicenseType?) = licenseType(JsonField.ofNullable(licenseType))
 
@@ -573,6 +628,7 @@ private constructor(
                 checkRequired("thresholds", thresholds).map { it.toImmutable() },
                 checkRequired("type", type),
                 (balanceAlertStatus ?: JsonMissing.of()).map { it.toImmutable() },
+                (groupingKeys ?: JsonMissing.of()).map { it.toImmutable() },
                 licenseType,
                 additionalProperties.toMutableMap(),
             )
@@ -596,6 +652,7 @@ private constructor(
         thresholds()?.forEach { it.validate() }
         type().validate()
         balanceAlertStatus()?.forEach { it.validate() }
+        groupingKeys()
         licenseType()?.validate()
         validated = true
     }
@@ -625,6 +682,7 @@ private constructor(
             (thresholds.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (type.asKnown()?.validity() ?: 0) +
             (balanceAlertStatus.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (groupingKeys.asKnown()?.size ?: 0) +
             (licenseType.asKnown()?.validity() ?: 0)
 
     /** The metric the alert applies to. */
@@ -1590,6 +1648,7 @@ private constructor(
             thresholds == other.thresholds &&
             type == other.type &&
             balanceAlertStatus == other.balanceAlertStatus &&
+            groupingKeys == other.groupingKeys &&
             licenseType == other.licenseType &&
             additionalProperties == other.additionalProperties
     }
@@ -1607,6 +1666,7 @@ private constructor(
             thresholds,
             type,
             balanceAlertStatus,
+            groupingKeys,
             licenseType,
             additionalProperties,
         )
@@ -1615,5 +1675,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Alert{id=$id, createdAt=$createdAt, currency=$currency, customer=$customer, enabled=$enabled, metric=$metric, plan=$plan, subscription=$subscription, thresholds=$thresholds, type=$type, balanceAlertStatus=$balanceAlertStatus, licenseType=$licenseType, additionalProperties=$additionalProperties}"
+        "Alert{id=$id, createdAt=$createdAt, currency=$currency, customer=$customer, enabled=$enabled, metric=$metric, plan=$plan, subscription=$subscription, thresholds=$thresholds, type=$type, balanceAlertStatus=$balanceAlertStatus, groupingKeys=$groupingKeys, licenseType=$licenseType, additionalProperties=$additionalProperties}"
 }

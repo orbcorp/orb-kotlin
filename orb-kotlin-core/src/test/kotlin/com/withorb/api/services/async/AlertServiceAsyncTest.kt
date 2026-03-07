@@ -126,7 +126,9 @@ internal class AlertServiceAsyncTest {
                     .subscriptionId("subscription_id")
                     .addThreshold(Threshold.builder().value(0.0).build())
                     .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
+                    .addGroupingKey("string")
                     .metricId("metric_id")
+                    .pricingUnitId("pricing_unit_id")
                     .build()
             )
 

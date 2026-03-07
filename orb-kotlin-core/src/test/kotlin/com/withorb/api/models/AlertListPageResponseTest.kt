@@ -44,6 +44,7 @@ internal class AlertListPageResponseTest {
                                 .thresholdValue(0.0)
                                 .build()
                         )
+                        .addGroupingKey("string")
                         .licenseType(Alert.LicenseType.builder().id("id").build())
                         .build()
                 )
@@ -80,6 +81,7 @@ internal class AlertListPageResponseTest {
                     .addBalanceAlertStatus(
                         Alert.BalanceAlertStatus.builder().inAlert(true).thresholdValue(0.0).build()
                     )
+                    .addGroupingKey("string")
                     .licenseType(Alert.LicenseType.builder().id("id").build())
                     .build()
             )
@@ -122,6 +124,7 @@ internal class AlertListPageResponseTest {
                                 .thresholdValue(0.0)
                                 .build()
                         )
+                        .addGroupingKey("string")
                         .licenseType(Alert.LicenseType.builder().id("id").build())
                         .build()
                 )
