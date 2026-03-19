@@ -2,29 +2,54 @@
 
 package com.withorb.api.models
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter
+import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.Params
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.toImmutable
+import com.withorb.api.errors.OrbInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
 /**
- * This endpoint collects payment for an invoice using the customer's default payment method. This
- * action can only be taken on invoices with status "issued".
+ * This endpoint collects payment for an invoice. By default, it uses the customer's default payment
+ * method. Optionally, a shared payment token (SPT) can be provided to pay using agent-granted
+ * credentials instead. This action can only be taken on invoices with status "issued".
  */
 class InvoicePayParams
 private constructor(
     private val invoiceId: String?,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
     fun invoiceId(): String? = invoiceId
 
-    /** Additional body properties to send with the request. */
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    /**
+     * The ID of a shared payment token granted by an agent to use for this payment.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun sharedPaymentTokenId(): String = body.sharedPaymentTokenId()
+
+    /**
+     * Returns the raw JSON value of [sharedPaymentTokenId].
+     *
+     * Unlike [sharedPaymentTokenId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    fun _sharedPaymentTokenId(): JsonField<String> = body._sharedPaymentTokenId()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -36,9 +61,14 @@ private constructor(
 
     companion object {
 
-        fun none(): InvoicePayParams = builder().build()
-
-        /** Returns a mutable builder for constructing an instance of [InvoicePayParams]. */
+        /**
+         * Returns a mutable builder for constructing an instance of [InvoicePayParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .sharedPaymentTokenId()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -46,18 +76,62 @@ private constructor(
     class Builder internal constructor() {
 
         private var invoiceId: String? = null
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(invoicePayParams: InvoicePayParams) = apply {
             invoiceId = invoicePayParams.invoiceId
+            body = invoicePayParams.body.toBuilder()
             additionalHeaders = invoicePayParams.additionalHeaders.toBuilder()
             additionalQueryParams = invoicePayParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = invoicePayParams.additionalBodyProperties.toMutableMap()
         }
 
         fun invoiceId(invoiceId: String?) = apply { this.invoiceId = invoiceId }
+
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [sharedPaymentTokenId]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /** The ID of a shared payment token granted by an agent to use for this payment. */
+        fun sharedPaymentTokenId(sharedPaymentTokenId: String) = apply {
+            body.sharedPaymentTokenId(sharedPaymentTokenId)
+        }
+
+        /**
+         * Sets [Builder.sharedPaymentTokenId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.sharedPaymentTokenId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun sharedPaymentTokenId(sharedPaymentTokenId: JsonField<String>) = apply {
+            body.sharedPaymentTokenId(sharedPaymentTokenId)
+        }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -157,43 +231,28 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
-        }
-
         /**
          * Returns an immutable instance of [InvoicePayParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .sharedPaymentTokenId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): InvoicePayParams =
             InvoicePayParams(
                 invoiceId,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
-    fun _body(): Map<String, JsonValue>? = additionalBodyProperties.ifEmpty { null }
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -205,6 +264,175 @@ private constructor(
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
+    class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val sharedPaymentTokenId: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("shared_payment_token_id")
+            @ExcludeMissing
+            sharedPaymentTokenId: JsonField<String> = JsonMissing.of()
+        ) : this(sharedPaymentTokenId, mutableMapOf())
+
+        /**
+         * The ID of a shared payment token granted by an agent to use for this payment.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun sharedPaymentTokenId(): String =
+            sharedPaymentTokenId.getRequired("shared_payment_token_id")
+
+        /**
+         * Returns the raw JSON value of [sharedPaymentTokenId].
+         *
+         * Unlike [sharedPaymentTokenId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("shared_payment_token_id")
+        @ExcludeMissing
+        fun _sharedPaymentTokenId(): JsonField<String> = sharedPaymentTokenId
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .sharedPaymentTokenId()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Body]. */
+        class Builder internal constructor() {
+
+            private var sharedPaymentTokenId: JsonField<String>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(body: Body) = apply {
+                sharedPaymentTokenId = body.sharedPaymentTokenId
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** The ID of a shared payment token granted by an agent to use for this payment. */
+            fun sharedPaymentTokenId(sharedPaymentTokenId: String) =
+                sharedPaymentTokenId(JsonField.of(sharedPaymentTokenId))
+
+            /**
+             * Sets [Builder.sharedPaymentTokenId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.sharedPaymentTokenId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun sharedPaymentTokenId(sharedPaymentTokenId: JsonField<String>) = apply {
+                this.sharedPaymentTokenId = sharedPaymentTokenId
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .sharedPaymentTokenId()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Body =
+                Body(
+                    checkRequired("sharedPaymentTokenId", sharedPaymentTokenId),
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Body = apply {
+            if (validated) {
+                return@apply
+            }
+
+            sharedPaymentTokenId()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = (if (sharedPaymentTokenId.asKnown() == null) 0 else 1)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Body &&
+                sharedPaymentTokenId == other.sharedPaymentTokenId &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy {
+            Objects.hash(sharedPaymentTokenId, additionalProperties)
+        }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Body{sharedPaymentTokenId=$sharedPaymentTokenId, additionalProperties=$additionalProperties}"
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -212,14 +440,14 @@ private constructor(
 
         return other is InvoicePayParams &&
             invoiceId == other.invoiceId &&
+            body == other.body &&
             additionalHeaders == other.additionalHeaders &&
-            additionalQueryParams == other.additionalQueryParams &&
-            additionalBodyProperties == other.additionalBodyProperties
+            additionalQueryParams == other.additionalQueryParams
     }
 
     override fun hashCode(): Int =
-        Objects.hash(invoiceId, additionalHeaders, additionalQueryParams, additionalBodyProperties)
+        Objects.hash(invoiceId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
-        "InvoicePayParams{invoiceId=$invoiceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "InvoicePayParams{invoiceId=$invoiceId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

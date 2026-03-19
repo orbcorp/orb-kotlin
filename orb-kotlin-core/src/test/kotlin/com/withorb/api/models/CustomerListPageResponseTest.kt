@@ -107,6 +107,7 @@ internal class CustomerListPageResponseTest {
                                                 .ProviderType
                                                 .STRIPE
                                         )
+                                        .defaultSharedPaymentToken("default_shared_payment_token")
                                         .addExcludedPaymentMethodType("string")
                                         .build()
                                 )
@@ -213,6 +214,7 @@ internal class CustomerListPageResponseTest {
                                         Customer.PaymentConfiguration.PaymentProvider.ProviderType
                                             .STRIPE
                                     )
+                                    .defaultSharedPaymentToken("default_shared_payment_token")
                                     .addExcludedPaymentMethodType("string")
                                     .build()
                             )
@@ -324,6 +326,7 @@ internal class CustomerListPageResponseTest {
                                                 .ProviderType
                                                 .STRIPE
                                         )
+                                        .defaultSharedPaymentToken("default_shared_payment_token")
                                         .addExcludedPaymentMethodType("string")
                                         .build()
                                 )

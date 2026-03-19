@@ -151,6 +151,7 @@ internal class MutatedSubscriptionTest {
                                                 .ProviderType
                                                 .STRIPE
                                         )
+                                        .defaultSharedPaymentToken("default_shared_payment_token")
                                         .addExcludedPaymentMethodType("string")
                                         .build()
                                 )
@@ -1913,6 +1914,7 @@ internal class MutatedSubscriptionTest {
                                         Customer.PaymentConfiguration.PaymentProvider.ProviderType
                                             .STRIPE
                                     )
+                                    .defaultSharedPaymentToken("default_shared_payment_token")
                                     .addExcludedPaymentMethodType("string")
                                     .build()
                             )
@@ -3615,6 +3617,7 @@ internal class MutatedSubscriptionTest {
                                                 .ProviderType
                                                 .STRIPE
                                         )
+                                        .defaultSharedPaymentToken("default_shared_payment_token")
                                         .addExcludedPaymentMethodType("string")
                                         .build()
                                 )

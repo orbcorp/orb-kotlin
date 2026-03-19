@@ -98,6 +98,7 @@ internal class ServiceParamsTest {
                                         .ProviderType
                                         .STRIPE
                                 )
+                                .defaultSharedPaymentToken("default_shared_payment_token")
                                 .addExcludedPaymentMethodType("string")
                                 .build()
                         )
