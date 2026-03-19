@@ -2697,6 +2697,7 @@ private constructor(
         @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val providerType: JsonField<ProviderType>,
+            private val defaultSharedPaymentToken: JsonField<String>,
             private val excludedPaymentMethodTypes: JsonField<List<String>>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
@@ -2706,10 +2707,18 @@ private constructor(
                 @JsonProperty("provider_type")
                 @ExcludeMissing
                 providerType: JsonField<ProviderType> = JsonMissing.of(),
+                @JsonProperty("default_shared_payment_token")
+                @ExcludeMissing
+                defaultSharedPaymentToken: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("excluded_payment_method_types")
                 @ExcludeMissing
                 excludedPaymentMethodTypes: JsonField<List<String>> = JsonMissing.of(),
-            ) : this(providerType, excludedPaymentMethodTypes, mutableMapOf())
+            ) : this(
+                providerType,
+                defaultSharedPaymentToken,
+                excludedPaymentMethodTypes,
+                mutableMapOf(),
+            )
 
             /**
              * The payment provider to configure.
@@ -2719,6 +2728,17 @@ private constructor(
              *   value).
              */
             fun providerType(): ProviderType = providerType.getRequired("provider_type")
+
+            /**
+             * The ID of a shared payment token granted by an agent to use as the default payment
+             * instrument for this customer. When set, auto-collection will use this token instead
+             * of the customer's default payment method.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun defaultSharedPaymentToken(): String? =
+                defaultSharedPaymentToken.getNullable("default_shared_payment_token")
 
             /**
              * List of Stripe payment method types to exclude for this customer. Excluded payment
@@ -2742,6 +2762,16 @@ private constructor(
             @JsonProperty("provider_type")
             @ExcludeMissing
             fun _providerType(): JsonField<ProviderType> = providerType
+
+            /**
+             * Returns the raw JSON value of [defaultSharedPaymentToken].
+             *
+             * Unlike [defaultSharedPaymentToken], this method doesn't throw if the JSON field has
+             * an unexpected type.
+             */
+            @JsonProperty("default_shared_payment_token")
+            @ExcludeMissing
+            fun _defaultSharedPaymentToken(): JsonField<String> = defaultSharedPaymentToken
 
             /**
              * Returns the raw JSON value of [excludedPaymentMethodTypes].
@@ -2782,11 +2812,13 @@ private constructor(
             class Builder internal constructor() {
 
                 private var providerType: JsonField<ProviderType>? = null
+                private var defaultSharedPaymentToken: JsonField<String> = JsonMissing.of()
                 private var excludedPaymentMethodTypes: JsonField<MutableList<String>>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(paymentProvider: PaymentProvider) = apply {
                     providerType = paymentProvider.providerType
+                    defaultSharedPaymentToken = paymentProvider.defaultSharedPaymentToken
                     excludedPaymentMethodTypes =
                         paymentProvider.excludedPaymentMethodTypes.map { it.toMutableList() }
                     additionalProperties = paymentProvider.additionalProperties.toMutableMap()
@@ -2806,6 +2838,26 @@ private constructor(
                 fun providerType(providerType: JsonField<ProviderType>) = apply {
                     this.providerType = providerType
                 }
+
+                /**
+                 * The ID of a shared payment token granted by an agent to use as the default
+                 * payment instrument for this customer. When set, auto-collection will use this
+                 * token instead of the customer's default payment method.
+                 */
+                fun defaultSharedPaymentToken(defaultSharedPaymentToken: String?) =
+                    defaultSharedPaymentToken(JsonField.ofNullable(defaultSharedPaymentToken))
+
+                /**
+                 * Sets [Builder.defaultSharedPaymentToken] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.defaultSharedPaymentToken] with a well-typed
+                 * [String] value instead. This method is primarily for setting the field to an
+                 * undocumented or not yet supported value.
+                 */
+                fun defaultSharedPaymentToken(defaultSharedPaymentToken: JsonField<String>) =
+                    apply {
+                        this.defaultSharedPaymentToken = defaultSharedPaymentToken
+                    }
 
                 /**
                  * List of Stripe payment method types to exclude for this customer. Excluded
@@ -2881,6 +2933,7 @@ private constructor(
                 fun build(): PaymentProvider =
                     PaymentProvider(
                         checkRequired("providerType", providerType),
+                        defaultSharedPaymentToken,
                         (excludedPaymentMethodTypes ?: JsonMissing.of()).map { it.toImmutable() },
                         additionalProperties.toMutableMap(),
                     )
@@ -2894,6 +2947,7 @@ private constructor(
                 }
 
                 providerType().validate()
+                defaultSharedPaymentToken()
                 excludedPaymentMethodTypes()
                 validated = true
             }
@@ -2914,6 +2968,7 @@ private constructor(
              */
             internal fun validity(): Int =
                 (providerType.asKnown()?.validity() ?: 0) +
+                    (if (defaultSharedPaymentToken.asKnown() == null) 0 else 1) +
                     (excludedPaymentMethodTypes.asKnown()?.size ?: 0)
 
             /** The payment provider to configure. */
@@ -3049,18 +3104,24 @@ private constructor(
 
                 return other is PaymentProvider &&
                     providerType == other.providerType &&
+                    defaultSharedPaymentToken == other.defaultSharedPaymentToken &&
                     excludedPaymentMethodTypes == other.excludedPaymentMethodTypes &&
                     additionalProperties == other.additionalProperties
             }
 
             private val hashCode: Int by lazy {
-                Objects.hash(providerType, excludedPaymentMethodTypes, additionalProperties)
+                Objects.hash(
+                    providerType,
+                    defaultSharedPaymentToken,
+                    excludedPaymentMethodTypes,
+                    additionalProperties,
+                )
             }
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "PaymentProvider{providerType=$providerType, excludedPaymentMethodTypes=$excludedPaymentMethodTypes, additionalProperties=$additionalProperties}"
+                "PaymentProvider{providerType=$providerType, defaultSharedPaymentToken=$defaultSharedPaymentToken, excludedPaymentMethodTypes=$excludedPaymentMethodTypes, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {

@@ -164,6 +164,9 @@ internal class SubscriptionsTest {
                                                         .ProviderType
                                                         .STRIPE
                                                 )
+                                                .defaultSharedPaymentToken(
+                                                    "default_shared_payment_token"
+                                                )
                                                 .addExcludedPaymentMethodType("string")
                                                 .build()
                                         )
@@ -927,6 +930,9 @@ internal class SubscriptionsTest {
                                                     .ProviderType
                                                     .STRIPE
                                             )
+                                            .defaultSharedPaymentToken(
+                                                "default_shared_payment_token"
+                                            )
                                             .addExcludedPaymentMethodType("string")
                                             .build()
                                     )
@@ -1663,6 +1669,9 @@ internal class SubscriptionsTest {
                                                     Customer.PaymentConfiguration.PaymentProvider
                                                         .ProviderType
                                                         .STRIPE
+                                                )
+                                                .defaultSharedPaymentToken(
+                                                    "default_shared_payment_token"
                                                 )
                                                 .addExcludedPaymentMethodType("string")
                                                 .build()

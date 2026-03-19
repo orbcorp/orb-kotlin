@@ -242,12 +242,14 @@ interface InvoiceService {
     ): Invoice
 
     /**
-     * This endpoint collects payment for an invoice using the customer's default payment method.
-     * This action can only be taken on invoices with status "issued".
+     * This endpoint collects payment for an invoice. By default, it uses the customer's default
+     * payment method. Optionally, a shared payment token (SPT) can be provided to pay using
+     * agent-granted credentials instead. This action can only be taken on invoices with status
+     * "issued".
      */
     fun pay(
         invoiceId: String,
-        params: InvoicePayParams = InvoicePayParams.none(),
+        params: InvoicePayParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice = pay(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
@@ -256,10 +258,6 @@ interface InvoiceService {
         params: InvoicePayParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
-
-    /** @see pay */
-    fun pay(invoiceId: String, requestOptions: RequestOptions): Invoice =
-        pay(invoiceId, InvoicePayParams.none(), requestOptions)
 
     /**
      * This endpoint allows an invoice's status to be set to the `void` status. This can only be
@@ -494,7 +492,7 @@ interface InvoiceService {
         @MustBeClosed
         fun pay(
             invoiceId: String,
-            params: InvoicePayParams = InvoicePayParams.none(),
+            params: InvoicePayParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice> =
             pay(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
@@ -505,11 +503,6 @@ interface InvoiceService {
             params: InvoicePayParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
-
-        /** @see pay */
-        @MustBeClosed
-        fun pay(invoiceId: String, requestOptions: RequestOptions): HttpResponseFor<Invoice> =
-            pay(invoiceId, InvoicePayParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /invoices/{invoice_id}/void`, but is otherwise the

@@ -168,6 +168,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                                         .ProviderType
                                                         .STRIPE
                                                 )
+                                                .defaultSharedPaymentToken(
+                                                    "default_shared_payment_token"
+                                                )
                                                 .addExcludedPaymentMethodType("string")
                                                 .build()
                                         )
@@ -2194,6 +2197,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     .ProviderType
                                                     .STRIPE
                                             )
+                                            .defaultSharedPaymentToken(
+                                                "default_shared_payment_token"
+                                            )
                                             .addExcludedPaymentMethodType("string")
                                             .build()
                                     )
@@ -4109,6 +4115,9 @@ internal class SubscriptionChangeCancelResponseTest {
                                                     Customer.PaymentConfiguration.PaymentProvider
                                                         .ProviderType
                                                         .STRIPE
+                                                )
+                                                .defaultSharedPaymentToken(
+                                                    "default_shared_payment_token"
                                                 )
                                                 .addExcludedPaymentMethodType("string")
                                                 .build()
