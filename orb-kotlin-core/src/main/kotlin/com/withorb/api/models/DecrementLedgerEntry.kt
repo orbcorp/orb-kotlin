@@ -179,10 +179,13 @@ private constructor(
     fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
     /**
+     * This field is deprecated and will always be null. Decrements are not associated with
+     * individual events.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
-    fun eventId(): String? = eventId.getNullable("event_id")
+    @Deprecated("deprecated") fun eventId(): String? = eventId.getNullable("event_id")
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
@@ -307,7 +310,10 @@ private constructor(
      *
      * Unlike [eventId], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("event_id") @ExcludeMissing fun _eventId(): JsonField<String> = eventId
+    @Deprecated("deprecated")
+    @JsonProperty("event_id")
+    @ExcludeMissing
+    fun _eventId(): JsonField<String> = eventId
 
     /**
      * Returns the raw JSON value of [invoiceId].
@@ -558,6 +564,11 @@ private constructor(
             this.startingBalance = startingBalance
         }
 
+        /**
+         * This field is deprecated and will always be null. Decrements are not associated with
+         * individual events.
+         */
+        @Deprecated("deprecated")
         fun eventId(eventId: String?) = eventId(JsonField.ofNullable(eventId))
 
         /**
@@ -566,6 +577,7 @@ private constructor(
          * You should usually call [Builder.eventId] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
+        @Deprecated("deprecated")
         fun eventId(eventId: JsonField<String>) = apply { this.eventId = eventId }
 
         fun invoiceId(invoiceId: String?) = invoiceId(JsonField.ofNullable(invoiceId))
