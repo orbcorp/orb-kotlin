@@ -4,7 +4,6 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.withorb.api.core.jsonMapper
-import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -17,7 +16,9 @@ internal class PlanMigrationListPageResponseTest {
                 .addData(
                     PlanMigrationListResponse.builder()
                         .id("id")
-                        .effectiveTime(LocalDate.parse("2019-12-27"))
+                        .effectiveTime(
+                            PlanMigrationListResponse.EffectiveTime.UnionMember2.END_OF_TERM
+                        )
                         .planId("plan_id")
                         .status(PlanMigrationListResponse.Status.NOT_STARTED)
                         .build()
@@ -31,7 +32,7 @@ internal class PlanMigrationListPageResponseTest {
             .containsExactly(
                 PlanMigrationListResponse.builder()
                     .id("id")
-                    .effectiveTime(LocalDate.parse("2019-12-27"))
+                    .effectiveTime(PlanMigrationListResponse.EffectiveTime.UnionMember2.END_OF_TERM)
                     .planId("plan_id")
                     .status(PlanMigrationListResponse.Status.NOT_STARTED)
                     .build()
@@ -48,7 +49,9 @@ internal class PlanMigrationListPageResponseTest {
                 .addData(
                     PlanMigrationListResponse.builder()
                         .id("id")
-                        .effectiveTime(LocalDate.parse("2019-12-27"))
+                        .effectiveTime(
+                            PlanMigrationListResponse.EffectiveTime.UnionMember2.END_OF_TERM
+                        )
                         .planId("plan_id")
                         .status(PlanMigrationListResponse.Status.NOT_STARTED)
                         .build()

@@ -6,6 +6,7 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.BillingCycleAnchorConfiguration
+import com.withorb.api.models.BillingCycleRelativeDate
 import com.withorb.api.models.ConversionRateUnitConfig
 import com.withorb.api.models.CustomExpiration
 import com.withorb.api.models.DiscountOverride
@@ -534,7 +535,7 @@ internal class SubscriptionServiceTest {
                     .subscriptionId("subscription_id")
                     .addAdd(
                         SubscriptionPriceIntervalsParams.Add.builder()
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .startDate(BillingCycleRelativeDate.START_OF_TERM)
                             .allocationPrice(
                                 NewAllocationPrice.builder()
                                     .amount("10.00")
@@ -561,7 +562,7 @@ internal class SubscriptionServiceTest {
                             )
                             .canDeferBilling(true)
                             .addAmountDiscount(0.0)
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .endDate(BillingCycleRelativeDate.START_OF_TERM)
                             .externalPriceId("external_price_id")
                             .filter("my_property > 100 AND my_other_property = 'bar'")
                             .addFixedFeeQuantityTransition(
@@ -642,7 +643,7 @@ internal class SubscriptionServiceTest {
                     )
                     .addAddAdjustment(
                         SubscriptionPriceIntervalsParams.AddAdjustment.builder()
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .startDate(BillingCycleRelativeDate.START_OF_TERM)
                             .adjustment(
                                 NewPercentageDiscount.builder()
                                     .adjustmentType(
@@ -669,7 +670,7 @@ internal class SubscriptionServiceTest {
                                     .build()
                             )
                             .adjustmentId("h74gfhdjvn7ujokd")
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .endDate(BillingCycleRelativeDate.START_OF_TERM)
                             .build()
                     )
                     .allowInvoiceCreditOrVoid(true)
@@ -679,7 +680,7 @@ internal class SubscriptionServiceTest {
                             .priceIntervalId("sdfs6wdjvn7ujokd")
                             .billingCycleDay(0L)
                             .canDeferBilling(true)
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .endDate(BillingCycleRelativeDate.START_OF_TERM)
                             .filter("my_property > 100 AND my_other_property = 'bar'")
                             .addFixedFeeQuantityTransition(
                                 SubscriptionPriceIntervalsParams.Edit.FixedFeeQuantityTransition
@@ -694,15 +695,15 @@ internal class SubscriptionServiceTest {
                                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                                     .build()
                             )
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .startDate(BillingCycleRelativeDate.START_OF_TERM)
                             .addUsageCustomerId("string")
                             .build()
                     )
                     .addEditAdjustment(
                         SubscriptionPriceIntervalsParams.EditAdjustment.builder()
                             .adjustmentIntervalId("sdfs6wdjvn7ujokd")
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .endDate(BillingCycleRelativeDate.START_OF_TERM)
+                            .startDate(BillingCycleRelativeDate.START_OF_TERM)
                             .build()
                     )
                     .build()
