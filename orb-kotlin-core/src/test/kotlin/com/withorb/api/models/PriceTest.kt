@@ -80,6 +80,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -242,6 +243,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -376,6 +378,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -549,6 +552,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -699,6 +703,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -870,6 +875,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -1023,6 +1029,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -1206,6 +1213,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -1337,6 +1345,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -1501,6 +1510,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -1638,6 +1648,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -1811,6 +1822,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -1954,6 +1966,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -2136,6 +2149,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -2288,6 +2302,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -2466,6 +2481,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -2614,6 +2630,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -2797,6 +2814,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -2965,6 +2983,7 @@ internal class PriceTest {
                         )
                         .build()
                 )
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -3143,6 +3162,7 @@ internal class PriceTest {
                             )
                             .build()
                     )
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -3276,6 +3296,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -3463,6 +3484,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -3617,6 +3639,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -3787,6 +3810,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -3925,6 +3949,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -4092,6 +4117,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -4229,6 +4255,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -4405,6 +4432,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -4549,6 +4577,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -4722,6 +4751,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -4863,6 +4893,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -5031,6 +5062,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -5174,6 +5206,7 @@ internal class PriceTest {
                         .overageUnitRate("overage_unit_rate")
                         .build()
                 )
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -5344,6 +5377,7 @@ internal class PriceTest {
                             .overageUnitRate("overage_unit_rate")
                             .build()
                     )
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -5491,6 +5525,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -5670,6 +5705,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -5810,6 +5846,7 @@ internal class PriceTest {
                         .unitRate("unit_rate")
                         .build()
                 )
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -5983,6 +6020,7 @@ internal class PriceTest {
                             .unitRate("unit_rate")
                             .build()
                     )
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -6140,6 +6178,7 @@ internal class PriceTest {
                         )
                         .build()
                 )
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -6330,6 +6369,7 @@ internal class PriceTest {
                             )
                             .build()
                     )
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -6473,6 +6513,7 @@ internal class PriceTest {
                         .perUnitRate("per_unit_rate")
                         .build()
                 )
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -6649,6 +6690,7 @@ internal class PriceTest {
                             .perUnitRate("per_unit_rate")
                             .build()
                     )
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -6782,6 +6824,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -6958,6 +7001,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -7120,6 +7164,7 @@ internal class PriceTest {
                         )
                         .build()
                 )
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -7301,6 +7346,7 @@ internal class PriceTest {
                             )
                             .build()
                     )
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -7434,6 +7480,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -7615,6 +7662,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -7771,6 +7819,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -7957,6 +8006,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -8114,6 +8164,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -8317,6 +8368,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -8498,6 +8550,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -8675,6 +8728,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -8818,6 +8872,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -8994,6 +9049,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -9125,6 +9181,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -9292,6 +9349,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -9429,6 +9487,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -9591,6 +9650,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
@@ -9730,6 +9790,7 @@ internal class PriceTest {
                 )
                 .externalPriceId("external_price_id")
                 .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
                 .invoicingCycleConfiguration(
                     BillingCycleConfiguration.builder()
                         .duration(0L)
@@ -9898,6 +9959,7 @@ internal class PriceTest {
                     )
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
                     .invoicingCycleConfiguration(
                         BillingCycleConfiguration.builder()
                             .duration(0L)
