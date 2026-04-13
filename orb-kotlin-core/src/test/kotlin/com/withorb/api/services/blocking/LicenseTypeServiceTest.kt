@@ -22,7 +22,7 @@ internal class LicenseTypeServiceTest {
 
         val licenseType =
             licenseTypeService.create(
-                LicenseTypeCreateParams.builder().groupingKey("grouping_key").name("name").build()
+                LicenseTypeCreateParams.builder().groupingKey("x").name("x").build()
             )
 
         licenseType.validate()
