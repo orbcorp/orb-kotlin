@@ -9,17 +9,16 @@ internal class LicenseTypeCreateParamsTest {
 
     @Test
     fun create() {
-        LicenseTypeCreateParams.builder().groupingKey("grouping_key").name("name").build()
+        LicenseTypeCreateParams.builder().groupingKey("x").name("x").build()
     }
 
     @Test
     fun body() {
-        val params =
-            LicenseTypeCreateParams.builder().groupingKey("grouping_key").name("name").build()
+        val params = LicenseTypeCreateParams.builder().groupingKey("x").name("x").build()
 
         val body = params._body()
 
-        assertThat(body.groupingKey()).isEqualTo("grouping_key")
-        assertThat(body.name()).isEqualTo("name")
+        assertThat(body.groupingKey()).isEqualTo("x")
+        assertThat(body.name()).isEqualTo("x")
     }
 }

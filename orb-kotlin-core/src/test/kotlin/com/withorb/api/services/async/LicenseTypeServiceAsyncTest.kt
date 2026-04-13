@@ -22,7 +22,7 @@ internal class LicenseTypeServiceAsyncTest {
 
         val licenseType =
             licenseTypeServiceAsync.create(
-                LicenseTypeCreateParams.builder().groupingKey("grouping_key").name("name").build()
+                LicenseTypeCreateParams.builder().groupingKey("x").name("x").build()
             )
 
         licenseType.validate()
