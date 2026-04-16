@@ -25,6 +25,7 @@ internal class ExternalPlanIdServiceAsyncTest {
             externalPlanIdServiceAsync.update(
                 PlanExternalPlanIdUpdateParams.builder()
                     .otherExternalPlanId("external_plan_id")
+                    .description("description")
                     .externalPlanId("external_plan_id")
                     .metadata(
                         PlanExternalPlanIdUpdateParams.Metadata.builder()

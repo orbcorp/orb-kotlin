@@ -89,6 +89,11 @@ internal class BetaServiceAsyncTest {
                                     )
                                     .itemId("item_id")
                                     .licenseTypeId("license_type_id")
+                                    .metadata(
+                                        NewAllocationPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
                                     .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )
@@ -296,6 +301,11 @@ internal class BetaServiceAsyncTest {
                                     )
                                     .itemId("item_id")
                                     .licenseTypeId("license_type_id")
+                                    .metadata(
+                                        NewAllocationPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
                                     .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )

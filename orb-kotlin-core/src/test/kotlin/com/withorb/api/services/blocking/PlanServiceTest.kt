@@ -58,6 +58,11 @@ internal class PlanServiceTest {
                                     )
                                     .itemId("item_id")
                                     .licenseTypeId("license_type_id")
+                                    .metadata(
+                                        NewAllocationPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
                                     .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )
@@ -223,6 +228,7 @@ internal class PlanServiceTest {
                             .build()
                     )
                     .defaultInvoiceMemo("default_invoice_memo")
+                    .description("description")
                     .externalPlanId("external_plan_id")
                     .metadata(
                         PlanCreateParams.Metadata.builder()
@@ -258,6 +264,7 @@ internal class PlanServiceTest {
             planService.update(
                 PlanUpdateParams.builder()
                     .planId("plan_id")
+                    .description("description")
                     .externalPlanId("external_plan_id")
                     .metadata(
                         PlanUpdateParams.Metadata.builder()
