@@ -80,6 +80,14 @@ private constructor(
     fun defaultInvoiceMemo(): String? = body.defaultInvoiceMemo()
 
     /**
+     * An optional user-defined description of the plan.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun description(): String? = body.description()
+
+    /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
@@ -157,6 +165,13 @@ private constructor(
      * type.
      */
     fun _defaultInvoiceMemo(): JsonField<String> = body._defaultInvoiceMemo()
+
+    /**
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _description(): JsonField<String> = body._description()
 
     /**
      * Returns the raw JSON value of [externalPlanId].
@@ -327,6 +342,18 @@ private constructor(
         fun defaultInvoiceMemo(defaultInvoiceMemo: JsonField<String>) = apply {
             body.defaultInvoiceMemo(defaultInvoiceMemo)
         }
+
+        /** An optional user-defined description of the plan. */
+        fun description(description: String?) = apply { body.description(description) }
+
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun description(description: JsonField<String>) = apply { body.description(description) }
 
         fun externalPlanId(externalPlanId: String?) = apply { body.externalPlanId(externalPlanId) }
 
@@ -565,6 +592,7 @@ private constructor(
         private val prices: JsonField<List<Price>>,
         private val adjustments: JsonField<List<Adjustment>>,
         private val defaultInvoiceMemo: JsonField<String>,
+        private val description: JsonField<String>,
         private val externalPlanId: JsonField<String>,
         private val metadata: JsonField<Metadata>,
         private val netTerms: JsonField<Long>,
@@ -588,6 +616,9 @@ private constructor(
             @JsonProperty("default_invoice_memo")
             @ExcludeMissing
             defaultInvoiceMemo: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("description")
+            @ExcludeMissing
+            description: JsonField<String> = JsonMissing.of(),
             @JsonProperty("external_plan_id")
             @ExcludeMissing
             externalPlanId: JsonField<String> = JsonMissing.of(),
@@ -605,6 +636,7 @@ private constructor(
             prices,
             adjustments,
             defaultInvoiceMemo,
+            description,
             externalPlanId,
             metadata,
             netTerms,
@@ -652,6 +684,14 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun defaultInvoiceMemo(): String? = defaultInvoiceMemo.getNullable("default_invoice_memo")
+
+        /**
+         * An optional user-defined description of the plan.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun description(): String? = description.getNullable("description")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -737,6 +777,15 @@ private constructor(
         fun _defaultInvoiceMemo(): JsonField<String> = defaultInvoiceMemo
 
         /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("description")
+        @ExcludeMissing
+        fun _description(): JsonField<String> = description
+
+        /**
          * Returns the raw JSON value of [externalPlanId].
          *
          * Unlike [externalPlanId], this method doesn't throw if the JSON field has an unexpected
@@ -811,6 +860,7 @@ private constructor(
             private var prices: JsonField<MutableList<Price>>? = null
             private var adjustments: JsonField<MutableList<Adjustment>>? = null
             private var defaultInvoiceMemo: JsonField<String> = JsonMissing.of()
+            private var description: JsonField<String> = JsonMissing.of()
             private var externalPlanId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var netTerms: JsonField<Long> = JsonMissing.of()
@@ -824,6 +874,7 @@ private constructor(
                 prices = body.prices.map { it.toMutableList() }
                 adjustments = body.adjustments.map { it.toMutableList() }
                 defaultInvoiceMemo = body.defaultInvoiceMemo
+                description = body.description
                 externalPlanId = body.externalPlanId
                 metadata = body.metadata
                 netTerms = body.netTerms
@@ -927,6 +978,20 @@ private constructor(
              */
             fun defaultInvoiceMemo(defaultInvoiceMemo: JsonField<String>) = apply {
                 this.defaultInvoiceMemo = defaultInvoiceMemo
+            }
+
+            /** An optional user-defined description of the plan. */
+            fun description(description: String?) = description(JsonField.ofNullable(description))
+
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
             }
 
             fun externalPlanId(externalPlanId: String?) =
@@ -1066,6 +1131,7 @@ private constructor(
                     checkRequired("prices", prices).map { it.toImmutable() },
                     (adjustments ?: JsonMissing.of()).map { it.toImmutable() },
                     defaultInvoiceMemo,
+                    description,
                     externalPlanId,
                     metadata,
                     netTerms,
@@ -1087,6 +1153,7 @@ private constructor(
             prices().forEach { it.validate() }
             adjustments()?.forEach { it.validate() }
             defaultInvoiceMemo()
+            description()
             externalPlanId()
             metadata()?.validate()
             netTerms()
@@ -1115,6 +1182,7 @@ private constructor(
                 (prices.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (adjustments.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (defaultInvoiceMemo.asKnown() == null) 0 else 1) +
+                (if (description.asKnown() == null) 0 else 1) +
                 (if (externalPlanId.asKnown() == null) 0 else 1) +
                 (metadata.asKnown()?.validity() ?: 0) +
                 (if (netTerms.asKnown() == null) 0 else 1) +
@@ -1132,6 +1200,7 @@ private constructor(
                 prices == other.prices &&
                 adjustments == other.adjustments &&
                 defaultInvoiceMemo == other.defaultInvoiceMemo &&
+                description == other.description &&
                 externalPlanId == other.externalPlanId &&
                 metadata == other.metadata &&
                 netTerms == other.netTerms &&
@@ -1147,6 +1216,7 @@ private constructor(
                 prices,
                 adjustments,
                 defaultInvoiceMemo,
+                description,
                 externalPlanId,
                 metadata,
                 netTerms,
@@ -1159,7 +1229,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{currency=$currency, name=$name, prices=$prices, adjustments=$adjustments, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, metadata=$metadata, netTerms=$netTerms, planPhases=$planPhases, status=$status, additionalProperties=$additionalProperties}"
+            "Body{currency=$currency, name=$name, prices=$prices, adjustments=$adjustments, defaultInvoiceMemo=$defaultInvoiceMemo, description=$description, externalPlanId=$externalPlanId, metadata=$metadata, netTerms=$netTerms, planPhases=$planPhases, status=$status, additionalProperties=$additionalProperties}"
     }
 
     class Price

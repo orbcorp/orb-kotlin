@@ -19,7 +19,8 @@ import java.util.Collections
 import java.util.Objects
 
 /**
- * This endpoint can be used to update the `external_plan_id`, and `metadata` of an existing plan.
+ * This endpoint can be used to update the `external_plan_id`, `description`, and `metadata` of an
+ * existing plan.
  *
  * Other fields on a plan are currently immutable.
  */
@@ -32,6 +33,14 @@ private constructor(
 ) : Params {
 
     fun planId(): String? = planId
+
+    /**
+     * An optional user-defined description of the plan.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun description(): String? = body.description()
 
     /**
      * An optional user-defined ID for this plan resource, used throughout the system as an alias
@@ -51,6 +60,13 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun metadata(): Metadata? = body.metadata()
+
+    /**
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _description(): JsonField<String> = body._description()
 
     /**
      * Returns the raw JSON value of [externalPlanId].
@@ -106,10 +122,23 @@ private constructor(
          *
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [description]
          * - [externalPlanId]
          * - [metadata]
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /** An optional user-defined description of the plan. */
+        fun description(description: String?) = apply { body.description(description) }
+
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /**
          * An optional user-defined ID for this plan resource, used throughout the system as an
@@ -291,6 +320,7 @@ private constructor(
     class Body
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
+        private val description: JsonField<String>,
         private val externalPlanId: JsonField<String>,
         private val metadata: JsonField<Metadata>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -298,13 +328,24 @@ private constructor(
 
         @JsonCreator
         private constructor(
+            @JsonProperty("description")
+            @ExcludeMissing
+            description: JsonField<String> = JsonMissing.of(),
             @JsonProperty("external_plan_id")
             @ExcludeMissing
             externalPlanId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("metadata")
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
-        ) : this(externalPlanId, metadata, mutableMapOf())
+        ) : this(description, externalPlanId, metadata, mutableMapOf())
+
+        /**
+         * An optional user-defined description of the plan.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun description(): String? = description.getNullable("description")
 
         /**
          * An optional user-defined ID for this plan resource, used throughout the system as an
@@ -325,6 +366,15 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("description")
+        @ExcludeMissing
+        fun _description(): JsonField<String> = description
 
         /**
          * Returns the raw JSON value of [externalPlanId].
@@ -364,14 +414,30 @@ private constructor(
         /** A builder for [Body]. */
         class Builder internal constructor() {
 
+            private var description: JsonField<String> = JsonMissing.of()
             private var externalPlanId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(body: Body) = apply {
+                description = body.description
                 externalPlanId = body.externalPlanId
                 metadata = body.metadata
                 additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** An optional user-defined description of the plan. */
+            fun description(description: String?) = description(JsonField.ofNullable(description))
+
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
             }
 
             /**
@@ -433,7 +499,8 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Body = Body(externalPlanId, metadata, additionalProperties.toMutableMap())
+            fun build(): Body =
+                Body(description, externalPlanId, metadata, additionalProperties.toMutableMap())
         }
 
         private var validated: Boolean = false
@@ -443,6 +510,7 @@ private constructor(
                 return@apply
             }
 
+            description()
             externalPlanId()
             metadata()?.validate()
             validated = true
@@ -463,7 +531,9 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            (if (externalPlanId.asKnown() == null) 0 else 1) + (metadata.asKnown()?.validity() ?: 0)
+            (if (description.asKnown() == null) 0 else 1) +
+                (if (externalPlanId.asKnown() == null) 0 else 1) +
+                (metadata.asKnown()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -471,19 +541,20 @@ private constructor(
             }
 
             return other is Body &&
+                description == other.description &&
                 externalPlanId == other.externalPlanId &&
                 metadata == other.metadata &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(externalPlanId, metadata, additionalProperties)
+            Objects.hash(description, externalPlanId, metadata, additionalProperties)
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{externalPlanId=$externalPlanId, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "Body{description=$description, externalPlanId=$externalPlanId, metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     /**

@@ -30,8 +30,8 @@ interface ExternalPlanIdService {
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ExternalPlanIdService
 
     /**
-     * This endpoint can be used to update the `external_plan_id`, and `metadata` of an existing
-     * plan.
+     * This endpoint can be used to update the `external_plan_id`, `description`, and `metadata` of
+     * an existing plan.
      *
      * Other fields on a plan are currently immutable.
      */
