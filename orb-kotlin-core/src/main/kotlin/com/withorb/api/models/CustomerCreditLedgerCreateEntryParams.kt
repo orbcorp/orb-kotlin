@@ -3288,8 +3288,9 @@ private constructor(
             @JsonProperty("entry_type") @ExcludeMissing fun _entryType(): JsonValue = entryType
 
             /**
-             * A future date (specified in YYYY-MM-DD format) used for expiration change, denoting
-             * when credits transferred (as part of a partial block expiration) should expire.
+             * A date (specified in YYYY-MM-DD format) used for expiration change, denoting when
+             * credits transferred (as part of a partial block expiration) should expire. This date
+             * must be on or after the effective date of the credit block.
              *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
@@ -3479,9 +3480,9 @@ private constructor(
                 fun entryType(entryType: JsonValue) = apply { this.entryType = entryType }
 
                 /**
-                 * A future date (specified in YYYY-MM-DD format) used for expiration change,
-                 * denoting when credits transferred (as part of a partial block expiration) should
-                 * expire.
+                 * A date (specified in YYYY-MM-DD format) used for expiration change, denoting when
+                 * credits transferred (as part of a partial block expiration) should expire. This
+                 * date must be on or after the effective date of the credit block.
                  */
                 fun targetExpiryDate(targetExpiryDate: LocalDate) =
                     targetExpiryDate(JsonField.of(targetExpiryDate))
