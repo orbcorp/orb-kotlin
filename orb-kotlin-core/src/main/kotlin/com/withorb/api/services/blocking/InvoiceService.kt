@@ -90,6 +90,10 @@ interface InvoiceService {
      * When fetching any `draft` invoices, this returns the last-computed invoice values for each
      * draft invoice, which may not always be up-to-date since Orb regularly refreshes invoices
      * asynchronously.
+     *
+     * If you don't need line item details, minimums, maximums, or discounts, prefer the
+     * [list invoices summary](/api-reference/invoice/list-invoices-summary) endpoint for better
+     * performance.
      */
     fun list(
         params: InvoiceListParams = InvoiceListParams.none(),
