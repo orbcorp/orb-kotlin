@@ -100,12 +100,10 @@ internal class ExternalPlanIdServiceAsyncTest {
                             .licenseAllocationPrice(
                                 BetaExternalPlanIdCreatePlanVersionParams.AddPrice
                                     .LicenseAllocationPrice
-                                    .Unit
                                     .builder()
                                     .cadence(
                                         BetaExternalPlanIdCreatePlanVersionParams.AddPrice
                                             .LicenseAllocationPrice
-                                            .Unit
                                             .Cadence
                                             .ANNUAL
                                     )
@@ -113,13 +111,18 @@ internal class ExternalPlanIdServiceAsyncTest {
                                     .addLicenseAllocation(
                                         BetaExternalPlanIdCreatePlanVersionParams.AddPrice
                                             .LicenseAllocationPrice
-                                            .Unit
                                             .LicenseAllocation
                                             .builder()
                                             .amount("amount")
                                             .currency("currency")
                                             .writeOffOverage(true)
                                             .build()
+                                    )
+                                    .modelType(
+                                        BetaExternalPlanIdCreatePlanVersionParams.AddPrice
+                                            .LicenseAllocationPrice
+                                            .ModelType
+                                            .UNIT
                                     )
                                     .name("Annual fee")
                                     .unitConfig(
@@ -169,7 +172,6 @@ internal class ExternalPlanIdServiceAsyncTest {
                                     .metadata(
                                         BetaExternalPlanIdCreatePlanVersionParams.AddPrice
                                             .LicenseAllocationPrice
-                                            .Unit
                                             .Metadata
                                             .builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -317,12 +319,10 @@ internal class ExternalPlanIdServiceAsyncTest {
                             .licenseAllocationPrice(
                                 BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
                                     .LicenseAllocationPrice
-                                    .Unit
                                     .builder()
                                     .cadence(
                                         BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
                                             .LicenseAllocationPrice
-                                            .Unit
                                             .Cadence
                                             .ANNUAL
                                     )
@@ -330,13 +330,18 @@ internal class ExternalPlanIdServiceAsyncTest {
                                     .addLicenseAllocation(
                                         BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
                                             .LicenseAllocationPrice
-                                            .Unit
                                             .LicenseAllocation
                                             .builder()
                                             .amount("amount")
                                             .currency("currency")
                                             .writeOffOverage(true)
                                             .build()
+                                    )
+                                    .modelType(
+                                        BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                            .LicenseAllocationPrice
+                                            .ModelType
+                                            .UNIT
                                     )
                                     .name("Annual fee")
                                     .unitConfig(
@@ -386,7 +391,6 @@ internal class ExternalPlanIdServiceAsyncTest {
                                     .metadata(
                                         BetaExternalPlanIdCreatePlanVersionParams.ReplacePrice
                                             .LicenseAllocationPrice
-                                            .Unit
                                             .Metadata
                                             .builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
