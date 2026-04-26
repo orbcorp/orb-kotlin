@@ -45,19 +45,18 @@ internal class PlanCreateParamsTest {
                             .build()
                     )
                     .licenseAllocationPrice(
-                        PlanCreateParams.Price.LicenseAllocationPrice.Unit.builder()
-                            .cadence(
-                                PlanCreateParams.Price.LicenseAllocationPrice.Unit.Cadence.ANNUAL
-                            )
+                        PlanCreateParams.Price.LicenseAllocationPrice.builder()
+                            .cadence(PlanCreateParams.Price.LicenseAllocationPrice.Cadence.ANNUAL)
                             .itemId("item_id")
                             .addLicenseAllocation(
-                                PlanCreateParams.Price.LicenseAllocationPrice.Unit.LicenseAllocation
+                                PlanCreateParams.Price.LicenseAllocationPrice.LicenseAllocation
                                     .builder()
                                     .amount("amount")
                                     .currency("currency")
                                     .writeOffOverage(true)
                                     .build()
                             )
+                            .modelType(PlanCreateParams.Price.LicenseAllocationPrice.ModelType.UNIT)
                             .name("Annual fee")
                             .unitConfig(
                                 UnitConfig.builder()
@@ -98,8 +97,7 @@ internal class PlanCreateParamsTest {
                             )
                             .licenseTypeId("license_type_id")
                             .metadata(
-                                PlanCreateParams.Price.LicenseAllocationPrice.Unit.Metadata
-                                    .builder()
+                                PlanCreateParams.Price.LicenseAllocationPrice.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
@@ -248,20 +246,21 @@ internal class PlanCreateParamsTest {
                                 .build()
                         )
                         .licenseAllocationPrice(
-                            PlanCreateParams.Price.LicenseAllocationPrice.Unit.builder()
+                            PlanCreateParams.Price.LicenseAllocationPrice.builder()
                                 .cadence(
-                                    PlanCreateParams.Price.LicenseAllocationPrice.Unit.Cadence
-                                        .ANNUAL
+                                    PlanCreateParams.Price.LicenseAllocationPrice.Cadence.ANNUAL
                                 )
                                 .itemId("item_id")
                                 .addLicenseAllocation(
-                                    PlanCreateParams.Price.LicenseAllocationPrice.Unit
-                                        .LicenseAllocation
+                                    PlanCreateParams.Price.LicenseAllocationPrice.LicenseAllocation
                                         .builder()
                                         .amount("amount")
                                         .currency("currency")
                                         .writeOffOverage(true)
                                         .build()
+                                )
+                                .modelType(
+                                    PlanCreateParams.Price.LicenseAllocationPrice.ModelType.UNIT
                                 )
                                 .name("Annual fee")
                                 .unitConfig(
@@ -305,8 +304,7 @@ internal class PlanCreateParamsTest {
                                 )
                                 .licenseTypeId("license_type_id")
                                 .metadata(
-                                    PlanCreateParams.Price.LicenseAllocationPrice.Unit.Metadata
-                                        .builder()
+                                    PlanCreateParams.Price.LicenseAllocationPrice.Metadata.builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
@@ -455,19 +453,18 @@ internal class PlanCreateParamsTest {
                             .build()
                     )
                     .licenseAllocationPrice(
-                        PlanCreateParams.Price.LicenseAllocationPrice.Unit.builder()
-                            .cadence(
-                                PlanCreateParams.Price.LicenseAllocationPrice.Unit.Cadence.ANNUAL
-                            )
+                        PlanCreateParams.Price.LicenseAllocationPrice.builder()
+                            .cadence(PlanCreateParams.Price.LicenseAllocationPrice.Cadence.ANNUAL)
                             .itemId("item_id")
                             .addLicenseAllocation(
-                                PlanCreateParams.Price.LicenseAllocationPrice.Unit.LicenseAllocation
+                                PlanCreateParams.Price.LicenseAllocationPrice.LicenseAllocation
                                     .builder()
                                     .amount("amount")
                                     .currency("currency")
                                     .writeOffOverage(true)
                                     .build()
                             )
+                            .modelType(PlanCreateParams.Price.LicenseAllocationPrice.ModelType.UNIT)
                             .name("Annual fee")
                             .unitConfig(
                                 UnitConfig.builder()
@@ -508,8 +505,7 @@ internal class PlanCreateParamsTest {
                             )
                             .licenseTypeId("license_type_id")
                             .metadata(
-                                PlanCreateParams.Price.LicenseAllocationPrice.Unit.Metadata
-                                    .builder()
+                                PlanCreateParams.Price.LicenseAllocationPrice.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )

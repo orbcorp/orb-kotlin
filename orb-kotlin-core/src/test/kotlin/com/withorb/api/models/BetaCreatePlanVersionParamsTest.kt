@@ -73,21 +73,25 @@ internal class BetaCreatePlanVersionParamsTest {
                             .build()
                     )
                     .licenseAllocationPrice(
-                        BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Unit.builder()
+                        BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.builder()
                             .cadence(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Unit
-                                    .Cadence
+                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Cadence
                                     .ANNUAL
                             )
                             .itemId("item_id")
                             .addLicenseAllocation(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Unit
+                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
                                     .LicenseAllocation
                                     .builder()
                                     .amount("amount")
                                     .currency("currency")
                                     .writeOffOverage(true)
                                     .build()
+                            )
+                            .modelType(
+                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                                    .ModelType
+                                    .UNIT
                             )
                             .name("Annual fee")
                             .unitConfig(
@@ -129,8 +133,7 @@ internal class BetaCreatePlanVersionParamsTest {
                             )
                             .licenseTypeId("license_type_id")
                             .metadata(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Unit
-                                    .Metadata
+                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Metadata
                                     .builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
@@ -267,22 +270,26 @@ internal class BetaCreatePlanVersionParamsTest {
                             .build()
                     )
                     .licenseAllocationPrice(
-                        BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice.Unit
-                            .builder()
+                        BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice.builder()
                             .cadence(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice.Unit
+                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
                                     .Cadence
                                     .ANNUAL
                             )
                             .itemId("item_id")
                             .addLicenseAllocation(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice.Unit
+                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
                                     .LicenseAllocation
                                     .builder()
                                     .amount("amount")
                                     .currency("currency")
                                     .writeOffOverage(true)
                                     .build()
+                            )
+                            .modelType(
+                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                    .ModelType
+                                    .UNIT
                             )
                             .name("Annual fee")
                             .unitConfig(
@@ -324,7 +331,7 @@ internal class BetaCreatePlanVersionParamsTest {
                             )
                             .licenseTypeId("license_type_id")
                             .metadata(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice.Unit
+                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
                                     .Metadata
                                     .builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -467,22 +474,26 @@ internal class BetaCreatePlanVersionParamsTest {
                                 .build()
                         )
                         .licenseAllocationPrice(
-                            BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Unit
-                                .builder()
+                            BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.builder()
                                 .cadence(
-                                    BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Unit
+                                    BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
                                         .Cadence
                                         .ANNUAL
                                 )
                                 .itemId("item_id")
                                 .addLicenseAllocation(
-                                    BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Unit
+                                    BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
                                         .LicenseAllocation
                                         .builder()
                                         .amount("amount")
                                         .currency("currency")
                                         .writeOffOverage(true)
                                         .build()
+                                )
+                                .modelType(
+                                    BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                                        .ModelType
+                                        .UNIT
                                 )
                                 .name("Annual fee")
                                 .unitConfig(
@@ -526,7 +537,7 @@ internal class BetaCreatePlanVersionParamsTest {
                                 )
                                 .licenseTypeId("license_type_id")
                                 .metadata(
-                                    BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Unit
+                                    BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
                                         .Metadata
                                         .builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -666,24 +677,27 @@ internal class BetaCreatePlanVersionParamsTest {
                                 .build()
                         )
                         .licenseAllocationPrice(
-                            BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice.Unit
+                            BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
                                 .builder()
                                 .cadence(
                                     BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
-                                        .Unit
                                         .Cadence
                                         .ANNUAL
                                 )
                                 .itemId("item_id")
                                 .addLicenseAllocation(
                                     BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
-                                        .Unit
                                         .LicenseAllocation
                                         .builder()
                                         .amount("amount")
                                         .currency("currency")
                                         .writeOffOverage(true)
                                         .build()
+                                )
+                                .modelType(
+                                    BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                        .ModelType
+                                        .UNIT
                                 )
                                 .name("Annual fee")
                                 .unitConfig(
@@ -728,7 +742,6 @@ internal class BetaCreatePlanVersionParamsTest {
                                 .licenseTypeId("license_type_id")
                                 .metadata(
                                     BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
-                                        .Unit
                                         .Metadata
                                         .builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -862,21 +875,25 @@ internal class BetaCreatePlanVersionParamsTest {
                             .build()
                     )
                     .licenseAllocationPrice(
-                        BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Unit.builder()
+                        BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.builder()
                             .cadence(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Unit
-                                    .Cadence
+                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Cadence
                                     .ANNUAL
                             )
                             .itemId("item_id")
                             .addLicenseAllocation(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Unit
+                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
                                     .LicenseAllocation
                                     .builder()
                                     .amount("amount")
                                     .currency("currency")
                                     .writeOffOverage(true)
                                     .build()
+                            )
+                            .modelType(
+                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                                    .ModelType
+                                    .UNIT
                             )
                             .name("Annual fee")
                             .unitConfig(
@@ -918,8 +935,7 @@ internal class BetaCreatePlanVersionParamsTest {
                             )
                             .licenseTypeId("license_type_id")
                             .metadata(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Unit
-                                    .Metadata
+                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Metadata
                                     .builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
@@ -1060,22 +1076,26 @@ internal class BetaCreatePlanVersionParamsTest {
                             .build()
                     )
                     .licenseAllocationPrice(
-                        BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice.Unit
-                            .builder()
+                        BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice.builder()
                             .cadence(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice.Unit
+                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
                                     .Cadence
                                     .ANNUAL
                             )
                             .itemId("item_id")
                             .addLicenseAllocation(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice.Unit
+                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
                                     .LicenseAllocation
                                     .builder()
                                     .amount("amount")
                                     .currency("currency")
                                     .writeOffOverage(true)
                                     .build()
+                            )
+                            .modelType(
+                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                    .ModelType
+                                    .UNIT
                             )
                             .name("Annual fee")
                             .unitConfig(
@@ -1117,7 +1137,7 @@ internal class BetaCreatePlanVersionParamsTest {
                             )
                             .licenseTypeId("license_type_id")
                             .metadata(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice.Unit
+                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
                                     .Metadata
                                     .builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
