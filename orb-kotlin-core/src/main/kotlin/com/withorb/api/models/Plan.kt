@@ -1202,6 +1202,12 @@ private constructor(
         fun addPrice(cumulativeGroupedAllocation: Price.CumulativeGroupedAllocation) =
             addPrice(Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation))
 
+        /**
+         * Alias for calling [addPrice] with `Price.ofDailyCreditAllowance(dailyCreditAllowance)`.
+         */
+        fun addPrice(dailyCreditAllowance: Price.DailyCreditAllowance) =
+            addPrice(Price.ofDailyCreditAllowance(dailyCreditAllowance))
+
         /** Alias for calling [addPrice] with `Price.ofMinimumComposite(minimumComposite)`. */
         fun addPrice(minimumComposite: Price.MinimumComposite) =
             addPrice(Price.ofMinimumComposite(minimumComposite))
