@@ -374,6 +374,14 @@ private constructor(
             (System.getProperty("orb.webhookSecret") ?: System.getenv("ORB_WEBHOOK_SECRET"))?.let {
                 webhookSecret(it)
             }
+            System.getenv("ORB_CUSTOM_HEADERS")?.let { customHeadersEnv ->
+                for (line in customHeadersEnv.split("\n")) {
+                    val colon = line.indexOf(':')
+                    if (colon >= 0) {
+                        putHeader(line.substring(0, colon).trim(), line.substring(colon + 1).trim())
+                    }
+                }
+            }
         }
 
         /**
