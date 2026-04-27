@@ -329,6 +329,13 @@ interface PriceServiceAsync {
 
     /** @see create */
     suspend fun create(
+        dailyCreditAllowance: PriceCreateParams.Body.DailyCreditAllowance,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(PriceCreateParams.Body.ofDailyCreditAllowance(dailyCreditAllowance), requestOptions)
+
+    /** @see create */
+    suspend fun create(
         minimumComposite: NewFloatingMinimumCompositePrice,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price = create(PriceCreateParams.Body.ofMinimumComposite(minimumComposite), requestOptions)
@@ -792,6 +799,17 @@ interface PriceServiceAsync {
         ): HttpResponseFor<Price> =
             create(
                 PriceCreateParams.Body.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        suspend fun create(
+            dailyCreditAllowance: PriceCreateParams.Body.DailyCreditAllowance,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofDailyCreditAllowance(dailyCreditAllowance),
                 requestOptions,
             )
 
