@@ -5,10 +5,14 @@ package com.withorb.api.errors
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
+import com.withorb.api.core.jsonMapper
 
 class UnauthorizedException
 private constructor(private val headers: Headers, private val body: JsonValue, cause: Throwable?) :
-    OrbServiceException("401: $body", cause) {
+    OrbServiceException(
+        "401: ${if (body.isMissing()) "Unknown" else jsonMapper().writeValueAsString(body)}",
+        cause,
+    ) {
 
     override fun statusCode(): Int = 401
 
