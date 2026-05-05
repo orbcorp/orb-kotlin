@@ -398,6 +398,21 @@ val client: OrbClient = OrbOkHttpClient.builder()
     .build()
 ```
 
+If the proxy responds with `407 Proxy Authentication Required`, supply credentials by also configuring `proxyAuthenticator`:
+
+```kotlin
+import com.withorb.api.client.OrbClient
+import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.core.http.ProxyAuthenticator
+
+val client: OrbClient = OrbOkHttpClient.builder()
+    .fromEnv()
+    .proxy(...)
+    // Or a custom implementation of `ProxyAuthenticator`.
+    .proxyAuthenticator(ProxyAuthenticator.basic("username", "password"))
+    .build()
+```
+
 ### Connection pooling
 
 To customize the underlying OkHttp connection pool, configure the client using the `maxIdleConnections` and `keepAliveDuration` methods:
