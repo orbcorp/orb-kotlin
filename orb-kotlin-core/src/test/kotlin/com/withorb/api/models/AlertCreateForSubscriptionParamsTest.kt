@@ -15,7 +15,20 @@ internal class AlertCreateForSubscriptionParamsTest {
             .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
             .addGroupingKey("string")
             .metricId("metric_id")
+            .addPriceFilter(
+                AlertCreateForSubscriptionParams.PriceFilter.builder()
+                    .field(AlertCreateForSubscriptionParams.PriceFilter.Field.PRICE_ID)
+                    .operator(AlertCreateForSubscriptionParams.PriceFilter.Operator.INCLUDES)
+                    .addValue("string")
+                    .build()
+            )
             .pricingUnitId("pricing_unit_id")
+            .addThresholdOverride(
+                AlertCreateForSubscriptionParams.ThresholdOverride.builder()
+                    .addGroupValue("string")
+                    .addThreshold(Threshold.builder().value(0.0).build())
+                    .build()
+            )
             .build()
     }
 
@@ -42,7 +55,20 @@ internal class AlertCreateForSubscriptionParamsTest {
                 .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .addGroupingKey("string")
                 .metricId("metric_id")
+                .addPriceFilter(
+                    AlertCreateForSubscriptionParams.PriceFilter.builder()
+                        .field(AlertCreateForSubscriptionParams.PriceFilter.Field.PRICE_ID)
+                        .operator(AlertCreateForSubscriptionParams.PriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
                 .pricingUnitId("pricing_unit_id")
+                .addThresholdOverride(
+                    AlertCreateForSubscriptionParams.ThresholdOverride.builder()
+                        .addGroupValue("string")
+                        .addThreshold(Threshold.builder().value(0.0).build())
+                        .build()
+                )
                 .build()
 
         val body = params._body()
@@ -51,7 +77,22 @@ internal class AlertCreateForSubscriptionParamsTest {
         assertThat(body.type()).isEqualTo(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
         assertThat(body.groupingKeys()).containsExactly("string")
         assertThat(body.metricId()).isEqualTo("metric_id")
+        assertThat(body.priceFilters())
+            .containsExactly(
+                AlertCreateForSubscriptionParams.PriceFilter.builder()
+                    .field(AlertCreateForSubscriptionParams.PriceFilter.Field.PRICE_ID)
+                    .operator(AlertCreateForSubscriptionParams.PriceFilter.Operator.INCLUDES)
+                    .addValue("string")
+                    .build()
+            )
         assertThat(body.pricingUnitId()).isEqualTo("pricing_unit_id")
+        assertThat(body.thresholdOverrides())
+            .containsExactly(
+                AlertCreateForSubscriptionParams.ThresholdOverride.builder()
+                    .addGroupValue("string")
+                    .addThreshold(Threshold.builder().value(0.0).build())
+                    .build()
+            )
     }
 
     @Test

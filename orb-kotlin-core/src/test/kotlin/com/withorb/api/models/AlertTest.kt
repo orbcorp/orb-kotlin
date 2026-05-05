@@ -41,6 +41,19 @@ internal class AlertTest {
                 )
                 .addGroupingKey("string")
                 .licenseType(Alert.LicenseType.builder().id("id").build())
+                .addPriceFilter(
+                    Alert.PriceFilter.builder()
+                        .field(Alert.PriceFilter.Field.PRICE_ID)
+                        .operator(Alert.PriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
+                .addThresholdOverride(
+                    Alert.ThresholdOverride.builder()
+                        .addGroupValue("string")
+                        .addThreshold(Threshold.builder().value(0.0).build())
+                        .build()
+                )
                 .build()
 
         assertThat(alert.id()).isEqualTo("XuxCbt7x9L82yyeF")
@@ -74,6 +87,21 @@ internal class AlertTest {
             )
         assertThat(alert.groupingKeys()).containsExactly("string")
         assertThat(alert.licenseType()).isEqualTo(Alert.LicenseType.builder().id("id").build())
+        assertThat(alert.priceFilters())
+            .containsExactly(
+                Alert.PriceFilter.builder()
+                    .field(Alert.PriceFilter.Field.PRICE_ID)
+                    .operator(Alert.PriceFilter.Operator.INCLUDES)
+                    .addValue("string")
+                    .build()
+            )
+        assertThat(alert.thresholdOverrides())
+            .containsExactly(
+                Alert.ThresholdOverride.builder()
+                    .addGroupValue("string")
+                    .addThreshold(Threshold.builder().value(0.0).build())
+                    .build()
+            )
     }
 
     @Test
@@ -108,6 +136,19 @@ internal class AlertTest {
                 )
                 .addGroupingKey("string")
                 .licenseType(Alert.LicenseType.builder().id("id").build())
+                .addPriceFilter(
+                    Alert.PriceFilter.builder()
+                        .field(Alert.PriceFilter.Field.PRICE_ID)
+                        .operator(Alert.PriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
+                .addThresholdOverride(
+                    Alert.ThresholdOverride.builder()
+                        .addGroupValue("string")
+                        .addThreshold(Threshold.builder().value(0.0).build())
+                        .build()
+                )
                 .build()
 
         val roundtrippedAlert =
