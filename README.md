@@ -290,8 +290,6 @@ while (true) {
 
 ## Logging
 
-The SDK uses the standard [OkHttp logging interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor).
-
 Enable logging by setting the `ORB_LOG` environment variable to `info`:
 
 ```sh
@@ -302,6 +300,19 @@ Or to `debug` for more verbose logging:
 
 ```sh
 export ORB_LOG=debug
+```
+
+Or configure the client manually using the `logLevel` method:
+
+```kotlin
+import com.withorb.api.client.OrbClient
+import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.core.LogLevel
+
+val client: OrbClient = OrbOkHttpClient.builder()
+    .fromEnv()
+    .logLevel(LogLevel.INFO)
+    .build()
 ```
 
 ## ProGuard and R8
