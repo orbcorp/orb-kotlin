@@ -50,24 +50,34 @@ private constructor(
     ) : this(id, effectiveTime, planId, status, mutableMapOf())
 
     /**
+     * Unique identifier for this plan version change.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
 
     /**
+     * When the migration takes effect. Can be a specific date/time, or 'end_of_term' when scheduled
+     * to be at the end of the current billing period.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
     fun effectiveTime(): EffectiveTime? = effectiveTime.getNullable("effective_time")
 
     /**
+     * The ID of the plan being migrated.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun planId(): String = planId.getRequired("plan_id")
 
     /**
+     * Current status of the migration: 'not_started', 'in_progress', 'completed', 'action_needed',
+     * or 'canceled'.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -149,6 +159,7 @@ private constructor(
             additionalProperties = planMigrationRetrieveResponse.additionalProperties.toMutableMap()
         }
 
+        /** Unique identifier for this plan version change. */
         fun id(id: String) = id(JsonField.of(id))
 
         /**
@@ -159,6 +170,10 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
+        /**
+         * When the migration takes effect. Can be a specific date/time, or 'end_of_term' when
+         * scheduled to be at the end of the current billing period.
+         */
         fun effectiveTime(effectiveTime: EffectiveTime?) =
             effectiveTime(JsonField.ofNullable(effectiveTime))
 
@@ -185,6 +200,7 @@ private constructor(
         fun effectiveTime(unionMember2: EffectiveTime.UnionMember2) =
             effectiveTime(EffectiveTime.ofUnionMember2(unionMember2))
 
+        /** The ID of the plan being migrated. */
         fun planId(planId: String) = planId(JsonField.of(planId))
 
         /**
@@ -195,6 +211,10 @@ private constructor(
          */
         fun planId(planId: JsonField<String>) = apply { this.planId = planId }
 
+        /**
+         * Current status of the migration: 'not_started', 'in_progress', 'completed',
+         * 'action_needed', or 'canceled'.
+         */
         fun status(status: Status) = status(JsonField.of(status))
 
         /**
@@ -290,6 +310,10 @@ private constructor(
             (if (planId.asKnown() == null) 0 else 1) +
             (status.asKnown()?.validity() ?: 0)
 
+    /**
+     * When the migration takes effect. Can be a specific date/time, or 'end_of_term' when scheduled
+     * to be at the end of the current billing period.
+     */
     @JsonDeserialize(using = EffectiveTime.Deserializer::class)
     @JsonSerialize(using = EffectiveTime.Serializer::class)
     class EffectiveTime
@@ -653,6 +677,10 @@ private constructor(
         }
     }
 
+    /**
+     * Current status of the migration: 'not_started', 'in_progress', 'completed', 'action_needed',
+     * or 'canceled'.
+     */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
