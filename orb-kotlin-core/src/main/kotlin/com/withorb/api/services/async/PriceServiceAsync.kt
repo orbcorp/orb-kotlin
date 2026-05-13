@@ -336,6 +336,12 @@ interface PriceServiceAsync {
 
     /** @see create */
     suspend fun create(
+        meteredAllowance: PriceCreateParams.Body.MeteredAllowance,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofMeteredAllowance(meteredAllowance), requestOptions)
+
+    /** @see create */
+    suspend fun create(
         minimumComposite: NewFloatingMinimumCompositePrice,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price = create(PriceCreateParams.Body.ofMinimumComposite(minimumComposite), requestOptions)
@@ -812,6 +818,14 @@ interface PriceServiceAsync {
                 PriceCreateParams.Body.ofDailyCreditAllowance(dailyCreditAllowance),
                 requestOptions,
             )
+
+        /** @see create */
+        @MustBeClosed
+        suspend fun create(
+            meteredAllowance: PriceCreateParams.Body.MeteredAllowance,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofMeteredAllowance(meteredAllowance), requestOptions)
 
         /** @see create */
         @MustBeClosed

@@ -306,6 +306,10 @@ private constructor(
         fun price(dailyCreditAllowance: Price.DailyCreditAllowance) =
             price(Price.ofDailyCreditAllowance(dailyCreditAllowance))
 
+        /** Alias for calling [price] with `Price.ofMeteredAllowance(meteredAllowance)`. */
+        fun price(meteredAllowance: Price.MeteredAllowance) =
+            price(Price.ofMeteredAllowance(meteredAllowance))
+
         /** Alias for calling [price] with `Price.ofMinimumComposite(minimumComposite)`. */
         fun price(minimumComposite: Price.MinimumComposite) =
             price(Price.ofMinimumComposite(minimumComposite))
