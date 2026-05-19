@@ -19,7 +19,7 @@ import java.util.Objects
 
 /**
  * A dimensional price group is used to partition the result of a billable metric by a set of
- * dimensions. Prices in a price group must specify the parition used to derive their usage.
+ * dimensions. Prices in a price group must specify the partition used to derive their usage.
  */
 class DimensionalPriceGroup
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
