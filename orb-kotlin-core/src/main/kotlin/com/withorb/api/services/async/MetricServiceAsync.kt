@@ -62,9 +62,8 @@ interface MetricServiceAsync {
         update(metricId, MetricUpdateParams.none(), requestOptions)
 
     /**
-     * This endpoint is used to fetch [metric](/core-concepts##metric) details given a metric
-     * identifier. It returns information about the metrics including its name, description, and
-     * item.
+     * This endpoint is used to list [metrics](/core-concepts#metric). It returns information about
+     * the metrics including its name, description, and item.
      */
     suspend fun list(
         params: MetricListParams = MetricListParams.none(),
@@ -76,8 +75,9 @@ interface MetricServiceAsync {
         list(MetricListParams.none(), requestOptions)
 
     /**
-     * This endpoint is used to list [metrics](/core-concepts#metric). It returns information about
-     * the metrics including its name, description, and item.
+     * This endpoint is used to fetch [metric](/core-concepts#metric) details given a metric
+     * identifier. It returns information about the metrics including its name, description, and
+     * item.
      */
     suspend fun fetch(
         metricId: String,

@@ -10,8 +10,8 @@ import java.time.format.DateTimeFormatter
 import java.util.Objects
 
 /**
- * This endpoint is used to fetch [metric](/core-concepts##metric) details given a metric
- * identifier. It returns information about the metrics including its name, description, and item.
+ * This endpoint is used to list [metrics](/core-concepts#metric). It returns information about the
+ * metrics including its name, description, and item.
  */
 class MetricListParams
 private constructor(
