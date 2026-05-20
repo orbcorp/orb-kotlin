@@ -14,11 +14,12 @@ internal class AccountingProviderConfigTest {
         val accountingProviderConfig =
             AccountingProviderConfig.builder()
                 .externalProviderId("external_provider_id")
-                .providerType("provider_type")
+                .providerType(AccountingProviderConfig.ProviderType.QUICKBOOKS)
                 .build()
 
         assertThat(accountingProviderConfig.externalProviderId()).isEqualTo("external_provider_id")
-        assertThat(accountingProviderConfig.providerType()).isEqualTo("provider_type")
+        assertThat(accountingProviderConfig.providerType())
+            .isEqualTo(AccountingProviderConfig.ProviderType.QUICKBOOKS)
     }
 
     @Test
@@ -27,7 +28,7 @@ internal class AccountingProviderConfigTest {
         val accountingProviderConfig =
             AccountingProviderConfig.builder()
                 .externalProviderId("external_provider_id")
-                .providerType("provider_type")
+                .providerType(AccountingProviderConfig.ProviderType.QUICKBOOKS)
                 .build()
 
         val roundtrippedAccountingProviderConfig =

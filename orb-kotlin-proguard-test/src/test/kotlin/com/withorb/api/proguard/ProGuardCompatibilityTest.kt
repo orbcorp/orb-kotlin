@@ -78,7 +78,7 @@ internal class ProGuardCompatibilityTest {
         val accountingProviderConfig =
             AccountingProviderConfig.builder()
                 .externalProviderId("external_provider_id")
-                .providerType("provider_type")
+                .providerType(AccountingProviderConfig.ProviderType.QUICKBOOKS)
                 .build()
 
         val roundtrippedAccountingProviderConfig =
