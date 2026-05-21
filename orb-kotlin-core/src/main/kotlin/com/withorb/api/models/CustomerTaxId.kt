@@ -73,11 +73,13 @@ import java.util.Objects
  * |Estonia               |`eu_vat`    |European VAT Number                                                                                    |
  * |Ethiopia              |`et_tin`    |Ethiopia Tax Identification Number                                                                     |
  * |European Union        |`eu_oss_vat`|European One Stop Shop VAT Number for non-Union scheme                                                 |
+ * |Faroe Islands         |`fo_vat`    |Faroe Islands VAT Number                                                                               |
  * |Finland               |`eu_vat`    |European VAT Number                                                                                    |
  * |France                |`eu_vat`    |European VAT Number                                                                                    |
  * |Georgia               |`ge_vat`    |Georgian VAT                                                                                           |
  * |Germany               |`de_stn`    |German Tax Number (Steuernummer)                                                                       |
  * |Germany               |`eu_vat`    |European VAT Number                                                                                    |
+ * |Gibraltar             |`gi_tin`    |Gibraltar Tax Identification Number                                                                    |
  * |Greece                |`eu_vat`    |European VAT Number                                                                                    |
  * |Guinea                |`gn_nif`    |Guinea Tax Identification Number (Número de Identificação Fiscal)                                      |
  * |Hong Kong             |`hk_br`     |Hong Kong BR Number                                                                                    |
@@ -89,6 +91,7 @@ import java.util.Objects
  * |Ireland               |`eu_vat`    |European VAT Number                                                                                    |
  * |Israel                |`il_vat`    |Israel VAT                                                                                             |
  * |Italy                 |`eu_vat`    |European VAT Number                                                                                    |
+ * |Italy                 |`it_cf`     |Italian Codice Fiscale Number                                                                          |
  * |Japan                 |`jp_cn`     |Japanese Corporate Number (*Hōjin Bangō*)                                                              |
  * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (*Tōroku Kokugai Jigyōsha no Tōroku Bangō*)|
  * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (*Tōroku Bangō*)                                                      |
@@ -119,6 +122,7 @@ import java.util.Objects
  * |Norway                |`no_vat`    |Norwegian VAT Number                                                                                   |
  * |Norway                |`no_voec`   |Norwegian VAT on e-commerce Number                                                                     |
  * |Oman                  |`om_vat`    |Omani VAT Number                                                                                       |
+ * |Paraguay              |`py_ruc`    |Paraguayan RUC Number                                                                                  |
  * |Peru                  |`pe_ruc`    |Peruvian RUC Number                                                                                    |
  * |Philippines           |`ph_tin`    |Philippines Tax Identification Number                                                                  |
  * |Poland                |`eu_vat`    |European VAT Number                                                                                    |
@@ -140,6 +144,7 @@ import java.util.Objects
  * |South Korea           |`kr_brn`    |Korean BRN                                                                                             |
  * |Spain                 |`es_cif`    |Spanish NIF Number (previously Spanish CIF Number)                                                     |
  * |Spain                 |`eu_vat`    |European VAT Number                                                                                    |
+ * |Sri Lanka             |`lk_vat`    |Sri Lanka VAT Number                                                                                   |
  * |Suriname              |`sr_fin`    |Suriname FIN Number                                                                                    |
  * |Sweden                |`eu_vat`    |European VAT Number                                                                                    |
  * |Switzerland           |`ch_uid`    |Switzerland UID Number                                                                                 |
@@ -446,11 +451,11 @@ private constructor(
 
             val CV = of("CV")
 
-            val DE = of("DE")
-
             val CY = of("CY")
 
             val CZ = of("CZ")
+
+            val DE = of("DE")
 
             val DK = of("DK")
 
@@ -470,11 +475,15 @@ private constructor(
 
             val FI = of("FI")
 
+            val FO = of("FO")
+
             val FR = of("FR")
 
             val GB = of("GB")
 
             val GE = of("GE")
+
+            val GI = of("GI")
 
             val GN = of("GN")
 
@@ -513,6 +522,8 @@ private constructor(
             val LA = of("LA")
 
             val LI = of("LI")
+
+            val LK = of("LK")
 
             val LT = of("LT")
 
@@ -555,6 +566,8 @@ private constructor(
             val PL = of("PL")
 
             val PT = of("PT")
+
+            val PY = of("PY")
 
             val RO = of("RO")
 
@@ -644,9 +657,9 @@ private constructor(
             CO,
             CR,
             CV,
-            DE,
             CY,
             CZ,
+            DE,
             DK,
             DO,
             EC,
@@ -656,9 +669,11 @@ private constructor(
             ET,
             EU,
             FI,
+            FO,
             FR,
             GB,
             GE,
+            GI,
             GN,
             GR,
             HK,
@@ -678,6 +693,7 @@ private constructor(
             KZ,
             LA,
             LI,
+            LK,
             LT,
             LU,
             LV,
@@ -699,6 +715,7 @@ private constructor(
             PH,
             PL,
             PT,
+            PY,
             RO,
             RS,
             RU,
@@ -768,9 +785,9 @@ private constructor(
             CO,
             CR,
             CV,
-            DE,
             CY,
             CZ,
+            DE,
             DK,
             DO,
             EC,
@@ -780,9 +797,11 @@ private constructor(
             ET,
             EU,
             FI,
+            FO,
             FR,
             GB,
             GE,
+            GI,
             GN,
             GR,
             HK,
@@ -802,6 +821,7 @@ private constructor(
             KZ,
             LA,
             LI,
+            LK,
             LT,
             LU,
             LV,
@@ -823,6 +843,7 @@ private constructor(
             PH,
             PL,
             PT,
+            PY,
             RO,
             RS,
             RU,
@@ -893,9 +914,9 @@ private constructor(
                 CO -> Value.CO
                 CR -> Value.CR
                 CV -> Value.CV
-                DE -> Value.DE
                 CY -> Value.CY
                 CZ -> Value.CZ
+                DE -> Value.DE
                 DK -> Value.DK
                 DO -> Value.DO
                 EC -> Value.EC
@@ -905,9 +926,11 @@ private constructor(
                 ET -> Value.ET
                 EU -> Value.EU
                 FI -> Value.FI
+                FO -> Value.FO
                 FR -> Value.FR
                 GB -> Value.GB
                 GE -> Value.GE
+                GI -> Value.GI
                 GN -> Value.GN
                 GR -> Value.GR
                 HK -> Value.HK
@@ -927,6 +950,7 @@ private constructor(
                 KZ -> Value.KZ
                 LA -> Value.LA
                 LI -> Value.LI
+                LK -> Value.LK
                 LT -> Value.LT
                 LU -> Value.LU
                 LV -> Value.LV
@@ -948,6 +972,7 @@ private constructor(
                 PH -> Value.PH
                 PL -> Value.PL
                 PT -> Value.PT
+                PY -> Value.PY
                 RO -> Value.RO
                 RS -> Value.RS
                 RU -> Value.RU
@@ -1018,9 +1043,9 @@ private constructor(
                 CO -> Known.CO
                 CR -> Known.CR
                 CV -> Known.CV
-                DE -> Known.DE
                 CY -> Known.CY
                 CZ -> Known.CZ
+                DE -> Known.DE
                 DK -> Known.DK
                 DO -> Known.DO
                 EC -> Known.EC
@@ -1030,9 +1055,11 @@ private constructor(
                 ET -> Known.ET
                 EU -> Known.EU
                 FI -> Known.FI
+                FO -> Known.FO
                 FR -> Known.FR
                 GB -> Known.GB
                 GE -> Known.GE
+                GI -> Known.GI
                 GN -> Known.GN
                 GR -> Known.GR
                 HK -> Known.HK
@@ -1052,6 +1079,7 @@ private constructor(
                 KZ -> Known.KZ
                 LA -> Known.LA
                 LI -> Known.LI
+                LK -> Known.LK
                 LT -> Known.LT
                 LU -> Known.LU
                 LV -> Known.LV
@@ -1073,6 +1101,7 @@ private constructor(
                 PH -> Known.PH
                 PL -> Known.PL
                 PT -> Known.PT
+                PY -> Known.PY
                 RO -> Known.RO
                 RS -> Known.RS
                 RU -> Known.RU
@@ -1267,9 +1296,13 @@ private constructor(
 
             val EU_OSS_VAT = of("eu_oss_vat")
 
+            val FO_VAT = of("fo_vat")
+
             val GB_VAT = of("gb_vat")
 
             val GE_VAT = of("ge_vat")
+
+            val GI_TIN = of("gi_tin")
 
             val GN_NIF = of("gn_nif")
 
@@ -1286,6 +1319,8 @@ private constructor(
             val IN_GST = of("in_gst")
 
             val IS_VAT = of("is_vat")
+
+            val IT_CF = of("it_cf")
 
             val JP_CN = of("jp_cn")
 
@@ -1308,6 +1343,8 @@ private constructor(
             val LI_UID = of("li_uid")
 
             val LI_VAT = of("li_vat")
+
+            val LK_VAT = of("lk_vat")
 
             val MA_VAT = of("ma_vat")
 
@@ -1344,6 +1381,8 @@ private constructor(
             val PH_TIN = of("ph_tin")
 
             val PL_NIP = of("pl_nip")
+
+            val PY_RUC = of("py_ruc")
 
             val RO_TIN = of("ro_tin")
 
@@ -1449,8 +1488,10 @@ private constructor(
             ES_CIF,
             ET_TIN,
             EU_OSS_VAT,
+            FO_VAT,
             GB_VAT,
             GE_VAT,
+            GI_TIN,
             GN_NIF,
             HK_BR,
             HR_OIB,
@@ -1459,6 +1500,7 @@ private constructor(
             IL_VAT,
             IN_GST,
             IS_VAT,
+            IT_CF,
             JP_CN,
             JP_RN,
             JP_TRN,
@@ -1470,6 +1512,7 @@ private constructor(
             LA_TIN,
             LI_UID,
             LI_VAT,
+            LK_VAT,
             MA_VAT,
             MD_VAT,
             ME_PIB,
@@ -1488,6 +1531,7 @@ private constructor(
             PE_RUC,
             PH_TIN,
             PL_NIP,
+            PY_RUC,
             RO_TIN,
             RS_PIB,
             RU_INN,
@@ -1572,8 +1616,10 @@ private constructor(
             ES_CIF,
             ET_TIN,
             EU_OSS_VAT,
+            FO_VAT,
             GB_VAT,
             GE_VAT,
+            GI_TIN,
             GN_NIF,
             HK_BR,
             HR_OIB,
@@ -1582,6 +1628,7 @@ private constructor(
             IL_VAT,
             IN_GST,
             IS_VAT,
+            IT_CF,
             JP_CN,
             JP_RN,
             JP_TRN,
@@ -1593,6 +1640,7 @@ private constructor(
             LA_TIN,
             LI_UID,
             LI_VAT,
+            LK_VAT,
             MA_VAT,
             MD_VAT,
             ME_PIB,
@@ -1611,6 +1659,7 @@ private constructor(
             PE_RUC,
             PH_TIN,
             PL_NIP,
+            PY_RUC,
             RO_TIN,
             RS_PIB,
             RU_INN,
@@ -1696,8 +1745,10 @@ private constructor(
                 ES_CIF -> Value.ES_CIF
                 ET_TIN -> Value.ET_TIN
                 EU_OSS_VAT -> Value.EU_OSS_VAT
+                FO_VAT -> Value.FO_VAT
                 GB_VAT -> Value.GB_VAT
                 GE_VAT -> Value.GE_VAT
+                GI_TIN -> Value.GI_TIN
                 GN_NIF -> Value.GN_NIF
                 HK_BR -> Value.HK_BR
                 HR_OIB -> Value.HR_OIB
@@ -1706,6 +1757,7 @@ private constructor(
                 IL_VAT -> Value.IL_VAT
                 IN_GST -> Value.IN_GST
                 IS_VAT -> Value.IS_VAT
+                IT_CF -> Value.IT_CF
                 JP_CN -> Value.JP_CN
                 JP_RN -> Value.JP_RN
                 JP_TRN -> Value.JP_TRN
@@ -1717,6 +1769,7 @@ private constructor(
                 LA_TIN -> Value.LA_TIN
                 LI_UID -> Value.LI_UID
                 LI_VAT -> Value.LI_VAT
+                LK_VAT -> Value.LK_VAT
                 MA_VAT -> Value.MA_VAT
                 MD_VAT -> Value.MD_VAT
                 ME_PIB -> Value.ME_PIB
@@ -1735,6 +1788,7 @@ private constructor(
                 PE_RUC -> Value.PE_RUC
                 PH_TIN -> Value.PH_TIN
                 PL_NIP -> Value.PL_NIP
+                PY_RUC -> Value.PY_RUC
                 RO_TIN -> Value.RO_TIN
                 RS_PIB -> Value.RS_PIB
                 RU_INN -> Value.RU_INN
@@ -1820,8 +1874,10 @@ private constructor(
                 ES_CIF -> Known.ES_CIF
                 ET_TIN -> Known.ET_TIN
                 EU_OSS_VAT -> Known.EU_OSS_VAT
+                FO_VAT -> Known.FO_VAT
                 GB_VAT -> Known.GB_VAT
                 GE_VAT -> Known.GE_VAT
+                GI_TIN -> Known.GI_TIN
                 GN_NIF -> Known.GN_NIF
                 HK_BR -> Known.HK_BR
                 HR_OIB -> Known.HR_OIB
@@ -1830,6 +1886,7 @@ private constructor(
                 IL_VAT -> Known.IL_VAT
                 IN_GST -> Known.IN_GST
                 IS_VAT -> Known.IS_VAT
+                IT_CF -> Known.IT_CF
                 JP_CN -> Known.JP_CN
                 JP_RN -> Known.JP_RN
                 JP_TRN -> Known.JP_TRN
@@ -1841,6 +1898,7 @@ private constructor(
                 LA_TIN -> Known.LA_TIN
                 LI_UID -> Known.LI_UID
                 LI_VAT -> Known.LI_VAT
+                LK_VAT -> Known.LK_VAT
                 MA_VAT -> Known.MA_VAT
                 MD_VAT -> Known.MD_VAT
                 ME_PIB -> Known.ME_PIB
@@ -1859,6 +1917,7 @@ private constructor(
                 PE_RUC -> Known.PE_RUC
                 PH_TIN -> Known.PH_TIN
                 PL_NIP -> Known.PL_NIP
+                PY_RUC -> Known.PY_RUC
                 RO_TIN -> Known.RO_TIN
                 RS_PIB -> Known.RS_PIB
                 RU_INN -> Known.RU_INN
