@@ -1986,6 +1986,13 @@ private constructor(
                 price(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
             /**
+             * Alias for calling [price] with
+             * `Price.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts)`.
+             */
+            fun price(matrixWithThresholdDiscounts: Price.MatrixWithThresholdDiscounts) =
+                price(Price.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts))
+
+            /**
              * Alias for calling [price] with `Price.ofTieredWithProration(tieredWithProration)`.
              */
             fun price(tieredWithProration: Price.TieredWithProration) =
@@ -4063,6 +4070,7 @@ private constructor(
             private val packageWithAllocation: NewPlanPackageWithAllocationPrice? = null,
             private val unitWithPercent: NewPlanUnitWithPercentPrice? = null,
             private val matrixWithAllocation: NewPlanMatrixWithAllocationPrice? = null,
+            private val matrixWithThresholdDiscounts: MatrixWithThresholdDiscounts? = null,
             private val tieredWithProration: TieredWithProration? = null,
             private val unitWithProration: NewPlanUnitWithProrationPrice? = null,
             private val groupedAllocation: NewPlanGroupedAllocationPrice? = null,
@@ -4116,6 +4124,9 @@ private constructor(
             fun unitWithPercent(): NewPlanUnitWithPercentPrice? = unitWithPercent
 
             fun matrixWithAllocation(): NewPlanMatrixWithAllocationPrice? = matrixWithAllocation
+
+            fun matrixWithThresholdDiscounts(): MatrixWithThresholdDiscounts? =
+                matrixWithThresholdDiscounts
 
             fun tieredWithProration(): TieredWithProration? = tieredWithProration
 
@@ -4188,6 +4199,8 @@ private constructor(
             fun isUnitWithPercent(): Boolean = unitWithPercent != null
 
             fun isMatrixWithAllocation(): Boolean = matrixWithAllocation != null
+
+            fun isMatrixWithThresholdDiscounts(): Boolean = matrixWithThresholdDiscounts != null
 
             fun isTieredWithProration(): Boolean = tieredWithProration != null
 
@@ -4263,6 +4276,9 @@ private constructor(
 
             fun asMatrixWithAllocation(): NewPlanMatrixWithAllocationPrice =
                 matrixWithAllocation.getOrThrow("matrixWithAllocation")
+
+            fun asMatrixWithThresholdDiscounts(): MatrixWithThresholdDiscounts =
+                matrixWithThresholdDiscounts.getOrThrow("matrixWithThresholdDiscounts")
 
             fun asTieredWithProration(): TieredWithProration =
                 tieredWithProration.getOrThrow("tieredWithProration")
@@ -4366,6 +4382,8 @@ private constructor(
                     unitWithPercent != null -> visitor.visitUnitWithPercent(unitWithPercent)
                     matrixWithAllocation != null ->
                         visitor.visitMatrixWithAllocation(matrixWithAllocation)
+                    matrixWithThresholdDiscounts != null ->
+                        visitor.visitMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts)
                     tieredWithProration != null ->
                         visitor.visitTieredWithProration(tieredWithProration)
                     unitWithProration != null -> visitor.visitUnitWithProration(unitWithProration)
@@ -4487,6 +4505,12 @@ private constructor(
                             matrixWithAllocation: NewPlanMatrixWithAllocationPrice
                         ) {
                             matrixWithAllocation.validate()
+                        }
+
+                        override fun visitMatrixWithThresholdDiscounts(
+                            matrixWithThresholdDiscounts: MatrixWithThresholdDiscounts
+                        ) {
+                            matrixWithThresholdDiscounts.validate()
                         }
 
                         override fun visitTieredWithProration(
@@ -4663,6 +4687,10 @@ private constructor(
                             matrixWithAllocation: NewPlanMatrixWithAllocationPrice
                         ) = matrixWithAllocation.validity()
 
+                        override fun visitMatrixWithThresholdDiscounts(
+                            matrixWithThresholdDiscounts: MatrixWithThresholdDiscounts
+                        ) = matrixWithThresholdDiscounts.validity()
+
                         override fun visitTieredWithProration(
                             tieredWithProration: TieredWithProration
                         ) = tieredWithProration.validity()
@@ -4760,6 +4788,7 @@ private constructor(
                     packageWithAllocation == other.packageWithAllocation &&
                     unitWithPercent == other.unitWithPercent &&
                     matrixWithAllocation == other.matrixWithAllocation &&
+                    matrixWithThresholdDiscounts == other.matrixWithThresholdDiscounts &&
                     tieredWithProration == other.tieredWithProration &&
                     unitWithProration == other.unitWithProration &&
                     groupedAllocation == other.groupedAllocation &&
@@ -4797,6 +4826,7 @@ private constructor(
                     packageWithAllocation,
                     unitWithPercent,
                     matrixWithAllocation,
+                    matrixWithThresholdDiscounts,
                     tieredWithProration,
                     unitWithProration,
                     groupedAllocation,
@@ -4838,6 +4868,8 @@ private constructor(
                     unitWithPercent != null -> "Price{unitWithPercent=$unitWithPercent}"
                     matrixWithAllocation != null ->
                         "Price{matrixWithAllocation=$matrixWithAllocation}"
+                    matrixWithThresholdDiscounts != null ->
+                        "Price{matrixWithThresholdDiscounts=$matrixWithThresholdDiscounts}"
                     tieredWithProration != null -> "Price{tieredWithProration=$tieredWithProration}"
                     unitWithProration != null -> "Price{unitWithProration=$unitWithProration}"
                     groupedAllocation != null -> "Price{groupedAllocation=$groupedAllocation}"
@@ -4912,6 +4944,10 @@ private constructor(
 
                 fun ofMatrixWithAllocation(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
                     Price(matrixWithAllocation = matrixWithAllocation)
+
+                fun ofMatrixWithThresholdDiscounts(
+                    matrixWithThresholdDiscounts: MatrixWithThresholdDiscounts
+                ) = Price(matrixWithThresholdDiscounts = matrixWithThresholdDiscounts)
 
                 fun ofTieredWithProration(tieredWithProration: TieredWithProration) =
                     Price(tieredWithProration = tieredWithProration)
@@ -5017,6 +5053,10 @@ private constructor(
 
                 fun visitMatrixWithAllocation(
                     matrixWithAllocation: NewPlanMatrixWithAllocationPrice
+                ): T
+
+                fun visitMatrixWithThresholdDiscounts(
+                    matrixWithThresholdDiscounts: MatrixWithThresholdDiscounts
                 ): T
 
                 fun visitTieredWithProration(tieredWithProration: TieredWithProration): T
@@ -5184,6 +5224,14 @@ private constructor(
                                     jacksonTypeRef<NewPlanMatrixWithAllocationPrice>(),
                                 )
                                 ?.let { Price(matrixWithAllocation = it, _json = json) }
+                                ?: Price(_json = json)
+                        }
+                        "matrix_with_threshold_discounts" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<MatrixWithThresholdDiscounts>(),
+                                )
+                                ?.let { Price(matrixWithThresholdDiscounts = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "tiered_with_proration" -> {
@@ -5358,6 +5406,8 @@ private constructor(
                             generator.writeObject(value.unitWithPercent)
                         value.matrixWithAllocation != null ->
                             generator.writeObject(value.matrixWithAllocation)
+                        value.matrixWithThresholdDiscounts != null ->
+                            generator.writeObject(value.matrixWithThresholdDiscounts)
                         value.tieredWithProration != null ->
                             generator.writeObject(value.tieredWithProration)
                         value.unitWithProration != null ->
@@ -7538,6 +7588,2595 @@ private constructor(
 
                 override fun toString() =
                     "BulkWithFilters{bulkWithFiltersConfig=$bulkWithFiltersConfig, cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, licenseTypeId=$licenseTypeId, metadata=$metadata, referenceId=$referenceId, additionalProperties=$additionalProperties}"
+            }
+
+            class MatrixWithThresholdDiscounts
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+            private constructor(
+                private val cadence: JsonField<Cadence>,
+                private val itemId: JsonField<String>,
+                private val matrixWithThresholdDiscountsConfig:
+                    JsonField<MatrixWithThresholdDiscountsConfig>,
+                private val modelType: JsonValue,
+                private val name: JsonField<String>,
+                private val billableMetricId: JsonField<String>,
+                private val billedInAdvance: JsonField<Boolean>,
+                private val billingCycleConfiguration: JsonField<NewBillingCycleConfiguration>,
+                private val conversionRate: JsonField<Double>,
+                private val conversionRateConfig: JsonField<ConversionRateConfig>,
+                private val currency: JsonField<String>,
+                private val dimensionalPriceConfiguration:
+                    JsonField<NewDimensionalPriceConfiguration>,
+                private val externalPriceId: JsonField<String>,
+                private val fixedPriceQuantity: JsonField<Double>,
+                private val invoiceGroupingKey: JsonField<String>,
+                private val invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>,
+                private val licenseTypeId: JsonField<String>,
+                private val metadata: JsonField<Metadata>,
+                private val referenceId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("cadence")
+                    @ExcludeMissing
+                    cadence: JsonField<Cadence> = JsonMissing.of(),
+                    @JsonProperty("item_id")
+                    @ExcludeMissing
+                    itemId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("matrix_with_threshold_discounts_config")
+                    @ExcludeMissing
+                    matrixWithThresholdDiscountsConfig:
+                        JsonField<MatrixWithThresholdDiscountsConfig> =
+                        JsonMissing.of(),
+                    @JsonProperty("model_type")
+                    @ExcludeMissing
+                    modelType: JsonValue = JsonMissing.of(),
+                    @JsonProperty("name")
+                    @ExcludeMissing
+                    name: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("billable_metric_id")
+                    @ExcludeMissing
+                    billableMetricId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("billed_in_advance")
+                    @ExcludeMissing
+                    billedInAdvance: JsonField<Boolean> = JsonMissing.of(),
+                    @JsonProperty("billing_cycle_configuration")
+                    @ExcludeMissing
+                    billingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of(),
+                    @JsonProperty("conversion_rate")
+                    @ExcludeMissing
+                    conversionRate: JsonField<Double> = JsonMissing.of(),
+                    @JsonProperty("conversion_rate_config")
+                    @ExcludeMissing
+                    conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
+                    @JsonProperty("currency")
+                    @ExcludeMissing
+                    currency: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_configuration")
+                    @ExcludeMissing
+                    dimensionalPriceConfiguration: JsonField<NewDimensionalPriceConfiguration> =
+                        JsonMissing.of(),
+                    @JsonProperty("external_price_id")
+                    @ExcludeMissing
+                    externalPriceId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("fixed_price_quantity")
+                    @ExcludeMissing
+                    fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+                    @JsonProperty("invoice_grouping_key")
+                    @ExcludeMissing
+                    invoiceGroupingKey: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("invoicing_cycle_configuration")
+                    @ExcludeMissing
+                    invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of(),
+                    @JsonProperty("license_type_id")
+                    @ExcludeMissing
+                    licenseTypeId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("metadata")
+                    @ExcludeMissing
+                    metadata: JsonField<Metadata> = JsonMissing.of(),
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    referenceId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    cadence,
+                    itemId,
+                    matrixWithThresholdDiscountsConfig,
+                    modelType,
+                    name,
+                    billableMetricId,
+                    billedInAdvance,
+                    billingCycleConfiguration,
+                    conversionRate,
+                    conversionRateConfig,
+                    currency,
+                    dimensionalPriceConfiguration,
+                    externalPriceId,
+                    fixedPriceQuantity,
+                    invoiceGroupingKey,
+                    invoicingCycleConfiguration,
+                    licenseTypeId,
+                    metadata,
+                    referenceId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The cadence to bill for this price on.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun cadence(): Cadence = cadence.getRequired("cadence")
+
+                /**
+                 * The id of the item the price will be associated with.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun itemId(): String = itemId.getRequired("item_id")
+
+                /**
+                 * Configuration for matrix_with_threshold_discounts pricing
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun matrixWithThresholdDiscountsConfig(): MatrixWithThresholdDiscountsConfig =
+                    matrixWithThresholdDiscountsConfig.getRequired(
+                        "matrix_with_threshold_discounts_config"
+                    )
+
+                /**
+                 * The pricing model type
+                 *
+                 * Expected to always return the following:
+                 * ```kotlin
+                 * JsonValue.from("matrix_with_threshold_discounts")
+                 * ```
+                 *
+                 * However, this method can be useful for debugging and logging (e.g. if the server
+                 * responded with an unexpected value).
+                 */
+                @JsonProperty("model_type") @ExcludeMissing fun _modelType(): JsonValue = modelType
+
+                /**
+                 * The name of the price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun name(): String = name.getRequired("name")
+
+                /**
+                 * The id of the billable metric for the price. Only needed if the price is
+                 * usage-based.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun billableMetricId(): String? = billableMetricId.getNullable("billable_metric_id")
+
+                /**
+                 * If the Price represents a fixed cost, the price will be billed in-advance if this
+                 * is true, and in-arrears if this is false.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun billedInAdvance(): Boolean? = billedInAdvance.getNullable("billed_in_advance")
+
+                /**
+                 * For custom cadence: specifies the duration of the billing period in days or
+                 * months.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun billingCycleConfiguration(): NewBillingCycleConfiguration? =
+                    billingCycleConfiguration.getNullable("billing_cycle_configuration")
+
+                /**
+                 * The per unit conversion rate of the price currency to the invoicing currency.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+                /**
+                 * The configuration for the rate of the price currency to the invoicing currency.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun conversionRateConfig(): ConversionRateConfig? =
+                    conversionRateConfig.getNullable("conversion_rate_config")
+
+                /**
+                 * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                 * price is billed.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * For dimensional price: specifies a price group and dimension values
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceConfiguration(): NewDimensionalPriceConfiguration? =
+                    dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
+
+                /**
+                 * An alias for the price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
+
+                /**
+                 * If the Price represents a fixed cost, this represents the quantity of units
+                 * applied.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun fixedPriceQuantity(): Double? =
+                    fixedPriceQuantity.getNullable("fixed_price_quantity")
+
+                /**
+                 * The property used to group this price on an invoice
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun invoiceGroupingKey(): String? =
+                    invoiceGroupingKey.getNullable("invoice_grouping_key")
+
+                /**
+                 * Within each billing cycle, specifies the cadence at which invoices are produced.
+                 * If unspecified, a single invoice is produced per billing cycle.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun invoicingCycleConfiguration(): NewBillingCycleConfiguration? =
+                    invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
+
+                /**
+                 * The ID of the license type to associate with this price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun licenseTypeId(): String? = licenseTypeId.getNullable("license_type_id")
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
+
+                /**
+                 * Returns the raw JSON value of [cadence].
+                 *
+                 * Unlike [cadence], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("cadence")
+                @ExcludeMissing
+                fun _cadence(): JsonField<Cadence> = cadence
+
+                /**
+                 * Returns the raw JSON value of [itemId].
+                 *
+                 * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+
+                /**
+                 * Returns the raw JSON value of [matrixWithThresholdDiscountsConfig].
+                 *
+                 * Unlike [matrixWithThresholdDiscountsConfig], this method doesn't throw if the
+                 * JSON field has an unexpected type.
+                 */
+                @JsonProperty("matrix_with_threshold_discounts_config")
+                @ExcludeMissing
+                fun _matrixWithThresholdDiscountsConfig():
+                    JsonField<MatrixWithThresholdDiscountsConfig> =
+                    matrixWithThresholdDiscountsConfig
+
+                /**
+                 * Returns the raw JSON value of [name].
+                 *
+                 * Unlike [name], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+                /**
+                 * Returns the raw JSON value of [billableMetricId].
+                 *
+                 * Unlike [billableMetricId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("billable_metric_id")
+                @ExcludeMissing
+                fun _billableMetricId(): JsonField<String> = billableMetricId
+
+                /**
+                 * Returns the raw JSON value of [billedInAdvance].
+                 *
+                 * Unlike [billedInAdvance], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("billed_in_advance")
+                @ExcludeMissing
+                fun _billedInAdvance(): JsonField<Boolean> = billedInAdvance
+
+                /**
+                 * Returns the raw JSON value of [billingCycleConfiguration].
+                 *
+                 * Unlike [billingCycleConfiguration], this method doesn't throw if the JSON field
+                 * has an unexpected type.
+                 */
+                @JsonProperty("billing_cycle_configuration")
+                @ExcludeMissing
+                fun _billingCycleConfiguration(): JsonField<NewBillingCycleConfiguration> =
+                    billingCycleConfiguration
+
+                /**
+                 * Returns the raw JSON value of [conversionRate].
+                 *
+                 * Unlike [conversionRate], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("conversion_rate")
+                @ExcludeMissing
+                fun _conversionRate(): JsonField<Double> = conversionRate
+
+                /**
+                 * Returns the raw JSON value of [conversionRateConfig].
+                 *
+                 * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("conversion_rate_config")
+                @ExcludeMissing
+                fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
+
+                /**
+                 * Returns the raw JSON value of [currency].
+                 *
+                 * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("currency")
+                @ExcludeMissing
+                fun _currency(): JsonField<String> = currency
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceConfiguration].
+                 *
+                 * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                fun _dimensionalPriceConfiguration(): JsonField<NewDimensionalPriceConfiguration> =
+                    dimensionalPriceConfiguration
+
+                /**
+                 * Returns the raw JSON value of [externalPriceId].
+                 *
+                 * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("external_price_id")
+                @ExcludeMissing
+                fun _externalPriceId(): JsonField<String> = externalPriceId
+
+                /**
+                 * Returns the raw JSON value of [fixedPriceQuantity].
+                 *
+                 * Unlike [fixedPriceQuantity], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("fixed_price_quantity")
+                @ExcludeMissing
+                fun _fixedPriceQuantity(): JsonField<Double> = fixedPriceQuantity
+
+                /**
+                 * Returns the raw JSON value of [invoiceGroupingKey].
+                 *
+                 * Unlike [invoiceGroupingKey], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("invoice_grouping_key")
+                @ExcludeMissing
+                fun _invoiceGroupingKey(): JsonField<String> = invoiceGroupingKey
+
+                /**
+                 * Returns the raw JSON value of [invoicingCycleConfiguration].
+                 *
+                 * Unlike [invoicingCycleConfiguration], this method doesn't throw if the JSON field
+                 * has an unexpected type.
+                 */
+                @JsonProperty("invoicing_cycle_configuration")
+                @ExcludeMissing
+                fun _invoicingCycleConfiguration(): JsonField<NewBillingCycleConfiguration> =
+                    invoicingCycleConfiguration
+
+                /**
+                 * Returns the raw JSON value of [licenseTypeId].
+                 *
+                 * Unlike [licenseTypeId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("license_type_id")
+                @ExcludeMissing
+                fun _licenseTypeId(): JsonField<String> = licenseTypeId
+
+                /**
+                 * Returns the raw JSON value of [metadata].
+                 *
+                 * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun _metadata(): JsonField<Metadata> = metadata
+
+                /**
+                 * Returns the raw JSON value of [referenceId].
+                 *
+                 * Unlike [referenceId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("reference_id")
+                @ExcludeMissing
+                fun _referenceId(): JsonField<String> = referenceId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [MatrixWithThresholdDiscounts].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .itemId()
+                     * .matrixWithThresholdDiscountsConfig()
+                     * .name()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [MatrixWithThresholdDiscounts]. */
+                class Builder internal constructor() {
+
+                    private var cadence: JsonField<Cadence>? = null
+                    private var itemId: JsonField<String>? = null
+                    private var matrixWithThresholdDiscountsConfig:
+                        JsonField<MatrixWithThresholdDiscountsConfig>? =
+                        null
+                    private var modelType: JsonValue =
+                        JsonValue.from("matrix_with_threshold_discounts")
+                    private var name: JsonField<String>? = null
+                    private var billableMetricId: JsonField<String> = JsonMissing.of()
+                    private var billedInAdvance: JsonField<Boolean> = JsonMissing.of()
+                    private var billingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of()
+                    private var conversionRate: JsonField<Double> = JsonMissing.of()
+                    private var conversionRateConfig: JsonField<ConversionRateConfig> =
+                        JsonMissing.of()
+                    private var currency: JsonField<String> = JsonMissing.of()
+                    private var dimensionalPriceConfiguration:
+                        JsonField<NewDimensionalPriceConfiguration> =
+                        JsonMissing.of()
+                    private var externalPriceId: JsonField<String> = JsonMissing.of()
+                    private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
+                    private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
+                    private var invoicingCycleConfiguration:
+                        JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of()
+                    private var licenseTypeId: JsonField<String> = JsonMissing.of()
+                    private var metadata: JsonField<Metadata> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(matrixWithThresholdDiscounts: MatrixWithThresholdDiscounts) =
+                        apply {
+                            cadence = matrixWithThresholdDiscounts.cadence
+                            itemId = matrixWithThresholdDiscounts.itemId
+                            matrixWithThresholdDiscountsConfig =
+                                matrixWithThresholdDiscounts.matrixWithThresholdDiscountsConfig
+                            modelType = matrixWithThresholdDiscounts.modelType
+                            name = matrixWithThresholdDiscounts.name
+                            billableMetricId = matrixWithThresholdDiscounts.billableMetricId
+                            billedInAdvance = matrixWithThresholdDiscounts.billedInAdvance
+                            billingCycleConfiguration =
+                                matrixWithThresholdDiscounts.billingCycleConfiguration
+                            conversionRate = matrixWithThresholdDiscounts.conversionRate
+                            conversionRateConfig = matrixWithThresholdDiscounts.conversionRateConfig
+                            currency = matrixWithThresholdDiscounts.currency
+                            dimensionalPriceConfiguration =
+                                matrixWithThresholdDiscounts.dimensionalPriceConfiguration
+                            externalPriceId = matrixWithThresholdDiscounts.externalPriceId
+                            fixedPriceQuantity = matrixWithThresholdDiscounts.fixedPriceQuantity
+                            invoiceGroupingKey = matrixWithThresholdDiscounts.invoiceGroupingKey
+                            invoicingCycleConfiguration =
+                                matrixWithThresholdDiscounts.invoicingCycleConfiguration
+                            licenseTypeId = matrixWithThresholdDiscounts.licenseTypeId
+                            metadata = matrixWithThresholdDiscounts.metadata
+                            referenceId = matrixWithThresholdDiscounts.referenceId
+                            additionalProperties =
+                                matrixWithThresholdDiscounts.additionalProperties.toMutableMap()
+                        }
+
+                    /** The cadence to bill for this price on. */
+                    fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
+
+                    /**
+                     * Sets [Builder.cadence] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.cadence] with a well-typed [Cadence] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
+
+                    /** The id of the item the price will be associated with. */
+                    fun itemId(itemId: String) = itemId(JsonField.of(itemId))
+
+                    /**
+                     * Sets [Builder.itemId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.itemId] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
+                    /** Configuration for matrix_with_threshold_discounts pricing */
+                    fun matrixWithThresholdDiscountsConfig(
+                        matrixWithThresholdDiscountsConfig: MatrixWithThresholdDiscountsConfig
+                    ) =
+                        matrixWithThresholdDiscountsConfig(
+                            JsonField.of(matrixWithThresholdDiscountsConfig)
+                        )
+
+                    /**
+                     * Sets [Builder.matrixWithThresholdDiscountsConfig] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.matrixWithThresholdDiscountsConfig] with a
+                     * well-typed [MatrixWithThresholdDiscountsConfig] value instead. This method is
+                     * primarily for setting the field to an undocumented or not yet supported
+                     * value.
+                     */
+                    fun matrixWithThresholdDiscountsConfig(
+                        matrixWithThresholdDiscountsConfig:
+                            JsonField<MatrixWithThresholdDiscountsConfig>
+                    ) = apply {
+                        this.matrixWithThresholdDiscountsConfig = matrixWithThresholdDiscountsConfig
+                    }
+
+                    /**
+                     * Sets the field to an arbitrary JSON value.
+                     *
+                     * It is usually unnecessary to call this method because the field defaults to
+                     * the following:
+                     * ```kotlin
+                     * JsonValue.from("matrix_with_threshold_discounts")
+                     * ```
+                     *
+                     * This method is primarily for setting the field to an undocumented or not yet
+                     * supported value.
+                     */
+                    fun modelType(modelType: JsonValue) = apply { this.modelType = modelType }
+
+                    /** The name of the price. */
+                    fun name(name: String) = name(JsonField.of(name))
+
+                    /**
+                     * Sets [Builder.name] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.name] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun name(name: JsonField<String>) = apply { this.name = name }
+
+                    /**
+                     * The id of the billable metric for the price. Only needed if the price is
+                     * usage-based.
+                     */
+                    fun billableMetricId(billableMetricId: String?) =
+                        billableMetricId(JsonField.ofNullable(billableMetricId))
+
+                    /**
+                     * Sets [Builder.billableMetricId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.billableMetricId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun billableMetricId(billableMetricId: JsonField<String>) = apply {
+                        this.billableMetricId = billableMetricId
+                    }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean?) =
+                        billedInAdvance(JsonField.ofNullable(billedInAdvance))
+
+                    /**
+                     * Alias for [Builder.billedInAdvance].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
+
+                    /**
+                     * Sets [Builder.billedInAdvance] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.billedInAdvance] with a well-typed [Boolean]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun billedInAdvance(billedInAdvance: JsonField<Boolean>) = apply {
+                        this.billedInAdvance = billedInAdvance
+                    }
+
+                    /**
+                     * For custom cadence: specifies the duration of the billing period in days or
+                     * months.
+                     */
+                    fun billingCycleConfiguration(
+                        billingCycleConfiguration: NewBillingCycleConfiguration?
+                    ) = billingCycleConfiguration(JsonField.ofNullable(billingCycleConfiguration))
+
+                    /**
+                     * Sets [Builder.billingCycleConfiguration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.billingCycleConfiguration] with a well-typed
+                     * [NewBillingCycleConfiguration] value instead. This method is primarily for
+                     * setting the field to an undocumented or not yet supported value.
+                     */
+                    fun billingCycleConfiguration(
+                        billingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
+                    ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double?) =
+                        conversionRate(JsonField.ofNullable(conversionRate))
+
+                    /**
+                     * Alias for [Builder.conversionRate].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
+                    /**
+                     * Sets [Builder.conversionRate] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.conversionRate] with a well-typed [Double]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun conversionRate(conversionRate: JsonField<Double>) = apply {
+                        this.conversionRate = conversionRate
+                    }
+
+                    /**
+                     * The configuration for the rate of the price currency to the invoicing
+                     * currency.
+                     */
+                    fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                        conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+                    /**
+                     * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.conversionRateConfig] with a well-typed
+                     * [ConversionRateConfig] value instead. This method is primarily for setting
+                     * the field to an undocumented or not yet supported value.
+                     */
+                    fun conversionRateConfig(
+                        conversionRateConfig: JsonField<ConversionRateConfig>
+                    ) = apply { this.conversionRateConfig = conversionRateConfig }
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with
+                     * `ConversionRateConfig.ofUnit(unit)`.
+                     */
+                    fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                        conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with the following:
+                     * ```kotlin
+                     * UnitConversionRateConfig.builder()
+                     *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                     *     .unitConfig(unitConfig)
+                     *     .build()
+                     * ```
+                     */
+                    fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                        conversionRateConfig(
+                            UnitConversionRateConfig.builder()
+                                .conversionRateType(
+                                    UnitConversionRateConfig.ConversionRateType.UNIT
+                                )
+                                .unitConfig(unitConfig)
+                                .build()
+                        )
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with
+                     * `ConversionRateConfig.ofTiered(tiered)`.
+                     */
+                    fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                        conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with the following:
+                     * ```kotlin
+                     * TieredConversionRateConfig.builder()
+                     *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                     *     .tieredConfig(tieredConfig)
+                     *     .build()
+                     * ```
+                     */
+                    fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                        conversionRateConfig(
+                            TieredConversionRateConfig.builder()
+                                .conversionRateType(
+                                    TieredConversionRateConfig.ConversionRateType.TIERED
+                                )
+                                .tieredConfig(tieredConfig)
+                                .build()
+                        )
+
+                    /**
+                     * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                     * price is billed.
+                     */
+                    fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
+
+                    /**
+                     * Sets [Builder.currency] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.currency] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+                    /** For dimensional price: specifies a price group and dimension values */
+                    fun dimensionalPriceConfiguration(
+                        dimensionalPriceConfiguration: NewDimensionalPriceConfiguration?
+                    ) =
+                        dimensionalPriceConfiguration(
+                            JsonField.ofNullable(dimensionalPriceConfiguration)
+                        )
+
+                    /**
+                     * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceConfiguration] with a
+                     * well-typed [NewDimensionalPriceConfiguration] value instead. This method is
+                     * primarily for setting the field to an undocumented or not yet supported
+                     * value.
+                     */
+                    fun dimensionalPriceConfiguration(
+                        dimensionalPriceConfiguration: JsonField<NewDimensionalPriceConfiguration>
+                    ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
+                    /** An alias for the price. */
+                    fun externalPriceId(externalPriceId: String?) =
+                        externalPriceId(JsonField.ofNullable(externalPriceId))
+
+                    /**
+                     * Sets [Builder.externalPriceId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalPriceId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun externalPriceId(externalPriceId: JsonField<String>) = apply {
+                        this.externalPriceId = externalPriceId
+                    }
+
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) =
+                        fixedPriceQuantity(JsonField.ofNullable(fixedPriceQuantity))
+
+                    /**
+                     * Alias for [Builder.fixedPriceQuantity].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
+                    /**
+                     * Sets [Builder.fixedPriceQuantity] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.fixedPriceQuantity] with a well-typed
+                     * [Double] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
+                        this.fixedPriceQuantity = fixedPriceQuantity
+                    }
+
+                    /** The property used to group this price on an invoice */
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) =
+                        invoiceGroupingKey(JsonField.ofNullable(invoiceGroupingKey))
+
+                    /**
+                     * Sets [Builder.invoiceGroupingKey] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.invoiceGroupingKey] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun invoiceGroupingKey(invoiceGroupingKey: JsonField<String>) = apply {
+                        this.invoiceGroupingKey = invoiceGroupingKey
+                    }
+
+                    /**
+                     * Within each billing cycle, specifies the cadence at which invoices are
+                     * produced. If unspecified, a single invoice is produced per billing cycle.
+                     */
+                    fun invoicingCycleConfiguration(
+                        invoicingCycleConfiguration: NewBillingCycleConfiguration?
+                    ) =
+                        invoicingCycleConfiguration(
+                            JsonField.ofNullable(invoicingCycleConfiguration)
+                        )
+
+                    /**
+                     * Sets [Builder.invoicingCycleConfiguration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.invoicingCycleConfiguration] with a
+                     * well-typed [NewBillingCycleConfiguration] value instead. This method is
+                     * primarily for setting the field to an undocumented or not yet supported
+                     * value.
+                     */
+                    fun invoicingCycleConfiguration(
+                        invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
+                    ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
+
+                    /** The ID of the license type to associate with this price. */
+                    fun licenseTypeId(licenseTypeId: String?) =
+                        licenseTypeId(JsonField.ofNullable(licenseTypeId))
+
+                    /**
+                     * Sets [Builder.licenseTypeId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.licenseTypeId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun licenseTypeId(licenseTypeId: JsonField<String>) = apply {
+                        this.licenseTypeId = licenseTypeId
+                    }
+
+                    /**
+                     * User-specified key/value pairs for the resource. Individual keys can be
+                     * removed by setting the value to `null`, and the entire metadata mapping can
+                     * be cleared by setting `metadata` to `null`.
+                     */
+                    fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+                    /**
+                     * Sets [Builder.metadata] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String?) =
+                        referenceId(JsonField.ofNullable(referenceId))
+
+                    /**
+                     * Sets [Builder.referenceId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.referenceId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [MatrixWithThresholdDiscounts].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .itemId()
+                     * .matrixWithThresholdDiscountsConfig()
+                     * .name()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): MatrixWithThresholdDiscounts =
+                        MatrixWithThresholdDiscounts(
+                            checkRequired("cadence", cadence),
+                            checkRequired("itemId", itemId),
+                            checkRequired(
+                                "matrixWithThresholdDiscountsConfig",
+                                matrixWithThresholdDiscountsConfig,
+                            ),
+                            modelType,
+                            checkRequired("name", name),
+                            billableMetricId,
+                            billedInAdvance,
+                            billingCycleConfiguration,
+                            conversionRate,
+                            conversionRateConfig,
+                            currency,
+                            dimensionalPriceConfiguration,
+                            externalPriceId,
+                            fixedPriceQuantity,
+                            invoiceGroupingKey,
+                            invoicingCycleConfiguration,
+                            licenseTypeId,
+                            metadata,
+                            referenceId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                /**
+                 * Validates that the types of all values in this object match their expected types
+                 * recursively.
+                 *
+                 * This method is _not_ forwards compatible with new types from the API for existing
+                 * fields.
+                 *
+                 * @throws OrbInvalidDataException if any value type in this object doesn't match
+                 *   its expected type.
+                 */
+                fun validate(): MatrixWithThresholdDiscounts = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    cadence().validate()
+                    itemId()
+                    matrixWithThresholdDiscountsConfig().validate()
+                    _modelType().let {
+                        if (it != JsonValue.from("matrix_with_threshold_discounts")) {
+                            throw OrbInvalidDataException("'modelType' is invalid, received $it")
+                        }
+                    }
+                    name()
+                    billableMetricId()
+                    billedInAdvance()
+                    billingCycleConfiguration()?.validate()
+                    conversionRate()
+                    conversionRateConfig()?.validate()
+                    currency()
+                    dimensionalPriceConfiguration()?.validate()
+                    externalPriceId()
+                    fixedPriceQuantity()
+                    invoiceGroupingKey()
+                    invoicingCycleConfiguration()?.validate()
+                    licenseTypeId()
+                    metadata()?.validate()
+                    referenceId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (cadence.asKnown()?.validity() ?: 0) +
+                        (if (itemId.asKnown() == null) 0 else 1) +
+                        (matrixWithThresholdDiscountsConfig.asKnown()?.validity() ?: 0) +
+                        modelType.let {
+                            if (it == JsonValue.from("matrix_with_threshold_discounts")) 1 else 0
+                        } +
+                        (if (name.asKnown() == null) 0 else 1) +
+                        (if (billableMetricId.asKnown() == null) 0 else 1) +
+                        (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                        (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                        (if (conversionRate.asKnown() == null) 0 else 1) +
+                        (conversionRateConfig.asKnown()?.validity() ?: 0) +
+                        (if (currency.asKnown() == null) 0 else 1) +
+                        (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
+                        (if (externalPriceId.asKnown() == null) 0 else 1) +
+                        (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                        (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                        (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                        (if (licenseTypeId.asKnown() == null) 0 else 1) +
+                        (metadata.asKnown()?.validity() ?: 0) +
+                        (if (referenceId.asKnown() == null) 0 else 1)
+
+                /** The cadence to bill for this price on. */
+                class Cadence
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val ANNUAL = of("annual")
+
+                        val SEMI_ANNUAL = of("semi_annual")
+
+                        val MONTHLY = of("monthly")
+
+                        val QUARTERLY = of("quarterly")
+
+                        val ONE_TIME = of("one_time")
+
+                        val CUSTOM = of("custom")
+
+                        fun of(value: String) = Cadence(JsonField.of(value))
+                    }
+
+                    /** An enum containing [Cadence]'s known values. */
+                    enum class Known {
+                        ANNUAL,
+                        SEMI_ANNUAL,
+                        MONTHLY,
+                        QUARTERLY,
+                        ONE_TIME,
+                        CUSTOM,
+                    }
+
+                    /**
+                     * An enum containing [Cadence]'s known values, as well as an [_UNKNOWN] member.
+                     *
+                     * An instance of [Cadence] can contain an unknown value in a couple of cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        ANNUAL,
+                        SEMI_ANNUAL,
+                        MONTHLY,
+                        QUARTERLY,
+                        ONE_TIME,
+                        CUSTOM,
+                        /**
+                         * An enum member indicating that [Cadence] was instantiated with an unknown
+                         * value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
+                            MONTHLY -> Value.MONTHLY
+                            QUARTERLY -> Value.QUARTERLY
+                            ONE_TIME -> Value.ONE_TIME
+                            CUSTOM -> Value.CUSTOM
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
+                            MONTHLY -> Known.MONTHLY
+                            QUARTERLY -> Known.QUARTERLY
+                            ONE_TIME -> Known.ONE_TIME
+                            CUSTOM -> Known.CUSTOM
+                            else -> throw OrbInvalidDataException("Unknown Cadence: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    /**
+                     * Validates that the types of all values in this object match their expected
+                     * types recursively.
+                     *
+                     * This method is _not_ forwards compatible with new types from the API for
+                     * existing fields.
+                     *
+                     * @throws OrbInvalidDataException if any value type in this object doesn't
+                     *   match its expected type.
+                     */
+                    fun validate(): Cadence = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is Cadence && value == other.value
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                /** Configuration for matrix_with_threshold_discounts pricing */
+                class MatrixWithThresholdDiscountsConfig
+                @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+                private constructor(
+                    private val defaultUnitAmount: JsonField<String>,
+                    private val firstDimension: JsonField<String>,
+                    private val matrixValues: JsonField<List<MatrixValue>>,
+                    private val secondDimension: JsonField<String>,
+                    private val thresholdDiscountGroups: JsonField<List<ThresholdDiscountGroup>>,
+                    private val additionalProperties: MutableMap<String, JsonValue>,
+                ) {
+
+                    @JsonCreator
+                    private constructor(
+                        @JsonProperty("default_unit_amount")
+                        @ExcludeMissing
+                        defaultUnitAmount: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("first_dimension")
+                        @ExcludeMissing
+                        firstDimension: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("matrix_values")
+                        @ExcludeMissing
+                        matrixValues: JsonField<List<MatrixValue>> = JsonMissing.of(),
+                        @JsonProperty("second_dimension")
+                        @ExcludeMissing
+                        secondDimension: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("threshold_discount_groups")
+                        @ExcludeMissing
+                        thresholdDiscountGroups: JsonField<List<ThresholdDiscountGroup>> =
+                            JsonMissing.of(),
+                    ) : this(
+                        defaultUnitAmount,
+                        firstDimension,
+                        matrixValues,
+                        secondDimension,
+                        thresholdDiscountGroups,
+                        mutableMapOf(),
+                    )
+
+                    /**
+                     * Unit price used for usage that does not match any defined matrix cell.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun defaultUnitAmount(): String =
+                        defaultUnitAmount.getRequired("default_unit_amount")
+
+                    /**
+                     * First matrix dimension key.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun firstDimension(): String = firstDimension.getRequired("first_dimension")
+
+                    /**
+                     * Per-cell unit prices.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun matrixValues(): List<MatrixValue> =
+                        matrixValues.getRequired("matrix_values")
+
+                    /**
+                     * Optional second matrix dimension key.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun secondDimension(): String? = secondDimension.getNullable("second_dimension")
+
+                    /**
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun thresholdDiscountGroups(): List<ThresholdDiscountGroup>? =
+                        thresholdDiscountGroups.getNullable("threshold_discount_groups")
+
+                    /**
+                     * Returns the raw JSON value of [defaultUnitAmount].
+                     *
+                     * Unlike [defaultUnitAmount], this method doesn't throw if the JSON field has
+                     * an unexpected type.
+                     */
+                    @JsonProperty("default_unit_amount")
+                    @ExcludeMissing
+                    fun _defaultUnitAmount(): JsonField<String> = defaultUnitAmount
+
+                    /**
+                     * Returns the raw JSON value of [firstDimension].
+                     *
+                     * Unlike [firstDimension], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("first_dimension")
+                    @ExcludeMissing
+                    fun _firstDimension(): JsonField<String> = firstDimension
+
+                    /**
+                     * Returns the raw JSON value of [matrixValues].
+                     *
+                     * Unlike [matrixValues], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("matrix_values")
+                    @ExcludeMissing
+                    fun _matrixValues(): JsonField<List<MatrixValue>> = matrixValues
+
+                    /**
+                     * Returns the raw JSON value of [secondDimension].
+                     *
+                     * Unlike [secondDimension], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("second_dimension")
+                    @ExcludeMissing
+                    fun _secondDimension(): JsonField<String> = secondDimension
+
+                    /**
+                     * Returns the raw JSON value of [thresholdDiscountGroups].
+                     *
+                     * Unlike [thresholdDiscountGroups], this method doesn't throw if the JSON field
+                     * has an unexpected type.
+                     */
+                    @JsonProperty("threshold_discount_groups")
+                    @ExcludeMissing
+                    fun _thresholdDiscountGroups(): JsonField<List<ThresholdDiscountGroup>> =
+                        thresholdDiscountGroups
+
+                    @JsonAnySetter
+                    private fun putAdditionalProperty(key: String, value: JsonValue) {
+                        additionalProperties.put(key, value)
+                    }
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> =
+                        Collections.unmodifiableMap(additionalProperties)
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [MatrixWithThresholdDiscountsConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .defaultUnitAmount()
+                         * .firstDimension()
+                         * .matrixValues()
+                         * ```
+                         */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [MatrixWithThresholdDiscountsConfig]. */
+                    class Builder internal constructor() {
+
+                        private var defaultUnitAmount: JsonField<String>? = null
+                        private var firstDimension: JsonField<String>? = null
+                        private var matrixValues: JsonField<MutableList<MatrixValue>>? = null
+                        private var secondDimension: JsonField<String> = JsonMissing.of()
+                        private var thresholdDiscountGroups:
+                            JsonField<MutableList<ThresholdDiscountGroup>>? =
+                            null
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(
+                            matrixWithThresholdDiscountsConfig: MatrixWithThresholdDiscountsConfig
+                        ) = apply {
+                            defaultUnitAmount = matrixWithThresholdDiscountsConfig.defaultUnitAmount
+                            firstDimension = matrixWithThresholdDiscountsConfig.firstDimension
+                            matrixValues =
+                                matrixWithThresholdDiscountsConfig.matrixValues.map {
+                                    it.toMutableList()
+                                }
+                            secondDimension = matrixWithThresholdDiscountsConfig.secondDimension
+                            thresholdDiscountGroups =
+                                matrixWithThresholdDiscountsConfig.thresholdDiscountGroups.map {
+                                    it.toMutableList()
+                                }
+                            additionalProperties =
+                                matrixWithThresholdDiscountsConfig.additionalProperties
+                                    .toMutableMap()
+                        }
+
+                        /**
+                         * Unit price used for usage that does not match any defined matrix cell.
+                         */
+                        fun defaultUnitAmount(defaultUnitAmount: String) =
+                            defaultUnitAmount(JsonField.of(defaultUnitAmount))
+
+                        /**
+                         * Sets [Builder.defaultUnitAmount] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.defaultUnitAmount] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun defaultUnitAmount(defaultUnitAmount: JsonField<String>) = apply {
+                            this.defaultUnitAmount = defaultUnitAmount
+                        }
+
+                        /** First matrix dimension key. */
+                        fun firstDimension(firstDimension: String) =
+                            firstDimension(JsonField.of(firstDimension))
+
+                        /**
+                         * Sets [Builder.firstDimension] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.firstDimension] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun firstDimension(firstDimension: JsonField<String>) = apply {
+                            this.firstDimension = firstDimension
+                        }
+
+                        /** Per-cell unit prices. */
+                        fun matrixValues(matrixValues: List<MatrixValue>) =
+                            matrixValues(JsonField.of(matrixValues))
+
+                        /**
+                         * Sets [Builder.matrixValues] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.matrixValues] with a well-typed
+                         * `List<MatrixValue>` value instead. This method is primarily for setting
+                         * the field to an undocumented or not yet supported value.
+                         */
+                        fun matrixValues(matrixValues: JsonField<List<MatrixValue>>) = apply {
+                            this.matrixValues = matrixValues.map { it.toMutableList() }
+                        }
+
+                        /**
+                         * Adds a single [MatrixValue] to [matrixValues].
+                         *
+                         * @throws IllegalStateException if the field was previously set to a
+                         *   non-list.
+                         */
+                        fun addMatrixValue(matrixValue: MatrixValue) = apply {
+                            matrixValues =
+                                (matrixValues ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("matrixValues", it).add(matrixValue)
+                                }
+                        }
+
+                        /** Optional second matrix dimension key. */
+                        fun secondDimension(secondDimension: String?) =
+                            secondDimension(JsonField.ofNullable(secondDimension))
+
+                        /**
+                         * Sets [Builder.secondDimension] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.secondDimension] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun secondDimension(secondDimension: JsonField<String>) = apply {
+                            this.secondDimension = secondDimension
+                        }
+
+                        fun thresholdDiscountGroups(
+                            thresholdDiscountGroups: List<ThresholdDiscountGroup>
+                        ) = thresholdDiscountGroups(JsonField.of(thresholdDiscountGroups))
+
+                        /**
+                         * Sets [Builder.thresholdDiscountGroups] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.thresholdDiscountGroups] with a
+                         * well-typed `List<ThresholdDiscountGroup>` value instead. This method is
+                         * primarily for setting the field to an undocumented or not yet supported
+                         * value.
+                         */
+                        fun thresholdDiscountGroups(
+                            thresholdDiscountGroups: JsonField<List<ThresholdDiscountGroup>>
+                        ) = apply {
+                            this.thresholdDiscountGroups =
+                                thresholdDiscountGroups.map { it.toMutableList() }
+                        }
+
+                        /**
+                         * Adds a single [ThresholdDiscountGroup] to [thresholdDiscountGroups].
+                         *
+                         * @throws IllegalStateException if the field was previously set to a
+                         *   non-list.
+                         */
+                        fun addThresholdDiscountGroup(
+                            thresholdDiscountGroup: ThresholdDiscountGroup
+                        ) = apply {
+                            thresholdDiscountGroups =
+                                (thresholdDiscountGroups ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("thresholdDiscountGroups", it)
+                                        .add(thresholdDiscountGroup)
+                                }
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [MatrixWithThresholdDiscountsConfig].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .defaultUnitAmount()
+                         * .firstDimension()
+                         * .matrixValues()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
+                        fun build(): MatrixWithThresholdDiscountsConfig =
+                            MatrixWithThresholdDiscountsConfig(
+                                checkRequired("defaultUnitAmount", defaultUnitAmount),
+                                checkRequired("firstDimension", firstDimension),
+                                checkRequired("matrixValues", matrixValues).map {
+                                    it.toImmutable()
+                                },
+                                secondDimension,
+                                (thresholdDiscountGroups ?: JsonMissing.of()).map {
+                                    it.toImmutable()
+                                },
+                                additionalProperties.toMutableMap(),
+                            )
+                    }
+
+                    private var validated: Boolean = false
+
+                    /**
+                     * Validates that the types of all values in this object match their expected
+                     * types recursively.
+                     *
+                     * This method is _not_ forwards compatible with new types from the API for
+                     * existing fields.
+                     *
+                     * @throws OrbInvalidDataException if any value type in this object doesn't
+                     *   match its expected type.
+                     */
+                    fun validate(): MatrixWithThresholdDiscountsConfig = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        defaultUnitAmount()
+                        firstDimension()
+                        matrixValues().forEach { it.validate() }
+                        secondDimension()
+                        thresholdDiscountGroups()?.forEach { it.validate() }
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (if (defaultUnitAmount.asKnown() == null) 0 else 1) +
+                            (if (firstDimension.asKnown() == null) 0 else 1) +
+                            (matrixValues.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                            (if (secondDimension.asKnown() == null) 0 else 1) +
+                            (thresholdDiscountGroups.asKnown()?.sumOf { it.validity().toInt() }
+                                ?: 0)
+
+                    class MatrixValue
+                    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+                    private constructor(
+                        private val firstDimensionValue: JsonField<String>,
+                        private val unitAmount: JsonField<String>,
+                        private val secondDimensionValue: JsonField<String>,
+                        private val additionalProperties: MutableMap<String, JsonValue>,
+                    ) {
+
+                        @JsonCreator
+                        private constructor(
+                            @JsonProperty("first_dimension_value")
+                            @ExcludeMissing
+                            firstDimensionValue: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("unit_amount")
+                            @ExcludeMissing
+                            unitAmount: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("second_dimension_value")
+                            @ExcludeMissing
+                            secondDimensionValue: JsonField<String> = JsonMissing.of(),
+                        ) : this(
+                            firstDimensionValue,
+                            unitAmount,
+                            secondDimensionValue,
+                            mutableMapOf(),
+                        )
+
+                        /**
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun firstDimensionValue(): String =
+                            firstDimensionValue.getRequired("first_dimension_value")
+
+                        /**
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun unitAmount(): String = unitAmount.getRequired("unit_amount")
+
+                        /**
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   (e.g. if the server responded with an unexpected value).
+                         */
+                        fun secondDimensionValue(): String? =
+                            secondDimensionValue.getNullable("second_dimension_value")
+
+                        /**
+                         * Returns the raw JSON value of [firstDimensionValue].
+                         *
+                         * Unlike [firstDimensionValue], this method doesn't throw if the JSON field
+                         * has an unexpected type.
+                         */
+                        @JsonProperty("first_dimension_value")
+                        @ExcludeMissing
+                        fun _firstDimensionValue(): JsonField<String> = firstDimensionValue
+
+                        /**
+                         * Returns the raw JSON value of [unitAmount].
+                         *
+                         * Unlike [unitAmount], this method doesn't throw if the JSON field has an
+                         * unexpected type.
+                         */
+                        @JsonProperty("unit_amount")
+                        @ExcludeMissing
+                        fun _unitAmount(): JsonField<String> = unitAmount
+
+                        /**
+                         * Returns the raw JSON value of [secondDimensionValue].
+                         *
+                         * Unlike [secondDimensionValue], this method doesn't throw if the JSON
+                         * field has an unexpected type.
+                         */
+                        @JsonProperty("second_dimension_value")
+                        @ExcludeMissing
+                        fun _secondDimensionValue(): JsonField<String> = secondDimensionValue
+
+                        @JsonAnySetter
+                        private fun putAdditionalProperty(key: String, value: JsonValue) {
+                            additionalProperties.put(key, value)
+                        }
+
+                        @JsonAnyGetter
+                        @ExcludeMissing
+                        fun _additionalProperties(): Map<String, JsonValue> =
+                            Collections.unmodifiableMap(additionalProperties)
+
+                        fun toBuilder() = Builder().from(this)
+
+                        companion object {
+
+                            /**
+                             * Returns a mutable builder for constructing an instance of
+                             * [MatrixValue].
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .firstDimensionValue()
+                             * .unitAmount()
+                             * ```
+                             */
+                            fun builder() = Builder()
+                        }
+
+                        /** A builder for [MatrixValue]. */
+                        class Builder internal constructor() {
+
+                            private var firstDimensionValue: JsonField<String>? = null
+                            private var unitAmount: JsonField<String>? = null
+                            private var secondDimensionValue: JsonField<String> = JsonMissing.of()
+                            private var additionalProperties: MutableMap<String, JsonValue> =
+                                mutableMapOf()
+
+                            internal fun from(matrixValue: MatrixValue) = apply {
+                                firstDimensionValue = matrixValue.firstDimensionValue
+                                unitAmount = matrixValue.unitAmount
+                                secondDimensionValue = matrixValue.secondDimensionValue
+                                additionalProperties =
+                                    matrixValue.additionalProperties.toMutableMap()
+                            }
+
+                            fun firstDimensionValue(firstDimensionValue: String) =
+                                firstDimensionValue(JsonField.of(firstDimensionValue))
+
+                            /**
+                             * Sets [Builder.firstDimensionValue] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.firstDimensionValue] with a
+                             * well-typed [String] value instead. This method is primarily for
+                             * setting the field to an undocumented or not yet supported value.
+                             */
+                            fun firstDimensionValue(firstDimensionValue: JsonField<String>) =
+                                apply {
+                                    this.firstDimensionValue = firstDimensionValue
+                                }
+
+                            fun unitAmount(unitAmount: String) =
+                                unitAmount(JsonField.of(unitAmount))
+
+                            /**
+                             * Sets [Builder.unitAmount] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.unitAmount] with a well-typed
+                             * [String] value instead. This method is primarily for setting the
+                             * field to an undocumented or not yet supported value.
+                             */
+                            fun unitAmount(unitAmount: JsonField<String>) = apply {
+                                this.unitAmount = unitAmount
+                            }
+
+                            fun secondDimensionValue(secondDimensionValue: String?) =
+                                secondDimensionValue(JsonField.ofNullable(secondDimensionValue))
+
+                            /**
+                             * Sets [Builder.secondDimensionValue] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.secondDimensionValue] with a
+                             * well-typed [String] value instead. This method is primarily for
+                             * setting the field to an undocumented or not yet supported value.
+                             */
+                            fun secondDimensionValue(secondDimensionValue: JsonField<String>) =
+                                apply {
+                                    this.secondDimensionValue = secondDimensionValue
+                                }
+
+                            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                                apply {
+                                    this.additionalProperties.clear()
+                                    putAllAdditionalProperties(additionalProperties)
+                                }
+
+                            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                                additionalProperties.put(key, value)
+                            }
+
+                            fun putAllAdditionalProperties(
+                                additionalProperties: Map<String, JsonValue>
+                            ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                            fun removeAdditionalProperty(key: String) = apply {
+                                additionalProperties.remove(key)
+                            }
+
+                            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                                keys.forEach(::removeAdditionalProperty)
+                            }
+
+                            /**
+                             * Returns an immutable instance of [MatrixValue].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .firstDimensionValue()
+                             * .unitAmount()
+                             * ```
+                             *
+                             * @throws IllegalStateException if any required field is unset.
+                             */
+                            fun build(): MatrixValue =
+                                MatrixValue(
+                                    checkRequired("firstDimensionValue", firstDimensionValue),
+                                    checkRequired("unitAmount", unitAmount),
+                                    secondDimensionValue,
+                                    additionalProperties.toMutableMap(),
+                                )
+                        }
+
+                        private var validated: Boolean = false
+
+                        /**
+                         * Validates that the types of all values in this object match their
+                         * expected types recursively.
+                         *
+                         * This method is _not_ forwards compatible with new types from the API for
+                         * existing fields.
+                         *
+                         * @throws OrbInvalidDataException if any value type in this object doesn't
+                         *   match its expected type.
+                         */
+                        fun validate(): MatrixValue = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            firstDimensionValue()
+                            unitAmount()
+                            secondDimensionValue()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int =
+                            (if (firstDimensionValue.asKnown() == null) 0 else 1) +
+                                (if (unitAmount.asKnown() == null) 0 else 1) +
+                                (if (secondDimensionValue.asKnown() == null) 0 else 1)
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return other is MatrixValue &&
+                                firstDimensionValue == other.firstDimensionValue &&
+                                unitAmount == other.unitAmount &&
+                                secondDimensionValue == other.secondDimensionValue &&
+                                additionalProperties == other.additionalProperties
+                        }
+
+                        private val hashCode: Int by lazy {
+                            Objects.hash(
+                                firstDimensionValue,
+                                unitAmount,
+                                secondDimensionValue,
+                                additionalProperties,
+                            )
+                        }
+
+                        override fun hashCode(): Int = hashCode
+
+                        override fun toString() =
+                            "MatrixValue{firstDimensionValue=$firstDimensionValue, unitAmount=$unitAmount, secondDimensionValue=$secondDimensionValue, additionalProperties=$additionalProperties}"
+                    }
+
+                    class ThresholdDiscountGroup
+                    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+                    private constructor(
+                        private val aboveThresholdDiscountPercentage: JsonField<String>,
+                        private val belowThresholdDiscountPercentage: JsonField<String>,
+                        private val cellCoordinates: JsonField<String>,
+                        private val thresholdAmount: JsonField<String>,
+                        private val description: JsonField<String>,
+                        private val additionalProperties: MutableMap<String, JsonValue>,
+                    ) {
+
+                        @JsonCreator
+                        private constructor(
+                            @JsonProperty("above_threshold_discount_percentage")
+                            @ExcludeMissing
+                            aboveThresholdDiscountPercentage: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("below_threshold_discount_percentage")
+                            @ExcludeMissing
+                            belowThresholdDiscountPercentage: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("cell_coordinates")
+                            @ExcludeMissing
+                            cellCoordinates: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("threshold_amount")
+                            @ExcludeMissing
+                            thresholdAmount: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("description")
+                            @ExcludeMissing
+                            description: JsonField<String> = JsonMissing.of(),
+                        ) : this(
+                            aboveThresholdDiscountPercentage,
+                            belowThresholdDiscountPercentage,
+                            cellCoordinates,
+                            thresholdAmount,
+                            description,
+                            mutableMapOf(),
+                        )
+
+                        /**
+                         * Discount rate applied to spend above the threshold.
+                         *
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun aboveThresholdDiscountPercentage(): String =
+                            aboveThresholdDiscountPercentage.getRequired(
+                                "above_threshold_discount_percentage"
+                            )
+
+                        /**
+                         * Discount rate applied to spend at or below the threshold. Set to 0 for no
+                         * baseline discount.
+                         *
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun belowThresholdDiscountPercentage(): String =
+                            belowThresholdDiscountPercentage.getRequired(
+                                "below_threshold_discount_percentage"
+                            )
+
+                        /**
+                         * Semicolon-separated list of matrix cell coordinates targeted by this
+                         * group. Each coordinate is `first,second` when the matrix has two
+                         * dimensions, or just `first` for a single-dimension matrix. Example:
+                         * `blue,circle;green,triangle`.
+                         *
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun cellCoordinates(): String =
+                            cellCoordinates.getRequired("cell_coordinates")
+
+                        /**
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun thresholdAmount(): String =
+                            thresholdAmount.getRequired("threshold_amount")
+
+                        /**
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   (e.g. if the server responded with an unexpected value).
+                         */
+                        fun description(): String? = description.getNullable("description")
+
+                        /**
+                         * Returns the raw JSON value of [aboveThresholdDiscountPercentage].
+                         *
+                         * Unlike [aboveThresholdDiscountPercentage], this method doesn't throw if
+                         * the JSON field has an unexpected type.
+                         */
+                        @JsonProperty("above_threshold_discount_percentage")
+                        @ExcludeMissing
+                        fun _aboveThresholdDiscountPercentage(): JsonField<String> =
+                            aboveThresholdDiscountPercentage
+
+                        /**
+                         * Returns the raw JSON value of [belowThresholdDiscountPercentage].
+                         *
+                         * Unlike [belowThresholdDiscountPercentage], this method doesn't throw if
+                         * the JSON field has an unexpected type.
+                         */
+                        @JsonProperty("below_threshold_discount_percentage")
+                        @ExcludeMissing
+                        fun _belowThresholdDiscountPercentage(): JsonField<String> =
+                            belowThresholdDiscountPercentage
+
+                        /**
+                         * Returns the raw JSON value of [cellCoordinates].
+                         *
+                         * Unlike [cellCoordinates], this method doesn't throw if the JSON field has
+                         * an unexpected type.
+                         */
+                        @JsonProperty("cell_coordinates")
+                        @ExcludeMissing
+                        fun _cellCoordinates(): JsonField<String> = cellCoordinates
+
+                        /**
+                         * Returns the raw JSON value of [thresholdAmount].
+                         *
+                         * Unlike [thresholdAmount], this method doesn't throw if the JSON field has
+                         * an unexpected type.
+                         */
+                        @JsonProperty("threshold_amount")
+                        @ExcludeMissing
+                        fun _thresholdAmount(): JsonField<String> = thresholdAmount
+
+                        /**
+                         * Returns the raw JSON value of [description].
+                         *
+                         * Unlike [description], this method doesn't throw if the JSON field has an
+                         * unexpected type.
+                         */
+                        @JsonProperty("description")
+                        @ExcludeMissing
+                        fun _description(): JsonField<String> = description
+
+                        @JsonAnySetter
+                        private fun putAdditionalProperty(key: String, value: JsonValue) {
+                            additionalProperties.put(key, value)
+                        }
+
+                        @JsonAnyGetter
+                        @ExcludeMissing
+                        fun _additionalProperties(): Map<String, JsonValue> =
+                            Collections.unmodifiableMap(additionalProperties)
+
+                        fun toBuilder() = Builder().from(this)
+
+                        companion object {
+
+                            /**
+                             * Returns a mutable builder for constructing an instance of
+                             * [ThresholdDiscountGroup].
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .aboveThresholdDiscountPercentage()
+                             * .belowThresholdDiscountPercentage()
+                             * .cellCoordinates()
+                             * .thresholdAmount()
+                             * ```
+                             */
+                            fun builder() = Builder()
+                        }
+
+                        /** A builder for [ThresholdDiscountGroup]. */
+                        class Builder internal constructor() {
+
+                            private var aboveThresholdDiscountPercentage: JsonField<String>? = null
+                            private var belowThresholdDiscountPercentage: JsonField<String>? = null
+                            private var cellCoordinates: JsonField<String>? = null
+                            private var thresholdAmount: JsonField<String>? = null
+                            private var description: JsonField<String> = JsonMissing.of()
+                            private var additionalProperties: MutableMap<String, JsonValue> =
+                                mutableMapOf()
+
+                            internal fun from(thresholdDiscountGroup: ThresholdDiscountGroup) =
+                                apply {
+                                    aboveThresholdDiscountPercentage =
+                                        thresholdDiscountGroup.aboveThresholdDiscountPercentage
+                                    belowThresholdDiscountPercentage =
+                                        thresholdDiscountGroup.belowThresholdDiscountPercentage
+                                    cellCoordinates = thresholdDiscountGroup.cellCoordinates
+                                    thresholdAmount = thresholdDiscountGroup.thresholdAmount
+                                    description = thresholdDiscountGroup.description
+                                    additionalProperties =
+                                        thresholdDiscountGroup.additionalProperties.toMutableMap()
+                                }
+
+                            /** Discount rate applied to spend above the threshold. */
+                            fun aboveThresholdDiscountPercentage(
+                                aboveThresholdDiscountPercentage: String
+                            ) =
+                                aboveThresholdDiscountPercentage(
+                                    JsonField.of(aboveThresholdDiscountPercentage)
+                                )
+
+                            /**
+                             * Sets [Builder.aboveThresholdDiscountPercentage] to an arbitrary JSON
+                             * value.
+                             *
+                             * You should usually call [Builder.aboveThresholdDiscountPercentage]
+                             * with a well-typed [String] value instead. This method is primarily
+                             * for setting the field to an undocumented or not yet supported value.
+                             */
+                            fun aboveThresholdDiscountPercentage(
+                                aboveThresholdDiscountPercentage: JsonField<String>
+                            ) = apply {
+                                this.aboveThresholdDiscountPercentage =
+                                    aboveThresholdDiscountPercentage
+                            }
+
+                            /**
+                             * Discount rate applied to spend at or below the threshold. Set to 0
+                             * for no baseline discount.
+                             */
+                            fun belowThresholdDiscountPercentage(
+                                belowThresholdDiscountPercentage: String
+                            ) =
+                                belowThresholdDiscountPercentage(
+                                    JsonField.of(belowThresholdDiscountPercentage)
+                                )
+
+                            /**
+                             * Sets [Builder.belowThresholdDiscountPercentage] to an arbitrary JSON
+                             * value.
+                             *
+                             * You should usually call [Builder.belowThresholdDiscountPercentage]
+                             * with a well-typed [String] value instead. This method is primarily
+                             * for setting the field to an undocumented or not yet supported value.
+                             */
+                            fun belowThresholdDiscountPercentage(
+                                belowThresholdDiscountPercentage: JsonField<String>
+                            ) = apply {
+                                this.belowThresholdDiscountPercentage =
+                                    belowThresholdDiscountPercentage
+                            }
+
+                            /**
+                             * Semicolon-separated list of matrix cell coordinates targeted by this
+                             * group. Each coordinate is `first,second` when the matrix has two
+                             * dimensions, or just `first` for a single-dimension matrix. Example:
+                             * `blue,circle;green,triangle`.
+                             */
+                            fun cellCoordinates(cellCoordinates: String) =
+                                cellCoordinates(JsonField.of(cellCoordinates))
+
+                            /**
+                             * Sets [Builder.cellCoordinates] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.cellCoordinates] with a well-typed
+                             * [String] value instead. This method is primarily for setting the
+                             * field to an undocumented or not yet supported value.
+                             */
+                            fun cellCoordinates(cellCoordinates: JsonField<String>) = apply {
+                                this.cellCoordinates = cellCoordinates
+                            }
+
+                            fun thresholdAmount(thresholdAmount: String) =
+                                thresholdAmount(JsonField.of(thresholdAmount))
+
+                            /**
+                             * Sets [Builder.thresholdAmount] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.thresholdAmount] with a well-typed
+                             * [String] value instead. This method is primarily for setting the
+                             * field to an undocumented or not yet supported value.
+                             */
+                            fun thresholdAmount(thresholdAmount: JsonField<String>) = apply {
+                                this.thresholdAmount = thresholdAmount
+                            }
+
+                            fun description(description: String?) =
+                                description(JsonField.ofNullable(description))
+
+                            /**
+                             * Sets [Builder.description] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.description] with a well-typed
+                             * [String] value instead. This method is primarily for setting the
+                             * field to an undocumented or not yet supported value.
+                             */
+                            fun description(description: JsonField<String>) = apply {
+                                this.description = description
+                            }
+
+                            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                                apply {
+                                    this.additionalProperties.clear()
+                                    putAllAdditionalProperties(additionalProperties)
+                                }
+
+                            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                                additionalProperties.put(key, value)
+                            }
+
+                            fun putAllAdditionalProperties(
+                                additionalProperties: Map<String, JsonValue>
+                            ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                            fun removeAdditionalProperty(key: String) = apply {
+                                additionalProperties.remove(key)
+                            }
+
+                            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                                keys.forEach(::removeAdditionalProperty)
+                            }
+
+                            /**
+                             * Returns an immutable instance of [ThresholdDiscountGroup].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .aboveThresholdDiscountPercentage()
+                             * .belowThresholdDiscountPercentage()
+                             * .cellCoordinates()
+                             * .thresholdAmount()
+                             * ```
+                             *
+                             * @throws IllegalStateException if any required field is unset.
+                             */
+                            fun build(): ThresholdDiscountGroup =
+                                ThresholdDiscountGroup(
+                                    checkRequired(
+                                        "aboveThresholdDiscountPercentage",
+                                        aboveThresholdDiscountPercentage,
+                                    ),
+                                    checkRequired(
+                                        "belowThresholdDiscountPercentage",
+                                        belowThresholdDiscountPercentage,
+                                    ),
+                                    checkRequired("cellCoordinates", cellCoordinates),
+                                    checkRequired("thresholdAmount", thresholdAmount),
+                                    description,
+                                    additionalProperties.toMutableMap(),
+                                )
+                        }
+
+                        private var validated: Boolean = false
+
+                        /**
+                         * Validates that the types of all values in this object match their
+                         * expected types recursively.
+                         *
+                         * This method is _not_ forwards compatible with new types from the API for
+                         * existing fields.
+                         *
+                         * @throws OrbInvalidDataException if any value type in this object doesn't
+                         *   match its expected type.
+                         */
+                        fun validate(): ThresholdDiscountGroup = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            aboveThresholdDiscountPercentage()
+                            belowThresholdDiscountPercentage()
+                            cellCoordinates()
+                            thresholdAmount()
+                            description()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int =
+                            (if (aboveThresholdDiscountPercentage.asKnown() == null) 0 else 1) +
+                                (if (belowThresholdDiscountPercentage.asKnown() == null) 0 else 1) +
+                                (if (cellCoordinates.asKnown() == null) 0 else 1) +
+                                (if (thresholdAmount.asKnown() == null) 0 else 1) +
+                                (if (description.asKnown() == null) 0 else 1)
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return other is ThresholdDiscountGroup &&
+                                aboveThresholdDiscountPercentage ==
+                                    other.aboveThresholdDiscountPercentage &&
+                                belowThresholdDiscountPercentage ==
+                                    other.belowThresholdDiscountPercentage &&
+                                cellCoordinates == other.cellCoordinates &&
+                                thresholdAmount == other.thresholdAmount &&
+                                description == other.description &&
+                                additionalProperties == other.additionalProperties
+                        }
+
+                        private val hashCode: Int by lazy {
+                            Objects.hash(
+                                aboveThresholdDiscountPercentage,
+                                belowThresholdDiscountPercentage,
+                                cellCoordinates,
+                                thresholdAmount,
+                                description,
+                                additionalProperties,
+                            )
+                        }
+
+                        override fun hashCode(): Int = hashCode
+
+                        override fun toString() =
+                            "ThresholdDiscountGroup{aboveThresholdDiscountPercentage=$aboveThresholdDiscountPercentage, belowThresholdDiscountPercentage=$belowThresholdDiscountPercentage, cellCoordinates=$cellCoordinates, thresholdAmount=$thresholdAmount, description=$description, additionalProperties=$additionalProperties}"
+                    }
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is MatrixWithThresholdDiscountsConfig &&
+                            defaultUnitAmount == other.defaultUnitAmount &&
+                            firstDimension == other.firstDimension &&
+                            matrixValues == other.matrixValues &&
+                            secondDimension == other.secondDimension &&
+                            thresholdDiscountGroups == other.thresholdDiscountGroups &&
+                            additionalProperties == other.additionalProperties
+                    }
+
+                    private val hashCode: Int by lazy {
+                        Objects.hash(
+                            defaultUnitAmount,
+                            firstDimension,
+                            matrixValues,
+                            secondDimension,
+                            thresholdDiscountGroups,
+                            additionalProperties,
+                        )
+                    }
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() =
+                        "MatrixWithThresholdDiscountsConfig{defaultUnitAmount=$defaultUnitAmount, firstDimension=$firstDimension, matrixValues=$matrixValues, secondDimension=$secondDimension, thresholdDiscountGroups=$thresholdDiscountGroups, additionalProperties=$additionalProperties}"
+                }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                class Metadata
+                @JsonCreator
+                private constructor(
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    private val additionalProperties: Map<String, JsonValue>
+                ) {
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [Metadata]. */
+                    class Builder internal constructor() {
+
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(metadata: Metadata) = apply {
+                            additionalProperties = metadata.additionalProperties.toMutableMap()
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
+                        fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                    }
+
+                    private var validated: Boolean = false
+
+                    /**
+                     * Validates that the types of all values in this object match their expected
+                     * types recursively.
+                     *
+                     * This method is _not_ forwards compatible with new types from the API for
+                     * existing fields.
+                     *
+                     * @throws OrbInvalidDataException if any value type in this object doesn't
+                     *   match its expected type.
+                     */
+                    fun validate(): Metadata = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        additionalProperties.count { (_, value) ->
+                            !value.isNull() && !value.isMissing()
+                        }
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is Metadata &&
+                            additionalProperties == other.additionalProperties
+                    }
+
+                    private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is MatrixWithThresholdDiscounts &&
+                        cadence == other.cadence &&
+                        itemId == other.itemId &&
+                        matrixWithThresholdDiscountsConfig ==
+                            other.matrixWithThresholdDiscountsConfig &&
+                        modelType == other.modelType &&
+                        name == other.name &&
+                        billableMetricId == other.billableMetricId &&
+                        billedInAdvance == other.billedInAdvance &&
+                        billingCycleConfiguration == other.billingCycleConfiguration &&
+                        conversionRate == other.conversionRate &&
+                        conversionRateConfig == other.conversionRateConfig &&
+                        currency == other.currency &&
+                        dimensionalPriceConfiguration == other.dimensionalPriceConfiguration &&
+                        externalPriceId == other.externalPriceId &&
+                        fixedPriceQuantity == other.fixedPriceQuantity &&
+                        invoiceGroupingKey == other.invoiceGroupingKey &&
+                        invoicingCycleConfiguration == other.invoicingCycleConfiguration &&
+                        licenseTypeId == other.licenseTypeId &&
+                        metadata == other.metadata &&
+                        referenceId == other.referenceId &&
+                        additionalProperties == other.additionalProperties
+                }
+
+                private val hashCode: Int by lazy {
+                    Objects.hash(
+                        cadence,
+                        itemId,
+                        matrixWithThresholdDiscountsConfig,
+                        modelType,
+                        name,
+                        billableMetricId,
+                        billedInAdvance,
+                        billingCycleConfiguration,
+                        conversionRate,
+                        conversionRateConfig,
+                        currency,
+                        dimensionalPriceConfiguration,
+                        externalPriceId,
+                        fixedPriceQuantity,
+                        invoiceGroupingKey,
+                        invoicingCycleConfiguration,
+                        licenseTypeId,
+                        metadata,
+                        referenceId,
+                        additionalProperties,
+                    )
+                }
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "MatrixWithThresholdDiscounts{cadence=$cadence, itemId=$itemId, matrixWithThresholdDiscountsConfig=$matrixWithThresholdDiscountsConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, licenseTypeId=$licenseTypeId, metadata=$metadata, referenceId=$referenceId, additionalProperties=$additionalProperties}"
             }
 
             class TieredWithProration
@@ -21725,6 +24364,13 @@ private constructor(
                 price(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
             /**
+             * Alias for calling [price] with
+             * `Price.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts)`.
+             */
+            fun price(matrixWithThresholdDiscounts: Price.MatrixWithThresholdDiscounts) =
+                price(Price.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts))
+
+            /**
              * Alias for calling [price] with `Price.ofTieredWithProration(tieredWithProration)`.
              */
             fun price(tieredWithProration: Price.TieredWithProration) =
@@ -23812,6 +26458,7 @@ private constructor(
             private val packageWithAllocation: NewPlanPackageWithAllocationPrice? = null,
             private val unitWithPercent: NewPlanUnitWithPercentPrice? = null,
             private val matrixWithAllocation: NewPlanMatrixWithAllocationPrice? = null,
+            private val matrixWithThresholdDiscounts: MatrixWithThresholdDiscounts? = null,
             private val tieredWithProration: TieredWithProration? = null,
             private val unitWithProration: NewPlanUnitWithProrationPrice? = null,
             private val groupedAllocation: NewPlanGroupedAllocationPrice? = null,
@@ -23865,6 +26512,9 @@ private constructor(
             fun unitWithPercent(): NewPlanUnitWithPercentPrice? = unitWithPercent
 
             fun matrixWithAllocation(): NewPlanMatrixWithAllocationPrice? = matrixWithAllocation
+
+            fun matrixWithThresholdDiscounts(): MatrixWithThresholdDiscounts? =
+                matrixWithThresholdDiscounts
 
             fun tieredWithProration(): TieredWithProration? = tieredWithProration
 
@@ -23937,6 +26587,8 @@ private constructor(
             fun isUnitWithPercent(): Boolean = unitWithPercent != null
 
             fun isMatrixWithAllocation(): Boolean = matrixWithAllocation != null
+
+            fun isMatrixWithThresholdDiscounts(): Boolean = matrixWithThresholdDiscounts != null
 
             fun isTieredWithProration(): Boolean = tieredWithProration != null
 
@@ -24012,6 +26664,9 @@ private constructor(
 
             fun asMatrixWithAllocation(): NewPlanMatrixWithAllocationPrice =
                 matrixWithAllocation.getOrThrow("matrixWithAllocation")
+
+            fun asMatrixWithThresholdDiscounts(): MatrixWithThresholdDiscounts =
+                matrixWithThresholdDiscounts.getOrThrow("matrixWithThresholdDiscounts")
 
             fun asTieredWithProration(): TieredWithProration =
                 tieredWithProration.getOrThrow("tieredWithProration")
@@ -24115,6 +26770,8 @@ private constructor(
                     unitWithPercent != null -> visitor.visitUnitWithPercent(unitWithPercent)
                     matrixWithAllocation != null ->
                         visitor.visitMatrixWithAllocation(matrixWithAllocation)
+                    matrixWithThresholdDiscounts != null ->
+                        visitor.visitMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts)
                     tieredWithProration != null ->
                         visitor.visitTieredWithProration(tieredWithProration)
                     unitWithProration != null -> visitor.visitUnitWithProration(unitWithProration)
@@ -24236,6 +26893,12 @@ private constructor(
                             matrixWithAllocation: NewPlanMatrixWithAllocationPrice
                         ) {
                             matrixWithAllocation.validate()
+                        }
+
+                        override fun visitMatrixWithThresholdDiscounts(
+                            matrixWithThresholdDiscounts: MatrixWithThresholdDiscounts
+                        ) {
+                            matrixWithThresholdDiscounts.validate()
                         }
 
                         override fun visitTieredWithProration(
@@ -24412,6 +27075,10 @@ private constructor(
                             matrixWithAllocation: NewPlanMatrixWithAllocationPrice
                         ) = matrixWithAllocation.validity()
 
+                        override fun visitMatrixWithThresholdDiscounts(
+                            matrixWithThresholdDiscounts: MatrixWithThresholdDiscounts
+                        ) = matrixWithThresholdDiscounts.validity()
+
                         override fun visitTieredWithProration(
                             tieredWithProration: TieredWithProration
                         ) = tieredWithProration.validity()
@@ -24509,6 +27176,7 @@ private constructor(
                     packageWithAllocation == other.packageWithAllocation &&
                     unitWithPercent == other.unitWithPercent &&
                     matrixWithAllocation == other.matrixWithAllocation &&
+                    matrixWithThresholdDiscounts == other.matrixWithThresholdDiscounts &&
                     tieredWithProration == other.tieredWithProration &&
                     unitWithProration == other.unitWithProration &&
                     groupedAllocation == other.groupedAllocation &&
@@ -24546,6 +27214,7 @@ private constructor(
                     packageWithAllocation,
                     unitWithPercent,
                     matrixWithAllocation,
+                    matrixWithThresholdDiscounts,
                     tieredWithProration,
                     unitWithProration,
                     groupedAllocation,
@@ -24587,6 +27256,8 @@ private constructor(
                     unitWithPercent != null -> "Price{unitWithPercent=$unitWithPercent}"
                     matrixWithAllocation != null ->
                         "Price{matrixWithAllocation=$matrixWithAllocation}"
+                    matrixWithThresholdDiscounts != null ->
+                        "Price{matrixWithThresholdDiscounts=$matrixWithThresholdDiscounts}"
                     tieredWithProration != null -> "Price{tieredWithProration=$tieredWithProration}"
                     unitWithProration != null -> "Price{unitWithProration=$unitWithProration}"
                     groupedAllocation != null -> "Price{groupedAllocation=$groupedAllocation}"
@@ -24661,6 +27332,10 @@ private constructor(
 
                 fun ofMatrixWithAllocation(matrixWithAllocation: NewPlanMatrixWithAllocationPrice) =
                     Price(matrixWithAllocation = matrixWithAllocation)
+
+                fun ofMatrixWithThresholdDiscounts(
+                    matrixWithThresholdDiscounts: MatrixWithThresholdDiscounts
+                ) = Price(matrixWithThresholdDiscounts = matrixWithThresholdDiscounts)
 
                 fun ofTieredWithProration(tieredWithProration: TieredWithProration) =
                     Price(tieredWithProration = tieredWithProration)
@@ -24766,6 +27441,10 @@ private constructor(
 
                 fun visitMatrixWithAllocation(
                     matrixWithAllocation: NewPlanMatrixWithAllocationPrice
+                ): T
+
+                fun visitMatrixWithThresholdDiscounts(
+                    matrixWithThresholdDiscounts: MatrixWithThresholdDiscounts
                 ): T
 
                 fun visitTieredWithProration(tieredWithProration: TieredWithProration): T
@@ -24933,6 +27612,14 @@ private constructor(
                                     jacksonTypeRef<NewPlanMatrixWithAllocationPrice>(),
                                 )
                                 ?.let { Price(matrixWithAllocation = it, _json = json) }
+                                ?: Price(_json = json)
+                        }
+                        "matrix_with_threshold_discounts" -> {
+                            return tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<MatrixWithThresholdDiscounts>(),
+                                )
+                                ?.let { Price(matrixWithThresholdDiscounts = it, _json = json) }
                                 ?: Price(_json = json)
                         }
                         "tiered_with_proration" -> {
@@ -25107,6 +27794,8 @@ private constructor(
                             generator.writeObject(value.unitWithPercent)
                         value.matrixWithAllocation != null ->
                             generator.writeObject(value.matrixWithAllocation)
+                        value.matrixWithThresholdDiscounts != null ->
+                            generator.writeObject(value.matrixWithThresholdDiscounts)
                         value.tieredWithProration != null ->
                             generator.writeObject(value.tieredWithProration)
                         value.unitWithProration != null ->
@@ -27287,6 +29976,2595 @@ private constructor(
 
                 override fun toString() =
                     "BulkWithFilters{bulkWithFiltersConfig=$bulkWithFiltersConfig, cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, licenseTypeId=$licenseTypeId, metadata=$metadata, referenceId=$referenceId, additionalProperties=$additionalProperties}"
+            }
+
+            class MatrixWithThresholdDiscounts
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+            private constructor(
+                private val cadence: JsonField<Cadence>,
+                private val itemId: JsonField<String>,
+                private val matrixWithThresholdDiscountsConfig:
+                    JsonField<MatrixWithThresholdDiscountsConfig>,
+                private val modelType: JsonValue,
+                private val name: JsonField<String>,
+                private val billableMetricId: JsonField<String>,
+                private val billedInAdvance: JsonField<Boolean>,
+                private val billingCycleConfiguration: JsonField<NewBillingCycleConfiguration>,
+                private val conversionRate: JsonField<Double>,
+                private val conversionRateConfig: JsonField<ConversionRateConfig>,
+                private val currency: JsonField<String>,
+                private val dimensionalPriceConfiguration:
+                    JsonField<NewDimensionalPriceConfiguration>,
+                private val externalPriceId: JsonField<String>,
+                private val fixedPriceQuantity: JsonField<Double>,
+                private val invoiceGroupingKey: JsonField<String>,
+                private val invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>,
+                private val licenseTypeId: JsonField<String>,
+                private val metadata: JsonField<Metadata>,
+                private val referenceId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("cadence")
+                    @ExcludeMissing
+                    cadence: JsonField<Cadence> = JsonMissing.of(),
+                    @JsonProperty("item_id")
+                    @ExcludeMissing
+                    itemId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("matrix_with_threshold_discounts_config")
+                    @ExcludeMissing
+                    matrixWithThresholdDiscountsConfig:
+                        JsonField<MatrixWithThresholdDiscountsConfig> =
+                        JsonMissing.of(),
+                    @JsonProperty("model_type")
+                    @ExcludeMissing
+                    modelType: JsonValue = JsonMissing.of(),
+                    @JsonProperty("name")
+                    @ExcludeMissing
+                    name: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("billable_metric_id")
+                    @ExcludeMissing
+                    billableMetricId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("billed_in_advance")
+                    @ExcludeMissing
+                    billedInAdvance: JsonField<Boolean> = JsonMissing.of(),
+                    @JsonProperty("billing_cycle_configuration")
+                    @ExcludeMissing
+                    billingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of(),
+                    @JsonProperty("conversion_rate")
+                    @ExcludeMissing
+                    conversionRate: JsonField<Double> = JsonMissing.of(),
+                    @JsonProperty("conversion_rate_config")
+                    @ExcludeMissing
+                    conversionRateConfig: JsonField<ConversionRateConfig> = JsonMissing.of(),
+                    @JsonProperty("currency")
+                    @ExcludeMissing
+                    currency: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("dimensional_price_configuration")
+                    @ExcludeMissing
+                    dimensionalPriceConfiguration: JsonField<NewDimensionalPriceConfiguration> =
+                        JsonMissing.of(),
+                    @JsonProperty("external_price_id")
+                    @ExcludeMissing
+                    externalPriceId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("fixed_price_quantity")
+                    @ExcludeMissing
+                    fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+                    @JsonProperty("invoice_grouping_key")
+                    @ExcludeMissing
+                    invoiceGroupingKey: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("invoicing_cycle_configuration")
+                    @ExcludeMissing
+                    invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of(),
+                    @JsonProperty("license_type_id")
+                    @ExcludeMissing
+                    licenseTypeId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("metadata")
+                    @ExcludeMissing
+                    metadata: JsonField<Metadata> = JsonMissing.of(),
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    referenceId: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    cadence,
+                    itemId,
+                    matrixWithThresholdDiscountsConfig,
+                    modelType,
+                    name,
+                    billableMetricId,
+                    billedInAdvance,
+                    billingCycleConfiguration,
+                    conversionRate,
+                    conversionRateConfig,
+                    currency,
+                    dimensionalPriceConfiguration,
+                    externalPriceId,
+                    fixedPriceQuantity,
+                    invoiceGroupingKey,
+                    invoicingCycleConfiguration,
+                    licenseTypeId,
+                    metadata,
+                    referenceId,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * The cadence to bill for this price on.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun cadence(): Cadence = cadence.getRequired("cadence")
+
+                /**
+                 * The id of the item the price will be associated with.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun itemId(): String = itemId.getRequired("item_id")
+
+                /**
+                 * Configuration for matrix_with_threshold_discounts pricing
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun matrixWithThresholdDiscountsConfig(): MatrixWithThresholdDiscountsConfig =
+                    matrixWithThresholdDiscountsConfig.getRequired(
+                        "matrix_with_threshold_discounts_config"
+                    )
+
+                /**
+                 * The pricing model type
+                 *
+                 * Expected to always return the following:
+                 * ```kotlin
+                 * JsonValue.from("matrix_with_threshold_discounts")
+                 * ```
+                 *
+                 * However, this method can be useful for debugging and logging (e.g. if the server
+                 * responded with an unexpected value).
+                 */
+                @JsonProperty("model_type") @ExcludeMissing fun _modelType(): JsonValue = modelType
+
+                /**
+                 * The name of the price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+                 *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+                 *   value).
+                 */
+                fun name(): String = name.getRequired("name")
+
+                /**
+                 * The id of the billable metric for the price. Only needed if the price is
+                 * usage-based.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun billableMetricId(): String? = billableMetricId.getNullable("billable_metric_id")
+
+                /**
+                 * If the Price represents a fixed cost, the price will be billed in-advance if this
+                 * is true, and in-arrears if this is false.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun billedInAdvance(): Boolean? = billedInAdvance.getNullable("billed_in_advance")
+
+                /**
+                 * For custom cadence: specifies the duration of the billing period in days or
+                 * months.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun billingCycleConfiguration(): NewBillingCycleConfiguration? =
+                    billingCycleConfiguration.getNullable("billing_cycle_configuration")
+
+                /**
+                 * The per unit conversion rate of the price currency to the invoicing currency.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+                /**
+                 * The configuration for the rate of the price currency to the invoicing currency.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun conversionRateConfig(): ConversionRateConfig? =
+                    conversionRateConfig.getNullable("conversion_rate_config")
+
+                /**
+                 * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                 * price is billed.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * For dimensional price: specifies a price group and dimension values
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun dimensionalPriceConfiguration(): NewDimensionalPriceConfiguration? =
+                    dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
+
+                /**
+                 * An alias for the price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
+
+                /**
+                 * If the Price represents a fixed cost, this represents the quantity of units
+                 * applied.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun fixedPriceQuantity(): Double? =
+                    fixedPriceQuantity.getNullable("fixed_price_quantity")
+
+                /**
+                 * The property used to group this price on an invoice
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun invoiceGroupingKey(): String? =
+                    invoiceGroupingKey.getNullable("invoice_grouping_key")
+
+                /**
+                 * Within each billing cycle, specifies the cadence at which invoices are produced.
+                 * If unspecified, a single invoice is produced per billing cycle.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun invoicingCycleConfiguration(): NewBillingCycleConfiguration? =
+                    invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
+
+                /**
+                 * The ID of the license type to associate with this price.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun licenseTypeId(): String? = licenseTypeId.getNullable("license_type_id")
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 *
+                 * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
+                 *   the server responded with an unexpected value).
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
+
+                /**
+                 * Returns the raw JSON value of [cadence].
+                 *
+                 * Unlike [cadence], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("cadence")
+                @ExcludeMissing
+                fun _cadence(): JsonField<Cadence> = cadence
+
+                /**
+                 * Returns the raw JSON value of [itemId].
+                 *
+                 * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+
+                /**
+                 * Returns the raw JSON value of [matrixWithThresholdDiscountsConfig].
+                 *
+                 * Unlike [matrixWithThresholdDiscountsConfig], this method doesn't throw if the
+                 * JSON field has an unexpected type.
+                 */
+                @JsonProperty("matrix_with_threshold_discounts_config")
+                @ExcludeMissing
+                fun _matrixWithThresholdDiscountsConfig():
+                    JsonField<MatrixWithThresholdDiscountsConfig> =
+                    matrixWithThresholdDiscountsConfig
+
+                /**
+                 * Returns the raw JSON value of [name].
+                 *
+                 * Unlike [name], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+                /**
+                 * Returns the raw JSON value of [billableMetricId].
+                 *
+                 * Unlike [billableMetricId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("billable_metric_id")
+                @ExcludeMissing
+                fun _billableMetricId(): JsonField<String> = billableMetricId
+
+                /**
+                 * Returns the raw JSON value of [billedInAdvance].
+                 *
+                 * Unlike [billedInAdvance], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("billed_in_advance")
+                @ExcludeMissing
+                fun _billedInAdvance(): JsonField<Boolean> = billedInAdvance
+
+                /**
+                 * Returns the raw JSON value of [billingCycleConfiguration].
+                 *
+                 * Unlike [billingCycleConfiguration], this method doesn't throw if the JSON field
+                 * has an unexpected type.
+                 */
+                @JsonProperty("billing_cycle_configuration")
+                @ExcludeMissing
+                fun _billingCycleConfiguration(): JsonField<NewBillingCycleConfiguration> =
+                    billingCycleConfiguration
+
+                /**
+                 * Returns the raw JSON value of [conversionRate].
+                 *
+                 * Unlike [conversionRate], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("conversion_rate")
+                @ExcludeMissing
+                fun _conversionRate(): JsonField<Double> = conversionRate
+
+                /**
+                 * Returns the raw JSON value of [conversionRateConfig].
+                 *
+                 * Unlike [conversionRateConfig], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("conversion_rate_config")
+                @ExcludeMissing
+                fun _conversionRateConfig(): JsonField<ConversionRateConfig> = conversionRateConfig
+
+                /**
+                 * Returns the raw JSON value of [currency].
+                 *
+                 * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("currency")
+                @ExcludeMissing
+                fun _currency(): JsonField<String> = currency
+
+                /**
+                 * Returns the raw JSON value of [dimensionalPriceConfiguration].
+                 *
+                 * Unlike [dimensionalPriceConfiguration], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("dimensional_price_configuration")
+                @ExcludeMissing
+                fun _dimensionalPriceConfiguration(): JsonField<NewDimensionalPriceConfiguration> =
+                    dimensionalPriceConfiguration
+
+                /**
+                 * Returns the raw JSON value of [externalPriceId].
+                 *
+                 * Unlike [externalPriceId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("external_price_id")
+                @ExcludeMissing
+                fun _externalPriceId(): JsonField<String> = externalPriceId
+
+                /**
+                 * Returns the raw JSON value of [fixedPriceQuantity].
+                 *
+                 * Unlike [fixedPriceQuantity], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("fixed_price_quantity")
+                @ExcludeMissing
+                fun _fixedPriceQuantity(): JsonField<Double> = fixedPriceQuantity
+
+                /**
+                 * Returns the raw JSON value of [invoiceGroupingKey].
+                 *
+                 * Unlike [invoiceGroupingKey], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("invoice_grouping_key")
+                @ExcludeMissing
+                fun _invoiceGroupingKey(): JsonField<String> = invoiceGroupingKey
+
+                /**
+                 * Returns the raw JSON value of [invoicingCycleConfiguration].
+                 *
+                 * Unlike [invoicingCycleConfiguration], this method doesn't throw if the JSON field
+                 * has an unexpected type.
+                 */
+                @JsonProperty("invoicing_cycle_configuration")
+                @ExcludeMissing
+                fun _invoicingCycleConfiguration(): JsonField<NewBillingCycleConfiguration> =
+                    invoicingCycleConfiguration
+
+                /**
+                 * Returns the raw JSON value of [licenseTypeId].
+                 *
+                 * Unlike [licenseTypeId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("license_type_id")
+                @ExcludeMissing
+                fun _licenseTypeId(): JsonField<String> = licenseTypeId
+
+                /**
+                 * Returns the raw JSON value of [metadata].
+                 *
+                 * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun _metadata(): JsonField<Metadata> = metadata
+
+                /**
+                 * Returns the raw JSON value of [referenceId].
+                 *
+                 * Unlike [referenceId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("reference_id")
+                @ExcludeMissing
+                fun _referenceId(): JsonField<String> = referenceId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [MatrixWithThresholdDiscounts].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .itemId()
+                     * .matrixWithThresholdDiscountsConfig()
+                     * .name()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [MatrixWithThresholdDiscounts]. */
+                class Builder internal constructor() {
+
+                    private var cadence: JsonField<Cadence>? = null
+                    private var itemId: JsonField<String>? = null
+                    private var matrixWithThresholdDiscountsConfig:
+                        JsonField<MatrixWithThresholdDiscountsConfig>? =
+                        null
+                    private var modelType: JsonValue =
+                        JsonValue.from("matrix_with_threshold_discounts")
+                    private var name: JsonField<String>? = null
+                    private var billableMetricId: JsonField<String> = JsonMissing.of()
+                    private var billedInAdvance: JsonField<Boolean> = JsonMissing.of()
+                    private var billingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of()
+                    private var conversionRate: JsonField<Double> = JsonMissing.of()
+                    private var conversionRateConfig: JsonField<ConversionRateConfig> =
+                        JsonMissing.of()
+                    private var currency: JsonField<String> = JsonMissing.of()
+                    private var dimensionalPriceConfiguration:
+                        JsonField<NewDimensionalPriceConfiguration> =
+                        JsonMissing.of()
+                    private var externalPriceId: JsonField<String> = JsonMissing.of()
+                    private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
+                    private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
+                    private var invoicingCycleConfiguration:
+                        JsonField<NewBillingCycleConfiguration> =
+                        JsonMissing.of()
+                    private var licenseTypeId: JsonField<String> = JsonMissing.of()
+                    private var metadata: JsonField<Metadata> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(matrixWithThresholdDiscounts: MatrixWithThresholdDiscounts) =
+                        apply {
+                            cadence = matrixWithThresholdDiscounts.cadence
+                            itemId = matrixWithThresholdDiscounts.itemId
+                            matrixWithThresholdDiscountsConfig =
+                                matrixWithThresholdDiscounts.matrixWithThresholdDiscountsConfig
+                            modelType = matrixWithThresholdDiscounts.modelType
+                            name = matrixWithThresholdDiscounts.name
+                            billableMetricId = matrixWithThresholdDiscounts.billableMetricId
+                            billedInAdvance = matrixWithThresholdDiscounts.billedInAdvance
+                            billingCycleConfiguration =
+                                matrixWithThresholdDiscounts.billingCycleConfiguration
+                            conversionRate = matrixWithThresholdDiscounts.conversionRate
+                            conversionRateConfig = matrixWithThresholdDiscounts.conversionRateConfig
+                            currency = matrixWithThresholdDiscounts.currency
+                            dimensionalPriceConfiguration =
+                                matrixWithThresholdDiscounts.dimensionalPriceConfiguration
+                            externalPriceId = matrixWithThresholdDiscounts.externalPriceId
+                            fixedPriceQuantity = matrixWithThresholdDiscounts.fixedPriceQuantity
+                            invoiceGroupingKey = matrixWithThresholdDiscounts.invoiceGroupingKey
+                            invoicingCycleConfiguration =
+                                matrixWithThresholdDiscounts.invoicingCycleConfiguration
+                            licenseTypeId = matrixWithThresholdDiscounts.licenseTypeId
+                            metadata = matrixWithThresholdDiscounts.metadata
+                            referenceId = matrixWithThresholdDiscounts.referenceId
+                            additionalProperties =
+                                matrixWithThresholdDiscounts.additionalProperties.toMutableMap()
+                        }
+
+                    /** The cadence to bill for this price on. */
+                    fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
+
+                    /**
+                     * Sets [Builder.cadence] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.cadence] with a well-typed [Cadence] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
+
+                    /** The id of the item the price will be associated with. */
+                    fun itemId(itemId: String) = itemId(JsonField.of(itemId))
+
+                    /**
+                     * Sets [Builder.itemId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.itemId] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
+                    /** Configuration for matrix_with_threshold_discounts pricing */
+                    fun matrixWithThresholdDiscountsConfig(
+                        matrixWithThresholdDiscountsConfig: MatrixWithThresholdDiscountsConfig
+                    ) =
+                        matrixWithThresholdDiscountsConfig(
+                            JsonField.of(matrixWithThresholdDiscountsConfig)
+                        )
+
+                    /**
+                     * Sets [Builder.matrixWithThresholdDiscountsConfig] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.matrixWithThresholdDiscountsConfig] with a
+                     * well-typed [MatrixWithThresholdDiscountsConfig] value instead. This method is
+                     * primarily for setting the field to an undocumented or not yet supported
+                     * value.
+                     */
+                    fun matrixWithThresholdDiscountsConfig(
+                        matrixWithThresholdDiscountsConfig:
+                            JsonField<MatrixWithThresholdDiscountsConfig>
+                    ) = apply {
+                        this.matrixWithThresholdDiscountsConfig = matrixWithThresholdDiscountsConfig
+                    }
+
+                    /**
+                     * Sets the field to an arbitrary JSON value.
+                     *
+                     * It is usually unnecessary to call this method because the field defaults to
+                     * the following:
+                     * ```kotlin
+                     * JsonValue.from("matrix_with_threshold_discounts")
+                     * ```
+                     *
+                     * This method is primarily for setting the field to an undocumented or not yet
+                     * supported value.
+                     */
+                    fun modelType(modelType: JsonValue) = apply { this.modelType = modelType }
+
+                    /** The name of the price. */
+                    fun name(name: String) = name(JsonField.of(name))
+
+                    /**
+                     * Sets [Builder.name] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.name] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun name(name: JsonField<String>) = apply { this.name = name }
+
+                    /**
+                     * The id of the billable metric for the price. Only needed if the price is
+                     * usage-based.
+                     */
+                    fun billableMetricId(billableMetricId: String?) =
+                        billableMetricId(JsonField.ofNullable(billableMetricId))
+
+                    /**
+                     * Sets [Builder.billableMetricId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.billableMetricId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun billableMetricId(billableMetricId: JsonField<String>) = apply {
+                        this.billableMetricId = billableMetricId
+                    }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean?) =
+                        billedInAdvance(JsonField.ofNullable(billedInAdvance))
+
+                    /**
+                     * Alias for [Builder.billedInAdvance].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
+
+                    /**
+                     * Sets [Builder.billedInAdvance] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.billedInAdvance] with a well-typed [Boolean]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun billedInAdvance(billedInAdvance: JsonField<Boolean>) = apply {
+                        this.billedInAdvance = billedInAdvance
+                    }
+
+                    /**
+                     * For custom cadence: specifies the duration of the billing period in days or
+                     * months.
+                     */
+                    fun billingCycleConfiguration(
+                        billingCycleConfiguration: NewBillingCycleConfiguration?
+                    ) = billingCycleConfiguration(JsonField.ofNullable(billingCycleConfiguration))
+
+                    /**
+                     * Sets [Builder.billingCycleConfiguration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.billingCycleConfiguration] with a well-typed
+                     * [NewBillingCycleConfiguration] value instead. This method is primarily for
+                     * setting the field to an undocumented or not yet supported value.
+                     */
+                    fun billingCycleConfiguration(
+                        billingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
+                    ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double?) =
+                        conversionRate(JsonField.ofNullable(conversionRate))
+
+                    /**
+                     * Alias for [Builder.conversionRate].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
+                    /**
+                     * Sets [Builder.conversionRate] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.conversionRate] with a well-typed [Double]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun conversionRate(conversionRate: JsonField<Double>) = apply {
+                        this.conversionRate = conversionRate
+                    }
+
+                    /**
+                     * The configuration for the rate of the price currency to the invoicing
+                     * currency.
+                     */
+                    fun conversionRateConfig(conversionRateConfig: ConversionRateConfig?) =
+                        conversionRateConfig(JsonField.ofNullable(conversionRateConfig))
+
+                    /**
+                     * Sets [Builder.conversionRateConfig] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.conversionRateConfig] with a well-typed
+                     * [ConversionRateConfig] value instead. This method is primarily for setting
+                     * the field to an undocumented or not yet supported value.
+                     */
+                    fun conversionRateConfig(
+                        conversionRateConfig: JsonField<ConversionRateConfig>
+                    ) = apply { this.conversionRateConfig = conversionRateConfig }
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with
+                     * `ConversionRateConfig.ofUnit(unit)`.
+                     */
+                    fun conversionRateConfig(unit: UnitConversionRateConfig) =
+                        conversionRateConfig(ConversionRateConfig.ofUnit(unit))
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with the following:
+                     * ```kotlin
+                     * UnitConversionRateConfig.builder()
+                     *     .conversionRateType(UnitConversionRateConfig.ConversionRateType.UNIT)
+                     *     .unitConfig(unitConfig)
+                     *     .build()
+                     * ```
+                     */
+                    fun unitConversionRateConfig(unitConfig: ConversionRateUnitConfig) =
+                        conversionRateConfig(
+                            UnitConversionRateConfig.builder()
+                                .conversionRateType(
+                                    UnitConversionRateConfig.ConversionRateType.UNIT
+                                )
+                                .unitConfig(unitConfig)
+                                .build()
+                        )
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with
+                     * `ConversionRateConfig.ofTiered(tiered)`.
+                     */
+                    fun conversionRateConfig(tiered: TieredConversionRateConfig) =
+                        conversionRateConfig(ConversionRateConfig.ofTiered(tiered))
+
+                    /**
+                     * Alias for calling [conversionRateConfig] with the following:
+                     * ```kotlin
+                     * TieredConversionRateConfig.builder()
+                     *     .conversionRateType(TieredConversionRateConfig.ConversionRateType.TIERED)
+                     *     .tieredConfig(tieredConfig)
+                     *     .build()
+                     * ```
+                     */
+                    fun tieredConversionRateConfig(tieredConfig: ConversionRateTieredConfig) =
+                        conversionRateConfig(
+                            TieredConversionRateConfig.builder()
+                                .conversionRateType(
+                                    TieredConversionRateConfig.ConversionRateType.TIERED
+                                )
+                                .tieredConfig(tieredConfig)
+                                .build()
+                        )
+
+                    /**
+                     * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                     * price is billed.
+                     */
+                    fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
+
+                    /**
+                     * Sets [Builder.currency] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.currency] with a well-typed [String] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+                    /** For dimensional price: specifies a price group and dimension values */
+                    fun dimensionalPriceConfiguration(
+                        dimensionalPriceConfiguration: NewDimensionalPriceConfiguration?
+                    ) =
+                        dimensionalPriceConfiguration(
+                            JsonField.ofNullable(dimensionalPriceConfiguration)
+                        )
+
+                    /**
+                     * Sets [Builder.dimensionalPriceConfiguration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.dimensionalPriceConfiguration] with a
+                     * well-typed [NewDimensionalPriceConfiguration] value instead. This method is
+                     * primarily for setting the field to an undocumented or not yet supported
+                     * value.
+                     */
+                    fun dimensionalPriceConfiguration(
+                        dimensionalPriceConfiguration: JsonField<NewDimensionalPriceConfiguration>
+                    ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
+                    /** An alias for the price. */
+                    fun externalPriceId(externalPriceId: String?) =
+                        externalPriceId(JsonField.ofNullable(externalPriceId))
+
+                    /**
+                     * Sets [Builder.externalPriceId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.externalPriceId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun externalPriceId(externalPriceId: JsonField<String>) = apply {
+                        this.externalPriceId = externalPriceId
+                    }
+
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) =
+                        fixedPriceQuantity(JsonField.ofNullable(fixedPriceQuantity))
+
+                    /**
+                     * Alias for [Builder.fixedPriceQuantity].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
+                    /**
+                     * Sets [Builder.fixedPriceQuantity] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.fixedPriceQuantity] with a well-typed
+                     * [Double] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
+                        this.fixedPriceQuantity = fixedPriceQuantity
+                    }
+
+                    /** The property used to group this price on an invoice */
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) =
+                        invoiceGroupingKey(JsonField.ofNullable(invoiceGroupingKey))
+
+                    /**
+                     * Sets [Builder.invoiceGroupingKey] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.invoiceGroupingKey] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun invoiceGroupingKey(invoiceGroupingKey: JsonField<String>) = apply {
+                        this.invoiceGroupingKey = invoiceGroupingKey
+                    }
+
+                    /**
+                     * Within each billing cycle, specifies the cadence at which invoices are
+                     * produced. If unspecified, a single invoice is produced per billing cycle.
+                     */
+                    fun invoicingCycleConfiguration(
+                        invoicingCycleConfiguration: NewBillingCycleConfiguration?
+                    ) =
+                        invoicingCycleConfiguration(
+                            JsonField.ofNullable(invoicingCycleConfiguration)
+                        )
+
+                    /**
+                     * Sets [Builder.invoicingCycleConfiguration] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.invoicingCycleConfiguration] with a
+                     * well-typed [NewBillingCycleConfiguration] value instead. This method is
+                     * primarily for setting the field to an undocumented or not yet supported
+                     * value.
+                     */
+                    fun invoicingCycleConfiguration(
+                        invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
+                    ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
+
+                    /** The ID of the license type to associate with this price. */
+                    fun licenseTypeId(licenseTypeId: String?) =
+                        licenseTypeId(JsonField.ofNullable(licenseTypeId))
+
+                    /**
+                     * Sets [Builder.licenseTypeId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.licenseTypeId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun licenseTypeId(licenseTypeId: JsonField<String>) = apply {
+                        this.licenseTypeId = licenseTypeId
+                    }
+
+                    /**
+                     * User-specified key/value pairs for the resource. Individual keys can be
+                     * removed by setting the value to `null`, and the entire metadata mapping can
+                     * be cleared by setting `metadata` to `null`.
+                     */
+                    fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+                    /**
+                     * Sets [Builder.metadata] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.metadata] with a well-typed [Metadata] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String?) =
+                        referenceId(JsonField.ofNullable(referenceId))
+
+                    /**
+                     * Sets [Builder.referenceId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.referenceId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [MatrixWithThresholdDiscounts].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .cadence()
+                     * .itemId()
+                     * .matrixWithThresholdDiscountsConfig()
+                     * .name()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): MatrixWithThresholdDiscounts =
+                        MatrixWithThresholdDiscounts(
+                            checkRequired("cadence", cadence),
+                            checkRequired("itemId", itemId),
+                            checkRequired(
+                                "matrixWithThresholdDiscountsConfig",
+                                matrixWithThresholdDiscountsConfig,
+                            ),
+                            modelType,
+                            checkRequired("name", name),
+                            billableMetricId,
+                            billedInAdvance,
+                            billingCycleConfiguration,
+                            conversionRate,
+                            conversionRateConfig,
+                            currency,
+                            dimensionalPriceConfiguration,
+                            externalPriceId,
+                            fixedPriceQuantity,
+                            invoiceGroupingKey,
+                            invoicingCycleConfiguration,
+                            licenseTypeId,
+                            metadata,
+                            referenceId,
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                /**
+                 * Validates that the types of all values in this object match their expected types
+                 * recursively.
+                 *
+                 * This method is _not_ forwards compatible with new types from the API for existing
+                 * fields.
+                 *
+                 * @throws OrbInvalidDataException if any value type in this object doesn't match
+                 *   its expected type.
+                 */
+                fun validate(): MatrixWithThresholdDiscounts = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    cadence().validate()
+                    itemId()
+                    matrixWithThresholdDiscountsConfig().validate()
+                    _modelType().let {
+                        if (it != JsonValue.from("matrix_with_threshold_discounts")) {
+                            throw OrbInvalidDataException("'modelType' is invalid, received $it")
+                        }
+                    }
+                    name()
+                    billableMetricId()
+                    billedInAdvance()
+                    billingCycleConfiguration()?.validate()
+                    conversionRate()
+                    conversionRateConfig()?.validate()
+                    currency()
+                    dimensionalPriceConfiguration()?.validate()
+                    externalPriceId()
+                    fixedPriceQuantity()
+                    invoiceGroupingKey()
+                    invoicingCycleConfiguration()?.validate()
+                    licenseTypeId()
+                    metadata()?.validate()
+                    referenceId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (cadence.asKnown()?.validity() ?: 0) +
+                        (if (itemId.asKnown() == null) 0 else 1) +
+                        (matrixWithThresholdDiscountsConfig.asKnown()?.validity() ?: 0) +
+                        modelType.let {
+                            if (it == JsonValue.from("matrix_with_threshold_discounts")) 1 else 0
+                        } +
+                        (if (name.asKnown() == null) 0 else 1) +
+                        (if (billableMetricId.asKnown() == null) 0 else 1) +
+                        (if (billedInAdvance.asKnown() == null) 0 else 1) +
+                        (billingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                        (if (conversionRate.asKnown() == null) 0 else 1) +
+                        (conversionRateConfig.asKnown()?.validity() ?: 0) +
+                        (if (currency.asKnown() == null) 0 else 1) +
+                        (dimensionalPriceConfiguration.asKnown()?.validity() ?: 0) +
+                        (if (externalPriceId.asKnown() == null) 0 else 1) +
+                        (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
+                        (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
+                        (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+                        (if (licenseTypeId.asKnown() == null) 0 else 1) +
+                        (metadata.asKnown()?.validity() ?: 0) +
+                        (if (referenceId.asKnown() == null) 0 else 1)
+
+                /** The cadence to bill for this price on. */
+                class Cadence
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val ANNUAL = of("annual")
+
+                        val SEMI_ANNUAL = of("semi_annual")
+
+                        val MONTHLY = of("monthly")
+
+                        val QUARTERLY = of("quarterly")
+
+                        val ONE_TIME = of("one_time")
+
+                        val CUSTOM = of("custom")
+
+                        fun of(value: String) = Cadence(JsonField.of(value))
+                    }
+
+                    /** An enum containing [Cadence]'s known values. */
+                    enum class Known {
+                        ANNUAL,
+                        SEMI_ANNUAL,
+                        MONTHLY,
+                        QUARTERLY,
+                        ONE_TIME,
+                        CUSTOM,
+                    }
+
+                    /**
+                     * An enum containing [Cadence]'s known values, as well as an [_UNKNOWN] member.
+                     *
+                     * An instance of [Cadence] can contain an unknown value in a couple of cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        ANNUAL,
+                        SEMI_ANNUAL,
+                        MONTHLY,
+                        QUARTERLY,
+                        ONE_TIME,
+                        CUSTOM,
+                        /**
+                         * An enum member indicating that [Cadence] was instantiated with an unknown
+                         * value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
+                            MONTHLY -> Value.MONTHLY
+                            QUARTERLY -> Value.QUARTERLY
+                            ONE_TIME -> Value.ONE_TIME
+                            CUSTOM -> Value.CUSTOM
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
+                            MONTHLY -> Known.MONTHLY
+                            QUARTERLY -> Known.QUARTERLY
+                            ONE_TIME -> Known.ONE_TIME
+                            CUSTOM -> Known.CUSTOM
+                            else -> throw OrbInvalidDataException("Unknown Cadence: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value does not have
+                     *   the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw OrbInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    /**
+                     * Validates that the types of all values in this object match their expected
+                     * types recursively.
+                     *
+                     * This method is _not_ forwards compatible with new types from the API for
+                     * existing fields.
+                     *
+                     * @throws OrbInvalidDataException if any value type in this object doesn't
+                     *   match its expected type.
+                     */
+                    fun validate(): Cadence = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is Cadence && value == other.value
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                /** Configuration for matrix_with_threshold_discounts pricing */
+                class MatrixWithThresholdDiscountsConfig
+                @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+                private constructor(
+                    private val defaultUnitAmount: JsonField<String>,
+                    private val firstDimension: JsonField<String>,
+                    private val matrixValues: JsonField<List<MatrixValue>>,
+                    private val secondDimension: JsonField<String>,
+                    private val thresholdDiscountGroups: JsonField<List<ThresholdDiscountGroup>>,
+                    private val additionalProperties: MutableMap<String, JsonValue>,
+                ) {
+
+                    @JsonCreator
+                    private constructor(
+                        @JsonProperty("default_unit_amount")
+                        @ExcludeMissing
+                        defaultUnitAmount: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("first_dimension")
+                        @ExcludeMissing
+                        firstDimension: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("matrix_values")
+                        @ExcludeMissing
+                        matrixValues: JsonField<List<MatrixValue>> = JsonMissing.of(),
+                        @JsonProperty("second_dimension")
+                        @ExcludeMissing
+                        secondDimension: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("threshold_discount_groups")
+                        @ExcludeMissing
+                        thresholdDiscountGroups: JsonField<List<ThresholdDiscountGroup>> =
+                            JsonMissing.of(),
+                    ) : this(
+                        defaultUnitAmount,
+                        firstDimension,
+                        matrixValues,
+                        secondDimension,
+                        thresholdDiscountGroups,
+                        mutableMapOf(),
+                    )
+
+                    /**
+                     * Unit price used for usage that does not match any defined matrix cell.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun defaultUnitAmount(): String =
+                        defaultUnitAmount.getRequired("default_unit_amount")
+
+                    /**
+                     * First matrix dimension key.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun firstDimension(): String = firstDimension.getRequired("first_dimension")
+
+                    /**
+                     * Per-cell unit prices.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type or
+                     *   is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun matrixValues(): List<MatrixValue> =
+                        matrixValues.getRequired("matrix_values")
+
+                    /**
+                     * Optional second matrix dimension key.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun secondDimension(): String? = secondDimension.getNullable("second_dimension")
+
+                    /**
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun thresholdDiscountGroups(): List<ThresholdDiscountGroup>? =
+                        thresholdDiscountGroups.getNullable("threshold_discount_groups")
+
+                    /**
+                     * Returns the raw JSON value of [defaultUnitAmount].
+                     *
+                     * Unlike [defaultUnitAmount], this method doesn't throw if the JSON field has
+                     * an unexpected type.
+                     */
+                    @JsonProperty("default_unit_amount")
+                    @ExcludeMissing
+                    fun _defaultUnitAmount(): JsonField<String> = defaultUnitAmount
+
+                    /**
+                     * Returns the raw JSON value of [firstDimension].
+                     *
+                     * Unlike [firstDimension], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("first_dimension")
+                    @ExcludeMissing
+                    fun _firstDimension(): JsonField<String> = firstDimension
+
+                    /**
+                     * Returns the raw JSON value of [matrixValues].
+                     *
+                     * Unlike [matrixValues], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("matrix_values")
+                    @ExcludeMissing
+                    fun _matrixValues(): JsonField<List<MatrixValue>> = matrixValues
+
+                    /**
+                     * Returns the raw JSON value of [secondDimension].
+                     *
+                     * Unlike [secondDimension], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("second_dimension")
+                    @ExcludeMissing
+                    fun _secondDimension(): JsonField<String> = secondDimension
+
+                    /**
+                     * Returns the raw JSON value of [thresholdDiscountGroups].
+                     *
+                     * Unlike [thresholdDiscountGroups], this method doesn't throw if the JSON field
+                     * has an unexpected type.
+                     */
+                    @JsonProperty("threshold_discount_groups")
+                    @ExcludeMissing
+                    fun _thresholdDiscountGroups(): JsonField<List<ThresholdDiscountGroup>> =
+                        thresholdDiscountGroups
+
+                    @JsonAnySetter
+                    private fun putAdditionalProperty(key: String, value: JsonValue) {
+                        additionalProperties.put(key, value)
+                    }
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> =
+                        Collections.unmodifiableMap(additionalProperties)
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [MatrixWithThresholdDiscountsConfig].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .defaultUnitAmount()
+                         * .firstDimension()
+                         * .matrixValues()
+                         * ```
+                         */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [MatrixWithThresholdDiscountsConfig]. */
+                    class Builder internal constructor() {
+
+                        private var defaultUnitAmount: JsonField<String>? = null
+                        private var firstDimension: JsonField<String>? = null
+                        private var matrixValues: JsonField<MutableList<MatrixValue>>? = null
+                        private var secondDimension: JsonField<String> = JsonMissing.of()
+                        private var thresholdDiscountGroups:
+                            JsonField<MutableList<ThresholdDiscountGroup>>? =
+                            null
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(
+                            matrixWithThresholdDiscountsConfig: MatrixWithThresholdDiscountsConfig
+                        ) = apply {
+                            defaultUnitAmount = matrixWithThresholdDiscountsConfig.defaultUnitAmount
+                            firstDimension = matrixWithThresholdDiscountsConfig.firstDimension
+                            matrixValues =
+                                matrixWithThresholdDiscountsConfig.matrixValues.map {
+                                    it.toMutableList()
+                                }
+                            secondDimension = matrixWithThresholdDiscountsConfig.secondDimension
+                            thresholdDiscountGroups =
+                                matrixWithThresholdDiscountsConfig.thresholdDiscountGroups.map {
+                                    it.toMutableList()
+                                }
+                            additionalProperties =
+                                matrixWithThresholdDiscountsConfig.additionalProperties
+                                    .toMutableMap()
+                        }
+
+                        /**
+                         * Unit price used for usage that does not match any defined matrix cell.
+                         */
+                        fun defaultUnitAmount(defaultUnitAmount: String) =
+                            defaultUnitAmount(JsonField.of(defaultUnitAmount))
+
+                        /**
+                         * Sets [Builder.defaultUnitAmount] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.defaultUnitAmount] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun defaultUnitAmount(defaultUnitAmount: JsonField<String>) = apply {
+                            this.defaultUnitAmount = defaultUnitAmount
+                        }
+
+                        /** First matrix dimension key. */
+                        fun firstDimension(firstDimension: String) =
+                            firstDimension(JsonField.of(firstDimension))
+
+                        /**
+                         * Sets [Builder.firstDimension] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.firstDimension] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun firstDimension(firstDimension: JsonField<String>) = apply {
+                            this.firstDimension = firstDimension
+                        }
+
+                        /** Per-cell unit prices. */
+                        fun matrixValues(matrixValues: List<MatrixValue>) =
+                            matrixValues(JsonField.of(matrixValues))
+
+                        /**
+                         * Sets [Builder.matrixValues] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.matrixValues] with a well-typed
+                         * `List<MatrixValue>` value instead. This method is primarily for setting
+                         * the field to an undocumented or not yet supported value.
+                         */
+                        fun matrixValues(matrixValues: JsonField<List<MatrixValue>>) = apply {
+                            this.matrixValues = matrixValues.map { it.toMutableList() }
+                        }
+
+                        /**
+                         * Adds a single [MatrixValue] to [matrixValues].
+                         *
+                         * @throws IllegalStateException if the field was previously set to a
+                         *   non-list.
+                         */
+                        fun addMatrixValue(matrixValue: MatrixValue) = apply {
+                            matrixValues =
+                                (matrixValues ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("matrixValues", it).add(matrixValue)
+                                }
+                        }
+
+                        /** Optional second matrix dimension key. */
+                        fun secondDimension(secondDimension: String?) =
+                            secondDimension(JsonField.ofNullable(secondDimension))
+
+                        /**
+                         * Sets [Builder.secondDimension] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.secondDimension] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun secondDimension(secondDimension: JsonField<String>) = apply {
+                            this.secondDimension = secondDimension
+                        }
+
+                        fun thresholdDiscountGroups(
+                            thresholdDiscountGroups: List<ThresholdDiscountGroup>
+                        ) = thresholdDiscountGroups(JsonField.of(thresholdDiscountGroups))
+
+                        /**
+                         * Sets [Builder.thresholdDiscountGroups] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.thresholdDiscountGroups] with a
+                         * well-typed `List<ThresholdDiscountGroup>` value instead. This method is
+                         * primarily for setting the field to an undocumented or not yet supported
+                         * value.
+                         */
+                        fun thresholdDiscountGroups(
+                            thresholdDiscountGroups: JsonField<List<ThresholdDiscountGroup>>
+                        ) = apply {
+                            this.thresholdDiscountGroups =
+                                thresholdDiscountGroups.map { it.toMutableList() }
+                        }
+
+                        /**
+                         * Adds a single [ThresholdDiscountGroup] to [thresholdDiscountGroups].
+                         *
+                         * @throws IllegalStateException if the field was previously set to a
+                         *   non-list.
+                         */
+                        fun addThresholdDiscountGroup(
+                            thresholdDiscountGroup: ThresholdDiscountGroup
+                        ) = apply {
+                            thresholdDiscountGroups =
+                                (thresholdDiscountGroups ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("thresholdDiscountGroups", it)
+                                        .add(thresholdDiscountGroup)
+                                }
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [MatrixWithThresholdDiscountsConfig].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .defaultUnitAmount()
+                         * .firstDimension()
+                         * .matrixValues()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
+                        fun build(): MatrixWithThresholdDiscountsConfig =
+                            MatrixWithThresholdDiscountsConfig(
+                                checkRequired("defaultUnitAmount", defaultUnitAmount),
+                                checkRequired("firstDimension", firstDimension),
+                                checkRequired("matrixValues", matrixValues).map {
+                                    it.toImmutable()
+                                },
+                                secondDimension,
+                                (thresholdDiscountGroups ?: JsonMissing.of()).map {
+                                    it.toImmutable()
+                                },
+                                additionalProperties.toMutableMap(),
+                            )
+                    }
+
+                    private var validated: Boolean = false
+
+                    /**
+                     * Validates that the types of all values in this object match their expected
+                     * types recursively.
+                     *
+                     * This method is _not_ forwards compatible with new types from the API for
+                     * existing fields.
+                     *
+                     * @throws OrbInvalidDataException if any value type in this object doesn't
+                     *   match its expected type.
+                     */
+                    fun validate(): MatrixWithThresholdDiscountsConfig = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        defaultUnitAmount()
+                        firstDimension()
+                        matrixValues().forEach { it.validate() }
+                        secondDimension()
+                        thresholdDiscountGroups()?.forEach { it.validate() }
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (if (defaultUnitAmount.asKnown() == null) 0 else 1) +
+                            (if (firstDimension.asKnown() == null) 0 else 1) +
+                            (matrixValues.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                            (if (secondDimension.asKnown() == null) 0 else 1) +
+                            (thresholdDiscountGroups.asKnown()?.sumOf { it.validity().toInt() }
+                                ?: 0)
+
+                    class MatrixValue
+                    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+                    private constructor(
+                        private val firstDimensionValue: JsonField<String>,
+                        private val unitAmount: JsonField<String>,
+                        private val secondDimensionValue: JsonField<String>,
+                        private val additionalProperties: MutableMap<String, JsonValue>,
+                    ) {
+
+                        @JsonCreator
+                        private constructor(
+                            @JsonProperty("first_dimension_value")
+                            @ExcludeMissing
+                            firstDimensionValue: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("unit_amount")
+                            @ExcludeMissing
+                            unitAmount: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("second_dimension_value")
+                            @ExcludeMissing
+                            secondDimensionValue: JsonField<String> = JsonMissing.of(),
+                        ) : this(
+                            firstDimensionValue,
+                            unitAmount,
+                            secondDimensionValue,
+                            mutableMapOf(),
+                        )
+
+                        /**
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun firstDimensionValue(): String =
+                            firstDimensionValue.getRequired("first_dimension_value")
+
+                        /**
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun unitAmount(): String = unitAmount.getRequired("unit_amount")
+
+                        /**
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   (e.g. if the server responded with an unexpected value).
+                         */
+                        fun secondDimensionValue(): String? =
+                            secondDimensionValue.getNullable("second_dimension_value")
+
+                        /**
+                         * Returns the raw JSON value of [firstDimensionValue].
+                         *
+                         * Unlike [firstDimensionValue], this method doesn't throw if the JSON field
+                         * has an unexpected type.
+                         */
+                        @JsonProperty("first_dimension_value")
+                        @ExcludeMissing
+                        fun _firstDimensionValue(): JsonField<String> = firstDimensionValue
+
+                        /**
+                         * Returns the raw JSON value of [unitAmount].
+                         *
+                         * Unlike [unitAmount], this method doesn't throw if the JSON field has an
+                         * unexpected type.
+                         */
+                        @JsonProperty("unit_amount")
+                        @ExcludeMissing
+                        fun _unitAmount(): JsonField<String> = unitAmount
+
+                        /**
+                         * Returns the raw JSON value of [secondDimensionValue].
+                         *
+                         * Unlike [secondDimensionValue], this method doesn't throw if the JSON
+                         * field has an unexpected type.
+                         */
+                        @JsonProperty("second_dimension_value")
+                        @ExcludeMissing
+                        fun _secondDimensionValue(): JsonField<String> = secondDimensionValue
+
+                        @JsonAnySetter
+                        private fun putAdditionalProperty(key: String, value: JsonValue) {
+                            additionalProperties.put(key, value)
+                        }
+
+                        @JsonAnyGetter
+                        @ExcludeMissing
+                        fun _additionalProperties(): Map<String, JsonValue> =
+                            Collections.unmodifiableMap(additionalProperties)
+
+                        fun toBuilder() = Builder().from(this)
+
+                        companion object {
+
+                            /**
+                             * Returns a mutable builder for constructing an instance of
+                             * [MatrixValue].
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .firstDimensionValue()
+                             * .unitAmount()
+                             * ```
+                             */
+                            fun builder() = Builder()
+                        }
+
+                        /** A builder for [MatrixValue]. */
+                        class Builder internal constructor() {
+
+                            private var firstDimensionValue: JsonField<String>? = null
+                            private var unitAmount: JsonField<String>? = null
+                            private var secondDimensionValue: JsonField<String> = JsonMissing.of()
+                            private var additionalProperties: MutableMap<String, JsonValue> =
+                                mutableMapOf()
+
+                            internal fun from(matrixValue: MatrixValue) = apply {
+                                firstDimensionValue = matrixValue.firstDimensionValue
+                                unitAmount = matrixValue.unitAmount
+                                secondDimensionValue = matrixValue.secondDimensionValue
+                                additionalProperties =
+                                    matrixValue.additionalProperties.toMutableMap()
+                            }
+
+                            fun firstDimensionValue(firstDimensionValue: String) =
+                                firstDimensionValue(JsonField.of(firstDimensionValue))
+
+                            /**
+                             * Sets [Builder.firstDimensionValue] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.firstDimensionValue] with a
+                             * well-typed [String] value instead. This method is primarily for
+                             * setting the field to an undocumented or not yet supported value.
+                             */
+                            fun firstDimensionValue(firstDimensionValue: JsonField<String>) =
+                                apply {
+                                    this.firstDimensionValue = firstDimensionValue
+                                }
+
+                            fun unitAmount(unitAmount: String) =
+                                unitAmount(JsonField.of(unitAmount))
+
+                            /**
+                             * Sets [Builder.unitAmount] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.unitAmount] with a well-typed
+                             * [String] value instead. This method is primarily for setting the
+                             * field to an undocumented or not yet supported value.
+                             */
+                            fun unitAmount(unitAmount: JsonField<String>) = apply {
+                                this.unitAmount = unitAmount
+                            }
+
+                            fun secondDimensionValue(secondDimensionValue: String?) =
+                                secondDimensionValue(JsonField.ofNullable(secondDimensionValue))
+
+                            /**
+                             * Sets [Builder.secondDimensionValue] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.secondDimensionValue] with a
+                             * well-typed [String] value instead. This method is primarily for
+                             * setting the field to an undocumented or not yet supported value.
+                             */
+                            fun secondDimensionValue(secondDimensionValue: JsonField<String>) =
+                                apply {
+                                    this.secondDimensionValue = secondDimensionValue
+                                }
+
+                            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                                apply {
+                                    this.additionalProperties.clear()
+                                    putAllAdditionalProperties(additionalProperties)
+                                }
+
+                            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                                additionalProperties.put(key, value)
+                            }
+
+                            fun putAllAdditionalProperties(
+                                additionalProperties: Map<String, JsonValue>
+                            ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                            fun removeAdditionalProperty(key: String) = apply {
+                                additionalProperties.remove(key)
+                            }
+
+                            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                                keys.forEach(::removeAdditionalProperty)
+                            }
+
+                            /**
+                             * Returns an immutable instance of [MatrixValue].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .firstDimensionValue()
+                             * .unitAmount()
+                             * ```
+                             *
+                             * @throws IllegalStateException if any required field is unset.
+                             */
+                            fun build(): MatrixValue =
+                                MatrixValue(
+                                    checkRequired("firstDimensionValue", firstDimensionValue),
+                                    checkRequired("unitAmount", unitAmount),
+                                    secondDimensionValue,
+                                    additionalProperties.toMutableMap(),
+                                )
+                        }
+
+                        private var validated: Boolean = false
+
+                        /**
+                         * Validates that the types of all values in this object match their
+                         * expected types recursively.
+                         *
+                         * This method is _not_ forwards compatible with new types from the API for
+                         * existing fields.
+                         *
+                         * @throws OrbInvalidDataException if any value type in this object doesn't
+                         *   match its expected type.
+                         */
+                        fun validate(): MatrixValue = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            firstDimensionValue()
+                            unitAmount()
+                            secondDimensionValue()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int =
+                            (if (firstDimensionValue.asKnown() == null) 0 else 1) +
+                                (if (unitAmount.asKnown() == null) 0 else 1) +
+                                (if (secondDimensionValue.asKnown() == null) 0 else 1)
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return other is MatrixValue &&
+                                firstDimensionValue == other.firstDimensionValue &&
+                                unitAmount == other.unitAmount &&
+                                secondDimensionValue == other.secondDimensionValue &&
+                                additionalProperties == other.additionalProperties
+                        }
+
+                        private val hashCode: Int by lazy {
+                            Objects.hash(
+                                firstDimensionValue,
+                                unitAmount,
+                                secondDimensionValue,
+                                additionalProperties,
+                            )
+                        }
+
+                        override fun hashCode(): Int = hashCode
+
+                        override fun toString() =
+                            "MatrixValue{firstDimensionValue=$firstDimensionValue, unitAmount=$unitAmount, secondDimensionValue=$secondDimensionValue, additionalProperties=$additionalProperties}"
+                    }
+
+                    class ThresholdDiscountGroup
+                    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+                    private constructor(
+                        private val aboveThresholdDiscountPercentage: JsonField<String>,
+                        private val belowThresholdDiscountPercentage: JsonField<String>,
+                        private val cellCoordinates: JsonField<String>,
+                        private val thresholdAmount: JsonField<String>,
+                        private val description: JsonField<String>,
+                        private val additionalProperties: MutableMap<String, JsonValue>,
+                    ) {
+
+                        @JsonCreator
+                        private constructor(
+                            @JsonProperty("above_threshold_discount_percentage")
+                            @ExcludeMissing
+                            aboveThresholdDiscountPercentage: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("below_threshold_discount_percentage")
+                            @ExcludeMissing
+                            belowThresholdDiscountPercentage: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("cell_coordinates")
+                            @ExcludeMissing
+                            cellCoordinates: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("threshold_amount")
+                            @ExcludeMissing
+                            thresholdAmount: JsonField<String> = JsonMissing.of(),
+                            @JsonProperty("description")
+                            @ExcludeMissing
+                            description: JsonField<String> = JsonMissing.of(),
+                        ) : this(
+                            aboveThresholdDiscountPercentage,
+                            belowThresholdDiscountPercentage,
+                            cellCoordinates,
+                            thresholdAmount,
+                            description,
+                            mutableMapOf(),
+                        )
+
+                        /**
+                         * Discount rate applied to spend above the threshold.
+                         *
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun aboveThresholdDiscountPercentage(): String =
+                            aboveThresholdDiscountPercentage.getRequired(
+                                "above_threshold_discount_percentage"
+                            )
+
+                        /**
+                         * Discount rate applied to spend at or below the threshold. Set to 0 for no
+                         * baseline discount.
+                         *
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun belowThresholdDiscountPercentage(): String =
+                            belowThresholdDiscountPercentage.getRequired(
+                                "below_threshold_discount_percentage"
+                            )
+
+                        /**
+                         * Semicolon-separated list of matrix cell coordinates targeted by this
+                         * group. Each coordinate is `first,second` when the matrix has two
+                         * dimensions, or just `first` for a single-dimension matrix. Example:
+                         * `blue,circle;green,triangle`.
+                         *
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun cellCoordinates(): String =
+                            cellCoordinates.getRequired("cell_coordinates")
+
+                        /**
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   or is unexpectedly missing or null (e.g. if the server responded with
+                         *   an unexpected value).
+                         */
+                        fun thresholdAmount(): String =
+                            thresholdAmount.getRequired("threshold_amount")
+
+                        /**
+                         * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                         *   (e.g. if the server responded with an unexpected value).
+                         */
+                        fun description(): String? = description.getNullable("description")
+
+                        /**
+                         * Returns the raw JSON value of [aboveThresholdDiscountPercentage].
+                         *
+                         * Unlike [aboveThresholdDiscountPercentage], this method doesn't throw if
+                         * the JSON field has an unexpected type.
+                         */
+                        @JsonProperty("above_threshold_discount_percentage")
+                        @ExcludeMissing
+                        fun _aboveThresholdDiscountPercentage(): JsonField<String> =
+                            aboveThresholdDiscountPercentage
+
+                        /**
+                         * Returns the raw JSON value of [belowThresholdDiscountPercentage].
+                         *
+                         * Unlike [belowThresholdDiscountPercentage], this method doesn't throw if
+                         * the JSON field has an unexpected type.
+                         */
+                        @JsonProperty("below_threshold_discount_percentage")
+                        @ExcludeMissing
+                        fun _belowThresholdDiscountPercentage(): JsonField<String> =
+                            belowThresholdDiscountPercentage
+
+                        /**
+                         * Returns the raw JSON value of [cellCoordinates].
+                         *
+                         * Unlike [cellCoordinates], this method doesn't throw if the JSON field has
+                         * an unexpected type.
+                         */
+                        @JsonProperty("cell_coordinates")
+                        @ExcludeMissing
+                        fun _cellCoordinates(): JsonField<String> = cellCoordinates
+
+                        /**
+                         * Returns the raw JSON value of [thresholdAmount].
+                         *
+                         * Unlike [thresholdAmount], this method doesn't throw if the JSON field has
+                         * an unexpected type.
+                         */
+                        @JsonProperty("threshold_amount")
+                        @ExcludeMissing
+                        fun _thresholdAmount(): JsonField<String> = thresholdAmount
+
+                        /**
+                         * Returns the raw JSON value of [description].
+                         *
+                         * Unlike [description], this method doesn't throw if the JSON field has an
+                         * unexpected type.
+                         */
+                        @JsonProperty("description")
+                        @ExcludeMissing
+                        fun _description(): JsonField<String> = description
+
+                        @JsonAnySetter
+                        private fun putAdditionalProperty(key: String, value: JsonValue) {
+                            additionalProperties.put(key, value)
+                        }
+
+                        @JsonAnyGetter
+                        @ExcludeMissing
+                        fun _additionalProperties(): Map<String, JsonValue> =
+                            Collections.unmodifiableMap(additionalProperties)
+
+                        fun toBuilder() = Builder().from(this)
+
+                        companion object {
+
+                            /**
+                             * Returns a mutable builder for constructing an instance of
+                             * [ThresholdDiscountGroup].
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .aboveThresholdDiscountPercentage()
+                             * .belowThresholdDiscountPercentage()
+                             * .cellCoordinates()
+                             * .thresholdAmount()
+                             * ```
+                             */
+                            fun builder() = Builder()
+                        }
+
+                        /** A builder for [ThresholdDiscountGroup]. */
+                        class Builder internal constructor() {
+
+                            private var aboveThresholdDiscountPercentage: JsonField<String>? = null
+                            private var belowThresholdDiscountPercentage: JsonField<String>? = null
+                            private var cellCoordinates: JsonField<String>? = null
+                            private var thresholdAmount: JsonField<String>? = null
+                            private var description: JsonField<String> = JsonMissing.of()
+                            private var additionalProperties: MutableMap<String, JsonValue> =
+                                mutableMapOf()
+
+                            internal fun from(thresholdDiscountGroup: ThresholdDiscountGroup) =
+                                apply {
+                                    aboveThresholdDiscountPercentage =
+                                        thresholdDiscountGroup.aboveThresholdDiscountPercentage
+                                    belowThresholdDiscountPercentage =
+                                        thresholdDiscountGroup.belowThresholdDiscountPercentage
+                                    cellCoordinates = thresholdDiscountGroup.cellCoordinates
+                                    thresholdAmount = thresholdDiscountGroup.thresholdAmount
+                                    description = thresholdDiscountGroup.description
+                                    additionalProperties =
+                                        thresholdDiscountGroup.additionalProperties.toMutableMap()
+                                }
+
+                            /** Discount rate applied to spend above the threshold. */
+                            fun aboveThresholdDiscountPercentage(
+                                aboveThresholdDiscountPercentage: String
+                            ) =
+                                aboveThresholdDiscountPercentage(
+                                    JsonField.of(aboveThresholdDiscountPercentage)
+                                )
+
+                            /**
+                             * Sets [Builder.aboveThresholdDiscountPercentage] to an arbitrary JSON
+                             * value.
+                             *
+                             * You should usually call [Builder.aboveThresholdDiscountPercentage]
+                             * with a well-typed [String] value instead. This method is primarily
+                             * for setting the field to an undocumented or not yet supported value.
+                             */
+                            fun aboveThresholdDiscountPercentage(
+                                aboveThresholdDiscountPercentage: JsonField<String>
+                            ) = apply {
+                                this.aboveThresholdDiscountPercentage =
+                                    aboveThresholdDiscountPercentage
+                            }
+
+                            /**
+                             * Discount rate applied to spend at or below the threshold. Set to 0
+                             * for no baseline discount.
+                             */
+                            fun belowThresholdDiscountPercentage(
+                                belowThresholdDiscountPercentage: String
+                            ) =
+                                belowThresholdDiscountPercentage(
+                                    JsonField.of(belowThresholdDiscountPercentage)
+                                )
+
+                            /**
+                             * Sets [Builder.belowThresholdDiscountPercentage] to an arbitrary JSON
+                             * value.
+                             *
+                             * You should usually call [Builder.belowThresholdDiscountPercentage]
+                             * with a well-typed [String] value instead. This method is primarily
+                             * for setting the field to an undocumented or not yet supported value.
+                             */
+                            fun belowThresholdDiscountPercentage(
+                                belowThresholdDiscountPercentage: JsonField<String>
+                            ) = apply {
+                                this.belowThresholdDiscountPercentage =
+                                    belowThresholdDiscountPercentage
+                            }
+
+                            /**
+                             * Semicolon-separated list of matrix cell coordinates targeted by this
+                             * group. Each coordinate is `first,second` when the matrix has two
+                             * dimensions, or just `first` for a single-dimension matrix. Example:
+                             * `blue,circle;green,triangle`.
+                             */
+                            fun cellCoordinates(cellCoordinates: String) =
+                                cellCoordinates(JsonField.of(cellCoordinates))
+
+                            /**
+                             * Sets [Builder.cellCoordinates] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.cellCoordinates] with a well-typed
+                             * [String] value instead. This method is primarily for setting the
+                             * field to an undocumented or not yet supported value.
+                             */
+                            fun cellCoordinates(cellCoordinates: JsonField<String>) = apply {
+                                this.cellCoordinates = cellCoordinates
+                            }
+
+                            fun thresholdAmount(thresholdAmount: String) =
+                                thresholdAmount(JsonField.of(thresholdAmount))
+
+                            /**
+                             * Sets [Builder.thresholdAmount] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.thresholdAmount] with a well-typed
+                             * [String] value instead. This method is primarily for setting the
+                             * field to an undocumented or not yet supported value.
+                             */
+                            fun thresholdAmount(thresholdAmount: JsonField<String>) = apply {
+                                this.thresholdAmount = thresholdAmount
+                            }
+
+                            fun description(description: String?) =
+                                description(JsonField.ofNullable(description))
+
+                            /**
+                             * Sets [Builder.description] to an arbitrary JSON value.
+                             *
+                             * You should usually call [Builder.description] with a well-typed
+                             * [String] value instead. This method is primarily for setting the
+                             * field to an undocumented or not yet supported value.
+                             */
+                            fun description(description: JsonField<String>) = apply {
+                                this.description = description
+                            }
+
+                            fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                                apply {
+                                    this.additionalProperties.clear()
+                                    putAllAdditionalProperties(additionalProperties)
+                                }
+
+                            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                                additionalProperties.put(key, value)
+                            }
+
+                            fun putAllAdditionalProperties(
+                                additionalProperties: Map<String, JsonValue>
+                            ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                            fun removeAdditionalProperty(key: String) = apply {
+                                additionalProperties.remove(key)
+                            }
+
+                            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                                keys.forEach(::removeAdditionalProperty)
+                            }
+
+                            /**
+                             * Returns an immutable instance of [ThresholdDiscountGroup].
+                             *
+                             * Further updates to this [Builder] will not mutate the returned
+                             * instance.
+                             *
+                             * The following fields are required:
+                             * ```kotlin
+                             * .aboveThresholdDiscountPercentage()
+                             * .belowThresholdDiscountPercentage()
+                             * .cellCoordinates()
+                             * .thresholdAmount()
+                             * ```
+                             *
+                             * @throws IllegalStateException if any required field is unset.
+                             */
+                            fun build(): ThresholdDiscountGroup =
+                                ThresholdDiscountGroup(
+                                    checkRequired(
+                                        "aboveThresholdDiscountPercentage",
+                                        aboveThresholdDiscountPercentage,
+                                    ),
+                                    checkRequired(
+                                        "belowThresholdDiscountPercentage",
+                                        belowThresholdDiscountPercentage,
+                                    ),
+                                    checkRequired("cellCoordinates", cellCoordinates),
+                                    checkRequired("thresholdAmount", thresholdAmount),
+                                    description,
+                                    additionalProperties.toMutableMap(),
+                                )
+                        }
+
+                        private var validated: Boolean = false
+
+                        /**
+                         * Validates that the types of all values in this object match their
+                         * expected types recursively.
+                         *
+                         * This method is _not_ forwards compatible with new types from the API for
+                         * existing fields.
+                         *
+                         * @throws OrbInvalidDataException if any value type in this object doesn't
+                         *   match its expected type.
+                         */
+                        fun validate(): ThresholdDiscountGroup = apply {
+                            if (validated) {
+                                return@apply
+                            }
+
+                            aboveThresholdDiscountPercentage()
+                            belowThresholdDiscountPercentage()
+                            cellCoordinates()
+                            thresholdAmount()
+                            description()
+                            validated = true
+                        }
+
+                        fun isValid(): Boolean =
+                            try {
+                                validate()
+                                true
+                            } catch (e: OrbInvalidDataException) {
+                                false
+                            }
+
+                        /**
+                         * Returns a score indicating how many valid values are contained in this
+                         * object recursively.
+                         *
+                         * Used for best match union deserialization.
+                         */
+                        internal fun validity(): Int =
+                            (if (aboveThresholdDiscountPercentage.asKnown() == null) 0 else 1) +
+                                (if (belowThresholdDiscountPercentage.asKnown() == null) 0 else 1) +
+                                (if (cellCoordinates.asKnown() == null) 0 else 1) +
+                                (if (thresholdAmount.asKnown() == null) 0 else 1) +
+                                (if (description.asKnown() == null) 0 else 1)
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return other is ThresholdDiscountGroup &&
+                                aboveThresholdDiscountPercentage ==
+                                    other.aboveThresholdDiscountPercentage &&
+                                belowThresholdDiscountPercentage ==
+                                    other.belowThresholdDiscountPercentage &&
+                                cellCoordinates == other.cellCoordinates &&
+                                thresholdAmount == other.thresholdAmount &&
+                                description == other.description &&
+                                additionalProperties == other.additionalProperties
+                        }
+
+                        private val hashCode: Int by lazy {
+                            Objects.hash(
+                                aboveThresholdDiscountPercentage,
+                                belowThresholdDiscountPercentage,
+                                cellCoordinates,
+                                thresholdAmount,
+                                description,
+                                additionalProperties,
+                            )
+                        }
+
+                        override fun hashCode(): Int = hashCode
+
+                        override fun toString() =
+                            "ThresholdDiscountGroup{aboveThresholdDiscountPercentage=$aboveThresholdDiscountPercentage, belowThresholdDiscountPercentage=$belowThresholdDiscountPercentage, cellCoordinates=$cellCoordinates, thresholdAmount=$thresholdAmount, description=$description, additionalProperties=$additionalProperties}"
+                    }
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is MatrixWithThresholdDiscountsConfig &&
+                            defaultUnitAmount == other.defaultUnitAmount &&
+                            firstDimension == other.firstDimension &&
+                            matrixValues == other.matrixValues &&
+                            secondDimension == other.secondDimension &&
+                            thresholdDiscountGroups == other.thresholdDiscountGroups &&
+                            additionalProperties == other.additionalProperties
+                    }
+
+                    private val hashCode: Int by lazy {
+                        Objects.hash(
+                            defaultUnitAmount,
+                            firstDimension,
+                            matrixValues,
+                            secondDimension,
+                            thresholdDiscountGroups,
+                            additionalProperties,
+                        )
+                    }
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() =
+                        "MatrixWithThresholdDiscountsConfig{defaultUnitAmount=$defaultUnitAmount, firstDimension=$firstDimension, matrixValues=$matrixValues, secondDimension=$secondDimension, thresholdDiscountGroups=$thresholdDiscountGroups, additionalProperties=$additionalProperties}"
+                }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                class Metadata
+                @JsonCreator
+                private constructor(
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    private val additionalProperties: Map<String, JsonValue>
+                ) {
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /** Returns a mutable builder for constructing an instance of [Metadata]. */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [Metadata]. */
+                    class Builder internal constructor() {
+
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(metadata: Metadata) = apply {
+                            additionalProperties = metadata.additionalProperties.toMutableMap()
+                        }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [Metadata].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         */
+                        fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                    }
+
+                    private var validated: Boolean = false
+
+                    /**
+                     * Validates that the types of all values in this object match their expected
+                     * types recursively.
+                     *
+                     * This method is _not_ forwards compatible with new types from the API for
+                     * existing fields.
+                     *
+                     * @throws OrbInvalidDataException if any value type in this object doesn't
+                     *   match its expected type.
+                     */
+                    fun validate(): Metadata = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: OrbInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        additionalProperties.count { (_, value) ->
+                            !value.isNull() && !value.isMissing()
+                        }
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is Metadata &&
+                            additionalProperties == other.additionalProperties
+                    }
+
+                    private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is MatrixWithThresholdDiscounts &&
+                        cadence == other.cadence &&
+                        itemId == other.itemId &&
+                        matrixWithThresholdDiscountsConfig ==
+                            other.matrixWithThresholdDiscountsConfig &&
+                        modelType == other.modelType &&
+                        name == other.name &&
+                        billableMetricId == other.billableMetricId &&
+                        billedInAdvance == other.billedInAdvance &&
+                        billingCycleConfiguration == other.billingCycleConfiguration &&
+                        conversionRate == other.conversionRate &&
+                        conversionRateConfig == other.conversionRateConfig &&
+                        currency == other.currency &&
+                        dimensionalPriceConfiguration == other.dimensionalPriceConfiguration &&
+                        externalPriceId == other.externalPriceId &&
+                        fixedPriceQuantity == other.fixedPriceQuantity &&
+                        invoiceGroupingKey == other.invoiceGroupingKey &&
+                        invoicingCycleConfiguration == other.invoicingCycleConfiguration &&
+                        licenseTypeId == other.licenseTypeId &&
+                        metadata == other.metadata &&
+                        referenceId == other.referenceId &&
+                        additionalProperties == other.additionalProperties
+                }
+
+                private val hashCode: Int by lazy {
+                    Objects.hash(
+                        cadence,
+                        itemId,
+                        matrixWithThresholdDiscountsConfig,
+                        modelType,
+                        name,
+                        billableMetricId,
+                        billedInAdvance,
+                        billingCycleConfiguration,
+                        conversionRate,
+                        conversionRateConfig,
+                        currency,
+                        dimensionalPriceConfiguration,
+                        externalPriceId,
+                        fixedPriceQuantity,
+                        invoiceGroupingKey,
+                        invoicingCycleConfiguration,
+                        licenseTypeId,
+                        metadata,
+                        referenceId,
+                        additionalProperties,
+                    )
+                }
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "MatrixWithThresholdDiscounts{cadence=$cadence, itemId=$itemId, matrixWithThresholdDiscountsConfig=$matrixWithThresholdDiscountsConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, licenseTypeId=$licenseTypeId, metadata=$metadata, referenceId=$referenceId, additionalProperties=$additionalProperties}"
             }
 
             class TieredWithProration
