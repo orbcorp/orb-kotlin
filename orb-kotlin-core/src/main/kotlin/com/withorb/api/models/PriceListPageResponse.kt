@@ -187,6 +187,13 @@ private constructor(
         fun addData(matrixWithAllocation: Price.MatrixWithAllocation) =
             addData(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
+        /**
+         * Alias for calling [addData] with
+         * `Price.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts)`.
+         */
+        fun addData(matrixWithThresholdDiscounts: Price.MatrixWithThresholdDiscounts) =
+            addData(Price.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts))
+
         /** Alias for calling [addData] with `Price.ofTieredWithProration(tieredWithProration)`. */
         fun addData(tieredWithProration: Price.TieredWithProration) =
             addData(Price.ofTieredWithProration(tieredWithProration))

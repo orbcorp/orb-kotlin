@@ -205,6 +205,16 @@ interface PriceService {
 
     /** @see create */
     fun create(
+        matrixWithThresholdDiscounts: PriceCreateParams.Body.MatrixWithThresholdDiscounts,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(
+            PriceCreateParams.Body.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
         tieredWithProration: NewFloatingTieredWithProrationPrice,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price =
@@ -654,6 +664,17 @@ interface PriceService {
         ): HttpResponseFor<Price> =
             create(
                 PriceCreateParams.Body.ofMatrixWithAllocation(matrixWithAllocation),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            matrixWithThresholdDiscounts: PriceCreateParams.Body.MatrixWithThresholdDiscounts,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts),
                 requestOptions,
             )
 
