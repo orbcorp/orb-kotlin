@@ -287,6 +287,10 @@ private constructor(
     fun paymentProviderId(): String? = paymentProviderId.getNullable("payment_provider_id")
 
     /**
+     * Deprecated. Returns the URL of the most recent non-expired portal link, or null. When the
+     * account has opted into customer portal sessions, this field always returns null. Use POST
+     * /v1/customers/{id}/portal_sessions to mint short-lived portal session URLs.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
@@ -1079,6 +1083,11 @@ private constructor(
             this.paymentProviderId = paymentProviderId
         }
 
+        /**
+         * Deprecated. Returns the URL of the most recent non-expired portal link, or null. When the
+         * account has opted into customer portal sessions, this field always returns null. Use POST
+         * /v1/customers/{id}/portal_sessions to mint short-lived portal session URLs.
+         */
         fun portalUrl(portalUrl: String?) = portalUrl(JsonField.ofNullable(portalUrl))
 
         /**
