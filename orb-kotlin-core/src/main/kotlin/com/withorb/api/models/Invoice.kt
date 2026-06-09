@@ -6288,12 +6288,15 @@ private constructor(
 
                 val STRIPE = of("stripe")
 
+                val ADYEN = of("adyen")
+
                 fun of(value: String) = PaymentProvider(JsonField.of(value))
             }
 
             /** An enum containing [PaymentProvider]'s known values. */
             enum class Known {
-                STRIPE
+                STRIPE,
+                ADYEN,
             }
 
             /**
@@ -6307,6 +6310,7 @@ private constructor(
              */
             enum class Value {
                 STRIPE,
+                ADYEN,
                 /**
                  * An enum member indicating that [PaymentProvider] was instantiated with an unknown
                  * value.
@@ -6324,6 +6328,7 @@ private constructor(
             fun value(): Value =
                 when (this) {
                     STRIPE -> Value.STRIPE
+                    ADYEN -> Value.ADYEN
                     else -> Value._UNKNOWN
                 }
 
@@ -6339,6 +6344,7 @@ private constructor(
             fun known(): Known =
                 when (this) {
                     STRIPE -> Known.STRIPE
+                    ADYEN -> Known.ADYEN
                     else -> throw OrbInvalidDataException("Unknown PaymentProvider: $value")
                 }
 

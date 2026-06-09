@@ -21944,6 +21944,9 @@ private constructor(
                 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
                 private constructor(
                     private val percent: JsonField<Double>,
+                    private val maximumAmount: JsonField<String>,
+                    private val minimumAmount: JsonField<String>,
+                    private val prorated: JsonField<Boolean>,
                     private val additionalProperties: MutableMap<String, JsonValue>,
                 ) {
 
@@ -21951,17 +21954,52 @@ private constructor(
                     private constructor(
                         @JsonProperty("percent")
                         @ExcludeMissing
-                        percent: JsonField<Double> = JsonMissing.of()
-                    ) : this(percent, mutableMapOf())
+                        percent: JsonField<Double> = JsonMissing.of(),
+                        @JsonProperty("maximum_amount")
+                        @ExcludeMissing
+                        maximumAmount: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("minimum_amount")
+                        @ExcludeMissing
+                        minimumAmount: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("prorated")
+                        @ExcludeMissing
+                        prorated: JsonField<Boolean> = JsonMissing.of(),
+                    ) : this(percent, maximumAmount, minimumAmount, prorated, mutableMapOf())
 
                     /**
-                     * What percent of the component subtotals to charge
+                     * Fraction of the component subtotals to charge (0 < percent <= 1).
                      *
                      * @throws OrbInvalidDataException if the JSON field has an unexpected type or
                      *   is unexpectedly missing or null (e.g. if the server responded with an
                      *   unexpected value).
                      */
                     fun percent(): Double = percent.getRequired("percent")
+
+                    /**
+                     * Maximum amount to charge. If unset, the fee has no upper bound.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun maximumAmount(): String? = maximumAmount.getNullable("maximum_amount")
+
+                    /**
+                     * Minimum amount to charge. If unset, the fee is bounded below by 0.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun minimumAmount(): String? = minimumAmount.getNullable("minimum_amount")
+
+                    /**
+                     * If true, the minimum_amount is prorated based on the service period. The
+                     * maximum_amount is an absolute cap (never prorated), and the percent applied
+                     * to upstream subtotals is never prorated either.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun prorated(): Boolean? = prorated.getNullable("prorated")
 
                     /**
                      * Returns the raw JSON value of [percent].
@@ -21972,6 +22010,36 @@ private constructor(
                     @JsonProperty("percent")
                     @ExcludeMissing
                     fun _percent(): JsonField<Double> = percent
+
+                    /**
+                     * Returns the raw JSON value of [maximumAmount].
+                     *
+                     * Unlike [maximumAmount], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("maximum_amount")
+                    @ExcludeMissing
+                    fun _maximumAmount(): JsonField<String> = maximumAmount
+
+                    /**
+                     * Returns the raw JSON value of [minimumAmount].
+                     *
+                     * Unlike [minimumAmount], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("minimum_amount")
+                    @ExcludeMissing
+                    fun _minimumAmount(): JsonField<String> = minimumAmount
+
+                    /**
+                     * Returns the raw JSON value of [prorated].
+                     *
+                     * Unlike [prorated], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("prorated")
+                    @ExcludeMissing
+                    fun _prorated(): JsonField<Boolean> = prorated
 
                     @JsonAnySetter
                     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -22003,15 +22071,21 @@ private constructor(
                     class Builder internal constructor() {
 
                         private var percent: JsonField<Double>? = null
+                        private var maximumAmount: JsonField<String> = JsonMissing.of()
+                        private var minimumAmount: JsonField<String> = JsonMissing.of()
+                        private var prorated: JsonField<Boolean> = JsonMissing.of()
                         private var additionalProperties: MutableMap<String, JsonValue> =
                             mutableMapOf()
 
                         internal fun from(percentConfig: PercentConfig) = apply {
                             percent = percentConfig.percent
+                            maximumAmount = percentConfig.maximumAmount
+                            minimumAmount = percentConfig.minimumAmount
+                            prorated = percentConfig.prorated
                             additionalProperties = percentConfig.additionalProperties.toMutableMap()
                         }
 
-                        /** What percent of the component subtotals to charge */
+                        /** Fraction of the component subtotals to charge (0 < percent <= 1). */
                         fun percent(percent: Double) = percent(JsonField.of(percent))
 
                         /**
@@ -22022,6 +22096,54 @@ private constructor(
                          * undocumented or not yet supported value.
                          */
                         fun percent(percent: JsonField<Double>) = apply { this.percent = percent }
+
+                        /** Maximum amount to charge. If unset, the fee has no upper bound. */
+                        fun maximumAmount(maximumAmount: String?) =
+                            maximumAmount(JsonField.ofNullable(maximumAmount))
+
+                        /**
+                         * Sets [Builder.maximumAmount] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.maximumAmount] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun maximumAmount(maximumAmount: JsonField<String>) = apply {
+                            this.maximumAmount = maximumAmount
+                        }
+
+                        /** Minimum amount to charge. If unset, the fee is bounded below by 0. */
+                        fun minimumAmount(minimumAmount: String?) =
+                            minimumAmount(JsonField.ofNullable(minimumAmount))
+
+                        /**
+                         * Sets [Builder.minimumAmount] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.minimumAmount] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun minimumAmount(minimumAmount: JsonField<String>) = apply {
+                            this.minimumAmount = minimumAmount
+                        }
+
+                        /**
+                         * If true, the minimum_amount is prorated based on the service period. The
+                         * maximum_amount is an absolute cap (never prorated), and the percent
+                         * applied to upstream subtotals is never prorated either.
+                         */
+                        fun prorated(prorated: Boolean) = prorated(JsonField.of(prorated))
+
+                        /**
+                         * Sets [Builder.prorated] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.prorated] with a well-typed [Boolean]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun prorated(prorated: JsonField<Boolean>) = apply {
+                            this.prorated = prorated
+                        }
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
                             apply {
@@ -22060,6 +22182,9 @@ private constructor(
                         fun build(): PercentConfig =
                             PercentConfig(
                                 checkRequired("percent", percent),
+                                maximumAmount,
+                                minimumAmount,
+                                prorated,
                                 additionalProperties.toMutableMap(),
                             )
                     }
@@ -22082,6 +22207,9 @@ private constructor(
                         }
 
                         percent()
+                        maximumAmount()
+                        minimumAmount()
+                        prorated()
                         validated = true
                     }
 
@@ -22099,7 +22227,11 @@ private constructor(
                      *
                      * Used for best match union deserialization.
                      */
-                    internal fun validity(): Int = (if (percent.asKnown() == null) 0 else 1)
+                    internal fun validity(): Int =
+                        (if (percent.asKnown() == null) 0 else 1) +
+                            (if (maximumAmount.asKnown() == null) 0 else 1) +
+                            (if (minimumAmount.asKnown() == null) 0 else 1) +
+                            (if (prorated.asKnown() == null) 0 else 1)
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -22108,17 +22240,26 @@ private constructor(
 
                         return other is PercentConfig &&
                             percent == other.percent &&
+                            maximumAmount == other.maximumAmount &&
+                            minimumAmount == other.minimumAmount &&
+                            prorated == other.prorated &&
                             additionalProperties == other.additionalProperties
                     }
 
                     private val hashCode: Int by lazy {
-                        Objects.hash(percent, additionalProperties)
+                        Objects.hash(
+                            percent,
+                            maximumAmount,
+                            minimumAmount,
+                            prorated,
+                            additionalProperties,
+                        )
                     }
 
                     override fun hashCode(): Int = hashCode
 
                     override fun toString() =
-                        "PercentConfig{percent=$percent, additionalProperties=$additionalProperties}"
+                        "PercentConfig{percent=$percent, maximumAmount=$maximumAmount, minimumAmount=$minimumAmount, prorated=$prorated, additionalProperties=$additionalProperties}"
                 }
 
                 /**
@@ -43026,6 +43167,9 @@ private constructor(
                 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
                 private constructor(
                     private val percent: JsonField<Double>,
+                    private val maximumAmount: JsonField<String>,
+                    private val minimumAmount: JsonField<String>,
+                    private val prorated: JsonField<Boolean>,
                     private val additionalProperties: MutableMap<String, JsonValue>,
                 ) {
 
@@ -43033,17 +43177,52 @@ private constructor(
                     private constructor(
                         @JsonProperty("percent")
                         @ExcludeMissing
-                        percent: JsonField<Double> = JsonMissing.of()
-                    ) : this(percent, mutableMapOf())
+                        percent: JsonField<Double> = JsonMissing.of(),
+                        @JsonProperty("maximum_amount")
+                        @ExcludeMissing
+                        maximumAmount: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("minimum_amount")
+                        @ExcludeMissing
+                        minimumAmount: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("prorated")
+                        @ExcludeMissing
+                        prorated: JsonField<Boolean> = JsonMissing.of(),
+                    ) : this(percent, maximumAmount, minimumAmount, prorated, mutableMapOf())
 
                     /**
-                     * What percent of the component subtotals to charge
+                     * Fraction of the component subtotals to charge (0 < percent <= 1).
                      *
                      * @throws OrbInvalidDataException if the JSON field has an unexpected type or
                      *   is unexpectedly missing or null (e.g. if the server responded with an
                      *   unexpected value).
                      */
                     fun percent(): Double = percent.getRequired("percent")
+
+                    /**
+                     * Maximum amount to charge. If unset, the fee has no upper bound.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun maximumAmount(): String? = maximumAmount.getNullable("maximum_amount")
+
+                    /**
+                     * Minimum amount to charge. If unset, the fee is bounded below by 0.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun minimumAmount(): String? = minimumAmount.getNullable("minimum_amount")
+
+                    /**
+                     * If true, the minimum_amount is prorated based on the service period. The
+                     * maximum_amount is an absolute cap (never prorated), and the percent applied
+                     * to upstream subtotals is never prorated either.
+                     *
+                     * @throws OrbInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun prorated(): Boolean? = prorated.getNullable("prorated")
 
                     /**
                      * Returns the raw JSON value of [percent].
@@ -43054,6 +43233,36 @@ private constructor(
                     @JsonProperty("percent")
                     @ExcludeMissing
                     fun _percent(): JsonField<Double> = percent
+
+                    /**
+                     * Returns the raw JSON value of [maximumAmount].
+                     *
+                     * Unlike [maximumAmount], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("maximum_amount")
+                    @ExcludeMissing
+                    fun _maximumAmount(): JsonField<String> = maximumAmount
+
+                    /**
+                     * Returns the raw JSON value of [minimumAmount].
+                     *
+                     * Unlike [minimumAmount], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("minimum_amount")
+                    @ExcludeMissing
+                    fun _minimumAmount(): JsonField<String> = minimumAmount
+
+                    /**
+                     * Returns the raw JSON value of [prorated].
+                     *
+                     * Unlike [prorated], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("prorated")
+                    @ExcludeMissing
+                    fun _prorated(): JsonField<Boolean> = prorated
 
                     @JsonAnySetter
                     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -43085,15 +43294,21 @@ private constructor(
                     class Builder internal constructor() {
 
                         private var percent: JsonField<Double>? = null
+                        private var maximumAmount: JsonField<String> = JsonMissing.of()
+                        private var minimumAmount: JsonField<String> = JsonMissing.of()
+                        private var prorated: JsonField<Boolean> = JsonMissing.of()
                         private var additionalProperties: MutableMap<String, JsonValue> =
                             mutableMapOf()
 
                         internal fun from(percentConfig: PercentConfig) = apply {
                             percent = percentConfig.percent
+                            maximumAmount = percentConfig.maximumAmount
+                            minimumAmount = percentConfig.minimumAmount
+                            prorated = percentConfig.prorated
                             additionalProperties = percentConfig.additionalProperties.toMutableMap()
                         }
 
-                        /** What percent of the component subtotals to charge */
+                        /** Fraction of the component subtotals to charge (0 < percent <= 1). */
                         fun percent(percent: Double) = percent(JsonField.of(percent))
 
                         /**
@@ -43104,6 +43319,54 @@ private constructor(
                          * undocumented or not yet supported value.
                          */
                         fun percent(percent: JsonField<Double>) = apply { this.percent = percent }
+
+                        /** Maximum amount to charge. If unset, the fee has no upper bound. */
+                        fun maximumAmount(maximumAmount: String?) =
+                            maximumAmount(JsonField.ofNullable(maximumAmount))
+
+                        /**
+                         * Sets [Builder.maximumAmount] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.maximumAmount] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun maximumAmount(maximumAmount: JsonField<String>) = apply {
+                            this.maximumAmount = maximumAmount
+                        }
+
+                        /** Minimum amount to charge. If unset, the fee is bounded below by 0. */
+                        fun minimumAmount(minimumAmount: String?) =
+                            minimumAmount(JsonField.ofNullable(minimumAmount))
+
+                        /**
+                         * Sets [Builder.minimumAmount] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.minimumAmount] with a well-typed
+                         * [String] value instead. This method is primarily for setting the field to
+                         * an undocumented or not yet supported value.
+                         */
+                        fun minimumAmount(minimumAmount: JsonField<String>) = apply {
+                            this.minimumAmount = minimumAmount
+                        }
+
+                        /**
+                         * If true, the minimum_amount is prorated based on the service period. The
+                         * maximum_amount is an absolute cap (never prorated), and the percent
+                         * applied to upstream subtotals is never prorated either.
+                         */
+                        fun prorated(prorated: Boolean) = prorated(JsonField.of(prorated))
+
+                        /**
+                         * Sets [Builder.prorated] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.prorated] with a well-typed [Boolean]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun prorated(prorated: JsonField<Boolean>) = apply {
+                            this.prorated = prorated
+                        }
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
                             apply {
@@ -43142,6 +43405,9 @@ private constructor(
                         fun build(): PercentConfig =
                             PercentConfig(
                                 checkRequired("percent", percent),
+                                maximumAmount,
+                                minimumAmount,
+                                prorated,
                                 additionalProperties.toMutableMap(),
                             )
                     }
@@ -43164,6 +43430,9 @@ private constructor(
                         }
 
                         percent()
+                        maximumAmount()
+                        minimumAmount()
+                        prorated()
                         validated = true
                     }
 
@@ -43181,7 +43450,11 @@ private constructor(
                      *
                      * Used for best match union deserialization.
                      */
-                    internal fun validity(): Int = (if (percent.asKnown() == null) 0 else 1)
+                    internal fun validity(): Int =
+                        (if (percent.asKnown() == null) 0 else 1) +
+                            (if (maximumAmount.asKnown() == null) 0 else 1) +
+                            (if (minimumAmount.asKnown() == null) 0 else 1) +
+                            (if (prorated.asKnown() == null) 0 else 1)
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -43190,17 +43463,26 @@ private constructor(
 
                         return other is PercentConfig &&
                             percent == other.percent &&
+                            maximumAmount == other.maximumAmount &&
+                            minimumAmount == other.minimumAmount &&
+                            prorated == other.prorated &&
                             additionalProperties == other.additionalProperties
                     }
 
                     private val hashCode: Int by lazy {
-                        Objects.hash(percent, additionalProperties)
+                        Objects.hash(
+                            percent,
+                            maximumAmount,
+                            minimumAmount,
+                            prorated,
+                            additionalProperties,
+                        )
                     }
 
                     override fun hashCode(): Int = hashCode
 
                     override fun toString() =
-                        "PercentConfig{percent=$percent, additionalProperties=$additionalProperties}"
+                        "PercentConfig{percent=$percent, maximumAmount=$maximumAmount, minimumAmount=$minimumAmount, prorated=$prorated, additionalProperties=$additionalProperties}"
                 }
 
                 /**

@@ -126,6 +126,7 @@ internal class AlertServiceTest {
                     .subscriptionId("subscription_id")
                     .addThreshold(Threshold.builder().value(0.0).build())
                     .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
+                    .currency("currency")
                     .addGroupingKey("string")
                     .metricId("metric_id")
                     .addPriceFilter(
@@ -137,7 +138,6 @@ internal class AlertServiceTest {
                             .addValue("string")
                             .build()
                     )
-                    .pricingUnitId("pricing_unit_id")
                     .addThresholdOverride(
                         AlertCreateForSubscriptionParams.ThresholdOverride.builder()
                             .addGroupValue("string")
