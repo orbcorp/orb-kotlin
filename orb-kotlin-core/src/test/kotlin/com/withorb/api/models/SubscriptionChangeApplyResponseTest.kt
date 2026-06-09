@@ -159,6 +159,19 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .build()
                                 )
                                 .automaticTaxEnabled(true)
+                                .defaultPaymentMethod(
+                                    Customer.DefaultPaymentMethod.builder()
+                                        .id("id")
+                                        .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                        .customerId("customer_id")
+                                        .default(true)
+                                        .externalPaymentMethodId("external_payment_method_id")
+                                        .paymentMethodType(
+                                            Customer.DefaultPaymentMethod.PaymentMethodType.CARD
+                                        )
+                                        .providerType("provider_type")
+                                        .build()
+                                )
                                 .paymentConfiguration(
                                     Customer.PaymentConfiguration.builder()
                                         .addPaymentProvider(
@@ -2192,6 +2205,19 @@ internal class SubscriptionChangeApplyResponseTest {
                                     .build()
                             )
                             .automaticTaxEnabled(true)
+                            .defaultPaymentMethod(
+                                Customer.DefaultPaymentMethod.builder()
+                                    .id("id")
+                                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                    .customerId("customer_id")
+                                    .default(true)
+                                    .externalPaymentMethodId("external_payment_method_id")
+                                    .paymentMethodType(
+                                        Customer.DefaultPaymentMethod.PaymentMethodType.CARD
+                                    )
+                                    .providerType("provider_type")
+                                    .build()
+                            )
                             .paymentConfiguration(
                                 Customer.PaymentConfiguration.builder()
                                     .addPaymentProvider(
@@ -4115,6 +4141,19 @@ internal class SubscriptionChangeApplyResponseTest {
                                         .build()
                                 )
                                 .automaticTaxEnabled(true)
+                                .defaultPaymentMethod(
+                                    Customer.DefaultPaymentMethod.builder()
+                                        .id("id")
+                                        .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                        .customerId("customer_id")
+                                        .default(true)
+                                        .externalPaymentMethodId("external_payment_method_id")
+                                        .paymentMethodType(
+                                            Customer.DefaultPaymentMethod.PaymentMethodType.CARD
+                                        )
+                                        .providerType("provider_type")
+                                        .build()
+                                )
                                 .paymentConfiguration(
                                     Customer.PaymentConfiguration.builder()
                                         .addPaymentProvider(

@@ -3569,6 +3569,8 @@ private constructor(
 
             val NETSUITE = of("netsuite")
 
+            val ADYEN = of("adyen")
+
             fun of(value: String) = PaymentProvider(JsonField.of(value))
         }
 
@@ -3579,6 +3581,7 @@ private constructor(
             STRIPE_CHARGE,
             STRIPE_INVOICE,
             NETSUITE,
+            ADYEN,
         }
 
         /**
@@ -3596,6 +3599,7 @@ private constructor(
             STRIPE_CHARGE,
             STRIPE_INVOICE,
             NETSUITE,
+            ADYEN,
             /**
              * An enum member indicating that [PaymentProvider] was instantiated with an unknown
              * value.
@@ -3617,6 +3621,7 @@ private constructor(
                 STRIPE_CHARGE -> Value.STRIPE_CHARGE
                 STRIPE_INVOICE -> Value.STRIPE_INVOICE
                 NETSUITE -> Value.NETSUITE
+                ADYEN -> Value.ADYEN
                 else -> Value._UNKNOWN
             }
 
@@ -3635,6 +3640,7 @@ private constructor(
                 STRIPE_CHARGE -> Known.STRIPE_CHARGE
                 STRIPE_INVOICE -> Known.STRIPE_INVOICE
                 NETSUITE -> Known.NETSUITE
+                ADYEN -> Known.ADYEN
                 else -> throw OrbInvalidDataException("Unknown PaymentProvider: $value")
             }
 
