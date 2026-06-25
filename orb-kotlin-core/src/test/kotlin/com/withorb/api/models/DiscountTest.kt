@@ -38,6 +38,7 @@ internal class DiscountTest {
         assertThat(discount.trial()).isNull()
         assertThat(discount.usage()).isNull()
         assertThat(discount.amount()).isNull()
+        assertThat(discount.tieredPercentage()).isNull()
     }
 
     @Test
@@ -95,6 +96,7 @@ internal class DiscountTest {
         assertThat(discount.trial()).isEqualTo(trial)
         assertThat(discount.usage()).isNull()
         assertThat(discount.amount()).isNull()
+        assertThat(discount.tieredPercentage()).isNull()
     }
 
     @Test
@@ -152,6 +154,7 @@ internal class DiscountTest {
         assertThat(discount.trial()).isNull()
         assertThat(discount.usage()).isEqualTo(usage)
         assertThat(discount.amount()).isNull()
+        assertThat(discount.tieredPercentage()).isNull()
     }
 
     @Test
@@ -208,6 +211,7 @@ internal class DiscountTest {
         assertThat(discount.trial()).isNull()
         assertThat(discount.usage()).isNull()
         assertThat(discount.amount()).isEqualTo(amount)
+        assertThat(discount.tieredPercentage()).isNull()
     }
 
     @Test
@@ -224,6 +228,73 @@ internal class DiscountTest {
                         AmountDiscount.Filter.builder()
                             .field(AmountDiscount.Filter.Field.PRICE_ID)
                             .operator(AmountDiscount.Filter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
+                    .reason("reason")
+                    .build()
+            )
+
+        val roundtrippedDiscount =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(discount),
+                jacksonTypeRef<Discount>(),
+            )
+
+        assertThat(roundtrippedDiscount).isEqualTo(discount)
+    }
+
+    @Test
+    fun ofTieredPercentage() {
+        val tieredPercentage =
+            Discount.TieredPercentage.builder()
+                .addTier(
+                    Discount.TieredPercentage.Tier.builder()
+                        .lowerBound(0.0)
+                        .percentage(0.0)
+                        .upperBound(0.0)
+                        .build()
+                )
+                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                .addFilter(
+                    Discount.TieredPercentage.Filter.builder()
+                        .field(Discount.TieredPercentage.Filter.Field.PRICE_ID)
+                        .operator(Discount.TieredPercentage.Filter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
+                .reason("reason")
+                .build()
+
+        val discount = Discount.ofTieredPercentage(tieredPercentage)
+
+        assertThat(discount.percentage()).isNull()
+        assertThat(discount.trial()).isNull()
+        assertThat(discount.usage()).isNull()
+        assertThat(discount.amount()).isNull()
+        assertThat(discount.tieredPercentage()).isEqualTo(tieredPercentage)
+    }
+
+    @Test
+    fun ofTieredPercentageRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val discount =
+            Discount.ofTieredPercentage(
+                Discount.TieredPercentage.builder()
+                    .addTier(
+                        Discount.TieredPercentage.Tier.builder()
+                            .lowerBound(0.0)
+                            .percentage(0.0)
+                            .upperBound(0.0)
+                            .build()
+                    )
+                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                    .addFilter(
+                        Discount.TieredPercentage.Filter.builder()
+                            .field(Discount.TieredPercentage.Filter.Field.PRICE_ID)
+                            .operator(Discount.TieredPercentage.Filter.Operator.INCLUDES)
                             .addValue("string")
                             .build()
                     )

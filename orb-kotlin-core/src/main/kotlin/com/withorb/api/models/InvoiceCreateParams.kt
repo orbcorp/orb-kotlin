@@ -433,6 +433,23 @@ private constructor(
          */
         fun amountDiscount(amountDiscount: String) = apply { body.amountDiscount(amountDiscount) }
 
+        /** Alias for calling [discount] with `Discount.ofTieredPercentage(tieredPercentage)`. */
+        fun discount(tieredPercentage: Discount.TieredPercentage) = apply {
+            body.discount(tieredPercentage)
+        }
+
+        /**
+         * Alias for calling [discount] with the following:
+         * ```kotlin
+         * Discount.TieredPercentage.builder()
+         *     .tiers(tiers)
+         *     .build()
+         * ```
+         */
+        fun tieredPercentageDiscount(tiers: List<Discount.TieredPercentage.Tier>) = apply {
+            body.tieredPercentageDiscount(tiers)
+        }
+
         /**
          * An optional custom due date for the invoice. If not set, the due date will be calculated
          * based on the `net_terms` value.
@@ -1196,6 +1213,23 @@ private constructor(
                         .amountDiscount(amountDiscount)
                         .build()
                 )
+
+            /**
+             * Alias for calling [discount] with `Discount.ofTieredPercentage(tieredPercentage)`.
+             */
+            fun discount(tieredPercentage: Discount.TieredPercentage) =
+                discount(Discount.ofTieredPercentage(tieredPercentage))
+
+            /**
+             * Alias for calling [discount] with the following:
+             * ```kotlin
+             * Discount.TieredPercentage.builder()
+             *     .tiers(tiers)
+             *     .build()
+             * ```
+             */
+            fun tieredPercentageDiscount(tiers: List<Discount.TieredPercentage.Tier>) =
+                discount(Discount.TieredPercentage.builder().tiers(tiers).build())
 
             /**
              * An optional custom due date for the invoice. If not set, the due date will be
