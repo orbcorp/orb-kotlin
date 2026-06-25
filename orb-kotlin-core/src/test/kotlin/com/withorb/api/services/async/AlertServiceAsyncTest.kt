@@ -46,6 +46,19 @@ internal class AlertServiceAsyncTest {
                 AlertUpdateParams.builder()
                     .alertConfigurationId("alert_configuration_id")
                     .addThreshold(Threshold.builder().value(0.0).build())
+                    .addPriceFilter(
+                        AlertUpdateParams.PriceFilter.builder()
+                            .field(AlertUpdateParams.PriceFilter.Field.PRICE_ID)
+                            .operator(AlertUpdateParams.PriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
+                    .addThresholdOverride(
+                        AlertUpdateParams.ThresholdOverride.builder()
+                            .addGroupValue("string")
+                            .addThreshold(Threshold.builder().value(0.0).build())
+                            .build()
+                    )
                     .build()
             )
 
