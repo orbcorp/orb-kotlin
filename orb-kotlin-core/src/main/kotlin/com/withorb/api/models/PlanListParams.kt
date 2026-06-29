@@ -16,7 +16,7 @@ import java.util.Objects
 /**
  * This endpoint returns a list of all [plans](/core-concepts#plan-and-price) for an account in a
  * list format. The list of plans is ordered starting from the most recently created plan. The
- * response also includes [`pagination_metadata`](/api-reference/pagination), which lets the caller
+ * response also includes [`pagination_metadata`](/api-reference/pagination) which lets the caller
  * retrieve the next page of results if they exist.
  */
 class PlanListParams
