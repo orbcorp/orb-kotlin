@@ -308,6 +308,16 @@ private constructor(
     fun autoCollection(): Boolean? = body.autoCollection()
 
     /**
+     * Used to determine if invoices for this subscription will be automatically issued. If true,
+     * invoices will be automatically issued. If false, invoices will require manual approval. If
+     * `null` is specified, this defaults to the behavior configured for this customer.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun autoIssuance(): Boolean? = body.autoIssuance()
+
+    /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
@@ -577,6 +587,13 @@ private constructor(
     fun _autoCollection(): JsonField<Boolean> = body._autoCollection()
 
     /**
+     * Returns the raw JSON value of [autoIssuance].
+     *
+     * Unlike [autoIssuance], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _autoIssuance(): JsonField<Boolean> = body._autoIssuance()
+
+    /**
      * Returns the raw JSON value of [awsRegion].
      *
      * Unlike [awsRegion], this method doesn't throw if the JSON field has an unexpected type.
@@ -841,7 +858,7 @@ private constructor(
          * - [addPrices]
          * - [alignBillingWithSubscriptionStartDate]
          * - [autoCollection]
-         * - [awsRegion]
+         * - [autoIssuance]
          * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
@@ -937,6 +954,32 @@ private constructor(
          */
         fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
             body.autoCollection(autoCollection)
+        }
+
+        /**
+         * Used to determine if invoices for this subscription will be automatically issued. If
+         * true, invoices will be automatically issued. If false, invoices will require manual
+         * approval. If `null` is specified, this defaults to the behavior configured for this
+         * customer.
+         */
+        fun autoIssuance(autoIssuance: Boolean?) = apply { body.autoIssuance(autoIssuance) }
+
+        /**
+         * Alias for [Builder.autoIssuance].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun autoIssuance(autoIssuance: Boolean) = autoIssuance(autoIssuance as Boolean?)
+
+        /**
+         * Sets [Builder.autoIssuance] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.autoIssuance] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun autoIssuance(autoIssuance: JsonField<Boolean>) = apply {
+            body.autoIssuance(autoIssuance)
         }
 
         @Deprecated("deprecated")
@@ -1660,6 +1703,7 @@ private constructor(
         private val addPrices: JsonField<List<AddPrice>>,
         private val alignBillingWithSubscriptionStartDate: JsonField<Boolean>,
         private val autoCollection: JsonField<Boolean>,
+        private val autoIssuance: JsonField<Boolean>,
         private val awsRegion: JsonField<String>,
         private val billingCycleAnchorConfiguration: JsonField<BillingCycleAnchorConfiguration>,
         private val couponRedemptionCode: JsonField<String>,
@@ -1706,6 +1750,9 @@ private constructor(
             @JsonProperty("auto_collection")
             @ExcludeMissing
             autoCollection: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("auto_issuance")
+            @ExcludeMissing
+            autoIssuance: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("aws_region")
             @ExcludeMissing
             awsRegion: JsonField<String> = JsonMissing.of(),
@@ -1791,6 +1838,7 @@ private constructor(
             addPrices,
             alignBillingWithSubscriptionStartDate,
             autoCollection,
+            autoIssuance,
             awsRegion,
             billingCycleAnchorConfiguration,
             couponRedemptionCode,
@@ -1859,6 +1907,17 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun autoCollection(): Boolean? = autoCollection.getNullable("auto_collection")
+
+        /**
+         * Used to determine if invoices for this subscription will be automatically issued. If
+         * true, invoices will be automatically issued. If false, invoices will require manual
+         * approval. If `null` is specified, this defaults to the behavior configured for this
+         * customer.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun autoIssuance(): Boolean? = autoIssuance.getNullable("auto_issuance")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -2147,6 +2206,16 @@ private constructor(
         @JsonProperty("auto_collection")
         @ExcludeMissing
         fun _autoCollection(): JsonField<Boolean> = autoCollection
+
+        /**
+         * Returns the raw JSON value of [autoIssuance].
+         *
+         * Unlike [autoIssuance], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("auto_issuance")
+        @ExcludeMissing
+        fun _autoIssuance(): JsonField<Boolean> = autoIssuance
 
         /**
          * Returns the raw JSON value of [awsRegion].
@@ -2448,6 +2517,7 @@ private constructor(
             private var addPrices: JsonField<MutableList<AddPrice>>? = null
             private var alignBillingWithSubscriptionStartDate: JsonField<Boolean> = JsonMissing.of()
             private var autoCollection: JsonField<Boolean> = JsonMissing.of()
+            private var autoIssuance: JsonField<Boolean> = JsonMissing.of()
             private var awsRegion: JsonField<String> = JsonMissing.of()
             private var billingCycleAnchorConfiguration:
                 JsonField<BillingCycleAnchorConfiguration> =
@@ -2486,6 +2556,7 @@ private constructor(
                 addPrices = body.addPrices.map { it.toMutableList() }
                 alignBillingWithSubscriptionStartDate = body.alignBillingWithSubscriptionStartDate
                 autoCollection = body.autoCollection
+                autoIssuance = body.autoIssuance
                 awsRegion = body.awsRegion
                 billingCycleAnchorConfiguration = body.billingCycleAnchorConfiguration
                 couponRedemptionCode = body.couponRedemptionCode
@@ -2621,6 +2692,33 @@ private constructor(
              */
             fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
                 this.autoCollection = autoCollection
+            }
+
+            /**
+             * Used to determine if invoices for this subscription will be automatically issued. If
+             * true, invoices will be automatically issued. If false, invoices will require manual
+             * approval. If `null` is specified, this defaults to the behavior configured for this
+             * customer.
+             */
+            fun autoIssuance(autoIssuance: Boolean?) =
+                autoIssuance(JsonField.ofNullable(autoIssuance))
+
+            /**
+             * Alias for [Builder.autoIssuance].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun autoIssuance(autoIssuance: Boolean) = autoIssuance(autoIssuance as Boolean?)
+
+            /**
+             * Sets [Builder.autoIssuance] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.autoIssuance] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun autoIssuance(autoIssuance: JsonField<Boolean>) = apply {
+                this.autoIssuance = autoIssuance
             }
 
             @Deprecated("deprecated")
@@ -3248,6 +3346,7 @@ private constructor(
                     (addPrices ?: JsonMissing.of()).map { it.toImmutable() },
                     alignBillingWithSubscriptionStartDate,
                     autoCollection,
+                    autoIssuance,
                     awsRegion,
                     billingCycleAnchorConfiguration,
                     couponRedemptionCode,
@@ -3301,6 +3400,7 @@ private constructor(
             addPrices()?.forEach { it.validate() }
             alignBillingWithSubscriptionStartDate()
             autoCollection()
+            autoIssuance()
             awsRegion()
             billingCycleAnchorConfiguration()?.validate()
             couponRedemptionCode()
@@ -3352,6 +3452,7 @@ private constructor(
                 (addPrices.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (alignBillingWithSubscriptionStartDate.asKnown() == null) 0 else 1) +
                 (if (autoCollection.asKnown() == null) 0 else 1) +
+                (if (autoIssuance.asKnown() == null) 0 else 1) +
                 (if (awsRegion.asKnown() == null) 0 else 1) +
                 (billingCycleAnchorConfiguration.asKnown()?.validity() ?: 0) +
                 (if (couponRedemptionCode.asKnown() == null) 0 else 1) +
@@ -3393,6 +3494,7 @@ private constructor(
                 alignBillingWithSubscriptionStartDate ==
                     other.alignBillingWithSubscriptionStartDate &&
                 autoCollection == other.autoCollection &&
+                autoIssuance == other.autoIssuance &&
                 awsRegion == other.awsRegion &&
                 billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration &&
                 couponRedemptionCode == other.couponRedemptionCode &&
@@ -3431,6 +3533,7 @@ private constructor(
                 addPrices,
                 alignBillingWithSubscriptionStartDate,
                 autoCollection,
+                autoIssuance,
                 awsRegion,
                 billingCycleAnchorConfiguration,
                 couponRedemptionCode,
@@ -3467,7 +3570,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, awsRegion=$awsRegion, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, currency=$currency, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, filter=$filter, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, name=$name, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, startDate=$startDate, trialDurationDays=$trialDurationDays, usageCustomerIds=$usageCustomerIds, additionalProperties=$additionalProperties}"
+            "Body{addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, autoIssuance=$autoIssuance, awsRegion=$awsRegion, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, currency=$currency, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, filter=$filter, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, name=$name, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, startDate=$startDate, trialDurationDays=$trialDurationDays, usageCustomerIds=$usageCustomerIds, additionalProperties=$additionalProperties}"
     }
 
     class AddAdjustment

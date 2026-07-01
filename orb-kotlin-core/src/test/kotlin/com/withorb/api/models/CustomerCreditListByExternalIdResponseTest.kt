@@ -17,6 +17,9 @@ internal class CustomerCreditListByExternalIdResponseTest {
             CustomerCreditListByExternalIdResponse.builder()
                 .id("id")
                 .balance(0.0)
+                .creditBlockSource(
+                    CustomerCreditListByExternalIdResponse.CreditBlockSource.ALLOCATION
+                )
                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addFilter(
@@ -34,10 +37,41 @@ internal class CustomerCreditListByExternalIdResponseTest {
                 )
                 .perUnitCostBasis("per_unit_cost_basis")
                 .status(CustomerCreditListByExternalIdResponse.Status.ACTIVE)
+                .creditAllocation(
+                    CustomerCreditListByExternalIdResponse.CreditAllocation.builder()
+                        .allowsRollover(true)
+                        .currency("currency")
+                        .customExpiration(
+                            CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                .build()
+                        )
+                        .itemId("item_id")
+                        .addFilter(
+                            CustomerCreditListByExternalIdResponse.CreditAllocation.Filter.builder()
+                                .field(
+                                    CustomerCreditListByExternalIdResponse.CreditAllocation.Filter
+                                        .Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    CustomerCreditListByExternalIdResponse.CreditAllocation.Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
+                        .licenseTypeId("license_type_id")
+                        .build()
+                )
                 .build()
 
         assertThat(customerCreditListByExternalIdResponse.id()).isEqualTo("id")
         assertThat(customerCreditListByExternalIdResponse.balance()).isEqualTo(0.0)
+        assertThat(customerCreditListByExternalIdResponse.creditBlockSource())
+            .isEqualTo(CustomerCreditListByExternalIdResponse.CreditBlockSource.ALLOCATION)
         assertThat(customerCreditListByExternalIdResponse.effectiveDate())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(customerCreditListByExternalIdResponse.expiryDate())
@@ -61,6 +95,35 @@ internal class CustomerCreditListByExternalIdResponseTest {
             .isEqualTo("per_unit_cost_basis")
         assertThat(customerCreditListByExternalIdResponse.status())
             .isEqualTo(CustomerCreditListByExternalIdResponse.Status.ACTIVE)
+        assertThat(customerCreditListByExternalIdResponse.creditAllocation())
+            .isEqualTo(
+                CustomerCreditListByExternalIdResponse.CreditAllocation.builder()
+                    .allowsRollover(true)
+                    .currency("currency")
+                    .customExpiration(
+                        CustomExpiration.builder()
+                            .duration(0L)
+                            .durationUnit(CustomExpiration.DurationUnit.DAY)
+                            .build()
+                    )
+                    .itemId("item_id")
+                    .addFilter(
+                        CustomerCreditListByExternalIdResponse.CreditAllocation.Filter.builder()
+                            .field(
+                                CustomerCreditListByExternalIdResponse.CreditAllocation.Filter.Field
+                                    .PRICE_ID
+                            )
+                            .operator(
+                                CustomerCreditListByExternalIdResponse.CreditAllocation.Filter
+                                    .Operator
+                                    .INCLUDES
+                            )
+                            .addValue("string")
+                            .build()
+                    )
+                    .licenseTypeId("license_type_id")
+                    .build()
+            )
     }
 
     @Test
@@ -70,6 +133,9 @@ internal class CustomerCreditListByExternalIdResponseTest {
             CustomerCreditListByExternalIdResponse.builder()
                 .id("id")
                 .balance(0.0)
+                .creditBlockSource(
+                    CustomerCreditListByExternalIdResponse.CreditBlockSource.ALLOCATION
+                )
                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addFilter(
@@ -87,6 +153,35 @@ internal class CustomerCreditListByExternalIdResponseTest {
                 )
                 .perUnitCostBasis("per_unit_cost_basis")
                 .status(CustomerCreditListByExternalIdResponse.Status.ACTIVE)
+                .creditAllocation(
+                    CustomerCreditListByExternalIdResponse.CreditAllocation.builder()
+                        .allowsRollover(true)
+                        .currency("currency")
+                        .customExpiration(
+                            CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                .build()
+                        )
+                        .itemId("item_id")
+                        .addFilter(
+                            CustomerCreditListByExternalIdResponse.CreditAllocation.Filter.builder()
+                                .field(
+                                    CustomerCreditListByExternalIdResponse.CreditAllocation.Filter
+                                        .Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    CustomerCreditListByExternalIdResponse.CreditAllocation.Filter
+                                        .Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
+                        .licenseTypeId("license_type_id")
+                        .build()
+                )
                 .build()
 
         val roundtrippedCustomerCreditListByExternalIdResponse =

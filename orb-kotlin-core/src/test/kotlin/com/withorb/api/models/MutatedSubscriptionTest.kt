@@ -52,6 +52,7 @@ internal class MutatedSubscriptionTest {
                         .build()
                 )
                 .autoCollection(true)
+                .autoIssuance(true)
                 .billingCycleAnchorConfiguration(
                     BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build()
                 )
@@ -1831,6 +1832,7 @@ internal class MutatedSubscriptionTest {
                     .build()
             )
         assertThat(mutatedSubscription.autoCollection()).isEqualTo(true)
+        assertThat(mutatedSubscription.autoIssuance()).isEqualTo(true)
         assertThat(mutatedSubscription.billingCycleAnchorConfiguration())
             .isEqualTo(BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build())
         assertThat(mutatedSubscription.billingCycleDay()).isEqualTo(1L)
@@ -3550,6 +3552,7 @@ internal class MutatedSubscriptionTest {
                         .build()
                 )
                 .autoCollection(true)
+                .autoIssuance(true)
                 .billingCycleAnchorConfiguration(
                     BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build()
                 )

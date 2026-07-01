@@ -149,6 +149,7 @@ internal class SubscriptionCreateParamsTest {
             )
             .alignBillingWithSubscriptionStartDate(true)
             .autoCollection(true)
+            .autoIssuance(true)
             .awsRegion("aws_region")
             .billingCycleAnchorConfiguration(
                 BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build()
@@ -469,6 +470,7 @@ internal class SubscriptionCreateParamsTest {
                 )
                 .alignBillingWithSubscriptionStartDate(true)
                 .autoCollection(true)
+                .autoIssuance(true)
                 .awsRegion("aws_region")
                 .billingCycleAnchorConfiguration(
                     BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build()
@@ -788,6 +790,7 @@ internal class SubscriptionCreateParamsTest {
             )
         assertThat(body.alignBillingWithSubscriptionStartDate()).isEqualTo(true)
         assertThat(body.autoCollection()).isEqualTo(true)
+        assertThat(body.autoIssuance()).isEqualTo(true)
         assertThat(body.awsRegion()).isEqualTo("aws_region")
         assertThat(body.billingCycleAnchorConfiguration())
             .isEqualTo(BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build())
