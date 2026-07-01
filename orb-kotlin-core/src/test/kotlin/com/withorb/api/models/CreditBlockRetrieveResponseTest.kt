@@ -17,6 +17,7 @@ internal class CreditBlockRetrieveResponseTest {
             CreditBlockRetrieveResponse.builder()
                 .id("id")
                 .balance(0.0)
+                .creditBlockSource(CreditBlockRetrieveResponse.CreditBlockSource.ALLOCATION)
                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addFilter(
@@ -34,10 +35,39 @@ internal class CreditBlockRetrieveResponseTest {
                 )
                 .perUnitCostBasis("per_unit_cost_basis")
                 .status(CreditBlockRetrieveResponse.Status.ACTIVE)
+                .creditAllocation(
+                    CreditBlockRetrieveResponse.CreditAllocation.builder()
+                        .allowsRollover(true)
+                        .currency("currency")
+                        .customExpiration(
+                            CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                .build()
+                        )
+                        .itemId("item_id")
+                        .addFilter(
+                            CreditBlockRetrieveResponse.CreditAllocation.Filter.builder()
+                                .field(
+                                    CreditBlockRetrieveResponse.CreditAllocation.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    CreditBlockRetrieveResponse.CreditAllocation.Filter.Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
+                        .licenseTypeId("license_type_id")
+                        .build()
+                )
                 .build()
 
         assertThat(creditBlockRetrieveResponse.id()).isEqualTo("id")
         assertThat(creditBlockRetrieveResponse.balance()).isEqualTo(0.0)
+        assertThat(creditBlockRetrieveResponse.creditBlockSource())
+            .isEqualTo(CreditBlockRetrieveResponse.CreditBlockSource.ALLOCATION)
         assertThat(creditBlockRetrieveResponse.effectiveDate())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(creditBlockRetrieveResponse.expiryDate())
@@ -60,6 +90,33 @@ internal class CreditBlockRetrieveResponseTest {
         assertThat(creditBlockRetrieveResponse.perUnitCostBasis()).isEqualTo("per_unit_cost_basis")
         assertThat(creditBlockRetrieveResponse.status())
             .isEqualTo(CreditBlockRetrieveResponse.Status.ACTIVE)
+        assertThat(creditBlockRetrieveResponse.creditAllocation())
+            .isEqualTo(
+                CreditBlockRetrieveResponse.CreditAllocation.builder()
+                    .allowsRollover(true)
+                    .currency("currency")
+                    .customExpiration(
+                        CustomExpiration.builder()
+                            .duration(0L)
+                            .durationUnit(CustomExpiration.DurationUnit.DAY)
+                            .build()
+                    )
+                    .itemId("item_id")
+                    .addFilter(
+                        CreditBlockRetrieveResponse.CreditAllocation.Filter.builder()
+                            .field(
+                                CreditBlockRetrieveResponse.CreditAllocation.Filter.Field.PRICE_ID
+                            )
+                            .operator(
+                                CreditBlockRetrieveResponse.CreditAllocation.Filter.Operator
+                                    .INCLUDES
+                            )
+                            .addValue("string")
+                            .build()
+                    )
+                    .licenseTypeId("license_type_id")
+                    .build()
+            )
     }
 
     @Test
@@ -69,6 +126,7 @@ internal class CreditBlockRetrieveResponseTest {
             CreditBlockRetrieveResponse.builder()
                 .id("id")
                 .balance(0.0)
+                .creditBlockSource(CreditBlockRetrieveResponse.CreditBlockSource.ALLOCATION)
                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addFilter(
@@ -86,6 +144,33 @@ internal class CreditBlockRetrieveResponseTest {
                 )
                 .perUnitCostBasis("per_unit_cost_basis")
                 .status(CreditBlockRetrieveResponse.Status.ACTIVE)
+                .creditAllocation(
+                    CreditBlockRetrieveResponse.CreditAllocation.builder()
+                        .allowsRollover(true)
+                        .currency("currency")
+                        .customExpiration(
+                            CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                .build()
+                        )
+                        .itemId("item_id")
+                        .addFilter(
+                            CreditBlockRetrieveResponse.CreditAllocation.Filter.builder()
+                                .field(
+                                    CreditBlockRetrieveResponse.CreditAllocation.Filter.Field
+                                        .PRICE_ID
+                                )
+                                .operator(
+                                    CreditBlockRetrieveResponse.CreditAllocation.Filter.Operator
+                                        .INCLUDES
+                                )
+                                .addValue("string")
+                                .build()
+                        )
+                        .licenseTypeId("license_type_id")
+                        .build()
+                )
                 .build()
 
         val roundtrippedCreditBlockRetrieveResponse =

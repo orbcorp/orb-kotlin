@@ -19,6 +19,9 @@ internal class CustomerCreditListByExternalIdPageResponseTest {
                     CustomerCreditListByExternalIdResponse.builder()
                         .id("id")
                         .balance(0.0)
+                        .creditBlockSource(
+                            CustomerCreditListByExternalIdResponse.CreditBlockSource.ALLOCATION
+                        )
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFilter(
@@ -38,6 +41,38 @@ internal class CustomerCreditListByExternalIdPageResponseTest {
                         )
                         .perUnitCostBasis("per_unit_cost_basis")
                         .status(CustomerCreditListByExternalIdResponse.Status.ACTIVE)
+                        .creditAllocation(
+                            CustomerCreditListByExternalIdResponse.CreditAllocation.builder()
+                                .allowsRollover(true)
+                                .currency("currency")
+                                .customExpiration(
+                                    CustomExpiration.builder()
+                                        .duration(0L)
+                                        .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                        .build()
+                                )
+                                .itemId("item_id")
+                                .addFilter(
+                                    CustomerCreditListByExternalIdResponse.CreditAllocation.Filter
+                                        .builder()
+                                        .field(
+                                            CustomerCreditListByExternalIdResponse.CreditAllocation
+                                                .Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            CustomerCreditListByExternalIdResponse.CreditAllocation
+                                                .Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
+                                .licenseTypeId("license_type_id")
+                                .build()
+                        )
                         .build()
                 )
                 .paginationMetadata(
@@ -50,6 +85,9 @@ internal class CustomerCreditListByExternalIdPageResponseTest {
                 CustomerCreditListByExternalIdResponse.builder()
                     .id("id")
                     .balance(0.0)
+                    .creditBlockSource(
+                        CustomerCreditListByExternalIdResponse.CreditBlockSource.ALLOCATION
+                    )
                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addFilter(
@@ -69,6 +107,38 @@ internal class CustomerCreditListByExternalIdPageResponseTest {
                     )
                     .perUnitCostBasis("per_unit_cost_basis")
                     .status(CustomerCreditListByExternalIdResponse.Status.ACTIVE)
+                    .creditAllocation(
+                        CustomerCreditListByExternalIdResponse.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .customExpiration(
+                                CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                    .build()
+                            )
+                            .itemId("item_id")
+                            .addFilter(
+                                CustomerCreditListByExternalIdResponse.CreditAllocation.Filter
+                                    .builder()
+                                    .field(
+                                        CustomerCreditListByExternalIdResponse.CreditAllocation
+                                            .Filter
+                                            .Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        CustomerCreditListByExternalIdResponse.CreditAllocation
+                                            .Filter
+                                            .Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
+                            .licenseTypeId("license_type_id")
+                            .build()
+                    )
                     .build()
             )
         assertThat(customerCreditListByExternalIdPageResponse.paginationMetadata())
@@ -84,6 +154,9 @@ internal class CustomerCreditListByExternalIdPageResponseTest {
                     CustomerCreditListByExternalIdResponse.builder()
                         .id("id")
                         .balance(0.0)
+                        .creditBlockSource(
+                            CustomerCreditListByExternalIdResponse.CreditBlockSource.ALLOCATION
+                        )
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFilter(
@@ -103,6 +176,38 @@ internal class CustomerCreditListByExternalIdPageResponseTest {
                         )
                         .perUnitCostBasis("per_unit_cost_basis")
                         .status(CustomerCreditListByExternalIdResponse.Status.ACTIVE)
+                        .creditAllocation(
+                            CustomerCreditListByExternalIdResponse.CreditAllocation.builder()
+                                .allowsRollover(true)
+                                .currency("currency")
+                                .customExpiration(
+                                    CustomExpiration.builder()
+                                        .duration(0L)
+                                        .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                        .build()
+                                )
+                                .itemId("item_id")
+                                .addFilter(
+                                    CustomerCreditListByExternalIdResponse.CreditAllocation.Filter
+                                        .builder()
+                                        .field(
+                                            CustomerCreditListByExternalIdResponse.CreditAllocation
+                                                .Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            CustomerCreditListByExternalIdResponse.CreditAllocation
+                                                .Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
+                                .licenseTypeId("license_type_id")
+                                .build()
+                        )
                         .build()
                 )
                 .paginationMetadata(

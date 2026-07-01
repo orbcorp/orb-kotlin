@@ -195,6 +195,7 @@ internal class SubscriptionServiceAsyncTest {
                     )
                     .alignBillingWithSubscriptionStartDate(true)
                     .autoCollection(true)
+                    .autoIssuance(true)
                     .awsRegion("aws_region")
                     .billingCycleAnchorConfiguration(
                         BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build()
@@ -398,6 +399,7 @@ internal class SubscriptionServiceAsyncTest {
                 SubscriptionUpdateParams.builder()
                     .subscriptionId("subscription_id")
                     .autoCollection(true)
+                    .autoIssuance(true)
                     .defaultInvoiceMemo("default_invoice_memo")
                     .invoicingThreshold("10.00")
                     .metadata(
@@ -912,6 +914,7 @@ internal class SubscriptionServiceAsyncTest {
                     )
                     .alignBillingWithPlanChangeDate(true)
                     .autoCollection(true)
+                    .autoIssuance(true)
                     .billingCycleAlignment(
                         SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
                     )

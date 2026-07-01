@@ -19,6 +19,9 @@ internal class CreditBlockListInvoicesResponseTest {
                     CreditBlockListInvoicesResponse.Block.builder()
                         .id("id")
                         .balance(0.0)
+                        .creditBlockSource(
+                            CreditBlockListInvoicesResponse.Block.CreditBlockSource.ALLOCATION
+                        )
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFilter(
@@ -38,6 +41,38 @@ internal class CreditBlockListInvoicesResponseTest {
                         )
                         .perUnitCostBasis("per_unit_cost_basis")
                         .status(CreditBlockListInvoicesResponse.Block.Status.ACTIVE)
+                        .creditAllocation(
+                            CreditBlockListInvoicesResponse.Block.CreditAllocation.builder()
+                                .allowsRollover(true)
+                                .currency("currency")
+                                .customExpiration(
+                                    CustomExpiration.builder()
+                                        .duration(0L)
+                                        .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                        .build()
+                                )
+                                .itemId("item_id")
+                                .addFilter(
+                                    CreditBlockListInvoicesResponse.Block.CreditAllocation.Filter
+                                        .builder()
+                                        .field(
+                                            CreditBlockListInvoicesResponse.Block.CreditAllocation
+                                                .Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            CreditBlockListInvoicesResponse.Block.CreditAllocation
+                                                .Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
+                                .licenseTypeId("license_type_id")
+                                .build()
+                        )
                         .build()
                 )
                 .addInvoice(
@@ -61,6 +96,9 @@ internal class CreditBlockListInvoicesResponseTest {
                 CreditBlockListInvoicesResponse.Block.builder()
                     .id("id")
                     .balance(0.0)
+                    .creditBlockSource(
+                        CreditBlockListInvoicesResponse.Block.CreditBlockSource.ALLOCATION
+                    )
                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addFilter(
@@ -80,6 +118,38 @@ internal class CreditBlockListInvoicesResponseTest {
                     )
                     .perUnitCostBasis("per_unit_cost_basis")
                     .status(CreditBlockListInvoicesResponse.Block.Status.ACTIVE)
+                    .creditAllocation(
+                        CreditBlockListInvoicesResponse.Block.CreditAllocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .customExpiration(
+                                CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                    .build()
+                            )
+                            .itemId("item_id")
+                            .addFilter(
+                                CreditBlockListInvoicesResponse.Block.CreditAllocation.Filter
+                                    .builder()
+                                    .field(
+                                        CreditBlockListInvoicesResponse.Block.CreditAllocation
+                                            .Filter
+                                            .Field
+                                            .PRICE_ID
+                                    )
+                                    .operator(
+                                        CreditBlockListInvoicesResponse.Block.CreditAllocation
+                                            .Filter
+                                            .Operator
+                                            .INCLUDES
+                                    )
+                                    .addValue("string")
+                                    .build()
+                            )
+                            .licenseTypeId("license_type_id")
+                            .build()
+                    )
                     .build()
             )
         assertThat(creditBlockListInvoicesResponse.invoices())
@@ -108,6 +178,9 @@ internal class CreditBlockListInvoicesResponseTest {
                     CreditBlockListInvoicesResponse.Block.builder()
                         .id("id")
                         .balance(0.0)
+                        .creditBlockSource(
+                            CreditBlockListInvoicesResponse.Block.CreditBlockSource.ALLOCATION
+                        )
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addFilter(
@@ -127,6 +200,38 @@ internal class CreditBlockListInvoicesResponseTest {
                         )
                         .perUnitCostBasis("per_unit_cost_basis")
                         .status(CreditBlockListInvoicesResponse.Block.Status.ACTIVE)
+                        .creditAllocation(
+                            CreditBlockListInvoicesResponse.Block.CreditAllocation.builder()
+                                .allowsRollover(true)
+                                .currency("currency")
+                                .customExpiration(
+                                    CustomExpiration.builder()
+                                        .duration(0L)
+                                        .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                        .build()
+                                )
+                                .itemId("item_id")
+                                .addFilter(
+                                    CreditBlockListInvoicesResponse.Block.CreditAllocation.Filter
+                                        .builder()
+                                        .field(
+                                            CreditBlockListInvoicesResponse.Block.CreditAllocation
+                                                .Filter
+                                                .Field
+                                                .PRICE_ID
+                                        )
+                                        .operator(
+                                            CreditBlockListInvoicesResponse.Block.CreditAllocation
+                                                .Filter
+                                                .Operator
+                                                .INCLUDES
+                                        )
+                                        .addValue("string")
+                                        .build()
+                                )
+                                .licenseTypeId("license_type_id")
+                                .build()
+                        )
                         .build()
                 )
                 .addInvoice(

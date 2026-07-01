@@ -152,6 +152,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
             )
             .alignBillingWithPlanChangeDate(true)
             .autoCollection(true)
+            .autoIssuance(true)
             .billingCycleAlignment(
                 SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
             )
@@ -479,6 +480,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                 )
                 .alignBillingWithPlanChangeDate(true)
                 .autoCollection(true)
+                .autoIssuance(true)
                 .billingCycleAlignment(
                     SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
                 )
@@ -793,6 +795,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
             )
         assertThat(body.alignBillingWithPlanChangeDate()).isEqualTo(true)
         assertThat(body.autoCollection()).isEqualTo(true)
+        assertThat(body.autoIssuance()).isEqualTo(true)
         assertThat(body.billingCycleAlignment())
             .isEqualTo(SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED)
         assertThat(body.billingCycleAnchorConfiguration())

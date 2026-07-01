@@ -60,6 +60,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                 .build()
                         )
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingCycleAnchorConfiguration(
                             BillingCycleAnchorConfiguration.builder()
                                 .day(1L)
@@ -2114,6 +2115,7 @@ internal class SubscriptionChangeCancelResponseTest {
                             .build()
                     )
                     .autoCollection(true)
+                    .autoIssuance(true)
                     .billingCycleAnchorConfiguration(
                         BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build()
                     )
@@ -4042,6 +4044,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                 .build()
                         )
                         .autoCollection(true)
+                        .autoIssuance(true)
                         .billingCycleAnchorConfiguration(
                             BillingCycleAnchorConfiguration.builder()
                                 .day(1L)
