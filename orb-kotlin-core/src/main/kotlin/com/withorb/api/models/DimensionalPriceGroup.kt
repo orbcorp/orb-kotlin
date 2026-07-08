@@ -19,7 +19,7 @@ import java.util.Objects
 
 /**
  * A dimensional price group is used to partition the result of a billable metric by a set of
- * dimensions. Prices in a price group must specify the parition used to derive their usage.
+ * dimensions. Prices in a price group must specify the partition used to derive their usage.
  */
 class DimensionalPriceGroup
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
@@ -355,6 +355,14 @@ private constructor(
 
     private var validated: Boolean = false
 
+    /**
+     * Validates that the types of all values in this object match their expected types recursively.
+     *
+     * This method is _not_ forwards compatible with new types from the API for existing fields.
+     *
+     * @throws OrbInvalidDataException if any value type in this object doesn't match its expected
+     *   type.
+     */
     fun validate(): DimensionalPriceGroup = apply {
         if (validated) {
             return@apply
@@ -452,6 +460,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Metadata = apply {
             if (validated) {
                 return@apply

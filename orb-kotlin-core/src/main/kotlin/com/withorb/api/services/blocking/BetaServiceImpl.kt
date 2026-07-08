@@ -24,6 +24,11 @@ import com.withorb.api.models.PlanVersion
 import com.withorb.api.services.blocking.beta.ExternalPlanIdService
 import com.withorb.api.services.blocking.beta.ExternalPlanIdServiceImpl
 
+/**
+ * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed to by
+ * a customer. Plans define the billing behavior of the subscription. You can see more about how to
+ * configure prices in the [Price resource](/reference/price).
+ */
 class BetaServiceImpl internal constructor(private val clientOptions: ClientOptions) : BetaService {
 
     private val withRawResponse: BetaService.WithRawResponse by lazy {
@@ -39,6 +44,11 @@ class BetaServiceImpl internal constructor(private val clientOptions: ClientOpti
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BetaService =
         BetaServiceImpl(clientOptions.toBuilder().apply(modifier).build())
 
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
     override fun externalPlanId(): ExternalPlanIdService = externalPlanId
 
     override fun createPlanVersion(
@@ -77,6 +87,11 @@ class BetaServiceImpl internal constructor(private val clientOptions: ClientOpti
         ): BetaService.WithRawResponse =
             BetaServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
         override fun externalPlanId(): ExternalPlanIdService.WithRawResponse = externalPlanId
 
         private val createPlanVersionHandler: Handler<PlanVersion> =

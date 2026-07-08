@@ -60,6 +60,7 @@ internal class NewPlanMatrixWithDisplayNamePriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewPlanMatrixWithDisplayNamePrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -130,6 +131,7 @@ internal class NewPlanMatrixWithDisplayNamePriceTest {
                     .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                     .build()
             )
+        assertThat(newPlanMatrixWithDisplayNamePrice.licenseTypeId()).isEqualTo("license_type_id")
         assertThat(newPlanMatrixWithDisplayNamePrice.metadata())
             .isEqualTo(
                 NewPlanMatrixWithDisplayNamePrice.Metadata.builder()
@@ -190,6 +192,7 @@ internal class NewPlanMatrixWithDisplayNamePriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewPlanMatrixWithDisplayNamePrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))

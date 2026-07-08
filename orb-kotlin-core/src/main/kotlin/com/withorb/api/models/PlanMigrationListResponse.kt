@@ -50,24 +50,34 @@ private constructor(
     ) : this(id, effectiveTime, planId, status, mutableMapOf())
 
     /**
+     * Unique identifier for this plan version change.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
 
     /**
+     * When the migration takes effect. Can be a specific date/time, or 'end_of_term' when scheduled
+     * to be at the end of the current billing period.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
     fun effectiveTime(): EffectiveTime? = effectiveTime.getNullable("effective_time")
 
     /**
+     * The ID of the plan being migrated.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun planId(): String = planId.getRequired("plan_id")
 
     /**
+     * Current status of the migration: 'not_started', 'in_progress', 'completed', 'action_needed',
+     * or 'canceled'.
+     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -148,6 +158,7 @@ private constructor(
             additionalProperties = planMigrationListResponse.additionalProperties.toMutableMap()
         }
 
+        /** Unique identifier for this plan version change. */
         fun id(id: String) = id(JsonField.of(id))
 
         /**
@@ -158,6 +169,10 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
+        /**
+         * When the migration takes effect. Can be a specific date/time, or 'end_of_term' when
+         * scheduled to be at the end of the current billing period.
+         */
         fun effectiveTime(effectiveTime: EffectiveTime?) =
             effectiveTime(JsonField.ofNullable(effectiveTime))
 
@@ -184,6 +199,7 @@ private constructor(
         fun effectiveTime(unionMember2: EffectiveTime.UnionMember2) =
             effectiveTime(EffectiveTime.ofUnionMember2(unionMember2))
 
+        /** The ID of the plan being migrated. */
         fun planId(planId: String) = planId(JsonField.of(planId))
 
         /**
@@ -194,6 +210,10 @@ private constructor(
          */
         fun planId(planId: JsonField<String>) = apply { this.planId = planId }
 
+        /**
+         * Current status of the migration: 'not_started', 'in_progress', 'completed',
+         * 'action_needed', or 'canceled'.
+         */
         fun status(status: Status) = status(JsonField.of(status))
 
         /**
@@ -250,6 +270,14 @@ private constructor(
 
     private var validated: Boolean = false
 
+    /**
+     * Validates that the types of all values in this object match their expected types recursively.
+     *
+     * This method is _not_ forwards compatible with new types from the API for existing fields.
+     *
+     * @throws OrbInvalidDataException if any value type in this object doesn't match its expected
+     *   type.
+     */
     fun validate(): PlanMigrationListResponse = apply {
         if (validated) {
             return@apply
@@ -281,6 +309,10 @@ private constructor(
             (if (planId.asKnown() == null) 0 else 1) +
             (status.asKnown()?.validity() ?: 0)
 
+    /**
+     * When the migration takes effect. Can be a specific date/time, or 'end_of_term' when scheduled
+     * to be at the end of the current billing period.
+     */
     @JsonDeserialize(using = EffectiveTime.Deserializer::class)
     @JsonSerialize(using = EffectiveTime.Serializer::class)
     class EffectiveTime
@@ -311,6 +343,30 @@ private constructor(
 
         fun _json(): JsonValue? = _json
 
+        /**
+         * Maps this instance's current variant to a value of type [T] using the given [visitor].
+         *
+         * Note that this method is _not_ forwards compatible with new variants from the API, unless
+         * [visitor] overrides [Visitor.unknown]. To handle variants not known to this version of
+         * the SDK gracefully, consider overriding [Visitor.unknown]:
+         * ```kotlin
+         * import com.withorb.api.core.JsonValue
+         *
+         * val result: String? = effectiveTime.accept(object : EffectiveTime.Visitor<String?> {
+         *     override fun visitLocalDate(localDate: LocalDate): String? = localDate.toString()
+         *
+         *     // ...
+         *
+         *     override fun unknown(json: JsonValue?): String? {
+         *         // Or inspect the `json`.
+         *         return null
+         *     }
+         * })
+         * ```
+         *
+         * @throws OrbInvalidDataException if [Visitor.unknown] is not overridden in [visitor] and
+         *   the current variant is unknown.
+         */
         fun <T> accept(visitor: Visitor<T>): T =
             when {
                 localDate != null -> visitor.visitLocalDate(localDate)
@@ -321,6 +377,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): EffectiveTime = apply {
             if (validated) {
                 return@apply
@@ -562,6 +627,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws OrbInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): UnionMember2 = apply {
                 if (validated) {
                     return@apply
@@ -601,6 +676,10 @@ private constructor(
         }
     }
 
+    /**
+     * Current status of the migration: 'not_started', 'in_progress', 'completed', 'action_needed',
+     * or 'canceled'.
+     */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -705,6 +784,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Status = apply {
             if (validated) {
                 return@apply

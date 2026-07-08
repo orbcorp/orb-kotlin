@@ -46,6 +46,19 @@ internal class AlertServiceTest {
                 AlertUpdateParams.builder()
                     .alertConfigurationId("alert_configuration_id")
                     .addThreshold(Threshold.builder().value(0.0).build())
+                    .addPriceFilter(
+                        AlertUpdateParams.PriceFilter.builder()
+                            .field(AlertUpdateParams.PriceFilter.Field.PRICE_ID)
+                            .operator(AlertUpdateParams.PriceFilter.Operator.INCLUDES)
+                            .addValue("string")
+                            .build()
+                    )
+                    .addThresholdOverride(
+                        AlertUpdateParams.ThresholdOverride.builder()
+                            .addGroupValue("string")
+                            .addThreshold(Threshold.builder().value(0.0).build())
+                            .build()
+                    )
                     .build()
             )
 
@@ -126,7 +139,24 @@ internal class AlertServiceTest {
                     .subscriptionId("subscription_id")
                     .addThreshold(Threshold.builder().value(0.0).build())
                     .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
+                    .currency("currency")
+                    .addGroupingKey("string")
                     .metricId("metric_id")
+                    .addPriceFilter(
+                        AlertCreateForSubscriptionParams.PriceFilter.builder()
+                            .field(AlertCreateForSubscriptionParams.PriceFilter.Field.PRICE_ID)
+                            .operator(
+                                AlertCreateForSubscriptionParams.PriceFilter.Operator.INCLUDES
+                            )
+                            .addValue("string")
+                            .build()
+                    )
+                    .addThresholdOverride(
+                        AlertCreateForSubscriptionParams.ThresholdOverride.builder()
+                            .addGroupValue("string")
+                            .addThreshold(Threshold.builder().value(0.0).build())
+                            .build()
+                    )
                     .build()
             )
 

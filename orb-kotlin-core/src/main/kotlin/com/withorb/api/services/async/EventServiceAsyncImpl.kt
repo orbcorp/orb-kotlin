@@ -29,6 +29,11 @@ import com.withorb.api.services.async.events.BackfillServiceAsyncImpl
 import com.withorb.api.services.async.events.VolumeServiceAsync
 import com.withorb.api.services.async.events.VolumeServiceAsyncImpl
 
+/**
+ * The [Event](/core-concepts#event) resource represents a usage event that has been created for a
+ * customer. Events are the core of Orb's usage-based billing model, and are used to calculate the
+ * usage charges for a given billing period.
+ */
 class EventServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     EventServiceAsync {
 
@@ -45,8 +50,18 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EventServiceAsync =
         EventServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
 
+    /**
+     * The [Event](/core-concepts#event) resource represents a usage event that has been created for
+     * a customer. Events are the core of Orb's usage-based billing model, and are used to calculate
+     * the usage charges for a given billing period.
+     */
     override fun backfills(): BackfillServiceAsync = backfills
 
+    /**
+     * The [Event](/core-concepts#event) resource represents a usage event that has been created for
+     * a customer. Events are the core of Orb's usage-based billing model, and are used to calculate
+     * the usage charges for a given billing period.
+     */
     override fun volume(): VolumeServiceAsync = volume
 
     override suspend fun update(
@@ -98,8 +113,18 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
                 clientOptions.toBuilder().apply(modifier).build()
             )
 
+        /**
+         * The [Event](/core-concepts#event) resource represents a usage event that has been created
+         * for a customer. Events are the core of Orb's usage-based billing model, and are used to
+         * calculate the usage charges for a given billing period.
+         */
         override fun backfills(): BackfillServiceAsync.WithRawResponse = backfills
 
+        /**
+         * The [Event](/core-concepts#event) resource represents a usage event that has been created
+         * for a customer. Events are the core of Orb's usage-based billing model, and are used to
+         * calculate the usage charges for a given billing period.
+         */
         override fun volume(): VolumeServiceAsync.WithRawResponse = volume
 
         private val updateHandler: Handler<EventUpdateResponse> =

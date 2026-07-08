@@ -59,6 +59,7 @@ internal class NewFloatingMatrixPriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewFloatingMatrixPrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -125,6 +126,7 @@ internal class NewFloatingMatrixPriceTest {
                     .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                     .build()
             )
+        assertThat(newFloatingMatrixPrice.licenseTypeId()).isEqualTo("license_type_id")
         assertThat(newFloatingMatrixPrice.metadata())
             .isEqualTo(
                 NewFloatingMatrixPrice.Metadata.builder()
@@ -183,6 +185,7 @@ internal class NewFloatingMatrixPriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewFloatingMatrixPrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))

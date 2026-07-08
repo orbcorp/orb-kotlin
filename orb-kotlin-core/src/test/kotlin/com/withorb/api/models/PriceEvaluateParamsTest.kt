@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -18,6 +19,11 @@ internal class PriceEvaluateParamsTest {
             .externalCustomerId("external_customer_id")
             .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
             .addGroupingKey("case when my_event_type = 'foo' then true else false end")
+            .metricParameterOverrides(
+                PriceEvaluateParams.MetricParameterOverrides.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .build()
+            )
             .build()
     }
 
@@ -46,6 +52,11 @@ internal class PriceEvaluateParamsTest {
                 .externalCustomerId("external_customer_id")
                 .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
                 .addGroupingKey("case when my_event_type = 'foo' then true else false end")
+                .metricParameterOverrides(
+                    PriceEvaluateParams.MetricParameterOverrides.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .build()
+                )
                 .build()
 
         val body = params._body()
@@ -59,6 +70,12 @@ internal class PriceEvaluateParamsTest {
             .isEqualTo("my_numeric_property > 100 AND my_other_property = 'bar'")
         assertThat(body.groupingKeys())
             .containsExactly("case when my_event_type = 'foo' then true else false end")
+        assertThat(body.metricParameterOverrides())
+            .isEqualTo(
+                PriceEvaluateParams.MetricParameterOverrides.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .build()
+            )
     }
 
     @Test

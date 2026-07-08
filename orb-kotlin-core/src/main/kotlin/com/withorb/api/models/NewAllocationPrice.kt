@@ -28,6 +28,8 @@ private constructor(
     private val expiresAtEndOfCadence: JsonField<Boolean>,
     private val filters: JsonField<List<Filter>>,
     private val itemId: JsonField<String>,
+    private val licenseTypeId: JsonField<String>,
+    private val metadata: JsonField<Metadata>,
     private val perUnitCostBasis: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -47,6 +49,10 @@ private constructor(
         @ExcludeMissing
         filters: JsonField<List<Filter>> = JsonMissing.of(),
         @JsonProperty("item_id") @ExcludeMissing itemId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("license_type_id")
+        @ExcludeMissing
+        licenseTypeId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("per_unit_cost_basis")
         @ExcludeMissing
         perUnitCostBasis: JsonField<String> = JsonMissing.of(),
@@ -58,6 +64,8 @@ private constructor(
         expiresAtEndOfCadence,
         filters,
         itemId,
+        licenseTypeId,
+        metadata,
         perUnitCostBasis,
         mutableMapOf(),
     )
@@ -121,6 +129,24 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun itemId(): String? = itemId.getNullable("item_id")
+
+    /**
+     * The license type ID to associate the price with license allocation.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun licenseTypeId(): String? = licenseTypeId.getNullable("license_type_id")
+
+    /**
+     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
+     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
+     * `null`.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun metadata(): Metadata? = metadata.getNullable("metadata")
 
     /**
      * The (per-unit) cost basis of each created block. If non-zero, a customer will be invoiced
@@ -187,6 +213,22 @@ private constructor(
     @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
     /**
+     * Returns the raw JSON value of [licenseTypeId].
+     *
+     * Unlike [licenseTypeId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("license_type_id")
+    @ExcludeMissing
+    fun _licenseTypeId(): JsonField<String> = licenseTypeId
+
+    /**
+     * Returns the raw JSON value of [metadata].
+     *
+     * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
+
+    /**
      * Returns the raw JSON value of [perUnitCostBasis].
      *
      * Unlike [perUnitCostBasis], this method doesn't throw if the JSON field has an unexpected
@@ -233,6 +275,8 @@ private constructor(
         private var expiresAtEndOfCadence: JsonField<Boolean> = JsonMissing.of()
         private var filters: JsonField<MutableList<Filter>>? = null
         private var itemId: JsonField<String> = JsonMissing.of()
+        private var licenseTypeId: JsonField<String> = JsonMissing.of()
+        private var metadata: JsonField<Metadata> = JsonMissing.of()
         private var perUnitCostBasis: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -244,6 +288,8 @@ private constructor(
             expiresAtEndOfCadence = newAllocationPrice.expiresAtEndOfCadence
             filters = newAllocationPrice.filters.map { it.toMutableList() }
             itemId = newAllocationPrice.itemId
+            licenseTypeId = newAllocationPrice.licenseTypeId
+            metadata = newAllocationPrice.metadata
             perUnitCostBasis = newAllocationPrice.perUnitCostBasis
             additionalProperties = newAllocationPrice.additionalProperties.toMutableMap()
         }
@@ -366,6 +412,37 @@ private constructor(
          */
         fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
+        /** The license type ID to associate the price with license allocation. */
+        fun licenseTypeId(licenseTypeId: String?) =
+            licenseTypeId(JsonField.ofNullable(licenseTypeId))
+
+        /**
+         * Sets [Builder.licenseTypeId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.licenseTypeId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun licenseTypeId(licenseTypeId: JsonField<String>) = apply {
+            this.licenseTypeId = licenseTypeId
+        }
+
+        /**
+         * User-specified key/value pairs for the resource. Individual keys can be removed by
+         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
+         * `metadata` to `null`.
+         */
+        fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+        /**
+         * Sets [Builder.metadata] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.metadata] with a well-typed [Metadata] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
         /**
          * The (per-unit) cost basis of each created block. If non-zero, a customer will be invoiced
          * according to the quantity and per unit cost basis specified for the allocation each
@@ -427,6 +504,8 @@ private constructor(
                 expiresAtEndOfCadence,
                 (filters ?: JsonMissing.of()).map { it.toImmutable() },
                 itemId,
+                licenseTypeId,
+                metadata,
                 perUnitCostBasis,
                 additionalProperties.toMutableMap(),
             )
@@ -434,6 +513,14 @@ private constructor(
 
     private var validated: Boolean = false
 
+    /**
+     * Validates that the types of all values in this object match their expected types recursively.
+     *
+     * This method is _not_ forwards compatible with new types from the API for existing fields.
+     *
+     * @throws OrbInvalidDataException if any value type in this object doesn't match its expected
+     *   type.
+     */
     fun validate(): NewAllocationPrice = apply {
         if (validated) {
             return@apply
@@ -446,6 +533,8 @@ private constructor(
         expiresAtEndOfCadence()
         filters()?.forEach { it.validate() }
         itemId()
+        licenseTypeId()
+        metadata()?.validate()
         perUnitCostBasis()
         validated = true
     }
@@ -471,6 +560,8 @@ private constructor(
             (if (expiresAtEndOfCadence.asKnown() == null) 0 else 1) +
             (filters.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (itemId.asKnown() == null) 0 else 1) +
+            (if (licenseTypeId.asKnown() == null) 0 else 1) +
+            (metadata.asKnown()?.validity() ?: 0) +
             (if (perUnitCostBasis.asKnown() == null) 0 else 1)
 
     /** The cadence at which to allocate the amount to the customer. */
@@ -578,6 +669,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Cadence = apply {
             if (validated) {
                 return@apply
@@ -818,6 +918,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Filter = apply {
             if (validated) {
                 return@apply
@@ -932,6 +1041,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws OrbInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): Field = apply {
                 if (validated) {
                     return@apply
@@ -1061,6 +1180,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws OrbInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): Operator = apply {
                 if (validated) {
                     return@apply
@@ -1121,6 +1250,117 @@ private constructor(
             "Filter{field=$field, operator=$operator, values=$values, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
+     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
+     * `null`.
+     */
+    class Metadata
+    @JsonCreator
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Metadata]. */
+        class Builder internal constructor() {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(metadata: Metadata) = apply {
+                additionalProperties = metadata.additionalProperties.toMutableMap()
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Metadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+        }
+
+        private var validated: Boolean = false
+
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
+        fun validate(): Metadata = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Metadata && additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -1134,6 +1374,8 @@ private constructor(
             expiresAtEndOfCadence == other.expiresAtEndOfCadence &&
             filters == other.filters &&
             itemId == other.itemId &&
+            licenseTypeId == other.licenseTypeId &&
+            metadata == other.metadata &&
             perUnitCostBasis == other.perUnitCostBasis &&
             additionalProperties == other.additionalProperties
     }
@@ -1147,6 +1389,8 @@ private constructor(
             expiresAtEndOfCadence,
             filters,
             itemId,
+            licenseTypeId,
+            metadata,
             perUnitCostBasis,
             additionalProperties,
         )
@@ -1155,5 +1399,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "NewAllocationPrice{amount=$amount, cadence=$cadence, currency=$currency, customExpiration=$customExpiration, expiresAtEndOfCadence=$expiresAtEndOfCadence, filters=$filters, itemId=$itemId, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
+        "NewAllocationPrice{amount=$amount, cadence=$cadence, currency=$currency, customExpiration=$customExpiration, expiresAtEndOfCadence=$expiresAtEndOfCadence, filters=$filters, itemId=$itemId, licenseTypeId=$licenseTypeId, metadata=$metadata, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
 }

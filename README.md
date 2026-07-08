@@ -290,8 +290,6 @@ while (true) {
 
 ## Logging
 
-The SDK uses the standard [OkHttp logging interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor).
-
 Enable logging by setting the `ORB_LOG` environment variable to `info`:
 
 ```sh
@@ -302,6 +300,19 @@ Or to `debug` for more verbose logging:
 
 ```sh
 export ORB_LOG=debug
+```
+
+Or configure the client manually using the `logLevel` method:
+
+```kotlin
+import com.withorb.api.client.OrbClient
+import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.core.LogLevel
+
+val client: OrbClient = OrbOkHttpClient.builder()
+    .fromEnv()
+    .logLevel(LogLevel.INFO)
+    .build()
 ```
 
 ## Webhook Verification
@@ -407,6 +418,40 @@ val client: OrbClient = OrbOkHttpClient.builder()
     ))
     .build()
 ```
+
+If the proxy responds with `407 Proxy Authentication Required`, supply credentials by also configuring `proxyAuthenticator`:
+
+```kotlin
+import com.withorb.api.client.OrbClient
+import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.core.http.ProxyAuthenticator
+
+val client: OrbClient = OrbOkHttpClient.builder()
+    .fromEnv()
+    .proxy(...)
+    // Or a custom implementation of `ProxyAuthenticator`.
+    .proxyAuthenticator(ProxyAuthenticator.basic("username", "password"))
+    .build()
+```
+
+### Connection pooling
+
+To customize the underlying OkHttp connection pool, configure the client using the `maxIdleConnections` and `keepAliveDuration` methods:
+
+```kotlin
+import com.withorb.api.client.OrbClient
+import com.withorb.api.client.okhttp.OrbOkHttpClient
+import java.time.Duration
+
+val client: OrbClient = OrbOkHttpClient.builder()
+    .fromEnv()
+    // If `maxIdleConnections` is set, then `keepAliveDuration` must be set, and vice versa.
+    .maxIdleConnections(10)
+    .keepAliveDuration(Duration.ofMinutes(2))
+    .build()
+```
+
+If both options are unset, OkHttp's default connection pool settings are used.
 
 ### HTTPS
 
@@ -612,7 +657,9 @@ In rare cases, the API may return a response that doesn't match the expected typ
 
 By default, the SDK will not throw an exception in this case. It will throw [`OrbInvalidDataException`](orb-kotlin-core/src/main/kotlin/com/withorb/api/errors/OrbInvalidDataException.kt) only if you directly access the property.
 
-If you would prefer to check that the response is completely well-typed upfront, then either call `validate()`:
+Validating the response is _not_ forwards compatible with new types from the API for existing fields.
+
+If you would still prefer to check that the response is completely well-typed upfront, then either call `validate()`:
 
 ```kotlin
 import com.withorb.api.models.Customer

@@ -68,6 +68,8 @@ internal class ProGuardCompatibilityTest {
         assertThat(client.dimensionalPriceGroups()).isNotNull()
         assertThat(client.subscriptionChanges()).isNotNull()
         assertThat(client.creditBlocks()).isNotNull()
+        assertThat(client.licenseTypes()).isNotNull()
+        assertThat(client.licenses()).isNotNull()
     }
 
     @Test
@@ -76,7 +78,7 @@ internal class ProGuardCompatibilityTest {
         val accountingProviderConfig =
             AccountingProviderConfig.builder()
                 .externalProviderId("external_provider_id")
-                .providerType("provider_type")
+                .providerType(AccountingProviderConfig.ProviderType.QUICKBOOKS)
                 .build()
 
         val roundtrippedAccountingProviderConfig =

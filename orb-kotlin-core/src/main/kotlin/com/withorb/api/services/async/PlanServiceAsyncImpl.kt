@@ -28,6 +28,11 @@ import com.withorb.api.services.async.plans.ExternalPlanIdServiceAsyncImpl
 import com.withorb.api.services.async.plans.MigrationServiceAsync
 import com.withorb.api.services.async.plans.MigrationServiceAsyncImpl
 
+/**
+ * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed to by
+ * a customer. Plans define the billing behavior of the subscription. You can see more about how to
+ * configure prices in the [Price resource](/reference/price).
+ */
 class PlanServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     PlanServiceAsync {
 
@@ -48,8 +53,18 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PlanServiceAsync =
         PlanServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
 
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
     override fun externalPlanId(): ExternalPlanIdServiceAsync = externalPlanId
 
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
     override fun migrations(): MigrationServiceAsync = migrations
 
     override suspend fun create(params: PlanCreateParams, requestOptions: RequestOptions): Plan =
@@ -92,8 +107,18 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
                 clientOptions.toBuilder().apply(modifier).build()
             )
 
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
         override fun externalPlanId(): ExternalPlanIdServiceAsync.WithRawResponse = externalPlanId
 
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
         override fun migrations(): MigrationServiceAsync.WithRawResponse = migrations
 
         private val createHandler: Handler<Plan> = jsonHandler<Plan>(clientOptions.jsonMapper)

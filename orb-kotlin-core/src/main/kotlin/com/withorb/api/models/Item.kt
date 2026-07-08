@@ -346,6 +346,14 @@ private constructor(
 
     private var validated: Boolean = false
 
+    /**
+     * Validates that the types of all values in this object match their expected types recursively.
+     *
+     * This method is _not_ forwards compatible with new types from the API for existing fields.
+     *
+     * @throws OrbInvalidDataException if any value type in this object doesn't match its expected
+     *   type.
+     */
     fun validate(): Item = apply {
         if (validated) {
             return@apply
@@ -552,6 +560,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): ExternalConnection = apply {
             if (validated) {
                 return@apply
@@ -613,6 +630,8 @@ private constructor(
 
                 val NUMERAL = of("numeral")
 
+                val STRIPE_TAX = of("stripe_tax")
+
                 fun of(value: String) = ExternalConnectionName(JsonField.of(value))
             }
 
@@ -626,6 +645,7 @@ private constructor(
                 AVALARA,
                 ANROK,
                 NUMERAL,
+                STRIPE_TAX,
             }
 
             /**
@@ -648,6 +668,7 @@ private constructor(
                 AVALARA,
                 ANROK,
                 NUMERAL,
+                STRIPE_TAX,
                 /**
                  * An enum member indicating that [ExternalConnectionName] was instantiated with an
                  * unknown value.
@@ -672,6 +693,7 @@ private constructor(
                     AVALARA -> Value.AVALARA
                     ANROK -> Value.ANROK
                     NUMERAL -> Value.NUMERAL
+                    STRIPE_TAX -> Value.STRIPE_TAX
                     else -> Value._UNKNOWN
                 }
 
@@ -694,6 +716,7 @@ private constructor(
                     AVALARA -> Known.AVALARA
                     ANROK -> Known.ANROK
                     NUMERAL -> Known.NUMERAL
+                    STRIPE_TAX -> Known.STRIPE_TAX
                     else -> throw OrbInvalidDataException("Unknown ExternalConnectionName: $value")
                 }
 
@@ -711,6 +734,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws OrbInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): ExternalConnectionName = apply {
                 if (validated) {
                     return@apply
@@ -832,6 +865,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Metadata = apply {
             if (validated) {
                 return@apply

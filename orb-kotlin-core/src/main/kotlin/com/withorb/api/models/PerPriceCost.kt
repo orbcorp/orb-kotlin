@@ -222,6 +222,13 @@ private constructor(
         fun price(matrixWithAllocation: Price.MatrixWithAllocation) =
             price(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
+        /**
+         * Alias for calling [price] with
+         * `Price.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts)`.
+         */
+        fun price(matrixWithThresholdDiscounts: Price.MatrixWithThresholdDiscounts) =
+            price(Price.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts))
+
         /** Alias for calling [price] with `Price.ofTieredWithProration(tieredWithProration)`. */
         fun price(tieredWithProration: Price.TieredWithProration) =
             price(Price.ofTieredWithProration(tieredWithProration))
@@ -301,6 +308,14 @@ private constructor(
          */
         fun price(cumulativeGroupedAllocation: Price.CumulativeGroupedAllocation) =
             price(Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation))
+
+        /** Alias for calling [price] with `Price.ofDailyCreditAllowance(dailyCreditAllowance)`. */
+        fun price(dailyCreditAllowance: Price.DailyCreditAllowance) =
+            price(Price.ofDailyCreditAllowance(dailyCreditAllowance))
+
+        /** Alias for calling [price] with `Price.ofMeteredAllowance(meteredAllowance)`. */
+        fun price(meteredAllowance: Price.MeteredAllowance) =
+            price(Price.ofMeteredAllowance(meteredAllowance))
 
         /** Alias for calling [price] with `Price.ofMinimumComposite(minimumComposite)`. */
         fun price(minimumComposite: Price.MinimumComposite) =
@@ -410,6 +425,14 @@ private constructor(
 
     private var validated: Boolean = false
 
+    /**
+     * Validates that the types of all values in this object match their expected types recursively.
+     *
+     * This method is _not_ forwards compatible with new types from the API for existing fields.
+     *
+     * @throws OrbInvalidDataException if any value type in this object doesn't match its expected
+     *   type.
+     */
     fun validate(): PerPriceCost = apply {
         if (validated) {
             return@apply

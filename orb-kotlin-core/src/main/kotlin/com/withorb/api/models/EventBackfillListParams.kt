@@ -12,8 +12,7 @@ import java.util.Objects
  *
  * The list of backfills is ordered starting from the most recently created backfill. The response
  * also includes [`pagination_metadata`](/api-reference/pagination), which lets the caller retrieve
- * the next page of results if they exist. More information about pagination can be found in the
- * [Pagination-metadata schema](pagination).
+ * the next page of results if they exist.
  */
 class EventBackfillListParams
 private constructor(

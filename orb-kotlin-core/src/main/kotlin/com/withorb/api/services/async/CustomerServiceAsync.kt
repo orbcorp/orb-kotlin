@@ -22,6 +22,24 @@ import com.withorb.api.services.async.customers.BalanceTransactionServiceAsync
 import com.withorb.api.services.async.customers.CostServiceAsync
 import com.withorb.api.services.async.customers.CreditServiceAsync
 
+/**
+ * A customer is a buyer of your products, and the other party to the billing relationship.
+ *
+ * In Orb, customers are assigned system generated identifiers automatically, but it's often
+ * desirable to have these match existing identifiers in your system. To avoid having to denormalize
+ * Orb ID information, you can pass in an `external_customer_id` with your own identifier. See
+ * [Customer ID Aliases](/events-and-metrics/customer-aliases) for further information about how
+ * these aliases work in Orb.
+ *
+ * In addition to having an identifier in your system, a customer may exist in a payment provider
+ * solution like Stripe. Use the `payment_provider_id` and the `payment_provider` enum field to
+ * express this mapping.
+ *
+ * A customer also has a timezone (from the standard
+ * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your account's
+ * timezone. See [Timezone localization](/essentials/timezones) for information on what this
+ * timezone parameter influences within Orb.
+ */
 interface CustomerServiceAsync {
 
     /**
@@ -36,10 +54,50 @@ interface CustomerServiceAsync {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CustomerServiceAsync
 
+    /**
+     * A customer is a buyer of your products, and the other party to the billing relationship.
+     *
+     * In Orb, customers are assigned system generated identifiers automatically, but it's often
+     * desirable to have these match existing identifiers in your system. To avoid having to
+     * denormalize Orb ID information, you can pass in an `external_customer_id` with your own
+     * identifier. See [Customer ID Aliases](/events-and-metrics/customer-aliases) for further
+     * information about how these aliases work in Orb.
+     *
+     * In addition to having an identifier in your system, a customer may exist in a payment
+     * provider solution like Stripe. Use the `payment_provider_id` and the `payment_provider` enum
+     * field to express this mapping.
+     *
+     * A customer also has a timezone (from the standard
+     * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your account's
+     * timezone. See [Timezone localization](/essentials/timezones) for information on what this
+     * timezone parameter influences within Orb.
+     */
     fun costs(): CostServiceAsync
 
+    /**
+     * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits
+     * within Orb.
+     */
     fun credits(): CreditServiceAsync
 
+    /**
+     * A customer is a buyer of your products, and the other party to the billing relationship.
+     *
+     * In Orb, customers are assigned system generated identifiers automatically, but it's often
+     * desirable to have these match existing identifiers in your system. To avoid having to
+     * denormalize Orb ID information, you can pass in an `external_customer_id` with your own
+     * identifier. See [Customer ID Aliases](/events-and-metrics/customer-aliases) for further
+     * information about how these aliases work in Orb.
+     *
+     * In addition to having an identifier in your system, a customer may exist in a payment
+     * provider solution like Stripe. Use the `payment_provider_id` and the `payment_provider` enum
+     * field to express this mapping.
+     *
+     * A customer also has a timezone (from the standard
+     * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your account's
+     * timezone. See [Timezone localization](/essentials/timezones) for information on what this
+     * timezone parameter influences within Orb.
+     */
     fun balanceTransactions(): BalanceTransactionServiceAsync
 
     /**
@@ -63,8 +121,9 @@ interface CustomerServiceAsync {
     /**
      * This endpoint can be used to update the `payment_provider`, `payment_provider_id`, `name`,
      * `email`, `email_delivery`, `tax_id`, `auto_collection`, `metadata`, `shipping_address`,
-     * `billing_address`, and `additional_emails` of an existing customer. Other fields on a
-     * customer are currently immutable.
+     * `billing_address`, `additional_emails`, and `currency` of an existing customer. `currency`
+     * can only be set if it has not already been set on the customer. Other fields on a customer
+     * are currently immutable.
      */
     suspend fun update(
         customerId: String,
@@ -287,10 +346,50 @@ interface CustomerServiceAsync {
             modifier: (ClientOptions.Builder) -> Unit
         ): CustomerServiceAsync.WithRawResponse
 
+        /**
+         * A customer is a buyer of your products, and the other party to the billing relationship.
+         *
+         * In Orb, customers are assigned system generated identifiers automatically, but it's often
+         * desirable to have these match existing identifiers in your system. To avoid having to
+         * denormalize Orb ID information, you can pass in an `external_customer_id` with your own
+         * identifier. See [Customer ID Aliases](/events-and-metrics/customer-aliases) for further
+         * information about how these aliases work in Orb.
+         *
+         * In addition to having an identifier in your system, a customer may exist in a payment
+         * provider solution like Stripe. Use the `payment_provider_id` and the `payment_provider`
+         * enum field to express this mapping.
+         *
+         * A customer also has a timezone (from the standard
+         * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your
+         * account's timezone. See [Timezone localization](/essentials/timezones) for information on
+         * what this timezone parameter influences within Orb.
+         */
         fun costs(): CostServiceAsync.WithRawResponse
 
+        /**
+         * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits
+         * within Orb.
+         */
         fun credits(): CreditServiceAsync.WithRawResponse
 
+        /**
+         * A customer is a buyer of your products, and the other party to the billing relationship.
+         *
+         * In Orb, customers are assigned system generated identifiers automatically, but it's often
+         * desirable to have these match existing identifiers in your system. To avoid having to
+         * denormalize Orb ID information, you can pass in an `external_customer_id` with your own
+         * identifier. See [Customer ID Aliases](/events-and-metrics/customer-aliases) for further
+         * information about how these aliases work in Orb.
+         *
+         * In addition to having an identifier in your system, a customer may exist in a payment
+         * provider solution like Stripe. Use the `payment_provider_id` and the `payment_provider`
+         * enum field to express this mapping.
+         *
+         * A customer also has a timezone (from the standard
+         * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your
+         * account's timezone. See [Timezone localization](/essentials/timezones) for information on
+         * what this timezone parameter influences within Orb.
+         */
         fun balanceTransactions(): BalanceTransactionServiceAsync.WithRawResponse
 
         /**

@@ -8,9 +8,15 @@ import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.CreditBlockDeleteParams
+import com.withorb.api.models.CreditBlockListInvoicesParams
+import com.withorb.api.models.CreditBlockListInvoicesResponse
 import com.withorb.api.models.CreditBlockRetrieveParams
 import com.withorb.api.models.CreditBlockRetrieveResponse
 
+/**
+ * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits within
+ * Orb.
+ */
 interface CreditBlockServiceAsync {
 
     /**
@@ -77,6 +83,44 @@ interface CreditBlockServiceAsync {
         delete(blockId, CreditBlockDeleteParams.none(), requestOptions)
 
     /**
+     * This endpoint returns the credit block and its associated purchasing invoices.
+     *
+     * If a credit block was purchased (as opposed to being manually added), this endpoint returns
+     * the invoices that were created to charge the customer for the credit block. For credit blocks
+     * with payment schedules spanning multiple periods (e.g., monthly payments over 12 months),
+     * multiple invoices will be returned.
+     *
+     * For credit blocks created by subscription allocation prices, this endpoint returns the
+     * subscription invoice containing the allocation line item that created the block.
+     *
+     * If the credit block was not purchased (e.g., manual increment), an empty invoices list is
+     * returned.
+     *
+     * **Note: This endpoint is currently experimental and its interface may change in future
+     * releases. Please contact support before building production integrations against this
+     * endpoint.**
+     */
+    suspend fun listInvoices(
+        blockId: String,
+        params: CreditBlockListInvoicesParams = CreditBlockListInvoicesParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CreditBlockListInvoicesResponse =
+        listInvoices(params.toBuilder().blockId(blockId).build(), requestOptions)
+
+    /** @see listInvoices */
+    suspend fun listInvoices(
+        params: CreditBlockListInvoicesParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CreditBlockListInvoicesResponse
+
+    /** @see listInvoices */
+    suspend fun listInvoices(
+        blockId: String,
+        requestOptions: RequestOptions,
+    ): CreditBlockListInvoicesResponse =
+        listInvoices(blockId, CreditBlockListInvoicesParams.none(), requestOptions)
+
+    /**
      * A view of [CreditBlockServiceAsync] that provides access to raw HTTP responses for each
      * method.
      */
@@ -140,5 +184,32 @@ interface CreditBlockServiceAsync {
         @MustBeClosed
         suspend fun delete(blockId: String, requestOptions: RequestOptions): HttpResponse =
             delete(blockId, CreditBlockDeleteParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `get /credit_blocks/{block_id}/invoices`, but is
+         * otherwise the same as [CreditBlockServiceAsync.listInvoices].
+         */
+        @MustBeClosed
+        suspend fun listInvoices(
+            blockId: String,
+            params: CreditBlockListInvoicesParams = CreditBlockListInvoicesParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CreditBlockListInvoicesResponse> =
+            listInvoices(params.toBuilder().blockId(blockId).build(), requestOptions)
+
+        /** @see listInvoices */
+        @MustBeClosed
+        suspend fun listInvoices(
+            params: CreditBlockListInvoicesParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CreditBlockListInvoicesResponse>
+
+        /** @see listInvoices */
+        @MustBeClosed
+        suspend fun listInvoices(
+            blockId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CreditBlockListInvoicesResponse> =
+            listInvoices(blockId, CreditBlockListInvoicesParams.none(), requestOptions)
     }
 }

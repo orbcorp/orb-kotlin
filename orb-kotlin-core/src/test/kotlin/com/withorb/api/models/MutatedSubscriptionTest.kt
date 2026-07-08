@@ -52,6 +52,7 @@ internal class MutatedSubscriptionTest {
                         .build()
                 )
                 .autoCollection(true)
+                .autoIssuance(true)
                 .billingCycleAnchorConfiguration(
                     BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build()
                 )
@@ -142,6 +143,19 @@ internal class MutatedSubscriptionTest {
                                 .build()
                         )
                         .automaticTaxEnabled(true)
+                        .defaultPaymentMethod(
+                            Customer.DefaultPaymentMethod.builder()
+                                .id("id")
+                                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .customerId("customer_id")
+                                .default(true)
+                                .externalPaymentMethodId("external_payment_method_id")
+                                .paymentMethodType(
+                                    Customer.DefaultPaymentMethod.PaymentMethodType.CARD
+                                )
+                                .providerType("provider_type")
+                                .build()
+                        )
                         .paymentConfiguration(
                             Customer.PaymentConfiguration.builder()
                                 .addPaymentProvider(
@@ -151,6 +165,7 @@ internal class MutatedSubscriptionTest {
                                                 .ProviderType
                                                 .STRIPE
                                         )
+                                        .defaultSharedPaymentToken("default_shared_payment_token")
                                         .addExcludedPaymentMethodType("string")
                                         .build()
                                 )
@@ -421,6 +436,7 @@ internal class MutatedSubscriptionTest {
                                                 .addValue("string")
                                                 .build()
                                         )
+                                        .licenseTypeId("license_type_id")
                                         .build()
                                 )
                                 .currency("currency")
@@ -444,6 +460,7 @@ internal class MutatedSubscriptionTest {
                                 )
                                 .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(0.0)
+                                .invoiceGroupingKey("invoice_grouping_key")
                                 .invoicingCycleConfiguration(
                                     BillingCycleConfiguration.builder()
                                         .duration(0L)
@@ -498,6 +515,13 @@ internal class MutatedSubscriptionTest {
                                     DimensionalPriceConfiguration.builder()
                                         .addDimensionValue("string")
                                         .dimensionalPriceGroupId("dimensional_price_group_id")
+                                        .build()
+                                )
+                                .licenseType(
+                                    Price.UnitPrice.LicenseType.builder()
+                                        .id("id")
+                                        .groupingKey("grouping_key")
+                                        .name("name")
                                         .build()
                                 )
                                 .build()
@@ -584,6 +608,7 @@ internal class MutatedSubscriptionTest {
                                                 .addValue("string")
                                                 .build()
                                         )
+                                        .licenseTypeId("license_type_id")
                                         .build()
                                 )
                                 .currency("currency")
@@ -607,6 +632,7 @@ internal class MutatedSubscriptionTest {
                                 )
                                 .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(0.0)
+                                .invoiceGroupingKey("invoice_grouping_key")
                                 .invoicingCycleConfiguration(
                                     BillingCycleConfiguration.builder()
                                         .duration(0L)
@@ -663,10 +689,22 @@ internal class MutatedSubscriptionTest {
                                         .dimensionalPriceGroupId("dimensional_price_group_id")
                                         .build()
                                 )
+                                .licenseType(
+                                    Price.UnitPrice.LicenseType.builder()
+                                        .id("id")
+                                        .groupingKey("grouping_key")
+                                        .name("name")
+                                        .build()
+                                )
                                 .build()
                         )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addUsageCustomerId("string")
+                        .metricParameterOverrides(
+                            PriceInterval.MetricParameterOverrides.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                .build()
+                        )
                         .build()
                 )
                 .redeemedCoupon(
@@ -1000,6 +1038,7 @@ internal class MutatedSubscriptionTest {
                                                                 .addValue("string")
                                                                 .build()
                                                         )
+                                                        .licenseTypeId("license_type_id")
                                                         .build()
                                                 )
                                                 .currency("currency")
@@ -1031,6 +1070,7 @@ internal class MutatedSubscriptionTest {
                                                 )
                                                 .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(0.0)
+                                                .invoiceGroupingKey("invoice_grouping_key")
                                                 .invoicingCycleConfiguration(
                                                     BillingCycleConfiguration.builder()
                                                         .duration(0L)
@@ -1103,6 +1143,13 @@ internal class MutatedSubscriptionTest {
                                                         .dimensionalPriceGroupId(
                                                             "dimensional_price_group_id"
                                                         )
+                                                        .build()
+                                                )
+                                                .licenseType(
+                                                    Price.UnitPrice.LicenseType.builder()
+                                                        .id("id")
+                                                        .groupingKey("grouping_key")
+                                                        .name("name")
                                                         .build()
                                                 )
                                                 .build()
@@ -1521,6 +1568,7 @@ internal class MutatedSubscriptionTest {
                                                                 .addValue("string")
                                                                 .build()
                                                         )
+                                                        .licenseTypeId("license_type_id")
                                                         .build()
                                                 )
                                                 .currency("currency")
@@ -1552,6 +1600,7 @@ internal class MutatedSubscriptionTest {
                                                 )
                                                 .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(0.0)
+                                                .invoiceGroupingKey("invoice_grouping_key")
                                                 .invoicingCycleConfiguration(
                                                     BillingCycleConfiguration.builder()
                                                         .duration(0L)
@@ -1624,6 +1673,13 @@ internal class MutatedSubscriptionTest {
                                                         .dimensionalPriceGroupId(
                                                             "dimensional_price_group_id"
                                                         )
+                                                        .build()
+                                                )
+                                                .licenseType(
+                                                    Price.UnitPrice.LicenseType.builder()
+                                                        .id("id")
+                                                        .groupingKey("grouping_key")
+                                                        .name("name")
                                                         .build()
                                                 )
                                                 .build()
@@ -1776,6 +1832,7 @@ internal class MutatedSubscriptionTest {
                     .build()
             )
         assertThat(mutatedSubscription.autoCollection()).isEqualTo(true)
+        assertThat(mutatedSubscription.autoIssuance()).isEqualTo(true)
         assertThat(mutatedSubscription.billingCycleAnchorConfiguration())
             .isEqualTo(BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build())
         assertThat(mutatedSubscription.billingCycleDay()).isEqualTo(1L)
@@ -1868,6 +1925,17 @@ internal class MutatedSubscriptionTest {
                             .build()
                     )
                     .automaticTaxEnabled(true)
+                    .defaultPaymentMethod(
+                        Customer.DefaultPaymentMethod.builder()
+                            .id("id")
+                            .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .customerId("customer_id")
+                            .default(true)
+                            .externalPaymentMethodId("external_payment_method_id")
+                            .paymentMethodType(Customer.DefaultPaymentMethod.PaymentMethodType.CARD)
+                            .providerType("provider_type")
+                            .build()
+                    )
                     .paymentConfiguration(
                         Customer.PaymentConfiguration.builder()
                             .addPaymentProvider(
@@ -1876,6 +1944,7 @@ internal class MutatedSubscriptionTest {
                                         Customer.PaymentConfiguration.PaymentProvider.ProviderType
                                             .STRIPE
                                     )
+                                    .defaultSharedPaymentToken("default_shared_payment_token")
                                     .addExcludedPaymentMethodType("string")
                                     .build()
                             )
@@ -2149,6 +2218,7 @@ internal class MutatedSubscriptionTest {
                                             .addValue("string")
                                             .build()
                                     )
+                                    .licenseTypeId("license_type_id")
                                     .build()
                             )
                             .currency("currency")
@@ -2170,6 +2240,7 @@ internal class MutatedSubscriptionTest {
                             )
                             .externalPriceId("external_price_id")
                             .fixedPriceQuantity(0.0)
+                            .invoiceGroupingKey("invoice_grouping_key")
                             .invoicingCycleConfiguration(
                                 BillingCycleConfiguration.builder()
                                     .duration(0L)
@@ -2224,6 +2295,13 @@ internal class MutatedSubscriptionTest {
                                 DimensionalPriceConfiguration.builder()
                                     .addDimensionValue("string")
                                     .dimensionalPriceGroupId("dimensional_price_group_id")
+                                    .build()
+                            )
+                            .licenseType(
+                                Price.UnitPrice.LicenseType.builder()
+                                    .id("id")
+                                    .groupingKey("grouping_key")
+                                    .name("name")
                                     .build()
                             )
                             .build()
@@ -2305,6 +2383,7 @@ internal class MutatedSubscriptionTest {
                                             .addValue("string")
                                             .build()
                                     )
+                                    .licenseTypeId("license_type_id")
                                     .build()
                             )
                             .currency("currency")
@@ -2326,6 +2405,7 @@ internal class MutatedSubscriptionTest {
                             )
                             .externalPriceId("external_price_id")
                             .fixedPriceQuantity(0.0)
+                            .invoiceGroupingKey("invoice_grouping_key")
                             .invoicingCycleConfiguration(
                                 BillingCycleConfiguration.builder()
                                     .duration(0L)
@@ -2382,10 +2462,22 @@ internal class MutatedSubscriptionTest {
                                     .dimensionalPriceGroupId("dimensional_price_group_id")
                                     .build()
                             )
+                            .licenseType(
+                                Price.UnitPrice.LicenseType.builder()
+                                    .id("id")
+                                    .groupingKey("grouping_key")
+                                    .name("name")
+                                    .build()
+                            )
                             .build()
                     )
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addUsageCustomerId("string")
+                    .metricParameterOverrides(
+                        PriceInterval.MetricParameterOverrides.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
                     .build()
             )
         assertThat(mutatedSubscription.redeemedCoupon())
@@ -2704,6 +2796,7 @@ internal class MutatedSubscriptionTest {
                                                             .addValue("string")
                                                             .build()
                                                     )
+                                                    .licenseTypeId("license_type_id")
                                                     .build()
                                             )
                                             .currency("currency")
@@ -2733,6 +2826,7 @@ internal class MutatedSubscriptionTest {
                                             )
                                             .externalPriceId("external_price_id")
                                             .fixedPriceQuantity(0.0)
+                                            .invoiceGroupingKey("invoice_grouping_key")
                                             .invoicingCycleConfiguration(
                                                 BillingCycleConfiguration.builder()
                                                     .duration(0L)
@@ -2798,6 +2892,13 @@ internal class MutatedSubscriptionTest {
                                                     .dimensionalPriceGroupId(
                                                         "dimensional_price_group_id"
                                                     )
+                                                    .build()
+                                            )
+                                            .licenseType(
+                                                Price.UnitPrice.LicenseType.builder()
+                                                    .id("id")
+                                                    .groupingKey("grouping_key")
+                                                    .name("name")
                                                     .build()
                                             )
                                             .build()
@@ -3193,6 +3294,7 @@ internal class MutatedSubscriptionTest {
                                                             .addValue("string")
                                                             .build()
                                                     )
+                                                    .licenseTypeId("license_type_id")
                                                     .build()
                                             )
                                             .currency("currency")
@@ -3222,6 +3324,7 @@ internal class MutatedSubscriptionTest {
                                             )
                                             .externalPriceId("external_price_id")
                                             .fixedPriceQuantity(0.0)
+                                            .invoiceGroupingKey("invoice_grouping_key")
                                             .invoicingCycleConfiguration(
                                                 BillingCycleConfiguration.builder()
                                                     .duration(0L)
@@ -3287,6 +3390,13 @@ internal class MutatedSubscriptionTest {
                                                     .dimensionalPriceGroupId(
                                                         "dimensional_price_group_id"
                                                     )
+                                                    .build()
+                                            )
+                                            .licenseType(
+                                                Price.UnitPrice.LicenseType.builder()
+                                                    .id("id")
+                                                    .groupingKey("grouping_key")
+                                                    .name("name")
                                                     .build()
                                             )
                                             .build()
@@ -3442,6 +3552,7 @@ internal class MutatedSubscriptionTest {
                         .build()
                 )
                 .autoCollection(true)
+                .autoIssuance(true)
                 .billingCycleAnchorConfiguration(
                     BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build()
                 )
@@ -3532,6 +3643,19 @@ internal class MutatedSubscriptionTest {
                                 .build()
                         )
                         .automaticTaxEnabled(true)
+                        .defaultPaymentMethod(
+                            Customer.DefaultPaymentMethod.builder()
+                                .id("id")
+                                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .customerId("customer_id")
+                                .default(true)
+                                .externalPaymentMethodId("external_payment_method_id")
+                                .paymentMethodType(
+                                    Customer.DefaultPaymentMethod.PaymentMethodType.CARD
+                                )
+                                .providerType("provider_type")
+                                .build()
+                        )
                         .paymentConfiguration(
                             Customer.PaymentConfiguration.builder()
                                 .addPaymentProvider(
@@ -3541,6 +3665,7 @@ internal class MutatedSubscriptionTest {
                                                 .ProviderType
                                                 .STRIPE
                                         )
+                                        .defaultSharedPaymentToken("default_shared_payment_token")
                                         .addExcludedPaymentMethodType("string")
                                         .build()
                                 )
@@ -3811,6 +3936,7 @@ internal class MutatedSubscriptionTest {
                                                 .addValue("string")
                                                 .build()
                                         )
+                                        .licenseTypeId("license_type_id")
                                         .build()
                                 )
                                 .currency("currency")
@@ -3834,6 +3960,7 @@ internal class MutatedSubscriptionTest {
                                 )
                                 .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(0.0)
+                                .invoiceGroupingKey("invoice_grouping_key")
                                 .invoicingCycleConfiguration(
                                     BillingCycleConfiguration.builder()
                                         .duration(0L)
@@ -3888,6 +4015,13 @@ internal class MutatedSubscriptionTest {
                                     DimensionalPriceConfiguration.builder()
                                         .addDimensionValue("string")
                                         .dimensionalPriceGroupId("dimensional_price_group_id")
+                                        .build()
+                                )
+                                .licenseType(
+                                    Price.UnitPrice.LicenseType.builder()
+                                        .id("id")
+                                        .groupingKey("grouping_key")
+                                        .name("name")
                                         .build()
                                 )
                                 .build()
@@ -3974,6 +4108,7 @@ internal class MutatedSubscriptionTest {
                                                 .addValue("string")
                                                 .build()
                                         )
+                                        .licenseTypeId("license_type_id")
                                         .build()
                                 )
                                 .currency("currency")
@@ -3997,6 +4132,7 @@ internal class MutatedSubscriptionTest {
                                 )
                                 .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(0.0)
+                                .invoiceGroupingKey("invoice_grouping_key")
                                 .invoicingCycleConfiguration(
                                     BillingCycleConfiguration.builder()
                                         .duration(0L)
@@ -4053,10 +4189,22 @@ internal class MutatedSubscriptionTest {
                                         .dimensionalPriceGroupId("dimensional_price_group_id")
                                         .build()
                                 )
+                                .licenseType(
+                                    Price.UnitPrice.LicenseType.builder()
+                                        .id("id")
+                                        .groupingKey("grouping_key")
+                                        .name("name")
+                                        .build()
+                                )
                                 .build()
                         )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .addUsageCustomerId("string")
+                        .metricParameterOverrides(
+                            PriceInterval.MetricParameterOverrides.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                .build()
+                        )
                         .build()
                 )
                 .redeemedCoupon(
@@ -4390,6 +4538,7 @@ internal class MutatedSubscriptionTest {
                                                                 .addValue("string")
                                                                 .build()
                                                         )
+                                                        .licenseTypeId("license_type_id")
                                                         .build()
                                                 )
                                                 .currency("currency")
@@ -4421,6 +4570,7 @@ internal class MutatedSubscriptionTest {
                                                 )
                                                 .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(0.0)
+                                                .invoiceGroupingKey("invoice_grouping_key")
                                                 .invoicingCycleConfiguration(
                                                     BillingCycleConfiguration.builder()
                                                         .duration(0L)
@@ -4493,6 +4643,13 @@ internal class MutatedSubscriptionTest {
                                                         .dimensionalPriceGroupId(
                                                             "dimensional_price_group_id"
                                                         )
+                                                        .build()
+                                                )
+                                                .licenseType(
+                                                    Price.UnitPrice.LicenseType.builder()
+                                                        .id("id")
+                                                        .groupingKey("grouping_key")
+                                                        .name("name")
                                                         .build()
                                                 )
                                                 .build()
@@ -4911,6 +5068,7 @@ internal class MutatedSubscriptionTest {
                                                                 .addValue("string")
                                                                 .build()
                                                         )
+                                                        .licenseTypeId("license_type_id")
                                                         .build()
                                                 )
                                                 .currency("currency")
@@ -4942,6 +5100,7 @@ internal class MutatedSubscriptionTest {
                                                 )
                                                 .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(0.0)
+                                                .invoiceGroupingKey("invoice_grouping_key")
                                                 .invoicingCycleConfiguration(
                                                     BillingCycleConfiguration.builder()
                                                         .duration(0L)
@@ -5014,6 +5173,13 @@ internal class MutatedSubscriptionTest {
                                                         .dimensionalPriceGroupId(
                                                             "dimensional_price_group_id"
                                                         )
+                                                        .build()
+                                                )
+                                                .licenseType(
+                                                    Price.UnitPrice.LicenseType.builder()
+                                                        .id("id")
+                                                        .groupingKey("grouping_key")
+                                                        .name("name")
                                                         .build()
                                                 )
                                                 .build()

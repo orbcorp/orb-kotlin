@@ -17,6 +17,11 @@ import com.withorb.api.models.EventUpdateResponse
 import com.withorb.api.services.async.events.BackfillServiceAsync
 import com.withorb.api.services.async.events.VolumeServiceAsync
 
+/**
+ * The [Event](/core-concepts#event) resource represents a usage event that has been created for a
+ * customer. Events are the core of Orb's usage-based billing model, and are used to calculate the
+ * usage charges for a given billing period.
+ */
 interface EventServiceAsync {
 
     /**
@@ -31,8 +36,18 @@ interface EventServiceAsync {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EventServiceAsync
 
+    /**
+     * The [Event](/core-concepts#event) resource represents a usage event that has been created for
+     * a customer. Events are the core of Orb's usage-based billing model, and are used to calculate
+     * the usage charges for a given billing period.
+     */
     fun backfills(): BackfillServiceAsync
 
+    /**
+     * The [Event](/core-concepts#event) resource represents a usage event that has been created for
+     * a customer. Events are the core of Orb's usage-based billing model, and are used to calculate
+     * the usage charges for a given billing period.
+     */
     fun volume(): VolumeServiceAsync
 
     /**
@@ -247,8 +262,8 @@ interface EventServiceAsync {
      * and ensure that all usage is billed for in the corresponding billing period.
      *
      * In general, Orb does not expect events with future dated timestamps. In cases where the
-     * timestamp is at least 24 hours ahead of the current time, the event will not be accepted as a
-     * valid event, and will throw validation errors.
+     * timestamp is 5 minutes ahead of the current time, the event will not be accepted as a valid
+     * event, and will throw validation errors.
      *
      * ## Event validation
      *
@@ -261,7 +276,7 @@ interface EventServiceAsync {
      * - If the `external_customer_id` is specified, the customer in Orb does not need to exist.
      *   Events will be attributed to any future customers with the `external_customer_id` on
      *   subscription creation.
-     * - `timestamp` must conform to ISO 8601 and represent a timestamp at most 1 hour in the
+     * - `timestamp` must conform to ISO 8601 and represent a timestamp at most 5 minutes in the
      *   future. This timestamp should be sent in UTC timezone (no timezone offset).
      *
      * ## Idempotency and retry semantics
@@ -295,36 +310,7 @@ interface EventServiceAsync {
      * size, but please give us a heads up if you’re changing either of these factors by an order of
      * magnitude from initial setup.
      *
-     * ## Testing in debug mode
-     * The ingestion API supports a debug mode, which returns additional verbose output to indicate
-     * which event idempotency keys were newly ingested or duplicates from previous requests. To
-     * enable this mode, mark `debug=true` as a query parameter.
-     *
-     * If `debug=true` is not specified, the response will only contain `validation_failed`. Orb
-     * will still honor the idempotency guarantees set
-     * [here](/events-and-metrics/event-ingestion#event-volume-and-concurrency) in all cases.
-     *
-     * We strongly recommend that you only use debug mode as part of testing your initial Orb
-     * integration. Once you're ready to switch to production, disable debug mode to take advantage
-     * of improved performance and maximal throughput.
-     *
-     * #### Example: ingestion response with `debug=true`
-     *
-     * ```json
-     * {
-     *   "debug": {
-     *     "duplicate": [],
-     *     "ingested": [
-     *       "B7E83HDMfJPAunXW",
-     *       "SJs5DQJ3TnwSqEZE",
-     *       "8SivfDsNKwCeAXim"
-     *     ]
-     *   },
-     *   "validation_failed": []
-     * }
-     * ```
-     *
-     * #### Example: ingestion response with `debug=false`
+     * #### Example: ingestion response
      *
      * ```json
      * {
@@ -370,8 +356,18 @@ interface EventServiceAsync {
             modifier: (ClientOptions.Builder) -> Unit
         ): EventServiceAsync.WithRawResponse
 
+        /**
+         * The [Event](/core-concepts#event) resource represents a usage event that has been created
+         * for a customer. Events are the core of Orb's usage-based billing model, and are used to
+         * calculate the usage charges for a given billing period.
+         */
         fun backfills(): BackfillServiceAsync.WithRawResponse
 
+        /**
+         * The [Event](/core-concepts#event) resource represents a usage event that has been created
+         * for a customer. Events are the core of Orb's usage-based billing model, and are used to
+         * calculate the usage charges for a given billing period.
+         */
         fun volume(): VolumeServiceAsync.WithRawResponse
 
         /**

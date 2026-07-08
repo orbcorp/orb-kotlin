@@ -187,6 +187,13 @@ private constructor(
         fun addData(matrixWithAllocation: Price.MatrixWithAllocation) =
             addData(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
+        /**
+         * Alias for calling [addData] with
+         * `Price.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts)`.
+         */
+        fun addData(matrixWithThresholdDiscounts: Price.MatrixWithThresholdDiscounts) =
+            addData(Price.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts))
+
         /** Alias for calling [addData] with `Price.ofTieredWithProration(tieredWithProration)`. */
         fun addData(tieredWithProration: Price.TieredWithProration) =
             addData(Price.ofTieredWithProration(tieredWithProration))
@@ -269,6 +276,16 @@ private constructor(
         fun addData(cumulativeGroupedAllocation: Price.CumulativeGroupedAllocation) =
             addData(Price.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation))
 
+        /**
+         * Alias for calling [addData] with `Price.ofDailyCreditAllowance(dailyCreditAllowance)`.
+         */
+        fun addData(dailyCreditAllowance: Price.DailyCreditAllowance) =
+            addData(Price.ofDailyCreditAllowance(dailyCreditAllowance))
+
+        /** Alias for calling [addData] with `Price.ofMeteredAllowance(meteredAllowance)`. */
+        fun addData(meteredAllowance: Price.MeteredAllowance) =
+            addData(Price.ofMeteredAllowance(meteredAllowance))
+
         /** Alias for calling [addData] with `Price.ofMinimumComposite(minimumComposite)`. */
         fun addData(minimumComposite: Price.MinimumComposite) =
             addData(Price.ofMinimumComposite(minimumComposite))
@@ -335,6 +352,14 @@ private constructor(
 
     private var validated: Boolean = false
 
+    /**
+     * Validates that the types of all values in this object match their expected types recursively.
+     *
+     * This method is _not_ forwards compatible with new types from the API for existing fields.
+     *
+     * @throws OrbInvalidDataException if any value type in this object doesn't match its expected
+     *   type.
+     */
     fun validate(): PriceListPageResponse = apply {
         if (validated) {
             return@apply

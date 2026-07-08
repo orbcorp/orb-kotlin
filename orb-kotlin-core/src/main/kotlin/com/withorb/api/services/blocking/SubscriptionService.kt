@@ -322,6 +322,10 @@ interface SubscriptionService {
      * Subscriptions can be filtered for a specific customer by using either the customer_id or
      * external_customer_id query parameters. To filter subscriptions for multiple customers, use
      * the customer_id[] or external_customer_id[] query parameters.
+     *
+     * Subscriptions can be filtered by status using the status query parameter (one of `active`,
+     * `ended`, or `upcoming`). To filter for multiple statuses in a single request, use the
+     * status[] query parameter, e.g. `status[]=active&status[]=ended`.
      */
     fun list(
         params: SubscriptionListParams = SubscriptionListParams.none(),
@@ -425,9 +429,9 @@ interface SubscriptionService {
      * units rather than a currency).
      *
      * The semantics of this endpoint exactly mirror those of
-     * [fetching a customer's costs](fetch-customer-costs). Use this endpoint to limit your analysis
-     * of costs to a specific subscription for the customer (e.g. to de-aggregate costs when a
-     * customer's subscription has started and stopped on the same day).
+     * [fetching a customer's costs](/api-reference/customer/fetch-customer-costs). Use this
+     * endpoint to limit your analysis of costs to a specific subscription for the customer (e.g. to
+     * de-aggregate costs when a customer's subscription has started and stopped on the same day).
      */
     fun fetchCosts(
         subscriptionId: String,
@@ -967,6 +971,12 @@ interface SubscriptionService {
      * To be eligible, the subscription must currently be active and have a future cancellation.
      * This operation will turn on auto-renew, ensuring that the subscription does not end at the
      * currently scheduled cancellation time.
+     *
+     * Note: uncancellation is a lossy operation. Price intervals that were cut short by the
+     * cancellation are extended to infinity (original end dates are lost), and future intervals or
+     * phases scheduled after the cancellation time are permanently deleted. For complex
+     * subscriptions with phases or scheduled plan changes, consider creating a new plan change
+     * instead of uncancelling.
      */
     fun unscheduleCancellation(
         subscriptionId: String,

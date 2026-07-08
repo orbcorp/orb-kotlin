@@ -40,7 +40,7 @@ internal class CustomerServiceTest {
                             .addAccountingProvider(
                                 AccountingProviderConfig.builder()
                                     .externalProviderId("external_provider_id")
-                                    .providerType("provider_type")
+                                    .providerType(AccountingProviderConfig.ProviderType.QUICKBOOKS)
                                     .build()
                             )
                             .excluded(true)
@@ -82,6 +82,7 @@ internal class CustomerServiceTest {
                                             .ProviderType
                                             .STRIPE
                                     )
+                                    .defaultSharedPaymentToken("default_shared_payment_token")
                                     .addExcludedPaymentMethodType("string")
                                     .build()
                             )
@@ -142,7 +143,7 @@ internal class CustomerServiceTest {
                             .addAccountingProvider(
                                 AccountingProviderConfig.builder()
                                     .externalProviderId("external_provider_id")
-                                    .providerType("provider_type")
+                                    .providerType(AccountingProviderConfig.ProviderType.QUICKBOOKS)
                                     .build()
                             )
                             .excluded(true)
@@ -162,6 +163,7 @@ internal class CustomerServiceTest {
                             .build()
                     )
                     .currency("currency")
+                    .defaultPaymentMethodId("default_payment_method_id")
                     .email("dev@stainless.com")
                     .emailDelivery(true)
                     .externalCustomerId("external_customer_id")
@@ -186,6 +188,7 @@ internal class CustomerServiceTest {
                                             .ProviderType
                                             .STRIPE
                                     )
+                                    .defaultSharedPaymentToken("default_shared_payment_token")
                                     .addExcludedPaymentMethodType("string")
                                     .build()
                             )
@@ -323,7 +326,7 @@ internal class CustomerServiceTest {
                             .addAccountingProvider(
                                 AccountingProviderConfig.builder()
                                     .externalProviderId("external_provider_id")
-                                    .providerType("provider_type")
+                                    .providerType(AccountingProviderConfig.ProviderType.QUICKBOOKS)
                                     .build()
                             )
                             .excluded(true)
@@ -343,6 +346,7 @@ internal class CustomerServiceTest {
                             .build()
                     )
                     .currency("currency")
+                    .defaultPaymentMethodId("default_payment_method_id")
                     .email("dev@stainless.com")
                     .emailDelivery(true)
                     .externalCustomerId("external_customer_id")
@@ -370,6 +374,7 @@ internal class CustomerServiceTest {
                                             .ProviderType
                                             .STRIPE
                                     )
+                                    .defaultSharedPaymentToken("default_shared_payment_token")
                                     .addExcludedPaymentMethodType("string")
                                     .build()
                             )

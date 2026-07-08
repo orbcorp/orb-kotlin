@@ -28,6 +28,10 @@ import java.util.Objects
  * When fetching any `draft` invoices, this returns the last-computed invoice values for each draft
  * invoice, which may not always be up-to-date since Orb regularly refreshes invoices
  * asynchronously.
+ *
+ * If you don't need line item details, minimums, maximums, or discounts, prefer the
+ * [list invoices summary](/api-reference/invoice/list-invoices-summary) endpoint for better
+ * performance.
  */
 class InvoiceListParams
 private constructor(
@@ -499,6 +503,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): DateType = apply {
             if (validated) {
                 return@apply
@@ -641,6 +654,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Status = apply {
             if (validated) {
                 return@apply

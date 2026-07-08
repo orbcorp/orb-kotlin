@@ -76,6 +76,7 @@ internal class CustomerCostListResponseTest {
                                                         .addValue("string")
                                                         .build()
                                                 )
+                                                .licenseTypeId("license_type_id")
                                                 .build()
                                         )
                                         .currency("currency")
@@ -104,6 +105,7 @@ internal class CustomerCostListResponseTest {
                                         )
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(0.0)
+                                        .invoiceGroupingKey("invoice_grouping_key")
                                         .invoicingCycleConfiguration(
                                             BillingCycleConfiguration.builder()
                                                 .duration(0L)
@@ -165,6 +167,13 @@ internal class CustomerCostListResponseTest {
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
                                                 )
+                                                .build()
+                                        )
+                                        .licenseType(
+                                            Price.UnitPrice.LicenseType.builder()
+                                                .id("id")
+                                                .groupingKey("grouping_key")
+                                                .name("name")
                                                 .build()
                                         )
                                         .build()
@@ -238,6 +247,7 @@ internal class CustomerCostListResponseTest {
                                                     .addValue("string")
                                                     .build()
                                             )
+                                            .licenseTypeId("license_type_id")
                                             .build()
                                     )
                                     .currency("currency")
@@ -263,6 +273,7 @@ internal class CustomerCostListResponseTest {
                                     )
                                     .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(0.0)
+                                    .invoiceGroupingKey("invoice_grouping_key")
                                     .invoicingCycleConfiguration(
                                         BillingCycleConfiguration.builder()
                                             .duration(0L)
@@ -319,6 +330,13 @@ internal class CustomerCostListResponseTest {
                                         DimensionalPriceConfiguration.builder()
                                             .addDimensionValue("string")
                                             .dimensionalPriceGroupId("dimensional_price_group_id")
+                                            .build()
+                                    )
+                                    .licenseType(
+                                        Price.UnitPrice.LicenseType.builder()
+                                            .id("id")
+                                            .groupingKey("grouping_key")
+                                            .name("name")
                                             .build()
                                     )
                                     .build()
@@ -403,6 +421,7 @@ internal class CustomerCostListResponseTest {
                                                         .addValue("string")
                                                         .build()
                                                 )
+                                                .licenseTypeId("license_type_id")
                                                 .build()
                                         )
                                         .currency("currency")
@@ -431,6 +450,7 @@ internal class CustomerCostListResponseTest {
                                         )
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(0.0)
+                                        .invoiceGroupingKey("invoice_grouping_key")
                                         .invoicingCycleConfiguration(
                                             BillingCycleConfiguration.builder()
                                                 .duration(0L)
@@ -492,6 +512,13 @@ internal class CustomerCostListResponseTest {
                                                 .dimensionalPriceGroupId(
                                                     "dimensional_price_group_id"
                                                 )
+                                                .build()
+                                        )
+                                        .licenseType(
+                                            Price.UnitPrice.LicenseType.builder()
+                                                .id("id")
+                                                .groupingKey("grouping_key")
+                                                .name("name")
                                                 .build()
                                         )
                                         .build()

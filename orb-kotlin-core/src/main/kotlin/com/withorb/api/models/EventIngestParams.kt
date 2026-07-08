@@ -126,8 +126,8 @@ import java.util.Objects
  * all usage is billed for in the corresponding billing period.
  *
  * In general, Orb does not expect events with future dated timestamps. In cases where the timestamp
- * is at least 24 hours ahead of the current time, the event will not be accepted as a valid event,
- * and will throw validation errors.
+ * is 5 minutes ahead of the current time, the event will not be accepted as a valid event, and will
+ * throw validation errors.
  *
  * ## Event validation
  *
@@ -140,7 +140,7 @@ import java.util.Objects
  * - If the `external_customer_id` is specified, the customer in Orb does not need to exist. Events
  *   will be attributed to any future customers with the `external_customer_id` on subscription
  *   creation.
- * - `timestamp` must conform to ISO 8601 and represent a timestamp at most 1 hour in the future.
+ * - `timestamp` must conform to ISO 8601 and represent a timestamp at most 5 minutes in the future.
  *   This timestamp should be sent in UTC timezone (no timezone offset).
  *
  * ## Idempotency and retry semantics
@@ -172,36 +172,7 @@ import java.util.Objects
  * but please give us a heads up if you’re changing either of these factors by an order of magnitude
  * from initial setup.
  *
- * ## Testing in debug mode
- * The ingestion API supports a debug mode, which returns additional verbose output to indicate
- * which event idempotency keys were newly ingested or duplicates from previous requests. To enable
- * this mode, mark `debug=true` as a query parameter.
- *
- * If `debug=true` is not specified, the response will only contain `validation_failed`. Orb will
- * still honor the idempotency guarantees set
- * [here](/events-and-metrics/event-ingestion#event-volume-and-concurrency) in all cases.
- *
- * We strongly recommend that you only use debug mode as part of testing your initial Orb
- * integration. Once you're ready to switch to production, disable debug mode to take advantage of
- * improved performance and maximal throughput.
- *
- * #### Example: ingestion response with `debug=true`
- *
- * ```json
- * {
- *   "debug": {
- *     "duplicate": [],
- *     "ingested": [
- *       "B7E83HDMfJPAunXW",
- *       "SJs5DQJ3TnwSqEZE",
- *       "8SivfDsNKwCeAXim"
- *     ]
- *   },
- *   "validation_failed": []
- * }
- * ```
- *
- * #### Example: ingestion response with `debug=false`
+ * #### Example: ingestion response
  *
  * ```json
  * {
@@ -224,8 +195,8 @@ private constructor(
      */
     fun backfillId(): String? = backfillId
 
-    /** Flag to enable additional debug information in the endpoint response */
-    fun debug(): Boolean? = debug
+    /** Pending Deprecation: Flag to enable additional debug information in the endpoint response */
+    @Deprecated("deprecated") fun debug(): Boolean? = debug
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -286,15 +257,17 @@ private constructor(
          */
         fun backfillId(backfillId: String?) = apply { this.backfillId = backfillId }
 
-        /** Flag to enable additional debug information in the endpoint response */
-        fun debug(debug: Boolean?) = apply { this.debug = debug }
+        /**
+         * Pending Deprecation: Flag to enable additional debug information in the endpoint response
+         */
+        @Deprecated("deprecated") fun debug(debug: Boolean?) = apply { this.debug = debug }
 
         /**
          * Alias for [Builder.debug].
          *
          * This unboxed primitive overload exists for backwards compatibility.
          */
-        fun debug(debug: Boolean) = debug(debug as Boolean?)
+        @Deprecated("deprecated") fun debug(debug: Boolean) = debug(debug as Boolean?)
 
         /**
          * Sets the entire request body.
@@ -603,6 +576,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Body = apply {
             if (validated) {
                 return@apply
@@ -986,6 +968,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Event = apply {
             if (validated) {
                 return@apply
@@ -1086,6 +1077,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws OrbInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): Properties = apply {
                 if (validated) {
                     return@apply

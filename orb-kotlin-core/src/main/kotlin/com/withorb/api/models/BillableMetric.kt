@@ -11,6 +11,7 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
+import com.withorb.api.core.checkKnown
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -30,6 +31,7 @@ private constructor(
     private val metadata: JsonField<Metadata>,
     private val name: JsonField<String>,
     private val status: JsonField<Status>,
+    private val parameterDefinitions: JsonField<List<ParameterDefinition>>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -43,7 +45,10 @@ private constructor(
         @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
-    ) : this(id, description, item, metadata, name, status, mutableMapOf())
+        @JsonProperty("parameter_definitions")
+        @ExcludeMissing
+        parameterDefinitions: JsonField<List<ParameterDefinition>> = JsonMissing.of(),
+    ) : this(id, description, item, metadata, name, status, parameterDefinitions, mutableMapOf())
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -90,6 +95,13 @@ private constructor(
     fun status(): Status = status.getRequired("status")
 
     /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun parameterDefinitions(): List<ParameterDefinition>? =
+        parameterDefinitions.getNullable("parameter_definitions")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
@@ -131,6 +143,16 @@ private constructor(
      */
     @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
+    /**
+     * Returns the raw JSON value of [parameterDefinitions].
+     *
+     * Unlike [parameterDefinitions], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("parameter_definitions")
+    @ExcludeMissing
+    fun _parameterDefinitions(): JsonField<List<ParameterDefinition>> = parameterDefinitions
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -170,6 +192,7 @@ private constructor(
         private var metadata: JsonField<Metadata>? = null
         private var name: JsonField<String>? = null
         private var status: JsonField<Status>? = null
+        private var parameterDefinitions: JsonField<MutableList<ParameterDefinition>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(billableMetric: BillableMetric) = apply {
@@ -179,6 +202,7 @@ private constructor(
             metadata = billableMetric.metadata
             name = billableMetric.name
             status = billableMetric.status
+            parameterDefinitions = billableMetric.parameterDefinitions.map { it.toMutableList() }
             additionalProperties = billableMetric.additionalProperties.toMutableMap()
         }
 
@@ -254,6 +278,33 @@ private constructor(
          */
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
+        fun parameterDefinitions(parameterDefinitions: List<ParameterDefinition>?) =
+            parameterDefinitions(JsonField.ofNullable(parameterDefinitions))
+
+        /**
+         * Sets [Builder.parameterDefinitions] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.parameterDefinitions] with a well-typed
+         * `List<ParameterDefinition>` value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
+         */
+        fun parameterDefinitions(parameterDefinitions: JsonField<List<ParameterDefinition>>) =
+            apply {
+                this.parameterDefinitions = parameterDefinitions.map { it.toMutableList() }
+            }
+
+        /**
+         * Adds a single [ParameterDefinition] to [parameterDefinitions].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addParameterDefinition(parameterDefinition: ParameterDefinition) = apply {
+            parameterDefinitions =
+                (parameterDefinitions ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("parameterDefinitions", it).add(parameterDefinition)
+                }
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -298,12 +349,21 @@ private constructor(
                 checkRequired("metadata", metadata),
                 checkRequired("name", name),
                 checkRequired("status", status),
+                (parameterDefinitions ?: JsonMissing.of()).map { it.toImmutable() },
                 additionalProperties.toMutableMap(),
             )
     }
 
     private var validated: Boolean = false
 
+    /**
+     * Validates that the types of all values in this object match their expected types recursively.
+     *
+     * This method is _not_ forwards compatible with new types from the API for existing fields.
+     *
+     * @throws OrbInvalidDataException if any value type in this object doesn't match its expected
+     *   type.
+     */
     fun validate(): BillableMetric = apply {
         if (validated) {
             return@apply
@@ -315,6 +375,7 @@ private constructor(
         metadata().validate()
         name()
         status().validate()
+        parameterDefinitions()?.forEach { it.validate() }
         validated = true
     }
 
@@ -337,7 +398,8 @@ private constructor(
             (item.asKnown()?.validity() ?: 0) +
             (metadata.asKnown()?.validity() ?: 0) +
             (if (name.asKnown() == null) 0 else 1) +
-            (status.asKnown()?.validity() ?: 0)
+            (status.asKnown()?.validity() ?: 0) +
+            (parameterDefinitions.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
     /**
      * User specified key-value pairs for the resource. If not present, this defaults to an empty
@@ -401,6 +463,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Metadata = apply {
             if (validated) {
                 return@apply
@@ -533,6 +604,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Status = apply {
             if (validated) {
                 return@apply
@@ -571,6 +651,114 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    class ParameterDefinition
+    @JsonCreator
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [ParameterDefinition]. */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [ParameterDefinition]. */
+        class Builder internal constructor() {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(parameterDefinition: ParameterDefinition) = apply {
+                additionalProperties = parameterDefinition.additionalProperties.toMutableMap()
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [ParameterDefinition].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): ParameterDefinition =
+                ParameterDefinition(additionalProperties.toImmutable())
+        }
+
+        private var validated: Boolean = false
+
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
+        fun validate(): ParameterDefinition = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is ParameterDefinition &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() = "ParameterDefinition{additionalProperties=$additionalProperties}"
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -583,15 +771,25 @@ private constructor(
             metadata == other.metadata &&
             name == other.name &&
             status == other.status &&
+            parameterDefinitions == other.parameterDefinitions &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(id, description, item, metadata, name, status, additionalProperties)
+        Objects.hash(
+            id,
+            description,
+            item,
+            metadata,
+            name,
+            status,
+            parameterDefinitions,
+            additionalProperties,
+        )
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "BillableMetric{id=$id, description=$description, item=$item, metadata=$metadata, name=$name, status=$status, additionalProperties=$additionalProperties}"
+        "BillableMetric{id=$id, description=$description, item=$item, metadata=$metadata, name=$name, status=$status, parameterDefinitions=$parameterDefinitions, additionalProperties=$additionalProperties}"
 }

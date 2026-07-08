@@ -14,6 +14,12 @@ import com.withorb.api.models.CouponListPage
 import com.withorb.api.models.CouponListParams
 import com.withorb.api.services.blocking.coupons.SubscriptionService
 
+/**
+ * A coupon represents a reusable discount configuration that can be applied either as a fixed or
+ * percentage amount to an invoice or subscription. Coupons are activated using a redemption code,
+ * which applies the discount to a subscription or invoice. The duration of a coupon determines how
+ * long it remains available for use by end users.
+ */
 interface CouponService {
 
     /**
@@ -28,6 +34,12 @@ interface CouponService {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CouponService
 
+    /**
+     * A coupon represents a reusable discount configuration that can be applied either as a fixed
+     * or percentage amount to an invoice or subscription. Coupons are activated using a redemption
+     * code, which applies the discount to a subscription or invoice. The duration of a coupon
+     * determines how long it remains available for use by end users.
+     */
     fun subscriptions(): SubscriptionService
 
     /**
@@ -44,8 +56,7 @@ interface CouponService {
      *
      * The list of coupons is ordered starting from the most recently created coupon. The response
      * also includes `pagination_metadata`, which lets the caller retrieve the next page of results
-     * if they exist. More information about pagination can be found in the Pagination-metadata
-     * schema.
+     * if they exist.
      */
     fun list(
         params: CouponListParams = CouponListParams.none(),
@@ -107,6 +118,12 @@ interface CouponService {
          */
         fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CouponService.WithRawResponse
 
+        /**
+         * A coupon represents a reusable discount configuration that can be applied either as a
+         * fixed or percentage amount to an invoice or subscription. Coupons are activated using a
+         * redemption code, which applies the discount to a subscription or invoice. The duration of
+         * a coupon determines how long it remains available for use by end users.
+         */
         fun subscriptions(): SubscriptionService.WithRawResponse
 
         /**

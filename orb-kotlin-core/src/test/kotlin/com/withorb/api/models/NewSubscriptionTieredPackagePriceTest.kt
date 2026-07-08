@@ -64,6 +64,7 @@ internal class NewSubscriptionTieredPackagePriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewSubscriptionTieredPackagePrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -138,6 +139,7 @@ internal class NewSubscriptionTieredPackagePriceTest {
                     .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                     .build()
             )
+        assertThat(newSubscriptionTieredPackagePrice.licenseTypeId()).isEqualTo("license_type_id")
         assertThat(newSubscriptionTieredPackagePrice.metadata())
             .isEqualTo(
                 NewSubscriptionTieredPackagePrice.Metadata.builder()
@@ -202,6 +204,7 @@ internal class NewSubscriptionTieredPackagePriceTest {
                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                         .build()
                 )
+                .licenseTypeId("license_type_id")
                 .metadata(
                     NewSubscriptionTieredPackagePrice.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))

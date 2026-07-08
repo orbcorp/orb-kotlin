@@ -13,6 +13,7 @@ internal class InvoiceUpdateParamsTest {
     fun create() {
         InvoiceUpdateParams.builder()
             .invoiceId("invoice_id")
+            .autoCollection(true)
             .dueDate(LocalDate.parse("2023-09-22"))
             .invoiceDate(LocalDate.parse("2023-09-22"))
             .metadata(
@@ -38,6 +39,7 @@ internal class InvoiceUpdateParamsTest {
         val params =
             InvoiceUpdateParams.builder()
                 .invoiceId("invoice_id")
+                .autoCollection(true)
                 .dueDate(LocalDate.parse("2023-09-22"))
                 .invoiceDate(LocalDate.parse("2023-09-22"))
                 .metadata(
@@ -50,6 +52,7 @@ internal class InvoiceUpdateParamsTest {
 
         val body = params._body()
 
+        assertThat(body.autoCollection()).isEqualTo(true)
         assertThat(body.dueDate())
             .isEqualTo(InvoiceUpdateParams.DueDate.ofDate(LocalDate.parse("2023-09-22")))
         assertThat(body.invoiceDate())

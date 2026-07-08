@@ -13,6 +13,10 @@ import com.withorb.api.models.MetricListPageAsync
 import com.withorb.api.models.MetricListParams
 import com.withorb.api.models.MetricUpdateParams
 
+/**
+ * The Metric resource represents a calculation of a quantity based on events. Metrics are defined
+ * by the query that transforms raw usage events into meaningful values for your customers.
+ */
 interface MetricServiceAsync {
 
     /**
@@ -58,9 +62,8 @@ interface MetricServiceAsync {
         update(metricId, MetricUpdateParams.none(), requestOptions)
 
     /**
-     * This endpoint is used to fetch [metric](/core-concepts##metric) details given a metric
-     * identifier. It returns information about the metrics including its name, description, and
-     * item.
+     * This endpoint is used to list [metrics](/core-concepts#metric). It returns information about
+     * the metrics including its name, description, and item.
      */
     suspend fun list(
         params: MetricListParams = MetricListParams.none(),
@@ -72,8 +75,9 @@ interface MetricServiceAsync {
         list(MetricListParams.none(), requestOptions)
 
     /**
-     * This endpoint is used to list [metrics](/core-concepts#metric). It returns information about
-     * the metrics including its name, description, and item.
+     * This endpoint is used to fetch [metric](/core-concepts#metric) details given a metric
+     * identifier. It returns information about the metrics including its name, description, and
+     * item.
      */
     suspend fun fetch(
         metricId: String,

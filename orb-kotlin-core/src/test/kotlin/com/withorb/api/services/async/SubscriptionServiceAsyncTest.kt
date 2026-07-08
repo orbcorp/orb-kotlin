@@ -6,6 +6,7 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.BillingCycleAnchorConfiguration
+import com.withorb.api.models.BillingCycleRelativeDate
 import com.withorb.api.models.ConversionRateUnitConfig
 import com.withorb.api.models.CustomExpiration
 import com.withorb.api.models.DiscountOverride
@@ -103,6 +104,12 @@ internal class SubscriptionServiceAsyncTest {
                                             .build()
                                     )
                                     .itemId("item_id")
+                                    .licenseTypeId("license_type_id")
+                                    .metadata(
+                                        NewAllocationPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
                                     .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )
@@ -117,6 +124,11 @@ internal class SubscriptionServiceAsyncTest {
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .externalPriceId("external_price_id")
                             .maximumAmount("1.23")
+                            .metricParameterOverrides(
+                                SubscriptionCreateParams.AddPrice.MetricParameterOverrides.builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                    .build()
+                            )
                             .minimumAmount("1.23")
                             .planPhaseOrder(0L)
                             .price(
@@ -168,6 +180,7 @@ internal class SubscriptionServiceAsyncTest {
                                             )
                                             .build()
                                     )
+                                    .licenseTypeId("license_type_id")
                                     .metadata(
                                         NewSubscriptionUnitPrice.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -182,6 +195,7 @@ internal class SubscriptionServiceAsyncTest {
                     )
                     .alignBillingWithSubscriptionStartDate(true)
                     .autoCollection(true)
+                    .autoIssuance(true)
                     .awsRegion("aws_region")
                     .billingCycleAnchorConfiguration(
                         BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build()
@@ -274,6 +288,12 @@ internal class SubscriptionServiceAsyncTest {
                                             .build()
                                     )
                                     .itemId("item_id")
+                                    .licenseTypeId("license_type_id")
+                                    .metadata(
+                                        NewAllocationPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
                                     .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )
@@ -288,6 +308,12 @@ internal class SubscriptionServiceAsyncTest {
                             .externalPriceId("external_price_id")
                             .fixedPriceQuantity(2.0)
                             .maximumAmount("1.23")
+                            .metricParameterOverrides(
+                                SubscriptionCreateParams.ReplacePrice.MetricParameterOverrides
+                                    .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                    .build()
+                            )
                             .minimumAmount("1.23")
                             .price(
                                 NewSubscriptionUnitPrice.builder()
@@ -338,6 +364,7 @@ internal class SubscriptionServiceAsyncTest {
                                             )
                                             .build()
                                     )
+                                    .licenseTypeId("license_type_id")
                                     .metadata(
                                         NewSubscriptionUnitPrice.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -372,6 +399,7 @@ internal class SubscriptionServiceAsyncTest {
                 SubscriptionUpdateParams.builder()
                     .subscriptionId("subscription_id")
                     .autoCollection(true)
+                    .autoIssuance(true)
                     .defaultInvoiceMemo("default_invoice_memo")
                     .invoicingThreshold("10.00")
                     .metadata(
@@ -519,7 +547,7 @@ internal class SubscriptionServiceAsyncTest {
                     .subscriptionId("subscription_id")
                     .addAdd(
                         SubscriptionPriceIntervalsParams.Add.builder()
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .startDate(BillingCycleRelativeDate.START_OF_TERM)
                             .allocationPrice(
                                 NewAllocationPrice.builder()
                                     .amount("10.00")
@@ -540,12 +568,18 @@ internal class SubscriptionServiceAsyncTest {
                                             .build()
                                     )
                                     .itemId("item_id")
+                                    .licenseTypeId("license_type_id")
+                                    .metadata(
+                                        NewAllocationPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
                                     .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )
                             .canDeferBilling(true)
                             .addAmountDiscount(0.0)
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .endDate(BillingCycleRelativeDate.START_OF_TERM)
                             .externalPriceId("external_price_id")
                             .filter("my_property > 100 AND my_other_property = 'bar'")
                             .addFixedFeeQuantityTransition(
@@ -556,6 +590,12 @@ internal class SubscriptionServiceAsyncTest {
                                     .build()
                             )
                             .maximumAmount(0.0)
+                            .metricParameterOverrides(
+                                SubscriptionPriceIntervalsParams.Add.MetricParameterOverrides
+                                    .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                    .build()
+                            )
                             .minimumAmount(0.0)
                             .price(
                                 NewFloatingUnitPrice.builder()
@@ -606,6 +646,7 @@ internal class SubscriptionServiceAsyncTest {
                                             )
                                             .build()
                                     )
+                                    .licenseTypeId("license_type_id")
                                     .metadata(
                                         NewFloatingUnitPrice.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -619,7 +660,7 @@ internal class SubscriptionServiceAsyncTest {
                     )
                     .addAddAdjustment(
                         SubscriptionPriceIntervalsParams.AddAdjustment.builder()
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .startDate(BillingCycleRelativeDate.START_OF_TERM)
                             .adjustment(
                                 NewPercentageDiscount.builder()
                                     .adjustmentType(
@@ -646,7 +687,7 @@ internal class SubscriptionServiceAsyncTest {
                                     .build()
                             )
                             .adjustmentId("h74gfhdjvn7ujokd")
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .endDate(BillingCycleRelativeDate.START_OF_TERM)
                             .build()
                     )
                     .allowInvoiceCreditOrVoid(true)
@@ -656,7 +697,7 @@ internal class SubscriptionServiceAsyncTest {
                             .priceIntervalId("sdfs6wdjvn7ujokd")
                             .billingCycleDay(0L)
                             .canDeferBilling(true)
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .endDate(BillingCycleRelativeDate.START_OF_TERM)
                             .filter("my_property > 100 AND my_other_property = 'bar'")
                             .addFixedFeeQuantityTransition(
                                 SubscriptionPriceIntervalsParams.Edit.FixedFeeQuantityTransition
@@ -665,15 +706,21 @@ internal class SubscriptionServiceAsyncTest {
                                     .quantity(5L)
                                     .build()
                             )
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .metricParameterOverrides(
+                                SubscriptionPriceIntervalsParams.Edit.MetricParameterOverrides
+                                    .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                    .build()
+                            )
+                            .startDate(BillingCycleRelativeDate.START_OF_TERM)
                             .addUsageCustomerId("string")
                             .build()
                     )
                     .addEditAdjustment(
                         SubscriptionPriceIntervalsParams.EditAdjustment.builder()
                             .adjustmentIntervalId("sdfs6wdjvn7ujokd")
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .endDate(BillingCycleRelativeDate.START_OF_TERM)
+                            .startDate(BillingCycleRelativeDate.START_OF_TERM)
                             .build()
                     )
                     .build()
@@ -774,6 +821,12 @@ internal class SubscriptionServiceAsyncTest {
                                             .build()
                                     )
                                     .itemId("item_id")
+                                    .licenseTypeId("license_type_id")
+                                    .metadata(
+                                        NewAllocationPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
                                     .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )
@@ -788,6 +841,13 @@ internal class SubscriptionServiceAsyncTest {
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .externalPriceId("external_price_id")
                             .maximumAmount("1.23")
+                            .metricParameterOverrides(
+                                SubscriptionSchedulePlanChangeParams.AddPrice
+                                    .MetricParameterOverrides
+                                    .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                    .build()
+                            )
                             .minimumAmount("1.23")
                             .planPhaseOrder(0L)
                             .price(
@@ -839,6 +899,7 @@ internal class SubscriptionServiceAsyncTest {
                                             )
                                             .build()
                                     )
+                                    .licenseTypeId("license_type_id")
                                     .metadata(
                                         NewSubscriptionUnitPrice.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -853,6 +914,7 @@ internal class SubscriptionServiceAsyncTest {
                     )
                     .alignBillingWithPlanChangeDate(true)
                     .autoCollection(true)
+                    .autoIssuance(true)
                     .billingCycleAlignment(
                         SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
                     )
@@ -936,6 +998,12 @@ internal class SubscriptionServiceAsyncTest {
                                             .build()
                                     )
                                     .itemId("item_id")
+                                    .licenseTypeId("license_type_id")
+                                    .metadata(
+                                        NewAllocationPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
                                     .perUnitCostBasis("per_unit_cost_basis")
                                     .build()
                             )
@@ -950,6 +1018,13 @@ internal class SubscriptionServiceAsyncTest {
                             .externalPriceId("external_price_id")
                             .fixedPriceQuantity(2.0)
                             .maximumAmount("1.23")
+                            .metricParameterOverrides(
+                                SubscriptionSchedulePlanChangeParams.ReplacePrice
+                                    .MetricParameterOverrides
+                                    .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                    .build()
+                            )
                             .minimumAmount("1.23")
                             .price(
                                 NewSubscriptionUnitPrice.builder()
@@ -1000,6 +1075,7 @@ internal class SubscriptionServiceAsyncTest {
                                             )
                                             .build()
                                     )
+                                    .licenseTypeId("license_type_id")
                                     .metadata(
                                         NewSubscriptionUnitPrice.Metadata.builder()
                                             .putAdditionalProperty("foo", JsonValue.from("string"))

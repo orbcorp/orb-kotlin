@@ -23,6 +23,10 @@ import java.util.Objects
  * Subscriptions can be filtered for a specific customer by using either the customer_id or
  * external_customer_id query parameters. To filter subscriptions for multiple customers, use the
  * customer_id[] or external_customer_id[] query parameters.
+ *
+ * Subscriptions can be filtered by status using the status query parameter (one of `active`,
+ * `ended`, or `upcoming`). To filter for multiple statuses in a single request, use the status[]
+ * query parameter, e.g. `status[]=active&status[]=ended`.
  */
 class SubscriptionListParams
 private constructor(
@@ -415,6 +419,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Status = apply {
             if (validated) {
                 return@apply

@@ -17,6 +17,11 @@ import com.withorb.api.models.EventBackfillListParams
 import com.withorb.api.models.EventBackfillRevertParams
 import com.withorb.api.models.EventBackfillRevertResponse
 
+/**
+ * The [Event](/core-concepts#event) resource represents a usage event that has been created for a
+ * customer. Events are the core of Orb's usage-based billing model, and are used to calculate the
+ * usage charges for a given billing period.
+ */
 interface BackfillService {
 
     /**
@@ -35,7 +40,8 @@ interface BackfillService {
      * Creating the backfill enables adding or replacing past events, even those that are older than
      * the ingestion grace period. Performing a backfill in Orb involves 3 steps:
      * 1. Create the backfill, specifying its parameters.
-     * 2. [Ingest](ingest) usage events, referencing the backfill (query parameter `backfill_id`).
+     * 2. [Ingest](/api-reference/event/ingest-events) usage events, referencing the backfill (query
+     *    parameter `backfill_id`).
      * 3. [Close](close-backfill) the backfill, propagating the update in past usage throughout Orb.
      *
      * Changes from a backfill are not reflected until the backfill is closed, so you won’t need to
@@ -74,8 +80,7 @@ interface BackfillService {
      *
      * The list of backfills is ordered starting from the most recently created backfill. The
      * response also includes [`pagination_metadata`](/api-reference/pagination), which lets the
-     * caller retrieve the next page of results if they exist. More information about pagination can
-     * be found in the [Pagination-metadata schema](pagination).
+     * caller retrieve the next page of results if they exist.
      */
     fun list(
         params: EventBackfillListParams = EventBackfillListParams.none(),

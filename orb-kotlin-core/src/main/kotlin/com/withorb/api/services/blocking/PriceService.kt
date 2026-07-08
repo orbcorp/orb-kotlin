@@ -6,6 +6,32 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
+import com.withorb.api.models.NewFloatingBulkPrice
+import com.withorb.api.models.NewFloatingBulkWithProrationPrice
+import com.withorb.api.models.NewFloatingCumulativeGroupedBulkPrice
+import com.withorb.api.models.NewFloatingGroupedAllocationPrice
+import com.withorb.api.models.NewFloatingGroupedTieredPackagePrice
+import com.withorb.api.models.NewFloatingGroupedTieredPrice
+import com.withorb.api.models.NewFloatingGroupedWithMeteredMinimumPrice
+import com.withorb.api.models.NewFloatingGroupedWithProratedMinimumPrice
+import com.withorb.api.models.NewFloatingMatrixPrice
+import com.withorb.api.models.NewFloatingMatrixWithAllocationPrice
+import com.withorb.api.models.NewFloatingMatrixWithDisplayNamePrice
+import com.withorb.api.models.NewFloatingMaxGroupTieredPackagePrice
+import com.withorb.api.models.NewFloatingMinimumCompositePrice
+import com.withorb.api.models.NewFloatingPackagePrice
+import com.withorb.api.models.NewFloatingPackageWithAllocationPrice
+import com.withorb.api.models.NewFloatingScalableMatrixWithTieredPricingPrice
+import com.withorb.api.models.NewFloatingScalableMatrixWithUnitPricingPrice
+import com.withorb.api.models.NewFloatingThresholdTotalAmountPrice
+import com.withorb.api.models.NewFloatingTieredPackagePrice
+import com.withorb.api.models.NewFloatingTieredPackageWithMinimumPrice
+import com.withorb.api.models.NewFloatingTieredPrice
+import com.withorb.api.models.NewFloatingTieredWithMinimumPrice
+import com.withorb.api.models.NewFloatingTieredWithProrationPrice
+import com.withorb.api.models.NewFloatingUnitPrice
+import com.withorb.api.models.NewFloatingUnitWithPercentPrice
+import com.withorb.api.models.NewFloatingUnitWithProrationPrice
 import com.withorb.api.models.Price
 import com.withorb.api.models.PriceCreateParams
 import com.withorb.api.models.PriceEvaluateMultipleParams
@@ -20,6 +46,18 @@ import com.withorb.api.models.PriceListParams
 import com.withorb.api.models.PriceUpdateParams
 import com.withorb.api.services.blocking.prices.ExternalPriceIdService
 
+/**
+ * The Price resource represents a price that can be billed on a subscription, resulting in a charge
+ * on an invoice in the form of an invoice line item. Prices take a quantity and determine an amount
+ * to bill.
+ *
+ * Orb supports a few different pricing models out of the box. Each of these models is serialized
+ * differently in a given Price object. The model_type field determines the key for the
+ * configuration object that is present.
+ *
+ * For more on the types of prices, see
+ * [the core concepts documentation](/core-concepts#plan-and-price)
+ */
 interface PriceService {
 
     /**
@@ -34,6 +72,18 @@ interface PriceService {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PriceService
 
+    /**
+     * The Price resource represents a price that can be billed on a subscription, resulting in a
+     * charge on an invoice in the form of an invoice line item. Prices take a quantity and
+     * determine an amount to bill.
+     *
+     * Orb supports a few different pricing models out of the box. Each of these models is
+     * serialized differently in a given Price object. The model_type field determines the key for
+     * the configuration object that is present.
+     *
+     * For more on the types of prices, see
+     * [the core concepts documentation](/core-concepts#plan-and-price)
+     */
     fun externalPriceId(): ExternalPriceIdService
 
     /**
@@ -52,6 +102,271 @@ interface PriceService {
         params: PriceCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
+
+    /** @see create */
+    fun create(
+        body: PriceCreateParams.Body,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.builder().body(body).build(), requestOptions)
+
+    /** @see create */
+    fun create(
+        unit: NewFloatingUnitPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofUnit(unit), requestOptions)
+
+    /** @see create */
+    fun create(
+        tiered: NewFloatingTieredPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofTiered(tiered), requestOptions)
+
+    /** @see create */
+    fun create(
+        bulk: NewFloatingBulkPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofBulk(bulk), requestOptions)
+
+    /** @see create */
+    fun create(
+        bulkWithFilters: PriceCreateParams.Body.BulkWithFilters,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofBulkWithFilters(bulkWithFilters), requestOptions)
+
+    /** @see create */
+    fun create(
+        package_: NewFloatingPackagePrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofPackage(package_), requestOptions)
+
+    /** @see create */
+    fun create(
+        matrix: NewFloatingMatrixPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofMatrix(matrix), requestOptions)
+
+    /** @see create */
+    fun create(
+        thresholdTotalAmount: NewFloatingThresholdTotalAmountPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(PriceCreateParams.Body.ofThresholdTotalAmount(thresholdTotalAmount), requestOptions)
+
+    /** @see create */
+    fun create(
+        tieredPackage: NewFloatingTieredPackagePrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofTieredPackage(tieredPackage), requestOptions)
+
+    /** @see create */
+    fun create(
+        tieredWithMinimum: NewFloatingTieredWithMinimumPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofTieredWithMinimum(tieredWithMinimum), requestOptions)
+
+    /** @see create */
+    fun create(
+        groupedTiered: NewFloatingGroupedTieredPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofGroupedTiered(groupedTiered), requestOptions)
+
+    /** @see create */
+    fun create(
+        tieredPackageWithMinimum: NewFloatingTieredPackageWithMinimumPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(
+            PriceCreateParams.Body.ofTieredPackageWithMinimum(tieredPackageWithMinimum),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        packageWithAllocation: NewFloatingPackageWithAllocationPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(
+            PriceCreateParams.Body.ofPackageWithAllocation(packageWithAllocation),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        unitWithPercent: NewFloatingUnitWithPercentPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofUnitWithPercent(unitWithPercent), requestOptions)
+
+    /** @see create */
+    fun create(
+        matrixWithAllocation: NewFloatingMatrixWithAllocationPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(PriceCreateParams.Body.ofMatrixWithAllocation(matrixWithAllocation), requestOptions)
+
+    /** @see create */
+    fun create(
+        matrixWithThresholdDiscounts: PriceCreateParams.Body.MatrixWithThresholdDiscounts,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(
+            PriceCreateParams.Body.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        tieredWithProration: NewFloatingTieredWithProrationPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(PriceCreateParams.Body.ofTieredWithProration(tieredWithProration), requestOptions)
+
+    /** @see create */
+    fun create(
+        unitWithProration: NewFloatingUnitWithProrationPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofUnitWithProration(unitWithProration), requestOptions)
+
+    /** @see create */
+    fun create(
+        groupedAllocation: NewFloatingGroupedAllocationPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofGroupedAllocation(groupedAllocation), requestOptions)
+
+    /** @see create */
+    fun create(
+        bulkWithProration: NewFloatingBulkWithProrationPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofBulkWithProration(bulkWithProration), requestOptions)
+
+    /** @see create */
+    fun create(
+        groupedWithProratedMinimum: NewFloatingGroupedWithProratedMinimumPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(
+            PriceCreateParams.Body.ofGroupedWithProratedMinimum(groupedWithProratedMinimum),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        groupedWithMeteredMinimum: NewFloatingGroupedWithMeteredMinimumPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(
+            PriceCreateParams.Body.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        groupedWithMinMaxThresholds: PriceCreateParams.Body.GroupedWithMinMaxThresholds,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(
+            PriceCreateParams.Body.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        matrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(
+            PriceCreateParams.Body.ofMatrixWithDisplayName(matrixWithDisplayName),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        groupedTieredPackage: NewFloatingGroupedTieredPackagePrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(PriceCreateParams.Body.ofGroupedTieredPackage(groupedTieredPackage), requestOptions)
+
+    /** @see create */
+    fun create(
+        maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(
+            PriceCreateParams.Body.ofMaxGroupTieredPackage(maxGroupTieredPackage),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        scalableMatrixWithUnitPricing: NewFloatingScalableMatrixWithUnitPricingPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(
+            PriceCreateParams.Body.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        scalableMatrixWithTieredPricing: NewFloatingScalableMatrixWithTieredPricingPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(
+            PriceCreateParams.Body.ofScalableMatrixWithTieredPricing(
+                scalableMatrixWithTieredPricing
+            ),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        cumulativeGroupedBulk: NewFloatingCumulativeGroupedBulkPrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(
+            PriceCreateParams.Body.ofCumulativeGroupedBulk(cumulativeGroupedBulk),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        cumulativeGroupedAllocation: PriceCreateParams.Body.CumulativeGroupedAllocation,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(
+            PriceCreateParams.Body.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        dailyCreditAllowance: PriceCreateParams.Body.DailyCreditAllowance,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(PriceCreateParams.Body.ofDailyCreditAllowance(dailyCreditAllowance), requestOptions)
+
+    /** @see create */
+    fun create(
+        meteredAllowance: PriceCreateParams.Body.MeteredAllowance,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofMeteredAllowance(meteredAllowance), requestOptions)
+
+    /** @see create */
+    fun create(
+        minimumComposite: NewFloatingMinimumCompositePrice,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofMinimumComposite(minimumComposite), requestOptions)
+
+    /** @see create */
+    fun create(
+        percent: PriceCreateParams.Body.Percent,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofPercent(percent), requestOptions)
+
+    /** @see create */
+    fun create(
+        eventOutput: PriceCreateParams.Body.EventOutput,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price = create(PriceCreateParams.Body.ofEventOutput(eventOutput), requestOptions)
 
     /**
      * This endpoint allows you to update the `metadata` property on a price. If you pass null for
@@ -200,6 +515,18 @@ interface PriceService {
          */
         fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PriceService.WithRawResponse
 
+        /**
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
+         *
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
+         *
+         * For more on the types of prices, see
+         * [the core concepts documentation](/core-concepts#plan-and-price)
+         */
         fun externalPriceId(): ExternalPriceIdService.WithRawResponse
 
         /**
@@ -211,6 +538,337 @@ interface PriceService {
             params: PriceCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Price>
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            body: PriceCreateParams.Body,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.builder().body(body).build(), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            unit: NewFloatingUnitPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> = create(PriceCreateParams.Body.ofUnit(unit), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            tiered: NewFloatingTieredPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> = create(PriceCreateParams.Body.ofTiered(tiered), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            bulk: NewFloatingBulkPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> = create(PriceCreateParams.Body.ofBulk(bulk), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            bulkWithFilters: PriceCreateParams.Body.BulkWithFilters,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofBulkWithFilters(bulkWithFilters), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            package_: NewFloatingPackagePrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofPackage(package_), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            matrix: NewFloatingMatrixPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> = create(PriceCreateParams.Body.ofMatrix(matrix), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            thresholdTotalAmount: NewFloatingThresholdTotalAmountPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofThresholdTotalAmount(thresholdTotalAmount),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            tieredPackage: NewFloatingTieredPackagePrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofTieredPackage(tieredPackage), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            tieredWithMinimum: NewFloatingTieredWithMinimumPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofTieredWithMinimum(tieredWithMinimum), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            groupedTiered: NewFloatingGroupedTieredPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofGroupedTiered(groupedTiered), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            tieredPackageWithMinimum: NewFloatingTieredPackageWithMinimumPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofTieredPackageWithMinimum(tieredPackageWithMinimum),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            packageWithAllocation: NewFloatingPackageWithAllocationPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofPackageWithAllocation(packageWithAllocation),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            unitWithPercent: NewFloatingUnitWithPercentPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofUnitWithPercent(unitWithPercent), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            matrixWithAllocation: NewFloatingMatrixWithAllocationPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofMatrixWithAllocation(matrixWithAllocation),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            matrixWithThresholdDiscounts: PriceCreateParams.Body.MatrixWithThresholdDiscounts,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            tieredWithProration: NewFloatingTieredWithProrationPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofTieredWithProration(tieredWithProration),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            unitWithProration: NewFloatingUnitWithProrationPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofUnitWithProration(unitWithProration), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            groupedAllocation: NewFloatingGroupedAllocationPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofGroupedAllocation(groupedAllocation), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            bulkWithProration: NewFloatingBulkWithProrationPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofBulkWithProration(bulkWithProration), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            groupedWithProratedMinimum: NewFloatingGroupedWithProratedMinimumPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofGroupedWithProratedMinimum(groupedWithProratedMinimum),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            groupedWithMeteredMinimum: NewFloatingGroupedWithMeteredMinimumPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            groupedWithMinMaxThresholds: PriceCreateParams.Body.GroupedWithMinMaxThresholds,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofGroupedWithMinMaxThresholds(groupedWithMinMaxThresholds),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            matrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofMatrixWithDisplayName(matrixWithDisplayName),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            groupedTieredPackage: NewFloatingGroupedTieredPackagePrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofGroupedTieredPackage(groupedTieredPackage),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            maxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofMaxGroupTieredPackage(maxGroupTieredPackage),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            scalableMatrixWithUnitPricing: NewFloatingScalableMatrixWithUnitPricingPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofScalableMatrixWithUnitPricing(
+                    scalableMatrixWithUnitPricing
+                ),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            scalableMatrixWithTieredPricing: NewFloatingScalableMatrixWithTieredPricingPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofScalableMatrixWithTieredPricing(
+                    scalableMatrixWithTieredPricing
+                ),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            cumulativeGroupedBulk: NewFloatingCumulativeGroupedBulkPrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofCumulativeGroupedBulk(cumulativeGroupedBulk),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            cumulativeGroupedAllocation: PriceCreateParams.Body.CumulativeGroupedAllocation,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofCumulativeGroupedAllocation(cumulativeGroupedAllocation),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            dailyCreditAllowance: PriceCreateParams.Body.DailyCreditAllowance,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(
+                PriceCreateParams.Body.ofDailyCreditAllowance(dailyCreditAllowance),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            meteredAllowance: PriceCreateParams.Body.MeteredAllowance,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofMeteredAllowance(meteredAllowance), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            minimumComposite: NewFloatingMinimumCompositePrice,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofMinimumComposite(minimumComposite), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            percent: PriceCreateParams.Body.Percent,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofPercent(percent), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            eventOutput: PriceCreateParams.Body.EventOutput,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofEventOutput(eventOutput), requestOptions)
 
         /**
          * Returns a raw HTTP response for `put /prices/{price_id}`, but is otherwise the same as

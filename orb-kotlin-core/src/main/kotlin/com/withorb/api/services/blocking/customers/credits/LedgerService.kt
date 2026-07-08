@@ -15,6 +15,10 @@ import com.withorb.api.models.CustomerCreditLedgerListByExternalIdParams
 import com.withorb.api.models.CustomerCreditLedgerListPage
 import com.withorb.api.models.CustomerCreditLedgerListParams
 
+/**
+ * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits within
+ * Orb.
+ */
 interface LedgerService {
 
     /**
@@ -151,18 +155,31 @@ interface LedgerService {
      * }
      * ```
      *
-     * Note that by default, Orb will always first increment any _negative_ balance in existing
-     * blocks before adding the remaining amount to the desired credit block.
+     * Note that an `increment` entry always creates a new credit block (defined by the optional
+     * `effective_date` and `expiry_date`); it never modifies an existing block.
      *
      * ### Invoicing for credits
      * By default, Orb manipulates the credit ledger but does not charge for credits. However, if
      * you pass `invoice_settings` in the body of this request, Orb will also generate a one-off
      * invoice for the customer for the credits pre-purchase. Note that you _must_ provide the
      * `per_unit_cost_basis`, since the total charges on the invoice are calculated by multiplying
-     * the cost basis with the number of credit units added.
+     * the cost basis with the number of credit units added. If you invoice or handle payment of
+     * credits outside of Orb (i.e. marketplace customers), set `mark_as_paid` in the
+     * `invoice_settings` to `true` to prevent duplicate invoicing effects.
+     * * if `per_unit_cost_basis` is greater than zero, an invoice will be generated and
+     *   `invoice_settings` must be included
+     * * if `invoice_settings` is passed, one of either `custom_due_date` or `net_terms` is required
+     *   to determine the due date
      *
      * ## Deducting Credits
-     * Orb allows you to deduct credits from a customer by creating an entry of type `decrement`.
+     * Orb allows you to deduct credits from a customer by creating an entry of type `decrement`. A
+     * `decrement` entry records credits as usage and immediately recognizes revenue at the block's
+     * `per_unit_cost_basis`.
+     *
+     * For most credit removals, use `void` (no revenue impact) or `expiration_change` (revenue
+     * recognized on expiration) instead. Only use `decrement` when credits were genuinely consumed
+     * outside of normal event ingestion.
+     *
      * Orb matches the algorithm for automatic deductions for determining which credit blocks to
      * decrement from. In the case that the deduction leads to multiple ledger entries, the response
      * from this endpoint will be the final deduction. Orb also optionally allows specifying a
@@ -263,18 +280,31 @@ interface LedgerService {
      * }
      * ```
      *
-     * Note that by default, Orb will always first increment any _negative_ balance in existing
-     * blocks before adding the remaining amount to the desired credit block.
+     * Note that an `increment` entry always creates a new credit block (defined by the optional
+     * `effective_date` and `expiry_date`); it never modifies an existing block.
      *
      * ### Invoicing for credits
      * By default, Orb manipulates the credit ledger but does not charge for credits. However, if
      * you pass `invoice_settings` in the body of this request, Orb will also generate a one-off
      * invoice for the customer for the credits pre-purchase. Note that you _must_ provide the
      * `per_unit_cost_basis`, since the total charges on the invoice are calculated by multiplying
-     * the cost basis with the number of credit units added.
+     * the cost basis with the number of credit units added. If you invoice or handle payment of
+     * credits outside of Orb (i.e. marketplace customers), set `mark_as_paid` in the
+     * `invoice_settings` to `true` to prevent duplicate invoicing effects.
+     * * if `per_unit_cost_basis` is greater than zero, an invoice will be generated and
+     *   `invoice_settings` must be included
+     * * if `invoice_settings` is passed, one of either `custom_due_date` or `net_terms` is required
+     *   to determine the due date
      *
      * ## Deducting Credits
-     * Orb allows you to deduct credits from a customer by creating an entry of type `decrement`.
+     * Orb allows you to deduct credits from a customer by creating an entry of type `decrement`. A
+     * `decrement` entry records credits as usage and immediately recognizes revenue at the block's
+     * `per_unit_cost_basis`.
+     *
+     * For most credit removals, use `void` (no revenue impact) or `expiration_change` (revenue
+     * recognized on expiration) instead. Only use `decrement` when credits were genuinely consumed
+     * outside of normal event ingestion.
+     *
      * Orb matches the algorithm for automatic deductions for determining which credit blocks to
      * decrement from. In the case that the deduction leads to multiple ledger entries, the response
      * from this endpoint will be the final deduction. Orb also optionally allows specifying a

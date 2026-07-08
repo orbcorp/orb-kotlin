@@ -70,6 +70,7 @@ internal class PriceIntervalTest {
                                         .addValue("string")
                                         .build()
                                 )
+                                .licenseTypeId("license_type_id")
                                 .build()
                         )
                         .currency("currency")
@@ -91,6 +92,7 @@ internal class PriceIntervalTest {
                         )
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(0.0)
+                        .invoiceGroupingKey("invoice_grouping_key")
                         .invoicingCycleConfiguration(
                             BillingCycleConfiguration.builder()
                                 .duration(0L)
@@ -144,10 +146,22 @@ internal class PriceIntervalTest {
                                 .dimensionalPriceGroupId("dimensional_price_group_id")
                                 .build()
                         )
+                        .licenseType(
+                            Price.UnitPrice.LicenseType.builder()
+                                .id("id")
+                                .groupingKey("grouping_key")
+                                .name("name")
+                                .build()
+                        )
                         .build()
                 )
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addUsageCustomerId("string")
+                .metricParameterOverrides(
+                    PriceInterval.MetricParameterOverrides.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .build()
+                )
                 .build()
 
         assertThat(priceInterval.id()).isEqualTo("id")
@@ -211,6 +225,7 @@ internal class PriceIntervalTest {
                                         .addValue("string")
                                         .build()
                                 )
+                                .licenseTypeId("license_type_id")
                                 .build()
                         )
                         .currency("currency")
@@ -232,6 +247,7 @@ internal class PriceIntervalTest {
                         )
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(0.0)
+                        .invoiceGroupingKey("invoice_grouping_key")
                         .invoicingCycleConfiguration(
                             BillingCycleConfiguration.builder()
                                 .duration(0L)
@@ -285,12 +301,25 @@ internal class PriceIntervalTest {
                                 .dimensionalPriceGroupId("dimensional_price_group_id")
                                 .build()
                         )
+                        .licenseType(
+                            Price.UnitPrice.LicenseType.builder()
+                                .id("id")
+                                .groupingKey("grouping_key")
+                                .name("name")
+                                .build()
+                        )
                         .build()
                 )
             )
         assertThat(priceInterval.startDate())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(priceInterval.usageCustomerIds()).containsExactly("string")
+        assertThat(priceInterval.metricParameterOverrides())
+            .isEqualTo(
+                PriceInterval.MetricParameterOverrides.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .build()
+            )
     }
 
     @Test
@@ -353,6 +382,7 @@ internal class PriceIntervalTest {
                                         .addValue("string")
                                         .build()
                                 )
+                                .licenseTypeId("license_type_id")
                                 .build()
                         )
                         .currency("currency")
@@ -374,6 +404,7 @@ internal class PriceIntervalTest {
                         )
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(0.0)
+                        .invoiceGroupingKey("invoice_grouping_key")
                         .invoicingCycleConfiguration(
                             BillingCycleConfiguration.builder()
                                 .duration(0L)
@@ -427,10 +458,22 @@ internal class PriceIntervalTest {
                                 .dimensionalPriceGroupId("dimensional_price_group_id")
                                 .build()
                         )
+                        .licenseType(
+                            Price.UnitPrice.LicenseType.builder()
+                                .id("id")
+                                .groupingKey("grouping_key")
+                                .name("name")
+                                .build()
+                        )
                         .build()
                 )
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addUsageCustomerId("string")
+                .metricParameterOverrides(
+                    PriceInterval.MetricParameterOverrides.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .build()
+                )
                 .build()
 
         val roundtrippedPriceInterval =

@@ -26,6 +26,10 @@ import com.withorb.api.services.async.InvoiceServiceAsync
 import com.withorb.api.services.async.InvoiceServiceAsyncImpl
 import com.withorb.api.services.async.ItemServiceAsync
 import com.withorb.api.services.async.ItemServiceAsyncImpl
+import com.withorb.api.services.async.LicenseServiceAsync
+import com.withorb.api.services.async.LicenseServiceAsyncImpl
+import com.withorb.api.services.async.LicenseTypeServiceAsync
+import com.withorb.api.services.async.LicenseTypeServiceAsyncImpl
 import com.withorb.api.services.async.MetricServiceAsync
 import com.withorb.api.services.async.MetricServiceAsyncImpl
 import com.withorb.api.services.async.PlanServiceAsync
@@ -118,6 +122,14 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
         CreditBlockServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val licenseTypes: LicenseTypeServiceAsync by lazy {
+        LicenseTypeServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
+    private val licenses: LicenseServiceAsync by lazy {
+        LicenseServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     override fun sync(): OrbClient = sync
 
     override fun withRawResponse(): OrbClientAsync.WithRawResponse = withRawResponse
@@ -127,30 +139,115 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
 
     override fun topLevel(): TopLevelServiceAsync = topLevel
 
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
     override fun beta(): BetaServiceAsync = beta
 
+    /**
+     * A coupon represents a reusable discount configuration that can be applied either as a fixed
+     * or percentage amount to an invoice or subscription. Coupons are activated using a redemption
+     * code, which applies the discount to a subscription or invoice. The duration of a coupon
+     * determines how long it remains available for use by end users.
+     */
     override fun coupons(): CouponServiceAsync = coupons
 
+    /**
+     * The [Credit Note](/invoicing/credit-notes) resource represents a credit that has been applied
+     * to a particular invoice.
+     */
     override fun creditNotes(): CreditNoteServiceAsync = creditNotes
 
+    /**
+     * A customer is a buyer of your products, and the other party to the billing relationship.
+     *
+     * In Orb, customers are assigned system generated identifiers automatically, but it's often
+     * desirable to have these match existing identifiers in your system. To avoid having to
+     * denormalize Orb ID information, you can pass in an `external_customer_id` with your own
+     * identifier. See [Customer ID Aliases](/events-and-metrics/customer-aliases) for further
+     * information about how these aliases work in Orb.
+     *
+     * In addition to having an identifier in your system, a customer may exist in a payment
+     * provider solution like Stripe. Use the `payment_provider_id` and the `payment_provider` enum
+     * field to express this mapping.
+     *
+     * A customer also has a timezone (from the standard
+     * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your account's
+     * timezone. See [Timezone localization](/essentials/timezones) for information on what this
+     * timezone parameter influences within Orb.
+     */
     override fun customers(): CustomerServiceAsync = customers
 
+    /**
+     * The [Event](/core-concepts#event) resource represents a usage event that has been created for
+     * a customer. Events are the core of Orb's usage-based billing model, and are used to calculate
+     * the usage charges for a given billing period.
+     */
     override fun events(): EventServiceAsync = events
 
+    /**
+     * An [`Invoice`](/core-concepts#invoice) is a fundamental billing entity, representing the
+     * request for payment for a single subscription. This includes a set of line items, which
+     * correspond to prices in the subscription's plan and can represent fixed recurring fees or
+     * usage-based fees. They are generated at the end of a billing period, or as the result of an
+     * action, such as a cancellation.
+     */
     override fun invoiceLineItems(): InvoiceLineItemServiceAsync = invoiceLineItems
 
+    /**
+     * An [`Invoice`](/core-concepts#invoice) is a fundamental billing entity, representing the
+     * request for payment for a single subscription. This includes a set of line items, which
+     * correspond to prices in the subscription's plan and can represent fixed recurring fees or
+     * usage-based fees. They are generated at the end of a billing period, or as the result of an
+     * action, such as a cancellation.
+     */
     override fun invoices(): InvoiceServiceAsync = invoices
 
+    /**
+     * The Item resource represents a sellable product or good. Items are associated with all line
+     * items, billable metrics, and prices and are used for defining external sync behavior for
+     * invoices and tax calculation purposes.
+     */
     override fun items(): ItemServiceAsync = items
 
+    /**
+     * The Metric resource represents a calculation of a quantity based on events. Metrics are
+     * defined by the query that transforms raw usage events into meaningful values for your
+     * customers.
+     */
     override fun metrics(): MetricServiceAsync = metrics
 
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
     override fun plans(): PlanServiceAsync = plans
 
+    /**
+     * The Price resource represents a price that can be billed on a subscription, resulting in a
+     * charge on an invoice in the form of an invoice line item. Prices take a quantity and
+     * determine an amount to bill.
+     *
+     * Orb supports a few different pricing models out of the box. Each of these models is
+     * serialized differently in a given Price object. The model_type field determines the key for
+     * the configuration object that is present.
+     *
+     * For more on the types of prices, see
+     * [the core concepts documentation](/core-concepts#plan-and-price)
+     */
     override fun prices(): PriceServiceAsync = prices
 
     override fun subscriptions(): SubscriptionServiceAsync = subscriptions
 
+    /**
+     * [Alerts within Orb](/product-catalog/configuring-alerts) monitor spending, usage, or credit
+     * balance and trigger webhooks when a threshold is exceeded.
+     *
+     * Alerts created through the API can be scoped to either customers or subscriptions.
+     */
     override fun alerts(): AlertServiceAsync = alerts
 
     override fun dimensionalPriceGroups(): DimensionalPriceGroupServiceAsync =
@@ -158,7 +255,19 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
 
     override fun subscriptionChanges(): SubscriptionChangeServiceAsync = subscriptionChanges
 
+    /**
+     * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits
+     * within Orb.
+     */
     override fun creditBlocks(): CreditBlockServiceAsync = creditBlocks
+
+    /**
+     * The LicenseType resource represents a type of license that can be assigned to users. License
+     * types are used during billing by grouping metrics on the configured grouping key.
+     */
+    override fun licenseTypes(): LicenseTypeServiceAsync = licenseTypes
+
+    override fun licenses(): LicenseServiceAsync = licenses
 
     override fun close() = clientOptions.close()
 
@@ -234,6 +343,14 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
             CreditBlockServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val licenseTypes: LicenseTypeServiceAsync.WithRawResponse by lazy {
+            LicenseTypeServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val licenses: LicenseServiceAsync.WithRawResponse by lazy {
+            LicenseServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): OrbClientAsync.WithRawResponse =
@@ -243,31 +360,116 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
 
         override fun topLevel(): TopLevelServiceAsync.WithRawResponse = topLevel
 
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
         override fun beta(): BetaServiceAsync.WithRawResponse = beta
 
+        /**
+         * A coupon represents a reusable discount configuration that can be applied either as a
+         * fixed or percentage amount to an invoice or subscription. Coupons are activated using a
+         * redemption code, which applies the discount to a subscription or invoice. The duration of
+         * a coupon determines how long it remains available for use by end users.
+         */
         override fun coupons(): CouponServiceAsync.WithRawResponse = coupons
 
+        /**
+         * The [Credit Note](/invoicing/credit-notes) resource represents a credit that has been
+         * applied to a particular invoice.
+         */
         override fun creditNotes(): CreditNoteServiceAsync.WithRawResponse = creditNotes
 
+        /**
+         * A customer is a buyer of your products, and the other party to the billing relationship.
+         *
+         * In Orb, customers are assigned system generated identifiers automatically, but it's often
+         * desirable to have these match existing identifiers in your system. To avoid having to
+         * denormalize Orb ID information, you can pass in an `external_customer_id` with your own
+         * identifier. See [Customer ID Aliases](/events-and-metrics/customer-aliases) for further
+         * information about how these aliases work in Orb.
+         *
+         * In addition to having an identifier in your system, a customer may exist in a payment
+         * provider solution like Stripe. Use the `payment_provider_id` and the `payment_provider`
+         * enum field to express this mapping.
+         *
+         * A customer also has a timezone (from the standard
+         * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your
+         * account's timezone. See [Timezone localization](/essentials/timezones) for information on
+         * what this timezone parameter influences within Orb.
+         */
         override fun customers(): CustomerServiceAsync.WithRawResponse = customers
 
+        /**
+         * The [Event](/core-concepts#event) resource represents a usage event that has been created
+         * for a customer. Events are the core of Orb's usage-based billing model, and are used to
+         * calculate the usage charges for a given billing period.
+         */
         override fun events(): EventServiceAsync.WithRawResponse = events
 
+        /**
+         * An [`Invoice`](/core-concepts#invoice) is a fundamental billing entity, representing the
+         * request for payment for a single subscription. This includes a set of line items, which
+         * correspond to prices in the subscription's plan and can represent fixed recurring fees or
+         * usage-based fees. They are generated at the end of a billing period, or as the result of
+         * an action, such as a cancellation.
+         */
         override fun invoiceLineItems(): InvoiceLineItemServiceAsync.WithRawResponse =
             invoiceLineItems
 
+        /**
+         * An [`Invoice`](/core-concepts#invoice) is a fundamental billing entity, representing the
+         * request for payment for a single subscription. This includes a set of line items, which
+         * correspond to prices in the subscription's plan and can represent fixed recurring fees or
+         * usage-based fees. They are generated at the end of a billing period, or as the result of
+         * an action, such as a cancellation.
+         */
         override fun invoices(): InvoiceServiceAsync.WithRawResponse = invoices
 
+        /**
+         * The Item resource represents a sellable product or good. Items are associated with all
+         * line items, billable metrics, and prices and are used for defining external sync behavior
+         * for invoices and tax calculation purposes.
+         */
         override fun items(): ItemServiceAsync.WithRawResponse = items
 
+        /**
+         * The Metric resource represents a calculation of a quantity based on events. Metrics are
+         * defined by the query that transforms raw usage events into meaningful values for your
+         * customers.
+         */
         override fun metrics(): MetricServiceAsync.WithRawResponse = metrics
 
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
         override fun plans(): PlanServiceAsync.WithRawResponse = plans
 
+        /**
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
+         *
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
+         *
+         * For more on the types of prices, see
+         * [the core concepts documentation](/core-concepts#plan-and-price)
+         */
         override fun prices(): PriceServiceAsync.WithRawResponse = prices
 
         override fun subscriptions(): SubscriptionServiceAsync.WithRawResponse = subscriptions
 
+        /**
+         * [Alerts within Orb](/product-catalog/configuring-alerts) monitor spending, usage, or
+         * credit balance and trigger webhooks when a threshold is exceeded.
+         *
+         * Alerts created through the API can be scoped to either customers or subscriptions.
+         */
         override fun alerts(): AlertServiceAsync.WithRawResponse = alerts
 
         override fun dimensionalPriceGroups(): DimensionalPriceGroupServiceAsync.WithRawResponse =
@@ -276,6 +478,18 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
         override fun subscriptionChanges(): SubscriptionChangeServiceAsync.WithRawResponse =
             subscriptionChanges
 
+        /**
+         * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits
+         * within Orb.
+         */
         override fun creditBlocks(): CreditBlockServiceAsync.WithRawResponse = creditBlocks
+
+        /**
+         * The LicenseType resource represents a type of license that can be assigned to users.
+         * License types are used during billing by grouping metrics on the configured grouping key.
+         */
+        override fun licenseTypes(): LicenseTypeServiceAsync.WithRawResponse = licenseTypes
+
+        override fun licenses(): LicenseServiceAsync.WithRawResponse = licenses
     }
 }

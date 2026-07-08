@@ -15,6 +15,11 @@ import com.withorb.api.models.PlanUpdateParams
 import com.withorb.api.services.async.plans.ExternalPlanIdServiceAsync
 import com.withorb.api.services.async.plans.MigrationServiceAsync
 
+/**
+ * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed to by
+ * a customer. Plans define the billing behavior of the subscription. You can see more about how to
+ * configure prices in the [Price resource](/reference/price).
+ */
 interface PlanServiceAsync {
 
     /**
@@ -29,8 +34,18 @@ interface PlanServiceAsync {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PlanServiceAsync
 
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
     fun externalPlanId(): ExternalPlanIdServiceAsync
 
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
     fun migrations(): MigrationServiceAsync
 
     /** This endpoint allows creation of plans including their prices. */
@@ -40,8 +55,8 @@ interface PlanServiceAsync {
     ): Plan
 
     /**
-     * This endpoint can be used to update the `external_plan_id`, and `metadata` of an existing
-     * plan.
+     * This endpoint can be used to update the `external_plan_id`, `description`, and `metadata` of
+     * an existing plan.
      *
      * Other fields on a plan are currently immutable.
      */
@@ -64,7 +79,7 @@ interface PlanServiceAsync {
     /**
      * This endpoint returns a list of all [plans](/core-concepts#plan-and-price) for an account in
      * a list format. The list of plans is ordered starting from the most recently created plan. The
-     * response also includes [`pagination_metadata`](/api-reference/pagination), which lets the
+     * response also includes [`pagination_metadata`](/api-reference/pagination) which lets the
      * caller retrieve the next page of results if they exist.
      */
     suspend fun list(
@@ -118,8 +133,18 @@ interface PlanServiceAsync {
          */
         fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PlanServiceAsync.WithRawResponse
 
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
         fun externalPlanId(): ExternalPlanIdServiceAsync.WithRawResponse
 
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
         fun migrations(): MigrationServiceAsync.WithRawResponse
 
         /**

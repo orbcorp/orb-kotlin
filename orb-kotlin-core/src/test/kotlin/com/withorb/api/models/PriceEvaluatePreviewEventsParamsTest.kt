@@ -34,6 +34,12 @@ internal class PriceEvaluatePreviewEventsParamsTest {
                     .externalPriceId("external_price_id")
                     .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
                     .addGroupingKey("case when my_event_type = 'foo' then true else false end")
+                    .metricParameterOverrides(
+                        PriceEvaluatePreviewEventsParams.PriceEvaluation.MetricParameterOverrides
+                            .builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
                     .price(
                         NewFloatingUnitPrice.builder()
                             .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
@@ -77,6 +83,7 @@ internal class PriceEvaluatePreviewEventsParamsTest {
                                     .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                     .build()
                             )
+                            .licenseTypeId("license_type_id")
                             .metadata(
                                 NewFloatingUnitPrice.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -116,6 +123,13 @@ internal class PriceEvaluatePreviewEventsParamsTest {
                         .externalPriceId("external_price_id")
                         .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
                         .addGroupingKey("case when my_event_type = 'foo' then true else false end")
+                        .metricParameterOverrides(
+                            PriceEvaluatePreviewEventsParams.PriceEvaluation
+                                .MetricParameterOverrides
+                                .builder()
+                                .putAdditionalProperty("foo", JsonValue.from("bar"))
+                                .build()
+                        )
                         .price(
                             NewFloatingUnitPrice.builder()
                                 .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
@@ -161,6 +175,7 @@ internal class PriceEvaluatePreviewEventsParamsTest {
                                         .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                         .build()
                                 )
+                                .licenseTypeId("license_type_id")
                                 .metadata(
                                     NewFloatingUnitPrice.Metadata.builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -200,6 +215,12 @@ internal class PriceEvaluatePreviewEventsParamsTest {
                     .externalPriceId("external_price_id")
                     .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
                     .addGroupingKey("case when my_event_type = 'foo' then true else false end")
+                    .metricParameterOverrides(
+                        PriceEvaluatePreviewEventsParams.PriceEvaluation.MetricParameterOverrides
+                            .builder()
+                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .build()
+                    )
                     .price(
                         NewFloatingUnitPrice.builder()
                             .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
@@ -243,6 +264,7 @@ internal class PriceEvaluatePreviewEventsParamsTest {
                                     .durationUnit(NewBillingCycleConfiguration.DurationUnit.DAY)
                                     .build()
                             )
+                            .licenseTypeId("license_type_id")
                             .metadata(
                                 NewFloatingUnitPrice.Metadata.builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))

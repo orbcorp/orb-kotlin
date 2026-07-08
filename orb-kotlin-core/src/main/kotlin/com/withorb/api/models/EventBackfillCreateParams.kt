@@ -23,7 +23,8 @@ import java.util.Objects
  * Creating the backfill enables adding or replacing past events, even those that are older than the
  * ingestion grace period. Performing a backfill in Orb involves 3 steps:
  * 1. Create the backfill, specifying its parameters.
- * 2. [Ingest](ingest) usage events, referencing the backfill (query parameter `backfill_id`).
+ * 2. [Ingest](/api-reference/event/ingest-events) usage events, referencing the backfill (query
+ *    parameter `backfill_id`).
  * 3. [Close](close-backfill) the backfill, propagating the update in past usage throughout Orb.
  *
  * Changes from a backfill are not reflected until the backfill is closed, so you won’t need to
@@ -901,6 +902,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Body = apply {
             if (validated) {
                 return@apply

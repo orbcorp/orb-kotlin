@@ -37,6 +37,7 @@ private constructor(
     private val fixedPriceQuantity: JsonField<Double>,
     private val invoiceGroupingKey: JsonField<String>,
     private val invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>,
+    private val licenseTypeId: JsonField<String>,
     private val metadata: JsonField<Metadata>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -85,6 +86,9 @@ private constructor(
         @JsonProperty("invoicing_cycle_configuration")
         @ExcludeMissing
         invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration> = JsonMissing.of(),
+        @JsonProperty("license_type_id")
+        @ExcludeMissing
+        licenseTypeId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
     ) : this(
         cadence,
@@ -103,6 +107,7 @@ private constructor(
         fixedPriceQuantity,
         invoiceGroupingKey,
         invoicingCycleConfiguration,
+        licenseTypeId,
         metadata,
         mutableMapOf(),
     )
@@ -241,6 +246,14 @@ private constructor(
      */
     fun invoicingCycleConfiguration(): NewBillingCycleConfiguration? =
         invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
+
+    /**
+     * The ID of the license type to associate with this price.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun licenseTypeId(): String? = licenseTypeId.getNullable("license_type_id")
 
     /**
      * User-specified key/value pairs for the resource. Individual keys can be removed by setting
@@ -399,6 +412,15 @@ private constructor(
         invoicingCycleConfiguration
 
     /**
+     * Returns the raw JSON value of [licenseTypeId].
+     *
+     * Unlike [licenseTypeId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("license_type_id")
+    @ExcludeMissing
+    fun _licenseTypeId(): JsonField<String> = licenseTypeId
+
+    /**
      * Returns the raw JSON value of [metadata].
      *
      * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
@@ -460,6 +482,7 @@ private constructor(
         private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
         private var invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
             JsonMissing.of()
+        private var licenseTypeId: JsonField<String> = JsonMissing.of()
         private var metadata: JsonField<Metadata> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -488,6 +511,7 @@ private constructor(
             invoiceGroupingKey = newFloatingScalableMatrixWithUnitPricingPrice.invoiceGroupingKey
             invoicingCycleConfiguration =
                 newFloatingScalableMatrixWithUnitPricingPrice.invoicingCycleConfiguration
+            licenseTypeId = newFloatingScalableMatrixWithUnitPricingPrice.licenseTypeId
             metadata = newFloatingScalableMatrixWithUnitPricingPrice.metadata
             additionalProperties =
                 newFloatingScalableMatrixWithUnitPricingPrice.additionalProperties.toMutableMap()
@@ -789,6 +813,21 @@ private constructor(
             invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
         ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
+        /** The ID of the license type to associate with this price. */
+        fun licenseTypeId(licenseTypeId: String?) =
+            licenseTypeId(JsonField.ofNullable(licenseTypeId))
+
+        /**
+         * Sets [Builder.licenseTypeId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.licenseTypeId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun licenseTypeId(licenseTypeId: JsonField<String>) = apply {
+            this.licenseTypeId = licenseTypeId
+        }
+
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
@@ -862,6 +901,7 @@ private constructor(
                 fixedPriceQuantity,
                 invoiceGroupingKey,
                 invoicingCycleConfiguration,
+                licenseTypeId,
                 metadata,
                 additionalProperties.toMutableMap(),
             )
@@ -869,6 +909,14 @@ private constructor(
 
     private var validated: Boolean = false
 
+    /**
+     * Validates that the types of all values in this object match their expected types recursively.
+     *
+     * This method is _not_ forwards compatible with new types from the API for existing fields.
+     *
+     * @throws OrbInvalidDataException if any value type in this object doesn't match its expected
+     *   type.
+     */
     fun validate(): NewFloatingScalableMatrixWithUnitPricingPrice = apply {
         if (validated) {
             return@apply
@@ -890,6 +938,7 @@ private constructor(
         fixedPriceQuantity()
         invoiceGroupingKey()
         invoicingCycleConfiguration()?.validate()
+        licenseTypeId()
         metadata()?.validate()
         validated = true
     }
@@ -924,6 +973,7 @@ private constructor(
             (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
             (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
             (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+            (if (licenseTypeId.asKnown() == null) 0 else 1) +
             (metadata.asKnown()?.validity() ?: 0)
 
     /** The cadence to bill for this price on. */
@@ -1037,6 +1087,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Cadence = apply {
             if (validated) {
                 return@apply
@@ -1158,6 +1217,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): ModelType = apply {
             if (validated) {
                 return@apply
@@ -1203,6 +1271,7 @@ private constructor(
         private val firstDimension: JsonField<String>,
         private val matrixScalingFactors: JsonField<List<MatrixScalingFactor>>,
         private val unitPrice: JsonField<String>,
+        private val groupingKey: JsonField<String>,
         private val prorate: JsonField<Boolean>,
         private val secondDimension: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -1219,6 +1288,9 @@ private constructor(
             @JsonProperty("unit_price")
             @ExcludeMissing
             unitPrice: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("grouping_key")
+            @ExcludeMissing
+            groupingKey: JsonField<String> = JsonMissing.of(),
             @JsonProperty("prorate") @ExcludeMissing prorate: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("second_dimension")
             @ExcludeMissing
@@ -1227,6 +1299,7 @@ private constructor(
             firstDimension,
             matrixScalingFactors,
             unitPrice,
+            groupingKey,
             prorate,
             secondDimension,
             mutableMapOf(),
@@ -1256,6 +1329,14 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun unitPrice(): String = unitPrice.getRequired("unit_price")
+
+        /**
+         * The property used to group this price
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun groupingKey(): String? = groupingKey.getNullable("grouping_key")
 
         /**
          * If true, the unit price will be prorated to the billing period
@@ -1299,6 +1380,15 @@ private constructor(
          * Unlike [unitPrice], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("unit_price") @ExcludeMissing fun _unitPrice(): JsonField<String> = unitPrice
+
+        /**
+         * Returns the raw JSON value of [groupingKey].
+         *
+         * Unlike [groupingKey], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("grouping_key")
+        @ExcludeMissing
+        fun _groupingKey(): JsonField<String> = groupingKey
 
         /**
          * Returns the raw JSON value of [prorate].
@@ -1351,6 +1441,7 @@ private constructor(
             private var firstDimension: JsonField<String>? = null
             private var matrixScalingFactors: JsonField<MutableList<MatrixScalingFactor>>? = null
             private var unitPrice: JsonField<String>? = null
+            private var groupingKey: JsonField<String> = JsonMissing.of()
             private var prorate: JsonField<Boolean> = JsonMissing.of()
             private var secondDimension: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -1364,6 +1455,7 @@ private constructor(
                         it.toMutableList()
                     }
                 unitPrice = scalableMatrixWithUnitPricingConfig.unitPrice
+                groupingKey = scalableMatrixWithUnitPricingConfig.groupingKey
                 prorate = scalableMatrixWithUnitPricingConfig.prorate
                 secondDimension = scalableMatrixWithUnitPricingConfig.secondDimension
                 additionalProperties =
@@ -1424,6 +1516,20 @@ private constructor(
              * supported value.
              */
             fun unitPrice(unitPrice: JsonField<String>) = apply { this.unitPrice = unitPrice }
+
+            /** The property used to group this price */
+            fun groupingKey(groupingKey: String?) = groupingKey(JsonField.ofNullable(groupingKey))
+
+            /**
+             * Sets [Builder.groupingKey] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.groupingKey] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun groupingKey(groupingKey: JsonField<String>) = apply {
+                this.groupingKey = groupingKey
+            }
 
             /** If true, the unit price will be prorated to the billing period */
             fun prorate(prorate: Boolean?) = prorate(JsonField.ofNullable(prorate))
@@ -1499,6 +1605,7 @@ private constructor(
                         it.toImmutable()
                     },
                     checkRequired("unitPrice", unitPrice),
+                    groupingKey,
                     prorate,
                     secondDimension,
                     additionalProperties.toMutableMap(),
@@ -1507,6 +1614,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): ScalableMatrixWithUnitPricingConfig = apply {
             if (validated) {
                 return@apply
@@ -1515,6 +1631,7 @@ private constructor(
             firstDimension()
             matrixScalingFactors().forEach { it.validate() }
             unitPrice()
+            groupingKey()
             prorate()
             secondDimension()
             validated = true
@@ -1538,6 +1655,7 @@ private constructor(
             (if (firstDimension.asKnown() == null) 0 else 1) +
                 (matrixScalingFactors.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (unitPrice.asKnown() == null) 0 else 1) +
+                (if (groupingKey.asKnown() == null) 0 else 1) +
                 (if (prorate.asKnown() == null) 0 else 1) +
                 (if (secondDimension.asKnown() == null) 0 else 1)
 
@@ -1745,6 +1863,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws OrbInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): MatrixScalingFactor = apply {
                 if (validated) {
                     return@apply
@@ -1811,6 +1939,7 @@ private constructor(
                 firstDimension == other.firstDimension &&
                 matrixScalingFactors == other.matrixScalingFactors &&
                 unitPrice == other.unitPrice &&
+                groupingKey == other.groupingKey &&
                 prorate == other.prorate &&
                 secondDimension == other.secondDimension &&
                 additionalProperties == other.additionalProperties
@@ -1821,6 +1950,7 @@ private constructor(
                 firstDimension,
                 matrixScalingFactors,
                 unitPrice,
+                groupingKey,
                 prorate,
                 secondDimension,
                 additionalProperties,
@@ -1830,7 +1960,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ScalableMatrixWithUnitPricingConfig{firstDimension=$firstDimension, matrixScalingFactors=$matrixScalingFactors, unitPrice=$unitPrice, prorate=$prorate, secondDimension=$secondDimension, additionalProperties=$additionalProperties}"
+            "ScalableMatrixWithUnitPricingConfig{firstDimension=$firstDimension, matrixScalingFactors=$matrixScalingFactors, unitPrice=$unitPrice, groupingKey=$groupingKey, prorate=$prorate, secondDimension=$secondDimension, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -1895,6 +2025,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Metadata = apply {
             if (validated) {
                 return@apply
@@ -1957,6 +2096,7 @@ private constructor(
             fixedPriceQuantity == other.fixedPriceQuantity &&
             invoiceGroupingKey == other.invoiceGroupingKey &&
             invoicingCycleConfiguration == other.invoicingCycleConfiguration &&
+            licenseTypeId == other.licenseTypeId &&
             metadata == other.metadata &&
             additionalProperties == other.additionalProperties
     }
@@ -1979,6 +2119,7 @@ private constructor(
             fixedPriceQuantity,
             invoiceGroupingKey,
             invoicingCycleConfiguration,
+            licenseTypeId,
             metadata,
             additionalProperties,
         )
@@ -1987,5 +2128,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "NewFloatingScalableMatrixWithUnitPricingPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, scalableMatrixWithUnitPricingConfig=$scalableMatrixWithUnitPricingConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+        "NewFloatingScalableMatrixWithUnitPricingPrice{cadence=$cadence, currency=$currency, itemId=$itemId, modelType=$modelType, name=$name, scalableMatrixWithUnitPricingConfig=$scalableMatrixWithUnitPricingConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, licenseTypeId=$licenseTypeId, metadata=$metadata, additionalProperties=$additionalProperties}"
 }

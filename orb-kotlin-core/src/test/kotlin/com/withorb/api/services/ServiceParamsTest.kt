@@ -56,7 +56,7 @@ internal class ServiceParamsTest {
                         .addAccountingProvider(
                             AccountingProviderConfig.builder()
                                 .externalProviderId("external_provider_id")
-                                .providerType("provider_type")
+                                .providerType(AccountingProviderConfig.ProviderType.QUICKBOOKS)
                                 .build()
                         )
                         .excluded(true)
@@ -98,6 +98,7 @@ internal class ServiceParamsTest {
                                         .ProviderType
                                         .STRIPE
                                 )
+                                .defaultSharedPaymentToken("default_shared_payment_token")
                                 .addExcludedPaymentMethodType("string")
                                 .build()
                         )

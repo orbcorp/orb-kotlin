@@ -304,11 +304,13 @@ private constructor(
      * |Estonia               |`eu_vat`    |European VAT Number                                                                                    |
      * |Ethiopia              |`et_tin`    |Ethiopia Tax Identification Number                                                                     |
      * |European Union        |`eu_oss_vat`|European One Stop Shop VAT Number for non-Union scheme                                                 |
+     * |Faroe Islands         |`fo_vat`    |Faroe Islands VAT Number                                                                               |
      * |Finland               |`eu_vat`    |European VAT Number                                                                                    |
      * |France                |`eu_vat`    |European VAT Number                                                                                    |
      * |Georgia               |`ge_vat`    |Georgian VAT                                                                                           |
      * |Germany               |`de_stn`    |German Tax Number (Steuernummer)                                                                       |
      * |Germany               |`eu_vat`    |European VAT Number                                                                                    |
+     * |Gibraltar             |`gi_tin`    |Gibraltar Tax Identification Number                                                                    |
      * |Greece                |`eu_vat`    |European VAT Number                                                                                    |
      * |Guinea                |`gn_nif`    |Guinea Tax Identification Number (Número de Identificação Fiscal)                                      |
      * |Hong Kong             |`hk_br`     |Hong Kong BR Number                                                                                    |
@@ -320,6 +322,7 @@ private constructor(
      * |Ireland               |`eu_vat`    |European VAT Number                                                                                    |
      * |Israel                |`il_vat`    |Israel VAT                                                                                             |
      * |Italy                 |`eu_vat`    |European VAT Number                                                                                    |
+     * |Italy                 |`it_cf`     |Italian Codice Fiscale Number                                                                          |
      * |Japan                 |`jp_cn`     |Japanese Corporate Number (*Hōjin Bangō*)                                                              |
      * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (*Tōroku Kokugai Jigyōsha no Tōroku Bangō*)|
      * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (*Tōroku Bangō*)                                                      |
@@ -350,6 +353,7 @@ private constructor(
      * |Norway                |`no_vat`    |Norwegian VAT Number                                                                                   |
      * |Norway                |`no_voec`   |Norwegian VAT on e-commerce Number                                                                     |
      * |Oman                  |`om_vat`    |Omani VAT Number                                                                                       |
+     * |Paraguay              |`py_ruc`    |Paraguayan RUC Number                                                                                  |
      * |Peru                  |`pe_ruc`    |Peruvian RUC Number                                                                                    |
      * |Philippines           |`ph_tin`    |Philippines Tax Identification Number                                                                  |
      * |Poland                |`eu_vat`    |European VAT Number                                                                                    |
@@ -371,6 +375,7 @@ private constructor(
      * |South Korea           |`kr_brn`    |Korean BRN                                                                                             |
      * |Spain                 |`es_cif`    |Spanish NIF Number (previously Spanish CIF Number)                                                     |
      * |Spain                 |`eu_vat`    |European VAT Number                                                                                    |
+     * |Sri Lanka             |`lk_vat`    |Sri Lanka VAT Number                                                                                   |
      * |Suriname              |`sr_fin`    |Suriname FIN Number                                                                                    |
      * |Sweden                |`eu_vat`    |European VAT Number                                                                                    |
      * |Switzerland           |`ch_uid`    |Switzerland UID Number                                                                                 |
@@ -417,8 +422,8 @@ private constructor(
     fun eligibleToIssueAt(): OffsetDateTime? = eligibleToIssueAt.getNullable("eligible_to_issue_at")
 
     /**
-     * A URL for the customer-facing invoice portal. This URL expires 30 days after the invoice's
-     * due date, or 60 days after being re-generated through the UI.
+     * A URL for the customer-facing invoice portal. This URL expires 60 days after the link is
+     * generated, or 30 days after the invoice's due date — whichever is later.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -1203,11 +1208,13 @@ private constructor(
          * |Estonia               |`eu_vat`    |European VAT Number                                                                                    |
          * |Ethiopia              |`et_tin`    |Ethiopia Tax Identification Number                                                                     |
          * |European Union        |`eu_oss_vat`|European One Stop Shop VAT Number for non-Union scheme                                                 |
+         * |Faroe Islands         |`fo_vat`    |Faroe Islands VAT Number                                                                               |
          * |Finland               |`eu_vat`    |European VAT Number                                                                                    |
          * |France                |`eu_vat`    |European VAT Number                                                                                    |
          * |Georgia               |`ge_vat`    |Georgian VAT                                                                                           |
          * |Germany               |`de_stn`    |German Tax Number (Steuernummer)                                                                       |
          * |Germany               |`eu_vat`    |European VAT Number                                                                                    |
+         * |Gibraltar             |`gi_tin`    |Gibraltar Tax Identification Number                                                                    |
          * |Greece                |`eu_vat`    |European VAT Number                                                                                    |
          * |Guinea                |`gn_nif`    |Guinea Tax Identification Number (Número de Identificação Fiscal)                                      |
          * |Hong Kong             |`hk_br`     |Hong Kong BR Number                                                                                    |
@@ -1219,6 +1226,7 @@ private constructor(
          * |Ireland               |`eu_vat`    |European VAT Number                                                                                    |
          * |Israel                |`il_vat`    |Israel VAT                                                                                             |
          * |Italy                 |`eu_vat`    |European VAT Number                                                                                    |
+         * |Italy                 |`it_cf`     |Italian Codice Fiscale Number                                                                          |
          * |Japan                 |`jp_cn`     |Japanese Corporate Number (*Hōjin Bangō*)                                                              |
          * |Japan                 |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (*Tōroku Kokugai Jigyōsha no Tōroku Bangō*)|
          * |Japan                 |`jp_trn`    |Japanese Tax Registration Number (*Tōroku Bangō*)                                                      |
@@ -1249,6 +1257,7 @@ private constructor(
          * |Norway                |`no_vat`    |Norwegian VAT Number                                                                                   |
          * |Norway                |`no_voec`   |Norwegian VAT on e-commerce Number                                                                     |
          * |Oman                  |`om_vat`    |Omani VAT Number                                                                                       |
+         * |Paraguay              |`py_ruc`    |Paraguayan RUC Number                                                                                  |
          * |Peru                  |`pe_ruc`    |Peruvian RUC Number                                                                                    |
          * |Philippines           |`ph_tin`    |Philippines Tax Identification Number                                                                  |
          * |Poland                |`eu_vat`    |European VAT Number                                                                                    |
@@ -1270,6 +1279,7 @@ private constructor(
          * |South Korea           |`kr_brn`    |Korean BRN                                                                                             |
          * |Spain                 |`es_cif`    |Spanish NIF Number (previously Spanish CIF Number)                                                     |
          * |Spain                 |`eu_vat`    |European VAT Number                                                                                    |
+         * |Sri Lanka             |`lk_vat`    |Sri Lanka VAT Number                                                                                   |
          * |Suriname              |`sr_fin`    |Suriname FIN Number                                                                                    |
          * |Sweden                |`eu_vat`    |European VAT Number                                                                                    |
          * |Switzerland           |`ch_uid`    |Switzerland UID Number                                                                                 |
@@ -1341,8 +1351,8 @@ private constructor(
         }
 
         /**
-         * A URL for the customer-facing invoice portal. This URL expires 30 days after the
-         * invoice's due date, or 60 days after being re-generated through the UI.
+         * A URL for the customer-facing invoice portal. This URL expires 60 days after the link is
+         * generated, or 30 days after the invoice's due date — whichever is later.
          */
         fun hostedInvoiceUrl(hostedInvoiceUrl: String?) =
             hostedInvoiceUrl(JsonField.ofNullable(hostedInvoiceUrl))
@@ -1775,6 +1785,14 @@ private constructor(
 
     private var validated: Boolean = false
 
+    /**
+     * Validates that the types of all values in this object match their expected types recursively.
+     *
+     * This method is _not_ forwards compatible with new types from the API for existing fields.
+     *
+     * @throws OrbInvalidDataException if any value type in this object doesn't match its expected
+     *   type.
+     */
     fun validate(): InvoiceListSummaryResponse = apply {
         if (validated) {
             return@apply
@@ -2134,6 +2152,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): AutoCollection = apply {
             if (validated) {
                 return@apply
@@ -2515,6 +2542,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): CreditNote = apply {
             if (validated) {
                 return@apply
@@ -3055,6 +3091,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): CustomerBalanceTransaction = apply {
             if (validated) {
                 return@apply
@@ -3236,6 +3281,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws OrbInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): Action = apply {
                 if (validated) {
                     return@apply
@@ -3361,6 +3416,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws OrbInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): Type = apply {
                 if (validated) {
                     return@apply
@@ -3536,6 +3601,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): InvoiceSource = apply {
             if (validated) {
                 return@apply
@@ -3636,6 +3710,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Metadata = apply {
             if (validated) {
                 return@apply
@@ -4036,6 +4119,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): PaymentAttempt = apply {
             if (validated) {
                 return@apply
@@ -4093,12 +4185,15 @@ private constructor(
 
                 val STRIPE = of("stripe")
 
+                val ADYEN = of("adyen")
+
                 fun of(value: String) = PaymentProvider(JsonField.of(value))
             }
 
             /** An enum containing [PaymentProvider]'s known values. */
             enum class Known {
-                STRIPE
+                STRIPE,
+                ADYEN,
             }
 
             /**
@@ -4112,6 +4207,7 @@ private constructor(
              */
             enum class Value {
                 STRIPE,
+                ADYEN,
                 /**
                  * An enum member indicating that [PaymentProvider] was instantiated with an unknown
                  * value.
@@ -4129,6 +4225,7 @@ private constructor(
             fun value(): Value =
                 when (this) {
                     STRIPE -> Value.STRIPE
+                    ADYEN -> Value.ADYEN
                     else -> Value._UNKNOWN
                 }
 
@@ -4144,6 +4241,7 @@ private constructor(
             fun known(): Known =
                 when (this) {
                     STRIPE -> Known.STRIPE
+                    ADYEN -> Known.ADYEN
                     else -> throw OrbInvalidDataException("Unknown PaymentProvider: $value")
                 }
 
@@ -4161,6 +4259,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws OrbInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): PaymentProvider = apply {
                 if (validated) {
                     return@apply
@@ -4338,6 +4446,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Status = apply {
             if (validated) {
                 return@apply

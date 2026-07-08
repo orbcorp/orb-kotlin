@@ -37,6 +37,7 @@ internal class InvoiceLevelDiscountTest {
         assertThat(invoiceLevelDiscount.percentage()).isEqualTo(percentage)
         assertThat(invoiceLevelDiscount.amount()).isNull()
         assertThat(invoiceLevelDiscount.trial()).isNull()
+        assertThat(invoiceLevelDiscount.tieredPercentage()).isNull()
     }
 
     @Test
@@ -92,6 +93,7 @@ internal class InvoiceLevelDiscountTest {
         assertThat(invoiceLevelDiscount.percentage()).isNull()
         assertThat(invoiceLevelDiscount.amount()).isEqualTo(amount)
         assertThat(invoiceLevelDiscount.trial()).isNull()
+        assertThat(invoiceLevelDiscount.tieredPercentage()).isNull()
     }
 
     @Test
@@ -148,6 +150,7 @@ internal class InvoiceLevelDiscountTest {
         assertThat(invoiceLevelDiscount.percentage()).isNull()
         assertThat(invoiceLevelDiscount.amount()).isNull()
         assertThat(invoiceLevelDiscount.trial()).isEqualTo(trial)
+        assertThat(invoiceLevelDiscount.tieredPercentage()).isNull()
     }
 
     @Test
@@ -169,6 +172,74 @@ internal class InvoiceLevelDiscountTest {
                     .reason("reason")
                     .trialAmountDiscount("trial_amount_discount")
                     .trialPercentageDiscount(0.0)
+                    .build()
+            )
+
+        val roundtrippedInvoiceLevelDiscount =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(invoiceLevelDiscount),
+                jacksonTypeRef<InvoiceLevelDiscount>(),
+            )
+
+        assertThat(roundtrippedInvoiceLevelDiscount).isEqualTo(invoiceLevelDiscount)
+    }
+
+    @Test
+    fun ofTieredPercentage() {
+        val tieredPercentage =
+            InvoiceLevelDiscount.TieredPercentage.builder()
+                .addTier(
+                    InvoiceLevelDiscount.TieredPercentage.Tier.builder()
+                        .lowerBound(0.0)
+                        .percentage(0.0)
+                        .upperBound(0.0)
+                        .build()
+                )
+                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                .addFilter(
+                    InvoiceLevelDiscount.TieredPercentage.Filter.builder()
+                        .field(InvoiceLevelDiscount.TieredPercentage.Filter.Field.PRICE_ID)
+                        .operator(InvoiceLevelDiscount.TieredPercentage.Filter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
+                .reason("reason")
+                .build()
+
+        val invoiceLevelDiscount = InvoiceLevelDiscount.ofTieredPercentage(tieredPercentage)
+
+        assertThat(invoiceLevelDiscount.percentage()).isNull()
+        assertThat(invoiceLevelDiscount.amount()).isNull()
+        assertThat(invoiceLevelDiscount.trial()).isNull()
+        assertThat(invoiceLevelDiscount.tieredPercentage()).isEqualTo(tieredPercentage)
+    }
+
+    @Test
+    fun ofTieredPercentageRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val invoiceLevelDiscount =
+            InvoiceLevelDiscount.ofTieredPercentage(
+                InvoiceLevelDiscount.TieredPercentage.builder()
+                    .addTier(
+                        InvoiceLevelDiscount.TieredPercentage.Tier.builder()
+                            .lowerBound(0.0)
+                            .percentage(0.0)
+                            .upperBound(0.0)
+                            .build()
+                    )
+                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                    .addFilter(
+                        InvoiceLevelDiscount.TieredPercentage.Filter.builder()
+                            .field(InvoiceLevelDiscount.TieredPercentage.Filter.Field.PRICE_ID)
+                            .operator(
+                                InvoiceLevelDiscount.TieredPercentage.Filter.Operator.INCLUDES
+                            )
+                            .addValue("string")
+                            .build()
+                    )
+                    .reason("reason")
                     .build()
             )
 

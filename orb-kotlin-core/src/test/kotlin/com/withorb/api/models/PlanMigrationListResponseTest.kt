@@ -4,7 +4,6 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.withorb.api.core.jsonMapper
-import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -15,7 +14,7 @@ internal class PlanMigrationListResponseTest {
         val planMigrationListResponse =
             PlanMigrationListResponse.builder()
                 .id("id")
-                .effectiveTime(LocalDate.parse("2019-12-27"))
+                .effectiveTime(PlanMigrationListResponse.EffectiveTime.UnionMember2.END_OF_TERM)
                 .planId("plan_id")
                 .status(PlanMigrationListResponse.Status.NOT_STARTED)
                 .build()
@@ -23,7 +22,9 @@ internal class PlanMigrationListResponseTest {
         assertThat(planMigrationListResponse.id()).isEqualTo("id")
         assertThat(planMigrationListResponse.effectiveTime())
             .isEqualTo(
-                PlanMigrationListResponse.EffectiveTime.ofLocalDate(LocalDate.parse("2019-12-27"))
+                PlanMigrationListResponse.EffectiveTime.ofUnionMember2(
+                    PlanMigrationListResponse.EffectiveTime.UnionMember2.END_OF_TERM
+                )
             )
         assertThat(planMigrationListResponse.planId()).isEqualTo("plan_id")
         assertThat(planMigrationListResponse.status())
@@ -36,7 +37,7 @@ internal class PlanMigrationListResponseTest {
         val planMigrationListResponse =
             PlanMigrationListResponse.builder()
                 .id("id")
-                .effectiveTime(LocalDate.parse("2019-12-27"))
+                .effectiveTime(PlanMigrationListResponse.EffectiveTime.UnionMember2.END_OF_TERM)
                 .planId("plan_id")
                 .status(PlanMigrationListResponse.Status.NOT_STARTED)
                 .build()

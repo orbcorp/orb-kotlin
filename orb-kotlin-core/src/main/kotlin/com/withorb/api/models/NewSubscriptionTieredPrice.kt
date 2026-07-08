@@ -36,6 +36,7 @@ private constructor(
     private val fixedPriceQuantity: JsonField<Double>,
     private val invoiceGroupingKey: JsonField<String>,
     private val invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>,
+    private val licenseTypeId: JsonField<String>,
     private val metadata: JsonField<Metadata>,
     private val referenceId: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -84,6 +85,9 @@ private constructor(
         @JsonProperty("invoicing_cycle_configuration")
         @ExcludeMissing
         invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration> = JsonMissing.of(),
+        @JsonProperty("license_type_id")
+        @ExcludeMissing
+        licenseTypeId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("reference_id")
         @ExcludeMissing
@@ -105,6 +109,7 @@ private constructor(
         fixedPriceQuantity,
         invoiceGroupingKey,
         invoicingCycleConfiguration,
+        licenseTypeId,
         metadata,
         referenceId,
         mutableMapOf(),
@@ -244,6 +249,14 @@ private constructor(
      */
     fun invoicingCycleConfiguration(): NewBillingCycleConfiguration? =
         invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
+
+    /**
+     * The ID of the license type to associate with this price.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun licenseTypeId(): String? = licenseTypeId.getNullable("license_type_id")
 
     /**
      * User-specified key/value pairs for the resource. Individual keys can be removed by setting
@@ -409,6 +422,15 @@ private constructor(
         invoicingCycleConfiguration
 
     /**
+     * Returns the raw JSON value of [licenseTypeId].
+     *
+     * Unlike [licenseTypeId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("license_type_id")
+    @ExcludeMissing
+    fun _licenseTypeId(): JsonField<String> = licenseTypeId
+
+    /**
      * Returns the raw JSON value of [metadata].
      *
      * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
@@ -475,6 +497,7 @@ private constructor(
         private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
         private var invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration> =
             JsonMissing.of()
+        private var licenseTypeId: JsonField<String> = JsonMissing.of()
         private var metadata: JsonField<Metadata> = JsonMissing.of()
         private var referenceId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -496,6 +519,7 @@ private constructor(
             fixedPriceQuantity = newSubscriptionTieredPrice.fixedPriceQuantity
             invoiceGroupingKey = newSubscriptionTieredPrice.invoiceGroupingKey
             invoicingCycleConfiguration = newSubscriptionTieredPrice.invoicingCycleConfiguration
+            licenseTypeId = newSubscriptionTieredPrice.licenseTypeId
             metadata = newSubscriptionTieredPrice.metadata
             referenceId = newSubscriptionTieredPrice.referenceId
             additionalProperties = newSubscriptionTieredPrice.additionalProperties.toMutableMap()
@@ -798,6 +822,21 @@ private constructor(
             invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
         ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
+        /** The ID of the license type to associate with this price. */
+        fun licenseTypeId(licenseTypeId: String?) =
+            licenseTypeId(JsonField.ofNullable(licenseTypeId))
+
+        /**
+         * Sets [Builder.licenseTypeId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.licenseTypeId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun licenseTypeId(licenseTypeId: JsonField<String>) = apply {
+            this.licenseTypeId = licenseTypeId
+        }
+
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
@@ -882,6 +921,7 @@ private constructor(
                 fixedPriceQuantity,
                 invoiceGroupingKey,
                 invoicingCycleConfiguration,
+                licenseTypeId,
                 metadata,
                 referenceId,
                 additionalProperties.toMutableMap(),
@@ -890,6 +930,14 @@ private constructor(
 
     private var validated: Boolean = false
 
+    /**
+     * Validates that the types of all values in this object match their expected types recursively.
+     *
+     * This method is _not_ forwards compatible with new types from the API for existing fields.
+     *
+     * @throws OrbInvalidDataException if any value type in this object doesn't match its expected
+     *   type.
+     */
     fun validate(): NewSubscriptionTieredPrice = apply {
         if (validated) {
             return@apply
@@ -911,6 +959,7 @@ private constructor(
         fixedPriceQuantity()
         invoiceGroupingKey()
         invoicingCycleConfiguration()?.validate()
+        licenseTypeId()
         metadata()?.validate()
         referenceId()
         validated = true
@@ -946,6 +995,7 @@ private constructor(
             (if (fixedPriceQuantity.asKnown() == null) 0 else 1) +
             (if (invoiceGroupingKey.asKnown() == null) 0 else 1) +
             (invoicingCycleConfiguration.asKnown()?.validity() ?: 0) +
+            (if (licenseTypeId.asKnown() == null) 0 else 1) +
             (metadata.asKnown()?.validity() ?: 0) +
             (if (referenceId.asKnown() == null) 0 else 1)
 
@@ -1060,6 +1110,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Cadence = apply {
             if (validated) {
                 return@apply
@@ -1181,6 +1240,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): ModelType = apply {
             if (validated) {
                 return@apply
@@ -1281,6 +1349,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Metadata = apply {
             if (validated) {
                 return@apply
@@ -1343,6 +1420,7 @@ private constructor(
             fixedPriceQuantity == other.fixedPriceQuantity &&
             invoiceGroupingKey == other.invoiceGroupingKey &&
             invoicingCycleConfiguration == other.invoicingCycleConfiguration &&
+            licenseTypeId == other.licenseTypeId &&
             metadata == other.metadata &&
             referenceId == other.referenceId &&
             additionalProperties == other.additionalProperties
@@ -1366,6 +1444,7 @@ private constructor(
             fixedPriceQuantity,
             invoiceGroupingKey,
             invoicingCycleConfiguration,
+            licenseTypeId,
             metadata,
             referenceId,
             additionalProperties,
@@ -1375,5 +1454,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "NewSubscriptionTieredPrice{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredConfig=$tieredConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, referenceId=$referenceId, additionalProperties=$additionalProperties}"
+        "NewSubscriptionTieredPrice{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, tieredConfig=$tieredConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, conversionRateConfig=$conversionRateConfig, currency=$currency, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, licenseTypeId=$licenseTypeId, metadata=$metadata, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 }

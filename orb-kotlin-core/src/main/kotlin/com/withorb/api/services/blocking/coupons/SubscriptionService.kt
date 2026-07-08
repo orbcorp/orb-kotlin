@@ -9,6 +9,12 @@ import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.CouponSubscriptionListPage
 import com.withorb.api.models.CouponSubscriptionListParams
 
+/**
+ * A coupon represents a reusable discount configuration that can be applied either as a fixed or
+ * percentage amount to an invoice or subscription. Coupons are activated using a redemption code,
+ * which applies the discount to a subscription or invoice. The duration of a coupon determines how
+ * long it remains available for use by end users.
+ */
 interface SubscriptionService {
 
     /**
