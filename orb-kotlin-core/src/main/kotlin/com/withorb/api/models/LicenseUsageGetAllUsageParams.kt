@@ -6,7 +6,6 @@ import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
-import com.withorb.api.core.toImmutable
 import java.time.LocalDate
 import java.util.Objects
 
@@ -21,7 +20,7 @@ private constructor(
     private val subscriptionId: String,
     private val cursor: String?,
     private val endDate: LocalDate?,
-    private val groupBy: List<String>?,
+    private val groupBy: String?,
     private val limit: Long?,
     private val startDate: LocalDate?,
     private val additionalHeaders: Headers,
@@ -44,7 +43,7 @@ private constructor(
      * How to group the results. Valid values: 'license', 'day'. Can be combined (e.g.,
      * 'license,day').
      */
-    fun groupBy(): List<String>? = groupBy
+    fun groupBy(): String? = groupBy
 
     /** Maximum number of rows in the response data (default 20, max 100). */
     fun limit(): Long? = limit
@@ -84,7 +83,7 @@ private constructor(
         private var subscriptionId: String? = null
         private var cursor: String? = null
         private var endDate: LocalDate? = null
-        private var groupBy: MutableList<String>? = null
+        private var groupBy: String? = null
         private var limit: Long? = null
         private var startDate: LocalDate? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -95,7 +94,7 @@ private constructor(
             subscriptionId = licenseUsageGetAllUsageParams.subscriptionId
             cursor = licenseUsageGetAllUsageParams.cursor
             endDate = licenseUsageGetAllUsageParams.endDate
-            groupBy = licenseUsageGetAllUsageParams.groupBy?.toMutableList()
+            groupBy = licenseUsageGetAllUsageParams.groupBy
             limit = licenseUsageGetAllUsageParams.limit
             startDate = licenseUsageGetAllUsageParams.startDate
             additionalHeaders = licenseUsageGetAllUsageParams.additionalHeaders.toBuilder()
@@ -120,16 +119,7 @@ private constructor(
          * How to group the results. Valid values: 'license', 'day'. Can be combined (e.g.,
          * 'license,day').
          */
-        fun groupBy(groupBy: List<String>?) = apply { this.groupBy = groupBy?.toMutableList() }
-
-        /**
-         * Adds a single [String] to [Builder.groupBy].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addGroupBy(groupBy: String) = apply {
-            this.groupBy = (this.groupBy ?: mutableListOf()).apply { add(groupBy) }
-        }
+        fun groupBy(groupBy: String?) = apply { this.groupBy = groupBy }
 
         /** Maximum number of rows in the response data (default 20, max 100). */
         fun limit(limit: Long?) = apply { this.limit = limit }
@@ -264,7 +254,7 @@ private constructor(
                 checkRequired("subscriptionId", subscriptionId),
                 cursor,
                 endDate,
-                groupBy?.toImmutable(),
+                groupBy,
                 limit,
                 startDate,
                 additionalHeaders.build(),
@@ -281,7 +271,7 @@ private constructor(
                 put("subscription_id", subscriptionId)
                 cursor?.let { put("cursor", it) }
                 endDate?.let { put("end_date", it.toString()) }
-                groupBy?.forEach { put("group_by[]", it) }
+                groupBy?.let { put("group_by", it) }
                 limit?.let { put("limit", it.toString()) }
                 startDate?.let { put("start_date", it.toString()) }
                 putAll(additionalQueryParams)
