@@ -1,5 +1,109 @@
 # Changelog
 
+## 1.13.0 (2026-07-09)
+
+Full Changelog: [v1.12.0...v1.13.0](https://github.com/orbcorp/orb-kotlin/compare/v1.12.0...v1.13.0)
+
+### Features
+
+* **api:** api update ([34cb6e3](https://github.com/orbcorp/orb-kotlin/commit/34cb6e30fa7521e3271e1664af9e563a3dbadbb9))
+* **api:** api update ([e04b36f](https://github.com/orbcorp/orb-kotlin/commit/e04b36fea610673ac928ca5b2ec218c02bcb3dd7))
+* **api:** api update ([111ab51](https://github.com/orbcorp/orb-kotlin/commit/111ab514f54746697386a207361d5dfb053b213d))
+* **api:** api update ([05bdc09](https://github.com/orbcorp/orb-kotlin/commit/05bdc09d464028f1f49a73eff6e438e4f4007cb5))
+* **api:** api update ([7161cb5](https://github.com/orbcorp/orb-kotlin/commit/7161cb5d35c5d39d4076a9030ce2e4885ad55537))
+* **api:** api update ([ed7ca19](https://github.com/orbcorp/orb-kotlin/commit/ed7ca19da834e5d30e9d7ecd9d2640778984b831))
+* **api:** api update ([c801463](https://github.com/orbcorp/orb-kotlin/commit/c801463b25f8351659f1f97a96b593b1d91599fc))
+* **api:** api update ([cbd291f](https://github.com/orbcorp/orb-kotlin/commit/cbd291f7b7e19e9646913bed492fd8a5496e5a99))
+* **api:** api update ([8abb7b1](https://github.com/orbcorp/orb-kotlin/commit/8abb7b1cc741d6c499dc9b780463cd690b3adcb9))
+* **api:** api update ([64c2edd](https://github.com/orbcorp/orb-kotlin/commit/64c2eddc89369152d9d85debd0f1c72e88063007))
+* **api:** api update ([3f1c5b8](https://github.com/orbcorp/orb-kotlin/commit/3f1c5b862e8e0f9033e48c9b6b66681125185d35))
+* **api:** api update ([8855e8b](https://github.com/orbcorp/orb-kotlin/commit/8855e8b4500e775a2d251bd6dde9b800b1a47b99))
+* **api:** api update ([97f2101](https://github.com/orbcorp/orb-kotlin/commit/97f210126b7f9a1f5eb1547e10af5285ad055111))
+* **api:** api update ([a203cf3](https://github.com/orbcorp/orb-kotlin/commit/a203cf35d7dd8c8ec7cbb934f3ef3ca13f655fea))
+* **api:** api update ([05e11d6](https://github.com/orbcorp/orb-kotlin/commit/05e11d621377c6def27e498662d59630358867be))
+* **api:** api update ([5ea0704](https://github.com/orbcorp/orb-kotlin/commit/5ea070481879828ccb9d921e890c728f66cc0d7e))
+* **api:** api update ([2e1cbcb](https://github.com/orbcorp/orb-kotlin/commit/2e1cbcb3c40bfab34375c0912229bff285d9a7aa))
+* **api:** api update ([0289fef](https://github.com/orbcorp/orb-kotlin/commit/0289fefd75e69d92e08b743ea63104f4e3f8a8f5))
+* **api:** api update ([6433d4d](https://github.com/orbcorp/orb-kotlin/commit/6433d4d6b7a18556ea6eed59335c858e12fc0910))
+* **api:** api update ([e6f1979](https://github.com/orbcorp/orb-kotlin/commit/e6f1979645d35e9d6d8fa64b0abc3c7e1030bde9))
+* **api:** api update ([b58e40d](https://github.com/orbcorp/orb-kotlin/commit/b58e40d21be2dd60f0fccff7b8dd588a4856d32a))
+* **api:** api update ([7f644ba](https://github.com/orbcorp/orb-kotlin/commit/7f644ba6333af41c5037fa6614d237bef1630418))
+* **api:** api update ([acb3561](https://github.com/orbcorp/orb-kotlin/commit/acb35615b06bcac0ba8c877dac71380aeb271506))
+* **api:** api update ([db3e7e6](https://github.com/orbcorp/orb-kotlin/commit/db3e7e6bc63244db215bf7274868ca86aaaad84a))
+* **api:** api update ([2cd78b6](https://github.com/orbcorp/orb-kotlin/commit/2cd78b672aa97902f2579c4a636c7e6d900d5b1e))
+* **api:** api update ([f108cca](https://github.com/orbcorp/orb-kotlin/commit/f108cca9594df29f98fee72963ce55534cee1b50))
+* **api:** api update ([ffa5b92](https://github.com/orbcorp/orb-kotlin/commit/ffa5b92f2d89afa95c12a8d4fd6c608c983b3eac))
+* **api:** api update ([2f25f86](https://github.com/orbcorp/orb-kotlin/commit/2f25f860175c24c187e7f8ffd2d283f0017b8722))
+* **api:** api update ([a0f53b0](https://github.com/orbcorp/orb-kotlin/commit/a0f53b00b27077118e8da9afc249843109aad174))
+* **api:** api update ([86ce6f3](https://github.com/orbcorp/orb-kotlin/commit/86ce6f3f76500235d4ebba8c96e2a4c84d4343db))
+* **api:** api update ([7091a72](https://github.com/orbcorp/orb-kotlin/commit/7091a7208d02be59e8e72fcec879ca805cf00813))
+* **api:** api update ([0e05662](https://github.com/orbcorp/orb-kotlin/commit/0e05662b947ceb6d28995075cc59fad024d6161f))
+* **api:** api update ([e397453](https://github.com/orbcorp/orb-kotlin/commit/e3974536b461231fef00e23c9e02fe6b274b6bd1))
+* **api:** api update ([723f156](https://github.com/orbcorp/orb-kotlin/commit/723f156299560f9a997cdb75603fc96dcbbe6906))
+* **api:** api update ([fe15a1e](https://github.com/orbcorp/orb-kotlin/commit/fe15a1ef1f9ecba723e359bcba1f36a629d3d960))
+* **api:** api update ([a018be0](https://github.com/orbcorp/orb-kotlin/commit/a018be0afe3879a198d667714f0de75f2c5cdbf9))
+* **api:** api update ([63f49a7](https://github.com/orbcorp/orb-kotlin/commit/63f49a7d9be8e33bbdc0489310fe5ef7f5f1df44))
+* **api:** api update ([6de031f](https://github.com/orbcorp/orb-kotlin/commit/6de031f604efd812fc895269568e4debf2b36566))
+* **api:** api update ([9c54a99](https://github.com/orbcorp/orb-kotlin/commit/9c54a99fc2abd5d78d679967ddf8c48c960eeb03))
+* **api:** api update ([808e072](https://github.com/orbcorp/orb-kotlin/commit/808e0728d3848bdcbd4e3ace9e4cf7e3e7fe9852))
+* **api:** api update ([a4e55fc](https://github.com/orbcorp/orb-kotlin/commit/a4e55fcd736a0e61da05512f1015c542b77b2e01))
+* **api:** api update ([7df6475](https://github.com/orbcorp/orb-kotlin/commit/7df6475b8742a8d3755c77f2168bfafdc0bf660a))
+* **api:** manual updates ([d93464c](https://github.com/orbcorp/orb-kotlin/commit/d93464c286e31f707862d8a961c5f454351022e5))
+* **client:** add connection pooling option ([ce4d8a2](https://github.com/orbcorp/orb-kotlin/commit/ce4d8a2e387790b9a1faf40b8f04374a74c9110e))
+* **client:** add more convenience service method overloads ([c449333](https://github.com/orbcorp/orb-kotlin/commit/c449333d09d0b112178f42325b09fd7ff48811df))
+* **client:** improve logging ([7154882](https://github.com/orbcorp/orb-kotlin/commit/7154882cf0798bf15368abf3cd38e6c03ef8ea8b))
+* **client:** more robust error parsing ([b4405c0](https://github.com/orbcorp/orb-kotlin/commit/b4405c012b9081da6157dddd9fe6cc799732a86f))
+* **client:** support proxy authentication ([d71b718](https://github.com/orbcorp/orb-kotlin/commit/d71b7185398c36bbb90275d1d4eed2156d91929d))
+* support setting headers via env ([f3521b7](https://github.com/orbcorp/orb-kotlin/commit/f3521b7f4b5f08e835fca219e62fea6311a2a478))
+
+
+### Bug Fixes
+
+* **client:** allow updating header/query affecting fields in `toBuilder()` ([562fcc3](https://github.com/orbcorp/orb-kotlin/commit/562fcc3e28663dc802d801a6c359cbc5c04c681a))
+* **client:** incorrect `Retry-After` parsing ([3c13033](https://github.com/orbcorp/orb-kotlin/commit/3c13033d0e362da84b28e1b5e26ba32d69188bac))
+* fix request delays for retrying to be more respectful of high requested delays ([860ce4a](https://github.com/orbcorp/orb-kotlin/commit/860ce4a58b2d43cad76f218d23db8baccab57534))
+
+
+### Performance Improvements
+
+* **client:** create one json mapper ([1755d55](https://github.com/orbcorp/orb-kotlin/commit/1755d5534cb74bcfbd899357a8ed300c372445d6))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([847e839](https://github.com/orbcorp/orb-kotlin/commit/847e8399ce5cd8c10fcf1abeeaba3184a0695b9f))
+* **docs:** add missing descriptions ([c57175f](https://github.com/orbcorp/orb-kotlin/commit/c57175fc1dc641c6d28ad1dc72cec513bc5982c2))
+* drop apache dependency ([2fb8c9e](https://github.com/orbcorp/orb-kotlin/commit/2fb8c9eb2ca0dbbf34cf0ec88e2053dae3af1df6))
+* **internal:** allow passing args to `./scripts/test` ([8b61c22](https://github.com/orbcorp/orb-kotlin/commit/8b61c22ee33f728ae31d37c535280c2ca0c6a364))
+* **internal:** bump ktfmt ([24a716a](https://github.com/orbcorp/orb-kotlin/commit/24a716abbe941baed09fedde8e5ef860e65e01ba))
+* **internal:** bump palantir-java-format ([8195969](https://github.com/orbcorp/orb-kotlin/commit/8195969d6833b6dbf576fe9a74e511ce8d1b4a00))
+* **internal:** codegen related update ([4e9e830](https://github.com/orbcorp/orb-kotlin/commit/4e9e830d982ed89d6e3f3a08e8dd952dedf44676))
+* **internal:** expand imports ([4e1cecf](https://github.com/orbcorp/orb-kotlin/commit/4e1cecf9966e60a856333a3fd94f08ffb5abe1d2))
+* **internal:** make `OkHttp` constructor internal ([2435e96](https://github.com/orbcorp/orb-kotlin/commit/2435e963adf84c275057b6a2e9ede78989e59cd0))
+* **internal:** tweak CI branches ([5fceea6](https://github.com/orbcorp/orb-kotlin/commit/5fceea66f7cc3148c01a0a33c81000cf1fbfd1a1))
+* **internal:** update `TestServerExtension` comment ([7eb1e48](https://github.com/orbcorp/orb-kotlin/commit/7eb1e48401da793d82b5b8465fef638088411e55))
+* **internal:** update gitignore ([fa67c12](https://github.com/orbcorp/orb-kotlin/commit/fa67c1226f96926bce3720704e5fff5a29871679))
+* **internal:** update multipart form array serialization ([f8ee810](https://github.com/orbcorp/orb-kotlin/commit/f8ee81005fb308a952e6fd946680c8e7d3f04190))
+* **internal:** update retry delay tests ([b77931f](https://github.com/orbcorp/orb-kotlin/commit/b77931f2d6025e820c84c9a01626321c73a65240))
+* **internal:** upgrade AssertJ ([8ea3731](https://github.com/orbcorp/orb-kotlin/commit/8ea373173f2b39a788ecd61aa1f4e83b9a27b8e4))
+* make `Properties` more resilient to `null` ([7104ce5](https://github.com/orbcorp/orb-kotlin/commit/7104ce5655136a86694abe6438bb8d7df7093ff9))
+* redact api-key headers in debug logs ([434e247](https://github.com/orbcorp/orb-kotlin/commit/434e247b82a297d291d9a7452786db59fc50d43b))
+* **test:** do not count install time for mock server timeout ([e2497db](https://github.com/orbcorp/orb-kotlin/commit/e2497db0a8bb5068d55a5ed257ebbad1e766bf2c))
+* **tests:** bump steady to v0.19.4 ([849d3de](https://github.com/orbcorp/orb-kotlin/commit/849d3de8b4ea87f9d0468a7375f0fdcb643e5cbc))
+* **tests:** bump steady to v0.19.5 ([a10b512](https://github.com/orbcorp/orb-kotlin/commit/a10b51221a51c8316be0ea100d22aa621e1672ad))
+* **tests:** bump steady to v0.19.6 ([db03fe4](https://github.com/orbcorp/orb-kotlin/commit/db03fe4c53ad646d5de1f7bd7a58bb1d9554c768))
+* **tests:** bump steady to v0.19.7 ([7f90cdf](https://github.com/orbcorp/orb-kotlin/commit/7f90cdf8a4b13e32a35eb69e48643dc3bbf7388e))
+* **tests:** bump steady to v0.20.1 ([60af3d0](https://github.com/orbcorp/orb-kotlin/commit/60af3d0eafd87bccc861e9c586f384869042f50d))
+* **tests:** bump steady to v0.20.2 ([196c645](https://github.com/orbcorp/orb-kotlin/commit/196c645c4bf289fb6ecfa7165e8b417679c52f0e))
+* **tests:** bump steady to v0.22.1 ([45f25e2](https://github.com/orbcorp/orb-kotlin/commit/45f25e2164988a8f85681d8cee91cde15d749f55))
+* **tests:** update mock server to steady ([67887bf](https://github.com/orbcorp/orb-kotlin/commit/67887bfd41f3744589a59299b8b4b69c136dfc1e))
+
+
+### Documentation
+
+* clarify forwards compat behavior ([99f1de1](https://github.com/orbcorp/orb-kotlin/commit/99f1de17b214cef54bf07accaa674c471ccd7d19))
+* improve examples ([f1ab4b8](https://github.com/orbcorp/orb-kotlin/commit/f1ab4b89f00819f7dc49af9c2163d5372a416327))
+
 ## 1.12.0 (2026-01-28)
 
 Full Changelog: [v1.11.0...v1.12.0](https://github.com/orbcorp/orb-kotlin/compare/v1.11.0...v1.12.0)
