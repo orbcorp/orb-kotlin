@@ -51,8 +51,9 @@ private constructor(
     fun currency(): String = body.currency()
 
     /**
-     * Optional invoice date to set. Must be in the past, if not set, `invoice_date` is set to the
-     * current time in the customer's timezone.
+     * An ISO 8601 date or timestamp, interpreted in the customer's timezone. Must be in the past.
+     * If a date is set without a time, `invoice_date` is set to midnight on the chosen date in the
+     * customer's timezone.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -300,8 +301,9 @@ private constructor(
         fun currency(currency: JsonField<String>) = apply { body.currency(currency) }
 
         /**
-         * Optional invoice date to set. Must be in the past, if not set, `invoice_date` is set to
-         * the current time in the customer's timezone.
+         * An ISO 8601 date or timestamp, interpreted in the customer's timezone. Must be in the
+         * past. If a date is set without a time, `invoice_date` is set to midnight on the chosen
+         * date in the customer's timezone.
          */
         fun invoiceDate(invoiceDate: OffsetDateTime) = apply { body.invoiceDate(invoiceDate) }
 
@@ -782,8 +784,9 @@ private constructor(
         fun currency(): String = currency.getRequired("currency")
 
         /**
-         * Optional invoice date to set. Must be in the past, if not set, `invoice_date` is set to
-         * the current time in the customer's timezone.
+         * An ISO 8601 date or timestamp, interpreted in the customer's timezone. Must be in the
+         * past. If a date is set without a time, `invoice_date` is set to midnight on the chosen
+         * date in the customer's timezone.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -1056,8 +1059,9 @@ private constructor(
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             /**
-             * Optional invoice date to set. Must be in the past, if not set, `invoice_date` is set
-             * to the current time in the customer's timezone.
+             * An ISO 8601 date or timestamp, interpreted in the customer's timezone. Must be in the
+             * past. If a date is set without a time, `invoice_date` is set to midnight on the
+             * chosen date in the customer's timezone.
              */
             fun invoiceDate(invoiceDate: OffsetDateTime) = invoiceDate(JsonField.of(invoiceDate))
 

@@ -29,7 +29,7 @@ internal class ExternalLicenseServiceTest {
                     .subscriptionId("subscription_id")
                     .cursor("cursor")
                     .endDate(LocalDate.parse("2019-12-27"))
-                    .addGroupBy("string")
+                    .groupBy("group_by")
                     .limit(1L)
                     .startDate(LocalDate.parse("2019-12-27"))
                     .build()
