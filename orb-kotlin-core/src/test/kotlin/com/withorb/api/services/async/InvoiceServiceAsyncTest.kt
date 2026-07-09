@@ -71,7 +71,7 @@ internal class InvoiceServiceAsyncTest {
                             .reason("reason")
                             .build()
                     )
-                    .dueDate(LocalDate.parse("2023-09-22"))
+                    .dueDate(LocalDate.parse("2025-09-22"))
                     .externalCustomerId("external-customer-id")
                     .memo("An optional memo for my invoice.")
                     .metadata(
