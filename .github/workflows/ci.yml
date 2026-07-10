@@ -40,7 +40,9 @@ jobs:
   build:
     timeout-minutes: 15
     name: build
-    runs-on: ${{ github.repository == 'stainless-sdks/orb-kotlin' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
+    # The private staging repo gets GitHub's smallest hosted runners, which die
+    # mid-Gradle; run those jobs on runs-on instead (public production stays hosted).
+    runs-on: ${{ github.repository == 'orbcorp/orb-kotlin-staging' && format('runs-on={0}/image=ubuntu24-full-x64/runner=8cpu-linux-x64/spot=false/tag=sdk-ci', github.run_id) || 'ubuntu-latest' }}
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
 
     steps:
@@ -64,7 +66,9 @@ jobs:
   test:
     timeout-minutes: 15
     name: test
-    runs-on: ${{ github.repository == 'stainless-sdks/orb-kotlin' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
+    # The private staging repo gets GitHub's smallest hosted runners, which die
+    # mid-Gradle; run those jobs on runs-on instead (public production stays hosted).
+    runs-on: ${{ github.repository == 'orbcorp/orb-kotlin-staging' && format('runs-on={0}/image=ubuntu24-full-x64/runner=8cpu-linux-x64/spot=false/tag=sdk-ci', github.run_id) || 'ubuntu-latest' }}
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
     steps:
       - uses: actions/checkout@v6
