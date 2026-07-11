@@ -16,7 +16,7 @@ jobs:
   lint:
     timeout-minutes: 15
     name: lint
-    runs-on: ${{ github.repository == 'stainless-sdks/orb-kotlin' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
+    runs-on: runs-on=${{ github.run_id }}/image=ubuntu24-full-x64/runner=8cpu-linux-x64/spot=false/tag=sdk-ci
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
 
     steps:
@@ -40,11 +40,7 @@ jobs:
   build:
     timeout-minutes: 15
     name: build
-    # GitHub's small hosted runners can't run these Gradle jobs: the private
-    # staging repo's die mid-build, and the public production repo's test job
-    # deterministically fails LoggingHttpClientTest there (SLF4J binding not
-    # loaded); run both repos' jobs on runs-on.
-    runs-on: ${{ startsWith(github.repository, 'orbcorp/orb-kotlin') && format('runs-on={0}/image=ubuntu24-full-x64/runner=8cpu-linux-x64/spot=false/tag=sdk-ci', github.run_id) || 'ubuntu-latest' }}
+    runs-on: runs-on=${{ github.run_id }}/image=ubuntu24-full-x64/runner=8cpu-linux-x64/spot=false/tag=sdk-ci
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
 
     steps:
@@ -68,11 +64,7 @@ jobs:
   test:
     timeout-minutes: 15
     name: test
-    # GitHub's small hosted runners can't run these Gradle jobs: the private
-    # staging repo's die mid-build, and the public production repo's test job
-    # deterministically fails LoggingHttpClientTest there (SLF4J binding not
-    # loaded); run both repos' jobs on runs-on.
-    runs-on: ${{ startsWith(github.repository, 'orbcorp/orb-kotlin') && format('runs-on={0}/image=ubuntu24-full-x64/runner=8cpu-linux-x64/spot=false/tag=sdk-ci', github.run_id) || 'ubuntu-latest' }}
+    runs-on: runs-on=${{ github.run_id }}/image=ubuntu24-full-x64/runner=8cpu-linux-x64/spot=false/tag=sdk-ci
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
     steps:
       - uses: actions/checkout@v6
