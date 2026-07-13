@@ -66,6 +66,12 @@ internal class CustomerCreditListByExternalIdResponseTest {
                         .licenseTypeId("license_type_id")
                         .build()
                 )
+                .creditCommitment(
+                    CustomerCreditListByExternalIdResponse.CreditCommitment.builder()
+                        .id("id")
+                        .subscriptionId("subscription_id")
+                        .build()
+                )
                 .build()
 
         assertThat(customerCreditListByExternalIdResponse.id()).isEqualTo("id")
@@ -124,6 +130,13 @@ internal class CustomerCreditListByExternalIdResponseTest {
                     .licenseTypeId("license_type_id")
                     .build()
             )
+        assertThat(customerCreditListByExternalIdResponse.creditCommitment())
+            .isEqualTo(
+                CustomerCreditListByExternalIdResponse.CreditCommitment.builder()
+                    .id("id")
+                    .subscriptionId("subscription_id")
+                    .build()
+            )
     }
 
     @Test
@@ -180,6 +193,12 @@ internal class CustomerCreditListByExternalIdResponseTest {
                                 .build()
                         )
                         .licenseTypeId("license_type_id")
+                        .build()
+                )
+                .creditCommitment(
+                    CustomerCreditListByExternalIdResponse.CreditCommitment.builder()
+                        .id("id")
+                        .subscriptionId("subscription_id")
                         .build()
                 )
                 .build()

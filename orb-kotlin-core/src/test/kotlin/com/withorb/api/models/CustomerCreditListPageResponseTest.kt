@@ -65,6 +65,12 @@ internal class CustomerCreditListPageResponseTest {
                                 .licenseTypeId("license_type_id")
                                 .build()
                         )
+                        .creditCommitment(
+                            CustomerCreditListResponse.CreditCommitment.builder()
+                                .id("id")
+                                .subscriptionId("subscription_id")
+                                .build()
+                        )
                         .build()
                 )
                 .paginationMetadata(
@@ -120,6 +126,12 @@ internal class CustomerCreditListPageResponseTest {
                                     .build()
                             )
                             .licenseTypeId("license_type_id")
+                            .build()
+                    )
+                    .creditCommitment(
+                        CustomerCreditListResponse.CreditCommitment.builder()
+                            .id("id")
+                            .subscriptionId("subscription_id")
                             .build()
                     )
                     .build()
@@ -181,6 +193,12 @@ internal class CustomerCreditListPageResponseTest {
                                         .build()
                                 )
                                 .licenseTypeId("license_type_id")
+                                .build()
+                        )
+                        .creditCommitment(
+                            CustomerCreditListResponse.CreditCommitment.builder()
+                                .id("id")
+                                .subscriptionId("subscription_id")
                                 .build()
                         )
                         .build()

@@ -73,6 +73,12 @@ internal class CreditBlockListInvoicesResponseTest {
                                 .licenseTypeId("license_type_id")
                                 .build()
                         )
+                        .creditCommitment(
+                            CreditBlockListInvoicesResponse.Block.CreditCommitment.builder()
+                                .id("id")
+                                .subscriptionId("subscription_id")
+                                .build()
+                        )
                         .build()
                 )
                 .addInvoice(
@@ -148,6 +154,12 @@ internal class CreditBlockListInvoicesResponseTest {
                                     .build()
                             )
                             .licenseTypeId("license_type_id")
+                            .build()
+                    )
+                    .creditCommitment(
+                        CreditBlockListInvoicesResponse.Block.CreditCommitment.builder()
+                            .id("id")
+                            .subscriptionId("subscription_id")
                             .build()
                     )
                     .build()
@@ -230,6 +242,12 @@ internal class CreditBlockListInvoicesResponseTest {
                                         .build()
                                 )
                                 .licenseTypeId("license_type_id")
+                                .build()
+                        )
+                        .creditCommitment(
+                            CreditBlockListInvoicesResponse.Block.CreditCommitment.builder()
+                                .id("id")
+                                .subscriptionId("subscription_id")
                                 .build()
                         )
                         .build()

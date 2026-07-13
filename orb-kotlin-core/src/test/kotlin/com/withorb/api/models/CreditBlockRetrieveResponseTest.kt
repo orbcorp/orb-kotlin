@@ -62,6 +62,12 @@ internal class CreditBlockRetrieveResponseTest {
                         .licenseTypeId("license_type_id")
                         .build()
                 )
+                .creditCommitment(
+                    CreditBlockRetrieveResponse.CreditCommitment.builder()
+                        .id("id")
+                        .subscriptionId("subscription_id")
+                        .build()
+                )
                 .build()
 
         assertThat(creditBlockRetrieveResponse.id()).isEqualTo("id")
@@ -117,6 +123,13 @@ internal class CreditBlockRetrieveResponseTest {
                     .licenseTypeId("license_type_id")
                     .build()
             )
+        assertThat(creditBlockRetrieveResponse.creditCommitment())
+            .isEqualTo(
+                CreditBlockRetrieveResponse.CreditCommitment.builder()
+                    .id("id")
+                    .subscriptionId("subscription_id")
+                    .build()
+            )
     }
 
     @Test
@@ -169,6 +182,12 @@ internal class CreditBlockRetrieveResponseTest {
                                 .build()
                         )
                         .licenseTypeId("license_type_id")
+                        .build()
+                )
+                .creditCommitment(
+                    CreditBlockRetrieveResponse.CreditCommitment.builder()
+                        .id("id")
+                        .subscriptionId("subscription_id")
                         .build()
                 )
                 .build()
