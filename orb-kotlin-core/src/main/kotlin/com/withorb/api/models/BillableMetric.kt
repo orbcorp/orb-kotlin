@@ -30,6 +30,7 @@ private constructor(
     private val item: JsonField<Item>,
     private val metadata: JsonField<Metadata>,
     private val name: JsonField<String>,
+    private val sql: JsonField<String>,
     private val status: JsonField<Status>,
     private val parameterDefinitions: JsonField<List<ParameterDefinition>>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -44,11 +45,22 @@ private constructor(
         @JsonProperty("item") @ExcludeMissing item: JsonField<Item> = JsonMissing.of(),
         @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("sql") @ExcludeMissing sql: JsonField<String> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
         @JsonProperty("parameter_definitions")
         @ExcludeMissing
         parameterDefinitions: JsonField<List<ParameterDefinition>> = JsonMissing.of(),
-    ) : this(id, description, item, metadata, name, status, parameterDefinitions, mutableMapOf())
+    ) : this(
+        id,
+        description,
+        item,
+        metadata,
+        name,
+        sql,
+        status,
+        parameterDefinitions,
+        mutableMapOf(),
+    )
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -87,6 +99,15 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun name(): String = name.getRequired("name")
+
+    /**
+     * The SQL definition of the metric. For metrics defined via configuration rather than SQL, this
+     * is a derived SQL representation.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun sql(): String = sql.getRequired("sql")
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -137,6 +158,13 @@ private constructor(
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
     /**
+     * Returns the raw JSON value of [sql].
+     *
+     * Unlike [sql], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("sql") @ExcludeMissing fun _sql(): JsonField<String> = sql
+
+    /**
      * Returns the raw JSON value of [status].
      *
      * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
@@ -177,6 +205,7 @@ private constructor(
          * .item()
          * .metadata()
          * .name()
+         * .sql()
          * .status()
          * ```
          */
@@ -191,6 +220,7 @@ private constructor(
         private var item: JsonField<Item>? = null
         private var metadata: JsonField<Metadata>? = null
         private var name: JsonField<String>? = null
+        private var sql: JsonField<String>? = null
         private var status: JsonField<Status>? = null
         private var parameterDefinitions: JsonField<MutableList<ParameterDefinition>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -201,6 +231,7 @@ private constructor(
             item = billableMetric.item
             metadata = billableMetric.metadata
             name = billableMetric.name
+            sql = billableMetric.sql
             status = billableMetric.status
             parameterDefinitions = billableMetric.parameterDefinitions.map { it.toMutableList() }
             additionalProperties = billableMetric.additionalProperties.toMutableMap()
@@ -267,6 +298,20 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
+
+        /**
+         * The SQL definition of the metric. For metrics defined via configuration rather than SQL,
+         * this is a derived SQL representation.
+         */
+        fun sql(sql: String) = sql(JsonField.of(sql))
+
+        /**
+         * Sets [Builder.sql] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.sql] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun sql(sql: JsonField<String>) = apply { this.sql = sql }
 
         fun status(status: Status) = status(JsonField.of(status))
 
@@ -336,6 +381,7 @@ private constructor(
          * .item()
          * .metadata()
          * .name()
+         * .sql()
          * .status()
          * ```
          *
@@ -348,6 +394,7 @@ private constructor(
                 checkRequired("item", item),
                 checkRequired("metadata", metadata),
                 checkRequired("name", name),
+                checkRequired("sql", sql),
                 checkRequired("status", status),
                 (parameterDefinitions ?: JsonMissing.of()).map { it.toImmutable() },
                 additionalProperties.toMutableMap(),
@@ -374,6 +421,7 @@ private constructor(
         item().validate()
         metadata().validate()
         name()
+        sql()
         status().validate()
         parameterDefinitions()?.forEach { it.validate() }
         validated = true
@@ -398,6 +446,7 @@ private constructor(
             (item.asKnown()?.validity() ?: 0) +
             (metadata.asKnown()?.validity() ?: 0) +
             (if (name.asKnown() == null) 0 else 1) +
+            (if (sql.asKnown() == null) 0 else 1) +
             (status.asKnown()?.validity() ?: 0) +
             (parameterDefinitions.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
@@ -770,6 +819,7 @@ private constructor(
             item == other.item &&
             metadata == other.metadata &&
             name == other.name &&
+            sql == other.sql &&
             status == other.status &&
             parameterDefinitions == other.parameterDefinitions &&
             additionalProperties == other.additionalProperties
@@ -782,6 +832,7 @@ private constructor(
             item,
             metadata,
             name,
+            sql,
             status,
             parameterDefinitions,
             additionalProperties,
@@ -791,5 +842,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "BillableMetric{id=$id, description=$description, item=$item, metadata=$metadata, name=$name, status=$status, parameterDefinitions=$parameterDefinitions, additionalProperties=$additionalProperties}"
+        "BillableMetric{id=$id, description=$description, item=$item, metadata=$metadata, name=$name, sql=$sql, status=$status, parameterDefinitions=$parameterDefinitions, additionalProperties=$additionalProperties}"
 }

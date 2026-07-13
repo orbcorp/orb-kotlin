@@ -46,6 +46,7 @@ internal class MetricListPageResponseTest {
                                 .build()
                         )
                         .name("name")
+                        .sql("sql")
                         .status(BillableMetric.Status.ACTIVE)
                         .addParameterDefinition(
                             BillableMetric.ParameterDefinition.builder()
@@ -91,6 +92,7 @@ internal class MetricListPageResponseTest {
                             .build()
                     )
                     .name("name")
+                    .sql("sql")
                     .status(BillableMetric.Status.ACTIVE)
                     .addParameterDefinition(
                         BillableMetric.ParameterDefinition.builder()
@@ -139,6 +141,7 @@ internal class MetricListPageResponseTest {
                                 .build()
                         )
                         .name("name")
+                        .sql("sql")
                         .status(BillableMetric.Status.ACTIVE)
                         .addParameterDefinition(
                             BillableMetric.ParameterDefinition.builder()
