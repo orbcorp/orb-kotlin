@@ -44,13 +44,10 @@ private constructor(
         validationFailed.getRequired("validation_failed")
 
     /**
-     * Optional debug information (only present when debug=true is passed to the endpoint). Contains
-     * ingested and duplicate event idempotency keys.
-     *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
      */
-    fun debug(): Debug? = debug.getNullable("debug")
+    @Deprecated("deprecated") fun debug(): Debug? = debug.getNullable("debug")
 
     /**
      * Returns the raw JSON value of [validationFailed].
@@ -67,7 +64,10 @@ private constructor(
      *
      * Unlike [debug], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("debug") @ExcludeMissing fun _debug(): JsonField<Debug> = debug
+    @Deprecated("deprecated")
+    @JsonProperty("debug")
+    @ExcludeMissing
+    fun _debug(): JsonField<Debug> = debug
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -137,11 +137,7 @@ private constructor(
                 }
         }
 
-        /**
-         * Optional debug information (only present when debug=true is passed to the endpoint).
-         * Contains ingested and duplicate event idempotency keys.
-         */
-        fun debug(debug: Debug?) = debug(JsonField.ofNullable(debug))
+        @Deprecated("deprecated") fun debug(debug: Debug?) = debug(JsonField.ofNullable(debug))
 
         /**
          * Sets [Builder.debug] to an arbitrary JSON value.
@@ -149,7 +145,7 @@ private constructor(
          * You should usually call [Builder.debug] with a well-typed [Debug] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun debug(debug: JsonField<Debug>) = apply { this.debug = debug }
+        @Deprecated("deprecated") fun debug(debug: JsonField<Debug>) = apply { this.debug = debug }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -464,10 +460,7 @@ private constructor(
             "ValidationFailed{idempotencyKey=$idempotencyKey, validationErrors=$validationErrors, additionalProperties=$additionalProperties}"
     }
 
-    /**
-     * Optional debug information (only present when debug=true is passed to the endpoint). Contains
-     * ingested and duplicate event idempotency keys.
-     */
+    @Deprecated("deprecated")
     class Debug
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
