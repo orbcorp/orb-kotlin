@@ -9,6 +9,10 @@ import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
+import com.withorb.api.models.CustomerCreatePortalSessionByExternalIdParams
+import com.withorb.api.models.CustomerCreatePortalSessionByExternalIdResponse
+import com.withorb.api.models.CustomerCreatePortalSessionParams
+import com.withorb.api.models.CustomerCreatePortalSessionResponse
 import com.withorb.api.models.CustomerDeleteParams
 import com.withorb.api.models.CustomerFetchByExternalIdParams
 import com.withorb.api.models.CustomerFetchParams
@@ -181,6 +185,68 @@ interface CustomerService {
     /** @see delete */
     fun delete(customerId: String, requestOptions: RequestOptions) =
         delete(customerId, CustomerDeleteParams.none(), requestOptions)
+
+    /**
+     * Creates a portal session for the customer, returning a short-lived URL that provides
+     * authenticated access to the customer's billing portal. The session expires after
+     * `expires_in_minutes` (default 60, max 180). By default, creating a new session invalidates
+     * any other active portal sessions for the customer; pass `invalidate_existing=false` to allow
+     * concurrent sessions.
+     */
+    fun createPortalSession(
+        customerId: String,
+        params: CustomerCreatePortalSessionParams = CustomerCreatePortalSessionParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreatePortalSessionResponse =
+        createPortalSession(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+    /** @see createPortalSession */
+    fun createPortalSession(
+        params: CustomerCreatePortalSessionParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreatePortalSessionResponse
+
+    /** @see createPortalSession */
+    fun createPortalSession(
+        customerId: String,
+        requestOptions: RequestOptions,
+    ): CustomerCreatePortalSessionResponse =
+        createPortalSession(customerId, CustomerCreatePortalSessionParams.none(), requestOptions)
+
+    /**
+     * Creates a portal session for the customer, returning a short-lived URL that provides
+     * authenticated access to the customer's billing portal. The session expires after
+     * `expires_in_minutes` (default 60, max 180). By default, creating a new session invalidates
+     * any other active portal sessions for the customer; pass `invalidate_existing=false` to allow
+     * concurrent sessions.
+     */
+    fun createPortalSessionByExternalId(
+        externalCustomerId: String,
+        params: CustomerCreatePortalSessionByExternalIdParams =
+            CustomerCreatePortalSessionByExternalIdParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreatePortalSessionByExternalIdResponse =
+        createPortalSessionByExternalId(
+            params.toBuilder().externalCustomerId(externalCustomerId).build(),
+            requestOptions,
+        )
+
+    /** @see createPortalSessionByExternalId */
+    fun createPortalSessionByExternalId(
+        params: CustomerCreatePortalSessionByExternalIdParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CustomerCreatePortalSessionByExternalIdResponse
+
+    /** @see createPortalSessionByExternalId */
+    fun createPortalSessionByExternalId(
+        externalCustomerId: String,
+        requestOptions: RequestOptions,
+    ): CustomerCreatePortalSessionByExternalIdResponse =
+        createPortalSessionByExternalId(
+            externalCustomerId,
+            CustomerCreatePortalSessionByExternalIdParams.none(),
+            requestOptions,
+        )
 
     /**
      * This endpoint is used to fetch customer details given an identifier. If the `Customer` is in
@@ -453,6 +519,73 @@ interface CustomerService {
         @MustBeClosed
         fun delete(customerId: String, requestOptions: RequestOptions): HttpResponse =
             delete(customerId, CustomerDeleteParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /customers/{customer_id}/portal_sessions`, but is
+         * otherwise the same as [CustomerService.createPortalSession].
+         */
+        @MustBeClosed
+        fun createPortalSession(
+            customerId: String,
+            params: CustomerCreatePortalSessionParams = CustomerCreatePortalSessionParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreatePortalSessionResponse> =
+            createPortalSession(params.toBuilder().customerId(customerId).build(), requestOptions)
+
+        /** @see createPortalSession */
+        @MustBeClosed
+        fun createPortalSession(
+            params: CustomerCreatePortalSessionParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreatePortalSessionResponse>
+
+        /** @see createPortalSession */
+        @MustBeClosed
+        fun createPortalSession(
+            customerId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreatePortalSessionResponse> =
+            createPortalSession(
+                customerId,
+                CustomerCreatePortalSessionParams.none(),
+                requestOptions,
+            )
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /customers/external_customer_id/{external_customer_id}/portal_sessions`, but is otherwise
+         * the same as [CustomerService.createPortalSessionByExternalId].
+         */
+        @MustBeClosed
+        fun createPortalSessionByExternalId(
+            externalCustomerId: String,
+            params: CustomerCreatePortalSessionByExternalIdParams =
+                CustomerCreatePortalSessionByExternalIdParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreatePortalSessionByExternalIdResponse> =
+            createPortalSessionByExternalId(
+                params.toBuilder().externalCustomerId(externalCustomerId).build(),
+                requestOptions,
+            )
+
+        /** @see createPortalSessionByExternalId */
+        @MustBeClosed
+        fun createPortalSessionByExternalId(
+            params: CustomerCreatePortalSessionByExternalIdParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreatePortalSessionByExternalIdResponse>
+
+        /** @see createPortalSessionByExternalId */
+        @MustBeClosed
+        fun createPortalSessionByExternalId(
+            externalCustomerId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreatePortalSessionByExternalIdResponse> =
+            createPortalSessionByExternalId(
+                externalCustomerId,
+                CustomerCreatePortalSessionByExternalIdParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /customers/{customer_id}`, but is otherwise the same

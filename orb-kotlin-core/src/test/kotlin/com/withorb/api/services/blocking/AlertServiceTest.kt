@@ -81,6 +81,18 @@ internal class AlertServiceTest {
     }
 
     @Test
+    fun delete() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val alertService = client.alerts()
+
+        alertService.delete("alert_configuration_id")
+    }
+
+    @Test
     fun createForCustomer() {
         val client =
             OrbOkHttpClient.builder()

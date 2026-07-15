@@ -5,6 +5,7 @@ package com.withorb.api.services.async
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.checkRequired
+import com.withorb.api.core.handlers.emptyHandler
 import com.withorb.api.core.handlers.errorBodyHandler
 import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.handlers.jsonHandler
@@ -20,6 +21,7 @@ import com.withorb.api.models.Alert
 import com.withorb.api.models.AlertCreateForCustomerParams
 import com.withorb.api.models.AlertCreateForExternalCustomerParams
 import com.withorb.api.models.AlertCreateForSubscriptionParams
+import com.withorb.api.models.AlertDeleteParams
 import com.withorb.api.models.AlertDisableParams
 import com.withorb.api.models.AlertEnableParams
 import com.withorb.api.models.AlertListPageAsync
@@ -63,6 +65,11 @@ class AlertServiceAsyncImpl internal constructor(private val clientOptions: Clie
     ): AlertListPageAsync =
         // get /alerts
         withRawResponse().list(params, requestOptions).parse()
+
+    override suspend fun delete(params: AlertDeleteParams, requestOptions: RequestOptions) {
+        // delete /alerts/{alert_configuration_id}
+        withRawResponse().delete(params, requestOptions)
+    }
 
     override suspend fun createForCustomer(
         params: AlertCreateForCustomerParams,
@@ -199,6 +206,30 @@ class AlertServiceAsyncImpl internal constructor(private val clientOptions: Clie
                             .response(it)
                             .build()
                     }
+            }
+        }
+
+        private val deleteHandler: Handler<Void?> = emptyHandler()
+
+        override suspend fun delete(
+            params: AlertDeleteParams,
+            requestOptions: RequestOptions,
+        ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("alertConfigurationId", params.alertConfigurationId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("alerts", params._pathParam(0))
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response.use { deleteHandler.handle(it) }
             }
         }
 

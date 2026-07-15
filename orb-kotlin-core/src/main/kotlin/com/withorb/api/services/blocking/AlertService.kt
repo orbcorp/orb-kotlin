@@ -5,11 +5,13 @@ package com.withorb.api.services.blocking
 import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Alert
 import com.withorb.api.models.AlertCreateForCustomerParams
 import com.withorb.api.models.AlertCreateForExternalCustomerParams
 import com.withorb.api.models.AlertCreateForSubscriptionParams
+import com.withorb.api.models.AlertDeleteParams
 import com.withorb.api.models.AlertDisableParams
 import com.withorb.api.models.AlertEnableParams
 import com.withorb.api.models.AlertListPage
@@ -90,6 +92,32 @@ interface AlertService {
     /** @see list */
     fun list(requestOptions: RequestOptions): AlertListPage =
         list(AlertListParams.none(), requestOptions)
+
+    /**
+     * This endpoint trashes a subscription- or customer-scoped alert. The alert is soft-deleted: it
+     * stops firing immediately and no longer appears in fetch or list responses, while the
+     * underlying record is retained internally for audit.
+     *
+     * Plan-level alerts cannot be trashed via the API — disable them instead (`POST
+     * /v1/alerts/{alert_configuration_id}/disable`). Their removal would need to be unwound from
+     * every subscription the alert was propagated to, which isn't supported yet.
+     */
+    fun delete(
+        alertConfigurationId: String,
+        params: AlertDeleteParams = AlertDeleteParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ) =
+        delete(
+            params.toBuilder().alertConfigurationId(alertConfigurationId).build(),
+            requestOptions,
+        )
+
+    /** @see delete */
+    fun delete(params: AlertDeleteParams, requestOptions: RequestOptions = RequestOptions.none())
+
+    /** @see delete */
+    fun delete(alertConfigurationId: String, requestOptions: RequestOptions) =
+        delete(alertConfigurationId, AlertDeleteParams.none(), requestOptions)
 
     /**
      * This endpoint creates a new alert to monitor a customer's credit balance. There are three
@@ -283,6 +311,33 @@ interface AlertService {
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<AlertListPage> =
             list(AlertListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `delete /alerts/{alert_configuration_id}`, but is
+         * otherwise the same as [AlertService.delete].
+         */
+        @MustBeClosed
+        fun delete(
+            alertConfigurationId: String,
+            params: AlertDeleteParams = AlertDeleteParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse =
+            delete(
+                params.toBuilder().alertConfigurationId(alertConfigurationId).build(),
+                requestOptions,
+            )
+
+        /** @see delete */
+        @MustBeClosed
+        fun delete(
+            params: AlertDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
+
+        /** @see delete */
+        @MustBeClosed
+        fun delete(alertConfigurationId: String, requestOptions: RequestOptions): HttpResponse =
+            delete(alertConfigurationId, AlertDeleteParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /alerts/customer_id/{customer_id}`, but is

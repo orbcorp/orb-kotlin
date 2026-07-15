@@ -8,6 +8,8 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.models.AccountingProviderConfig
 import com.withorb.api.models.AddressInput
 import com.withorb.api.models.CustomerCreateParams
+import com.withorb.api.models.CustomerCreatePortalSessionByExternalIdParams
+import com.withorb.api.models.CustomerCreatePortalSessionParams
 import com.withorb.api.models.CustomerHierarchyConfig
 import com.withorb.api.models.CustomerTaxId
 import com.withorb.api.models.CustomerUpdateByExternalIdParams
@@ -254,6 +256,48 @@ internal class CustomerServiceTest {
         val customerService = client.customers()
 
         customerService.delete("customer_id")
+    }
+
+    @Test
+    fun createPortalSession() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val customerService = client.customers()
+
+        val response =
+            customerService.createPortalSession(
+                CustomerCreatePortalSessionParams.builder()
+                    .customerId("customer_id")
+                    .expiresInMinutes(1L)
+                    .invalidateExisting(true)
+                    .build()
+            )
+
+        response.validate()
+    }
+
+    @Test
+    fun createPortalSessionByExternalId() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val customerService = client.customers()
+
+        val response =
+            customerService.createPortalSessionByExternalId(
+                CustomerCreatePortalSessionByExternalIdParams.builder()
+                    .externalCustomerId("external_customer_id")
+                    .expiresInMinutes(1L)
+                    .invalidateExisting(true)
+                    .build()
+            )
+
+        response.validate()
     }
 
     @Test

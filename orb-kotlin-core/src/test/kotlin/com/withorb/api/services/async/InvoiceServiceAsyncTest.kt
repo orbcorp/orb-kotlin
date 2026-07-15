@@ -271,6 +271,34 @@ internal class InvoiceServiceAsyncTest {
     }
 
     @Test
+    suspend fun regenerateInvoicePdf() {
+        val client =
+            OrbOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val invoiceServiceAsync = client.invoices()
+
+        val invoice = invoiceServiceAsync.regenerateInvoicePdf("invoice_id")
+
+        invoice.validate()
+    }
+
+    @Test
+    suspend fun regenerateReceiptPdf() {
+        val client =
+            OrbOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val invoiceServiceAsync = client.invoices()
+
+        val invoice = invoiceServiceAsync.regenerateReceiptPdf("invoice_id")
+
+        invoice.validate()
+    }
+
+    @Test
     suspend fun void() {
         val client =
             OrbOkHttpClientAsync.builder()
