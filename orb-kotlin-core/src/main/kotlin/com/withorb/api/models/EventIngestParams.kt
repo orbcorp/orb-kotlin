@@ -183,7 +183,6 @@ import java.util.Objects
 class EventIngestParams
 private constructor(
     private val backfillId: String?,
-    private val debug: Boolean?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -194,9 +193,6 @@ private constructor(
      * the backfill
      */
     fun backfillId(): String? = backfillId
-
-    /** Pending Deprecation: Flag to enable additional debug information in the endpoint response */
-    @Deprecated("deprecated") fun debug(): Boolean? = debug
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -238,14 +234,12 @@ private constructor(
     class Builder internal constructor() {
 
         private var backfillId: String? = null
-        private var debug: Boolean? = null
         private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(eventIngestParams: EventIngestParams) = apply {
             backfillId = eventIngestParams.backfillId
-            debug = eventIngestParams.debug
             body = eventIngestParams.body.toBuilder()
             additionalHeaders = eventIngestParams.additionalHeaders.toBuilder()
             additionalQueryParams = eventIngestParams.additionalQueryParams.toBuilder()
@@ -256,18 +250,6 @@ private constructor(
          * to the backfill
          */
         fun backfillId(backfillId: String?) = apply { this.backfillId = backfillId }
-
-        /**
-         * Pending Deprecation: Flag to enable additional debug information in the endpoint response
-         */
-        @Deprecated("deprecated") fun debug(debug: Boolean?) = apply { this.debug = debug }
-
-        /**
-         * Alias for [Builder.debug].
-         *
-         * This unboxed primitive overload exists for backwards compatibility.
-         */
-        @Deprecated("deprecated") fun debug(debug: Boolean) = debug(debug as Boolean?)
 
         /**
          * Sets the entire request body.
@@ -428,7 +410,6 @@ private constructor(
         fun build(): EventIngestParams =
             EventIngestParams(
                 backfillId,
-                debug,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -443,7 +424,6 @@ private constructor(
         QueryParams.builder()
             .apply {
                 backfillId?.let { put("backfill_id", it) }
-                debug?.let { put("debug", it.toString()) }
                 putAll(additionalQueryParams)
             }
             .build()
@@ -1167,15 +1147,14 @@ private constructor(
 
         return other is EventIngestParams &&
             backfillId == other.backfillId &&
-            debug == other.debug &&
             body == other.body &&
             additionalHeaders == other.additionalHeaders &&
             additionalQueryParams == other.additionalQueryParams
     }
 
     override fun hashCode(): Int =
-        Objects.hash(backfillId, debug, body, additionalHeaders, additionalQueryParams)
+        Objects.hash(backfillId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
-        "EventIngestParams{backfillId=$backfillId, debug=$debug, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "EventIngestParams{backfillId=$backfillId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -14,7 +14,6 @@ internal class EventIngestParamsTest {
     fun create() {
         EventIngestParams.builder()
             .backfillId("backfill_id")
-            .debug(true)
             .addEvent(
                 EventIngestParams.Event.builder()
                     .eventName("event_name")
@@ -37,7 +36,6 @@ internal class EventIngestParamsTest {
         val params =
             EventIngestParams.builder()
                 .backfillId("backfill_id")
-                .debug(true)
                 .addEvent(
                     EventIngestParams.Event.builder()
                         .eventName("event_name")
@@ -57,9 +55,7 @@ internal class EventIngestParamsTest {
         val queryParams = params._queryParams()
 
         assertThat(queryParams)
-            .isEqualTo(
-                QueryParams.builder().put("backfill_id", "backfill_id").put("debug", "true").build()
-            )
+            .isEqualTo(QueryParams.builder().put("backfill_id", "backfill_id").build())
     }
 
     @Test
@@ -90,7 +86,6 @@ internal class EventIngestParamsTest {
         val params =
             EventIngestParams.builder()
                 .backfillId("backfill_id")
-                .debug(true)
                 .addEvent(
                     EventIngestParams.Event.builder()
                         .eventName("event_name")

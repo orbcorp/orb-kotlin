@@ -19,12 +19,6 @@ internal class EventIngestResponseTest {
                         .addValidationError("string")
                         .build()
                 )
-                .debug(
-                    EventIngestResponse.Debug.builder()
-                        .addDuplicate("string")
-                        .addIngested("string")
-                        .build()
-                )
                 .build()
 
         assertThat(eventIngestResponse.validationFailed())
@@ -32,13 +26,6 @@ internal class EventIngestResponseTest {
                 EventIngestResponse.ValidationFailed.builder()
                     .idempotencyKey("idempotency_key")
                     .addValidationError("string")
-                    .build()
-            )
-        assertThat(eventIngestResponse.debug())
-            .isEqualTo(
-                EventIngestResponse.Debug.builder()
-                    .addDuplicate("string")
-                    .addIngested("string")
                     .build()
             )
     }
@@ -52,12 +39,6 @@ internal class EventIngestResponseTest {
                     EventIngestResponse.ValidationFailed.builder()
                         .idempotencyKey("idempotency_key")
                         .addValidationError("string")
-                        .build()
-                )
-                .debug(
-                    EventIngestResponse.Debug.builder()
-                        .addDuplicate("string")
-                        .addIngested("string")
                         .build()
                 )
                 .build()

@@ -70,7 +70,6 @@ internal class EventServiceTest {
             eventService.ingest(
                 EventIngestParams.builder()
                     .backfillId("backfill_id")
-                    .debug(true)
                     .addEvent(
                         EventIngestParams.Event.builder()
                             .eventName("event_name")
