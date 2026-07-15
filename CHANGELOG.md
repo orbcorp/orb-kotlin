@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/orbcorp/orb-kotlin/compare/v1.14.0...v1.15.0) (2026-07-15)
+
+
+### Features
+
+* **api:** deprecate debug mode ingestion response field ([9a77cdc](https://github.com/orbcorp/orb-kotlin/commit/9a77cdcebfb26c4cdfcdff4f7dd6849a148a7fe3))
+
 ## [1.14.0](https://github.com/orbcorp/orb-kotlin/compare/v1.13.0...v1.14.0) (2026-07-14)
 
 
