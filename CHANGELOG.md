@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.16.0](https://github.com/orbcorp/orb-kotlin/compare/v1.15.0...v1.16.0) (2026-07-16)
+
+
+### Features
+
+* **api:** add alert deletion, customer portal session, and invoice PDF regeneration endpoints ([b0f5241](https://github.com/orbcorp/orb-kotlin/commit/b0f5241218b58be36c637f36e076ec6c258e25b9))
+* **api:** remove deprecated debug field from events backfill endpoints ([a0a45d0](https://github.com/orbcorp/orb-kotlin/commit/a0a45d020776f87cc2017aef44ae44bd797343b9))
+* **api:** remove deprecated debug parameter and field from backfill endpoints ([a0a45d0](https://github.com/orbcorp/orb-kotlin/commit/a0a45d020776f87cc2017aef44ae44bd797343b9))
+* **api:** remove deprecated debug query parameter and field from events API ([a0a45d0](https://github.com/orbcorp/orb-kotlin/commit/a0a45d020776f87cc2017aef44ae44bd797343b9))
+
 ## [1.15.0](https://github.com/orbcorp/orb-kotlin/compare/v1.14.0...v1.15.0) (2026-07-15)
 
 
