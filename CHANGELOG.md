@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.0](https://github.com/orbcorp/orb-kotlin/compare/v1.16.0...v1.17.0) (2026-07-17)
+
+
+### Features
+
+* **api:** allow future invoice dates (up to one year) for one-off invoice creation ([0796519](https://github.com/orbcorp/orb-kotlin/commit/0796519bf9fa985c4527076c25587034a9c82cb3))
+
 ## [1.16.0](https://github.com/orbcorp/orb-kotlin/compare/v1.15.0...v1.16.0) (2026-07-16)
 
 
