@@ -58,8 +58,9 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
-     * When the migration takes effect. Can be a specific date/time, or 'end_of_term' when scheduled
-     * to be at the end of the current billing period.
+     * When the migration takes effect. Can be a specific date/time, 'end_of_term' when scheduled to
+     * be at the end of the current billing period, or 'end_of_invoice' when scheduled to be at the
+     * start of the next invoice.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -171,8 +172,9 @@ private constructor(
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
-         * When the migration takes effect. Can be a specific date/time, or 'end_of_term' when
-         * scheduled to be at the end of the current billing period.
+         * When the migration takes effect. Can be a specific date/time, 'end_of_term' when
+         * scheduled to be at the end of the current billing period, or 'end_of_invoice' when
+         * scheduled to be at the start of the next invoice.
          */
         fun effectiveTime(effectiveTime: EffectiveTime?) =
             effectiveTime(JsonField.ofNullable(effectiveTime))
@@ -311,8 +313,9 @@ private constructor(
             (status.asKnown()?.validity() ?: 0)
 
     /**
-     * When the migration takes effect. Can be a specific date/time, or 'end_of_term' when scheduled
-     * to be at the end of the current billing period.
+     * When the migration takes effect. Can be a specific date/time, 'end_of_term' when scheduled to
+     * be at the end of the current billing period, or 'end_of_invoice' when scheduled to be at the
+     * start of the next invoice.
      */
     @JsonDeserialize(using = EffectiveTime.Deserializer::class)
     @JsonSerialize(using = EffectiveTime.Serializer::class)
@@ -560,12 +563,15 @@ private constructor(
 
                 val END_OF_TERM = of("end_of_term")
 
+                val END_OF_INVOICE = of("end_of_invoice")
+
                 fun of(value: String) = UnionMember2(JsonField.of(value))
             }
 
             /** An enum containing [UnionMember2]'s known values. */
             enum class Known {
-                END_OF_TERM
+                END_OF_TERM,
+                END_OF_INVOICE,
             }
 
             /**
@@ -579,6 +585,7 @@ private constructor(
              */
             enum class Value {
                 END_OF_TERM,
+                END_OF_INVOICE,
                 /**
                  * An enum member indicating that [UnionMember2] was instantiated with an unknown
                  * value.
@@ -596,6 +603,7 @@ private constructor(
             fun value(): Value =
                 when (this) {
                     END_OF_TERM -> Value.END_OF_TERM
+                    END_OF_INVOICE -> Value.END_OF_INVOICE
                     else -> Value._UNKNOWN
                 }
 
@@ -611,6 +619,7 @@ private constructor(
             fun known(): Known =
                 when (this) {
                     END_OF_TERM -> Known.END_OF_TERM
+                    END_OF_INVOICE -> Known.END_OF_INVOICE
                     else -> throw OrbInvalidDataException("Unknown UnionMember2: $value")
                 }
 
