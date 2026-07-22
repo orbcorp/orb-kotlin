@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.0](https://github.com/orbcorp/orb-kotlin/compare/v1.17.0...v1.18.0) (2026-07-22)
+
+
+### Features
+
+* **api:** support `end_of_invoice` effective time for plan version migrations ([2080eae](https://github.com/orbcorp/orb-kotlin/commit/2080eaeb922752f4aff44fb5f9bcb248caadd73d))
+
 ## [1.17.0](https://github.com/orbcorp/orb-kotlin/compare/v1.16.0...v1.17.0) (2026-07-17)
 
 
