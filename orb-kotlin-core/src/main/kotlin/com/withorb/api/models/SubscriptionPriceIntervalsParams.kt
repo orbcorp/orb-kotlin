@@ -3394,7 +3394,7 @@ private constructor(
         @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val effectiveDate: JsonField<OffsetDateTime>,
-            private val quantity: JsonField<Long>,
+            private val quantity: JsonField<Double>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
 
@@ -3405,7 +3405,7 @@ private constructor(
                 effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of(),
                 @JsonProperty("quantity")
                 @ExcludeMissing
-                quantity: JsonField<Long> = JsonMissing.of(),
+                quantity: JsonField<Double> = JsonMissing.of(),
             ) : this(effectiveDate, quantity, mutableMapOf())
 
             /**
@@ -3424,7 +3424,7 @@ private constructor(
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
              */
-            fun quantity(): Long = quantity.getRequired("quantity")
+            fun quantity(): Double = quantity.getRequired("quantity")
 
             /**
              * Returns the raw JSON value of [effectiveDate].
@@ -3442,7 +3442,7 @@ private constructor(
              * Unlike [quantity], this method doesn't throw if the JSON field has an unexpected
              * type.
              */
-            @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Long> = quantity
+            @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
             @JsonAnySetter
             private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -3475,7 +3475,7 @@ private constructor(
             class Builder internal constructor() {
 
                 private var effectiveDate: JsonField<OffsetDateTime>? = null
-                private var quantity: JsonField<Long>? = null
+                private var quantity: JsonField<Double>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(fixedFeeQuantityTransition: FixedFeeQuantityTransition) = apply {
@@ -3501,16 +3501,16 @@ private constructor(
                 }
 
                 /** The quantity of the fixed fee quantity transition. */
-                fun quantity(quantity: Long) = quantity(JsonField.of(quantity))
+                fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
                 /**
                  * Sets [Builder.quantity] to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.quantity] with a well-typed [Long] value
+                 * You should usually call [Builder.quantity] with a well-typed [Double] value
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun quantity(quantity: JsonField<Long>) = apply { this.quantity = quantity }
+                fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -24399,7 +24399,7 @@ private constructor(
         @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val effectiveDate: JsonField<OffsetDateTime>,
-            private val quantity: JsonField<Long>,
+            private val quantity: JsonField<Double>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
 
@@ -24410,7 +24410,7 @@ private constructor(
                 effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of(),
                 @JsonProperty("quantity")
                 @ExcludeMissing
-                quantity: JsonField<Long> = JsonMissing.of(),
+                quantity: JsonField<Double> = JsonMissing.of(),
             ) : this(effectiveDate, quantity, mutableMapOf())
 
             /**
@@ -24429,7 +24429,7 @@ private constructor(
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
              */
-            fun quantity(): Long = quantity.getRequired("quantity")
+            fun quantity(): Double = quantity.getRequired("quantity")
 
             /**
              * Returns the raw JSON value of [effectiveDate].
@@ -24447,7 +24447,7 @@ private constructor(
              * Unlike [quantity], this method doesn't throw if the JSON field has an unexpected
              * type.
              */
-            @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Long> = quantity
+            @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
             @JsonAnySetter
             private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -24480,7 +24480,7 @@ private constructor(
             class Builder internal constructor() {
 
                 private var effectiveDate: JsonField<OffsetDateTime>? = null
-                private var quantity: JsonField<Long>? = null
+                private var quantity: JsonField<Double>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(fixedFeeQuantityTransition: FixedFeeQuantityTransition) = apply {
@@ -24506,16 +24506,16 @@ private constructor(
                 }
 
                 /** The quantity of the fixed fee quantity transition. */
-                fun quantity(quantity: Long) = quantity(JsonField.of(quantity))
+                fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
                 /**
                  * Sets [Builder.quantity] to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.quantity] with a well-typed [Long] value
+                 * You should usually call [Builder.quantity] with a well-typed [Double] value
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun quantity(quantity: JsonField<Long>) = apply { this.quantity = quantity }
+                fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()

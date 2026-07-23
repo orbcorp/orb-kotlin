@@ -586,7 +586,7 @@ internal class SubscriptionServiceAsyncTest {
                                 SubscriptionPriceIntervalsParams.Add.FixedFeeQuantityTransition
                                     .builder()
                                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                    .quantity(5L)
+                                    .quantity(5.0)
                                     .build()
                             )
                             .maximumAmount(0.0)
@@ -703,7 +703,7 @@ internal class SubscriptionServiceAsyncTest {
                                 SubscriptionPriceIntervalsParams.Edit.FixedFeeQuantityTransition
                                     .builder()
                                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                    .quantity(5L)
+                                    .quantity(5.0)
                                     .build()
                             )
                             .metricParameterOverrides(

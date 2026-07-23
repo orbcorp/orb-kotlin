@@ -560,7 +560,7 @@ internal class MutatedSubscriptionTest {
                             FixedFeeQuantityTransition.builder()
                                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .priceId("price_id")
-                                .quantity(0L)
+                                .quantity(0.0)
                                 .build()
                         )
                         .price(
@@ -2337,7 +2337,7 @@ internal class MutatedSubscriptionTest {
                         FixedFeeQuantityTransition.builder()
                             .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .priceId("price_id")
-                            .quantity(0L)
+                            .quantity(0.0)
                             .build()
                     )
                     .price(
@@ -4060,7 +4060,7 @@ internal class MutatedSubscriptionTest {
                             FixedFeeQuantityTransition.builder()
                                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .priceId("price_id")
-                                .quantity(0L)
+                                .quantity(0.0)
                                 .build()
                         )
                         .price(

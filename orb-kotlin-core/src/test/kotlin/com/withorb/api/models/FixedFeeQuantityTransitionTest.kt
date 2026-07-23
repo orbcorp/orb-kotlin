@@ -16,13 +16,13 @@ internal class FixedFeeQuantityTransitionTest {
             FixedFeeQuantityTransition.builder()
                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .priceId("price_id")
-                .quantity(0L)
+                .quantity(0.0)
                 .build()
 
         assertThat(fixedFeeQuantityTransition.effectiveDate())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(fixedFeeQuantityTransition.priceId()).isEqualTo("price_id")
-        assertThat(fixedFeeQuantityTransition.quantity()).isEqualTo(0L)
+        assertThat(fixedFeeQuantityTransition.quantity()).isEqualTo(0.0)
     }
 
     @Test
@@ -32,7 +32,7 @@ internal class FixedFeeQuantityTransitionTest {
             FixedFeeQuantityTransition.builder()
                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .priceId("price_id")
-                .quantity(0L)
+                .quantity(0.0)
                 .build()
 
         val roundtrippedFixedFeeQuantityTransition =

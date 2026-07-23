@@ -21,7 +21,7 @@ class FixedFeeQuantityTransition
 private constructor(
     private val effectiveDate: JsonField<OffsetDateTime>,
     private val priceId: JsonField<String>,
-    private val quantity: JsonField<Long>,
+    private val quantity: JsonField<Double>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -31,7 +31,7 @@ private constructor(
         @ExcludeMissing
         effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("price_id") @ExcludeMissing priceId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("quantity") @ExcludeMissing quantity: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("quantity") @ExcludeMissing quantity: JsonField<Double> = JsonMissing.of(),
     ) : this(effectiveDate, priceId, quantity, mutableMapOf())
 
     /**
@@ -50,7 +50,7 @@ private constructor(
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun quantity(): Long = quantity.getRequired("quantity")
+    fun quantity(): Double = quantity.getRequired("quantity")
 
     /**
      * Returns the raw JSON value of [effectiveDate].
@@ -73,7 +73,7 @@ private constructor(
      *
      * Unlike [quantity], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Long> = quantity
+    @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -107,7 +107,7 @@ private constructor(
 
         private var effectiveDate: JsonField<OffsetDateTime>? = null
         private var priceId: JsonField<String>? = null
-        private var quantity: JsonField<Long>? = null
+        private var quantity: JsonField<Double>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(fixedFeeQuantityTransition: FixedFeeQuantityTransition) = apply {
@@ -141,15 +141,15 @@ private constructor(
          */
         fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
 
-        fun quantity(quantity: Long) = quantity(JsonField.of(quantity))
+        fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
         /**
          * Sets [Builder.quantity] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.quantity] with a well-typed [Long] value instead. This
+         * You should usually call [Builder.quantity] with a well-typed [Double] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun quantity(quantity: JsonField<Long>) = apply { this.quantity = quantity }
+        fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
