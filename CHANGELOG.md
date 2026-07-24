@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.19.0](https://github.com/orbcorp/orb-kotlin/compare/v1.18.0...v1.19.0) (2026-07-24)
+
+
+### Features
+
+* **api:** increase max page limit for credit ledger endpoints from 500 to 1000 ([0b20869](https://github.com/orbcorp/orb-kotlin/commit/0b20869dc6bb5fd2766c489927f2cebb7bc787ef))
+* **api:** support decimal quantities for fixed fee quantity transitions ([6a38d22](https://github.com/orbcorp/orb-kotlin/commit/6a38d22f9c80afe536ddb7de12f7a7610c6809da))
+
 ## [1.18.0](https://github.com/orbcorp/orb-kotlin/compare/v1.17.0...v1.18.0) (2026-07-22)
 
 
