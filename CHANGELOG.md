@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.20.0](https://github.com/orbcorp/orb-kotlin/compare/v1.19.0...v1.20.0) (2026-07-25)
+
+
+### Features
+
+* **api:** rename "trash alert" endpoint to "delete alert" ([7cdc47f](https://github.com/orbcorp/orb-kotlin/commit/7cdc47f9155a2e97ce30c9155d6b16c798f42a14))
+
+
+### Bug Fixes
+
+* **api:** rename "trash alert" endpoint to "delete alert" ([7cdc47f](https://github.com/orbcorp/orb-kotlin/commit/7cdc47f9155a2e97ce30c9155d6b16c798f42a14))
+
 ## [1.19.0](https://github.com/orbcorp/orb-kotlin/compare/v1.18.0...v1.19.0) (2026-07-24)
 
 
