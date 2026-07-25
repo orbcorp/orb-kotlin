@@ -24,14 +24,16 @@ import java.util.Objects
 /**
  * This endpoint is used to create alerts at the subscription level.
  *
- * Subscription level alerts can be one of two types: `usage_exceeded` or `cost_exceeded`. A
- * `usage_exceeded` alert is scoped to a particular metric and is triggered when the usage of that
- * metric exceeds predefined thresholds during the current billing cycle. A `cost_exceeded` alert is
- * triggered when the total amount due during the current billing cycle surpasses predefined
- * thresholds. `cost_exceeded` alerts do not include burndown of pre-purchase credits. Each
- * subscription can have one `cost_exceeded` alert and one `usage_exceeded` alert per metric that is
- * a part of the subscription. Alerts are triggered based on usage or cost conditions met during the
- * current billing cycle.
+ * Subscription level alerts can be one of three types: `usage_exceeded`, `cost_exceeded`, or
+ * `spend_exceeded`. A `usage_exceeded` alert is scoped to a particular metric and is triggered when
+ * the usage of that metric exceeds predefined thresholds during the current billing cycle. A
+ * `cost_exceeded` alert is triggered when the total amount due during the current billing cycle
+ * surpasses predefined thresholds. `cost_exceeded` alerts do not include burndown of pre-purchase
+ * credits. A `spend_exceeded` alert is triggered when the rated spend (the pricing subtotal, before
+ * invoice-level adjustments and credits) denominated in the alert's currency exceeds predefined
+ * thresholds during the current billing cycle; `price_filters` can scope which prices contribute.
+ * Each subscription can have one `cost_exceeded` alert and one `usage_exceeded` alert per metric
+ * that is a part of the subscription.
  */
 class AlertCreateForSubscriptionParams
 private constructor(
@@ -60,8 +62,8 @@ private constructor(
     fun type(): Type = body.type()
 
     /**
-     * The case sensitive currency or custom pricing unit to use for grouped cost alerts. Required
-     * when grouping_keys is set.
+     * The case sensitive currency or custom pricing unit the alert is denominated in. Required for
+     * spend_exceeded alerts and when grouping_keys is set.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -85,9 +87,9 @@ private constructor(
     fun metricId(): String? = body.metricId()
 
     /**
-     * Filters to scope which prices are included in grouped cost alert evaluation. Supports
-     * filtering by price_id, item_id, or price_type with includes/excludes operators. Only
-     * applicable when grouping_keys is set.
+     * Filters to scope which prices are included in alert evaluation. Supports filtering by
+     * price_id, item_id, or price_type with includes/excludes operators. Only applicable to
+     * spend_exceeded alerts and to cost_exceeded alerts with grouping_keys set.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -246,8 +248,8 @@ private constructor(
         fun type(type: JsonField<Type>) = apply { body.type(type) }
 
         /**
-         * The case sensitive currency or custom pricing unit to use for grouped cost alerts.
-         * Required when grouping_keys is set.
+         * The case sensitive currency or custom pricing unit the alert is denominated in. Required
+         * for spend_exceeded alerts and when grouping_keys is set.
          */
         fun currency(currency: String?) = apply { body.currency(currency) }
 
@@ -292,9 +294,9 @@ private constructor(
         fun metricId(metricId: JsonField<String>) = apply { body.metricId(metricId) }
 
         /**
-         * Filters to scope which prices are included in grouped cost alert evaluation. Supports
-         * filtering by price_id, item_id, or price_type with includes/excludes operators. Only
-         * applicable when grouping_keys is set.
+         * Filters to scope which prices are included in alert evaluation. Supports filtering by
+         * price_id, item_id, or price_type with includes/excludes operators. Only applicable to
+         * spend_exceeded alerts and to cost_exceeded alerts with grouping_keys set.
          */
         fun priceFilters(priceFilters: List<PriceFilter>?) = apply {
             body.priceFilters(priceFilters)
@@ -561,8 +563,8 @@ private constructor(
         fun type(): Type = type.getRequired("type")
 
         /**
-         * The case sensitive currency or custom pricing unit to use for grouped cost alerts.
-         * Required when grouping_keys is set.
+         * The case sensitive currency or custom pricing unit the alert is denominated in. Required
+         * for spend_exceeded alerts and when grouping_keys is set.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -586,9 +588,9 @@ private constructor(
         fun metricId(): String? = metricId.getNullable("metric_id")
 
         /**
-         * Filters to scope which prices are included in grouped cost alert evaluation. Supports
-         * filtering by price_id, item_id, or price_type with includes/excludes operators. Only
-         * applicable when grouping_keys is set.
+         * Filters to scope which prices are included in alert evaluation. Supports filtering by
+         * price_id, item_id, or price_type with includes/excludes operators. Only applicable to
+         * spend_exceeded alerts and to cost_exceeded alerts with grouping_keys set.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -755,8 +757,8 @@ private constructor(
             fun type(type: JsonField<Type>) = apply { this.type = type }
 
             /**
-             * The case sensitive currency or custom pricing unit to use for grouped cost alerts.
-             * Required when grouping_keys is set.
+             * The case sensitive currency or custom pricing unit the alert is denominated in.
+             * Required for spend_exceeded alerts and when grouping_keys is set.
              */
             fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
 
@@ -811,9 +813,9 @@ private constructor(
             fun metricId(metricId: JsonField<String>) = apply { this.metricId = metricId }
 
             /**
-             * Filters to scope which prices are included in grouped cost alert evaluation. Supports
-             * filtering by price_id, item_id, or price_type with includes/excludes operators. Only
-             * applicable when grouping_keys is set.
+             * Filters to scope which prices are included in alert evaluation. Supports filtering by
+             * price_id, item_id, or price_type with includes/excludes operators. Only applicable to
+             * spend_exceeded alerts and to cost_exceeded alerts with grouping_keys set.
              */
             fun priceFilters(priceFilters: List<PriceFilter>?) =
                 priceFilters(JsonField.ofNullable(priceFilters))
@@ -1022,6 +1024,8 @@ private constructor(
 
             val COST_EXCEEDED = of("cost_exceeded")
 
+            val SPEND_EXCEEDED = of("spend_exceeded")
+
             fun of(value: String) = Type(JsonField.of(value))
         }
 
@@ -1029,6 +1033,7 @@ private constructor(
         enum class Known {
             USAGE_EXCEEDED,
             COST_EXCEEDED,
+            SPEND_EXCEEDED,
         }
 
         /**
@@ -1043,6 +1048,7 @@ private constructor(
         enum class Value {
             USAGE_EXCEEDED,
             COST_EXCEEDED,
+            SPEND_EXCEEDED,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -1058,6 +1064,7 @@ private constructor(
             when (this) {
                 USAGE_EXCEEDED -> Value.USAGE_EXCEEDED
                 COST_EXCEEDED -> Value.COST_EXCEEDED
+                SPEND_EXCEEDED -> Value.SPEND_EXCEEDED
                 else -> Value._UNKNOWN
             }
 
@@ -1073,6 +1080,7 @@ private constructor(
             when (this) {
                 USAGE_EXCEEDED -> Known.USAGE_EXCEEDED
                 COST_EXCEEDED -> Known.COST_EXCEEDED
+                SPEND_EXCEEDED -> Known.SPEND_EXCEEDED
                 else -> throw OrbInvalidDataException("Unknown Type: $value")
             }
 

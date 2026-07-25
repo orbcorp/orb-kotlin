@@ -169,14 +169,16 @@ interface AlertServiceAsync {
     /**
      * This endpoint is used to create alerts at the subscription level.
      *
-     * Subscription level alerts can be one of two types: `usage_exceeded` or `cost_exceeded`. A
-     * `usage_exceeded` alert is scoped to a particular metric and is triggered when the usage of
-     * that metric exceeds predefined thresholds during the current billing cycle. A `cost_exceeded`
-     * alert is triggered when the total amount due during the current billing cycle surpasses
-     * predefined thresholds. `cost_exceeded` alerts do not include burndown of pre-purchase
-     * credits. Each subscription can have one `cost_exceeded` alert and one `usage_exceeded` alert
-     * per metric that is a part of the subscription. Alerts are triggered based on usage or cost
-     * conditions met during the current billing cycle.
+     * Subscription level alerts can be one of three types: `usage_exceeded`, `cost_exceeded`, or
+     * `spend_exceeded`. A `usage_exceeded` alert is scoped to a particular metric and is triggered
+     * when the usage of that metric exceeds predefined thresholds during the current billing cycle.
+     * A `cost_exceeded` alert is triggered when the total amount due during the current billing
+     * cycle surpasses predefined thresholds. `cost_exceeded` alerts do not include burndown of
+     * pre-purchase credits. A `spend_exceeded` alert is triggered when the rated spend (the pricing
+     * subtotal, before invoice-level adjustments and credits) denominated in the alert's currency
+     * exceeds predefined thresholds during the current billing cycle; `price_filters` can scope
+     * which prices contribute. Each subscription can have one `cost_exceeded` alert and one
+     * `usage_exceeded` alert per metric that is a part of the subscription.
      */
     suspend fun createForSubscription(
         subscriptionId: String,
