@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.21.0](https://github.com/orbcorp/orb-kotlin/compare/v1.20.0...v1.21.0) (2026-07-26)
+
+
+### Features
+
+* **api:** add `spend_exceeded` alert type for subscription-level alerts ([467d162](https://github.com/orbcorp/orb-kotlin/commit/467d162b7fc1d773248090765501f06a0ad2c662))
+
 ## [1.20.0](https://github.com/orbcorp/orb-kotlin/compare/v1.19.0...v1.20.0) (2026-07-25)
 
 
