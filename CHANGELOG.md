@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.22.0](https://github.com/orbcorp/orb-kotlin/compare/v1.21.0...v1.22.0) (2026-07-31)
+
+
+### Features
+
+* **api:** add endpoint to create plan-level alerts ([2ac20b0](https://github.com/orbcorp/orb-kotlin/commit/2ac20b0d02c96d82fe39b3da3cb7c26df87bb352))
+* **api:** add endpoint to create plan-level alerts and allow PUT updates for plan usage alert thresholds ([2ac20b0](https://github.com/orbcorp/orb-kotlin/commit/2ac20b0d02c96d82fe39b3da3cb7c26df87bb352))
+
 ## [1.21.0](https://github.com/orbcorp/orb-kotlin/compare/v1.20.0...v1.21.0) (2026-07-26)
 
 
