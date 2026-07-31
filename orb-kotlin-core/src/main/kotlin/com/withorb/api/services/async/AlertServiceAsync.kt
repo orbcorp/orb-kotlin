@@ -56,7 +56,11 @@ interface AlertServiceAsync {
     suspend fun retrieve(alertId: String, requestOptions: RequestOptions): Alert =
         retrieve(alertId, AlertRetrieveParams.none(), requestOptions)
 
-    /** This endpoint updates the thresholds of an alert. */
+    /**
+     * This endpoint updates the thresholds of an alert. On cost alerts it also updates
+     * `price_filters`, and on subscription-scoped grouped cost alerts `threshold_overrides`;
+     * omitting either leaves it unchanged, and an empty list clears it.
+     */
     suspend fun update(
         alertConfigurationId: String,
         params: AlertUpdateParams,
