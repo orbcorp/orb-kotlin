@@ -164,6 +164,10 @@ private constructor(
         fun addData(groupedTiered: Price.GroupedTiered) =
             addData(Price.ofGroupedTiered(groupedTiered))
 
+        /** Alias for calling [addData] with `Price.ofGroupedTieredMatrix(groupedTieredMatrix)`. */
+        fun addData(groupedTieredMatrix: Price.GroupedTieredMatrix) =
+            addData(Price.ofGroupedTieredMatrix(groupedTieredMatrix))
+
         /**
          * Alias for calling [addData] with
          * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.

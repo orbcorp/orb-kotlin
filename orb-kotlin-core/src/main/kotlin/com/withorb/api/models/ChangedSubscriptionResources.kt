@@ -5285,6 +5285,13 @@ private constructor(
 
                 /**
                  * Alias for calling [price] with
+                 * `Price.ofGroupedTieredMatrix(groupedTieredMatrix)`.
+                 */
+                fun price(groupedTieredMatrix: Price.GroupedTieredMatrix) =
+                    price(Price.ofGroupedTieredMatrix(groupedTieredMatrix))
+
+                /**
+                 * Alias for calling [price] with
                  * `Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum)`.
                  */
                 fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimum) =
