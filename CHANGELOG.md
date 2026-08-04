@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.24.0](https://github.com/orbcorp/orb-kotlin/compare/v1.23.0...v1.24.0) (2026-08-04)
+
+
+### Features
+
+* **api:** api update ([3c5ad8b](https://github.com/orbcorp/orb-kotlin/commit/3c5ad8b052e25a0f5788cc2fee4d39be1b8254dd))
+* **api:** api update ([3c5ad8b](https://github.com/orbcorp/orb-kotlin/commit/3c5ad8b052e25a0f5788cc2fee4d39be1b8254dd))
+* **api:** api update ([3c5ad8b](https://github.com/orbcorp/orb-kotlin/commit/3c5ad8b052e25a0f5788cc2fee4d39be1b8254dd))
+
+
+### Bug Fixes
+
+* **api:** correct next_attempt_at accuracy in invoice auto-collection response ([3c5ad8b](https://github.com/orbcorp/orb-kotlin/commit/3c5ad8b052e25a0f5788cc2fee4d39be1b8254dd))
+
 ## [1.23.0](https://github.com/orbcorp/orb-kotlin/compare/v1.22.0...v1.23.0) (2026-08-01)
 
 
