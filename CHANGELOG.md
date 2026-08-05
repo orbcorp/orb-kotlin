@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.25.0](https://github.com/orbcorp/orb-kotlin/compare/v1.24.0...v1.25.0) (2026-08-05)
+
+
+### Features
+
+* **api:** add `grouped_tiered_matrix` price model for per-dimension tiered rates ([9e6fd9b](https://github.com/orbcorp/orb-kotlin/commit/9e6fd9b0ebf586fe398f9784e9a5152a1298d99c))
+
 ## [1.24.0](https://github.com/orbcorp/orb-kotlin/compare/v1.23.0...v1.24.0) (2026-08-04)
 
 
