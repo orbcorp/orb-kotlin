@@ -64,6 +64,16 @@ import java.util.Objects
  * Note that one of `plan_id` or `external_plan_id` is required in the request body for this
  * operation.
  *
+ * ## Interaction with scheduled cancellations
+ *
+ * Scheduling a plan change also unschedules a pending cancellation, as long as the cancellation
+ * date is on or after the plan change date: Orb honors the plan change over the scheduled
+ * cancellation, and the subscription continues on the new plan. Scheduling a plan change after the
+ * subscription's end date returns a validation error instead.
+ *
+ * Any plan changes already scheduled at or after the new plan change's date are unscheduled and
+ * replaced by it.
+ *
  * ## Customize your customer's subscriptions
  *
  * Prices and adjustments in a plan can be added, removed, or replaced on the subscription when you

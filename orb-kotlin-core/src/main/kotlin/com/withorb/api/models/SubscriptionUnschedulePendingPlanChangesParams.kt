@@ -11,7 +11,19 @@ import java.util.Objects
 
 /**
  * This endpoint can be used to unschedule any pending plan changes on an existing subscription.
- * When called, all upcoming plan changes will be unscheduled.
+ * When called, all upcoming plan changes will be unscheduled; it is not possible to unschedule a
+ * single plan change if multiple are scheduled.
+ *
+ * Note: unscheduling a plan change is a lossy operation, with the same semantics as
+ * [unscheduling a cancellation](/api-reference/subscription/unschedule-subscription-cancellation).
+ * Prices and adjustments on the current plan that were scheduled to end at the plan change time are
+ * extended to infinity (original end dates are lost), and anything scheduled to start after the
+ * plan change time is permanently deleted. Coupons redeemed as part of an unscheduled plan change
+ * are released and can be redeemed again.
+ *
+ * A scheduled cancellation is not affected by this operation: if the subscription has both a
+ * pending plan change and a scheduled cancellation, unscheduling the plan change leaves the
+ * cancellation in place.
  */
 class SubscriptionUnschedulePendingPlanChangesParams
 private constructor(

@@ -16,11 +16,19 @@ import java.util.Objects
  * operation will turn on auto-renew, ensuring that the subscription does not end at the currently
  * scheduled cancellation time.
  *
- * Note: uncancellation is a lossy operation. Price intervals that were cut short by the
- * cancellation are extended to infinity (original end dates are lost), and future intervals or
+ * A cancellation that has already taken effect cannot be unscheduled. This includes backdated
+ * cancellations: once the subscription's end date is in the past, this endpoint returns a
+ * validation error.
+ *
+ * Note: uncancellation is a lossy operation. Price and adjustment intervals that were cut short by
+ * the cancellation are extended to infinity (original end dates are lost), and future intervals or
  * phases scheduled after the cancellation time are permanently deleted. For complex subscriptions
  * with phases or scheduled plan changes, consider creating a new plan change instead of
  * uncancelling.
+ *
+ * If the scheduled cancellation already produced invoices or credit notes (for example, a proration
+ * refund credit note for an in-advance fee), uncancelling voids and reissues them as needed to
+ * match the subscription's new state.
  */
 class SubscriptionUnscheduleCancellationParams
 private constructor(
