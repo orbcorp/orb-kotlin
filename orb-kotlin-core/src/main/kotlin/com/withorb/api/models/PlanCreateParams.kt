@@ -1844,7 +1844,8 @@ private constructor(
             /**
              * License allocations to associate with this price. Each entry defines a per-license
              * credit pool granted each cadence. Requires license_type_id or
-             * license_type_configuration to be set.
+             * license_type_configuration to be set. Usage prices draw down from these allocations
+             * only if they set the same license type.
              *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
@@ -1978,7 +1979,11 @@ private constructor(
                 invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
 
             /**
-             * The ID of the license type to associate with this price.
+             * The ID of the license type to associate with this price. On a usage price this also
+             * marks the price as eligible to draw down from that license type's allocation; a usage
+             * price created without it is billed normally. Usage prices with a license type must
+             * use the `unit` model, and only draw down when their currency matches the
+             * allocation's.
              *
              * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
              *   server responded with an unexpected value).
@@ -2310,7 +2315,8 @@ private constructor(
                 /**
                  * License allocations to associate with this price. Each entry defines a
                  * per-license credit pool granted each cadence. Requires license_type_id or
-                 * license_type_configuration to be set.
+                 * license_type_configuration to be set. Usage prices draw down from these
+                 * allocations only if they set the same license type.
                  */
                 fun licenseAllocations(licenseAllocations: List<LicenseAllocation>) =
                     licenseAllocations(JsonField.of(licenseAllocations))
@@ -2642,7 +2648,13 @@ private constructor(
                     invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
                 ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
-                /** The ID of the license type to associate with this price. */
+                /**
+                 * The ID of the license type to associate with this price. On a usage price this
+                 * also marks the price as eligible to draw down from that license type's
+                 * allocation; a usage price created without it is billed normally. Usage prices
+                 * with a license type must use the `unit` model, and only draw down when their
+                 * currency matches the allocation's.
+                 */
                 fun licenseTypeId(licenseTypeId: String?) =
                     licenseTypeId(JsonField.ofNullable(licenseTypeId))
 
@@ -5286,7 +5298,11 @@ private constructor(
                     invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
 
                 /**
-                 * The ID of the license type to associate with this price.
+                 * The ID of the license type to associate with this price. On a usage price this
+                 * also marks the price as eligible to draw down from that license type's
+                 * allocation; a usage price created without it is billed normally. Usage prices
+                 * with a license type must use the `unit` model, and only draw down when their
+                 * currency matches the allocation's.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
@@ -5911,7 +5927,13 @@ private constructor(
                         invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
-                    /** The ID of the license type to associate with this price. */
+                    /**
+                     * The ID of the license type to associate with this price. On a usage price
+                     * this also marks the price as eligible to draw down from that license type's
+                     * allocation; a usage price created without it is billed normally. Usage prices
+                     * with a license type must use the `unit` model, and only draw down when their
+                     * currency matches the allocation's.
+                     */
                     fun licenseTypeId(licenseTypeId: String?) =
                         licenseTypeId(JsonField.ofNullable(licenseTypeId))
 
@@ -7427,7 +7449,11 @@ private constructor(
                     invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
 
                 /**
-                 * The ID of the license type to associate with this price.
+                 * The ID of the license type to associate with this price. On a usage price this
+                 * also marks the price as eligible to draw down from that license type's
+                 * allocation; a usage price created without it is billed normally. Usage prices
+                 * with a license type must use the `unit` model, and only draw down when their
+                 * currency matches the allocation's.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
@@ -8057,7 +8083,13 @@ private constructor(
                         invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
-                    /** The ID of the license type to associate with this price. */
+                    /**
+                     * The ID of the license type to associate with this price. On a usage price
+                     * this also marks the price as eligible to draw down from that license type's
+                     * allocation; a usage price created without it is billed normally. Usage prices
+                     * with a license type must use the `unit` model, and only draw down when their
+                     * currency matches the allocation's.
+                     */
                     fun licenseTypeId(licenseTypeId: String?) =
                         licenseTypeId(JsonField.ofNullable(licenseTypeId))
 
@@ -9437,7 +9469,11 @@ private constructor(
                     invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
 
                 /**
-                 * The ID of the license type to associate with this price.
+                 * The ID of the license type to associate with this price. On a usage price this
+                 * also marks the price as eligible to draw down from that license type's
+                 * allocation; a usage price created without it is billed normally. Usage prices
+                 * with a license type must use the `unit` model, and only draw down when their
+                 * currency matches the allocation's.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
@@ -10080,7 +10116,13 @@ private constructor(
                         invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
-                    /** The ID of the license type to associate with this price. */
+                    /**
+                     * The ID of the license type to associate with this price. On a usage price
+                     * this also marks the price as eligible to draw down from that license type's
+                     * allocation; a usage price created without it is billed normally. Usage prices
+                     * with a license type must use the `unit` model, and only draw down when their
+                     * currency matches the allocation's.
+                     */
                     fun licenseTypeId(licenseTypeId: String?) =
                         licenseTypeId(JsonField.ofNullable(licenseTypeId))
 
@@ -12022,7 +12064,11 @@ private constructor(
                     invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
 
                 /**
-                 * The ID of the license type to associate with this price.
+                 * The ID of the license type to associate with this price. On a usage price this
+                 * also marks the price as eligible to draw down from that license type's
+                 * allocation; a usage price created without it is billed normally. Usage prices
+                 * with a license type must use the `unit` model, and only draw down when their
+                 * currency matches the allocation's.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
@@ -12652,7 +12698,13 @@ private constructor(
                         invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
-                    /** The ID of the license type to associate with this price. */
+                    /**
+                     * The ID of the license type to associate with this price. On a usage price
+                     * this also marks the price as eligible to draw down from that license type's
+                     * allocation; a usage price created without it is billed normally. Usage prices
+                     * with a license type must use the `unit` model, and only draw down when their
+                     * currency matches the allocation's.
+                     */
                     fun licenseTypeId(licenseTypeId: String?) =
                         licenseTypeId(JsonField.ofNullable(licenseTypeId))
 
@@ -13890,7 +13942,11 @@ private constructor(
                     invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
 
                 /**
-                 * The ID of the license type to associate with this price.
+                 * The ID of the license type to associate with this price. On a usage price this
+                 * also marks the price as eligible to draw down from that license type's
+                 * allocation; a usage price created without it is billed normally. Usage prices
+                 * with a license type must use the `unit` model, and only draw down when their
+                 * currency matches the allocation's.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
@@ -14532,7 +14588,13 @@ private constructor(
                         invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
-                    /** The ID of the license type to associate with this price. */
+                    /**
+                     * The ID of the license type to associate with this price. On a usage price
+                     * this also marks the price as eligible to draw down from that license type's
+                     * allocation; a usage price created without it is billed normally. Usage prices
+                     * with a license type must use the `unit` model, and only draw down when their
+                     * currency matches the allocation's.
+                     */
                     fun licenseTypeId(licenseTypeId: String?) =
                         licenseTypeId(JsonField.ofNullable(licenseTypeId))
 
@@ -15673,7 +15735,11 @@ private constructor(
                     invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
 
                 /**
-                 * The ID of the license type to associate with this price.
+                 * The ID of the license type to associate with this price. On a usage price this
+                 * also marks the price as eligible to draw down from that license type's
+                 * allocation; a usage price created without it is billed normally. Usage prices
+                 * with a license type must use the `unit` model, and only draw down when their
+                 * currency matches the allocation's.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
@@ -16315,7 +16381,13 @@ private constructor(
                         invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
-                    /** The ID of the license type to associate with this price. */
+                    /**
+                     * The ID of the license type to associate with this price. On a usage price
+                     * this also marks the price as eligible to draw down from that license type's
+                     * allocation; a usage price created without it is billed normally. Usage prices
+                     * with a license type must use the `unit` model, and only draw down when their
+                     * currency matches the allocation's.
+                     */
                     fun licenseTypeId(licenseTypeId: String?) =
                         licenseTypeId(JsonField.ofNullable(licenseTypeId))
 
@@ -17459,7 +17531,11 @@ private constructor(
                     invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
 
                 /**
-                 * The ID of the license type to associate with this price.
+                 * The ID of the license type to associate with this price. On a usage price this
+                 * also marks the price as eligible to draw down from that license type's
+                 * allocation; a usage price created without it is billed normally. Usage prices
+                 * with a license type must use the `unit` model, and only draw down when their
+                 * currency matches the allocation's.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
@@ -18090,7 +18166,13 @@ private constructor(
                         invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
-                    /** The ID of the license type to associate with this price. */
+                    /**
+                     * The ID of the license type to associate with this price. On a usage price
+                     * this also marks the price as eligible to draw down from that license type's
+                     * allocation; a usage price created without it is billed normally. Usage prices
+                     * with a license type must use the `unit` model, and only draw down when their
+                     * currency matches the allocation's.
+                     */
                     fun licenseTypeId(licenseTypeId: String?) =
                         licenseTypeId(JsonField.ofNullable(licenseTypeId))
 
@@ -19580,7 +19662,11 @@ private constructor(
                     invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
 
                 /**
-                 * The ID of the license type to associate with this price.
+                 * The ID of the license type to associate with this price. On a usage price this
+                 * also marks the price as eligible to draw down from that license type's
+                 * allocation; a usage price created without it is billed normally. Usage prices
+                 * with a license type must use the `unit` model, and only draw down when their
+                 * currency matches the allocation's.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
@@ -20205,7 +20291,13 @@ private constructor(
                         invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
-                    /** The ID of the license type to associate with this price. */
+                    /**
+                     * The ID of the license type to associate with this price. On a usage price
+                     * this also marks the price as eligible to draw down from that license type's
+                     * allocation; a usage price created without it is billed normally. Usage prices
+                     * with a license type must use the `unit` model, and only draw down when their
+                     * currency matches the allocation's.
+                     */
                     fun licenseTypeId(licenseTypeId: String?) =
                         licenseTypeId(JsonField.ofNullable(licenseTypeId))
 
@@ -21452,7 +21544,11 @@ private constructor(
                     invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
 
                 /**
-                 * The ID of the license type to associate with this price.
+                 * The ID of the license type to associate with this price. On a usage price this
+                 * also marks the price as eligible to draw down from that license type's
+                 * allocation; a usage price created without it is billed normally. Usage prices
+                 * with a license type must use the `unit` model, and only draw down when their
+                 * currency matches the allocation's.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
@@ -22075,7 +22171,13 @@ private constructor(
                         invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
-                    /** The ID of the license type to associate with this price. */
+                    /**
+                     * The ID of the license type to associate with this price. On a usage price
+                     * this also marks the price as eligible to draw down from that license type's
+                     * allocation; a usage price created without it is billed normally. Usage prices
+                     * with a license type must use the `unit` model, and only draw down when their
+                     * currency matches the allocation's.
+                     */
                     fun licenseTypeId(licenseTypeId: String?) =
                         licenseTypeId(JsonField.ofNullable(licenseTypeId))
 
@@ -23194,7 +23296,11 @@ private constructor(
                     invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
 
                 /**
-                 * The ID of the license type to associate with this price.
+                 * The ID of the license type to associate with this price. On a usage price this
+                 * also marks the price as eligible to draw down from that license type's
+                 * allocation; a usage price created without it is billed normally. Usage prices
+                 * with a license type must use the `unit` model, and only draw down when their
+                 * currency matches the allocation's.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
@@ -23817,7 +23923,13 @@ private constructor(
                         invoicingCycleConfiguration: JsonField<NewBillingCycleConfiguration>
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
-                    /** The ID of the license type to associate with this price. */
+                    /**
+                     * The ID of the license type to associate with this price. On a usage price
+                     * this also marks the price as eligible to draw down from that license type's
+                     * allocation; a usage price created without it is billed normally. Usage prices
+                     * with a license type must use the `unit` model, and only draw down when their
+                     * currency matches the allocation's.
+                     */
                     fun licenseTypeId(licenseTypeId: String?) =
                         licenseTypeId(JsonField.ofNullable(licenseTypeId))
 
