@@ -18,7 +18,13 @@ internal class NewPlanUnitPriceTest {
                 .itemId("item_id")
                 .modelType(NewPlanUnitPrice.ModelType.UNIT)
                 .name("Annual fee")
-                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").prorated(true).build())
+                .unitConfig(
+                    UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .prorated(true)
+                        .scalingFactor(0.0)
+                        .build()
+                )
                 .billableMetricId("billable_metric_id")
                 .billedInAdvance(true)
                 .billingCycleConfiguration(
@@ -34,7 +40,7 @@ internal class NewPlanUnitPriceTest {
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
-                        .addDimensionValue("string")
+                        .addDimensionValue("x")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                         .build()
@@ -62,7 +68,13 @@ internal class NewPlanUnitPriceTest {
         assertThat(newPlanUnitPrice.modelType()).isEqualTo(NewPlanUnitPrice.ModelType.UNIT)
         assertThat(newPlanUnitPrice.name()).isEqualTo("Annual fee")
         assertThat(newPlanUnitPrice.unitConfig())
-            .isEqualTo(UnitConfig.builder().unitAmount("unit_amount").prorated(true).build())
+            .isEqualTo(
+                UnitConfig.builder()
+                    .unitAmount("unit_amount")
+                    .prorated(true)
+                    .scalingFactor(0.0)
+                    .build()
+            )
         assertThat(newPlanUnitPrice.billableMetricId()).isEqualTo("billable_metric_id")
         assertThat(newPlanUnitPrice.billedInAdvance()).isEqualTo(true)
         assertThat(newPlanUnitPrice.billingCycleConfiguration())
@@ -88,7 +100,7 @@ internal class NewPlanUnitPriceTest {
         assertThat(newPlanUnitPrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
-                    .addDimensionValue("string")
+                    .addDimensionValue("x")
                     .dimensionalPriceGroupId("dimensional_price_group_id")
                     .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                     .build()
@@ -122,7 +134,13 @@ internal class NewPlanUnitPriceTest {
                 .itemId("item_id")
                 .modelType(NewPlanUnitPrice.ModelType.UNIT)
                 .name("Annual fee")
-                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").prorated(true).build())
+                .unitConfig(
+                    UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .prorated(true)
+                        .scalingFactor(0.0)
+                        .build()
+                )
                 .billableMetricId("billable_metric_id")
                 .billedInAdvance(true)
                 .billingCycleConfiguration(
@@ -138,7 +156,7 @@ internal class NewPlanUnitPriceTest {
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
-                        .addDimensionValue("string")
+                        .addDimensionValue("x")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                         .build()

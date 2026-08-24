@@ -20,8 +20,10 @@ internal class MatrixWithAllocationConfigTest {
                     MatrixWithAllocationConfig.MatrixValue.builder()
                         .addDimensionValue("string")
                         .unitAmount("unit_amount")
+                        .scalingFactor("scaling_factor")
                         .build()
                 )
+                .scalingFactor("scaling_factor")
                 .build()
 
         assertThat(matrixWithAllocationConfig.allocation()).isEqualTo("allocation")
@@ -32,8 +34,10 @@ internal class MatrixWithAllocationConfigTest {
                 MatrixWithAllocationConfig.MatrixValue.builder()
                     .addDimensionValue("string")
                     .unitAmount("unit_amount")
+                    .scalingFactor("scaling_factor")
                     .build()
             )
+        assertThat(matrixWithAllocationConfig.scalingFactor()).isEqualTo("scaling_factor")
     }
 
     @Test
@@ -48,8 +52,10 @@ internal class MatrixWithAllocationConfigTest {
                     MatrixWithAllocationConfig.MatrixValue.builder()
                         .addDimensionValue("string")
                         .unitAmount("unit_amount")
+                        .scalingFactor("scaling_factor")
                         .build()
                 )
+                .scalingFactor("scaling_factor")
                 .build()
 
         val roundtrippedMatrixWithAllocationConfig =

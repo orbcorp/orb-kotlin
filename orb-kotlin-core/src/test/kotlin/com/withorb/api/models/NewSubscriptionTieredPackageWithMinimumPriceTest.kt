@@ -62,7 +62,7 @@ internal class NewSubscriptionTieredPackageWithMinimumPriceTest {
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
-                        .addDimensionValue("string")
+                        .addDimensionValue("x")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                         .build()
@@ -144,7 +144,7 @@ internal class NewSubscriptionTieredPackageWithMinimumPriceTest {
         assertThat(newSubscriptionTieredPackageWithMinimumPrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
-                    .addDimensionValue("string")
+                    .addDimensionValue("x")
                     .dimensionalPriceGroupId("dimensional_price_group_id")
                     .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                     .build()
@@ -225,7 +225,7 @@ internal class NewSubscriptionTieredPackageWithMinimumPriceTest {
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
-                        .addDimensionValue("string")
+                        .addDimensionValue("x")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                         .build()

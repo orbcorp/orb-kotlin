@@ -21,6 +21,7 @@ class UnitConfig
 private constructor(
     private val unitAmount: JsonField<String>,
     private val prorated: JsonField<Boolean>,
+    private val scalingFactor: JsonField<Double>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -30,7 +31,10 @@ private constructor(
         @ExcludeMissing
         unitAmount: JsonField<String> = JsonMissing.of(),
         @JsonProperty("prorated") @ExcludeMissing prorated: JsonField<Boolean> = JsonMissing.of(),
-    ) : this(unitAmount, prorated, mutableMapOf())
+        @JsonProperty("scaling_factor")
+        @ExcludeMissing
+        scalingFactor: JsonField<Double> = JsonMissing.of(),
+    ) : this(unitAmount, prorated, scalingFactor, mutableMapOf())
 
     /**
      * Rate per unit of usage
@@ -49,6 +53,15 @@ private constructor(
     fun prorated(): Boolean? = prorated.getNullable("prorated")
 
     /**
+     * Optional multiplier applied to rated quantity before unit_amount.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    @Deprecated("deprecated")
+    fun scalingFactor(): Double? = scalingFactor.getNullable("scaling_factor")
+
+    /**
      * Returns the raw JSON value of [unitAmount].
      *
      * Unlike [unitAmount], this method doesn't throw if the JSON field has an unexpected type.
@@ -61,6 +74,16 @@ private constructor(
      * Unlike [prorated], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("prorated") @ExcludeMissing fun _prorated(): JsonField<Boolean> = prorated
+
+    /**
+     * Returns the raw JSON value of [scalingFactor].
+     *
+     * Unlike [scalingFactor], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @Deprecated("deprecated")
+    @JsonProperty("scaling_factor")
+    @ExcludeMissing
+    fun _scalingFactor(): JsonField<Double> = scalingFactor
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -92,11 +115,13 @@ private constructor(
 
         private var unitAmount: JsonField<String>? = null
         private var prorated: JsonField<Boolean> = JsonMissing.of()
+        private var scalingFactor: JsonField<Double> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(unitConfig: UnitConfig) = apply {
             unitAmount = unitConfig.unitAmount
             prorated = unitConfig.prorated
+            scalingFactor = unitConfig.scalingFactor
             additionalProperties = unitConfig.additionalProperties.toMutableMap()
         }
 
@@ -123,6 +148,31 @@ private constructor(
          * value.
          */
         fun prorated(prorated: JsonField<Boolean>) = apply { this.prorated = prorated }
+
+        /** Optional multiplier applied to rated quantity before unit_amount. */
+        @Deprecated("deprecated")
+        fun scalingFactor(scalingFactor: Double?) =
+            scalingFactor(JsonField.ofNullable(scalingFactor))
+
+        /**
+         * Alias for [Builder.scalingFactor].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        @Deprecated("deprecated")
+        fun scalingFactor(scalingFactor: Double) = scalingFactor(scalingFactor as Double?)
+
+        /**
+         * Sets [Builder.scalingFactor] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.scalingFactor] with a well-typed [Double] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        @Deprecated("deprecated")
+        fun scalingFactor(scalingFactor: JsonField<Double>) = apply {
+            this.scalingFactor = scalingFactor
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -159,6 +209,7 @@ private constructor(
             UnitConfig(
                 checkRequired("unitAmount", unitAmount),
                 prorated,
+                scalingFactor,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -180,6 +231,7 @@ private constructor(
 
         unitAmount()
         prorated()
+        scalingFactor()
         validated = true
     }
 
@@ -197,7 +249,9 @@ private constructor(
      * Used for best match union deserialization.
      */
     internal fun validity(): Int =
-        (if (unitAmount.asKnown() == null) 0 else 1) + (if (prorated.asKnown() == null) 0 else 1)
+        (if (unitAmount.asKnown() == null) 0 else 1) +
+            (if (prorated.asKnown() == null) 0 else 1) +
+            (if (scalingFactor.asKnown() == null) 0 else 1)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -207,13 +261,16 @@ private constructor(
         return other is UnitConfig &&
             unitAmount == other.unitAmount &&
             prorated == other.prorated &&
+            scalingFactor == other.scalingFactor &&
             additionalProperties == other.additionalProperties
     }
 
-    private val hashCode: Int by lazy { Objects.hash(unitAmount, prorated, additionalProperties) }
+    private val hashCode: Int by lazy {
+        Objects.hash(unitAmount, prorated, scalingFactor, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "UnitConfig{unitAmount=$unitAmount, prorated=$prorated, additionalProperties=$additionalProperties}"
+        "UnitConfig{unitAmount=$unitAmount, prorated=$prorated, scalingFactor=$scalingFactor, additionalProperties=$additionalProperties}"
 }

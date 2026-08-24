@@ -557,6 +557,7 @@ internal class SubscriptionsTest {
                                             UnitConfig.builder()
                                                 .unitAmount("unit_amount")
                                                 .prorated(true)
+                                                .scalingFactor(0.0)
                                                 .build()
                                         )
                                         .dimensionalPriceConfiguration(
@@ -755,6 +756,7 @@ internal class SubscriptionsTest {
                                             UnitConfig.builder()
                                                 .unitAmount("unit_amount")
                                                 .prorated(true)
+                                                .scalingFactor(0.0)
                                                 .build()
                                         )
                                         .dimensionalPriceConfiguration(
@@ -1321,6 +1323,7 @@ internal class SubscriptionsTest {
                                         UnitConfig.builder()
                                             .unitAmount("unit_amount")
                                             .prorated(true)
+                                            .scalingFactor(0.0)
                                             .build()
                                     )
                                     .dimensionalPriceConfiguration(
@@ -1502,6 +1505,7 @@ internal class SubscriptionsTest {
                                         UnitConfig.builder()
                                             .unitAmount("unit_amount")
                                             .prorated(true)
+                                            .scalingFactor(0.0)
                                             .build()
                                     )
                                     .dimensionalPriceConfiguration(
@@ -2095,6 +2099,7 @@ internal class SubscriptionsTest {
                                             UnitConfig.builder()
                                                 .unitAmount("unit_amount")
                                                 .prorated(true)
+                                                .scalingFactor(0.0)
                                                 .build()
                                         )
                                         .dimensionalPriceConfiguration(
@@ -2293,6 +2298,7 @@ internal class SubscriptionsTest {
                                             UnitConfig.builder()
                                                 .unitAmount("unit_amount")
                                                 .prorated(true)
+                                                .scalingFactor(0.0)
                                                 .build()
                                         )
                                         .dimensionalPriceConfiguration(

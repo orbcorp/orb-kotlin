@@ -23,6 +23,7 @@ class MatrixValue
 private constructor(
     private val dimensionValues: JsonField<List<String?>>,
     private val unitAmount: JsonField<String>,
+    private val scalingFactor: JsonField<Double>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -34,7 +35,10 @@ private constructor(
         @JsonProperty("unit_amount")
         @ExcludeMissing
         unitAmount: JsonField<String> = JsonMissing.of(),
-    ) : this(dimensionValues, unitAmount, mutableMapOf())
+        @JsonProperty("scaling_factor")
+        @ExcludeMissing
+        scalingFactor: JsonField<Double> = JsonMissing.of(),
+    ) : this(dimensionValues, unitAmount, scalingFactor, mutableMapOf())
 
     /**
      * One or two matrix keys to filter usage to this Matrix value by
@@ -53,6 +57,15 @@ private constructor(
     fun unitAmount(): String = unitAmount.getRequired("unit_amount")
 
     /**
+     * Optional multiplier applied to rated quantity before unit_amount.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    @Deprecated("deprecated")
+    fun scalingFactor(): Double? = scalingFactor.getNullable("scaling_factor")
+
+    /**
      * Returns the raw JSON value of [dimensionValues].
      *
      * Unlike [dimensionValues], this method doesn't throw if the JSON field has an unexpected type.
@@ -67,6 +80,16 @@ private constructor(
      * Unlike [unitAmount], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("unit_amount") @ExcludeMissing fun _unitAmount(): JsonField<String> = unitAmount
+
+    /**
+     * Returns the raw JSON value of [scalingFactor].
+     *
+     * Unlike [scalingFactor], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @Deprecated("deprecated")
+    @JsonProperty("scaling_factor")
+    @ExcludeMissing
+    fun _scalingFactor(): JsonField<Double> = scalingFactor
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -99,11 +122,13 @@ private constructor(
 
         private var dimensionValues: JsonField<MutableList<String?>>? = null
         private var unitAmount: JsonField<String>? = null
+        private var scalingFactor: JsonField<Double> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(matrixValue: MatrixValue) = apply {
             dimensionValues = matrixValue.dimensionValues.map { it.toMutableList() }
             unitAmount = matrixValue.unitAmount
+            scalingFactor = matrixValue.scalingFactor
             additionalProperties = matrixValue.additionalProperties.toMutableMap()
         }
 
@@ -146,6 +171,31 @@ private constructor(
          */
         fun unitAmount(unitAmount: JsonField<String>) = apply { this.unitAmount = unitAmount }
 
+        /** Optional multiplier applied to rated quantity before unit_amount. */
+        @Deprecated("deprecated")
+        fun scalingFactor(scalingFactor: Double?) =
+            scalingFactor(JsonField.ofNullable(scalingFactor))
+
+        /**
+         * Alias for [Builder.scalingFactor].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        @Deprecated("deprecated")
+        fun scalingFactor(scalingFactor: Double) = scalingFactor(scalingFactor as Double?)
+
+        /**
+         * Sets [Builder.scalingFactor] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.scalingFactor] with a well-typed [Double] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        @Deprecated("deprecated")
+        fun scalingFactor(scalingFactor: JsonField<Double>) = apply {
+            this.scalingFactor = scalingFactor
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -182,6 +232,7 @@ private constructor(
             MatrixValue(
                 checkRequired("dimensionValues", dimensionValues).map { it.toImmutable() },
                 checkRequired("unitAmount", unitAmount),
+                scalingFactor,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -203,6 +254,7 @@ private constructor(
 
         dimensionValues()
         unitAmount()
+        scalingFactor()
         validated = true
     }
 
@@ -221,7 +273,8 @@ private constructor(
      */
     internal fun validity(): Int =
         (dimensionValues.asKnown()?.sumOf { (if (it == null) 0 else 1).toInt() } ?: 0) +
-            (if (unitAmount.asKnown() == null) 0 else 1)
+            (if (unitAmount.asKnown() == null) 0 else 1) +
+            (if (scalingFactor.asKnown() == null) 0 else 1)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -231,15 +284,16 @@ private constructor(
         return other is MatrixValue &&
             dimensionValues == other.dimensionValues &&
             unitAmount == other.unitAmount &&
+            scalingFactor == other.scalingFactor &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(dimensionValues, unitAmount, additionalProperties)
+        Objects.hash(dimensionValues, unitAmount, scalingFactor, additionalProperties)
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "MatrixValue{dimensionValues=$dimensionValues, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
+        "MatrixValue{dimensionValues=$dimensionValues, unitAmount=$unitAmount, scalingFactor=$scalingFactor, additionalProperties=$additionalProperties}"
 }

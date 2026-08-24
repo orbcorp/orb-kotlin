@@ -12,17 +12,26 @@ internal class MatrixValueTest {
     @Test
     fun create() {
         val matrixValue =
-            MatrixValue.builder().addDimensionValue("string").unitAmount("unit_amount").build()
+            MatrixValue.builder()
+                .addDimensionValue("string")
+                .unitAmount("unit_amount")
+                .scalingFactor(0.0)
+                .build()
 
         assertThat(matrixValue.dimensionValues()).containsExactly("string")
         assertThat(matrixValue.unitAmount()).isEqualTo("unit_amount")
+        assertThat(matrixValue.scalingFactor()).isEqualTo(0.0)
     }
 
     @Test
     fun roundtrip() {
         val jsonMapper = jsonMapper()
         val matrixValue =
-            MatrixValue.builder().addDimensionValue("string").unitAmount("unit_amount").build()
+            MatrixValue.builder()
+                .addDimensionValue("string")
+                .unitAmount("unit_amount")
+                .scalingFactor(0.0)
+                .build()
 
         val roundtrippedMatrixValue =
             jsonMapper.readValue(

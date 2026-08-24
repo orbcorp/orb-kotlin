@@ -19,16 +19,23 @@ internal class MatrixConfigTest {
                     MatrixValue.builder()
                         .addDimensionValue("string")
                         .unitAmount("unit_amount")
+                        .scalingFactor(0.0)
                         .build()
                 )
+                .scalingFactor(0.0)
                 .build()
 
         assertThat(matrixConfig.defaultUnitAmount()).isEqualTo("default_unit_amount")
         assertThat(matrixConfig.dimensions()).containsExactly("string")
         assertThat(matrixConfig.matrixValues())
             .containsExactly(
-                MatrixValue.builder().addDimensionValue("string").unitAmount("unit_amount").build()
+                MatrixValue.builder()
+                    .addDimensionValue("string")
+                    .unitAmount("unit_amount")
+                    .scalingFactor(0.0)
+                    .build()
             )
+        assertThat(matrixConfig.scalingFactor()).isEqualTo(0.0)
     }
 
     @Test
@@ -42,8 +49,10 @@ internal class MatrixConfigTest {
                     MatrixValue.builder()
                         .addDimensionValue("string")
                         .unitAmount("unit_amount")
+                        .scalingFactor(0.0)
                         .build()
                 )
+                .scalingFactor(0.0)
                 .build()
 
         val roundtrippedMatrixConfig =

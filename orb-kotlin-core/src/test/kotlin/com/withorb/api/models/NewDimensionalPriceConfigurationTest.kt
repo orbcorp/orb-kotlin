@@ -13,12 +13,12 @@ internal class NewDimensionalPriceConfigurationTest {
     fun create() {
         val newDimensionalPriceConfiguration =
             NewDimensionalPriceConfiguration.builder()
-                .addDimensionValue("string")
+                .addDimensionValue("x")
                 .dimensionalPriceGroupId("dimensional_price_group_id")
                 .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                 .build()
 
-        assertThat(newDimensionalPriceConfiguration.dimensionValues()).containsExactly("string")
+        assertThat(newDimensionalPriceConfiguration.dimensionValues()).containsExactly("x")
         assertThat(newDimensionalPriceConfiguration.dimensionalPriceGroupId())
             .isEqualTo("dimensional_price_group_id")
         assertThat(newDimensionalPriceConfiguration.externalDimensionalPriceGroupId())
@@ -30,7 +30,7 @@ internal class NewDimensionalPriceConfigurationTest {
         val jsonMapper = jsonMapper()
         val newDimensionalPriceConfiguration =
             NewDimensionalPriceConfiguration.builder()
-                .addDimensionValue("string")
+                .addDimensionValue("x")
                 .dimensionalPriceGroupId("dimensional_price_group_id")
                 .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                 .build()

@@ -104,6 +104,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                 UnitConfig.builder()
                                     .unitAmount("unit_amount")
                                     .prorated(true)
+                                    .scalingFactor(0.0)
                                     .build()
                             )
                             .billableMetricId("billable_metric_id")
@@ -121,7 +122,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                             .currency("currency")
                             .dimensionalPriceConfiguration(
                                 NewDimensionalPriceConfiguration.builder()
-                                    .addDimensionValue("string")
+                                    .addDimensionValue("x")
                                     .dimensionalPriceGroupId("dimensional_price_group_id")
                                     .externalDimensionalPriceGroupId(
                                         "external_dimensional_price_group_id"
@@ -271,6 +272,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                 UnitConfig.builder()
                                     .unitAmount("unit_amount")
                                     .prorated(true)
+                                    .scalingFactor(0.0)
                                     .build()
                             )
                             .billableMetricId("billable_metric_id")
@@ -288,7 +290,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                             .currency("currency")
                             .dimensionalPriceConfiguration(
                                 NewDimensionalPriceConfiguration.builder()
-                                    .addDimensionValue("string")
+                                    .addDimensionValue("x")
                                     .dimensionalPriceGroupId("dimensional_price_group_id")
                                     .externalDimensionalPriceGroupId(
                                         "external_dimensional_price_group_id"
@@ -430,6 +432,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     UnitConfig.builder()
                                         .unitAmount("unit_amount")
                                         .prorated(true)
+                                        .scalingFactor(0.0)
                                         .build()
                                 )
                                 .billableMetricId("billable_metric_id")
@@ -449,7 +452,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                 .currency("currency")
                                 .dimensionalPriceConfiguration(
                                     NewDimensionalPriceConfiguration.builder()
-                                        .addDimensionValue("string")
+                                        .addDimensionValue("x")
                                         .dimensionalPriceGroupId("dimensional_price_group_id")
                                         .externalDimensionalPriceGroupId(
                                             "external_dimensional_price_group_id"
@@ -600,6 +603,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                     UnitConfig.builder()
                                         .unitAmount("unit_amount")
                                         .prorated(true)
+                                        .scalingFactor(0.0)
                                         .build()
                                 )
                                 .billableMetricId("billable_metric_id")
@@ -619,7 +623,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                 .currency("currency")
                                 .dimensionalPriceConfiguration(
                                     NewDimensionalPriceConfiguration.builder()
-                                        .addDimensionValue("string")
+                                        .addDimensionValue("x")
                                         .dimensionalPriceGroupId("dimensional_price_group_id")
                                         .externalDimensionalPriceGroupId(
                                             "external_dimensional_price_group_id"
@@ -747,6 +751,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                 UnitConfig.builder()
                                     .unitAmount("unit_amount")
                                     .prorated(true)
+                                    .scalingFactor(0.0)
                                     .build()
                             )
                             .billableMetricId("billable_metric_id")
@@ -764,7 +769,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                             .currency("currency")
                             .dimensionalPriceConfiguration(
                                 NewDimensionalPriceConfiguration.builder()
-                                    .addDimensionValue("string")
+                                    .addDimensionValue("x")
                                     .dimensionalPriceGroupId("dimensional_price_group_id")
                                     .externalDimensionalPriceGroupId(
                                         "external_dimensional_price_group_id"
@@ -916,6 +921,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                                 UnitConfig.builder()
                                     .unitAmount("unit_amount")
                                     .prorated(true)
+                                    .scalingFactor(0.0)
                                     .build()
                             )
                             .billableMetricId("billable_metric_id")
@@ -933,7 +939,7 @@ internal class SubscriptionSchedulePlanChangeParamsTest {
                             .currency("currency")
                             .dimensionalPriceConfiguration(
                                 NewDimensionalPriceConfiguration.builder()
-                                    .addDimensionValue("string")
+                                    .addDimensionValue("x")
                                     .dimensionalPriceGroupId("dimensional_price_group_id")
                                     .externalDimensionalPriceGroupId(
                                         "external_dimensional_price_group_id"

@@ -18,7 +18,13 @@ internal class NewSubscriptionUnitPriceTest {
                 .itemId("item_id")
                 .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                 .name("Annual fee")
-                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").prorated(true).build())
+                .unitConfig(
+                    UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .prorated(true)
+                        .scalingFactor(0.0)
+                        .build()
+                )
                 .billableMetricId("billable_metric_id")
                 .billedInAdvance(true)
                 .billingCycleConfiguration(
@@ -34,7 +40,7 @@ internal class NewSubscriptionUnitPriceTest {
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
-                        .addDimensionValue("string")
+                        .addDimensionValue("x")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                         .build()
@@ -64,7 +70,13 @@ internal class NewSubscriptionUnitPriceTest {
             .isEqualTo(NewSubscriptionUnitPrice.ModelType.UNIT)
         assertThat(newSubscriptionUnitPrice.name()).isEqualTo("Annual fee")
         assertThat(newSubscriptionUnitPrice.unitConfig())
-            .isEqualTo(UnitConfig.builder().unitAmount("unit_amount").prorated(true).build())
+            .isEqualTo(
+                UnitConfig.builder()
+                    .unitAmount("unit_amount")
+                    .prorated(true)
+                    .scalingFactor(0.0)
+                    .build()
+            )
         assertThat(newSubscriptionUnitPrice.billableMetricId()).isEqualTo("billable_metric_id")
         assertThat(newSubscriptionUnitPrice.billedInAdvance()).isEqualTo(true)
         assertThat(newSubscriptionUnitPrice.billingCycleConfiguration())
@@ -90,7 +102,7 @@ internal class NewSubscriptionUnitPriceTest {
         assertThat(newSubscriptionUnitPrice.dimensionalPriceConfiguration())
             .isEqualTo(
                 NewDimensionalPriceConfiguration.builder()
-                    .addDimensionValue("string")
+                    .addDimensionValue("x")
                     .dimensionalPriceGroupId("dimensional_price_group_id")
                     .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                     .build()
@@ -124,7 +136,13 @@ internal class NewSubscriptionUnitPriceTest {
                 .itemId("item_id")
                 .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                 .name("Annual fee")
-                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").prorated(true).build())
+                .unitConfig(
+                    UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .prorated(true)
+                        .scalingFactor(0.0)
+                        .build()
+                )
                 .billableMetricId("billable_metric_id")
                 .billedInAdvance(true)
                 .billingCycleConfiguration(
@@ -140,7 +158,7 @@ internal class NewSubscriptionUnitPriceTest {
                 .currency("currency")
                 .dimensionalPriceConfiguration(
                     NewDimensionalPriceConfiguration.builder()
-                        .addDimensionValue("string")
+                        .addDimensionValue("x")
                         .dimensionalPriceGroupId("dimensional_price_group_id")
                         .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                         .build()

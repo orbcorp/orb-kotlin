@@ -265,7 +265,11 @@ internal class PlanTest {
                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                         .replacesPriceId("replaces_price_id")
                         .unitConfig(
-                            UnitConfig.builder().unitAmount("unit_amount").prorated(true).build()
+                            UnitConfig.builder()
+                                .unitAmount("unit_amount")
+                                .prorated(true)
+                                .scalingFactor(0.0)
+                                .build()
                         )
                         .dimensionalPriceConfiguration(
                             DimensionalPriceConfiguration.builder()
@@ -562,7 +566,11 @@ internal class PlanTest {
                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                         .replacesPriceId("replaces_price_id")
                         .unitConfig(
-                            UnitConfig.builder().unitAmount("unit_amount").prorated(true).build()
+                            UnitConfig.builder()
+                                .unitAmount("unit_amount")
+                                .prorated(true)
+                                .scalingFactor(0.0)
+                                .build()
                         )
                         .dimensionalPriceConfiguration(
                             DimensionalPriceConfiguration.builder()
@@ -854,7 +862,11 @@ internal class PlanTest {
                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                         .replacesPriceId("replaces_price_id")
                         .unitConfig(
-                            UnitConfig.builder().unitAmount("unit_amount").prorated(true).build()
+                            UnitConfig.builder()
+                                .unitAmount("unit_amount")
+                                .prorated(true)
+                                .scalingFactor(0.0)
+                                .build()
                         )
                         .dimensionalPriceConfiguration(
                             DimensionalPriceConfiguration.builder()

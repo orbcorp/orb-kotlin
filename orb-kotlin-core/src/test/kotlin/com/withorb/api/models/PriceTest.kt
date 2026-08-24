@@ -125,7 +125,13 @@ internal class PriceTest {
                 .planPhaseOrder(0L)
                 .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                 .replacesPriceId("replaces_price_id")
-                .unitConfig(UnitConfig.builder().unitAmount("unit_amount").prorated(true).build())
+                .unitConfig(
+                    UnitConfig.builder()
+                        .unitAmount("unit_amount")
+                        .prorated(true)
+                        .scalingFactor(0.0)
+                        .build()
+                )
                 .dimensionalPriceConfiguration(
                     DimensionalPriceConfiguration.builder()
                         .addDimensionValue("string")
@@ -293,7 +299,11 @@ internal class PriceTest {
                     .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                     .replacesPriceId("replaces_price_id")
                     .unitConfig(
-                        UnitConfig.builder().unitAmount("unit_amount").prorated(true).build()
+                        UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .prorated(true)
+                            .scalingFactor(0.0)
+                            .build()
                     )
                     .dimensionalPriceConfiguration(
                         DimensionalPriceConfiguration.builder()
@@ -1684,8 +1694,10 @@ internal class PriceTest {
                             MatrixValue.builder()
                                 .addDimensionValue("string")
                                 .unitAmount("unit_amount")
+                                .scalingFactor(0.0)
                                 .build()
                         )
+                        .scalingFactor(0.0)
                         .build()
                 )
                 .maximum(
@@ -1862,8 +1874,10 @@ internal class PriceTest {
                                 MatrixValue.builder()
                                     .addDimensionValue("string")
                                     .unitAmount("unit_amount")
+                                    .scalingFactor(0.0)
                                     .build()
                             )
+                            .scalingFactor(0.0)
                             .build()
                     )
                     .maximum(
@@ -4650,8 +4664,10 @@ internal class PriceTest {
                             MatrixWithAllocationConfig.MatrixValue.builder()
                                 .addDimensionValue("string")
                                 .unitAmount("unit_amount")
+                                .scalingFactor("scaling_factor")
                                 .build()
                         )
+                        .scalingFactor("scaling_factor")
                         .build()
                 )
                 .maximum(
@@ -4831,8 +4847,10 @@ internal class PriceTest {
                                 MatrixWithAllocationConfig.MatrixValue.builder()
                                     .addDimensionValue("string")
                                     .unitAmount("unit_amount")
+                                    .scalingFactor("scaling_factor")
                                     .build()
                             )
+                            .scalingFactor("scaling_factor")
                             .build()
                     )
                     .maximum(

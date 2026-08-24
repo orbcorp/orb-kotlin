@@ -288,6 +288,7 @@ internal class InvoiceListPageResponseTest {
                                             UnitConfig.builder()
                                                 .unitAmount("unit_amount")
                                                 .prorated(true)
+                                                .scalingFactor(0.0)
                                                 .build()
                                         )
                                         .dimensionalPriceConfiguration(
@@ -672,6 +673,7 @@ internal class InvoiceListPageResponseTest {
                                         UnitConfig.builder()
                                             .unitAmount("unit_amount")
                                             .prorated(true)
+                                            .scalingFactor(0.0)
                                             .build()
                                     )
                                     .dimensionalPriceConfiguration(
@@ -1074,6 +1076,7 @@ internal class InvoiceListPageResponseTest {
                                             UnitConfig.builder()
                                                 .unitAmount("unit_amount")
                                                 .prorated(true)
+                                                .scalingFactor(0.0)
                                                 .build()
                                         )
                                         .dimensionalPriceConfiguration(
