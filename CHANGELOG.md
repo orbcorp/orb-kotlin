@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.28.0](https://github.com/orbcorp/orb-kotlin/compare/v1.27.0...v1.28.0) (2026-08-25)
+
+
+### Features
+
+* **api:** restore deprecated `scaling_factor` field on unit and matrix price configs ([4d7ed48](https://github.com/orbcorp/orb-kotlin/commit/4d7ed48b722d4590a31a34e0a8c2250909f24bb4))
+
+
+### Bug Fixes
+
+* **api:** reject empty or missing dimension values in dimensional price configuration ([4d7ed48](https://github.com/orbcorp/orb-kotlin/commit/4d7ed48b722d4590a31a34e0a8c2250909f24bb4))
+
 ## [1.27.0](https://github.com/orbcorp/orb-kotlin/compare/v1.26.0...v1.27.0) (2026-08-19)
 
 
