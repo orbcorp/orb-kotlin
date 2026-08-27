@@ -99,8 +99,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -145,8 +145,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -212,8 +212,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -258,8 +258,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -325,8 +325,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -371,8 +371,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -438,8 +438,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -484,8 +484,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -551,8 +551,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -597,8 +597,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -664,8 +664,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -710,8 +710,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -777,8 +777,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -823,8 +823,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -890,8 +890,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -936,8 +936,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1003,8 +1003,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1049,8 +1049,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1116,8 +1116,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1162,8 +1162,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1229,8 +1229,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1275,8 +1275,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1342,8 +1342,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1388,8 +1388,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1455,8 +1455,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1501,8 +1501,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1568,8 +1568,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1614,8 +1614,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1681,8 +1681,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1727,8 +1727,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1794,8 +1794,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1840,8 +1840,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1905,8 +1905,8 @@ internal class ErrorHandlingTest {
                         .autoIssuance(true)
                         .billingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")
@@ -1951,8 +1951,8 @@ internal class ErrorHandlingTest {
                         )
                         .shippingAddress(
                             AddressInput.builder()
+                                .country("x")
                                 .city("city")
-                                .country("country")
                                 .line1("line1")
                                 .line2("line2")
                                 .postalCode("postal_code")

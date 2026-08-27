@@ -53,8 +53,8 @@ internal class CustomerServiceAsyncTest {
                     .autoIssuance(true)
                     .billingAddress(
                         AddressInput.builder()
+                            .country("x")
                             .city("city")
-                            .country("country")
                             .line1("line1")
                             .line2("line2")
                             .postalCode("postal_code")
@@ -97,8 +97,8 @@ internal class CustomerServiceAsyncTest {
                     )
                     .shippingAddress(
                         AddressInput.builder()
+                            .country("x")
                             .city("city")
-                            .country("country")
                             .line1("line1")
                             .line2("line2")
                             .postalCode("postal_code")
@@ -156,8 +156,8 @@ internal class CustomerServiceAsyncTest {
                     .autoIssuance(true)
                     .billingAddress(
                         AddressInput.builder()
+                            .country("x")
                             .city("city")
-                            .country("country")
                             .line1("line1")
                             .line2("line2")
                             .postalCode("postal_code")
@@ -203,8 +203,8 @@ internal class CustomerServiceAsyncTest {
                     )
                     .shippingAddress(
                         AddressInput.builder()
+                            .country("x")
                             .city("city")
-                            .country("country")
                             .line1("line1")
                             .line2("line2")
                             .postalCode("postal_code")
@@ -383,8 +383,8 @@ internal class CustomerServiceAsyncTest {
                     .autoIssuance(true)
                     .billingAddress(
                         AddressInput.builder()
+                            .country("x")
                             .city("city")
-                            .country("country")
                             .line1("line1")
                             .line2("line2")
                             .postalCode("postal_code")
@@ -433,8 +433,8 @@ internal class CustomerServiceAsyncTest {
                     )
                     .shippingAddress(
                         AddressInput.builder()
+                            .country("x")
                             .city("city")
-                            .country("country")
                             .line1("line1")
                             .line2("line2")
                             .postalCode("postal_code")

@@ -29,8 +29,8 @@ internal class CustomerCreateParamsTest {
             .autoIssuance(true)
             .billingAddress(
                 AddressInput.builder()
+                    .country("x")
                     .city("city")
-                    .country("country")
                     .line1("line1")
                     .line2("line2")
                     .postalCode("postal_code")
@@ -71,8 +71,8 @@ internal class CustomerCreateParamsTest {
             .reportingConfiguration(NewReportingConfiguration.builder().exempt(true).build())
             .shippingAddress(
                 AddressInput.builder()
+                    .country("x")
                     .city("city")
-                    .country("country")
                     .line1("line1")
                     .line2("line2")
                     .postalCode("postal_code")
@@ -120,8 +120,8 @@ internal class CustomerCreateParamsTest {
                 .autoIssuance(true)
                 .billingAddress(
                     AddressInput.builder()
+                        .country("x")
                         .city("city")
-                        .country("country")
                         .line1("line1")
                         .line2("line2")
                         .postalCode("postal_code")
@@ -162,8 +162,8 @@ internal class CustomerCreateParamsTest {
                 .reportingConfiguration(NewReportingConfiguration.builder().exempt(true).build())
                 .shippingAddress(
                     AddressInput.builder()
+                        .country("x")
                         .city("city")
-                        .country("country")
                         .line1("line1")
                         .line2("line2")
                         .postalCode("postal_code")
@@ -210,8 +210,8 @@ internal class CustomerCreateParamsTest {
         assertThat(body.billingAddress())
             .isEqualTo(
                 AddressInput.builder()
+                    .country("x")
                     .city("city")
-                    .country("country")
                     .line1("line1")
                     .line2("line2")
                     .postalCode("postal_code")
@@ -258,8 +258,8 @@ internal class CustomerCreateParamsTest {
         assertThat(body.shippingAddress())
             .isEqualTo(
                 AddressInput.builder()
+                    .country("x")
                     .city("city")
-                    .country("country")
                     .line1("line1")
                     .line2("line2")
                     .postalCode("postal_code")
