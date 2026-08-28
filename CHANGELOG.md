@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.28.1](https://github.com/orbcorp/orb-kotlin/compare/v1.28.0...v1.28.1) (2026-08-28)
+
+
+### Bug Fixes
+
+* **api:** require non-empty `country` in customer address input ([2133b7b](https://github.com/orbcorp/orb-kotlin/commit/2133b7ba793f52ceb3921ce3b781cd0de6a23562))
+
 ## [1.28.0](https://github.com/orbcorp/orb-kotlin/compare/v1.27.0...v1.28.0) (2026-08-25)
 
 
