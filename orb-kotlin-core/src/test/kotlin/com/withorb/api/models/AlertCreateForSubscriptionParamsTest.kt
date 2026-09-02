@@ -27,6 +27,7 @@ internal class AlertCreateForSubscriptionParamsTest {
                 AlertCreateForSubscriptionParams.ThresholdOverride.builder()
                     .addGroupValue("string")
                     .addThreshold(Threshold.builder().value(0.0).build())
+                    .addGroupKey("string")
                     .build()
             )
             .build()
@@ -67,6 +68,7 @@ internal class AlertCreateForSubscriptionParamsTest {
                     AlertCreateForSubscriptionParams.ThresholdOverride.builder()
                         .addGroupValue("string")
                         .addThreshold(Threshold.builder().value(0.0).build())
+                        .addGroupKey("string")
                         .build()
                 )
                 .build()
@@ -91,6 +93,7 @@ internal class AlertCreateForSubscriptionParamsTest {
                 AlertCreateForSubscriptionParams.ThresholdOverride.builder()
                     .addGroupValue("string")
                     .addThreshold(Threshold.builder().value(0.0).build())
+                    .addGroupKey("string")
                     .build()
             )
     }
