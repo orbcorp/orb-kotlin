@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.29.0](https://github.com/orbcorp/orb-kotlin/compare/v1.28.1...v1.29.0) (2026-09-03)
+
+
+### Features
+
+* **api:** support partial grouping key targeting in alert threshold overrides ([3ef4070](https://github.com/orbcorp/orb-kotlin/commit/3ef4070ec3ee4a4d214cb085a8b2bee61ce06b2d))
+
 ## [1.28.1](https://github.com/orbcorp/orb-kotlin/compare/v1.28.0...v1.28.1) (2026-08-28)
 
 
