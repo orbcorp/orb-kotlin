@@ -7,7 +7,11 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
-/** Fetch dimensional price group */
+/**
+ * This endpoint returns a dimensional price group identified by its ID. A dimensional price group
+ * partitions the result of a billable metric by a set of dimensions, and the prices in the group
+ * specify which partition their usage is derived from.
+ */
 class DimensionalPriceGroupRetrieveParams
 private constructor(
     private val dimensionalPriceGroupId: String?,

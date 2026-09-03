@@ -8,7 +8,11 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
-/** Fetch migration */
+/**
+ * This endpoint returns a migration for a plan, identified by its ID. A migration moves a plan's
+ * subscriptions onto a new version of that plan; the response reports the effective time it is
+ * scheduled for and its current status.
+ */
 class PlanMigrationRetrieveParams
 private constructor(
     private val planId: String,

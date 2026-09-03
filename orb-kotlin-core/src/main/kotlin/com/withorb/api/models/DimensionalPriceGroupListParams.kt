@@ -7,7 +7,14 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
-/** List dimensional price groups */
+/**
+ * This endpoint returns a list of all dimensional price groups for an account. A dimensional price
+ * group partitions the result of a billable metric by a set of dimensions, and the prices in the
+ * group specify which partition their usage is derived from.
+ *
+ * The response also includes pagination_metadata, which lets the caller retrieve the next page of
+ * results if they exist.
+ */
 class DimensionalPriceGroupListParams
 private constructor(
     private val cursor: String?,

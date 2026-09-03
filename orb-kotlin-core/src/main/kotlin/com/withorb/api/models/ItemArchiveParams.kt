@@ -9,7 +9,10 @@ import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
-/** Archive item */
+/**
+ * This endpoint archives an item, and cascades to archive every price for that item that is still
+ * active. An item that is already archived cannot be archived again.
+ */
 class ItemArchiveParams
 private constructor(
     private val itemId: String?,

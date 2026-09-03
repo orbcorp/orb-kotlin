@@ -57,7 +57,14 @@ interface TopUpServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditTopUpCreateResponse
 
-    /** List top-ups */
+    /**
+     * This endpoint returns a list of a customer's active top-ups; a top-up that has been
+     * deactivated is not included. While a top-up is active, the customer's balance is increased by
+     * the top-up amount whenever it falls to the top-up's threshold.
+     *
+     * The response also includes pagination_metadata, which lets the caller retrieve the next page
+     * of results if they exist.
+     */
     suspend fun list(
         customerId: String,
         params: CustomerCreditTopUpListParams = CustomerCreditTopUpListParams.none(),
@@ -134,7 +141,14 @@ interface TopUpServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** List top-ups by external ID */
+    /**
+     * This endpoint returns a list of a customer's active top-ups; a top-up that has been
+     * deactivated is not included. While a top-up is active, the customer's balance is increased by
+     * the top-up amount whenever it falls to the top-up's threshold.
+     *
+     * The response also includes pagination_metadata, which lets the caller retrieve the next page
+     * of results if they exist.
+     */
     suspend fun listByExternalId(
         externalCustomerId: String,
         params: CustomerCreditTopUpListByExternalIdParams =

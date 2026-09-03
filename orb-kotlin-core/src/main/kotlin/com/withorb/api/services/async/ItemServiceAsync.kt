@@ -66,7 +66,10 @@ interface ItemServiceAsync {
     suspend fun list(requestOptions: RequestOptions): ItemListPageAsync =
         list(ItemListParams.none(), requestOptions)
 
-    /** Archive item */
+    /**
+     * This endpoint archives an item, and cascades to archive every price for that item that is
+     * still active. An item that is already archived cannot be archived again.
+     */
     suspend fun archive(
         itemId: String,
         params: ItemArchiveParams = ItemArchiveParams.none(),

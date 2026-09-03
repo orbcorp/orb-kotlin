@@ -32,7 +32,11 @@ interface MigrationServiceAsync {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): MigrationServiceAsync
 
-    /** Fetch migration */
+    /**
+     * This endpoint returns a migration for a plan, identified by its ID. A migration moves a
+     * plan's subscriptions onto a new version of that plan; the response reports the effective time
+     * it is scheduled for and its current status.
+     */
     suspend fun retrieve(
         migrationId: String,
         params: PlanMigrationRetrieveParams,
