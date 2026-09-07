@@ -193,6 +193,13 @@ private constructor(
 
         /**
          * Alias for calling [addData] with
+         * `Price.ofTieredMatrixWithAllocation(tieredMatrixWithAllocation)`.
+         */
+        fun addData(tieredMatrixWithAllocation: Price.TieredMatrixWithAllocation) =
+            addData(Price.ofTieredMatrixWithAllocation(tieredMatrixWithAllocation))
+
+        /**
+         * Alias for calling [addData] with
          * `Price.ofMatrixWithThresholdDiscounts(matrixWithThresholdDiscounts)`.
          */
         fun addData(matrixWithThresholdDiscounts: Price.MatrixWithThresholdDiscounts) =
