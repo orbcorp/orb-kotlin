@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.31.0](https://github.com/orbcorp/orb-kotlin/compare/v1.30.0...v1.31.0) (2026-09-07)
+
+
+### Features
+
+* **api:** add `tiered_matrix_with_allocation` price model ([e42fb26](https://github.com/orbcorp/orb-kotlin/commit/e42fb265bb6f3c01716e96437f1e1c3ae8276a11))
+
 ## [1.30.0](https://github.com/orbcorp/orb-kotlin/compare/v1.29.0...v1.30.0) (2026-09-04)
 
 
