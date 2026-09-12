@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.33.0](https://github.com/orbcorp/orb-kotlin/compare/v1.32.0...v1.33.0) (2026-09-12)
+
+
+### Features
+
+* **api:** remove deprecated debug parameter and response details from ingestion ([0997716](https://github.com/orbcorp/orb-kotlin/commit/0997716fd73ba8c58f7fe1943c68f93240154267))
+
 ## [1.32.0](https://github.com/orbcorp/orb-kotlin/compare/v1.31.0...v1.32.0) (2026-09-10)
 
 
