@@ -11,11 +11,19 @@ import java.util.Objects
 class InvoiceFetchParams
 private constructor(
     private val invoiceId: String?,
+    private val includeZeroQuantityLineItems: Boolean?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
     fun invoiceId(): String? = invoiceId
+
+    /**
+     * Whether to return line items with a quantity of zero. When omitted, Orb returns every line
+     * item. A line item that is grouped as part of a line item minimum is always returned; an
+     * invoice-level minimum does not exempt it.
+     */
+    fun includeZeroQuantityLineItems(): Boolean? = includeZeroQuantityLineItems
 
     /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -37,16 +45,35 @@ private constructor(
     class Builder internal constructor() {
 
         private var invoiceId: String? = null
+        private var includeZeroQuantityLineItems: Boolean? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(invoiceFetchParams: InvoiceFetchParams) = apply {
             invoiceId = invoiceFetchParams.invoiceId
+            includeZeroQuantityLineItems = invoiceFetchParams.includeZeroQuantityLineItems
             additionalHeaders = invoiceFetchParams.additionalHeaders.toBuilder()
             additionalQueryParams = invoiceFetchParams.additionalQueryParams.toBuilder()
         }
 
         fun invoiceId(invoiceId: String?) = apply { this.invoiceId = invoiceId }
+
+        /**
+         * Whether to return line items with a quantity of zero. When omitted, Orb returns every
+         * line item. A line item that is grouped as part of a line item minimum is always returned;
+         * an invoice-level minimum does not exempt it.
+         */
+        fun includeZeroQuantityLineItems(includeZeroQuantityLineItems: Boolean?) = apply {
+            this.includeZeroQuantityLineItems = includeZeroQuantityLineItems
+        }
+
+        /**
+         * Alias for [Builder.includeZeroQuantityLineItems].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun includeZeroQuantityLineItems(includeZeroQuantityLineItems: Boolean) =
+            includeZeroQuantityLineItems(includeZeroQuantityLineItems as Boolean?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -152,7 +179,12 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          */
         fun build(): InvoiceFetchParams =
-            InvoiceFetchParams(invoiceId, additionalHeaders.build(), additionalQueryParams.build())
+            InvoiceFetchParams(
+                invoiceId,
+                includeZeroQuantityLineItems,
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
+            )
     }
 
     fun _pathParam(index: Int): String =
@@ -163,7 +195,15 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                includeZeroQuantityLineItems?.let {
+                    put("include_zero_quantity_line_items", it.toString())
+                }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -172,12 +212,19 @@ private constructor(
 
         return other is InvoiceFetchParams &&
             invoiceId == other.invoiceId &&
+            includeZeroQuantityLineItems == other.includeZeroQuantityLineItems &&
             additionalHeaders == other.additionalHeaders &&
             additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = Objects.hash(invoiceId, additionalHeaders, additionalQueryParams)
+    override fun hashCode(): Int =
+        Objects.hash(
+            invoiceId,
+            includeZeroQuantityLineItems,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
-        "InvoiceFetchParams{invoiceId=$invoiceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "InvoiceFetchParams{invoiceId=$invoiceId, includeZeroQuantityLineItems=$includeZeroQuantityLineItems, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

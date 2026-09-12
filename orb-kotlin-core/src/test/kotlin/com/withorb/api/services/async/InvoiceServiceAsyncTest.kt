@@ -7,6 +7,7 @@ import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.InvoiceCreateParams
 import com.withorb.api.models.InvoiceDeleteLineItemParams
+import com.withorb.api.models.InvoiceFetchParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceIssueSummaryParams
@@ -156,7 +157,13 @@ internal class InvoiceServiceAsyncTest {
                 .build()
         val invoiceServiceAsync = client.invoices()
 
-        val invoice = invoiceServiceAsync.fetch("invoice_id")
+        val invoice =
+            invoiceServiceAsync.fetch(
+                InvoiceFetchParams.builder()
+                    .invoiceId("invoice_id")
+                    .includeZeroQuantityLineItems(true)
+                    .build()
+            )
 
         invoice.validate()
     }
@@ -172,7 +179,10 @@ internal class InvoiceServiceAsyncTest {
 
         val response =
             invoiceServiceAsync.fetchUpcoming(
-                InvoiceFetchUpcomingParams.builder().subscriptionId("subscription_id").build()
+                InvoiceFetchUpcomingParams.builder()
+                    .subscriptionId("subscription_id")
+                    .includeZeroQuantityLineItems(true)
+                    .build()
             )
 
         response.validate()

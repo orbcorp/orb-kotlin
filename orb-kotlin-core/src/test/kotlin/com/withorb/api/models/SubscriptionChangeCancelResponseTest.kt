@@ -1025,6 +1025,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                         .eligibleToIssueAt(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
+                                        .hiddenLineItemCount(0L)
                                         .hostedInvoiceUrl("hosted_invoice_url")
                                         .invoiceDate(
                                             OffsetDateTime.parse("2022-05-01T07:00:00+00:00")
@@ -1655,6 +1656,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                         .eligibleToIssueAt(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
+                                        .hiddenLineItemCount(0L)
                                         .hostedInvoiceUrl("hosted_invoice_url")
                                         .invoiceDate(
                                             OffsetDateTime.parse("2022-05-01T07:00:00+00:00")
@@ -3023,6 +3025,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                     .eligibleToIssueAt(
                                         OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                     )
+                                    .hiddenLineItemCount(0L)
                                     .hostedInvoiceUrl("hosted_invoice_url")
                                     .invoiceDate(OffsetDateTime.parse("2022-05-01T07:00:00+00:00"))
                                     .invoiceNumber("JYEFHK-00001")
@@ -3607,6 +3610,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                     .eligibleToIssueAt(
                                         OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                     )
+                                    .hiddenLineItemCount(0L)
                                     .hostedInvoiceUrl("hosted_invoice_url")
                                     .invoiceDate(OffsetDateTime.parse("2022-05-01T07:00:00+00:00"))
                                     .invoiceNumber("JYEFHK-00001")
@@ -5017,6 +5021,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                         .eligibleToIssueAt(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
+                                        .hiddenLineItemCount(0L)
                                         .hostedInvoiceUrl("hosted_invoice_url")
                                         .invoiceDate(
                                             OffsetDateTime.parse("2022-05-01T07:00:00+00:00")
@@ -5647,6 +5652,7 @@ internal class SubscriptionChangeCancelResponseTest {
                                         .eligibleToIssueAt(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
+                                        .hiddenLineItemCount(0L)
                                         .hostedInvoiceUrl("hosted_invoice_url")
                                         .invoiceDate(
                                             OffsetDateTime.parse("2022-05-01T07:00:00+00:00")
