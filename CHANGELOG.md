@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.34.0](https://github.com/orbcorp/orb-kotlin/compare/v1.33.0...v1.34.0) (2026-09-13)
+
+
+### Features
+
+* **api:** add `include_zero_quantity_line_items` param and `hidden_line_item_count` to invoice endpoints ([3ee9bb0](https://github.com/orbcorp/orb-kotlin/commit/3ee9bb0a8f9e16d29113b4dfde0fffc267facb4e))
+
 ## [1.33.0](https://github.com/orbcorp/orb-kotlin/compare/v1.32.0...v1.33.0) (2026-09-12)
 
 
