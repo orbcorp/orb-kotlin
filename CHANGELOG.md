@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.36.0](https://github.com/orbcorp/orb-kotlin/compare/v1.35.0...v1.36.0) (2026-09-23)
+
+
+### Features
+
+* **api:** api update ([c407365](https://github.com/orbcorp/orb-kotlin/commit/c407365626b50679ab8e20a7b994ef54df811f69))
+* **api:** api update ([c407365](https://github.com/orbcorp/orb-kotlin/commit/c407365626b50679ab8e20a7b994ef54df811f69))
+* **api:** api update ([c407365](https://github.com/orbcorp/orb-kotlin/commit/c407365626b50679ab8e20a7b994ef54df811f69))
+* **api:** api update ([906a457](https://github.com/orbcorp/orb-kotlin/commit/906a4575e01191e7238c34edcc86d0bd1dbdd989))
+* **api:** api update ([906a457](https://github.com/orbcorp/orb-kotlin/commit/906a4575e01191e7238c34edcc86d0bd1dbdd989))
+* **api:** api update ([906a457](https://github.com/orbcorp/orb-kotlin/commit/906a4575e01191e7238c34edcc86d0bd1dbdd989))
+* **api:** api update ([906a457](https://github.com/orbcorp/orb-kotlin/commit/906a4575e01191e7238c34edcc86d0bd1dbdd989))
+
+
+### Bug Fixes
+
+* **api:** correctly apply plan name when updating a draft plan ([c407365](https://github.com/orbcorp/orb-kotlin/commit/c407365626b50679ab8e20a7b994ef54df811f69))
+
 ## [1.35.0](https://github.com/orbcorp/orb-kotlin/compare/v1.34.0...v1.35.0) (2026-09-21)
 
 
