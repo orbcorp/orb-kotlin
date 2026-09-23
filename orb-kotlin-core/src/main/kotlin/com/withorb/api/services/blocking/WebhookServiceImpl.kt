@@ -2,18 +2,18 @@
 
 package com.withorb.api.services.blocking
 
-import com.fasterxml.jackson.core.JsonProcessingException
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.getRequiredHeader
 import com.withorb.api.core.http.Headers
 import com.withorb.api.errors.OrbException
+import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.UnwrapWebhookEvent
 import java.security.MessageDigest
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
-import java.util.*
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
@@ -25,15 +25,28 @@ private const val SIGNATURE_VERSION = "v1"
 private const val SIGNATURE_DELIMITER = " "
 private const val SIGNATURE_KEY_VALUE_DELIMITER = "="
 
-class WebhookServiceImpl constructor(private val clientOptions: ClientOptions) : WebhookService {
+class WebhookServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    WebhookService {
 
-    override fun unwrap(payload: String, headers: Headers, secret: String?): JsonValue {
-        verifySignature(payload, headers, secret)
-        return try {
-            clientOptions.jsonMapper.readValue(payload, JsonValue::class.java)
-        } catch (e: JsonProcessingException) {
-            throw OrbException("Invalid event payload", e)
+    private val withRawResponse: WebhookService.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
+
+    override fun withRawResponse(): WebhookService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): WebhookService =
+        WebhookServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
+    override fun unwrap(body: String): UnwrapWebhookEvent =
+        try {
+            clientOptions.jsonMapper.readValue(body, jacksonTypeRef<UnwrapWebhookEvent>())
+        } catch (e: Exception) {
+            throw OrbInvalidDataException("Error parsing body", e)
         }
+
+    override fun unwrap(payload: String, headers: Headers, secret: String?): UnwrapWebhookEvent {
+        verifySignature(payload, headers, secret)
+        return unwrap(payload)
     }
 
     // required for `toHexString` usage
@@ -92,5 +105,16 @@ class WebhookServiceImpl constructor(private val clientOptions: ClientOptions) :
         }
 
         throw OrbException("None of the given webhook signatures match the expected signature")
+    }
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        WebhookService.WithRawResponse {
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): WebhookService.WithRawResponse =
+            WebhookServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
     }
 }

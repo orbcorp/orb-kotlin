@@ -42,6 +42,8 @@ import com.withorb.api.services.async.SubscriptionServiceAsync
 import com.withorb.api.services.async.SubscriptionServiceAsyncImpl
 import com.withorb.api.services.async.TopLevelServiceAsync
 import com.withorb.api.services.async.TopLevelServiceAsyncImpl
+import com.withorb.api.services.async.WebhookServiceAsync
+import com.withorb.api.services.async.WebhookServiceAsyncImpl
 
 class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAsync {
 
@@ -58,6 +60,10 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
 
     private val withRawResponse: OrbClientAsync.WithRawResponse by lazy {
         WithRawResponseImpl(clientOptions)
+    }
+
+    private val webhooks: WebhookServiceAsync by lazy {
+        WebhookServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
     private val topLevel: TopLevelServiceAsync by lazy {
@@ -136,6 +142,8 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
 
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): OrbClientAsync =
         OrbClientAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
+    override fun webhooks(): WebhookServiceAsync = webhooks
 
     override fun topLevel(): TopLevelServiceAsync = topLevel
 
@@ -274,6 +282,10 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         OrbClientAsync.WithRawResponse {
 
+        private val webhooks: WebhookServiceAsync.WithRawResponse by lazy {
+            WebhookServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val topLevel: TopLevelServiceAsync.WithRawResponse by lazy {
             TopLevelServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
@@ -357,6 +369,8 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
             OrbClientAsyncImpl.WithRawResponseImpl(
                 clientOptions.toBuilder().apply(modifier).build()
             )
+
+        override fun webhooks(): WebhookServiceAsync.WithRawResponse = webhooks
 
         override fun topLevel(): TopLevelServiceAsync.WithRawResponse = topLevel
 

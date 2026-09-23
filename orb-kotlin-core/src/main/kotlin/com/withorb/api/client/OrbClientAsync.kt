@@ -22,6 +22,7 @@ import com.withorb.api.services.async.PriceServiceAsync
 import com.withorb.api.services.async.SubscriptionChangeServiceAsync
 import com.withorb.api.services.async.SubscriptionServiceAsync
 import com.withorb.api.services.async.TopLevelServiceAsync
+import com.withorb.api.services.async.WebhookServiceAsync
 
 /**
  * A client for interacting with the Orb REST API asynchronously. You can also switch to synchronous
@@ -58,6 +59,8 @@ interface OrbClientAsync {
      * The original service is not modified.
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): OrbClientAsync
+
+    fun webhooks(): WebhookServiceAsync
 
     fun topLevel(): TopLevelServiceAsync
 
@@ -212,6 +215,8 @@ interface OrbClientAsync {
          * The original service is not modified.
          */
         fun withOptions(modifier: (ClientOptions.Builder) -> Unit): OrbClientAsync.WithRawResponse
+
+        fun webhooks(): WebhookServiceAsync.WithRawResponse
 
         fun topLevel(): TopLevelServiceAsync.WithRawResponse
 

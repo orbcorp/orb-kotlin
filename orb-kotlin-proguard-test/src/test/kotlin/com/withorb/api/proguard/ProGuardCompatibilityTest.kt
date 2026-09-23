@@ -51,6 +51,7 @@ internal class ProGuardCompatibilityTest {
         val client = OrbOkHttpClient.builder().apiKey("My API Key").build()
 
         assertThat(client).isNotNull()
+        assertThat(client.webhooks()).isNotNull()
         assertThat(client.topLevel()).isNotNull()
         assertThat(client.beta()).isNotNull()
         assertThat(client.coupons()).isNotNull()

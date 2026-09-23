@@ -60,6 +60,8 @@ interface OrbClient {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): OrbClient
 
+    fun webhooks(): WebhookService
+
     fun topLevel(): TopLevelService
 
     /**
@@ -177,8 +179,6 @@ interface OrbClient {
 
     fun subscriptionChanges(): SubscriptionChangeService
 
-    fun webhooks(): WebhookService
-
     /**
      * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits
      * within Orb.
@@ -215,6 +215,8 @@ interface OrbClient {
          * The original service is not modified.
          */
         fun withOptions(modifier: (ClientOptions.Builder) -> Unit): OrbClient.WithRawResponse
+
+        fun webhooks(): WebhookService.WithRawResponse
 
         fun topLevel(): TopLevelService.WithRawResponse
 

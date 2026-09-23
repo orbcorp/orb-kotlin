@@ -62,6 +62,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
         WithRawResponseImpl(clientOptions)
     }
 
+    private val webhooks: WebhookService by lazy { WebhookServiceImpl(clientOptionsWithUserAgent) }
+
     private val topLevel: TopLevelService by lazy {
         TopLevelServiceImpl(clientOptionsWithUserAgent)
     }
@@ -108,8 +110,6 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
         SubscriptionChangeServiceImpl(clientOptionsWithUserAgent)
     }
 
-    private val webhooks: WebhookService by lazy { WebhookServiceImpl(clientOptions) }
-
     private val creditBlocks: CreditBlockService by lazy {
         CreditBlockServiceImpl(clientOptionsWithUserAgent)
     }
@@ -126,6 +126,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
 
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): OrbClient =
         OrbClientImpl(clientOptions.toBuilder().apply(modifier).build())
+
+    override fun webhooks(): WebhookService = webhooks
 
     override fun topLevel(): TopLevelService = topLevel
 
@@ -242,8 +244,6 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
 
     override fun dimensionalPriceGroups(): DimensionalPriceGroupService = dimensionalPriceGroups
 
-    override fun webhooks(): WebhookService = webhooks
-
     override fun subscriptionChanges(): SubscriptionChangeService = subscriptionChanges
 
     /**
@@ -264,6 +264,10 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         OrbClient.WithRawResponse {
+
+        private val webhooks: WebhookService.WithRawResponse by lazy {
+            WebhookServiceImpl.WithRawResponseImpl(clientOptions)
+        }
 
         private val topLevel: TopLevelService.WithRawResponse by lazy {
             TopLevelServiceImpl.WithRawResponseImpl(clientOptions)
@@ -345,6 +349,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
             modifier: (ClientOptions.Builder) -> Unit
         ): OrbClient.WithRawResponse =
             OrbClientImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
+
+        override fun webhooks(): WebhookService.WithRawResponse = webhooks
 
         override fun topLevel(): TopLevelService.WithRawResponse = topLevel
 

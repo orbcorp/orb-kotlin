@@ -1,0 +1,1588 @@
+// File generated from our OpenAPI spec by Stainless.
+
+package com.withorb.api.models
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter
+import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.withorb.api.core.Enum
+import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.checkRequired
+import com.withorb.api.errors.OrbInvalidDataException
+import java.time.OffsetDateTime
+import java.util.Collections
+import java.util.Objects
+
+/** Issued when a customer balance transaction is created. */
+class CustomerBalanceTransactionCreatedWebhookEvent
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
+private constructor(
+    private val id: JsonField<String>,
+    private val createdAt: JsonField<OffsetDateTime>,
+    private val customer: JsonField<Customer>,
+    private val properties: JsonField<Properties>,
+    private val type: JsonField<Type>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
+) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("customer") @ExcludeMissing customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("properties")
+        @ExcludeMissing
+        properties: JsonField<Properties> = JsonMissing.of(),
+        @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+    ) : this(id, createdAt, customer, properties, type, mutableMapOf())
+
+    /**
+     * The ID of this webhook event.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun id(): String = id.getRequired("id")
+
+    /**
+     * The time at which this event was created, to the second.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+    /**
+     * A customer is a buyer of your products, and the other party to the billing relationship.
+     *
+     * In Orb, customers are assigned system generated identifiers automatically, but it's often
+     * desirable to have these match existing identifiers in your system. To avoid having to
+     * denormalize Orb ID information, you can pass in an `external_customer_id` with your own
+     * identifier. See [Customer ID Aliases](/events-and-metrics/customer-aliases) for further
+     * information about how these aliases work in Orb.
+     *
+     * In addition to having an identifier in your system, a customer may exist in a payment
+     * provider solution like Stripe. Use the `payment_provider_id` and the `payment_provider` enum
+     * field to express this mapping.
+     *
+     * A customer also has a timezone (from the standard
+     * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your account's
+     * timezone. See [Timezone localization](/essentials/timezones) for information on what this
+     * timezone parameter influences within Orb.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun customer(): Customer = customer.getRequired("customer")
+
+    /**
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun properties(): Properties = properties.getRequired("properties")
+
+    /**
+     * The event this payload describes.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun type(): Type = type.getRequired("type")
+
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
+    /**
+     * Returns the raw JSON value of [createdAt].
+     *
+     * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    fun _createdAt(): JsonField<OffsetDateTime> = createdAt
+
+    /**
+     * Returns the raw JSON value of [customer].
+     *
+     * Unlike [customer], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
+
+    /**
+     * Returns the raw JSON value of [properties].
+     *
+     * Unlike [properties], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("properties")
+    @ExcludeMissing
+    fun _properties(): JsonField<Properties> = properties
+
+    /**
+     * Returns the raw JSON value of [type].
+     *
+     * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
+
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
+    @JsonAnyGetter
+    @ExcludeMissing
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
+
+    fun toBuilder() = Builder().from(this)
+
+    companion object {
+
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CustomerBalanceTransactionCreatedWebhookEvent].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .createdAt()
+         * .customer()
+         * .properties()
+         * .type()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [CustomerBalanceTransactionCreatedWebhookEvent]. */
+    class Builder internal constructor() {
+
+        private var id: JsonField<String>? = null
+        private var createdAt: JsonField<OffsetDateTime>? = null
+        private var customer: JsonField<Customer>? = null
+        private var properties: JsonField<Properties>? = null
+        private var type: JsonField<Type>? = null
+        private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+        internal fun from(
+            customerBalanceTransactionCreatedWebhookEvent:
+                CustomerBalanceTransactionCreatedWebhookEvent
+        ) = apply {
+            id = customerBalanceTransactionCreatedWebhookEvent.id
+            createdAt = customerBalanceTransactionCreatedWebhookEvent.createdAt
+            customer = customerBalanceTransactionCreatedWebhookEvent.customer
+            properties = customerBalanceTransactionCreatedWebhookEvent.properties
+            type = customerBalanceTransactionCreatedWebhookEvent.type
+            additionalProperties =
+                customerBalanceTransactionCreatedWebhookEvent.additionalProperties.toMutableMap()
+        }
+
+        /** The ID of this webhook event. */
+        fun id(id: String) = id(JsonField.of(id))
+
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun id(id: JsonField<String>) = apply { this.id = id }
+
+        /** The time at which this event was created, to the second. */
+        fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+
+        /**
+         * Sets [Builder.createdAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
+
+        /**
+         * A customer is a buyer of your products, and the other party to the billing relationship.
+         *
+         * In Orb, customers are assigned system generated identifiers automatically, but it's often
+         * desirable to have these match existing identifiers in your system. To avoid having to
+         * denormalize Orb ID information, you can pass in an `external_customer_id` with your own
+         * identifier. See [Customer ID Aliases](/events-and-metrics/customer-aliases) for further
+         * information about how these aliases work in Orb.
+         *
+         * In addition to having an identifier in your system, a customer may exist in a payment
+         * provider solution like Stripe. Use the `payment_provider_id` and the `payment_provider`
+         * enum field to express this mapping.
+         *
+         * A customer also has a timezone (from the standard
+         * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your
+         * account's timezone. See [Timezone localization](/essentials/timezones) for information on
+         * what this timezone parameter influences within Orb.
+         */
+        fun customer(customer: Customer) = customer(JsonField.of(customer))
+
+        /**
+         * Sets [Builder.customer] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.customer] with a well-typed [Customer] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+
+        fun properties(properties: Properties) = properties(JsonField.of(properties))
+
+        /**
+         * Sets [Builder.properties] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.properties] with a well-typed [Properties] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun properties(properties: JsonField<Properties>) = apply { this.properties = properties }
+
+        /** The event this payload describes. */
+        fun type(type: Type) = type(JsonField.of(type))
+
+        /**
+         * Sets [Builder.type] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun type(type: JsonField<Type>) = apply { this.type = type }
+
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.clear()
+            putAllAdditionalProperties(additionalProperties)
+        }
+
+        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+            additionalProperties.put(key, value)
+        }
+
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
+        }
+
+        /**
+         * Returns an immutable instance of [CustomerBalanceTransactionCreatedWebhookEvent].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .createdAt()
+         * .customer()
+         * .properties()
+         * .type()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): CustomerBalanceTransactionCreatedWebhookEvent =
+            CustomerBalanceTransactionCreatedWebhookEvent(
+                checkRequired("id", id),
+                checkRequired("createdAt", createdAt),
+                checkRequired("customer", customer),
+                checkRequired("properties", properties),
+                checkRequired("type", type),
+                additionalProperties.toMutableMap(),
+            )
+    }
+
+    private var validated: Boolean = false
+
+    /**
+     * Validates that the types of all values in this object match their expected types recursively.
+     *
+     * This method is _not_ forwards compatible with new types from the API for existing fields.
+     *
+     * @throws OrbInvalidDataException if any value type in this object doesn't match its expected
+     *   type.
+     */
+    fun validate(): CustomerBalanceTransactionCreatedWebhookEvent = apply {
+        if (validated) {
+            return@apply
+        }
+
+        id()
+        createdAt()
+        customer().validate()
+        properties().validate()
+        type().validate()
+        validated = true
+    }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: OrbInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (id.asKnown() == null) 0 else 1) +
+            (if (createdAt.asKnown() == null) 0 else 1) +
+            (customer.asKnown()?.validity() ?: 0) +
+            (properties.asKnown()?.validity() ?: 0) +
+            (type.asKnown()?.validity() ?: 0)
+
+    class Properties
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val balanceTransaction: JsonField<BalanceTransaction>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("balance_transaction")
+            @ExcludeMissing
+            balanceTransaction: JsonField<BalanceTransaction> = JsonMissing.of()
+        ) : this(balanceTransaction, mutableMapOf())
+
+        /**
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun balanceTransaction(): BalanceTransaction =
+            balanceTransaction.getRequired("balance_transaction")
+
+        /**
+         * Returns the raw JSON value of [balanceTransaction].
+         *
+         * Unlike [balanceTransaction], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("balance_transaction")
+        @ExcludeMissing
+        fun _balanceTransaction(): JsonField<BalanceTransaction> = balanceTransaction
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Properties].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .balanceTransaction()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Properties]. */
+        class Builder internal constructor() {
+
+            private var balanceTransaction: JsonField<BalanceTransaction>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(properties: Properties) = apply {
+                balanceTransaction = properties.balanceTransaction
+                additionalProperties = properties.additionalProperties.toMutableMap()
+            }
+
+            fun balanceTransaction(balanceTransaction: BalanceTransaction) =
+                balanceTransaction(JsonField.of(balanceTransaction))
+
+            /**
+             * Sets [Builder.balanceTransaction] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.balanceTransaction] with a well-typed
+             * [BalanceTransaction] value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
+             */
+            fun balanceTransaction(balanceTransaction: JsonField<BalanceTransaction>) = apply {
+                this.balanceTransaction = balanceTransaction
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Properties].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .balanceTransaction()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Properties =
+                Properties(
+                    checkRequired("balanceTransaction", balanceTransaction),
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
+        fun validate(): Properties = apply {
+            if (validated) {
+                return@apply
+            }
+
+            balanceTransaction().validate()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = (balanceTransaction.asKnown()?.validity() ?: 0)
+
+        class BalanceTransaction
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val id: JsonField<String>,
+            private val action: JsonField<Action>,
+            private val amount: JsonField<String>,
+            private val createdAt: JsonField<OffsetDateTime>,
+            private val creditNote: JsonField<CreditNoteTiny>,
+            private val description: JsonField<String>,
+            private val endingBalance: JsonField<String>,
+            private val invoice: JsonField<InvoiceTiny>,
+            private val startingBalance: JsonField<String>,
+            private val type: JsonField<Type>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("action")
+                @ExcludeMissing
+                action: JsonField<Action> = JsonMissing.of(),
+                @JsonProperty("amount")
+                @ExcludeMissing
+                amount: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("created_at")
+                @ExcludeMissing
+                createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+                @JsonProperty("credit_note")
+                @ExcludeMissing
+                creditNote: JsonField<CreditNoteTiny> = JsonMissing.of(),
+                @JsonProperty("description")
+                @ExcludeMissing
+                description: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("ending_balance")
+                @ExcludeMissing
+                endingBalance: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("invoice")
+                @ExcludeMissing
+                invoice: JsonField<InvoiceTiny> = JsonMissing.of(),
+                @JsonProperty("starting_balance")
+                @ExcludeMissing
+                startingBalance: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+            ) : this(
+                id,
+                action,
+                amount,
+                createdAt,
+                creditNote,
+                description,
+                endingBalance,
+                invoice,
+                startingBalance,
+                type,
+                mutableMapOf(),
+            )
+
+            /**
+             * A unique id for this transaction.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun id(): String = id.getRequired("id")
+
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun action(): Action = action.getRequired("action")
+
+            /**
+             * The value of the amount changed in the transaction.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun amount(): String = amount.getRequired("amount")
+
+            /**
+             * The creation time of this transaction.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun creditNote(): CreditNoteTiny? = creditNote.getNullable("credit_note")
+
+            /**
+             * An optional description provided for manual customer balance adjustments.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun description(): String? = description.getNullable("description")
+
+            /**
+             * The new value of the customer's balance prior to the transaction, in the customer's
+             * currency.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun endingBalance(): String = endingBalance.getRequired("ending_balance")
+
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun invoice(): InvoiceTiny? = invoice.getNullable("invoice")
+
+            /**
+             * The original value of the customer's balance prior to the transaction, in the
+             * customer's currency.
+             *
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun startingBalance(): String = startingBalance.getRequired("starting_balance")
+
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun type(): Type = type.getRequired("type")
+
+            /**
+             * Returns the raw JSON value of [id].
+             *
+             * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
+            /**
+             * Returns the raw JSON value of [action].
+             *
+             * Unlike [action], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("action") @ExcludeMissing fun _action(): JsonField<Action> = action
+
+            /**
+             * Returns the raw JSON value of [amount].
+             *
+             * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
+
+            /**
+             * Returns the raw JSON value of [createdAt].
+             *
+             * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("created_at")
+            @ExcludeMissing
+            fun _createdAt(): JsonField<OffsetDateTime> = createdAt
+
+            /**
+             * Returns the raw JSON value of [creditNote].
+             *
+             * Unlike [creditNote], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("credit_note")
+            @ExcludeMissing
+            fun _creditNote(): JsonField<CreditNoteTiny> = creditNote
+
+            /**
+             * Returns the raw JSON value of [description].
+             *
+             * Unlike [description], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("description")
+            @ExcludeMissing
+            fun _description(): JsonField<String> = description
+
+            /**
+             * Returns the raw JSON value of [endingBalance].
+             *
+             * Unlike [endingBalance], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("ending_balance")
+            @ExcludeMissing
+            fun _endingBalance(): JsonField<String> = endingBalance
+
+            /**
+             * Returns the raw JSON value of [invoice].
+             *
+             * Unlike [invoice], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("invoice")
+            @ExcludeMissing
+            fun _invoice(): JsonField<InvoiceTiny> = invoice
+
+            /**
+             * Returns the raw JSON value of [startingBalance].
+             *
+             * Unlike [startingBalance], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("starting_balance")
+            @ExcludeMissing
+            fun _startingBalance(): JsonField<String> = startingBalance
+
+            /**
+             * Returns the raw JSON value of [type].
+             *
+             * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [BalanceTransaction].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .action()
+                 * .amount()
+                 * .createdAt()
+                 * .creditNote()
+                 * .description()
+                 * .endingBalance()
+                 * .invoice()
+                 * .startingBalance()
+                 * .type()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [BalanceTransaction]. */
+            class Builder internal constructor() {
+
+                private var id: JsonField<String>? = null
+                private var action: JsonField<Action>? = null
+                private var amount: JsonField<String>? = null
+                private var createdAt: JsonField<OffsetDateTime>? = null
+                private var creditNote: JsonField<CreditNoteTiny>? = null
+                private var description: JsonField<String>? = null
+                private var endingBalance: JsonField<String>? = null
+                private var invoice: JsonField<InvoiceTiny>? = null
+                private var startingBalance: JsonField<String>? = null
+                private var type: JsonField<Type>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(balanceTransaction: BalanceTransaction) = apply {
+                    id = balanceTransaction.id
+                    action = balanceTransaction.action
+                    amount = balanceTransaction.amount
+                    createdAt = balanceTransaction.createdAt
+                    creditNote = balanceTransaction.creditNote
+                    description = balanceTransaction.description
+                    endingBalance = balanceTransaction.endingBalance
+                    invoice = balanceTransaction.invoice
+                    startingBalance = balanceTransaction.startingBalance
+                    type = balanceTransaction.type
+                    additionalProperties = balanceTransaction.additionalProperties.toMutableMap()
+                }
+
+                /** A unique id for this transaction. */
+                fun id(id: String) = id(JsonField.of(id))
+
+                /**
+                 * Sets [Builder.id] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.id] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun id(id: JsonField<String>) = apply { this.id = id }
+
+                fun action(action: Action) = action(JsonField.of(action))
+
+                /**
+                 * Sets [Builder.action] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.action] with a well-typed [Action] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun action(action: JsonField<Action>) = apply { this.action = action }
+
+                /** The value of the amount changed in the transaction. */
+                fun amount(amount: String) = amount(JsonField.of(amount))
+
+                /**
+                 * Sets [Builder.amount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.amount] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun amount(amount: JsonField<String>) = apply { this.amount = amount }
+
+                /** The creation time of this transaction. */
+                fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+
+                /**
+                 * Sets [Builder.createdAt] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.createdAt] with a well-typed [OffsetDateTime]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
+                    this.createdAt = createdAt
+                }
+
+                fun creditNote(creditNote: CreditNoteTiny?) =
+                    creditNote(JsonField.ofNullable(creditNote))
+
+                /**
+                 * Sets [Builder.creditNote] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.creditNote] with a well-typed [CreditNoteTiny]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun creditNote(creditNote: JsonField<CreditNoteTiny>) = apply {
+                    this.creditNote = creditNote
+                }
+
+                /** An optional description provided for manual customer balance adjustments. */
+                fun description(description: String?) =
+                    description(JsonField.ofNullable(description))
+
+                /**
+                 * Sets [Builder.description] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.description] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun description(description: JsonField<String>) = apply {
+                    this.description = description
+                }
+
+                /**
+                 * The new value of the customer's balance prior to the transaction, in the
+                 * customer's currency.
+                 */
+                fun endingBalance(endingBalance: String) =
+                    endingBalance(JsonField.of(endingBalance))
+
+                /**
+                 * Sets [Builder.endingBalance] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.endingBalance] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun endingBalance(endingBalance: JsonField<String>) = apply {
+                    this.endingBalance = endingBalance
+                }
+
+                fun invoice(invoice: InvoiceTiny?) = invoice(JsonField.ofNullable(invoice))
+
+                /**
+                 * Sets [Builder.invoice] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.invoice] with a well-typed [InvoiceTiny] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun invoice(invoice: JsonField<InvoiceTiny>) = apply { this.invoice = invoice }
+
+                /**
+                 * The original value of the customer's balance prior to the transaction, in the
+                 * customer's currency.
+                 */
+                fun startingBalance(startingBalance: String) =
+                    startingBalance(JsonField.of(startingBalance))
+
+                /**
+                 * Sets [Builder.startingBalance] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.startingBalance] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun startingBalance(startingBalance: JsonField<String>) = apply {
+                    this.startingBalance = startingBalance
+                }
+
+                fun type(type: Type) = type(JsonField.of(type))
+
+                /**
+                 * Sets [Builder.type] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.type] with a well-typed [Type] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun type(type: JsonField<Type>) = apply { this.type = type }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [BalanceTransaction].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .action()
+                 * .amount()
+                 * .createdAt()
+                 * .creditNote()
+                 * .description()
+                 * .endingBalance()
+                 * .invoice()
+                 * .startingBalance()
+                 * .type()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): BalanceTransaction =
+                    BalanceTransaction(
+                        checkRequired("id", id),
+                        checkRequired("action", action),
+                        checkRequired("amount", amount),
+                        checkRequired("createdAt", createdAt),
+                        checkRequired("creditNote", creditNote),
+                        checkRequired("description", description),
+                        checkRequired("endingBalance", endingBalance),
+                        checkRequired("invoice", invoice),
+                        checkRequired("startingBalance", startingBalance),
+                        checkRequired("type", type),
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws OrbInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
+            fun validate(): BalanceTransaction = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                id()
+                action().validate()
+                amount()
+                createdAt()
+                creditNote()?.validate()
+                description()
+                endingBalance()
+                invoice()?.validate()
+                startingBalance()
+                type().validate()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: OrbInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (id.asKnown() == null) 0 else 1) +
+                    (action.asKnown()?.validity() ?: 0) +
+                    (if (amount.asKnown() == null) 0 else 1) +
+                    (if (createdAt.asKnown() == null) 0 else 1) +
+                    (creditNote.asKnown()?.validity() ?: 0) +
+                    (if (description.asKnown() == null) 0 else 1) +
+                    (if (endingBalance.asKnown() == null) 0 else 1) +
+                    (invoice.asKnown()?.validity() ?: 0) +
+                    (if (startingBalance.asKnown() == null) 0 else 1) +
+                    (type.asKnown()?.validity() ?: 0)
+
+            class Action @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val APPLIED_TO_INVOICE = of("applied_to_invoice")
+
+                    val MANUAL_ADJUSTMENT = of("manual_adjustment")
+
+                    val PRORATED_REFUND = of("prorated_refund")
+
+                    val REVERT_PRORATED_REFUND = of("revert_prorated_refund")
+
+                    val RETURN_FROM_VOIDING = of("return_from_voiding")
+
+                    val CREDIT_NOTE_APPLIED = of("credit_note_applied")
+
+                    val CREDIT_NOTE_VOIDED = of("credit_note_voided")
+
+                    val OVERPAYMENT_REFUND = of("overpayment_refund")
+
+                    val EXTERNAL_PAYMENT = of("external_payment")
+
+                    val SMALL_INVOICE_CARRYOVER = of("small_invoice_carryover")
+
+                    val PREPAID_COMMIT_CANCEL = of("prepaid_commit_cancel")
+
+                    fun of(value: String) = Action(JsonField.of(value))
+                }
+
+                /** An enum containing [Action]'s known values. */
+                enum class Known {
+                    APPLIED_TO_INVOICE,
+                    MANUAL_ADJUSTMENT,
+                    PRORATED_REFUND,
+                    REVERT_PRORATED_REFUND,
+                    RETURN_FROM_VOIDING,
+                    CREDIT_NOTE_APPLIED,
+                    CREDIT_NOTE_VOIDED,
+                    OVERPAYMENT_REFUND,
+                    EXTERNAL_PAYMENT,
+                    SMALL_INVOICE_CARRYOVER,
+                    PREPAID_COMMIT_CANCEL,
+                }
+
+                /**
+                 * An enum containing [Action]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [Action] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    APPLIED_TO_INVOICE,
+                    MANUAL_ADJUSTMENT,
+                    PRORATED_REFUND,
+                    REVERT_PRORATED_REFUND,
+                    RETURN_FROM_VOIDING,
+                    CREDIT_NOTE_APPLIED,
+                    CREDIT_NOTE_VOIDED,
+                    OVERPAYMENT_REFUND,
+                    EXTERNAL_PAYMENT,
+                    SMALL_INVOICE_CARRYOVER,
+                    PREPAID_COMMIT_CANCEL,
+                    /**
+                     * An enum member indicating that [Action] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        APPLIED_TO_INVOICE -> Value.APPLIED_TO_INVOICE
+                        MANUAL_ADJUSTMENT -> Value.MANUAL_ADJUSTMENT
+                        PRORATED_REFUND -> Value.PRORATED_REFUND
+                        REVERT_PRORATED_REFUND -> Value.REVERT_PRORATED_REFUND
+                        RETURN_FROM_VOIDING -> Value.RETURN_FROM_VOIDING
+                        CREDIT_NOTE_APPLIED -> Value.CREDIT_NOTE_APPLIED
+                        CREDIT_NOTE_VOIDED -> Value.CREDIT_NOTE_VOIDED
+                        OVERPAYMENT_REFUND -> Value.OVERPAYMENT_REFUND
+                        EXTERNAL_PAYMENT -> Value.EXTERNAL_PAYMENT
+                        SMALL_INVOICE_CARRYOVER -> Value.SMALL_INVOICE_CARRYOVER
+                        PREPAID_COMMIT_CANCEL -> Value.PREPAID_COMMIT_CANCEL
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        APPLIED_TO_INVOICE -> Known.APPLIED_TO_INVOICE
+                        MANUAL_ADJUSTMENT -> Known.MANUAL_ADJUSTMENT
+                        PRORATED_REFUND -> Known.PRORATED_REFUND
+                        REVERT_PRORATED_REFUND -> Known.REVERT_PRORATED_REFUND
+                        RETURN_FROM_VOIDING -> Known.RETURN_FROM_VOIDING
+                        CREDIT_NOTE_APPLIED -> Known.CREDIT_NOTE_APPLIED
+                        CREDIT_NOTE_VOIDED -> Known.CREDIT_NOTE_VOIDED
+                        OVERPAYMENT_REFUND -> Known.OVERPAYMENT_REFUND
+                        EXTERNAL_PAYMENT -> Known.EXTERNAL_PAYMENT
+                        SMALL_INVOICE_CARRYOVER -> Known.SMALL_INVOICE_CARRYOVER
+                        PREPAID_COMMIT_CANCEL -> Known.PREPAID_COMMIT_CANCEL
+                        else -> throw OrbInvalidDataException("Unknown Action: $value")
+                    }
+
+                /**
+                 * Returns this class instance's primitive wire representation.
+                 *
+                 * This differs from the [toString] method because that method is primarily for
+                 * debugging and generally doesn't throw.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value does not have the
+                 *   expected primitive type.
+                 */
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                /**
+                 * Validates that the types of all values in this object match their expected types
+                 * recursively.
+                 *
+                 * This method is _not_ forwards compatible with new types from the API for existing
+                 * fields.
+                 *
+                 * @throws OrbInvalidDataException if any value type in this object doesn't match
+                 *   its expected type.
+                 */
+                fun validate(): Action = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Action && value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            class Type @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val INCREMENT = of("increment")
+
+                    val DECREMENT = of("decrement")
+
+                    fun of(value: String) = Type(JsonField.of(value))
+                }
+
+                /** An enum containing [Type]'s known values. */
+                enum class Known {
+                    INCREMENT,
+                    DECREMENT,
+                }
+
+                /**
+                 * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [Type] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    INCREMENT,
+                    DECREMENT,
+                    /**
+                     * An enum member indicating that [Type] was instantiated with an unknown value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        INCREMENT -> Value.INCREMENT
+                        DECREMENT -> Value.DECREMENT
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        INCREMENT -> Known.INCREMENT
+                        DECREMENT -> Known.DECREMENT
+                        else -> throw OrbInvalidDataException("Unknown Type: $value")
+                    }
+
+                /**
+                 * Returns this class instance's primitive wire representation.
+                 *
+                 * This differs from the [toString] method because that method is primarily for
+                 * debugging and generally doesn't throw.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value does not have the
+                 *   expected primitive type.
+                 */
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                /**
+                 * Validates that the types of all values in this object match their expected types
+                 * recursively.
+                 *
+                 * This method is _not_ forwards compatible with new types from the API for existing
+                 * fields.
+                 *
+                 * @throws OrbInvalidDataException if any value type in this object doesn't match
+                 *   its expected type.
+                 */
+                fun validate(): Type = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Type && value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BalanceTransaction &&
+                    id == other.id &&
+                    action == other.action &&
+                    amount == other.amount &&
+                    createdAt == other.createdAt &&
+                    creditNote == other.creditNote &&
+                    description == other.description &&
+                    endingBalance == other.endingBalance &&
+                    invoice == other.invoice &&
+                    startingBalance == other.startingBalance &&
+                    type == other.type &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(
+                    id,
+                    action,
+                    amount,
+                    createdAt,
+                    creditNote,
+                    description,
+                    endingBalance,
+                    invoice,
+                    startingBalance,
+                    type,
+                    additionalProperties,
+                )
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "BalanceTransaction{id=$id, action=$action, amount=$amount, createdAt=$createdAt, creditNote=$creditNote, description=$description, endingBalance=$endingBalance, invoice=$invoice, startingBalance=$startingBalance, type=$type, additionalProperties=$additionalProperties}"
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Properties &&
+                balanceTransaction == other.balanceTransaction &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(balanceTransaction, additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Properties{balanceTransaction=$balanceTransaction, additionalProperties=$additionalProperties}"
+    }
+
+    /** The event this payload describes. */
+    class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            val CUSTOMER_BALANCE_TRANSACTION_CREATED = of("customer.balance_transaction_created")
+
+            fun of(value: String) = Type(JsonField.of(value))
+        }
+
+        /** An enum containing [Type]'s known values. */
+        enum class Known {
+            CUSTOMER_BALANCE_TRANSACTION_CREATED
+        }
+
+        /**
+         * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [Type] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            CUSTOMER_BALANCE_TRANSACTION_CREATED,
+            /** An enum member indicating that [Type] was instantiated with an unknown value. */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                CUSTOMER_BALANCE_TRANSACTION_CREATED -> Value.CUSTOMER_BALANCE_TRANSACTION_CREATED
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
+         */
+        fun known(): Known =
+            when (this) {
+                CUSTOMER_BALANCE_TRANSACTION_CREATED -> Known.CUSTOMER_BALANCE_TRANSACTION_CREATED
+                else -> throw OrbInvalidDataException("Unknown Type: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws OrbInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
+         */
+        fun asString(): String =
+            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
+        fun validate(): Type = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Type && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is CustomerBalanceTransactionCreatedWebhookEvent &&
+            id == other.id &&
+            createdAt == other.createdAt &&
+            customer == other.customer &&
+            properties == other.properties &&
+            type == other.type &&
+            additionalProperties == other.additionalProperties
+    }
+
+    private val hashCode: Int by lazy {
+        Objects.hash(id, createdAt, customer, properties, type, additionalProperties)
+    }
+
+    override fun hashCode(): Int = hashCode
+
+    override fun toString() =
+        "CustomerBalanceTransactionCreatedWebhookEvent{id=$id, createdAt=$createdAt, customer=$customer, properties=$properties, type=$type, additionalProperties=$additionalProperties}"
+}
