@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.37.0](https://github.com/orbcorp/orb-kotlin/compare/v1.36.0...v1.37.0) (2026-09-24)
+
+
+### Features
+
+* **api:** api update ([c5fd9f8](https://github.com/orbcorp/orb-kotlin/commit/c5fd9f85671e87e9a5b7966217d8be9c17084b6d))
+* **api:** api update ([c5fd9f8](https://github.com/orbcorp/orb-kotlin/commit/c5fd9f85671e87e9a5b7966217d8be9c17084b6d))
+* **api:** api update ([c5fd9f8](https://github.com/orbcorp/orb-kotlin/commit/c5fd9f85671e87e9a5b7966217d8be9c17084b6d))
+* **api:** hide internal webapp-api endpoints from public API reference ([4421556](https://github.com/orbcorp/orb-kotlin/commit/44215563c973688ea5332d0b42ce07b33aafc48c))
+
+
+### Bug Fixes
+
+* **api:** allow exact one-year timeframes for subscription usage/costs endpoints ([4421556](https://github.com/orbcorp/orb-kotlin/commit/44215563c973688ea5332d0b42ce07b33aafc48c))
+* **api:** fix Java SDK build error caused by empty webhook event properties marker ([4421556](https://github.com/orbcorp/orb-kotlin/commit/44215563c973688ea5332d0b42ce07b33aafc48c))
+* **api:** no functional change, only schema ordering reshuffled ([4421556](https://github.com/orbcorp/orb-kotlin/commit/44215563c973688ea5332d0b42ce07b33aafc48c))
+
 ## [1.36.0](https://github.com/orbcorp/orb-kotlin/compare/v1.35.0...v1.36.0) (2026-09-23)
 
 
