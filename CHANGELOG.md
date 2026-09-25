@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.38.0](https://github.com/orbcorp/orb-kotlin/compare/v1.37.0...v1.38.0) (2026-09-25)
+
+
+### Features
+
+* **api:** api update ([8fedf34](https://github.com/orbcorp/orb-kotlin/commit/8fedf34dd1e947f34919843850c14336e602ab0b))
+* **api:** label webhook event operations by event name and category tag ([8fedf34](https://github.com/orbcorp/orb-kotlin/commit/8fedf34dd1e947f34919843850c14336e602ab0b))
+
 ## [1.37.0](https://github.com/orbcorp/orb-kotlin/compare/v1.36.0...v1.37.0) (2026-09-24)
 
 
