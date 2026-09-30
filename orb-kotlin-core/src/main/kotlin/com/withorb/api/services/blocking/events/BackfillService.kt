@@ -65,7 +65,9 @@ interface BackfillService {
      * `deprecation_filter` can be optionally added which enables filtering using
      * [computed properties](/extensibility/advanced-metrics#computed-properties). The
      * expressiveness of computed properties allows you to deprecate existing events based on both a
-     * period of time and specific property values.
+     * period of time and specific property values. When `deprecation_filter` is provided, the
+     * timeframe may extend to `now` rather than the event reporting grace boundary. Matching events
+     * that arrive later with timestamps inside the timeframe will also be deprecated.
      *
      * You may not have multiple backfills in a pending or pending_revert state with overlapping
      * timeframes.
@@ -81,6 +83,8 @@ interface BackfillService {
      * The list of backfills is ordered starting from the most recently created backfill. The
      * response also includes [`pagination_metadata`](/api-reference/pagination), which lets the
      * caller retrieve the next page of results if they exist.
+     *
+     * Use `customer_id` and `status` to filter the results.
      */
     fun list(
         params: EventBackfillListParams = EventBackfillListParams.none(),

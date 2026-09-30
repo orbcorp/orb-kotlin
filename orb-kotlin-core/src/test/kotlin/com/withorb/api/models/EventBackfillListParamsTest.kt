@@ -10,17 +10,35 @@ internal class EventBackfillListParamsTest {
 
     @Test
     fun create() {
-        EventBackfillListParams.builder().cursor("cursor").limit(1L).build()
+        EventBackfillListParams.builder()
+            .cursor("cursor")
+            .customerId("customer_id")
+            .limit(1L)
+            .status(EventBackfillListParams.Status.PENDING)
+            .build()
     }
 
     @Test
     fun queryParams() {
-        val params = EventBackfillListParams.builder().cursor("cursor").limit(1L).build()
+        val params =
+            EventBackfillListParams.builder()
+                .cursor("cursor")
+                .customerId("customer_id")
+                .limit(1L)
+                .status(EventBackfillListParams.Status.PENDING)
+                .build()
 
         val queryParams = params._queryParams()
 
         assertThat(queryParams)
-            .isEqualTo(QueryParams.builder().put("cursor", "cursor").put("limit", "1").build())
+            .isEqualTo(
+                QueryParams.builder()
+                    .put("cursor", "cursor")
+                    .put("customer_id", "customer_id")
+                    .put("limit", "1")
+                    .put("status", "pending")
+                    .build()
+            )
     }
 
     @Test
