@@ -362,6 +362,7 @@ internal class InvoiceFetchUpcomingResponseTest {
                         .build()
                 )
                 .paymentFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .paymentReceivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .shippingAddress(
@@ -743,6 +744,8 @@ internal class InvoiceFetchUpcomingResponseTest {
                     .build()
             )
         assertThat(invoiceFetchUpcomingResponse.paymentFailedAt())
+            .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(invoiceFetchUpcomingResponse.paymentReceivedAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(invoiceFetchUpcomingResponse.paymentStartedAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1126,6 +1129,7 @@ internal class InvoiceFetchUpcomingResponseTest {
                         .build()
                 )
                 .paymentFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .paymentReceivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .shippingAddress(

@@ -493,6 +493,7 @@ internal class ChangedSubscriptionResourcesTest {
                                 .build()
                         )
                         .paymentFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .paymentReceivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .shippingAddress(
@@ -976,6 +977,7 @@ internal class ChangedSubscriptionResourcesTest {
                                 .build()
                         )
                         .paymentFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .paymentReceivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .shippingAddress(
@@ -1460,6 +1462,7 @@ internal class ChangedSubscriptionResourcesTest {
                             .build()
                     )
                     .paymentFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .paymentReceivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .shippingAddress(
@@ -1924,6 +1927,7 @@ internal class ChangedSubscriptionResourcesTest {
                             .build()
                     )
                     .paymentFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .paymentReceivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .shippingAddress(
@@ -2430,6 +2434,7 @@ internal class ChangedSubscriptionResourcesTest {
                                 .build()
                         )
                         .paymentFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .paymentReceivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .shippingAddress(
@@ -2913,6 +2918,7 @@ internal class ChangedSubscriptionResourcesTest {
                                 .build()
                         )
                         .paymentFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .paymentReceivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .shippingAddress(

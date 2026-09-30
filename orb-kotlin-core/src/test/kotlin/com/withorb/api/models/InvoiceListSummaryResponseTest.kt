@@ -110,6 +110,7 @@ internal class InvoiceListSummaryResponseTest {
                         .build()
                 )
                 .paymentFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .paymentReceivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .shippingAddress(
@@ -243,6 +244,8 @@ internal class InvoiceListSummaryResponseTest {
             )
         assertThat(invoiceListSummaryResponse.paymentFailedAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(invoiceListSummaryResponse.paymentReceivedAt())
+            .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(invoiceListSummaryResponse.paymentStartedAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(invoiceListSummaryResponse.scheduledIssueAt())
@@ -370,6 +373,7 @@ internal class InvoiceListSummaryResponseTest {
                         .build()
                 )
                 .paymentFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .paymentReceivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .shippingAddress(

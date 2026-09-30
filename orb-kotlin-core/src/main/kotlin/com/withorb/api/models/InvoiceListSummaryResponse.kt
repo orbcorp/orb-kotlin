@@ -47,6 +47,7 @@ private constructor(
     private val paidAt: JsonField<OffsetDateTime>,
     private val paymentAttempts: JsonField<List<PaymentAttempt>>,
     private val paymentFailedAt: JsonField<OffsetDateTime>,
+    private val paymentReceivedAt: JsonField<OffsetDateTime>,
     private val paymentStartedAt: JsonField<OffsetDateTime>,
     private val scheduledIssueAt: JsonField<OffsetDateTime>,
     private val shippingAddress: JsonField<Address>,
@@ -123,6 +124,9 @@ private constructor(
         @JsonProperty("payment_failed_at")
         @ExcludeMissing
         paymentFailedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("payment_received_at")
+        @ExcludeMissing
+        paymentReceivedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("payment_started_at")
         @ExcludeMissing
         paymentStartedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -171,6 +175,7 @@ private constructor(
         paidAt,
         paymentAttempts,
         paymentFailedAt,
+        paymentReceivedAt,
         paymentStartedAt,
         scheduledIssueAt,
         shippingAddress,
@@ -523,6 +528,18 @@ private constructor(
     fun paymentFailedAt(): OffsetDateTime? = paymentFailedAt.getNullable("payment_failed_at")
 
     /**
+     * When payment for this invoice was received. For an invoice manually marked as paid, this is
+     * the `payment_received_date` that was supplied. For an invoice paid through a payment
+     * provider, this is the settlement time reported by that provider. It is `null` for an invoice
+     * that became `paid` without a payment, such as a $0 invoice or one fully covered by credit
+     * notes. By contrast, `paid_at` is when the invoice reached the `paid` status in Orb.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun paymentReceivedAt(): OffsetDateTime? = paymentReceivedAt.getNullable("payment_received_at")
+
+    /**
      * If payment was attempted on this invoice, this will be the start time of the most recent
      * attempt. This field is especially useful for delayed-notification payment mechanisms (like
      * bank transfers), where payment can take 3 days or more.
@@ -795,6 +812,16 @@ private constructor(
     fun _paymentFailedAt(): JsonField<OffsetDateTime> = paymentFailedAt
 
     /**
+     * Returns the raw JSON value of [paymentReceivedAt].
+     *
+     * Unlike [paymentReceivedAt], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("payment_received_at")
+    @ExcludeMissing
+    fun _paymentReceivedAt(): JsonField<OffsetDateTime> = paymentReceivedAt
+
+    /**
      * Returns the raw JSON value of [paymentStartedAt].
      *
      * Unlike [paymentStartedAt], this method doesn't throw if the JSON field has an unexpected
@@ -914,6 +941,7 @@ private constructor(
          * .paidAt()
          * .paymentAttempts()
          * .paymentFailedAt()
+         * .paymentReceivedAt()
          * .paymentStartedAt()
          * .scheduledIssueAt()
          * .shippingAddress()
@@ -957,6 +985,7 @@ private constructor(
         private var paidAt: JsonField<OffsetDateTime>? = null
         private var paymentAttempts: JsonField<MutableList<PaymentAttempt>>? = null
         private var paymentFailedAt: JsonField<OffsetDateTime>? = null
+        private var paymentReceivedAt: JsonField<OffsetDateTime>? = null
         private var paymentStartedAt: JsonField<OffsetDateTime>? = null
         private var scheduledIssueAt: JsonField<OffsetDateTime>? = null
         private var shippingAddress: JsonField<Address>? = null
@@ -994,6 +1023,7 @@ private constructor(
             paidAt = invoiceListSummaryResponse.paidAt
             paymentAttempts = invoiceListSummaryResponse.paymentAttempts.map { it.toMutableList() }
             paymentFailedAt = invoiceListSummaryResponse.paymentFailedAt
+            paymentReceivedAt = invoiceListSummaryResponse.paymentReceivedAt
             paymentStartedAt = invoiceListSummaryResponse.paymentStartedAt
             scheduledIssueAt = invoiceListSummaryResponse.scheduledIssueAt
             shippingAddress = invoiceListSummaryResponse.shippingAddress
@@ -1544,6 +1574,28 @@ private constructor(
         }
 
         /**
+         * When payment for this invoice was received. For an invoice manually marked as paid, this
+         * is the `payment_received_date` that was supplied. For an invoice paid through a payment
+         * provider, this is the settlement time reported by that provider. It is `null` for an
+         * invoice that became `paid` without a payment, such as a $0 invoice or one fully covered
+         * by credit notes. By contrast, `paid_at` is when the invoice reached the `paid` status in
+         * Orb.
+         */
+        fun paymentReceivedAt(paymentReceivedAt: OffsetDateTime?) =
+            paymentReceivedAt(JsonField.ofNullable(paymentReceivedAt))
+
+        /**
+         * Sets [Builder.paymentReceivedAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.paymentReceivedAt] with a well-typed [OffsetDateTime]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun paymentReceivedAt(paymentReceivedAt: JsonField<OffsetDateTime>) = apply {
+            this.paymentReceivedAt = paymentReceivedAt
+        }
+
+        /**
          * If payment was attempted on this invoice, this will be the start time of the most recent
          * attempt. This field is especially useful for delayed-notification payment mechanisms
          * (like bank transfers), where payment can take 3 days or more.
@@ -1729,6 +1781,7 @@ private constructor(
          * .paidAt()
          * .paymentAttempts()
          * .paymentFailedAt()
+         * .paymentReceivedAt()
          * .paymentStartedAt()
          * .scheduledIssueAt()
          * .shippingAddress()
@@ -1770,6 +1823,7 @@ private constructor(
                 checkRequired("paidAt", paidAt),
                 checkRequired("paymentAttempts", paymentAttempts).map { it.toImmutable() },
                 checkRequired("paymentFailedAt", paymentFailedAt),
+                checkRequired("paymentReceivedAt", paymentReceivedAt),
                 checkRequired("paymentStartedAt", paymentStartedAt),
                 checkRequired("scheduledIssueAt", scheduledIssueAt),
                 checkRequired("shippingAddress", shippingAddress),
@@ -1822,6 +1876,7 @@ private constructor(
         paidAt()
         paymentAttempts().forEach { it.validate() }
         paymentFailedAt()
+        paymentReceivedAt()
         paymentStartedAt()
         scheduledIssueAt()
         shippingAddress()?.validate()
@@ -1872,6 +1927,7 @@ private constructor(
             (if (paidAt.asKnown() == null) 0 else 1) +
             (paymentAttempts.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (paymentFailedAt.asKnown() == null) 0 else 1) +
+            (if (paymentReceivedAt.asKnown() == null) 0 else 1) +
             (if (paymentStartedAt.asKnown() == null) 0 else 1) +
             (if (scheduledIssueAt.asKnown() == null) 0 else 1) +
             (shippingAddress.asKnown()?.validity() ?: 0) +
@@ -4529,6 +4585,7 @@ private constructor(
             paidAt == other.paidAt &&
             paymentAttempts == other.paymentAttempts &&
             paymentFailedAt == other.paymentFailedAt &&
+            paymentReceivedAt == other.paymentReceivedAt &&
             paymentStartedAt == other.paymentStartedAt &&
             scheduledIssueAt == other.scheduledIssueAt &&
             shippingAddress == other.shippingAddress &&
@@ -4567,6 +4624,7 @@ private constructor(
             paidAt,
             paymentAttempts,
             paymentFailedAt,
+            paymentReceivedAt,
             paymentStartedAt,
             scheduledIssueAt,
             shippingAddress,
@@ -4583,5 +4641,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "InvoiceListSummaryResponse{id=$id, amountDue=$amountDue, autoCollection=$autoCollection, billingAddress=$billingAddress, createdAt=$createdAt, creditNotes=$creditNotes, currency=$currency, customer=$customer, customerBalanceTransactions=$customerBalanceTransactions, customerTaxId=$customerTaxId, dueDate=$dueDate, eligibleToIssueAt=$eligibleToIssueAt, hostedInvoiceUrl=$hostedInvoiceUrl, invoiceDate=$invoiceDate, invoiceNumber=$invoiceNumber, invoicePdf=$invoicePdf, invoiceSource=$invoiceSource, issueFailedAt=$issueFailedAt, issuedAt=$issuedAt, memo=$memo, metadata=$metadata, paidAt=$paidAt, paymentAttempts=$paymentAttempts, paymentFailedAt=$paymentFailedAt, paymentStartedAt=$paymentStartedAt, scheduledIssueAt=$scheduledIssueAt, shippingAddress=$shippingAddress, status=$status, subscription=$subscription, syncFailedAt=$syncFailedAt, total=$total, voidedAt=$voidedAt, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
+        "InvoiceListSummaryResponse{id=$id, amountDue=$amountDue, autoCollection=$autoCollection, billingAddress=$billingAddress, createdAt=$createdAt, creditNotes=$creditNotes, currency=$currency, customer=$customer, customerBalanceTransactions=$customerBalanceTransactions, customerTaxId=$customerTaxId, dueDate=$dueDate, eligibleToIssueAt=$eligibleToIssueAt, hostedInvoiceUrl=$hostedInvoiceUrl, invoiceDate=$invoiceDate, invoiceNumber=$invoiceNumber, invoicePdf=$invoicePdf, invoiceSource=$invoiceSource, issueFailedAt=$issueFailedAt, issuedAt=$issuedAt, memo=$memo, metadata=$metadata, paidAt=$paidAt, paymentAttempts=$paymentAttempts, paymentFailedAt=$paymentFailedAt, paymentReceivedAt=$paymentReceivedAt, paymentStartedAt=$paymentStartedAt, scheduledIssueAt=$scheduledIssueAt, shippingAddress=$shippingAddress, status=$status, subscription=$subscription, syncFailedAt=$syncFailedAt, total=$total, voidedAt=$voidedAt, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
 }
