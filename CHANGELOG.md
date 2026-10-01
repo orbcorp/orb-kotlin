@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.39.0](https://github.com/orbcorp/orb-kotlin/compare/v1.38.0...v1.39.0) (2026-10-01)
+
+
+### Features
+
+* **api:** add `customer_id` and `status` filters to list backfills endpoint ([c63f877](https://github.com/orbcorp/orb-kotlin/commit/c63f877d1aa185c7b75cdbb4c13836c5219e5f32))
+* **api:** add `payment_received_at` field to invoice responses ([c21bbcd](https://github.com/orbcorp/orb-kotlin/commit/c21bbcd70ebbfd08a2f3a15394f051d3690fc1af))
+
+
+### Bug Fixes
+
+* **api:** correct webhook doc page titles and remove inapplicable auth section ([c21bbcd](https://github.com/orbcorp/orb-kotlin/commit/c21bbcd70ebbfd08a2f3a15394f051d3690fc1af))
+
 ## [1.38.0](https://github.com/orbcorp/orb-kotlin/compare/v1.37.0...v1.38.0) (2026-09-25)
 
 
