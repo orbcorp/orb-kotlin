@@ -109,6 +109,9 @@ interface DimensionalPriceGroupServiceAsync {
      * price group partitions the result of a billable metric by a set of dimensions, and the prices
      * in the group specify which partition their usage is derived from.
      *
+     * Filter with `billable_metric_id`. Each group includes `price_count`: non-archived prices in
+     * the group. Subscription overrides are not counted.
+     *
      * The response also includes pagination_metadata, which lets the caller retrieve the next page
      * of results if they exist.
      */

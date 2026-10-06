@@ -25,6 +25,7 @@ internal class DimensionalPriceGroupTest {
                         .build()
                 )
                 .name("name")
+                .priceCount(0L)
                 .build()
 
         assertThat(dimensionalPriceGroup.id()).isEqualTo("id")
@@ -39,6 +40,7 @@ internal class DimensionalPriceGroupTest {
                     .build()
             )
         assertThat(dimensionalPriceGroup.name()).isEqualTo("name")
+        assertThat(dimensionalPriceGroup.priceCount()).isEqualTo(0L)
     }
 
     @Test
@@ -57,6 +59,7 @@ internal class DimensionalPriceGroupTest {
                         .build()
                 )
                 .name("name")
+                .priceCount(0L)
                 .build()
 
         val roundtrippedDimensionalPriceGroup =

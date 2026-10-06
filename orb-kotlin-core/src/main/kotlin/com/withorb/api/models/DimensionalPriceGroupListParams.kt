@@ -12,16 +12,23 @@ import java.util.Objects
  * group partitions the result of a billable metric by a set of dimensions, and the prices in the
  * group specify which partition their usage is derived from.
  *
+ * Filter with `billable_metric_id`. Each group includes `price_count`: non-archived prices in the
+ * group. Subscription overrides are not counted.
+ *
  * The response also includes pagination_metadata, which lets the caller retrieve the next page of
  * results if they exist.
  */
 class DimensionalPriceGroupListParams
 private constructor(
+    private val billableMetricId: String?,
     private val cursor: String?,
     private val limit: Long?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
+
+    /** Filter to groups that use this billable metric. */
+    fun billableMetricId(): String? = billableMetricId
 
     /**
      * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
@@ -54,6 +61,7 @@ private constructor(
     /** A builder for [DimensionalPriceGroupListParams]. */
     class Builder internal constructor() {
 
+        private var billableMetricId: String? = null
         private var cursor: String? = null
         private var limit: Long? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -61,12 +69,18 @@ private constructor(
 
         internal fun from(dimensionalPriceGroupListParams: DimensionalPriceGroupListParams) =
             apply {
+                billableMetricId = dimensionalPriceGroupListParams.billableMetricId
                 cursor = dimensionalPriceGroupListParams.cursor
                 limit = dimensionalPriceGroupListParams.limit
                 additionalHeaders = dimensionalPriceGroupListParams.additionalHeaders.toBuilder()
                 additionalQueryParams =
                     dimensionalPriceGroupListParams.additionalQueryParams.toBuilder()
             }
+
+        /** Filter to groups that use this billable metric. */
+        fun billableMetricId(billableMetricId: String?) = apply {
+            this.billableMetricId = billableMetricId
+        }
 
         /**
          * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
@@ -189,6 +203,7 @@ private constructor(
          */
         fun build(): DimensionalPriceGroupListParams =
             DimensionalPriceGroupListParams(
+                billableMetricId,
                 cursor,
                 limit,
                 additionalHeaders.build(),
@@ -201,6 +216,7 @@ private constructor(
     override fun _queryParams(): QueryParams =
         QueryParams.builder()
             .apply {
+                billableMetricId?.let { put("billable_metric_id", it) }
                 cursor?.let { put("cursor", it) }
                 limit?.let { put("limit", it.toString()) }
                 putAll(additionalQueryParams)
@@ -213,6 +229,7 @@ private constructor(
         }
 
         return other is DimensionalPriceGroupListParams &&
+            billableMetricId == other.billableMetricId &&
             cursor == other.cursor &&
             limit == other.limit &&
             additionalHeaders == other.additionalHeaders &&
@@ -220,8 +237,8 @@ private constructor(
     }
 
     override fun hashCode(): Int =
-        Objects.hash(cursor, limit, additionalHeaders, additionalQueryParams)
+        Objects.hash(billableMetricId, cursor, limit, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
-        "DimensionalPriceGroupListParams{cursor=$cursor, limit=$limit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "DimensionalPriceGroupListParams{billableMetricId=$billableMetricId, cursor=$cursor, limit=$limit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -27,6 +27,7 @@ internal class DimensionalPriceGroupsTest {
                                 .build()
                         )
                         .name("name")
+                        .priceCount(0L)
                         .build()
                 )
                 .paginationMetadata(
@@ -48,6 +49,7 @@ internal class DimensionalPriceGroupsTest {
                             .build()
                     )
                     .name("name")
+                    .priceCount(0L)
                     .build()
             )
         assertThat(dimensionalPriceGroups.paginationMetadata())
@@ -72,6 +74,7 @@ internal class DimensionalPriceGroupsTest {
                                 .build()
                         )
                         .name("name")
+                        .priceCount(0L)
                         .build()
                 )
                 .paginationMetadata(

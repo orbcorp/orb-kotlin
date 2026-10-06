@@ -30,6 +30,7 @@ private constructor(
     private val externalDimensionalPriceGroupId: JsonField<String>,
     private val metadata: JsonField<Metadata>,
     private val name: JsonField<String>,
+    private val priceCount: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -47,6 +48,7 @@ private constructor(
         externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("metadata") @ExcludeMissing metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_count") @ExcludeMissing priceCount: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
         billableMetricId,
@@ -54,6 +56,7 @@ private constructor(
         externalDimensionalPriceGroupId,
         metadata,
         name,
+        priceCount,
         mutableMapOf(),
     )
 
@@ -108,6 +111,14 @@ private constructor(
     fun name(): String = name.getRequired("name")
 
     /**
+     * The number of prices in this group. Archived prices and subscription overrides are excluded.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun priceCount(): Long = priceCount.getRequired("price_count")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
@@ -157,6 +168,13 @@ private constructor(
      */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
+    /**
+     * Returns the raw JSON value of [priceCount].
+     *
+     * Unlike [priceCount], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("price_count") @ExcludeMissing fun _priceCount(): JsonField<Long> = priceCount
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -182,6 +200,7 @@ private constructor(
          * .externalDimensionalPriceGroupId()
          * .metadata()
          * .name()
+         * .priceCount()
          * ```
          */
         fun builder() = Builder()
@@ -196,6 +215,7 @@ private constructor(
         private var externalDimensionalPriceGroupId: JsonField<String>? = null
         private var metadata: JsonField<Metadata>? = null
         private var name: JsonField<String>? = null
+        private var priceCount: JsonField<Long>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(dimensionalPriceGroup: DimensionalPriceGroup) = apply {
@@ -205,6 +225,7 @@ private constructor(
             externalDimensionalPriceGroupId = dimensionalPriceGroup.externalDimensionalPriceGroupId
             metadata = dimensionalPriceGroup.metadata
             name = dimensionalPriceGroup.name
+            priceCount = dimensionalPriceGroup.priceCount
             additionalProperties = dimensionalPriceGroup.additionalProperties.toMutableMap()
         }
 
@@ -305,6 +326,20 @@ private constructor(
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
+        /**
+         * The number of prices in this group. Archived prices and subscription overrides are
+         * excluded.
+         */
+        fun priceCount(priceCount: Long) = priceCount(JsonField.of(priceCount))
+
+        /**
+         * Sets [Builder.priceCount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.priceCount] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun priceCount(priceCount: JsonField<Long>) = apply { this.priceCount = priceCount }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -337,6 +372,7 @@ private constructor(
          * .externalDimensionalPriceGroupId()
          * .metadata()
          * .name()
+         * .priceCount()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -349,6 +385,7 @@ private constructor(
                 checkRequired("externalDimensionalPriceGroupId", externalDimensionalPriceGroupId),
                 checkRequired("metadata", metadata),
                 checkRequired("name", name),
+                checkRequired("priceCount", priceCount),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -374,6 +411,7 @@ private constructor(
         externalDimensionalPriceGroupId()
         metadata().validate()
         name()
+        priceCount()
         validated = true
     }
 
@@ -396,7 +434,8 @@ private constructor(
             (dimensions.asKnown()?.size ?: 0) +
             (if (externalDimensionalPriceGroupId.asKnown() == null) 0 else 1) +
             (metadata.asKnown()?.validity() ?: 0) +
-            (if (name.asKnown() == null) 0 else 1)
+            (if (name.asKnown() == null) 0 else 1) +
+            (if (priceCount.asKnown() == null) 0 else 1)
 
     /**
      * User specified key-value pairs for the resource. If not present, this defaults to an empty
@@ -521,6 +560,7 @@ private constructor(
             externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId &&
             metadata == other.metadata &&
             name == other.name &&
+            priceCount == other.priceCount &&
             additionalProperties == other.additionalProperties
     }
 
@@ -532,6 +572,7 @@ private constructor(
             externalDimensionalPriceGroupId,
             metadata,
             name,
+            priceCount,
             additionalProperties,
         )
     }
@@ -539,5 +580,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "DimensionalPriceGroup{id=$id, billableMetricId=$billableMetricId, dimensions=$dimensions, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
+        "DimensionalPriceGroup{id=$id, billableMetricId=$billableMetricId, dimensions=$dimensions, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, metadata=$metadata, name=$name, priceCount=$priceCount, additionalProperties=$additionalProperties}"
 }
