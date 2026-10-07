@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.40.0](https://github.com/orbcorp/orb-kotlin/compare/v1.39.0...v1.40.0) (2026-10-07)
+
+
+### Features
+
+* **api:** add billable_metric_id filter, price_count, and prices list endpoint for dimensional price groups ([9643c64](https://github.com/orbcorp/orb-kotlin/commit/9643c644e69fa8b58ad911f5339da43086233601))
+
 ## [1.39.0](https://github.com/orbcorp/orb-kotlin/compare/v1.38.0...v1.39.0) (2026-10-01)
 
 
