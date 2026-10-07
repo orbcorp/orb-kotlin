@@ -14,7 +14,7 @@ internal class NewFloatingGroupedTieredPackagePriceTest {
     fun create() {
         val newFloatingGroupedTieredPackagePrice =
             NewFloatingGroupedTieredPackagePrice.builder()
-                .cadence(NewFloatingGroupedTieredPackagePrice.Cadence.ANNUAL)
+                .cadence(NewFloatingGroupedTieredPackagePrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .groupedTieredPackageConfig(
                     NewFloatingGroupedTieredPackagePrice.GroupedTieredPackageConfig.builder()
@@ -76,7 +76,7 @@ internal class NewFloatingGroupedTieredPackagePriceTest {
                 .build()
 
         assertThat(newFloatingGroupedTieredPackagePrice.cadence())
-            .isEqualTo(NewFloatingGroupedTieredPackagePrice.Cadence.ANNUAL)
+            .isEqualTo(NewFloatingGroupedTieredPackagePrice.Cadence.ONE_TIME)
         assertThat(newFloatingGroupedTieredPackagePrice.currency()).isEqualTo("currency")
         assertThat(newFloatingGroupedTieredPackagePrice.groupedTieredPackageConfig())
             .isEqualTo(
@@ -159,7 +159,7 @@ internal class NewFloatingGroupedTieredPackagePriceTest {
         val jsonMapper = jsonMapper()
         val newFloatingGroupedTieredPackagePrice =
             NewFloatingGroupedTieredPackagePrice.builder()
-                .cadence(NewFloatingGroupedTieredPackagePrice.Cadence.ANNUAL)
+                .cadence(NewFloatingGroupedTieredPackagePrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .groupedTieredPackageConfig(
                     NewFloatingGroupedTieredPackagePrice.GroupedTieredPackageConfig.builder()

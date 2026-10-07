@@ -14,7 +14,7 @@ internal class NewPlanMinimumCompositePriceTest {
     fun create() {
         val newPlanMinimumCompositePrice =
             NewPlanMinimumCompositePrice.builder()
-                .cadence(NewPlanMinimumCompositePrice.Cadence.ANNUAL)
+                .cadence(NewPlanMinimumCompositePrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .minimumCompositeConfig(
                     NewPlanMinimumCompositePrice.MinimumCompositeConfig.builder()
@@ -63,7 +63,7 @@ internal class NewPlanMinimumCompositePriceTest {
                 .build()
 
         assertThat(newPlanMinimumCompositePrice.cadence())
-            .isEqualTo(NewPlanMinimumCompositePrice.Cadence.ANNUAL)
+            .isEqualTo(NewPlanMinimumCompositePrice.Cadence.ONE_TIME)
         assertThat(newPlanMinimumCompositePrice.itemId()).isEqualTo("item_id")
         assertThat(newPlanMinimumCompositePrice.minimumCompositeConfig())
             .isEqualTo(
@@ -130,7 +130,7 @@ internal class NewPlanMinimumCompositePriceTest {
         val jsonMapper = jsonMapper()
         val newPlanMinimumCompositePrice =
             NewPlanMinimumCompositePrice.builder()
-                .cadence(NewPlanMinimumCompositePrice.Cadence.ANNUAL)
+                .cadence(NewPlanMinimumCompositePrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .minimumCompositeConfig(
                     NewPlanMinimumCompositePrice.MinimumCompositeConfig.builder()

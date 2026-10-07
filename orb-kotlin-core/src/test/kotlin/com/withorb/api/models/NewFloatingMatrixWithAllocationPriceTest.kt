@@ -14,7 +14,7 @@ internal class NewFloatingMatrixWithAllocationPriceTest {
     fun create() {
         val newFloatingMatrixWithAllocationPrice =
             NewFloatingMatrixWithAllocationPrice.builder()
-                .cadence(NewFloatingMatrixWithAllocationPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingMatrixWithAllocationPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .matrixWithAllocationConfig(
@@ -71,7 +71,7 @@ internal class NewFloatingMatrixWithAllocationPriceTest {
                 .build()
 
         assertThat(newFloatingMatrixWithAllocationPrice.cadence())
-            .isEqualTo(NewFloatingMatrixWithAllocationPrice.Cadence.ANNUAL)
+            .isEqualTo(NewFloatingMatrixWithAllocationPrice.Cadence.ONE_TIME)
         assertThat(newFloatingMatrixWithAllocationPrice.currency()).isEqualTo("currency")
         assertThat(newFloatingMatrixWithAllocationPrice.itemId()).isEqualTo("item_id")
         assertThat(newFloatingMatrixWithAllocationPrice.matrixWithAllocationConfig())
@@ -149,7 +149,7 @@ internal class NewFloatingMatrixWithAllocationPriceTest {
         val jsonMapper = jsonMapper()
         val newFloatingMatrixWithAllocationPrice =
             NewFloatingMatrixWithAllocationPrice.builder()
-                .cadence(NewFloatingMatrixWithAllocationPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingMatrixWithAllocationPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .matrixWithAllocationConfig(

@@ -14,7 +14,7 @@ internal class NewFloatingPackagePriceTest {
     fun create() {
         val newFloatingPackagePrice =
             NewFloatingPackagePrice.builder()
-                .cadence(NewFloatingPackagePrice.Cadence.ANNUAL)
+                .cadence(NewFloatingPackagePrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingPackagePrice.ModelType.PACKAGE)
@@ -59,7 +59,7 @@ internal class NewFloatingPackagePriceTest {
                 .build()
 
         assertThat(newFloatingPackagePrice.cadence())
-            .isEqualTo(NewFloatingPackagePrice.Cadence.ANNUAL)
+            .isEqualTo(NewFloatingPackagePrice.Cadence.ONE_TIME)
         assertThat(newFloatingPackagePrice.currency()).isEqualTo("currency")
         assertThat(newFloatingPackagePrice.itemId()).isEqualTo("item_id")
         assertThat(newFloatingPackagePrice.modelType())
@@ -122,7 +122,7 @@ internal class NewFloatingPackagePriceTest {
         val jsonMapper = jsonMapper()
         val newFloatingPackagePrice =
             NewFloatingPackagePrice.builder()
-                .cadence(NewFloatingPackagePrice.Cadence.ANNUAL)
+                .cadence(NewFloatingPackagePrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingPackagePrice.ModelType.PACKAGE)

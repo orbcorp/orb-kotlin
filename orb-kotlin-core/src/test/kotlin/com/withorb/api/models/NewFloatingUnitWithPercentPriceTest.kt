@@ -14,7 +14,7 @@ internal class NewFloatingUnitWithPercentPriceTest {
     fun create() {
         val newFloatingUnitWithPercentPrice =
             NewFloatingUnitWithPercentPrice.builder()
-                .cadence(NewFloatingUnitWithPercentPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingUnitWithPercentPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingUnitWithPercentPrice.ModelType.UNIT_WITH_PERCENT)
@@ -62,7 +62,7 @@ internal class NewFloatingUnitWithPercentPriceTest {
                 .build()
 
         assertThat(newFloatingUnitWithPercentPrice.cadence())
-            .isEqualTo(NewFloatingUnitWithPercentPrice.Cadence.ANNUAL)
+            .isEqualTo(NewFloatingUnitWithPercentPrice.Cadence.ONE_TIME)
         assertThat(newFloatingUnitWithPercentPrice.currency()).isEqualTo("currency")
         assertThat(newFloatingUnitWithPercentPrice.itemId()).isEqualTo("item_id")
         assertThat(newFloatingUnitWithPercentPrice.modelType())
@@ -129,7 +129,7 @@ internal class NewFloatingUnitWithPercentPriceTest {
         val jsonMapper = jsonMapper()
         val newFloatingUnitWithPercentPrice =
             NewFloatingUnitWithPercentPrice.builder()
-                .cadence(NewFloatingUnitWithPercentPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingUnitWithPercentPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingUnitWithPercentPrice.ModelType.UNIT_WITH_PERCENT)

@@ -14,7 +14,7 @@ internal class NewPlanScalableMatrixWithTieredPricingPriceTest {
     fun create() {
         val newPlanScalableMatrixWithTieredPricingPrice =
             NewPlanScalableMatrixWithTieredPricingPrice.builder()
-                .cadence(NewPlanScalableMatrixWithTieredPricingPrice.Cadence.ANNUAL)
+                .cadence(NewPlanScalableMatrixWithTieredPricingPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(
                     NewPlanScalableMatrixWithTieredPricingPrice.ModelType
@@ -96,7 +96,7 @@ internal class NewPlanScalableMatrixWithTieredPricingPriceTest {
                 .build()
 
         assertThat(newPlanScalableMatrixWithTieredPricingPrice.cadence())
-            .isEqualTo(NewPlanScalableMatrixWithTieredPricingPrice.Cadence.ANNUAL)
+            .isEqualTo(NewPlanScalableMatrixWithTieredPricingPrice.Cadence.ONE_TIME)
         assertThat(newPlanScalableMatrixWithTieredPricingPrice.itemId()).isEqualTo("item_id")
         assertThat(newPlanScalableMatrixWithTieredPricingPrice.modelType())
             .isEqualTo(
@@ -201,7 +201,7 @@ internal class NewPlanScalableMatrixWithTieredPricingPriceTest {
         val jsonMapper = jsonMapper()
         val newPlanScalableMatrixWithTieredPricingPrice =
             NewPlanScalableMatrixWithTieredPricingPrice.builder()
-                .cadence(NewPlanScalableMatrixWithTieredPricingPrice.Cadence.ANNUAL)
+                .cadence(NewPlanScalableMatrixWithTieredPricingPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(
                     NewPlanScalableMatrixWithTieredPricingPrice.ModelType

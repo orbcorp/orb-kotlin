@@ -14,7 +14,7 @@ internal class NewPlanCumulativeGroupedBulkPriceTest {
     fun create() {
         val newPlanCumulativeGroupedBulkPrice =
             NewPlanCumulativeGroupedBulkPrice.builder()
-                .cadence(NewPlanCumulativeGroupedBulkPrice.Cadence.ANNUAL)
+                .cadence(NewPlanCumulativeGroupedBulkPrice.Cadence.ONE_TIME)
                 .cumulativeGroupedBulkConfig(
                     NewPlanCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
                         .addDimensionValue(
@@ -71,7 +71,7 @@ internal class NewPlanCumulativeGroupedBulkPriceTest {
                 .build()
 
         assertThat(newPlanCumulativeGroupedBulkPrice.cadence())
-            .isEqualTo(NewPlanCumulativeGroupedBulkPrice.Cadence.ANNUAL)
+            .isEqualTo(NewPlanCumulativeGroupedBulkPrice.Cadence.ONE_TIME)
         assertThat(newPlanCumulativeGroupedBulkPrice.cumulativeGroupedBulkConfig())
             .isEqualTo(
                 NewPlanCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
@@ -147,7 +147,7 @@ internal class NewPlanCumulativeGroupedBulkPriceTest {
         val jsonMapper = jsonMapper()
         val newPlanCumulativeGroupedBulkPrice =
             NewPlanCumulativeGroupedBulkPrice.builder()
-                .cadence(NewPlanCumulativeGroupedBulkPrice.Cadence.ANNUAL)
+                .cadence(NewPlanCumulativeGroupedBulkPrice.Cadence.ONE_TIME)
                 .cumulativeGroupedBulkConfig(
                     NewPlanCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
                         .addDimensionValue(

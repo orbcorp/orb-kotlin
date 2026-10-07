@@ -14,7 +14,7 @@ internal class NewSubscriptionMatrixPriceTest {
     fun create() {
         val newSubscriptionMatrixPrice =
             NewSubscriptionMatrixPrice.builder()
-                .cadence(NewSubscriptionMatrixPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionMatrixPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .matrixConfig(
                     MatrixConfig.builder()
@@ -71,7 +71,7 @@ internal class NewSubscriptionMatrixPriceTest {
                 .build()
 
         assertThat(newSubscriptionMatrixPrice.cadence())
-            .isEqualTo(NewSubscriptionMatrixPrice.Cadence.ANNUAL)
+            .isEqualTo(NewSubscriptionMatrixPrice.Cadence.ONE_TIME)
         assertThat(newSubscriptionMatrixPrice.itemId()).isEqualTo("item_id")
         assertThat(newSubscriptionMatrixPrice.matrixConfig())
             .isEqualTo(
@@ -146,7 +146,7 @@ internal class NewSubscriptionMatrixPriceTest {
         val jsonMapper = jsonMapper()
         val newSubscriptionMatrixPrice =
             NewSubscriptionMatrixPrice.builder()
-                .cadence(NewSubscriptionMatrixPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionMatrixPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .matrixConfig(
                     MatrixConfig.builder()

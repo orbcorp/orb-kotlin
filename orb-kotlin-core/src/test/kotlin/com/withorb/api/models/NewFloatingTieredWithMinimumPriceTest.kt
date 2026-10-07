@@ -14,7 +14,7 @@ internal class NewFloatingTieredWithMinimumPriceTest {
     fun create() {
         val newFloatingTieredWithMinimumPrice =
             NewFloatingTieredWithMinimumPrice.builder()
-                .cadence(NewFloatingTieredWithMinimumPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingTieredWithMinimumPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingTieredWithMinimumPrice.ModelType.TIERED_WITH_MINIMUM)
@@ -76,7 +76,7 @@ internal class NewFloatingTieredWithMinimumPriceTest {
                 .build()
 
         assertThat(newFloatingTieredWithMinimumPrice.cadence())
-            .isEqualTo(NewFloatingTieredWithMinimumPrice.Cadence.ANNUAL)
+            .isEqualTo(NewFloatingTieredWithMinimumPrice.Cadence.ONE_TIME)
         assertThat(newFloatingTieredWithMinimumPrice.currency()).isEqualTo("currency")
         assertThat(newFloatingTieredWithMinimumPrice.itemId()).isEqualTo("item_id")
         assertThat(newFloatingTieredWithMinimumPrice.modelType())
@@ -158,7 +158,7 @@ internal class NewFloatingTieredWithMinimumPriceTest {
         val jsonMapper = jsonMapper()
         val newFloatingTieredWithMinimumPrice =
             NewFloatingTieredWithMinimumPrice.builder()
-                .cadence(NewFloatingTieredWithMinimumPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingTieredWithMinimumPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingTieredWithMinimumPrice.ModelType.TIERED_WITH_MINIMUM)

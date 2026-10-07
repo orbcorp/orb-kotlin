@@ -14,7 +14,7 @@ internal class NewFloatingGroupedAllocationPriceTest {
     fun create() {
         val newFloatingGroupedAllocationPrice =
             NewFloatingGroupedAllocationPrice.builder()
-                .cadence(NewFloatingGroupedAllocationPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingGroupedAllocationPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .groupedAllocationConfig(
                     NewFloatingGroupedAllocationPrice.GroupedAllocationConfig.builder()
@@ -63,7 +63,7 @@ internal class NewFloatingGroupedAllocationPriceTest {
                 .build()
 
         assertThat(newFloatingGroupedAllocationPrice.cadence())
-            .isEqualTo(NewFloatingGroupedAllocationPrice.Cadence.ANNUAL)
+            .isEqualTo(NewFloatingGroupedAllocationPrice.Cadence.ONE_TIME)
         assertThat(newFloatingGroupedAllocationPrice.currency()).isEqualTo("currency")
         assertThat(newFloatingGroupedAllocationPrice.groupedAllocationConfig())
             .isEqualTo(
@@ -132,7 +132,7 @@ internal class NewFloatingGroupedAllocationPriceTest {
         val jsonMapper = jsonMapper()
         val newFloatingGroupedAllocationPrice =
             NewFloatingGroupedAllocationPrice.builder()
-                .cadence(NewFloatingGroupedAllocationPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingGroupedAllocationPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .groupedAllocationConfig(
                     NewFloatingGroupedAllocationPrice.GroupedAllocationConfig.builder()

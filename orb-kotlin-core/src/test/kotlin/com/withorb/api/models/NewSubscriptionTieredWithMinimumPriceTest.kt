@@ -14,7 +14,7 @@ internal class NewSubscriptionTieredWithMinimumPriceTest {
     fun create() {
         val newSubscriptionTieredWithMinimumPrice =
             NewSubscriptionTieredWithMinimumPrice.builder()
-                .cadence(NewSubscriptionTieredWithMinimumPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionTieredWithMinimumPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(NewSubscriptionTieredWithMinimumPrice.ModelType.TIERED_WITH_MINIMUM)
                 .name("Annual fee")
@@ -79,7 +79,7 @@ internal class NewSubscriptionTieredWithMinimumPriceTest {
                 .build()
 
         assertThat(newSubscriptionTieredWithMinimumPrice.cadence())
-            .isEqualTo(NewSubscriptionTieredWithMinimumPrice.Cadence.ANNUAL)
+            .isEqualTo(NewSubscriptionTieredWithMinimumPrice.Cadence.ONE_TIME)
         assertThat(newSubscriptionTieredWithMinimumPrice.itemId()).isEqualTo("item_id")
         assertThat(newSubscriptionTieredWithMinimumPrice.modelType())
             .isEqualTo(NewSubscriptionTieredWithMinimumPrice.ModelType.TIERED_WITH_MINIMUM)
@@ -163,7 +163,7 @@ internal class NewSubscriptionTieredWithMinimumPriceTest {
         val jsonMapper = jsonMapper()
         val newSubscriptionTieredWithMinimumPrice =
             NewSubscriptionTieredWithMinimumPrice.builder()
-                .cadence(NewSubscriptionTieredWithMinimumPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionTieredWithMinimumPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(NewSubscriptionTieredWithMinimumPrice.ModelType.TIERED_WITH_MINIMUM)
                 .name("Annual fee")

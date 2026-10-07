@@ -14,7 +14,7 @@ internal class NewPlanGroupedWithMeteredMinimumPriceTest {
     fun create() {
         val newPlanGroupedWithMeteredMinimumPrice =
             NewPlanGroupedWithMeteredMinimumPrice.builder()
-                .cadence(NewPlanGroupedWithMeteredMinimumPrice.Cadence.ANNUAL)
+                .cadence(NewPlanGroupedWithMeteredMinimumPrice.Cadence.ONE_TIME)
                 .groupedWithMeteredMinimumConfig(
                     NewPlanGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig.builder()
                         .groupingKey("x")
@@ -83,7 +83,7 @@ internal class NewPlanGroupedWithMeteredMinimumPriceTest {
                 .build()
 
         assertThat(newPlanGroupedWithMeteredMinimumPrice.cadence())
-            .isEqualTo(NewPlanGroupedWithMeteredMinimumPrice.Cadence.ANNUAL)
+            .isEqualTo(NewPlanGroupedWithMeteredMinimumPrice.Cadence.ONE_TIME)
         assertThat(newPlanGroupedWithMeteredMinimumPrice.groupedWithMeteredMinimumConfig())
             .isEqualTo(
                 NewPlanGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig.builder()
@@ -171,7 +171,7 @@ internal class NewPlanGroupedWithMeteredMinimumPriceTest {
         val jsonMapper = jsonMapper()
         val newPlanGroupedWithMeteredMinimumPrice =
             NewPlanGroupedWithMeteredMinimumPrice.builder()
-                .cadence(NewPlanGroupedWithMeteredMinimumPrice.Cadence.ANNUAL)
+                .cadence(NewPlanGroupedWithMeteredMinimumPrice.Cadence.ONE_TIME)
                 .groupedWithMeteredMinimumConfig(
                     NewPlanGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig.builder()
                         .groupingKey("x")

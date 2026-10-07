@@ -14,7 +14,7 @@ internal class NewSubscriptionPackagePriceTest {
     fun create() {
         val newSubscriptionPackagePrice =
             NewSubscriptionPackagePrice.builder()
-                .cadence(NewSubscriptionPackagePrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionPackagePrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(NewSubscriptionPackagePrice.ModelType.PACKAGE)
                 .name("Annual fee")
@@ -60,7 +60,7 @@ internal class NewSubscriptionPackagePriceTest {
                 .build()
 
         assertThat(newSubscriptionPackagePrice.cadence())
-            .isEqualTo(NewSubscriptionPackagePrice.Cadence.ANNUAL)
+            .isEqualTo(NewSubscriptionPackagePrice.Cadence.ONE_TIME)
         assertThat(newSubscriptionPackagePrice.itemId()).isEqualTo("item_id")
         assertThat(newSubscriptionPackagePrice.modelType())
             .isEqualTo(NewSubscriptionPackagePrice.ModelType.PACKAGE)
@@ -124,7 +124,7 @@ internal class NewSubscriptionPackagePriceTest {
         val jsonMapper = jsonMapper()
         val newSubscriptionPackagePrice =
             NewSubscriptionPackagePrice.builder()
-                .cadence(NewSubscriptionPackagePrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionPackagePrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(NewSubscriptionPackagePrice.ModelType.PACKAGE)
                 .name("Annual fee")

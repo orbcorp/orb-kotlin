@@ -14,7 +14,7 @@ internal class NewSubscriptionGroupedAllocationPriceTest {
     fun create() {
         val newSubscriptionGroupedAllocationPrice =
             NewSubscriptionGroupedAllocationPrice.builder()
-                .cadence(NewSubscriptionGroupedAllocationPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionGroupedAllocationPrice.Cadence.ONE_TIME)
                 .groupedAllocationConfig(
                     NewSubscriptionGroupedAllocationPrice.GroupedAllocationConfig.builder()
                         .allocation("allocation")
@@ -64,7 +64,7 @@ internal class NewSubscriptionGroupedAllocationPriceTest {
                 .build()
 
         assertThat(newSubscriptionGroupedAllocationPrice.cadence())
-            .isEqualTo(NewSubscriptionGroupedAllocationPrice.Cadence.ANNUAL)
+            .isEqualTo(NewSubscriptionGroupedAllocationPrice.Cadence.ONE_TIME)
         assertThat(newSubscriptionGroupedAllocationPrice.groupedAllocationConfig())
             .isEqualTo(
                 NewSubscriptionGroupedAllocationPrice.GroupedAllocationConfig.builder()
@@ -135,7 +135,7 @@ internal class NewSubscriptionGroupedAllocationPriceTest {
         val jsonMapper = jsonMapper()
         val newSubscriptionGroupedAllocationPrice =
             NewSubscriptionGroupedAllocationPrice.builder()
-                .cadence(NewSubscriptionGroupedAllocationPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionGroupedAllocationPrice.Cadence.ONE_TIME)
                 .groupedAllocationConfig(
                     NewSubscriptionGroupedAllocationPrice.GroupedAllocationConfig.builder()
                         .allocation("allocation")

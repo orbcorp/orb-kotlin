@@ -14,7 +14,7 @@ internal class NewFloatingPackageWithAllocationPriceTest {
     fun create() {
         val newFloatingPackageWithAllocationPrice =
             NewFloatingPackageWithAllocationPrice.builder()
-                .cadence(NewFloatingPackageWithAllocationPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingPackageWithAllocationPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingPackageWithAllocationPrice.ModelType.PACKAGE_WITH_ALLOCATION)
@@ -63,7 +63,7 @@ internal class NewFloatingPackageWithAllocationPriceTest {
                 .build()
 
         assertThat(newFloatingPackageWithAllocationPrice.cadence())
-            .isEqualTo(NewFloatingPackageWithAllocationPrice.Cadence.ANNUAL)
+            .isEqualTo(NewFloatingPackageWithAllocationPrice.Cadence.ONE_TIME)
         assertThat(newFloatingPackageWithAllocationPrice.currency()).isEqualTo("currency")
         assertThat(newFloatingPackageWithAllocationPrice.itemId()).isEqualTo("item_id")
         assertThat(newFloatingPackageWithAllocationPrice.modelType())
@@ -133,7 +133,7 @@ internal class NewFloatingPackageWithAllocationPriceTest {
         val jsonMapper = jsonMapper()
         val newFloatingPackageWithAllocationPrice =
             NewFloatingPackageWithAllocationPrice.builder()
-                .cadence(NewFloatingPackageWithAllocationPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingPackageWithAllocationPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingPackageWithAllocationPrice.ModelType.PACKAGE_WITH_ALLOCATION)

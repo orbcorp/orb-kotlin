@@ -133,7 +133,7 @@ internal class SubscriptionServiceAsyncTest {
                             .planPhaseOrder(0L)
                             .price(
                                 NewSubscriptionUnitPrice.builder()
-                                    .cadence(NewSubscriptionUnitPrice.Cadence.ANNUAL)
+                                    .cadence(NewSubscriptionUnitPrice.Cadence.ONE_TIME)
                                     .itemId("item_id")
                                     .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
@@ -318,7 +318,7 @@ internal class SubscriptionServiceAsyncTest {
                             .minimumAmount("1.23")
                             .price(
                                 NewSubscriptionUnitPrice.builder()
-                                    .cadence(NewSubscriptionUnitPrice.Cadence.ANNUAL)
+                                    .cadence(NewSubscriptionUnitPrice.Cadence.ONE_TIME)
                                     .itemId("item_id")
                                     .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
@@ -601,7 +601,7 @@ internal class SubscriptionServiceAsyncTest {
                             .minimumAmount(0.0)
                             .price(
                                 NewFloatingUnitPrice.builder()
-                                    .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
+                                    .cadence(NewFloatingUnitPrice.Cadence.ONE_TIME)
                                     .currency("currency")
                                     .itemId("item_id")
                                     .modelType(NewFloatingUnitPrice.ModelType.UNIT)
@@ -855,7 +855,7 @@ internal class SubscriptionServiceAsyncTest {
                             .planPhaseOrder(0L)
                             .price(
                                 NewSubscriptionUnitPrice.builder()
-                                    .cadence(NewSubscriptionUnitPrice.Cadence.ANNUAL)
+                                    .cadence(NewSubscriptionUnitPrice.Cadence.ONE_TIME)
                                     .itemId("item_id")
                                     .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
@@ -1032,7 +1032,7 @@ internal class SubscriptionServiceAsyncTest {
                             .minimumAmount("1.23")
                             .price(
                                 NewSubscriptionUnitPrice.builder()
-                                    .cadence(NewSubscriptionUnitPrice.Cadence.ANNUAL)
+                                    .cadence(NewSubscriptionUnitPrice.Cadence.ONE_TIME)
                                     .itemId("item_id")
                                     .modelType(NewSubscriptionUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")

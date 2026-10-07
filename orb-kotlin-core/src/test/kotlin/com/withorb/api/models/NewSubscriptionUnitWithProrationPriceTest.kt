@@ -14,7 +14,7 @@ internal class NewSubscriptionUnitWithProrationPriceTest {
     fun create() {
         val newSubscriptionUnitWithProrationPrice =
             NewSubscriptionUnitWithProrationPrice.builder()
-                .cadence(NewSubscriptionUnitWithProrationPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionUnitWithProrationPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(NewSubscriptionUnitWithProrationPrice.ModelType.UNIT_WITH_PRORATION)
                 .name("Annual fee")
@@ -62,7 +62,7 @@ internal class NewSubscriptionUnitWithProrationPriceTest {
                 .build()
 
         assertThat(newSubscriptionUnitWithProrationPrice.cadence())
-            .isEqualTo(NewSubscriptionUnitWithProrationPrice.Cadence.ANNUAL)
+            .isEqualTo(NewSubscriptionUnitWithProrationPrice.Cadence.ONE_TIME)
         assertThat(newSubscriptionUnitWithProrationPrice.itemId()).isEqualTo("item_id")
         assertThat(newSubscriptionUnitWithProrationPrice.modelType())
             .isEqualTo(NewSubscriptionUnitWithProrationPrice.ModelType.UNIT_WITH_PRORATION)
@@ -131,7 +131,7 @@ internal class NewSubscriptionUnitWithProrationPriceTest {
         val jsonMapper = jsonMapper()
         val newSubscriptionUnitWithProrationPrice =
             NewSubscriptionUnitWithProrationPrice.builder()
-                .cadence(NewSubscriptionUnitWithProrationPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionUnitWithProrationPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(NewSubscriptionUnitWithProrationPrice.ModelType.UNIT_WITH_PRORATION)
                 .name("Annual fee")

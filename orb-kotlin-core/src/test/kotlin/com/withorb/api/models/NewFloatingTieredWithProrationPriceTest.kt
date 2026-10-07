@@ -14,7 +14,7 @@ internal class NewFloatingTieredWithProrationPriceTest {
     fun create() {
         val newFloatingTieredWithProrationPrice =
             NewFloatingTieredWithProrationPrice.builder()
-                .cadence(NewFloatingTieredWithProrationPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingTieredWithProrationPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingTieredWithProrationPrice.ModelType.TIERED_WITH_PRORATION)
@@ -67,7 +67,7 @@ internal class NewFloatingTieredWithProrationPriceTest {
                 .build()
 
         assertThat(newFloatingTieredWithProrationPrice.cadence())
-            .isEqualTo(NewFloatingTieredWithProrationPrice.Cadence.ANNUAL)
+            .isEqualTo(NewFloatingTieredWithProrationPrice.Cadence.ONE_TIME)
         assertThat(newFloatingTieredWithProrationPrice.currency()).isEqualTo("currency")
         assertThat(newFloatingTieredWithProrationPrice.itemId()).isEqualTo("item_id")
         assertThat(newFloatingTieredWithProrationPrice.modelType())
@@ -139,7 +139,7 @@ internal class NewFloatingTieredWithProrationPriceTest {
         val jsonMapper = jsonMapper()
         val newFloatingTieredWithProrationPrice =
             NewFloatingTieredWithProrationPrice.builder()
-                .cadence(NewFloatingTieredWithProrationPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingTieredWithProrationPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingTieredWithProrationPrice.ModelType.TIERED_WITH_PRORATION)

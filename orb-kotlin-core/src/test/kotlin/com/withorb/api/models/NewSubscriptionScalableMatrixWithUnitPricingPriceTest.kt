@@ -14,7 +14,7 @@ internal class NewSubscriptionScalableMatrixWithUnitPricingPriceTest {
     fun create() {
         val newSubscriptionScalableMatrixWithUnitPricingPrice =
             NewSubscriptionScalableMatrixWithUnitPricingPrice.builder()
-                .cadence(NewSubscriptionScalableMatrixWithUnitPricingPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionScalableMatrixWithUnitPricingPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(
                     NewSubscriptionScalableMatrixWithUnitPricingPrice.ModelType
@@ -81,7 +81,7 @@ internal class NewSubscriptionScalableMatrixWithUnitPricingPriceTest {
                 .build()
 
         assertThat(newSubscriptionScalableMatrixWithUnitPricingPrice.cadence())
-            .isEqualTo(NewSubscriptionScalableMatrixWithUnitPricingPrice.Cadence.ANNUAL)
+            .isEqualTo(NewSubscriptionScalableMatrixWithUnitPricingPrice.Cadence.ONE_TIME)
         assertThat(newSubscriptionScalableMatrixWithUnitPricingPrice.itemId()).isEqualTo("item_id")
         assertThat(newSubscriptionScalableMatrixWithUnitPricingPrice.modelType())
             .isEqualTo(
@@ -180,7 +180,7 @@ internal class NewSubscriptionScalableMatrixWithUnitPricingPriceTest {
         val jsonMapper = jsonMapper()
         val newSubscriptionScalableMatrixWithUnitPricingPrice =
             NewSubscriptionScalableMatrixWithUnitPricingPrice.builder()
-                .cadence(NewSubscriptionScalableMatrixWithUnitPricingPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionScalableMatrixWithUnitPricingPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(
                     NewSubscriptionScalableMatrixWithUnitPricingPrice.ModelType

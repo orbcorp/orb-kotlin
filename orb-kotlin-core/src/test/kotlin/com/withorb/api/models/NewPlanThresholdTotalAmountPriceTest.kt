@@ -14,7 +14,7 @@ internal class NewPlanThresholdTotalAmountPriceTest {
     fun create() {
         val newPlanThresholdTotalAmountPrice =
             NewPlanThresholdTotalAmountPrice.builder()
-                .cadence(NewPlanThresholdTotalAmountPrice.Cadence.ANNUAL)
+                .cadence(NewPlanThresholdTotalAmountPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(NewPlanThresholdTotalAmountPrice.ModelType.THRESHOLD_TOTAL_AMOUNT)
                 .name("Annual fee")
@@ -78,7 +78,7 @@ internal class NewPlanThresholdTotalAmountPriceTest {
                 .build()
 
         assertThat(newPlanThresholdTotalAmountPrice.cadence())
-            .isEqualTo(NewPlanThresholdTotalAmountPrice.Cadence.ANNUAL)
+            .isEqualTo(NewPlanThresholdTotalAmountPrice.Cadence.ONE_TIME)
         assertThat(newPlanThresholdTotalAmountPrice.itemId()).isEqualTo("item_id")
         assertThat(newPlanThresholdTotalAmountPrice.modelType())
             .isEqualTo(NewPlanThresholdTotalAmountPrice.ModelType.THRESHOLD_TOTAL_AMOUNT)
@@ -160,7 +160,7 @@ internal class NewPlanThresholdTotalAmountPriceTest {
         val jsonMapper = jsonMapper()
         val newPlanThresholdTotalAmountPrice =
             NewPlanThresholdTotalAmountPrice.builder()
-                .cadence(NewPlanThresholdTotalAmountPrice.Cadence.ANNUAL)
+                .cadence(NewPlanThresholdTotalAmountPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(NewPlanThresholdTotalAmountPrice.ModelType.THRESHOLD_TOTAL_AMOUNT)
                 .name("Annual fee")

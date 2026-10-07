@@ -33,7 +33,7 @@ internal class PriceServiceAsyncTest {
         val price =
             priceServiceAsync.create(
                 NewFloatingUnitPrice.builder()
-                    .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
+                    .cadence(NewFloatingUnitPrice.Cadence.ONE_TIME)
                     .currency("currency")
                     .itemId("item_id")
                     .modelType(NewFloatingUnitPrice.ModelType.UNIT)
@@ -184,7 +184,7 @@ internal class PriceServiceAsyncTest {
                             )
                             .price(
                                 NewFloatingUnitPrice.builder()
-                                    .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
+                                    .cadence(NewFloatingUnitPrice.Cadence.ONE_TIME)
                                     .currency("currency")
                                     .itemId("item_id")
                                     .modelType(NewFloatingUnitPrice.ModelType.UNIT)
@@ -294,7 +294,7 @@ internal class PriceServiceAsyncTest {
                             )
                             .price(
                                 NewFloatingUnitPrice.builder()
-                                    .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
+                                    .cadence(NewFloatingUnitPrice.Cadence.ONE_TIME)
                                     .currency("currency")
                                     .itemId("item_id")
                                     .modelType(NewFloatingUnitPrice.ModelType.UNIT)

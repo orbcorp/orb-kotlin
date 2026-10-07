@@ -14,7 +14,7 @@ internal class NewSubscriptionPackageWithAllocationPriceTest {
     fun create() {
         val newSubscriptionPackageWithAllocationPrice =
             NewSubscriptionPackageWithAllocationPrice.builder()
-                .cadence(NewSubscriptionPackageWithAllocationPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionPackageWithAllocationPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(
                     NewSubscriptionPackageWithAllocationPrice.ModelType.PACKAGE_WITH_ALLOCATION
@@ -66,7 +66,7 @@ internal class NewSubscriptionPackageWithAllocationPriceTest {
                 .build()
 
         assertThat(newSubscriptionPackageWithAllocationPrice.cadence())
-            .isEqualTo(NewSubscriptionPackageWithAllocationPrice.Cadence.ANNUAL)
+            .isEqualTo(NewSubscriptionPackageWithAllocationPrice.Cadence.ONE_TIME)
         assertThat(newSubscriptionPackageWithAllocationPrice.itemId()).isEqualTo("item_id")
         assertThat(newSubscriptionPackageWithAllocationPrice.modelType())
             .isEqualTo(NewSubscriptionPackageWithAllocationPrice.ModelType.PACKAGE_WITH_ALLOCATION)
@@ -138,7 +138,7 @@ internal class NewSubscriptionPackageWithAllocationPriceTest {
         val jsonMapper = jsonMapper()
         val newSubscriptionPackageWithAllocationPrice =
             NewSubscriptionPackageWithAllocationPrice.builder()
-                .cadence(NewSubscriptionPackageWithAllocationPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionPackageWithAllocationPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(
                     NewSubscriptionPackageWithAllocationPrice.ModelType.PACKAGE_WITH_ALLOCATION

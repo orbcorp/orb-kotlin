@@ -103,7 +103,7 @@ internal class BetaServiceAsyncTest {
                                     .cadence(
                                         BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
                                             .Cadence
-                                            .ANNUAL
+                                            .ONE_TIME
                                     )
                                     .itemId("item_id")
                                     .addLicenseAllocation(
@@ -179,7 +179,7 @@ internal class BetaServiceAsyncTest {
                             .planPhaseOrder(0L)
                             .price(
                                 NewPlanUnitPrice.builder()
-                                    .cadence(NewPlanUnitPrice.Cadence.ANNUAL)
+                                    .cadence(NewPlanUnitPrice.Cadence.ONE_TIME)
                                     .itemId("item_id")
                                     .modelType(NewPlanUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")
@@ -320,7 +320,7 @@ internal class BetaServiceAsyncTest {
                                         BetaCreatePlanVersionParams.ReplacePrice
                                             .LicenseAllocationPrice
                                             .Cadence
-                                            .ANNUAL
+                                            .ONE_TIME
                                     )
                                     .itemId("item_id")
                                     .addLicenseAllocation(
@@ -399,7 +399,7 @@ internal class BetaServiceAsyncTest {
                             .planPhaseOrder(0L)
                             .price(
                                 NewPlanUnitPrice.builder()
-                                    .cadence(NewPlanUnitPrice.Cadence.ANNUAL)
+                                    .cadence(NewPlanUnitPrice.Cadence.ONE_TIME)
                                     .itemId("item_id")
                                     .modelType(NewPlanUnitPrice.ModelType.UNIT)
                                     .name("Annual fee")

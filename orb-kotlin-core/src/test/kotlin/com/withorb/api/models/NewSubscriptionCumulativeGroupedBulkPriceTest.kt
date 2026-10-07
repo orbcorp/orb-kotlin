@@ -14,7 +14,7 @@ internal class NewSubscriptionCumulativeGroupedBulkPriceTest {
     fun create() {
         val newSubscriptionCumulativeGroupedBulkPrice =
             NewSubscriptionCumulativeGroupedBulkPrice.builder()
-                .cadence(NewSubscriptionCumulativeGroupedBulkPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionCumulativeGroupedBulkPrice.Cadence.ONE_TIME)
                 .cumulativeGroupedBulkConfig(
                     NewSubscriptionCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
                         .addDimensionValue(
@@ -73,7 +73,7 @@ internal class NewSubscriptionCumulativeGroupedBulkPriceTest {
                 .build()
 
         assertThat(newSubscriptionCumulativeGroupedBulkPrice.cadence())
-            .isEqualTo(NewSubscriptionCumulativeGroupedBulkPrice.Cadence.ANNUAL)
+            .isEqualTo(NewSubscriptionCumulativeGroupedBulkPrice.Cadence.ONE_TIME)
         assertThat(newSubscriptionCumulativeGroupedBulkPrice.cumulativeGroupedBulkConfig())
             .isEqualTo(
                 NewSubscriptionCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
@@ -152,7 +152,7 @@ internal class NewSubscriptionCumulativeGroupedBulkPriceTest {
         val jsonMapper = jsonMapper()
         val newSubscriptionCumulativeGroupedBulkPrice =
             NewSubscriptionCumulativeGroupedBulkPrice.builder()
-                .cadence(NewSubscriptionCumulativeGroupedBulkPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionCumulativeGroupedBulkPrice.Cadence.ONE_TIME)
                 .cumulativeGroupedBulkConfig(
                     NewSubscriptionCumulativeGroupedBulkPrice.CumulativeGroupedBulkConfig.builder()
                         .addDimensionValue(

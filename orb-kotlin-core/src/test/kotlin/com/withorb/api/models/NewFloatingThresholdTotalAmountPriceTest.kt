@@ -14,7 +14,7 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
     fun create() {
         val newFloatingThresholdTotalAmountPrice =
             NewFloatingThresholdTotalAmountPrice.builder()
-                .cadence(NewFloatingThresholdTotalAmountPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingThresholdTotalAmountPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingThresholdTotalAmountPrice.ModelType.THRESHOLD_TOTAL_AMOUNT)
@@ -77,7 +77,7 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
                 .build()
 
         assertThat(newFloatingThresholdTotalAmountPrice.cadence())
-            .isEqualTo(NewFloatingThresholdTotalAmountPrice.Cadence.ANNUAL)
+            .isEqualTo(NewFloatingThresholdTotalAmountPrice.Cadence.ONE_TIME)
         assertThat(newFloatingThresholdTotalAmountPrice.currency()).isEqualTo("currency")
         assertThat(newFloatingThresholdTotalAmountPrice.itemId()).isEqualTo("item_id")
         assertThat(newFloatingThresholdTotalAmountPrice.modelType())
@@ -161,7 +161,7 @@ internal class NewFloatingThresholdTotalAmountPriceTest {
         val jsonMapper = jsonMapper()
         val newFloatingThresholdTotalAmountPrice =
             NewFloatingThresholdTotalAmountPrice.builder()
-                .cadence(NewFloatingThresholdTotalAmountPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingThresholdTotalAmountPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingThresholdTotalAmountPrice.ModelType.THRESHOLD_TOTAL_AMOUNT)

@@ -13,7 +13,7 @@ internal class PriceCreateParamsTest {
         PriceCreateParams.builder()
             .body(
                 NewFloatingUnitPrice.builder()
-                    .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
+                    .cadence(NewFloatingUnitPrice.Cadence.ONE_TIME)
                     .currency("currency")
                     .itemId("item_id")
                     .modelType(NewFloatingUnitPrice.ModelType.UNIT)
@@ -70,7 +70,7 @@ internal class PriceCreateParamsTest {
             PriceCreateParams.builder()
                 .body(
                     NewFloatingUnitPrice.builder()
-                        .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
+                        .cadence(NewFloatingUnitPrice.Cadence.ONE_TIME)
                         .currency("currency")
                         .itemId("item_id")
                         .modelType(NewFloatingUnitPrice.ModelType.UNIT)
@@ -128,7 +128,7 @@ internal class PriceCreateParamsTest {
             .isEqualTo(
                 PriceCreateParams.Body.ofUnit(
                     NewFloatingUnitPrice.builder()
-                        .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
+                        .cadence(NewFloatingUnitPrice.Cadence.ONE_TIME)
                         .currency("currency")
                         .itemId("item_id")
                         .modelType(NewFloatingUnitPrice.ModelType.UNIT)
@@ -187,7 +187,7 @@ internal class PriceCreateParamsTest {
             PriceCreateParams.builder()
                 .body(
                     NewFloatingUnitPrice.builder()
-                        .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
+                        .cadence(NewFloatingUnitPrice.Cadence.ONE_TIME)
                         .currency("currency")
                         .itemId("item_id")
                         .modelType(NewFloatingUnitPrice.ModelType.UNIT)
@@ -203,7 +203,7 @@ internal class PriceCreateParamsTest {
             .isEqualTo(
                 PriceCreateParams.Body.ofUnit(
                     NewFloatingUnitPrice.builder()
-                        .cadence(NewFloatingUnitPrice.Cadence.ANNUAL)
+                        .cadence(NewFloatingUnitPrice.Cadence.ONE_TIME)
                         .currency("currency")
                         .itemId("item_id")
                         .modelType(NewFloatingUnitPrice.ModelType.UNIT)

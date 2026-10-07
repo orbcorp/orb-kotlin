@@ -14,7 +14,7 @@ internal class NewSubscriptionGroupedWithMeteredMinimumPriceTest {
     fun create() {
         val newSubscriptionGroupedWithMeteredMinimumPrice =
             NewSubscriptionGroupedWithMeteredMinimumPrice.builder()
-                .cadence(NewSubscriptionGroupedWithMeteredMinimumPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionGroupedWithMeteredMinimumPrice.Cadence.ONE_TIME)
                 .groupedWithMeteredMinimumConfig(
                     NewSubscriptionGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
                         .builder()
@@ -87,7 +87,7 @@ internal class NewSubscriptionGroupedWithMeteredMinimumPriceTest {
                 .build()
 
         assertThat(newSubscriptionGroupedWithMeteredMinimumPrice.cadence())
-            .isEqualTo(NewSubscriptionGroupedWithMeteredMinimumPrice.Cadence.ANNUAL)
+            .isEqualTo(NewSubscriptionGroupedWithMeteredMinimumPrice.Cadence.ONE_TIME)
         assertThat(newSubscriptionGroupedWithMeteredMinimumPrice.groupedWithMeteredMinimumConfig())
             .isEqualTo(
                 NewSubscriptionGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
@@ -183,7 +183,7 @@ internal class NewSubscriptionGroupedWithMeteredMinimumPriceTest {
         val jsonMapper = jsonMapper()
         val newSubscriptionGroupedWithMeteredMinimumPrice =
             NewSubscriptionGroupedWithMeteredMinimumPrice.builder()
-                .cadence(NewSubscriptionGroupedWithMeteredMinimumPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionGroupedWithMeteredMinimumPrice.Cadence.ONE_TIME)
                 .groupedWithMeteredMinimumConfig(
                     NewSubscriptionGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
                         .builder()

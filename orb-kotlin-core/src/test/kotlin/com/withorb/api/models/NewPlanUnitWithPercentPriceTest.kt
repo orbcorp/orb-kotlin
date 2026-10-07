@@ -14,7 +14,7 @@ internal class NewPlanUnitWithPercentPriceTest {
     fun create() {
         val newPlanUnitWithPercentPrice =
             NewPlanUnitWithPercentPrice.builder()
-                .cadence(NewPlanUnitWithPercentPrice.Cadence.ANNUAL)
+                .cadence(NewPlanUnitWithPercentPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(NewPlanUnitWithPercentPrice.ModelType.UNIT_WITH_PERCENT)
                 .name("Annual fee")
@@ -63,7 +63,7 @@ internal class NewPlanUnitWithPercentPriceTest {
                 .build()
 
         assertThat(newPlanUnitWithPercentPrice.cadence())
-            .isEqualTo(NewPlanUnitWithPercentPrice.Cadence.ANNUAL)
+            .isEqualTo(NewPlanUnitWithPercentPrice.Cadence.ONE_TIME)
         assertThat(newPlanUnitWithPercentPrice.itemId()).isEqualTo("item_id")
         assertThat(newPlanUnitWithPercentPrice.modelType())
             .isEqualTo(NewPlanUnitWithPercentPrice.ModelType.UNIT_WITH_PERCENT)
@@ -130,7 +130,7 @@ internal class NewPlanUnitWithPercentPriceTest {
         val jsonMapper = jsonMapper()
         val newPlanUnitWithPercentPrice =
             NewPlanUnitWithPercentPrice.builder()
-                .cadence(NewPlanUnitWithPercentPrice.Cadence.ANNUAL)
+                .cadence(NewPlanUnitWithPercentPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(NewPlanUnitWithPercentPrice.ModelType.UNIT_WITH_PERCENT)
                 .name("Annual fee")

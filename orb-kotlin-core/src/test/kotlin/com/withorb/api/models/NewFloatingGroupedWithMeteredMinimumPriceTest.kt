@@ -14,7 +14,7 @@ internal class NewFloatingGroupedWithMeteredMinimumPriceTest {
     fun create() {
         val newFloatingGroupedWithMeteredMinimumPrice =
             NewFloatingGroupedWithMeteredMinimumPrice.builder()
-                .cadence(NewFloatingGroupedWithMeteredMinimumPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingGroupedWithMeteredMinimumPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .groupedWithMeteredMinimumConfig(
                     NewFloatingGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig
@@ -85,7 +85,7 @@ internal class NewFloatingGroupedWithMeteredMinimumPriceTest {
                 .build()
 
         assertThat(newFloatingGroupedWithMeteredMinimumPrice.cadence())
-            .isEqualTo(NewFloatingGroupedWithMeteredMinimumPrice.Cadence.ANNUAL)
+            .isEqualTo(NewFloatingGroupedWithMeteredMinimumPrice.Cadence.ONE_TIME)
         assertThat(newFloatingGroupedWithMeteredMinimumPrice.currency()).isEqualTo("currency")
         assertThat(newFloatingGroupedWithMeteredMinimumPrice.groupedWithMeteredMinimumConfig())
             .isEqualTo(
@@ -174,7 +174,7 @@ internal class NewFloatingGroupedWithMeteredMinimumPriceTest {
         val jsonMapper = jsonMapper()
         val newFloatingGroupedWithMeteredMinimumPrice =
             NewFloatingGroupedWithMeteredMinimumPrice.builder()
-                .cadence(NewFloatingGroupedWithMeteredMinimumPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingGroupedWithMeteredMinimumPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .groupedWithMeteredMinimumConfig(
                     NewFloatingGroupedWithMeteredMinimumPrice.GroupedWithMeteredMinimumConfig

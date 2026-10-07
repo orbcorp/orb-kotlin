@@ -14,7 +14,7 @@ internal class NewPlanGroupedWithProratedMinimumPriceTest {
     fun create() {
         val newPlanGroupedWithProratedMinimumPrice =
             NewPlanGroupedWithProratedMinimumPrice.builder()
-                .cadence(NewPlanGroupedWithProratedMinimumPrice.Cadence.ANNUAL)
+                .cadence(NewPlanGroupedWithProratedMinimumPrice.Cadence.ONE_TIME)
                 .groupedWithProratedMinimumConfig(
                     NewPlanGroupedWithProratedMinimumPrice.GroupedWithProratedMinimumConfig
                         .builder()
@@ -67,7 +67,7 @@ internal class NewPlanGroupedWithProratedMinimumPriceTest {
                 .build()
 
         assertThat(newPlanGroupedWithProratedMinimumPrice.cadence())
-            .isEqualTo(NewPlanGroupedWithProratedMinimumPrice.Cadence.ANNUAL)
+            .isEqualTo(NewPlanGroupedWithProratedMinimumPrice.Cadence.ONE_TIME)
         assertThat(newPlanGroupedWithProratedMinimumPrice.groupedWithProratedMinimumConfig())
             .isEqualTo(
                 NewPlanGroupedWithProratedMinimumPrice.GroupedWithProratedMinimumConfig.builder()
@@ -140,7 +140,7 @@ internal class NewPlanGroupedWithProratedMinimumPriceTest {
         val jsonMapper = jsonMapper()
         val newPlanGroupedWithProratedMinimumPrice =
             NewPlanGroupedWithProratedMinimumPrice.builder()
-                .cadence(NewPlanGroupedWithProratedMinimumPrice.Cadence.ANNUAL)
+                .cadence(NewPlanGroupedWithProratedMinimumPrice.Cadence.ONE_TIME)
                 .groupedWithProratedMinimumConfig(
                     NewPlanGroupedWithProratedMinimumPrice.GroupedWithProratedMinimumConfig
                         .builder()

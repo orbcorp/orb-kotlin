@@ -14,7 +14,7 @@ internal class NewFloatingTieredPriceTest {
     fun create() {
         val newFloatingTieredPrice =
             NewFloatingTieredPrice.builder()
-                .cadence(NewFloatingTieredPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingTieredPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingTieredPrice.ModelType.TIERED)
@@ -68,7 +68,7 @@ internal class NewFloatingTieredPriceTest {
                 .build()
 
         assertThat(newFloatingTieredPrice.cadence())
-            .isEqualTo(NewFloatingTieredPrice.Cadence.ANNUAL)
+            .isEqualTo(NewFloatingTieredPrice.Cadence.ONE_TIME)
         assertThat(newFloatingTieredPrice.currency()).isEqualTo("currency")
         assertThat(newFloatingTieredPrice.itemId()).isEqualTo("item_id")
         assertThat(newFloatingTieredPrice.modelType())
@@ -140,7 +140,7 @@ internal class NewFloatingTieredPriceTest {
         val jsonMapper = jsonMapper()
         val newFloatingTieredPrice =
             NewFloatingTieredPrice.builder()
-                .cadence(NewFloatingTieredPrice.Cadence.ANNUAL)
+                .cadence(NewFloatingTieredPrice.Cadence.ONE_TIME)
                 .currency("currency")
                 .itemId("item_id")
                 .modelType(NewFloatingTieredPrice.ModelType.TIERED)

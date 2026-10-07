@@ -14,7 +14,7 @@ internal class NewSubscriptionGroupedTieredPackagePriceTest {
     fun create() {
         val newSubscriptionGroupedTieredPackagePrice =
             NewSubscriptionGroupedTieredPackagePrice.builder()
-                .cadence(NewSubscriptionGroupedTieredPackagePrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionGroupedTieredPackagePrice.Cadence.ONE_TIME)
                 .groupedTieredPackageConfig(
                     NewSubscriptionGroupedTieredPackagePrice.GroupedTieredPackageConfig.builder()
                         .groupingKey("x")
@@ -79,7 +79,7 @@ internal class NewSubscriptionGroupedTieredPackagePriceTest {
                 .build()
 
         assertThat(newSubscriptionGroupedTieredPackagePrice.cadence())
-            .isEqualTo(NewSubscriptionGroupedTieredPackagePrice.Cadence.ANNUAL)
+            .isEqualTo(NewSubscriptionGroupedTieredPackagePrice.Cadence.ONE_TIME)
         assertThat(newSubscriptionGroupedTieredPackagePrice.groupedTieredPackageConfig())
             .isEqualTo(
                 NewSubscriptionGroupedTieredPackagePrice.GroupedTieredPackageConfig.builder()
@@ -163,7 +163,7 @@ internal class NewSubscriptionGroupedTieredPackagePriceTest {
         val jsonMapper = jsonMapper()
         val newSubscriptionGroupedTieredPackagePrice =
             NewSubscriptionGroupedTieredPackagePrice.builder()
-                .cadence(NewSubscriptionGroupedTieredPackagePrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionGroupedTieredPackagePrice.Cadence.ONE_TIME)
                 .groupedTieredPackageConfig(
                     NewSubscriptionGroupedTieredPackagePrice.GroupedTieredPackageConfig.builder()
                         .groupingKey("x")

@@ -14,7 +14,7 @@ internal class NewSubscriptionThresholdTotalAmountPriceTest {
     fun create() {
         val newSubscriptionThresholdTotalAmountPrice =
             NewSubscriptionThresholdTotalAmountPrice.builder()
-                .cadence(NewSubscriptionThresholdTotalAmountPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionThresholdTotalAmountPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(
                     NewSubscriptionThresholdTotalAmountPrice.ModelType.THRESHOLD_TOTAL_AMOUNT
@@ -80,7 +80,7 @@ internal class NewSubscriptionThresholdTotalAmountPriceTest {
                 .build()
 
         assertThat(newSubscriptionThresholdTotalAmountPrice.cadence())
-            .isEqualTo(NewSubscriptionThresholdTotalAmountPrice.Cadence.ANNUAL)
+            .isEqualTo(NewSubscriptionThresholdTotalAmountPrice.Cadence.ONE_TIME)
         assertThat(newSubscriptionThresholdTotalAmountPrice.itemId()).isEqualTo("item_id")
         assertThat(newSubscriptionThresholdTotalAmountPrice.modelType())
             .isEqualTo(NewSubscriptionThresholdTotalAmountPrice.ModelType.THRESHOLD_TOTAL_AMOUNT)
@@ -165,7 +165,7 @@ internal class NewSubscriptionThresholdTotalAmountPriceTest {
         val jsonMapper = jsonMapper()
         val newSubscriptionThresholdTotalAmountPrice =
             NewSubscriptionThresholdTotalAmountPrice.builder()
-                .cadence(NewSubscriptionThresholdTotalAmountPrice.Cadence.ANNUAL)
+                .cadence(NewSubscriptionThresholdTotalAmountPrice.Cadence.ONE_TIME)
                 .itemId("item_id")
                 .modelType(
                     NewSubscriptionThresholdTotalAmountPrice.ModelType.THRESHOLD_TOTAL_AMOUNT
