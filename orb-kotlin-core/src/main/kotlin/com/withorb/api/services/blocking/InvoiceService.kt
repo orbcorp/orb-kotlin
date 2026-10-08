@@ -255,7 +255,7 @@ interface InvoiceService {
      */
     fun pay(
         invoiceId: String,
-        params: InvoicePayParams,
+        params: InvoicePayParams = InvoicePayParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice = pay(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
 
@@ -264,6 +264,10 @@ interface InvoiceService {
         params: InvoicePayParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
+
+    /** @see pay */
+    fun pay(invoiceId: String, requestOptions: RequestOptions): Invoice =
+        pay(invoiceId, InvoicePayParams.none(), requestOptions)
 
     /**
      * This endpoint triggers a regeneration of the PDF for a finalized invoice.
@@ -571,7 +575,7 @@ interface InvoiceService {
         @MustBeClosed
         fun pay(
             invoiceId: String,
-            params: InvoicePayParams,
+            params: InvoicePayParams = InvoicePayParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice> =
             pay(params.toBuilder().invoiceId(invoiceId).build(), requestOptions)
@@ -582,6 +586,11 @@ interface InvoiceService {
             params: InvoicePayParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Invoice>
+
+        /** @see pay */
+        @MustBeClosed
+        fun pay(invoiceId: String, requestOptions: RequestOptions): HttpResponseFor<Invoice> =
+            pay(invoiceId, InvoicePayParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /invoices/{invoice_id}/regenerate_invoice_pdf`, but

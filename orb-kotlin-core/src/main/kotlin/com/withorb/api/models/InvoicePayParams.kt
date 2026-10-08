@@ -11,7 +11,6 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.Params
-import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.errors.OrbInvalidDataException
@@ -36,10 +35,10 @@ private constructor(
     /**
      * The ID of a shared payment token granted by an agent to use for this payment.
      *
-     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
      */
-    fun sharedPaymentTokenId(): String = body.sharedPaymentTokenId()
+    fun sharedPaymentTokenId(): String? = body.sharedPaymentTokenId()
 
     /**
      * Returns the raw JSON value of [sharedPaymentTokenId].
@@ -61,14 +60,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [InvoicePayParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .sharedPaymentTokenId()
-         * ```
-         */
+        fun none(): InvoicePayParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [InvoicePayParams]. */
         fun builder() = Builder()
     }
 
@@ -99,7 +93,7 @@ private constructor(
         fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /** The ID of a shared payment token granted by an agent to use for this payment. */
-        fun sharedPaymentTokenId(sharedPaymentTokenId: String) = apply {
+        fun sharedPaymentTokenId(sharedPaymentTokenId: String?) = apply {
             body.sharedPaymentTokenId(sharedPaymentTokenId)
         }
 
@@ -235,13 +229,6 @@ private constructor(
          * Returns an immutable instance of [InvoicePayParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .sharedPaymentTokenId()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): InvoicePayParams =
             InvoicePayParams(
@@ -281,11 +268,11 @@ private constructor(
         /**
          * The ID of a shared payment token granted by an agent to use for this payment.
          *
-         * @throws OrbInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
-        fun sharedPaymentTokenId(): String =
-            sharedPaymentTokenId.getRequired("shared_payment_token_id")
+        fun sharedPaymentTokenId(): String? =
+            sharedPaymentTokenId.getNullable("shared_payment_token_id")
 
         /**
          * Returns the raw JSON value of [sharedPaymentTokenId].
@@ -311,21 +298,14 @@ private constructor(
 
         companion object {
 
-            /**
-             * Returns a mutable builder for constructing an instance of [Body].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .sharedPaymentTokenId()
-             * ```
-             */
+            /** Returns a mutable builder for constructing an instance of [Body]. */
             fun builder() = Builder()
         }
 
         /** A builder for [Body]. */
         class Builder internal constructor() {
 
-            private var sharedPaymentTokenId: JsonField<String>? = null
+            private var sharedPaymentTokenId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(body: Body) = apply {
@@ -334,8 +314,8 @@ private constructor(
             }
 
             /** The ID of a shared payment token granted by an agent to use for this payment. */
-            fun sharedPaymentTokenId(sharedPaymentTokenId: String) =
-                sharedPaymentTokenId(JsonField.of(sharedPaymentTokenId))
+            fun sharedPaymentTokenId(sharedPaymentTokenId: String?) =
+                sharedPaymentTokenId(JsonField.ofNullable(sharedPaymentTokenId))
 
             /**
              * Sets [Builder.sharedPaymentTokenId] to an arbitrary JSON value.
@@ -371,19 +351,8 @@ private constructor(
              * Returns an immutable instance of [Body].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .sharedPaymentTokenId()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
              */
-            fun build(): Body =
-                Body(
-                    checkRequired("sharedPaymentTokenId", sharedPaymentTokenId),
-                    additionalProperties.toMutableMap(),
-                )
+            fun build(): Body = Body(sharedPaymentTokenId, additionalProperties.toMutableMap())
         }
 
         private var validated: Boolean = false
