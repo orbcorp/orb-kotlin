@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.41.0](https://github.com/orbcorp/orb-kotlin/compare/v1.40.0...v1.41.0) (2026-10-08)
+
+
+### Features
+
+* **api:** add endpoint to bulk create dimensional price group prices ([c6dafb0](https://github.com/orbcorp/orb-kotlin/commit/c6dafb074a30e35258d397e364d4df970cf5b768))
+
+
+### Bug Fixes
+
+* **api:** clarify grouped subscription usage returns all groups in one response, no pagination ([c6dafb0](https://github.com/orbcorp/orb-kotlin/commit/c6dafb074a30e35258d397e364d4df970cf5b768))
+
 ## [1.40.0](https://github.com/orbcorp/orb-kotlin/compare/v1.39.0...v1.40.0) (2026-10-07)
 
 
