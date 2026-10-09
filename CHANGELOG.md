@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.42.0](https://github.com/orbcorp/orb-kotlin/compare/v1.41.0...v1.42.0) (2026-10-09)
+
+
+### Features
+
+* **api:** api update ([30da28c](https://github.com/orbcorp/orb-kotlin/commit/30da28c37e7353e448d7ed0218f09cb01420b995))
+* **api:** support listing pricebook prices and filtering by product_id in GET /v1/prices ([30da28c](https://github.com/orbcorp/orb-kotlin/commit/30da28c37e7353e448d7ed0218f09cb01420b995))
+
+
+### Bug Fixes
+
+* **api:** make shared_payment_token_id optional when paying an invoice ([30da28c](https://github.com/orbcorp/orb-kotlin/commit/30da28c37e7353e448d7ed0218f09cb01420b995))
+
 ## [1.41.0](https://github.com/orbcorp/orb-kotlin/compare/v1.40.0...v1.41.0) (2026-10-08)
 
 
