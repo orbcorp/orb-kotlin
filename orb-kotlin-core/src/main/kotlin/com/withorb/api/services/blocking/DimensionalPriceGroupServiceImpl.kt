@@ -25,6 +25,8 @@ import com.withorb.api.models.DimensionalPriceGroupUpdateParams
 import com.withorb.api.models.DimensionalPriceGroups
 import com.withorb.api.services.blocking.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdService
 import com.withorb.api.services.blocking.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdServiceImpl
+import com.withorb.api.services.blocking.dimensionalPriceGroups.PriceService
+import com.withorb.api.services.blocking.dimensionalPriceGroups.PriceServiceImpl
 
 class DimensionalPriceGroupServiceImpl
 internal constructor(private val clientOptions: ClientOptions) : DimensionalPriceGroupService {
@@ -37,6 +39,8 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
         ExternalDimensionalPriceGroupIdServiceImpl(clientOptions)
     }
 
+    private val prices: PriceService by lazy { PriceServiceImpl(clientOptions) }
+
     override fun withRawResponse(): DimensionalPriceGroupService.WithRawResponse = withRawResponse
 
     override fun withOptions(
@@ -46,6 +50,8 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
 
     override fun externalDimensionalPriceGroupId(): ExternalDimensionalPriceGroupIdService =
         externalDimensionalPriceGroupId
+
+    override fun prices(): PriceService = prices
 
     override fun create(
         params: DimensionalPriceGroupCreateParams,
@@ -86,6 +92,10 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
             ExternalDimensionalPriceGroupIdServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val prices: PriceService.WithRawResponse by lazy {
+            PriceServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): DimensionalPriceGroupService.WithRawResponse =
@@ -95,6 +105,8 @@ internal constructor(private val clientOptions: ClientOptions) : DimensionalPric
 
         override fun externalDimensionalPriceGroupId():
             ExternalDimensionalPriceGroupIdService.WithRawResponse = externalDimensionalPriceGroupId
+
+        override fun prices(): PriceService.WithRawResponse = prices
 
         private val createHandler: Handler<DimensionalPriceGroup> =
             jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper)

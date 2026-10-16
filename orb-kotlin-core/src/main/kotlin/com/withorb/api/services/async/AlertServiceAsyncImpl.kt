@@ -20,6 +20,7 @@ import com.withorb.api.core.prepareAsync
 import com.withorb.api.models.Alert
 import com.withorb.api.models.AlertCreateForCustomerParams
 import com.withorb.api.models.AlertCreateForExternalCustomerParams
+import com.withorb.api.models.AlertCreateForPlanParams
 import com.withorb.api.models.AlertCreateForSubscriptionParams
 import com.withorb.api.models.AlertDeleteParams
 import com.withorb.api.models.AlertDisableParams
@@ -84,6 +85,13 @@ class AlertServiceAsyncImpl internal constructor(private val clientOptions: Clie
     ): Alert =
         // post /alerts/external_customer_id/{external_customer_id}
         withRawResponse().createForExternalCustomer(params, requestOptions).parse()
+
+    override suspend fun createForPlan(
+        params: AlertCreateForPlanParams,
+        requestOptions: RequestOptions,
+    ): Alert =
+        // post /alerts/plan_id/{plan_id}
+        withRawResponse().createForPlan(params, requestOptions).parse()
 
     override suspend fun createForSubscription(
         params: AlertCreateForSubscriptionParams,
@@ -287,6 +295,37 @@ class AlertServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return errorHandler.handle(response).parseable {
                 response
                     .use { createForExternalCustomerHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val createForPlanHandler: Handler<Alert> =
+            jsonHandler<Alert>(clientOptions.jsonMapper)
+
+        override suspend fun createForPlan(
+            params: AlertCreateForPlanParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Alert> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("planId", params.planId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("alerts", "plan_id", params._pathParam(0))
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { createForPlanHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()

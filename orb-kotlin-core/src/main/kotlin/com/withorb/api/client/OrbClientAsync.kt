@@ -22,6 +22,7 @@ import com.withorb.api.services.async.PriceServiceAsync
 import com.withorb.api.services.async.SubscriptionChangeServiceAsync
 import com.withorb.api.services.async.SubscriptionServiceAsync
 import com.withorb.api.services.async.TopLevelServiceAsync
+import com.withorb.api.services.async.WebhookEndpointServiceAsync
 import com.withorb.api.services.async.WebhookServiceAsync
 
 /**
@@ -136,6 +137,12 @@ interface OrbClientAsync {
      * invoices and tax calculation purposes.
      */
     fun items(): ItemServiceAsync
+
+    /**
+     * A webhook endpoint is an HTTPS URL that Orb sends
+     * [webhook events](/integrations-and-exports/webhooks) to.
+     */
+    fun webhookEndpoints(): WebhookEndpointServiceAsync
 
     /**
      * The Metric resource represents a calculation of a quantity based on events. Metrics are
@@ -292,6 +299,12 @@ interface OrbClientAsync {
          * for invoices and tax calculation purposes.
          */
         fun items(): ItemServiceAsync.WithRawResponse
+
+        /**
+         * A webhook endpoint is an HTTPS URL that Orb sends
+         * [webhook events](/integrations-and-exports/webhooks) to.
+         */
+        fun webhookEndpoints(): WebhookEndpointServiceAsync.WithRawResponse
 
         /**
          * The Metric resource represents a calculation of a quantity based on events. Metrics are

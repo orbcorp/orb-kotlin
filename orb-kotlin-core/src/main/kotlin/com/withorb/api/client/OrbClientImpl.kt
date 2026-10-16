@@ -42,6 +42,8 @@ import com.withorb.api.services.blocking.SubscriptionService
 import com.withorb.api.services.blocking.SubscriptionServiceImpl
 import com.withorb.api.services.blocking.TopLevelService
 import com.withorb.api.services.blocking.TopLevelServiceImpl
+import com.withorb.api.services.blocking.WebhookEndpointService
+import com.withorb.api.services.blocking.WebhookEndpointServiceImpl
 import com.withorb.api.services.blocking.WebhookService
 import com.withorb.api.services.blocking.WebhookServiceImpl
 
@@ -89,6 +91,10 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
     private val invoices: InvoiceService by lazy { InvoiceServiceImpl(clientOptionsWithUserAgent) }
 
     private val items: ItemService by lazy { ItemServiceImpl(clientOptionsWithUserAgent) }
+
+    private val webhookEndpoints: WebhookEndpointService by lazy {
+        WebhookEndpointServiceImpl(clientOptionsWithUserAgent)
+    }
 
     private val metrics: MetricService by lazy { MetricServiceImpl(clientOptionsWithUserAgent) }
 
@@ -205,6 +211,12 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
     override fun items(): ItemService = items
 
     /**
+     * A webhook endpoint is an HTTPS URL that Orb sends
+     * [webhook events](/integrations-and-exports/webhooks) to.
+     */
+    override fun webhookEndpoints(): WebhookEndpointService = webhookEndpoints
+
+    /**
      * The Metric resource represents a calculation of a quantity based on events. Metrics are
      * defined by the query that transforms raw usage events into meaningful values for your
      * customers.
@@ -303,6 +315,10 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
 
         private val items: ItemService.WithRawResponse by lazy {
             ItemServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val webhookEndpoints: WebhookEndpointService.WithRawResponse by lazy {
+            WebhookEndpointServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
         private val metrics: MetricService.WithRawResponse by lazy {
@@ -426,6 +442,12 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
          * for invoices and tax calculation purposes.
          */
         override fun items(): ItemService.WithRawResponse = items
+
+        /**
+         * A webhook endpoint is an HTTPS URL that Orb sends
+         * [webhook events](/integrations-and-exports/webhooks) to.
+         */
+        override fun webhookEndpoints(): WebhookEndpointService.WithRawResponse = webhookEndpoints
 
         /**
          * The Metric resource represents a calculation of a quantity based on events. Metrics are

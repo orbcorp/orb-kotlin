@@ -10,6 +10,7 @@ import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Alert
 import com.withorb.api.models.AlertCreateForCustomerParams
 import com.withorb.api.models.AlertCreateForExternalCustomerParams
+import com.withorb.api.models.AlertCreateForPlanParams
 import com.withorb.api.models.AlertCreateForSubscriptionParams
 import com.withorb.api.models.AlertDeleteParams
 import com.withorb.api.models.AlertDisableParams
@@ -167,6 +168,34 @@ interface AlertServiceAsync {
     /** @see createForExternalCustomer */
     suspend fun createForExternalCustomer(
         params: AlertCreateForExternalCustomerParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Alert
+
+    /**
+     * This endpoint is used to create alerts at the plan level. Plan level alerts are automatically
+     * propagated to all subscriptions associated with the plan. These alerts are scoped to a
+     * specific plan version; if no version is specified, the active plan version is used.
+     *
+     * Plan level alerts can be of three types: `usage_exceeded`, `cost_exceeded`, or
+     * `spend_exceeded`. A `usage_exceeded` alert is scoped to a particular metric and is triggered
+     * when the usage of that metric exceeds predefined thresholds during the current billing cycle.
+     * A `cost_exceeded` alert is triggered when the total amount due during the current billing
+     * cycle surpasses predefined thresholds. `cost_exceeded` alerts do not include burndown of
+     * pre-purchase credits. A `spend_exceeded` alert is triggered when the rated spend (the pricing
+     * subtotal, before invoice-level adjustments and credits) denominated in the alert's currency
+     * exceeds predefined thresholds during the current billing cycle; `price_filters` can scope
+     * which prices contribute. Each plan can have one `cost_exceeded` alert and one
+     * `usage_exceeded` alert per metric that is a part of the plan.
+     */
+    suspend fun createForPlan(
+        planId: String,
+        params: AlertCreateForPlanParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Alert = createForPlan(params.toBuilder().planId(planId).build(), requestOptions)
+
+    /** @see createForPlan */
+    suspend fun createForPlan(
+        params: AlertCreateForPlanParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
@@ -393,6 +422,25 @@ interface AlertServiceAsync {
         @MustBeClosed
         suspend fun createForExternalCustomer(
             params: AlertCreateForExternalCustomerParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+
+        /**
+         * Returns a raw HTTP response for `post /alerts/plan_id/{plan_id}`, but is otherwise the
+         * same as [AlertServiceAsync.createForPlan].
+         */
+        @MustBeClosed
+        suspend fun createForPlan(
+            planId: String,
+            params: AlertCreateForPlanParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert> =
+            createForPlan(params.toBuilder().planId(planId).build(), requestOptions)
+
+        /** @see createForPlan */
+        @MustBeClosed
+        suspend fun createForPlan(
+            params: AlertCreateForPlanParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Alert>
 
