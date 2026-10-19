@@ -65,6 +65,7 @@ internal class CreditNoteAccountingSyncFailedWebhookEventTest {
                                         .amount("amount")
                                         .taxRateDescription("tax_rate_description")
                                         .taxRatePercentage("tax_rate_percentage")
+                                        .taxReason(TaxAmount.TaxReason.TAXED)
                                         .build()
                                 )
                                 .addDiscount(
@@ -188,6 +189,7 @@ internal class CreditNoteAccountingSyncFailedWebhookEventTest {
                                     .amount("amount")
                                     .taxRateDescription("tax_rate_description")
                                     .taxRatePercentage("tax_rate_percentage")
+                                    .taxReason(TaxAmount.TaxReason.TAXED)
                                     .build()
                             )
                             .addDiscount(
@@ -314,6 +316,7 @@ internal class CreditNoteAccountingSyncFailedWebhookEventTest {
                                         .amount("amount")
                                         .taxRateDescription("tax_rate_description")
                                         .taxRatePercentage("tax_rate_percentage")
+                                        .taxReason(TaxAmount.TaxReason.TAXED)
                                         .build()
                                 )
                                 .addDiscount(

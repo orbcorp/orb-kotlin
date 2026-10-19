@@ -16,11 +16,13 @@ internal class TaxAmountTest {
                 .amount("amount")
                 .taxRateDescription("tax_rate_description")
                 .taxRatePercentage("tax_rate_percentage")
+                .taxReason(TaxAmount.TaxReason.TAXED)
                 .build()
 
         assertThat(taxAmount.amount()).isEqualTo("amount")
         assertThat(taxAmount.taxRateDescription()).isEqualTo("tax_rate_description")
         assertThat(taxAmount.taxRatePercentage()).isEqualTo("tax_rate_percentage")
+        assertThat(taxAmount.taxReason()).isEqualTo(TaxAmount.TaxReason.TAXED)
     }
 
     @Test
@@ -31,6 +33,7 @@ internal class TaxAmountTest {
                 .amount("amount")
                 .taxRateDescription("tax_rate_description")
                 .taxRatePercentage("tax_rate_percentage")
+                .taxReason(TaxAmount.TaxReason.TAXED)
                 .build()
 
         val roundtrippedTaxAmount =
