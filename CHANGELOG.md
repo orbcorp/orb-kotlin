@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.44.0](https://github.com/orbcorp/orb-kotlin/compare/v1.43.0...v1.44.0) (2026-10-20)
+
+
+### Features
+
+* **api:** add `plan.created` and `plan.edited` webhook events ([30c4b6a](https://github.com/orbcorp/orb-kotlin/commit/30c4b6a7c328454484d47f7e45ba5197465a0519))
+* **api:** add `tax_reason` field to tax amount entries ([1532393](https://github.com/orbcorp/orb-kotlin/commit/15323931a2a15272797d1fdd6a457c40666842b3))
+
 ## [1.43.0](https://github.com/orbcorp/orb-kotlin/compare/v1.42.0...v1.43.0) (2026-10-16)
 
 
