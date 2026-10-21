@@ -16,7 +16,7 @@ jobs:
   lint:
     timeout-minutes: 15
     name: lint
-    runs-on: runs-on=${{ github.run_id }}/image=ubuntu24-full-x64/runner=8cpu-linux-x64/spot=false/tag=sdk-ci
+    runs-on: runs-on=${{ github.run_id }}/image=ubuntu24-full-x64/cpu=8/ram=32/family=m7i-flex+m7i+m7a/spot=false/tag=sdk-ci
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
 
     steps:
@@ -40,7 +40,7 @@ jobs:
   build:
     timeout-minutes: 15
     name: build
-    runs-on: runs-on=${{ github.run_id }}/image=ubuntu24-full-x64/runner=8cpu-linux-x64/spot=false/tag=sdk-ci
+    runs-on: runs-on=${{ github.run_id }}/image=ubuntu24-full-x64/cpu=8/ram=32/family=m7i-flex+m7i+m7a/spot=false/tag=sdk-ci
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
 
     steps:
@@ -64,7 +64,7 @@ jobs:
   test:
     timeout-minutes: 15
     name: test
-    runs-on: runs-on=${{ github.run_id }}/image=ubuntu24-full-x64/runner=8cpu-linux-x64/spot=false/tag=sdk-ci
+    runs-on: runs-on=${{ github.run_id }}/image=ubuntu24-full-x64/cpu=8/ram=32/family=m7i-flex+m7i+m7a/spot=false/tag=sdk-ci
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
     steps:
       - uses: actions/checkout@v6
