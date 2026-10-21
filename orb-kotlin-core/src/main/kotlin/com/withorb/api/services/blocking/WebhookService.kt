@@ -5,7 +5,9 @@ package com.withorb.api.services.blocking
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.http.Headers
 import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.UnwrapStandardWebhookEvent
 import com.withorb.api.models.UnwrapWebhookEvent
+import com.withorb.api.services.blocking.webhooks.StandardService
 
 interface WebhookService {
 
@@ -21,6 +23,8 @@ interface WebhookService {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): WebhookService
 
+    fun standard(): StandardService
+
     /**
      * Unwraps a webhook event from its JSON representation.
      *
@@ -34,6 +38,18 @@ interface WebhookService {
      * @throws OrbException if the signature does not match.
      */
     fun unwrap(payload: String, headers: Headers, secret: String?): UnwrapWebhookEvent
+
+    /**
+     * Verifies that the payload was sent by Orb and unwraps it, for an endpoint configured for
+     * standard payloads. The same as `standard().unwrapStandard`.
+     *
+     * @throws OrbException if the signature does not match.
+     */
+    fun unwrapStandard(
+        payload: String,
+        headers: Headers,
+        secret: String?,
+    ): UnwrapStandardWebhookEvent
 
     /**
      * Verifies that the payload was sent by Orb.
@@ -51,5 +67,7 @@ interface WebhookService {
          * The original service is not modified.
          */
         fun withOptions(modifier: (ClientOptions.Builder) -> Unit): WebhookService.WithRawResponse
+
+        fun standard(): StandardService.WithRawResponse
     }
 }

@@ -5,6 +5,7 @@ package com.withorb.api.services.async
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.UnwrapWebhookEvent
+import com.withorb.api.services.async.webhooks.StandardServiceAsync
 
 interface WebhookServiceAsync {
 
@@ -19,6 +20,8 @@ interface WebhookServiceAsync {
      * The original service is not modified.
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): WebhookServiceAsync
+
+    fun standard(): StandardServiceAsync
 
     /**
      * Unwraps a webhook event from its JSON representation.
@@ -40,5 +43,7 @@ interface WebhookServiceAsync {
         fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): WebhookServiceAsync.WithRawResponse
+
+        fun standard(): StandardServiceAsync.WithRawResponse
     }
 }

@@ -6,12 +6,15 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.http.Headers
 import com.withorb.api.errors.OrbException
+import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
 import java.time.Clock
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -43,6 +46,9 @@ internal class WebhookServiceTest {
         val WEBHOOK_TIMESTAMP_INSTANT =
             LocalDateTime.parse(WEBHOOK_TIMESTAMP).toInstant(ZoneOffset.UTC)
 
+        const val STANDARD_PAYLOAD =
+            "{\"id\": \"o4mmewpfNNTnjfZc\", \"created_at\": \"2024-03-27T15:42:29+00:00\", \"type\": \"resource_event.test\", \"payload_style\": \"standard\", \"properties\": {\"message\": \"A test webhook from Orb. Happy testing!\"}}"
+
         const val PAYLOAD =
             "{\"id\": \"o4mmewpfNNTnjfZc\", \"created_at\": \"2024-03-27T15:42:29+00:00\", \"type\": \"resource_event.test\", \"properties\": {\"message\": \"A test webhook from Orb. Happy testing!\"}}"
     }
@@ -67,6 +73,53 @@ internal class WebhookServiceTest {
         val event = client.webhooks().unwrap(PAYLOAD, headers, SECRET)
 
         assertThat(event).isNotNull()
+    }
+
+    private fun sign(payload: String): String {
+        val mac = Mac.getInstance("HmacSHA256")
+        mac.init(SecretKeySpec(SECRET.toByteArray(Charsets.UTF_8), "HmacSHA256"))
+        return mac.doFinal("v1:$WEBHOOK_TIMESTAMP:$payload".toByteArray(Charsets.UTF_8))
+            .joinToString("") { "%02x".format(it) }
+    }
+
+    @Test
+    fun unwrapStandardVerifiesSignature() {
+        val client = buildClient()
+        val headers = buildHeaders(signature = sign(STANDARD_PAYLOAD))
+
+        val event = client.webhooks().standard().unwrapStandard(STANDARD_PAYLOAD, headers, SECRET)
+        val aliased = client.webhooks().unwrapStandard(STANDARD_PAYLOAD, headers, SECRET)
+
+        assertThat(event).isEqualTo(aliased)
+        assertThatThrownBy {
+                client
+                    .webhooks()
+                    .unwrapStandard(STANDARD_PAYLOAD, buildHeaders(signature = SIGNATURE), SECRET)
+            }
+            .isInstanceOf(OrbException::class.java)
+            .hasMessage("None of the given webhook signatures match the expected signature")
+    }
+
+    @Test
+    fun unwrapRejectsAPayloadInTheOtherStyle() {
+        val client = buildClient()
+
+        assertThatThrownBy {
+                client
+                    .webhooks()
+                    .unwrap(
+                        STANDARD_PAYLOAD,
+                        buildHeaders(signature = sign(STANDARD_PAYLOAD)),
+                        SECRET,
+                    )
+            }
+            .isInstanceOf(OrbInvalidDataException::class.java)
+            .hasMessageContaining("Use `webhooks().standard().unwrapStandard`")
+        assertThatThrownBy {
+                client.webhooks().standard().unwrapStandard(PAYLOAD, buildHeaders(), SECRET)
+            }
+            .isInstanceOf(OrbInvalidDataException::class.java)
+            .hasMessageContaining("Use `webhooks().unwrap`")
     }
 
     @Test

@@ -8,7 +8,10 @@ import com.withorb.api.core.getRequiredHeader
 import com.withorb.api.core.http.Headers
 import com.withorb.api.errors.OrbException
 import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.UnwrapStandardWebhookEvent
 import com.withorb.api.models.UnwrapWebhookEvent
+import com.withorb.api.services.blocking.webhooks.StandardService
+import com.withorb.api.services.blocking.webhooks.StandardServiceImpl
 import java.security.MessageDigest
 import java.time.Duration
 import java.time.Instant
@@ -25,6 +28,28 @@ private const val SIGNATURE_VERSION = "v1"
 private const val SIGNATURE_DELIMITER = " "
 private const val SIGNATURE_KEY_VALUE_DELIMITER = "="
 
+/**
+ * Throws when a payload was rendered in a style the calling method doesn't parse, rather than
+ * letting it parse into a type whose fields it doesn't carry. Payloads from before payload styles
+ * existed carry no `payload_style` and are expanded.
+ */
+internal fun checkPayloadStyle(clientOptions: ClientOptions, payload: String, expected: String) {
+    val style =
+        try {
+            clientOptions.jsonMapper.readTree(payload).get("payload_style")?.asText() ?: "expanded"
+        } catch (e: Exception) {
+            throw OrbInvalidDataException("Error parsing body", e)
+        }
+    if (style == expected) {
+        return
+    }
+    val method =
+        if (style == "standard") "webhooks().standard().unwrapStandard" else "webhooks().unwrap"
+    throw OrbInvalidDataException(
+        "This webhook payload has payload_style \"$style\", but this method parses \"$expected\" payloads. Use `$method` for an endpoint configured for \"$style\" payloads."
+    )
+}
+
 class WebhookServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     WebhookService {
 
@@ -32,10 +57,14 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
         WithRawResponseImpl(clientOptions)
     }
 
+    private val standard: StandardService by lazy { StandardServiceImpl(clientOptions) }
+
     override fun withRawResponse(): WebhookService.WithRawResponse = withRawResponse
 
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): WebhookService =
         WebhookServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
+    override fun standard(): StandardService = standard
 
     override fun unwrap(body: String): UnwrapWebhookEvent =
         try {
@@ -46,8 +75,15 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
 
     override fun unwrap(payload: String, headers: Headers, secret: String?): UnwrapWebhookEvent {
         verifySignature(payload, headers, secret)
+        checkPayloadStyle(clientOptions, payload, "expanded")
         return unwrap(payload)
     }
+
+    override fun unwrapStandard(
+        payload: String,
+        headers: Headers,
+        secret: String?,
+    ): UnwrapStandardWebhookEvent = standard().unwrapStandard(payload, headers, secret)
 
     // required for `toHexString` usage
     @OptIn(ExperimentalStdlibApi::class)
@@ -110,11 +146,17 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         WebhookService.WithRawResponse {
 
+        private val standard: StandardService.WithRawResponse by lazy {
+            StandardServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): WebhookService.WithRawResponse =
             WebhookServiceImpl.WithRawResponseImpl(
                 clientOptions.toBuilder().apply(modifier).build()
             )
+
+        override fun standard(): StandardService.WithRawResponse = standard
     }
 }
