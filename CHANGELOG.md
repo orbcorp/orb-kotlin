@@ -5,7 +5,7 @@
 
 ### Features
 
-* **api:** api update ([ad78839](https://github.com/orbcorp/orb-kotlin/commit/ad788392162e65998f6457b230169478e516cb76))
+* **api:** add `payload_style` to webhook payloads, and publish standard payload types and the `UnwrapWebhookEventStandard` union ([ad78839](https://github.com/orbcorp/orb-kotlin/commit/ad788392162e65998f6457b230169478e516cb76))
 
 ## [1.44.0](https://github.com/orbcorp/orb-kotlin/compare/v1.43.0...v1.44.0) (2026-10-20)
 
