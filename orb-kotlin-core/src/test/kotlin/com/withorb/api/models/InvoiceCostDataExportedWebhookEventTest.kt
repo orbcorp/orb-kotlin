@@ -17,6 +17,7 @@ internal class InvoiceCostDataExportedWebhookEventTest {
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .invoice("invoice")
+                .payloadStyle(InvoiceCostDataExportedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceCostDataExportedWebhookEvent.Properties.builder()
                         .exportedDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -31,6 +32,8 @@ internal class InvoiceCostDataExportedWebhookEventTest {
         assertThat(invoiceCostDataExportedWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(invoiceCostDataExportedWebhookEvent.invoice()).isEqualTo("invoice")
+        assertThat(invoiceCostDataExportedWebhookEvent.payloadStyle())
+            .isEqualTo(InvoiceCostDataExportedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(invoiceCostDataExportedWebhookEvent.properties())
             .isEqualTo(
                 InvoiceCostDataExportedWebhookEvent.Properties.builder()
@@ -51,6 +54,7 @@ internal class InvoiceCostDataExportedWebhookEventTest {
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .invoice("invoice")
+                .payloadStyle(InvoiceCostDataExportedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceCostDataExportedWebhookEvent.Properties.builder()
                         .exportedDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

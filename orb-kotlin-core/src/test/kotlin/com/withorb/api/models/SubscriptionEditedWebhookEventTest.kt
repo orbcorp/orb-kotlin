@@ -17,6 +17,7 @@ internal class SubscriptionEditedWebhookEventTest {
             SubscriptionEditedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionEditedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionEditedWebhookEvent.Properties.builder()
                         .previousAttributes(
@@ -829,6 +830,8 @@ internal class SubscriptionEditedWebhookEventTest {
         assertThat(subscriptionEditedWebhookEvent.id()).isEqualTo("id")
         assertThat(subscriptionEditedWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionEditedWebhookEvent.payloadStyle())
+            .isEqualTo(SubscriptionEditedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(subscriptionEditedWebhookEvent.properties())
             .isEqualTo(
                 SubscriptionEditedWebhookEvent.Properties.builder()
@@ -1603,6 +1606,7 @@ internal class SubscriptionEditedWebhookEventTest {
             SubscriptionEditedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionEditedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionEditedWebhookEvent.Properties.builder()
                         .previousAttributes(

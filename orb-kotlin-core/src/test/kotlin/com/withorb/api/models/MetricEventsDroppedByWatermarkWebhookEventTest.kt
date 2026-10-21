@@ -16,6 +16,7 @@ internal class MetricEventsDroppedByWatermarkWebhookEventTest {
             MetricEventsDroppedByWatermarkWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(MetricEventsDroppedByWatermarkWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     MetricEventsDroppedByWatermarkWebhookEvent.Properties.builder()
                         .dropped(0L)
@@ -34,6 +35,8 @@ internal class MetricEventsDroppedByWatermarkWebhookEventTest {
         assertThat(metricEventsDroppedByWatermarkWebhookEvent.id()).isEqualTo("id")
         assertThat(metricEventsDroppedByWatermarkWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(metricEventsDroppedByWatermarkWebhookEvent.payloadStyle())
+            .isEqualTo(MetricEventsDroppedByWatermarkWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(metricEventsDroppedByWatermarkWebhookEvent.properties())
             .isEqualTo(
                 MetricEventsDroppedByWatermarkWebhookEvent.Properties.builder()
@@ -57,6 +60,7 @@ internal class MetricEventsDroppedByWatermarkWebhookEventTest {
             MetricEventsDroppedByWatermarkWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(MetricEventsDroppedByWatermarkWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     MetricEventsDroppedByWatermarkWebhookEvent.Properties.builder()
                         .dropped(0L)

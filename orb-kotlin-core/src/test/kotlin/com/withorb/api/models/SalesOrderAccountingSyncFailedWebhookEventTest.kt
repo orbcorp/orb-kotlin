@@ -438,6 +438,7 @@ internal class SalesOrderAccountingSyncFailedWebhookEventTest {
                         .willAutoIssue(true)
                         .build()
                 )
+                .payloadStyle(SalesOrderAccountingSyncFailedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SalesOrderAccountingSyncFailedWebhookEvent.Properties.builder()
                         .connectionType("connection_type")
@@ -855,6 +856,8 @@ internal class SalesOrderAccountingSyncFailedWebhookEventTest {
                     .willAutoIssue(true)
                     .build()
             )
+        assertThat(salesOrderAccountingSyncFailedWebhookEvent.payloadStyle())
+            .isEqualTo(SalesOrderAccountingSyncFailedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(salesOrderAccountingSyncFailedWebhookEvent.properties())
             .isEqualTo(
                 SalesOrderAccountingSyncFailedWebhookEvent.Properties.builder()
@@ -1296,6 +1299,7 @@ internal class SalesOrderAccountingSyncFailedWebhookEventTest {
                         .willAutoIssue(true)
                         .build()
                 )
+                .payloadStyle(SalesOrderAccountingSyncFailedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SalesOrderAccountingSyncFailedWebhookEvent.Properties.builder()
                         .connectionType("connection_type")

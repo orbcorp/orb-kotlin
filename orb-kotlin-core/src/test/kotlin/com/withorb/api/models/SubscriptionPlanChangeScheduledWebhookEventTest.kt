@@ -17,6 +17,7 @@ internal class SubscriptionPlanChangeScheduledWebhookEventTest {
             SubscriptionPlanChangeScheduledWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionPlanChangeScheduledWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionPlanChangeScheduledWebhookEvent.Properties.builder()
                         .changeDate("change_date")
@@ -819,6 +820,8 @@ internal class SubscriptionPlanChangeScheduledWebhookEventTest {
         assertThat(subscriptionPlanChangeScheduledWebhookEvent.id()).isEqualTo("id")
         assertThat(subscriptionPlanChangeScheduledWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionPlanChangeScheduledWebhookEvent.payloadStyle())
+            .isEqualTo(SubscriptionPlanChangeScheduledWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(subscriptionPlanChangeScheduledWebhookEvent.properties())
             .isEqualTo(
                 SubscriptionPlanChangeScheduledWebhookEvent.Properties.builder()
@@ -1582,6 +1585,7 @@ internal class SubscriptionPlanChangeScheduledWebhookEventTest {
             SubscriptionPlanChangeScheduledWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionPlanChangeScheduledWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionPlanChangeScheduledWebhookEvent.Properties.builder()
                         .changeDate("change_date")

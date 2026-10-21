@@ -17,6 +17,7 @@ internal class SubscriptionCreatedWebhookEventTest {
             SubscriptionCreatedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionCreatedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(JsonValue.from(mapOf<String, Any>()))
                 .subscription(
                     Subscription.builder()
@@ -810,6 +811,8 @@ internal class SubscriptionCreatedWebhookEventTest {
         assertThat(subscriptionCreatedWebhookEvent.id()).isEqualTo("id")
         assertThat(subscriptionCreatedWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionCreatedWebhookEvent.payloadStyle())
+            .isEqualTo(SubscriptionCreatedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(subscriptionCreatedWebhookEvent._properties())
             .isEqualTo(JsonValue.from(mapOf<String, Any>()))
         assertThat(subscriptionCreatedWebhookEvent.subscription())
@@ -1565,6 +1568,7 @@ internal class SubscriptionCreatedWebhookEventTest {
             SubscriptionCreatedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionCreatedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(JsonValue.from(mapOf<String, Any>()))
                 .subscription(
                     Subscription.builder()

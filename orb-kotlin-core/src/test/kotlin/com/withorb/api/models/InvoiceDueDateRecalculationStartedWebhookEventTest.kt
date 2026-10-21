@@ -16,6 +16,7 @@ internal class InvoiceDueDateRecalculationStartedWebhookEventTest {
             InvoiceDueDateRecalculationStartedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(InvoiceDueDateRecalculationStartedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceDueDateRecalculationStartedWebhookEvent.Properties.builder()
                         .startedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -30,6 +31,8 @@ internal class InvoiceDueDateRecalculationStartedWebhookEventTest {
         assertThat(invoiceDueDateRecalculationStartedWebhookEvent.id()).isEqualTo("id")
         assertThat(invoiceDueDateRecalculationStartedWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(invoiceDueDateRecalculationStartedWebhookEvent.payloadStyle())
+            .isEqualTo(InvoiceDueDateRecalculationStartedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(invoiceDueDateRecalculationStartedWebhookEvent.properties())
             .isEqualTo(
                 InvoiceDueDateRecalculationStartedWebhookEvent.Properties.builder()
@@ -50,6 +53,7 @@ internal class InvoiceDueDateRecalculationStartedWebhookEventTest {
             InvoiceDueDateRecalculationStartedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(InvoiceDueDateRecalculationStartedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceDueDateRecalculationStartedWebhookEvent.Properties.builder()
                         .startedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

@@ -16,6 +16,7 @@ internal class DataExportsTransferErrorWebhookEventTest {
             DataExportsTransferErrorWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(DataExportsTransferErrorWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     DataExportsTransferErrorWebhookEvent.Properties.builder()
                         .description("description")
@@ -33,6 +34,8 @@ internal class DataExportsTransferErrorWebhookEventTest {
         assertThat(dataExportsTransferErrorWebhookEvent.id()).isEqualTo("id")
         assertThat(dataExportsTransferErrorWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(dataExportsTransferErrorWebhookEvent.payloadStyle())
+            .isEqualTo(DataExportsTransferErrorWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(dataExportsTransferErrorWebhookEvent.properties())
             .isEqualTo(
                 DataExportsTransferErrorWebhookEvent.Properties.builder()
@@ -56,6 +59,7 @@ internal class DataExportsTransferErrorWebhookEventTest {
             DataExportsTransferErrorWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(DataExportsTransferErrorWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     DataExportsTransferErrorWebhookEvent.Properties.builder()
                         .description("description")

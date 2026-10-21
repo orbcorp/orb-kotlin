@@ -57,6 +57,7 @@ internal class BillableMetricEditedWebhookEventTest {
                         .build()
                 )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(BillableMetricEditedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     BillableMetricEditedWebhookEvent.Properties.builder()
                         .previousAttributes(
@@ -121,6 +122,8 @@ internal class BillableMetricEditedWebhookEventTest {
             )
         assertThat(billableMetricEditedWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(billableMetricEditedWebhookEvent.payloadStyle())
+            .isEqualTo(BillableMetricEditedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(billableMetricEditedWebhookEvent.properties())
             .isEqualTo(
                 BillableMetricEditedWebhookEvent.Properties.builder()
@@ -190,6 +193,7 @@ internal class BillableMetricEditedWebhookEventTest {
                         .build()
                 )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(BillableMetricEditedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     BillableMetricEditedWebhookEvent.Properties.builder()
                         .previousAttributes(

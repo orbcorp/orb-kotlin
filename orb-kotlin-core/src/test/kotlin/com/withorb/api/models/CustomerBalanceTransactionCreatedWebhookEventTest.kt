@@ -133,6 +133,7 @@ internal class CustomerBalanceTransactionCreatedWebhookEventTest {
                         )
                         .build()
                 )
+                .payloadStyle(CustomerBalanceTransactionCreatedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CustomerBalanceTransactionCreatedWebhookEvent.Properties.builder()
                         .balanceTransaction(
@@ -285,6 +286,8 @@ internal class CustomerBalanceTransactionCreatedWebhookEventTest {
                     )
                     .build()
             )
+        assertThat(customerBalanceTransactionCreatedWebhookEvent.payloadStyle())
+            .isEqualTo(CustomerBalanceTransactionCreatedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(customerBalanceTransactionCreatedWebhookEvent.properties())
             .isEqualTo(
                 CustomerBalanceTransactionCreatedWebhookEvent.Properties.builder()
@@ -445,6 +448,7 @@ internal class CustomerBalanceTransactionCreatedWebhookEventTest {
                         )
                         .build()
                 )
+                .payloadStyle(CustomerBalanceTransactionCreatedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CustomerBalanceTransactionCreatedWebhookEvent.Properties.builder()
                         .balanceTransaction(

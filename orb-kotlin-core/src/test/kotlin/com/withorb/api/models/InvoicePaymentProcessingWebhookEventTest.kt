@@ -416,6 +416,7 @@ internal class InvoicePaymentProcessingWebhookEventTest {
                         .willAutoIssue(true)
                         .build()
                 )
+                .payloadStyle(InvoicePaymentProcessingWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoicePaymentProcessingWebhookEvent.Properties.builder()
                         .paymentProviderId("payment_provider_id")
@@ -809,6 +810,8 @@ internal class InvoicePaymentProcessingWebhookEventTest {
                     .willAutoIssue(true)
                     .build()
             )
+        assertThat(invoicePaymentProcessingWebhookEvent.payloadStyle())
+            .isEqualTo(InvoicePaymentProcessingWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(invoicePaymentProcessingWebhookEvent.properties())
             .isEqualTo(
                 InvoicePaymentProcessingWebhookEvent.Properties.builder()
@@ -1226,6 +1229,7 @@ internal class InvoicePaymentProcessingWebhookEventTest {
                         .willAutoIssue(true)
                         .build()
                 )
+                .payloadStyle(InvoicePaymentProcessingWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoicePaymentProcessingWebhookEvent.Properties.builder()
                         .paymentProviderId("payment_provider_id")

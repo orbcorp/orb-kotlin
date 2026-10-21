@@ -17,6 +17,7 @@ internal class PaymentMethodDeletedWebhookEventTest {
             PaymentMethodDeletedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(PaymentMethodDeletedWebhookEvent.PayloadStyle.EXPANDED)
                 .paymentMethod(
                     PaymentMethodDeletedWebhookEvent.PaymentMethod.builder()
                         .id("id")
@@ -37,6 +38,8 @@ internal class PaymentMethodDeletedWebhookEventTest {
         assertThat(paymentMethodDeletedWebhookEvent.id()).isEqualTo("id")
         assertThat(paymentMethodDeletedWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(paymentMethodDeletedWebhookEvent.payloadStyle())
+            .isEqualTo(PaymentMethodDeletedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(paymentMethodDeletedWebhookEvent.paymentMethod())
             .isEqualTo(
                 PaymentMethodDeletedWebhookEvent.PaymentMethod.builder()
@@ -64,6 +67,7 @@ internal class PaymentMethodDeletedWebhookEventTest {
             PaymentMethodDeletedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(PaymentMethodDeletedWebhookEvent.PayloadStyle.EXPANDED)
                 .paymentMethod(
                     PaymentMethodDeletedWebhookEvent.PaymentMethod.builder()
                         .id("id")

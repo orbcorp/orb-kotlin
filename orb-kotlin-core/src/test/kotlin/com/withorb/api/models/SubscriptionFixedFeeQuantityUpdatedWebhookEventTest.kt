@@ -17,6 +17,7 @@ internal class SubscriptionFixedFeeQuantityUpdatedWebhookEventTest {
             SubscriptionFixedFeeQuantityUpdatedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionFixedFeeQuantityUpdatedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionFixedFeeQuantityUpdatedWebhookEvent.Properties.builder()
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -820,6 +821,8 @@ internal class SubscriptionFixedFeeQuantityUpdatedWebhookEventTest {
         assertThat(subscriptionFixedFeeQuantityUpdatedWebhookEvent.id()).isEqualTo("id")
         assertThat(subscriptionFixedFeeQuantityUpdatedWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionFixedFeeQuantityUpdatedWebhookEvent.payloadStyle())
+            .isEqualTo(SubscriptionFixedFeeQuantityUpdatedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(subscriptionFixedFeeQuantityUpdatedWebhookEvent.properties())
             .isEqualTo(
                 SubscriptionFixedFeeQuantityUpdatedWebhookEvent.Properties.builder()
@@ -1585,6 +1588,7 @@ internal class SubscriptionFixedFeeQuantityUpdatedWebhookEventTest {
             SubscriptionFixedFeeQuantityUpdatedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionFixedFeeQuantityUpdatedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionFixedFeeQuantityUpdatedWebhookEvent.Properties.builder()
                         .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

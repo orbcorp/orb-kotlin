@@ -23,6 +23,7 @@ class SubscriptionPlanVersionChangeScheduledWebhookEvent
 private constructor(
     private val id: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
+    private val payloadStyle: JsonField<PayloadStyle>,
     private val properties: JsonField<Properties>,
     private val subscription: JsonField<Subscription>,
     private val type: JsonField<Type>,
@@ -35,6 +36,9 @@ private constructor(
         @JsonProperty("created_at")
         @ExcludeMissing
         createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("payload_style")
+        @ExcludeMissing
+        payloadStyle: JsonField<PayloadStyle> = JsonMissing.of(),
         @JsonProperty("properties")
         @ExcludeMissing
         properties: JsonField<Properties> = JsonMissing.of(),
@@ -42,7 +46,7 @@ private constructor(
         @ExcludeMissing
         subscription: JsonField<Subscription> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
-    ) : this(id, createdAt, properties, subscription, type, mutableMapOf())
+    ) : this(id, createdAt, payloadStyle, properties, subscription, type, mutableMapOf())
 
     /**
      * The ID of this webhook event.
@@ -59,6 +63,14 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+    /**
+     * The serialization style this payload was rendered in, as configured on the endpoint.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun payloadStyle(): PayloadStyle = payloadStyle.getRequired("payload_style")
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -114,6 +126,15 @@ private constructor(
     fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
     /**
+     * Returns the raw JSON value of [payloadStyle].
+     *
+     * Unlike [payloadStyle], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("payload_style")
+    @ExcludeMissing
+    fun _payloadStyle(): JsonField<PayloadStyle> = payloadStyle
+
+    /**
      * Returns the raw JSON value of [properties].
      *
      * Unlike [properties], this method doesn't throw if the JSON field has an unexpected type.
@@ -160,6 +181,7 @@ private constructor(
          * ```kotlin
          * .id()
          * .createdAt()
+         * .payloadStyle()
          * .properties()
          * .subscription()
          * .type()
@@ -173,6 +195,7 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
+        private var payloadStyle: JsonField<PayloadStyle>? = null
         private var properties: JsonField<Properties>? = null
         private var subscription: JsonField<Subscription>? = null
         private var type: JsonField<Type>? = null
@@ -184,6 +207,7 @@ private constructor(
         ) = apply {
             id = subscriptionPlanVersionChangeScheduledWebhookEvent.id
             createdAt = subscriptionPlanVersionChangeScheduledWebhookEvent.createdAt
+            payloadStyle = subscriptionPlanVersionChangeScheduledWebhookEvent.payloadStyle
             properties = subscriptionPlanVersionChangeScheduledWebhookEvent.properties
             subscription = subscriptionPlanVersionChangeScheduledWebhookEvent.subscription
             type = subscriptionPlanVersionChangeScheduledWebhookEvent.type
@@ -214,6 +238,20 @@ private constructor(
          * supported value.
          */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
+
+        /** The serialization style this payload was rendered in, as configured on the endpoint. */
+        fun payloadStyle(payloadStyle: PayloadStyle) = payloadStyle(JsonField.of(payloadStyle))
+
+        /**
+         * Sets [Builder.payloadStyle] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.payloadStyle] with a well-typed [PayloadStyle] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun payloadStyle(payloadStyle: JsonField<PayloadStyle>) = apply {
+            this.payloadStyle = payloadStyle
+        }
 
         fun properties(properties: Properties) = properties(JsonField.of(properties))
 
@@ -296,6 +334,7 @@ private constructor(
          * ```kotlin
          * .id()
          * .createdAt()
+         * .payloadStyle()
          * .properties()
          * .subscription()
          * .type()
@@ -307,6 +346,7 @@ private constructor(
             SubscriptionPlanVersionChangeScheduledWebhookEvent(
                 checkRequired("id", id),
                 checkRequired("createdAt", createdAt),
+                checkRequired("payloadStyle", payloadStyle),
                 checkRequired("properties", properties),
                 checkRequired("subscription", subscription),
                 checkRequired("type", type),
@@ -331,6 +371,7 @@ private constructor(
 
         id()
         createdAt()
+        payloadStyle().validate()
         properties().validate()
         subscription().validate()
         type().validate()
@@ -353,9 +394,147 @@ private constructor(
     internal fun validity(): Int =
         (if (id.asKnown() == null) 0 else 1) +
             (if (createdAt.asKnown() == null) 0 else 1) +
+            (payloadStyle.asKnown()?.validity() ?: 0) +
             (properties.asKnown()?.validity() ?: 0) +
             (subscription.asKnown()?.validity() ?: 0) +
             (type.asKnown()?.validity() ?: 0)
+
+    /** The serialization style this payload was rendered in, as configured on the endpoint. */
+    class PayloadStyle @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            val EXPANDED = of("expanded")
+
+            val STANDARD = of("standard")
+
+            fun of(value: String) = PayloadStyle(JsonField.of(value))
+        }
+
+        /** An enum containing [PayloadStyle]'s known values. */
+        enum class Known {
+            EXPANDED,
+            STANDARD,
+        }
+
+        /**
+         * An enum containing [PayloadStyle]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [PayloadStyle] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            EXPANDED,
+            STANDARD,
+            /**
+             * An enum member indicating that [PayloadStyle] was instantiated with an unknown value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                EXPANDED -> Value.EXPANDED
+                STANDARD -> Value.STANDARD
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
+         */
+        fun known(): Known =
+            when (this) {
+                EXPANDED -> Known.EXPANDED
+                STANDARD -> Known.STANDARD
+                else -> throw OrbInvalidDataException("Unknown PayloadStyle: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws OrbInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
+         */
+        fun asString(): String =
+            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
+        fun validate(): PayloadStyle = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is PayloadStyle && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
 
     class Properties
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
@@ -761,6 +940,7 @@ private constructor(
         return other is SubscriptionPlanVersionChangeScheduledWebhookEvent &&
             id == other.id &&
             createdAt == other.createdAt &&
+            payloadStyle == other.payloadStyle &&
             properties == other.properties &&
             subscription == other.subscription &&
             type == other.type &&
@@ -768,11 +948,19 @@ private constructor(
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(id, createdAt, properties, subscription, type, additionalProperties)
+        Objects.hash(
+            id,
+            createdAt,
+            payloadStyle,
+            properties,
+            subscription,
+            type,
+            additionalProperties,
+        )
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "SubscriptionPlanVersionChangeScheduledWebhookEvent{id=$id, createdAt=$createdAt, properties=$properties, subscription=$subscription, type=$type, additionalProperties=$additionalProperties}"
+        "SubscriptionPlanVersionChangeScheduledWebhookEvent{id=$id, createdAt=$createdAt, payloadStyle=$payloadStyle, properties=$properties, subscription=$subscription, type=$type, additionalProperties=$additionalProperties}"
 }

@@ -16,6 +16,7 @@ internal class SubscriptionGroupedCostExceededWebhookEventTest {
             SubscriptionGroupedCostExceededWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionGroupedCostExceededWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionGroupedCostExceededWebhookEvent.Properties.builder()
                         .alertConfiguration(
@@ -172,6 +173,8 @@ internal class SubscriptionGroupedCostExceededWebhookEventTest {
         assertThat(subscriptionGroupedCostExceededWebhookEvent.id()).isEqualTo("id")
         assertThat(subscriptionGroupedCostExceededWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionGroupedCostExceededWebhookEvent.payloadStyle())
+            .isEqualTo(SubscriptionGroupedCostExceededWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(subscriptionGroupedCostExceededWebhookEvent.properties())
             .isEqualTo(
                 SubscriptionGroupedCostExceededWebhookEvent.Properties.builder()
@@ -331,6 +334,7 @@ internal class SubscriptionGroupedCostExceededWebhookEventTest {
             SubscriptionGroupedCostExceededWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionGroupedCostExceededWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionGroupedCostExceededWebhookEvent.Properties.builder()
                         .alertConfiguration(

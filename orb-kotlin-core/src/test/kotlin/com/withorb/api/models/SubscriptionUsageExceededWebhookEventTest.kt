@@ -17,6 +17,7 @@ internal class SubscriptionUsageExceededWebhookEventTest {
             SubscriptionUsageExceededWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionUsageExceededWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionUsageExceededWebhookEvent.Properties.builder()
                         .alertConfiguration(
@@ -927,6 +928,8 @@ internal class SubscriptionUsageExceededWebhookEventTest {
         assertThat(subscriptionUsageExceededWebhookEvent.id()).isEqualTo("id")
         assertThat(subscriptionUsageExceededWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionUsageExceededWebhookEvent.payloadStyle())
+            .isEqualTo(SubscriptionUsageExceededWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(subscriptionUsageExceededWebhookEvent.properties())
             .isEqualTo(
                 SubscriptionUsageExceededWebhookEvent.Properties.builder()
@@ -1791,6 +1794,7 @@ internal class SubscriptionUsageExceededWebhookEventTest {
             SubscriptionUsageExceededWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionUsageExceededWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionUsageExceededWebhookEvent.Properties.builder()
                         .alertConfiguration(

@@ -39,6 +39,7 @@ internal class TransactionAccountingSyncFailedWebhookEventTest {
                         .build()
                 )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(TransactionAccountingSyncFailedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     TransactionAccountingSyncFailedWebhookEvent.Properties.builder()
                         .connectionType("connection_type")
@@ -92,6 +93,8 @@ internal class TransactionAccountingSyncFailedWebhookEventTest {
             )
         assertThat(transactionAccountingSyncFailedWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(transactionAccountingSyncFailedWebhookEvent.payloadStyle())
+            .isEqualTo(TransactionAccountingSyncFailedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(transactionAccountingSyncFailedWebhookEvent.properties())
             .isEqualTo(
                 TransactionAccountingSyncFailedWebhookEvent.Properties.builder()
@@ -151,6 +154,7 @@ internal class TransactionAccountingSyncFailedWebhookEventTest {
                         .build()
                 )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(TransactionAccountingSyncFailedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     TransactionAccountingSyncFailedWebhookEvent.Properties.builder()
                         .connectionType("connection_type")

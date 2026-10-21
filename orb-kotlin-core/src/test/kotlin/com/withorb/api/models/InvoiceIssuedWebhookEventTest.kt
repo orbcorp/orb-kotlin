@@ -416,6 +416,7 @@ internal class InvoiceIssuedWebhookEventTest {
                         .willAutoIssue(true)
                         .build()
                 )
+                .payloadStyle(InvoiceIssuedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceIssuedWebhookEvent.Properties.builder()
                         .automaticallyMarkedAsPaid(true)
@@ -808,6 +809,8 @@ internal class InvoiceIssuedWebhookEventTest {
                     .willAutoIssue(true)
                     .build()
             )
+        assertThat(invoiceIssuedWebhookEvent.payloadStyle())
+            .isEqualTo(InvoiceIssuedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(invoiceIssuedWebhookEvent.properties())
             .isEqualTo(
                 InvoiceIssuedWebhookEvent.Properties.builder()
@@ -1224,6 +1227,7 @@ internal class InvoiceIssuedWebhookEventTest {
                         .willAutoIssue(true)
                         .build()
                 )
+                .payloadStyle(InvoiceIssuedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceIssuedWebhookEvent.Properties.builder()
                         .automaticallyMarkedAsPaid(true)

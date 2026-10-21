@@ -416,6 +416,7 @@ internal class InvoiceEditedWebhookEventTest {
                         .willAutoIssue(true)
                         .build()
                 )
+                .payloadStyle(InvoiceEditedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceEditedWebhookEvent.Properties.builder()
                         .previousAttributes(
@@ -1127,6 +1128,8 @@ internal class InvoiceEditedWebhookEventTest {
                     .willAutoIssue(true)
                     .build()
             )
+        assertThat(invoiceEditedWebhookEvent.payloadStyle())
+            .isEqualTo(InvoiceEditedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(invoiceEditedWebhookEvent.properties())
             .isEqualTo(
                 InvoiceEditedWebhookEvent.Properties.builder()
@@ -1842,6 +1845,7 @@ internal class InvoiceEditedWebhookEventTest {
                         .willAutoIssue(true)
                         .build()
                 )
+                .payloadStyle(InvoiceEditedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceEditedWebhookEvent.Properties.builder()
                         .previousAttributes(

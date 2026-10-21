@@ -17,6 +17,7 @@ internal class PriceEditedWebhookEventTest {
             PriceEditedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(PriceEditedWebhookEvent.PayloadStyle.EXPANDED)
                 .price(
                     Price.UnitPrice.builder()
                         .id("id")
@@ -167,6 +168,8 @@ internal class PriceEditedWebhookEventTest {
         assertThat(priceEditedWebhookEvent.id()).isEqualTo("id")
         assertThat(priceEditedWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(priceEditedWebhookEvent.payloadStyle())
+            .isEqualTo(PriceEditedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(priceEditedWebhookEvent.price())
             .isEqualTo(
                 Price.ofUnit(
@@ -326,6 +329,7 @@ internal class PriceEditedWebhookEventTest {
             PriceEditedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(PriceEditedWebhookEvent.PayloadStyle.EXPANDED)
                 .price(
                     Price.UnitPrice.builder()
                         .id("id")

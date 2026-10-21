@@ -16,6 +16,9 @@ internal class SubscriptionInvoicingThresholdExceededWebhookEventTest {
             SubscriptionInvoicingThresholdExceededWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(
+                    SubscriptionInvoicingThresholdExceededWebhookEvent.PayloadStyle.EXPANDED
+                )
                 .properties(
                     SubscriptionInvoicingThresholdExceededWebhookEvent.Properties.builder()
                         .evaluatedAmount("evaluated_amount")
@@ -58,6 +61,8 @@ internal class SubscriptionInvoicingThresholdExceededWebhookEventTest {
         assertThat(subscriptionInvoicingThresholdExceededWebhookEvent.id()).isEqualTo("id")
         assertThat(subscriptionInvoicingThresholdExceededWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionInvoicingThresholdExceededWebhookEvent.payloadStyle())
+            .isEqualTo(SubscriptionInvoicingThresholdExceededWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(subscriptionInvoicingThresholdExceededWebhookEvent.properties())
             .isEqualTo(
                 SubscriptionInvoicingThresholdExceededWebhookEvent.Properties.builder()
@@ -107,6 +112,9 @@ internal class SubscriptionInvoicingThresholdExceededWebhookEventTest {
             SubscriptionInvoicingThresholdExceededWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(
+                    SubscriptionInvoicingThresholdExceededWebhookEvent.PayloadStyle.EXPANDED
+                )
                 .properties(
                     SubscriptionInvoicingThresholdExceededWebhookEvent.Properties.builder()
                         .evaluatedAmount("evaluated_amount")

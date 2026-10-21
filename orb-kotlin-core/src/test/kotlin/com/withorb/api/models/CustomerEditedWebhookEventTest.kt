@@ -133,6 +133,7 @@ internal class CustomerEditedWebhookEventTest {
                         )
                         .build()
                 )
+                .payloadStyle(CustomerEditedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CustomerEditedWebhookEvent.Properties.builder()
                         .previousAttributes(
@@ -302,6 +303,8 @@ internal class CustomerEditedWebhookEventTest {
                     )
                     .build()
             )
+        assertThat(customerEditedWebhookEvent.payloadStyle())
+            .isEqualTo(CustomerEditedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(customerEditedWebhookEvent.properties())
             .isEqualTo(
                 CustomerEditedWebhookEvent.Properties.builder()
@@ -479,6 +482,7 @@ internal class CustomerEditedWebhookEventTest {
                         )
                         .build()
                 )
+                .payloadStyle(CustomerEditedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CustomerEditedWebhookEvent.Properties.builder()
                         .previousAttributes(

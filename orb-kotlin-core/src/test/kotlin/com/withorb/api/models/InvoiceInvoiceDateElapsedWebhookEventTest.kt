@@ -30,6 +30,7 @@ internal class InvoiceInvoiceDateElapsedWebhookEventTest {
                         .subscription(SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build())
                         .build()
                 )
+                .payloadStyle(InvoiceInvoiceDateElapsedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceInvoiceDateElapsedWebhookEvent.Properties.builder()
                         .invoiceDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -56,6 +57,8 @@ internal class InvoiceInvoiceDateElapsedWebhookEventTest {
                     .subscription(SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build())
                     .build()
             )
+        assertThat(invoiceInvoiceDateElapsedWebhookEvent.payloadStyle())
+            .isEqualTo(InvoiceInvoiceDateElapsedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(invoiceInvoiceDateElapsedWebhookEvent.properties())
             .isEqualTo(
                 InvoiceInvoiceDateElapsedWebhookEvent.Properties.builder()
@@ -87,6 +90,7 @@ internal class InvoiceInvoiceDateElapsedWebhookEventTest {
                         .subscription(SubscriptionMinified.builder().id("VDGsT23osdLb84KD").build())
                         .build()
                 )
+                .payloadStyle(InvoiceInvoiceDateElapsedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceInvoiceDateElapsedWebhookEvent.Properties.builder()
                         .invoiceDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

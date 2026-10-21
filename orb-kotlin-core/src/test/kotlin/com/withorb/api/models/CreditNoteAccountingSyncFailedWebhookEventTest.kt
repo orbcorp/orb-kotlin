@@ -126,6 +126,7 @@ internal class CreditNoteAccountingSyncFailedWebhookEventTest {
                         )
                         .build()
                 )
+                .payloadStyle(CreditNoteAccountingSyncFailedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CreditNoteAccountingSyncFailedWebhookEvent.Properties.builder()
                         .connectionType("connection_type")
@@ -248,6 +249,8 @@ internal class CreditNoteAccountingSyncFailedWebhookEventTest {
                     )
                     .build()
             )
+        assertThat(creditNoteAccountingSyncFailedWebhookEvent.payloadStyle())
+            .isEqualTo(CreditNoteAccountingSyncFailedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(creditNoteAccountingSyncFailedWebhookEvent.properties())
             .isEqualTo(
                 CreditNoteAccountingSyncFailedWebhookEvent.Properties.builder()
@@ -377,6 +380,7 @@ internal class CreditNoteAccountingSyncFailedWebhookEventTest {
                         )
                         .build()
                 )
+                .payloadStyle(CreditNoteAccountingSyncFailedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CreditNoteAccountingSyncFailedWebhookEvent.Properties.builder()
                         .connectionType("connection_type")

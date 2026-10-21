@@ -36,6 +36,9 @@ internal class InvoiceAutomationScheduleStepExecutedWebhookEventTest {
                         .subscriptionId("subscription_id")
                         .build()
                 )
+                .payloadStyle(
+                    InvoiceAutomationScheduleStepExecutedWebhookEvent.PayloadStyle.EXPANDED
+                )
                 .properties(
                     InvoiceAutomationScheduleStepExecutedWebhookEvent.Properties.builder()
                         .addAction(
@@ -90,6 +93,8 @@ internal class InvoiceAutomationScheduleStepExecutedWebhookEventTest {
                     .subscriptionId("subscription_id")
                     .build()
             )
+        assertThat(invoiceAutomationScheduleStepExecutedWebhookEvent.payloadStyle())
+            .isEqualTo(InvoiceAutomationScheduleStepExecutedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(invoiceAutomationScheduleStepExecutedWebhookEvent.properties())
             .isEqualTo(
                 InvoiceAutomationScheduleStepExecutedWebhookEvent.Properties.builder()
@@ -147,6 +152,9 @@ internal class InvoiceAutomationScheduleStepExecutedWebhookEventTest {
                         .status("status")
                         .subscriptionId("subscription_id")
                         .build()
+                )
+                .payloadStyle(
+                    InvoiceAutomationScheduleStepExecutedWebhookEvent.PayloadStyle.EXPANDED
                 )
                 .properties(
                     InvoiceAutomationScheduleStepExecutedWebhookEvent.Properties.builder()

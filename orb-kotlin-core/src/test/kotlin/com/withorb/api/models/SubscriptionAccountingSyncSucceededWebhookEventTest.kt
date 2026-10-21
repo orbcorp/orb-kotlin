@@ -39,6 +39,7 @@ internal class SubscriptionAccountingSyncSucceededWebhookEventTest {
                         .build()
                 )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionAccountingSyncSucceededWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionAccountingSyncSucceededWebhookEvent.Properties.builder()
                         .connectionType("connection_type")
@@ -862,6 +863,8 @@ internal class SubscriptionAccountingSyncSucceededWebhookEventTest {
             )
         assertThat(subscriptionAccountingSyncSucceededWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionAccountingSyncSucceededWebhookEvent.payloadStyle())
+            .isEqualTo(SubscriptionAccountingSyncSucceededWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(subscriptionAccountingSyncSucceededWebhookEvent.properties())
             .isEqualTo(
                 SubscriptionAccountingSyncSucceededWebhookEvent.Properties.builder()
@@ -1646,6 +1649,7 @@ internal class SubscriptionAccountingSyncSucceededWebhookEventTest {
                         .build()
                 )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionAccountingSyncSucceededWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionAccountingSyncSucceededWebhookEvent.Properties.builder()
                         .connectionType("connection_type")

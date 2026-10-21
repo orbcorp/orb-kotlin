@@ -16,6 +16,7 @@ internal class SubscriptionLicenseAllocationResetWebhookEventTest {
             SubscriptionLicenseAllocationResetWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionLicenseAllocationResetWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionLicenseAllocationResetWebhookEvent.Properties.builder()
                         .addResetAllocation(
@@ -65,6 +66,8 @@ internal class SubscriptionLicenseAllocationResetWebhookEventTest {
         assertThat(subscriptionLicenseAllocationResetWebhookEvent.id()).isEqualTo("id")
         assertThat(subscriptionLicenseAllocationResetWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionLicenseAllocationResetWebhookEvent.payloadStyle())
+            .isEqualTo(SubscriptionLicenseAllocationResetWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(subscriptionLicenseAllocationResetWebhookEvent.properties())
             .isEqualTo(
                 SubscriptionLicenseAllocationResetWebhookEvent.Properties.builder()
@@ -118,6 +121,7 @@ internal class SubscriptionLicenseAllocationResetWebhookEventTest {
             SubscriptionLicenseAllocationResetWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionLicenseAllocationResetWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionLicenseAllocationResetWebhookEvent.Properties.builder()
                         .addResetAllocation(

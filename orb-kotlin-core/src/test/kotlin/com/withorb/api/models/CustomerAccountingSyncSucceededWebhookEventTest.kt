@@ -154,6 +154,7 @@ internal class CustomerAccountingSyncSucceededWebhookEventTest {
                         )
                         .build()
                 )
+                .payloadStyle(CustomerAccountingSyncSucceededWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CustomerAccountingSyncSucceededWebhookEvent.Properties.builder()
                         .connectionType("connection_type")
@@ -302,6 +303,8 @@ internal class CustomerAccountingSyncSucceededWebhookEventTest {
                     )
                     .build()
             )
+        assertThat(customerAccountingSyncSucceededWebhookEvent.payloadStyle())
+            .isEqualTo(CustomerAccountingSyncSucceededWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(customerAccountingSyncSucceededWebhookEvent.properties())
             .isEqualTo(
                 CustomerAccountingSyncSucceededWebhookEvent.Properties.builder()
@@ -458,6 +461,7 @@ internal class CustomerAccountingSyncSucceededWebhookEventTest {
                         )
                         .build()
                 )
+                .payloadStyle(CustomerAccountingSyncSucceededWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CustomerAccountingSyncSucceededWebhookEvent.Properties.builder()
                         .connectionType("connection_type")

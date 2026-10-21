@@ -16,6 +16,9 @@ internal class SubscriptionLicenseBalanceThresholdReachedWebhookEventTest {
             SubscriptionLicenseBalanceThresholdReachedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(
+                    SubscriptionLicenseBalanceThresholdReachedWebhookEvent.PayloadStyle.EXPANDED
+                )
                 .properties(
                     SubscriptionLicenseBalanceThresholdReachedWebhookEvent.Properties.builder()
                         .alertConfiguration(
@@ -187,6 +190,8 @@ internal class SubscriptionLicenseBalanceThresholdReachedWebhookEventTest {
         assertThat(subscriptionLicenseBalanceThresholdReachedWebhookEvent.id()).isEqualTo("id")
         assertThat(subscriptionLicenseBalanceThresholdReachedWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionLicenseBalanceThresholdReachedWebhookEvent.payloadStyle())
+            .isEqualTo(SubscriptionLicenseBalanceThresholdReachedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(subscriptionLicenseBalanceThresholdReachedWebhookEvent.properties())
             .isEqualTo(
                 SubscriptionLicenseBalanceThresholdReachedWebhookEvent.Properties.builder()
@@ -355,6 +360,9 @@ internal class SubscriptionLicenseBalanceThresholdReachedWebhookEventTest {
             SubscriptionLicenseBalanceThresholdReachedWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(
+                    SubscriptionLicenseBalanceThresholdReachedWebhookEvent.PayloadStyle.EXPANDED
+                )
                 .properties(
                     SubscriptionLicenseBalanceThresholdReachedWebhookEvent.Properties.builder()
                         .alertConfiguration(

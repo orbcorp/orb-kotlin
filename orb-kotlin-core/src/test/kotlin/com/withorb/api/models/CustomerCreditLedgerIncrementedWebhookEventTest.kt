@@ -133,6 +133,7 @@ internal class CustomerCreditLedgerIncrementedWebhookEventTest {
                         )
                         .build()
                 )
+                .payloadStyle(CustomerCreditLedgerIncrementedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CustomerCreditLedgerIncrementedWebhookEvent.Properties.builder()
                         .block(
@@ -367,6 +368,8 @@ internal class CustomerCreditLedgerIncrementedWebhookEventTest {
                     )
                     .build()
             )
+        assertThat(customerCreditLedgerIncrementedWebhookEvent.payloadStyle())
+            .isEqualTo(CustomerCreditLedgerIncrementedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(customerCreditLedgerIncrementedWebhookEvent.properties())
             .isEqualTo(
                 CustomerCreditLedgerIncrementedWebhookEvent.Properties.builder()
@@ -603,6 +606,7 @@ internal class CustomerCreditLedgerIncrementedWebhookEventTest {
                         )
                         .build()
                 )
+                .payloadStyle(CustomerCreditLedgerIncrementedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CustomerCreditLedgerIncrementedWebhookEvent.Properties.builder()
                         .block(

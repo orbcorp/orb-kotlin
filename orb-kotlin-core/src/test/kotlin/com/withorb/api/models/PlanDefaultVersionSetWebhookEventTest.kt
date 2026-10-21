@@ -16,6 +16,7 @@ internal class PlanDefaultVersionSetWebhookEventTest {
             PlanDefaultVersionSetWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(PlanDefaultVersionSetWebhookEvent.PayloadStyle.EXPANDED)
                 .plan(
                     PlanDefaultVersionSetWebhookEvent.Plan.builder()
                         .id("m2t5akQeh2obwxeU")
@@ -35,6 +36,8 @@ internal class PlanDefaultVersionSetWebhookEventTest {
         assertThat(planDefaultVersionSetWebhookEvent.id()).isEqualTo("id")
         assertThat(planDefaultVersionSetWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(planDefaultVersionSetWebhookEvent.payloadStyle())
+            .isEqualTo(PlanDefaultVersionSetWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(planDefaultVersionSetWebhookEvent.plan())
             .isEqualTo(
                 PlanDefaultVersionSetWebhookEvent.Plan.builder()
@@ -61,6 +64,7 @@ internal class PlanDefaultVersionSetWebhookEventTest {
             PlanDefaultVersionSetWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(PlanDefaultVersionSetWebhookEvent.PayloadStyle.EXPANDED)
                 .plan(
                     PlanDefaultVersionSetWebhookEvent.Plan.builder()
                         .id("m2t5akQeh2obwxeU")

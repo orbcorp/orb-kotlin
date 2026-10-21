@@ -416,6 +416,7 @@ internal class InvoiceDunningScheduleStepExecutedWebhookEventTest {
                         .willAutoIssue(true)
                         .build()
                 )
+                .payloadStyle(InvoiceDunningScheduleStepExecutedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceDunningScheduleStepExecutedWebhookEvent.Properties.builder()
                         .dunningStep(
@@ -825,6 +826,8 @@ internal class InvoiceDunningScheduleStepExecutedWebhookEventTest {
                     .willAutoIssue(true)
                     .build()
             )
+        assertThat(invoiceDunningScheduleStepExecutedWebhookEvent.payloadStyle())
+            .isEqualTo(InvoiceDunningScheduleStepExecutedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(invoiceDunningScheduleStepExecutedWebhookEvent.properties())
             .isEqualTo(
                 InvoiceDunningScheduleStepExecutedWebhookEvent.Properties.builder()
@@ -1256,6 +1259,7 @@ internal class InvoiceDunningScheduleStepExecutedWebhookEventTest {
                         .willAutoIssue(true)
                         .build()
                 )
+                .payloadStyle(InvoiceDunningScheduleStepExecutedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceDunningScheduleStepExecutedWebhookEvent.Properties.builder()
                         .dunningStep(

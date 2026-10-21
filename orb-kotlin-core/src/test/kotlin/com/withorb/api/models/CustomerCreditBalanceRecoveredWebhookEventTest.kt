@@ -133,6 +133,7 @@ internal class CustomerCreditBalanceRecoveredWebhookEventTest {
                         )
                         .build()
                 )
+                .payloadStyle(CustomerCreditBalanceRecoveredWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CustomerCreditBalanceRecoveredWebhookEvent.Properties.builder()
                         .alertConfiguration(
@@ -377,6 +378,8 @@ internal class CustomerCreditBalanceRecoveredWebhookEventTest {
                     )
                     .build()
             )
+        assertThat(customerCreditBalanceRecoveredWebhookEvent.payloadStyle())
+            .isEqualTo(CustomerCreditBalanceRecoveredWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(customerCreditBalanceRecoveredWebhookEvent.properties())
             .isEqualTo(
                 CustomerCreditBalanceRecoveredWebhookEvent.Properties.builder()
@@ -628,6 +631,7 @@ internal class CustomerCreditBalanceRecoveredWebhookEventTest {
                         )
                         .build()
                 )
+                .payloadStyle(CustomerCreditBalanceRecoveredWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CustomerCreditBalanceRecoveredWebhookEvent.Properties.builder()
                         .alertConfiguration(

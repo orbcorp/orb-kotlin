@@ -16,6 +16,7 @@ internal class IngestionUnmatchedCustomerIdsWebhookEventTest {
             IngestionUnmatchedCustomerIdsWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(IngestionUnmatchedCustomerIdsWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     IngestionUnmatchedCustomerIdsWebhookEvent.Properties.builder()
                         .addExternalCustomerId("string")
@@ -29,6 +30,8 @@ internal class IngestionUnmatchedCustomerIdsWebhookEventTest {
         assertThat(ingestionUnmatchedCustomerIdsWebhookEvent.id()).isEqualTo("id")
         assertThat(ingestionUnmatchedCustomerIdsWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(ingestionUnmatchedCustomerIdsWebhookEvent.payloadStyle())
+            .isEqualTo(IngestionUnmatchedCustomerIdsWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(ingestionUnmatchedCustomerIdsWebhookEvent.properties())
             .isEqualTo(
                 IngestionUnmatchedCustomerIdsWebhookEvent.Properties.builder()
@@ -48,6 +51,7 @@ internal class IngestionUnmatchedCustomerIdsWebhookEventTest {
             IngestionUnmatchedCustomerIdsWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(IngestionUnmatchedCustomerIdsWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     IngestionUnmatchedCustomerIdsWebhookEvent.Properties.builder()
                         .addExternalCustomerId("string")

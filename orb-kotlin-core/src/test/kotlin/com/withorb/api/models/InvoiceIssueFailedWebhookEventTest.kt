@@ -416,6 +416,7 @@ internal class InvoiceIssueFailedWebhookEventTest {
                         .willAutoIssue(true)
                         .build()
                 )
+                .payloadStyle(InvoiceIssueFailedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceIssueFailedWebhookEvent.Properties.builder().reason("reason").build()
                 )
@@ -806,6 +807,8 @@ internal class InvoiceIssueFailedWebhookEventTest {
                     .willAutoIssue(true)
                     .build()
             )
+        assertThat(invoiceIssueFailedWebhookEvent.payloadStyle())
+            .isEqualTo(InvoiceIssueFailedWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(invoiceIssueFailedWebhookEvent.properties())
             .isEqualTo(InvoiceIssueFailedWebhookEvent.Properties.builder().reason("reason").build())
         assertThat(invoiceIssueFailedWebhookEvent.type())
@@ -1218,6 +1221,7 @@ internal class InvoiceIssueFailedWebhookEventTest {
                         .willAutoIssue(true)
                         .build()
                 )
+                .payloadStyle(InvoiceIssueFailedWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     InvoiceIssueFailedWebhookEvent.Properties.builder().reason("reason").build()
                 )

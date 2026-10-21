@@ -119,6 +119,7 @@ internal class CreditBlockAccountingSyncSucceededWebhookEventTest {
                         .build()
                 )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(CreditBlockAccountingSyncSucceededWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CreditBlockAccountingSyncSucceededWebhookEvent.Properties.builder()
                         .connectionType("connection_type")
@@ -235,6 +236,8 @@ internal class CreditBlockAccountingSyncSucceededWebhookEventTest {
             )
         assertThat(creditBlockAccountingSyncSucceededWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(creditBlockAccountingSyncSucceededWebhookEvent.payloadStyle())
+            .isEqualTo(CreditBlockAccountingSyncSucceededWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(creditBlockAccountingSyncSucceededWebhookEvent.properties())
             .isEqualTo(
                 CreditBlockAccountingSyncSucceededWebhookEvent.Properties.builder()
@@ -357,6 +360,7 @@ internal class CreditBlockAccountingSyncSucceededWebhookEventTest {
                         .build()
                 )
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(CreditBlockAccountingSyncSucceededWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     CreditBlockAccountingSyncSucceededWebhookEvent.Properties.builder()
                         .connectionType("connection_type")

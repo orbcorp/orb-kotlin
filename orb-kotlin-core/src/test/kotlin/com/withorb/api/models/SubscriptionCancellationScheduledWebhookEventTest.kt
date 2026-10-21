@@ -17,6 +17,7 @@ internal class SubscriptionCancellationScheduledWebhookEventTest {
             SubscriptionCancellationScheduledWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionCancellationScheduledWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionCancellationScheduledWebhookEvent.Properties.builder()
                         .cancellationDate("cancellation_date")
@@ -817,6 +818,8 @@ internal class SubscriptionCancellationScheduledWebhookEventTest {
         assertThat(subscriptionCancellationScheduledWebhookEvent.id()).isEqualTo("id")
         assertThat(subscriptionCancellationScheduledWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionCancellationScheduledWebhookEvent.payloadStyle())
+            .isEqualTo(SubscriptionCancellationScheduledWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(subscriptionCancellationScheduledWebhookEvent.properties())
             .isEqualTo(
                 SubscriptionCancellationScheduledWebhookEvent.Properties.builder()
@@ -1579,6 +1582,7 @@ internal class SubscriptionCancellationScheduledWebhookEventTest {
             SubscriptionCancellationScheduledWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionCancellationScheduledWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionCancellationScheduledWebhookEvent.Properties.builder()
                         .cancellationDate("cancellation_date")

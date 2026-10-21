@@ -17,6 +17,7 @@ internal class EventUnmatchedEventWebhookEventTest {
             EventUnmatchedEventWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(EventUnmatchedEventWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     EventUnmatchedEventWebhookEvent.Properties.builder()
                         .event(
@@ -42,6 +43,8 @@ internal class EventUnmatchedEventWebhookEventTest {
         assertThat(eventUnmatchedEventWebhookEvent.id()).isEqualTo("id")
         assertThat(eventUnmatchedEventWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(eventUnmatchedEventWebhookEvent.payloadStyle())
+            .isEqualTo(EventUnmatchedEventWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(eventUnmatchedEventWebhookEvent.properties())
             .isEqualTo(
                 EventUnmatchedEventWebhookEvent.Properties.builder()
@@ -73,6 +76,7 @@ internal class EventUnmatchedEventWebhookEventTest {
             EventUnmatchedEventWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(EventUnmatchedEventWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     EventUnmatchedEventWebhookEvent.Properties.builder()
                         .event(

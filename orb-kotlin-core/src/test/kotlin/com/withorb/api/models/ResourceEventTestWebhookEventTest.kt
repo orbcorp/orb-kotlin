@@ -16,6 +16,7 @@ internal class ResourceEventTestWebhookEventTest {
             ResourceEventTestWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(ResourceEventTestWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     ResourceEventTestWebhookEvent.Properties.builder().message("message").build()
                 )
@@ -25,6 +26,8 @@ internal class ResourceEventTestWebhookEventTest {
         assertThat(resourceEventTestWebhookEvent.id()).isEqualTo("id")
         assertThat(resourceEventTestWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(resourceEventTestWebhookEvent.payloadStyle())
+            .isEqualTo(ResourceEventTestWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(resourceEventTestWebhookEvent.properties())
             .isEqualTo(
                 ResourceEventTestWebhookEvent.Properties.builder().message("message").build()
@@ -40,6 +43,7 @@ internal class ResourceEventTestWebhookEventTest {
             ResourceEventTestWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(ResourceEventTestWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     ResourceEventTestWebhookEvent.Properties.builder().message("message").build()
                 )

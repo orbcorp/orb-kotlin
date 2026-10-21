@@ -16,6 +16,7 @@ internal class SubscriptionAlertDisabledWebhookEventTest {
             SubscriptionAlertDisabledWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionAlertDisabledWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionAlertDisabledWebhookEvent.Properties.builder()
                         .alertConfiguration(
@@ -159,6 +160,8 @@ internal class SubscriptionAlertDisabledWebhookEventTest {
         assertThat(subscriptionAlertDisabledWebhookEvent.id()).isEqualTo("id")
         assertThat(subscriptionAlertDisabledWebhookEvent.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(subscriptionAlertDisabledWebhookEvent.payloadStyle())
+            .isEqualTo(SubscriptionAlertDisabledWebhookEvent.PayloadStyle.EXPANDED)
         assertThat(subscriptionAlertDisabledWebhookEvent.properties())
             .isEqualTo(
                 SubscriptionAlertDisabledWebhookEvent.Properties.builder()
@@ -301,6 +304,7 @@ internal class SubscriptionAlertDisabledWebhookEventTest {
             SubscriptionAlertDisabledWebhookEvent.builder()
                 .id("id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .payloadStyle(SubscriptionAlertDisabledWebhookEvent.PayloadStyle.EXPANDED)
                 .properties(
                     SubscriptionAlertDisabledWebhookEvent.Properties.builder()
                         .alertConfiguration(
