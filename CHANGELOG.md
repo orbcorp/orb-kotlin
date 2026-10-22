@@ -5,7 +5,7 @@
 
 ### Features
 
-* **api:** api update ([1d624fb](https://github.com/orbcorp/orb-kotlin/commit/1d624fb58c94fc1dca23e2d56037d14f155c01f5))
+* **api:** add `webhooks().standard().unwrapStandard(payload, headers, secret)`, aliased as `webhooks().unwrapStandard`, which verifies and parses standard webhook payloads; the verifying `webhooks().unwrap` throws on a standard payload ([1d624fb](https://github.com/orbcorp/orb-kotlin/commit/1d624fb58c94fc1dca23e2d56037d14f155c01f5))
 
 
 ### Chores
