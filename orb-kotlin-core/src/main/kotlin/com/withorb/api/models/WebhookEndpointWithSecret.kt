@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
@@ -26,6 +27,7 @@ private constructor(
     private val createdAt: JsonField<OffsetDateTime>,
     private val enabled: JsonField<Boolean>,
     private val enabledEventTypes: JsonField<List<String>>,
+    private val payloadStyle: JsonField<PayloadStyle>,
     private val secret: JsonField<String>,
     private val url: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -41,9 +43,12 @@ private constructor(
         @JsonProperty("enabled_event_types")
         @ExcludeMissing
         enabledEventTypes: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("payload_style")
+        @ExcludeMissing
+        payloadStyle: JsonField<PayloadStyle> = JsonMissing.of(),
         @JsonProperty("secret") @ExcludeMissing secret: JsonField<String> = JsonMissing.of(),
         @JsonProperty("url") @ExcludeMissing url: JsonField<String> = JsonMissing.of(),
-    ) : this(id, createdAt, enabled, enabledEventTypes, secret, url, mutableMapOf())
+    ) : this(id, createdAt, enabled, enabledEventTypes, payloadStyle, secret, url, mutableMapOf())
 
     /**
      * The Orb-assigned unique identifier for the webhook endpoint.
@@ -76,6 +81,16 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun enabledEventTypes(): List<String>? = enabledEventTypes.getNullable("enabled_event_types")
+
+    /**
+     * The payload style of the webhook events sent to this endpoint. `standard` payloads include
+     * each object's own fields and references to related objects, without invoice line items or
+     * subscription price intervals. `expanded` payloads include every object fully expanded.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun payloadStyle(): PayloadStyle = payloadStyle.getRequired("payload_style")
 
     /**
      * The secret used to sign the webhook events sent to this endpoint. Only returned when the
@@ -128,6 +143,15 @@ private constructor(
     fun _enabledEventTypes(): JsonField<List<String>> = enabledEventTypes
 
     /**
+     * Returns the raw JSON value of [payloadStyle].
+     *
+     * Unlike [payloadStyle], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("payload_style")
+    @ExcludeMissing
+    fun _payloadStyle(): JsonField<PayloadStyle> = payloadStyle
+
+    /**
      * Returns the raw JSON value of [secret].
      *
      * Unlike [secret], this method doesn't throw if the JSON field has an unexpected type.
@@ -164,6 +188,7 @@ private constructor(
          * .createdAt()
          * .enabled()
          * .enabledEventTypes()
+         * .payloadStyle()
          * .secret()
          * .url()
          * ```
@@ -178,6 +203,7 @@ private constructor(
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var enabled: JsonField<Boolean>? = null
         private var enabledEventTypes: JsonField<MutableList<String>>? = null
+        private var payloadStyle: JsonField<PayloadStyle>? = null
         private var secret: JsonField<String>? = null
         private var url: JsonField<String>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -188,6 +214,7 @@ private constructor(
             enabled = webhookEndpointWithSecret.enabled
             enabledEventTypes =
                 webhookEndpointWithSecret.enabledEventTypes.map { it.toMutableList() }
+            payloadStyle = webhookEndpointWithSecret.payloadStyle
             secret = webhookEndpointWithSecret.secret
             url = webhookEndpointWithSecret.url
             additionalProperties = webhookEndpointWithSecret.additionalProperties.toMutableMap()
@@ -255,6 +282,25 @@ private constructor(
         }
 
         /**
+         * The payload style of the webhook events sent to this endpoint. `standard` payloads
+         * include each object's own fields and references to related objects, without invoice line
+         * items or subscription price intervals. `expanded` payloads include every object fully
+         * expanded.
+         */
+        fun payloadStyle(payloadStyle: PayloadStyle) = payloadStyle(JsonField.of(payloadStyle))
+
+        /**
+         * Sets [Builder.payloadStyle] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.payloadStyle] with a well-typed [PayloadStyle] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun payloadStyle(payloadStyle: JsonField<PayloadStyle>) = apply {
+            this.payloadStyle = payloadStyle
+        }
+
+        /**
          * The secret used to sign the webhook events sent to this endpoint. Only returned when the
          * endpoint is created.
          */
@@ -309,6 +355,7 @@ private constructor(
          * .createdAt()
          * .enabled()
          * .enabledEventTypes()
+         * .payloadStyle()
          * .secret()
          * .url()
          * ```
@@ -321,6 +368,7 @@ private constructor(
                 checkRequired("createdAt", createdAt),
                 checkRequired("enabled", enabled),
                 checkRequired("enabledEventTypes", enabledEventTypes).map { it.toImmutable() },
+                checkRequired("payloadStyle", payloadStyle),
                 checkRequired("secret", secret),
                 checkRequired("url", url),
                 additionalProperties.toMutableMap(),
@@ -346,6 +394,7 @@ private constructor(
         createdAt()
         enabled()
         enabledEventTypes()
+        payloadStyle().validate()
         secret()
         url()
         validated = true
@@ -369,8 +418,150 @@ private constructor(
             (if (createdAt.asKnown() == null) 0 else 1) +
             (if (enabled.asKnown() == null) 0 else 1) +
             (enabledEventTypes.asKnown()?.size ?: 0) +
+            (payloadStyle.asKnown()?.validity() ?: 0) +
             (if (secret.asKnown() == null) 0 else 1) +
             (if (url.asKnown() == null) 0 else 1)
+
+    /**
+     * The payload style of the webhook events sent to this endpoint. `standard` payloads include
+     * each object's own fields and references to related objects, without invoice line items or
+     * subscription price intervals. `expanded` payloads include every object fully expanded.
+     */
+    class PayloadStyle @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            val EXPANDED = of("expanded")
+
+            val STANDARD = of("standard")
+
+            fun of(value: String) = PayloadStyle(JsonField.of(value))
+        }
+
+        /** An enum containing [PayloadStyle]'s known values. */
+        enum class Known {
+            EXPANDED,
+            STANDARD,
+        }
+
+        /**
+         * An enum containing [PayloadStyle]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [PayloadStyle] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            EXPANDED,
+            STANDARD,
+            /**
+             * An enum member indicating that [PayloadStyle] was instantiated with an unknown value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                EXPANDED -> Value.EXPANDED
+                STANDARD -> Value.STANDARD
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
+         */
+        fun known(): Known =
+            when (this) {
+                EXPANDED -> Known.EXPANDED
+                STANDARD -> Known.STANDARD
+                else -> throw OrbInvalidDataException("Unknown PayloadStyle: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws OrbInvalidDataException if this class instance's value does not have the expected
+         *   primitive type.
+         */
+        fun asString(): String =
+            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws OrbInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
+        fun validate(): PayloadStyle = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: OrbInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is PayloadStyle && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -382,17 +573,27 @@ private constructor(
             createdAt == other.createdAt &&
             enabled == other.enabled &&
             enabledEventTypes == other.enabledEventTypes &&
+            payloadStyle == other.payloadStyle &&
             secret == other.secret &&
             url == other.url &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(id, createdAt, enabled, enabledEventTypes, secret, url, additionalProperties)
+        Objects.hash(
+            id,
+            createdAt,
+            enabled,
+            enabledEventTypes,
+            payloadStyle,
+            secret,
+            url,
+            additionalProperties,
+        )
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "WebhookEndpointWithSecret{id=$id, createdAt=$createdAt, enabled=$enabled, enabledEventTypes=$enabledEventTypes, secret=$secret, url=$url, additionalProperties=$additionalProperties}"
+        "WebhookEndpointWithSecret{id=$id, createdAt=$createdAt, enabled=$enabled, enabledEventTypes=$enabledEventTypes, payloadStyle=$payloadStyle, secret=$secret, url=$url, additionalProperties=$additionalProperties}"
 }

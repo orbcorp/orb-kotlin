@@ -19,7 +19,10 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 
-/** #InvoiceApiResourceWithoutLineItems */
+/**
+ * An invoice without its line items, subtotal, discounts, minimums or maximums. Fetch the invoice
+ * for those.
+ */
 class InvoiceListSummaryResponse
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(

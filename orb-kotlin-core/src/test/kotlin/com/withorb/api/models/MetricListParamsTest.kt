@@ -18,6 +18,7 @@ internal class MetricListParamsTest {
             .createdAtLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .cursor("cursor")
             .limit(1L)
+            .status(MetricListParams.Status.ACTIVE)
             .build()
     }
 
@@ -31,6 +32,7 @@ internal class MetricListParamsTest {
                 .createdAtLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .cursor("cursor")
                 .limit(1L)
+                .status(MetricListParams.Status.ACTIVE)
                 .build()
 
         val queryParams = params._queryParams()
@@ -44,6 +46,7 @@ internal class MetricListParamsTest {
                     .put("created_at[lte]", "2019-12-27T18:11:19.117Z")
                     .put("cursor", "cursor")
                     .put("limit", "1")
+                    .put("status", "active")
                     .build()
             )
     }

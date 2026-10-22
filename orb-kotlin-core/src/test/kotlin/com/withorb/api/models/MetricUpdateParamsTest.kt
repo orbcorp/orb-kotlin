@@ -12,11 +12,13 @@ internal class MetricUpdateParamsTest {
     fun create() {
         MetricUpdateParams.builder()
             .metricId("metric_id")
+            .description("Sum of bytes downloaded in fast mode")
             .metadata(
                 MetricUpdateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+            .name("Bytes downloaded")
             .build()
     }
 
@@ -34,21 +36,25 @@ internal class MetricUpdateParamsTest {
         val params =
             MetricUpdateParams.builder()
                 .metricId("metric_id")
+                .description("Sum of bytes downloaded in fast mode")
                 .metadata(
                     MetricUpdateParams.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .name("Bytes downloaded")
                 .build()
 
         val body = params._body()
 
+        assertThat(body.description()).isEqualTo("Sum of bytes downloaded in fast mode")
         assertThat(body.metadata())
             .isEqualTo(
                 MetricUpdateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(body.name()).isEqualTo("Bytes downloaded")
     }
 
     @Test

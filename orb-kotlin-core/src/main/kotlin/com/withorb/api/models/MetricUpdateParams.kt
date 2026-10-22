@@ -19,8 +19,9 @@ import java.util.Collections
 import java.util.Objects
 
 /**
- * This endpoint allows you to update the `metadata` property on a metric. If you pass `null` for
- * the metadata value, it will clear any existing metadata for that invoice.
+ * This endpoint allows you to update the `name`, `description`, and `metadata` properties on a
+ * metric. Fields left out of the request are not changed, and `name` cannot be empty. If you pass
+ * `null` for the metadata value, it will clear any existing metadata for that metric.
  */
 class MetricUpdateParams
 private constructor(
@@ -33,6 +34,14 @@ private constructor(
     fun metricId(): String? = metricId
 
     /**
+     * A description of the metric.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun description(): String? = body.description()
+
+    /**
      * User-specified key/value pairs for the resource. Individual keys can be removed by setting
      * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
      * `null`.
@@ -43,11 +52,33 @@ private constructor(
     fun metadata(): Metadata? = body.metadata()
 
     /**
+     * The name of the metric.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun name(): String? = body.name()
+
+    /**
+     * Returns the raw JSON value of [description].
+     *
+     * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _description(): JsonField<String> = body._description()
+
+    /**
      * Returns the raw JSON value of [metadata].
      *
      * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _metadata(): JsonField<Metadata> = body._metadata()
+
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _name(): JsonField<String> = body._name()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
@@ -89,9 +120,23 @@ private constructor(
          *
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [description]
          * - [metadata]
+         * - [name]
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /** A description of the metric. */
+        fun description(description: String?) = apply { body.description(description) }
+
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -108,6 +153,17 @@ private constructor(
          * value.
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
+
+        /** The name of the metric. */
+        fun name(name: String?) = apply { body.name(name) }
+
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun name(name: JsonField<String>) = apply { body.name(name) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
@@ -255,16 +311,30 @@ private constructor(
     class Body
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
+        private val description: JsonField<String>,
         private val metadata: JsonField<Metadata>,
+        private val name: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
+            @JsonProperty("description")
+            @ExcludeMissing
+            description: JsonField<String> = JsonMissing.of(),
             @JsonProperty("metadata")
             @ExcludeMissing
-            metadata: JsonField<Metadata> = JsonMissing.of()
-        ) : this(metadata, mutableMapOf())
+            metadata: JsonField<Metadata> = JsonMissing.of(),
+            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        ) : this(description, metadata, name, mutableMapOf())
+
+        /**
+         * A description of the metric.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun description(): String? = description.getNullable("description")
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -277,11 +347,35 @@ private constructor(
         fun metadata(): Metadata? = metadata.getNullable("metadata")
 
         /**
+         * The name of the metric.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun name(): String? = name.getNullable("name")
+
+        /**
+         * Returns the raw JSON value of [description].
+         *
+         * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("description")
+        @ExcludeMissing
+        fun _description(): JsonField<String> = description
+
+        /**
          * Returns the raw JSON value of [metadata].
          *
          * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
+
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -304,12 +398,30 @@ private constructor(
         /** A builder for [Body]. */
         class Builder internal constructor() {
 
+            private var description: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var name: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(body: Body) = apply {
+                description = body.description
                 metadata = body.metadata
+                name = body.name
                 additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /** A description of the metric. */
+            fun description(description: String?) = description(JsonField.ofNullable(description))
+
+            /**
+             * Sets [Builder.description] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.description] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
             }
 
             /**
@@ -327,6 +439,18 @@ private constructor(
              * supported value.
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+            /** The name of the metric. */
+            fun name(name: String?) = name(JsonField.ofNullable(name))
+
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -352,7 +476,8 @@ private constructor(
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              */
-            fun build(): Body = Body(metadata, additionalProperties.toMutableMap())
+            fun build(): Body =
+                Body(description, metadata, name, additionalProperties.toMutableMap())
         }
 
         private var validated: Boolean = false
@@ -371,7 +496,9 @@ private constructor(
                 return@apply
             }
 
+            description()
             metadata()?.validate()
+            name()
             validated = true
         }
 
@@ -389,7 +516,10 @@ private constructor(
          *
          * Used for best match union deserialization.
          */
-        internal fun validity(): Int = (metadata.asKnown()?.validity() ?: 0)
+        internal fun validity(): Int =
+            (if (description.asKnown() == null) 0 else 1) +
+                (metadata.asKnown()?.validity() ?: 0) +
+                (if (name.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -397,16 +527,20 @@ private constructor(
             }
 
             return other is Body &&
+                description == other.description &&
                 metadata == other.metadata &&
+                name == other.name &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(metadata, additionalProperties) }
+        private val hashCode: Int by lazy {
+            Objects.hash(description, metadata, name, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{metadata=$metadata, additionalProperties=$additionalProperties}"
+            "Body{description=$description, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
     }
 
     /**

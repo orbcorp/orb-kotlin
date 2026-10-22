@@ -9,18 +9,27 @@ internal class WebhookEndpointCreateParamsTest {
 
     @Test
     fun create() {
-        WebhookEndpointCreateParams.builder().url("url").addEnabledEventType("string").build()
+        WebhookEndpointCreateParams.builder()
+            .url("url")
+            .addEnabledEventType("string")
+            .payloadStyle(WebhookEndpointCreateParams.PayloadStyle.EXPANDED)
+            .build()
     }
 
     @Test
     fun body() {
         val params =
-            WebhookEndpointCreateParams.builder().url("url").addEnabledEventType("string").build()
+            WebhookEndpointCreateParams.builder()
+                .url("url")
+                .addEnabledEventType("string")
+                .payloadStyle(WebhookEndpointCreateParams.PayloadStyle.EXPANDED)
+                .build()
 
         val body = params._body()
 
         assertThat(body.url()).isEqualTo("url")
         assertThat(body.enabledEventTypes()).containsExactly("string")
+        assertThat(body.payloadStyle()).isEqualTo(WebhookEndpointCreateParams.PayloadStyle.EXPANDED)
     }
 
     @Test

@@ -19,8 +19,8 @@ import java.util.Collections
 import java.util.Objects
 
 /**
- * This endpoint can be used to update the `external_plan_id`, `description`, and `metadata` of an
- * existing plan.
+ * This endpoint can be used to update the `name`, `external_plan_id`, `description`, and `metadata`
+ * of an existing plan. A plan's `name` cannot be empty.
  *
  * Other fields on a plan are currently immutable.
  */
@@ -62,6 +62,14 @@ private constructor(
     fun metadata(): Metadata? = body.metadata()
 
     /**
+     * The name of the plan.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun name(): String? = body.name()
+
+    /**
      * Returns the raw JSON value of [description].
      *
      * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
@@ -81,6 +89,13 @@ private constructor(
      * Unlike [metadata], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _metadata(): JsonField<Metadata> = body._metadata()
+
+    /**
+     * Returns the raw JSON value of [name].
+     *
+     * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _name(): JsonField<String> = body._name()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
@@ -130,6 +145,7 @@ private constructor(
          * - [description]
          * - [externalPlanId]
          * - [metadata]
+         * - [name]
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
 
@@ -178,6 +194,17 @@ private constructor(
          * value.
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
+
+        /** The name of the plan. */
+        fun name(name: String?) = apply { body.name(name) }
+
+        /**
+         * Sets [Builder.name] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.name] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun name(name: JsonField<String>) = apply { body.name(name) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
@@ -328,6 +355,7 @@ private constructor(
         private val description: JsonField<String>,
         private val externalPlanId: JsonField<String>,
         private val metadata: JsonField<Metadata>,
+        private val name: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -342,7 +370,8 @@ private constructor(
             @JsonProperty("metadata")
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
-        ) : this(description, externalPlanId, metadata, mutableMapOf())
+            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        ) : this(description, externalPlanId, metadata, name, mutableMapOf())
 
         /**
          * An optional user-defined description of the plan.
@@ -373,6 +402,14 @@ private constructor(
         fun metadata(): Metadata? = metadata.getNullable("metadata")
 
         /**
+         * The name of the plan.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun name(): String? = name.getNullable("name")
+
+        /**
          * Returns the raw JSON value of [description].
          *
          * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
@@ -398,6 +435,13 @@ private constructor(
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -422,12 +466,14 @@ private constructor(
             private var description: JsonField<String> = JsonMissing.of()
             private var externalPlanId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var name: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(body: Body) = apply {
                 description = body.description
                 externalPlanId = body.externalPlanId
                 metadata = body.metadata
+                name = body.name
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
 
@@ -480,6 +526,18 @@ private constructor(
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
+            /** The name of the plan. */
+            fun name(name: String?) = name(JsonField.ofNullable(name))
+
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun name(name: JsonField<String>) = apply { this.name = name }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -505,7 +563,13 @@ private constructor(
              * Further updates to this [Builder] will not mutate the returned instance.
              */
             fun build(): Body =
-                Body(description, externalPlanId, metadata, additionalProperties.toMutableMap())
+                Body(
+                    description,
+                    externalPlanId,
+                    metadata,
+                    name,
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -527,6 +591,7 @@ private constructor(
             description()
             externalPlanId()
             metadata()?.validate()
+            name()
             validated = true
         }
 
@@ -547,7 +612,8 @@ private constructor(
         internal fun validity(): Int =
             (if (description.asKnown() == null) 0 else 1) +
                 (if (externalPlanId.asKnown() == null) 0 else 1) +
-                (metadata.asKnown()?.validity() ?: 0)
+                (metadata.asKnown()?.validity() ?: 0) +
+                (if (name.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -558,17 +624,18 @@ private constructor(
                 description == other.description &&
                 externalPlanId == other.externalPlanId &&
                 metadata == other.metadata &&
+                name == other.name &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(description, externalPlanId, metadata, additionalProperties)
+            Objects.hash(description, externalPlanId, metadata, name, additionalProperties)
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{description=$description, externalPlanId=$externalPlanId, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "Body{description=$description, externalPlanId=$externalPlanId, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
     }
 
     /**

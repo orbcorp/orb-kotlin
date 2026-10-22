@@ -276,6 +276,7 @@ internal class PlanServiceAsyncTest {
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
+                    .name("name")
                     .build()
             )
 

@@ -32,6 +32,7 @@ internal class ExternalPlanIdServiceAsyncTest {
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
+                    .name("name")
                     .build()
             )
 

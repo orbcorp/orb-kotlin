@@ -55,8 +55,8 @@ interface PlanService {
     ): Plan
 
     /**
-     * This endpoint can be used to update the `external_plan_id`, `description`, and `metadata` of
-     * an existing plan.
+     * This endpoint can be used to update the `name`, `external_plan_id`, `description`, and
+     * `metadata` of an existing plan. A plan's `name` cannot be empty.
      *
      * Other fields on a plan are currently immutable.
      */

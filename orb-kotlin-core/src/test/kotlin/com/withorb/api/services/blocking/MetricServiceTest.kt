@@ -53,11 +53,13 @@ internal class MetricServiceTest {
             metricService.update(
                 MetricUpdateParams.builder()
                     .metricId("metric_id")
+                    .description("Sum of bytes downloaded in fast mode")
                     .metadata(
                         MetricUpdateParams.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
+                    .name("Bytes downloaded")
                     .build()
             )
 

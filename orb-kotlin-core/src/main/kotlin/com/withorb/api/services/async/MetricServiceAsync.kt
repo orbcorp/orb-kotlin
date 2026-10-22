@@ -42,8 +42,9 @@ interface MetricServiceAsync {
     ): BillableMetric
 
     /**
-     * This endpoint allows you to update the `metadata` property on a metric. If you pass `null`
-     * for the metadata value, it will clear any existing metadata for that invoice.
+     * This endpoint allows you to update the `name`, `description`, and `metadata` properties on a
+     * metric. Fields left out of the request are not changed, and `name` cannot be empty. If you
+     * pass `null` for the metadata value, it will clear any existing metadata for that metric.
      */
     suspend fun update(
         metricId: String,
@@ -64,6 +65,9 @@ interface MetricServiceAsync {
     /**
      * This endpoint is used to list [metrics](/core-concepts#metric). It returns information about
      * the metrics including its name, description, and item.
+     *
+     * Pass `status` to only return metrics with that status, e.g. `status=active` to leave out
+     * archived metrics.
      */
     suspend fun list(
         params: MetricListParams = MetricListParams.none(),

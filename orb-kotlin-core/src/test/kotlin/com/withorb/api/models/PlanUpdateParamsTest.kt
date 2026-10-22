@@ -19,6 +19,7 @@ internal class PlanUpdateParamsTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+            .name("name")
             .build()
     }
 
@@ -43,6 +44,7 @@ internal class PlanUpdateParamsTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .name("name")
                 .build()
 
         val body = params._body()
@@ -55,6 +57,7 @@ internal class PlanUpdateParamsTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(body.name()).isEqualTo("name")
     }
 
     @Test

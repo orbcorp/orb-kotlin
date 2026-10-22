@@ -80,8 +80,9 @@ private constructor(
     fun properties(): Properties = properties.getRequired("properties")
 
     /**
-     * The subscription in a standard webhook payload: the fields readable without
-     * to_subscription_params(), which every interval, billing period and plan phase depends on.
+     * The subscription in a standard webhook payload: its own fields, with its plan and customer as
+     * references. Fetch the subscription for its price intervals, billing periods, plan phases and
+     * other derived fields.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -252,8 +253,9 @@ private constructor(
         fun properties(properties: JsonField<Properties>) = apply { this.properties = properties }
 
         /**
-         * The subscription in a standard webhook payload: the fields readable without
-         * to_subscription_params(), which every interval, billing period and plan phase depends on.
+         * The subscription in a standard webhook payload: its own fields, with its plan and
+         * customer as references. Fetch the subscription for its price intervals, billing periods,
+         * plan phases and other derived fields.
          */
         fun subscription(subscription: Subscription) = subscription(JsonField.of(subscription))
 
@@ -686,8 +688,9 @@ private constructor(
     }
 
     /**
-     * The subscription in a standard webhook payload: the fields readable without
-     * to_subscription_params(), which every interval, billing period and plan phase depends on.
+     * The subscription in a standard webhook payload: its own fields, with its plan and customer as
+     * references. Fetch the subscription for its price intervals, billing periods, plan phases and
+     * other derived fields.
      */
     class Subscription
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)

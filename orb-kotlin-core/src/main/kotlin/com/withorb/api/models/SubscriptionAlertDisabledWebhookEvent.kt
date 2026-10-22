@@ -84,9 +84,8 @@ private constructor(
     fun properties(): Properties = properties.getRequired("properties")
 
     /**
-     * A lightweight subscription representation for webhook payloads.
-     *
-     * This avoids the expensive to_subscription_params() call required for full serialization.
+     * The subscription in a license or grouped cost webhook payload: its status, dates, plan and
+     * customer.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -259,9 +258,8 @@ private constructor(
         fun properties(properties: JsonField<Properties>) = apply { this.properties = properties }
 
         /**
-         * A lightweight subscription representation for webhook payloads.
-         *
-         * This avoids the expensive to_subscription_params() call required for full serialization.
+         * The subscription in a license or grouped cost webhook payload: its status, dates, plan
+         * and customer.
          */
         fun subscription(subscription: Subscription) = subscription(JsonField.of(subscription))
 
@@ -4187,9 +4185,8 @@ private constructor(
     }
 
     /**
-     * A lightweight subscription representation for webhook payloads.
-     *
-     * This avoids the expensive to_subscription_params() call required for full serialization.
+     * The subscription in a license or grouped cost webhook payload: its status, dates, plan and
+     * customer.
      */
     class Subscription
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)

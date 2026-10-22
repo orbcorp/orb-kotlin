@@ -26,6 +26,7 @@ internal class WebhookEndpointServiceTest {
                 WebhookEndpointCreateParams.builder()
                     .url("url")
                     .addEnabledEventType("string")
+                    .payloadStyle(WebhookEndpointCreateParams.PayloadStyle.EXPANDED)
                     .build()
             )
 
@@ -60,6 +61,7 @@ internal class WebhookEndpointServiceTest {
                 WebhookEndpointUpdateParams.builder()
                     .webhookEndpointId("webhook_endpoint_id")
                     .addEnabledEventType("string")
+                    .payloadStyle(WebhookEndpointUpdateParams.PayloadStyle.EXPANDED)
                     .url("url")
                     .build()
             )
