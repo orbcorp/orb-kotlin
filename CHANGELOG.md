@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.46.0](https://github.com/orbcorp/orb-kotlin/compare/v1.45.0...v1.46.0) (2026-10-22)
+
+
+### Features
+
+* **api:** api update ([1d624fb](https://github.com/orbcorp/orb-kotlin/commit/1d624fb58c94fc1dca23e2d56037d14f155c01f5))
+
+
+### Chores
+
+* correct the payload styles changelog entry ([#1](https://github.com/orbcorp/orb-kotlin/issues/1)) ([748de4f](https://github.com/orbcorp/orb-kotlin/commit/748de4f7ae5f91788cb5c4b03ca1c6a3a9cfe541))
+
 ## [1.45.0](https://github.com/orbcorp/orb-kotlin/compare/v1.44.0...v1.45.0) (2026-10-21)
 
 
