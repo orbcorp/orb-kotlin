@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.47.0](https://github.com/orbcorp/orb-kotlin/compare/v1.46.0...v1.47.0) (2026-10-23)
+
+
+### Features
+
+* **api:** Add customer credit balance summary endpoints ([6668cc2](https://github.com/orbcorp/orb-kotlin/commit/6668cc234969ef163b48788aa95f993350b087c5))
+* **api:** Add endpoint to update credit block metadata ([22e72eb](https://github.com/orbcorp/orb-kotlin/commit/22e72ebfd5765a91ba8f6ac06a42f17b6e253c03))
+* **api:** api update ([22e72eb](https://github.com/orbcorp/orb-kotlin/commit/22e72ebfd5765a91ba8f6ac06a42f17b6e253c03))
+* **api:** api update ([22e72eb](https://github.com/orbcorp/orb-kotlin/commit/22e72ebfd5765a91ba8f6ac06a42f17b6e253c03))
+* **api:** api update ([22e72eb](https://github.com/orbcorp/orb-kotlin/commit/22e72ebfd5765a91ba8f6ac06a42f17b6e253c03))
+
+
+### Chores
+
+* correct the standard webhook unwrap changelog entry ([#3](https://github.com/orbcorp/orb-kotlin/issues/3)) ([1b8f5e3](https://github.com/orbcorp/orb-kotlin/commit/1b8f5e321dd2f0958425795cf592ffc09ad5da69))
+
 ## [1.46.0](https://github.com/orbcorp/orb-kotlin/compare/v1.45.0...v1.46.0) (2026-10-22)
 
 
