@@ -22,6 +22,8 @@ import com.withorb.api.models.CreditBlockListInvoicesParams
 import com.withorb.api.models.CreditBlockListInvoicesResponse
 import com.withorb.api.models.CreditBlockRetrieveParams
 import com.withorb.api.models.CreditBlockRetrieveResponse
+import com.withorb.api.models.CreditBlockUpdateParams
+import com.withorb.api.models.CreditBlockUpdateResponse
 
 /**
  * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits within
@@ -45,6 +47,13 @@ class CreditBlockServiceAsyncImpl internal constructor(private val clientOptions
     ): CreditBlockRetrieveResponse =
         // get /credit_blocks/{block_id}
         withRawResponse().retrieve(params, requestOptions).parse()
+
+    override suspend fun update(
+        params: CreditBlockUpdateParams,
+        requestOptions: RequestOptions,
+    ): CreditBlockUpdateResponse =
+        // put /credit_blocks/{block_id}
+        withRawResponse().update(params, requestOptions).parse()
 
     override suspend fun delete(params: CreditBlockDeleteParams, requestOptions: RequestOptions) {
         // delete /credit_blocks/{block_id}
@@ -93,6 +102,37 @@ class CreditBlockServiceAsyncImpl internal constructor(private val clientOptions
             return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val updateHandler: Handler<CreditBlockUpdateResponse> =
+            jsonHandler<CreditBlockUpdateResponse>(clientOptions.jsonMapper)
+
+        override suspend fun update(
+            params: CreditBlockUpdateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CreditBlockUpdateResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("blockId", params.blockId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("credit_blocks", params._pathParam(0))
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { updateHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()

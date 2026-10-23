@@ -17,11 +17,13 @@ import com.withorb.api.core.http.json
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.models.BillableMetric
+import com.withorb.api.models.MetricArchiveParams
 import com.withorb.api.models.MetricCreateParams
 import com.withorb.api.models.MetricFetchParams
 import com.withorb.api.models.MetricListPage
 import com.withorb.api.models.MetricListPageResponse
 import com.withorb.api.models.MetricListParams
+import com.withorb.api.models.MetricUnarchiveParams
 import com.withorb.api.models.MetricUpdateParams
 
 /**
@@ -58,9 +60,23 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
         // get /metrics
         withRawResponse().list(params, requestOptions).parse()
 
+    override fun archive(
+        params: MetricArchiveParams,
+        requestOptions: RequestOptions,
+    ): BillableMetric =
+        // post /metrics/{metric_id}/archive
+        withRawResponse().archive(params, requestOptions).parse()
+
     override fun fetch(params: MetricFetchParams, requestOptions: RequestOptions): BillableMetric =
         // get /metrics/{metric_id}
         withRawResponse().fetch(params, requestOptions).parse()
+
+    override fun unarchive(
+        params: MetricUnarchiveParams,
+        requestOptions: RequestOptions,
+    ): BillableMetric =
+        // post /metrics/{metric_id}/unarchive
+        withRawResponse().unarchive(params, requestOptions).parse()
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         MetricService.WithRawResponse {
@@ -166,6 +182,37 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
             }
         }
 
+        private val archiveHandler: Handler<BillableMetric> =
+            jsonHandler<BillableMetric>(clientOptions.jsonMapper)
+
+        override fun archive(
+            params: MetricArchiveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<BillableMetric> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("metricId", params.metricId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("metrics", params._pathParam(0), "archive")
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { archiveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
         private val fetchHandler: Handler<BillableMetric> =
             jsonHandler<BillableMetric>(clientOptions.jsonMapper)
 
@@ -188,6 +235,37 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
             return errorHandler.handle(response).parseable {
                 response
                     .use { fetchHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val unarchiveHandler: Handler<BillableMetric> =
+            jsonHandler<BillableMetric>(clientOptions.jsonMapper)
+
+        override fun unarchive(
+            params: MetricUnarchiveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<BillableMetric> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("metricId", params.metricId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("metrics", params._pathParam(0), "unarchive")
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { unarchiveHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()

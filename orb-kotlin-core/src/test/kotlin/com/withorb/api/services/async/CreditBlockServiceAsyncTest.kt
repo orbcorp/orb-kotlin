@@ -4,6 +4,8 @@ package com.withorb.api.services.async
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
+import com.withorb.api.core.JsonValue
+import com.withorb.api.models.CreditBlockUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -20,6 +22,30 @@ internal class CreditBlockServiceAsyncTest {
         val creditBlockServiceAsync = client.creditBlocks()
 
         val creditBlock = creditBlockServiceAsync.retrieve("block_id")
+
+        creditBlock.validate()
+    }
+
+    @Test
+    suspend fun update() {
+        val client =
+            OrbOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val creditBlockServiceAsync = client.creditBlocks()
+
+        val creditBlock =
+            creditBlockServiceAsync.update(
+                CreditBlockUpdateParams.builder()
+                    .blockId("block_id")
+                    .metadata(
+                        CreditBlockUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .build()
+            )
 
         creditBlock.validate()
     }

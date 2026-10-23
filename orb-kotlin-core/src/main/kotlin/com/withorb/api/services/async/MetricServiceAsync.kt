@@ -7,10 +7,12 @@ import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.BillableMetric
+import com.withorb.api.models.MetricArchiveParams
 import com.withorb.api.models.MetricCreateParams
 import com.withorb.api.models.MetricFetchParams
 import com.withorb.api.models.MetricListPageAsync
 import com.withorb.api.models.MetricListParams
+import com.withorb.api.models.MetricUnarchiveParams
 import com.withorb.api.models.MetricUpdateParams
 
 /**
@@ -79,6 +81,31 @@ interface MetricServiceAsync {
         list(MetricListParams.none(), requestOptions)
 
     /**
+     * This endpoint archives a [metric](/core-concepts#metric). Archived metrics are left out of
+     * `GET /v1/metrics` when filtering with `status=active`, and can't be chosen when creating new
+     * plans in the Orb dashboard.
+     *
+     * Archiving does not change existing prices, plans, or subscriptions that use the metric, and
+     * usage on those prices continues to be billed. A metric that is already archived cannot be
+     * archived again.
+     */
+    suspend fun archive(
+        metricId: String,
+        params: MetricArchiveParams = MetricArchiveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BillableMetric = archive(params.toBuilder().metricId(metricId).build(), requestOptions)
+
+    /** @see archive */
+    suspend fun archive(
+        params: MetricArchiveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BillableMetric
+
+    /** @see archive */
+    suspend fun archive(metricId: String, requestOptions: RequestOptions): BillableMetric =
+        archive(metricId, MetricArchiveParams.none(), requestOptions)
+
+    /**
      * This endpoint is used to fetch [metric](/core-concepts#metric) details given a metric
      * identifier. It returns information about the metrics including its name, description, and
      * item.
@@ -98,6 +125,26 @@ interface MetricServiceAsync {
     /** @see fetch */
     suspend fun fetch(metricId: String, requestOptions: RequestOptions): BillableMetric =
         fetch(metricId, MetricFetchParams.none(), requestOptions)
+
+    /**
+     * This endpoint restores an archived [metric](/core-concepts#metric) to `active`, so it can be
+     * chosen for new plans again. Only archived metrics can be unarchived.
+     */
+    suspend fun unarchive(
+        metricId: String,
+        params: MetricUnarchiveParams = MetricUnarchiveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BillableMetric = unarchive(params.toBuilder().metricId(metricId).build(), requestOptions)
+
+    /** @see unarchive */
+    suspend fun unarchive(
+        params: MetricUnarchiveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BillableMetric
+
+    /** @see unarchive */
+    suspend fun unarchive(metricId: String, requestOptions: RequestOptions): BillableMetric =
+        unarchive(metricId, MetricUnarchiveParams.none(), requestOptions)
 
     /**
      * A view of [MetricServiceAsync] that provides access to raw HTTP responses for each method.
@@ -166,6 +213,33 @@ interface MetricServiceAsync {
             list(MetricListParams.none(), requestOptions)
 
         /**
+         * Returns a raw HTTP response for `post /metrics/{metric_id}/archive`, but is otherwise the
+         * same as [MetricServiceAsync.archive].
+         */
+        @MustBeClosed
+        suspend fun archive(
+            metricId: String,
+            params: MetricArchiveParams = MetricArchiveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillableMetric> =
+            archive(params.toBuilder().metricId(metricId).build(), requestOptions)
+
+        /** @see archive */
+        @MustBeClosed
+        suspend fun archive(
+            params: MetricArchiveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillableMetric>
+
+        /** @see archive */
+        @MustBeClosed
+        suspend fun archive(
+            metricId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<BillableMetric> =
+            archive(metricId, MetricArchiveParams.none(), requestOptions)
+
+        /**
          * Returns a raw HTTP response for `get /metrics/{metric_id}`, but is otherwise the same as
          * [MetricServiceAsync.fetch].
          */
@@ -191,5 +265,32 @@ interface MetricServiceAsync {
             requestOptions: RequestOptions,
         ): HttpResponseFor<BillableMetric> =
             fetch(metricId, MetricFetchParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /metrics/{metric_id}/unarchive`, but is otherwise
+         * the same as [MetricServiceAsync.unarchive].
+         */
+        @MustBeClosed
+        suspend fun unarchive(
+            metricId: String,
+            params: MetricUnarchiveParams = MetricUnarchiveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillableMetric> =
+            unarchive(params.toBuilder().metricId(metricId).build(), requestOptions)
+
+        /** @see unarchive */
+        @MustBeClosed
+        suspend fun unarchive(
+            params: MetricUnarchiveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BillableMetric>
+
+        /** @see unarchive */
+        @MustBeClosed
+        suspend fun unarchive(
+            metricId: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<BillableMetric> =
+            unarchive(metricId, MetricUnarchiveParams.none(), requestOptions)
     }
 }

@@ -81,6 +81,20 @@ internal class MetricServiceTest {
     }
 
     @Test
+    fun archive() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val metricService = client.metrics()
+
+        val billableMetric = metricService.archive("metric_id")
+
+        billableMetric.validate()
+    }
+
+    @Test
     fun fetch() {
         val client =
             OrbOkHttpClient.builder()
@@ -90,6 +104,20 @@ internal class MetricServiceTest {
         val metricService = client.metrics()
 
         val billableMetric = metricService.fetch("metric_id")
+
+        billableMetric.validate()
+    }
+
+    @Test
+    fun unarchive() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val metricService = client.metrics()
+
+        val billableMetric = metricService.unarchive("metric_id")
 
         billableMetric.validate()
     }
