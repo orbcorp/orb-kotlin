@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.48.0](https://github.com/orbcorp/orb-kotlin/compare/v1.47.0...v1.48.0) (2026-10-24)
+
+
+### Features
+
+* **api:** add list endpoint for lightweight subscription summaries ([a4c29d8](https://github.com/orbcorp/orb-kotlin/commit/a4c29d81179d6e747dbdd033f3767550216c9621))
+
 ## [1.47.0](https://github.com/orbcorp/orb-kotlin/compare/v1.46.0...v1.47.0) (2026-10-23)
 
 
