@@ -34,8 +34,9 @@ import java.util.Objects
  * `spend_exceeded` alert is triggered when the rated spend (the pricing subtotal, before
  * invoice-level adjustments and credits) denominated in the alert's currency exceeds predefined
  * thresholds during the current billing cycle; `price_filters` can scope which prices contribute.
- * Each plan can have one `cost_exceeded` alert and one `usage_exceeded` alert per metric that is a
- * part of the plan.
+ * Each plan can have one `cost_exceeded` alert, one `usage_exceeded` alert per metric that is a
+ * part of the plan, and up to 50 `spend_exceeded` alerts, one per combination of currency and
+ * `price_filters`, so separate products can each have their own spend alert.
  */
 class AlertCreateForPlanParams
 private constructor(
