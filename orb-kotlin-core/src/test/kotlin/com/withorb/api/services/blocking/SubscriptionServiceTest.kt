@@ -533,6 +533,20 @@ internal class SubscriptionServiceTest {
         subscriptionUsage.validate()
     }
 
+    @Test
+    fun listSummary() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val subscriptionService = client.subscriptions()
+
+        val page = subscriptionService.listSummary()
+
+        page.response().validate()
+    }
+
     @Disabled("Incorrect example breaks Prism")
     @Test
     fun priceIntervals() {

@@ -29,6 +29,9 @@ import com.withorb.api.models.SubscriptionFetchScheduleParams
 import com.withorb.api.models.SubscriptionFetchUsageParams
 import com.withorb.api.models.SubscriptionListPage
 import com.withorb.api.models.SubscriptionListParams
+import com.withorb.api.models.SubscriptionListSummaryPage
+import com.withorb.api.models.SubscriptionListSummaryPageResponse
+import com.withorb.api.models.SubscriptionListSummaryParams
 import com.withorb.api.models.SubscriptionPriceIntervalsParams
 import com.withorb.api.models.SubscriptionRedeemCouponParams
 import com.withorb.api.models.SubscriptionSchedulePlanChangeParams
@@ -109,6 +112,13 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
     ): SubscriptionUsage =
         // get /subscriptions/{subscription_id}/usage
         withRawResponse().fetchUsage(params, requestOptions).parse()
+
+    override fun listSummary(
+        params: SubscriptionListSummaryParams,
+        requestOptions: RequestOptions,
+    ): SubscriptionListSummaryPage =
+        // get /subscriptions/summary
+        withRawResponse().listSummary(params, requestOptions).parse()
 
     override fun priceIntervals(
         params: SubscriptionPriceIntervalsParams,
@@ -433,6 +443,40 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
                         if (requestOptions.responseValidation!!) {
                             it.validate()
                         }
+                    }
+            }
+        }
+
+        private val listSummaryHandler: Handler<SubscriptionListSummaryPageResponse> =
+            jsonHandler<SubscriptionListSummaryPageResponse>(clientOptions.jsonMapper)
+
+        override fun listSummary(
+            params: SubscriptionListSummaryParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SubscriptionListSummaryPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("subscriptions", "summary")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { listSummaryHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        SubscriptionListSummaryPage.builder()
+                            .service(SubscriptionServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

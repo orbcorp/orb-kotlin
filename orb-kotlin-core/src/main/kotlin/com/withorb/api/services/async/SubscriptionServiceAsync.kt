@@ -18,6 +18,8 @@ import com.withorb.api.models.SubscriptionFetchScheduleParams
 import com.withorb.api.models.SubscriptionFetchUsageParams
 import com.withorb.api.models.SubscriptionListPageAsync
 import com.withorb.api.models.SubscriptionListParams
+import com.withorb.api.models.SubscriptionListSummaryPageAsync
+import com.withorb.api.models.SubscriptionListSummaryParams
 import com.withorb.api.models.SubscriptionPriceIntervalsParams
 import com.withorb.api.models.SubscriptionRedeemCouponParams
 import com.withorb.api.models.SubscriptionSchedulePlanChangeParams
@@ -668,6 +670,25 @@ interface SubscriptionServiceAsync {
         requestOptions: RequestOptions,
     ): SubscriptionUsage =
         fetchUsage(subscriptionId, SubscriptionFetchUsageParams.none(), requestOptions)
+
+    /**
+     * This is a lighter-weight version of
+     * [List subscriptions](/api-reference/subscription/list-subscriptions), with the same filters,
+     * pagination and order. It returns each subscription's own fields, with its plan and customer
+     * as references, and leaves out price intervals, billing periods, plan phases and other derived
+     * fields, making it faster to respond. Fetch a subscription for those.
+     *
+     * This is the same summary of a subscription that standard
+     * [webhook payloads](/integrations-and-exports/webhook-payload-styles) carry.
+     */
+    suspend fun listSummary(
+        params: SubscriptionListSummaryParams = SubscriptionListSummaryParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubscriptionListSummaryPageAsync
+
+    /** @see listSummary */
+    suspend fun listSummary(requestOptions: RequestOptions): SubscriptionListSummaryPageAsync =
+        listSummary(SubscriptionListSummaryParams.none(), requestOptions)
 
     /**
      * This endpoint is used to add and edit subscription
@@ -1370,6 +1391,23 @@ interface SubscriptionServiceAsync {
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionUsage> =
             fetchUsage(subscriptionId, SubscriptionFetchUsageParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `get /subscriptions/summary`, but is otherwise the same
+         * as [SubscriptionServiceAsync.listSummary].
+         */
+        @MustBeClosed
+        suspend fun listSummary(
+            params: SubscriptionListSummaryParams = SubscriptionListSummaryParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubscriptionListSummaryPageAsync>
+
+        /** @see listSummary */
+        @MustBeClosed
+        suspend fun listSummary(
+            requestOptions: RequestOptions
+        ): HttpResponseFor<SubscriptionListSummaryPageAsync> =
+            listSummary(SubscriptionListSummaryParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /subscriptions/{subscription_id}/price_intervals`,
