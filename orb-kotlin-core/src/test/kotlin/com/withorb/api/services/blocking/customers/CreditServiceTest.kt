@@ -4,6 +4,8 @@ package com.withorb.api.services.blocking.customers
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.models.CustomerCreditFetchBalanceByExternalIdParams
+import com.withorb.api.models.CustomerCreditFetchBalanceParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -22,6 +24,46 @@ internal class CreditServiceTest {
         val page = creditService.list("customer_id")
 
         page.response().validate()
+    }
+
+    @Test
+    fun fetchBalance() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val creditService = client.customers().credits()
+
+        val response =
+            creditService.fetchBalance(
+                CustomerCreditFetchBalanceParams.builder()
+                    .customerId("customer_id")
+                    .currency("currency")
+                    .build()
+            )
+
+        response.validate()
+    }
+
+    @Test
+    fun fetchBalanceByExternalId() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val creditService = client.customers().credits()
+
+        val response =
+            creditService.fetchBalanceByExternalId(
+                CustomerCreditFetchBalanceByExternalIdParams.builder()
+                    .externalCustomerId("external_customer_id")
+                    .currency("currency")
+                    .build()
+            )
+
+        response.validate()
     }
 
     @Test

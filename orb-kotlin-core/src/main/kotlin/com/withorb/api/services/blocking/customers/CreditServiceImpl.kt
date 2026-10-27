@@ -15,6 +15,10 @@ import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
+import com.withorb.api.models.CustomerCreditFetchBalanceByExternalIdParams
+import com.withorb.api.models.CustomerCreditFetchBalanceByExternalIdResponse
+import com.withorb.api.models.CustomerCreditFetchBalanceParams
+import com.withorb.api.models.CustomerCreditFetchBalanceResponse
 import com.withorb.api.models.CustomerCreditListByExternalIdPage
 import com.withorb.api.models.CustomerCreditListByExternalIdPageResponse
 import com.withorb.api.models.CustomerCreditListByExternalIdParams
@@ -64,6 +68,20 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
     ): CustomerCreditListPage =
         // get /customers/{customer_id}/credits
         withRawResponse().list(params, requestOptions).parse()
+
+    override fun fetchBalance(
+        params: CustomerCreditFetchBalanceParams,
+        requestOptions: RequestOptions,
+    ): CustomerCreditFetchBalanceResponse =
+        // get /customers/{customer_id}/credits/balance
+        withRawResponse().fetchBalance(params, requestOptions).parse()
+
+    override fun fetchBalanceByExternalId(
+        params: CustomerCreditFetchBalanceByExternalIdParams,
+        requestOptions: RequestOptions,
+    ): CustomerCreditFetchBalanceByExternalIdResponse =
+        // get /customers/external_customer_id/{external_customer_id}/credits/balance
+        withRawResponse().fetchBalanceByExternalId(params, requestOptions).parse()
 
     override fun listByExternalId(
         params: CustomerCreditListByExternalIdParams,
@@ -136,6 +154,73 @@ class CreditServiceImpl internal constructor(private val clientOptions: ClientOp
                             .params(params)
                             .response(it)
                             .build()
+                    }
+            }
+        }
+
+        private val fetchBalanceHandler: Handler<CustomerCreditFetchBalanceResponse> =
+            jsonHandler<CustomerCreditFetchBalanceResponse>(clientOptions.jsonMapper)
+
+        override fun fetchBalance(
+            params: CustomerCreditFetchBalanceParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreditFetchBalanceResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("customerId", params.customerId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("customers", params._pathParam(0), "credits", "balance")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { fetchBalanceHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val fetchBalanceByExternalIdHandler:
+            Handler<CustomerCreditFetchBalanceByExternalIdResponse> =
+            jsonHandler<CustomerCreditFetchBalanceByExternalIdResponse>(clientOptions.jsonMapper)
+
+        override fun fetchBalanceByExternalId(
+            params: CustomerCreditFetchBalanceByExternalIdParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreditFetchBalanceByExternalIdResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalCustomerId", params.externalCustomerId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments(
+                        "customers",
+                        "external_customer_id",
+                        params._pathParam(0),
+                        "credits",
+                        "balance",
+                    )
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { fetchBalanceByExternalIdHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
                     }
             }
         }
