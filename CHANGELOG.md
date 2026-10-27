@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.49.0](https://github.com/orbcorp/orb-kotlin/compare/v1.48.0...v1.49.0) (2026-10-27)
+
+
+### Features
+
+* **api:** allow up to 50 spend_exceeded alerts per plan or subscription ([bbf04a9](https://github.com/orbcorp/orb-kotlin/commit/bbf04a986965410149ea98851c48bf26c0e30107))
+
 ## [1.48.0](https://github.com/orbcorp/orb-kotlin/compare/v1.47.0...v1.48.0) (2026-10-24)
 
 
