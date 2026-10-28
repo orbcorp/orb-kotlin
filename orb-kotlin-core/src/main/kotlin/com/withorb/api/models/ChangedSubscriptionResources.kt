@@ -406,6 +406,8 @@ private constructor(
         private val paymentReceivedAt: JsonField<OffsetDateTime>,
         private val paymentStartedAt: JsonField<OffsetDateTime>,
         private val scheduledIssueAt: JsonField<OffsetDateTime>,
+        private val servicePeriodEnd: JsonField<OffsetDateTime>,
+        private val servicePeriodStart: JsonField<OffsetDateTime>,
         private val shippingAddress: JsonField<Address>,
         private val status: JsonField<Status>,
         private val subscription: JsonField<SubscriptionMinified>,
@@ -518,6 +520,12 @@ private constructor(
             @JsonProperty("scheduled_issue_at")
             @ExcludeMissing
             scheduledIssueAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("service_period_end")
+            @ExcludeMissing
+            servicePeriodEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("service_period_start")
+            @ExcludeMissing
+            servicePeriodStart: JsonField<OffsetDateTime> = JsonMissing.of(),
             @JsonProperty("shipping_address")
             @ExcludeMissing
             shippingAddress: JsonField<Address> = JsonMissing.of(),
@@ -575,6 +583,8 @@ private constructor(
             paymentReceivedAt,
             paymentStartedAt,
             scheduledIssueAt,
+            servicePeriodEnd,
+            servicePeriodStart,
             shippingAddress,
             status,
             subscription,
@@ -1034,6 +1044,25 @@ private constructor(
         fun scheduledIssueAt(): OffsetDateTime? = scheduledIssueAt.getNullable("scheduled_issue_at")
 
         /**
+         * The latest `end_date` of the invoice's line items, including any line items hidden
+         * because they have zero quantity. This is `null` when the invoice has no line items.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun servicePeriodEnd(): OffsetDateTime? = servicePeriodEnd.getNullable("service_period_end")
+
+        /**
+         * The earliest `start_date` of the invoice's line items, including any line items hidden
+         * because they have zero quantity. This is `null` when the invoice has no line items.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun servicePeriodStart(): OffsetDateTime? =
+            servicePeriodStart.getNullable("service_period_start")
+
+        /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
@@ -1413,6 +1442,26 @@ private constructor(
         fun _scheduledIssueAt(): JsonField<OffsetDateTime> = scheduledIssueAt
 
         /**
+         * Returns the raw JSON value of [servicePeriodEnd].
+         *
+         * Unlike [servicePeriodEnd], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("service_period_end")
+        @ExcludeMissing
+        fun _servicePeriodEnd(): JsonField<OffsetDateTime> = servicePeriodEnd
+
+        /**
+         * Returns the raw JSON value of [servicePeriodStart].
+         *
+         * Unlike [servicePeriodStart], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("service_period_start")
+        @ExcludeMissing
+        fun _servicePeriodStart(): JsonField<OffsetDateTime> = servicePeriodStart
+
+        /**
          * Returns the raw JSON value of [shippingAddress].
          *
          * Unlike [shippingAddress], this method doesn't throw if the JSON field has an unexpected
@@ -1537,6 +1586,8 @@ private constructor(
              * .paymentReceivedAt()
              * .paymentStartedAt()
              * .scheduledIssueAt()
+             * .servicePeriodEnd()
+             * .servicePeriodStart()
              * .shippingAddress()
              * .status()
              * .subscription()
@@ -1591,6 +1642,8 @@ private constructor(
             private var paymentReceivedAt: JsonField<OffsetDateTime>? = null
             private var paymentStartedAt: JsonField<OffsetDateTime>? = null
             private var scheduledIssueAt: JsonField<OffsetDateTime>? = null
+            private var servicePeriodEnd: JsonField<OffsetDateTime>? = null
+            private var servicePeriodStart: JsonField<OffsetDateTime>? = null
             private var shippingAddress: JsonField<Address>? = null
             private var status: JsonField<Status>? = null
             private var subscription: JsonField<SubscriptionMinified>? = null
@@ -1639,6 +1692,8 @@ private constructor(
                 paymentReceivedAt = createdInvoice.paymentReceivedAt
                 paymentStartedAt = createdInvoice.paymentStartedAt
                 scheduledIssueAt = createdInvoice.scheduledIssueAt
+                servicePeriodEnd = createdInvoice.servicePeriodEnd
+                servicePeriodStart = createdInvoice.servicePeriodStart
                 shippingAddress = createdInvoice.shippingAddress
                 status = createdInvoice.status
                 subscription = createdInvoice.subscription
@@ -2465,6 +2520,43 @@ private constructor(
                 this.scheduledIssueAt = scheduledIssueAt
             }
 
+            /**
+             * The latest `end_date` of the invoice's line items, including any line items hidden
+             * because they have zero quantity. This is `null` when the invoice has no line items.
+             */
+            fun servicePeriodEnd(servicePeriodEnd: OffsetDateTime?) =
+                servicePeriodEnd(JsonField.ofNullable(servicePeriodEnd))
+
+            /**
+             * Sets [Builder.servicePeriodEnd] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.servicePeriodEnd] with a well-typed [OffsetDateTime]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun servicePeriodEnd(servicePeriodEnd: JsonField<OffsetDateTime>) = apply {
+                this.servicePeriodEnd = servicePeriodEnd
+            }
+
+            /**
+             * The earliest `start_date` of the invoice's line items, including any line items
+             * hidden because they have zero quantity. This is `null` when the invoice has no line
+             * items.
+             */
+            fun servicePeriodStart(servicePeriodStart: OffsetDateTime?) =
+                servicePeriodStart(JsonField.ofNullable(servicePeriodStart))
+
+            /**
+             * Sets [Builder.servicePeriodStart] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.servicePeriodStart] with a well-typed
+             * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+             * undocumented or not yet supported value.
+             */
+            fun servicePeriodStart(servicePeriodStart: JsonField<OffsetDateTime>) = apply {
+                this.servicePeriodStart = servicePeriodStart
+            }
+
             fun shippingAddress(shippingAddress: Address?) =
                 shippingAddress(JsonField.ofNullable(shippingAddress))
 
@@ -2641,6 +2733,8 @@ private constructor(
              * .paymentReceivedAt()
              * .paymentStartedAt()
              * .scheduledIssueAt()
+             * .servicePeriodEnd()
+             * .servicePeriodStart()
              * .shippingAddress()
              * .status()
              * .subscription()
@@ -2693,6 +2787,8 @@ private constructor(
                     checkRequired("paymentReceivedAt", paymentReceivedAt),
                     checkRequired("paymentStartedAt", paymentStartedAt),
                     checkRequired("scheduledIssueAt", scheduledIssueAt),
+                    checkRequired("servicePeriodEnd", servicePeriodEnd),
+                    checkRequired("servicePeriodStart", servicePeriodStart),
                     checkRequired("shippingAddress", shippingAddress),
                     checkRequired("status", status),
                     checkRequired("subscription", subscription),
@@ -2756,6 +2852,8 @@ private constructor(
             paymentReceivedAt()
             paymentStartedAt()
             scheduledIssueAt()
+            servicePeriodEnd()
+            servicePeriodStart()
             shippingAddress()?.validate()
             status().validate()
             subscription()?.validate()
@@ -2817,6 +2915,8 @@ private constructor(
                 (if (paymentReceivedAt.asKnown() == null) 0 else 1) +
                 (if (paymentStartedAt.asKnown() == null) 0 else 1) +
                 (if (scheduledIssueAt.asKnown() == null) 0 else 1) +
+                (if (servicePeriodEnd.asKnown() == null) 0 else 1) +
+                (if (servicePeriodStart.asKnown() == null) 0 else 1) +
                 (shippingAddress.asKnown()?.validity() ?: 0) +
                 (status.asKnown()?.validity() ?: 0) +
                 (subscription.asKnown()?.validity() ?: 0) +
@@ -8937,6 +9037,8 @@ private constructor(
                 paymentReceivedAt == other.paymentReceivedAt &&
                 paymentStartedAt == other.paymentStartedAt &&
                 scheduledIssueAt == other.scheduledIssueAt &&
+                servicePeriodEnd == other.servicePeriodEnd &&
+                servicePeriodStart == other.servicePeriodStart &&
                 shippingAddress == other.shippingAddress &&
                 status == other.status &&
                 subscription == other.subscription &&
@@ -8986,6 +9088,8 @@ private constructor(
                 paymentReceivedAt,
                 paymentStartedAt,
                 scheduledIssueAt,
+                servicePeriodEnd,
+                servicePeriodStart,
                 shippingAddress,
                 status,
                 subscription,
@@ -9001,7 +9105,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CreatedInvoice{id=$id, amountDue=$amountDue, autoCollection=$autoCollection, billingAddress=$billingAddress, createdAt=$createdAt, creditNotes=$creditNotes, currency=$currency, customer=$customer, customerBalanceTransactions=$customerBalanceTransactions, customerTaxId=$customerTaxId, discount=$discount, discounts=$discounts, dueDate=$dueDate, eligibleToIssueAt=$eligibleToIssueAt, hiddenLineItemCount=$hiddenLineItemCount, hostedInvoiceUrl=$hostedInvoiceUrl, invoiceDate=$invoiceDate, invoiceNumber=$invoiceNumber, invoicePdf=$invoicePdf, invoiceSource=$invoiceSource, isPayableNow=$isPayableNow, issueFailedAt=$issueFailedAt, issuedAt=$issuedAt, lineItems=$lineItems, maximum=$maximum, maximumAmount=$maximumAmount, memo=$memo, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, paidAt=$paidAt, paymentAttempts=$paymentAttempts, paymentFailedAt=$paymentFailedAt, paymentReceivedAt=$paymentReceivedAt, paymentStartedAt=$paymentStartedAt, scheduledIssueAt=$scheduledIssueAt, shippingAddress=$shippingAddress, status=$status, subscription=$subscription, subtotal=$subtotal, syncFailedAt=$syncFailedAt, total=$total, voidedAt=$voidedAt, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
+            "CreatedInvoice{id=$id, amountDue=$amountDue, autoCollection=$autoCollection, billingAddress=$billingAddress, createdAt=$createdAt, creditNotes=$creditNotes, currency=$currency, customer=$customer, customerBalanceTransactions=$customerBalanceTransactions, customerTaxId=$customerTaxId, discount=$discount, discounts=$discounts, dueDate=$dueDate, eligibleToIssueAt=$eligibleToIssueAt, hiddenLineItemCount=$hiddenLineItemCount, hostedInvoiceUrl=$hostedInvoiceUrl, invoiceDate=$invoiceDate, invoiceNumber=$invoiceNumber, invoicePdf=$invoicePdf, invoiceSource=$invoiceSource, isPayableNow=$isPayableNow, issueFailedAt=$issueFailedAt, issuedAt=$issuedAt, lineItems=$lineItems, maximum=$maximum, maximumAmount=$maximumAmount, memo=$memo, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, paidAt=$paidAt, paymentAttempts=$paymentAttempts, paymentFailedAt=$paymentFailedAt, paymentReceivedAt=$paymentReceivedAt, paymentStartedAt=$paymentStartedAt, scheduledIssueAt=$scheduledIssueAt, servicePeriodEnd=$servicePeriodEnd, servicePeriodStart=$servicePeriodStart, shippingAddress=$shippingAddress, status=$status, subscription=$subscription, subtotal=$subtotal, syncFailedAt=$syncFailedAt, total=$total, voidedAt=$voidedAt, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
