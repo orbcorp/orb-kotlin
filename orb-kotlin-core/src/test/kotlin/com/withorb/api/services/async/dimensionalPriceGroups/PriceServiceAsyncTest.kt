@@ -31,7 +31,7 @@ internal class PriceServiceAsyncTest {
                     .addPrice(
                         DimensionalPriceGroupPriceCreateParams.Price.builder()
                             .addAmount(0.0)
-                            .addDimensionValue("string")
+                            .addDimensionValue("x")
                             .name("name")
                             .build()
                     )
