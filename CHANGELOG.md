@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.51.0](https://github.com/orbcorp/orb-kotlin/compare/v1.50.0...v1.51.0) (2026-10-30)
+
+
+### Features
+
+* **api:** api update ([58e7357](https://github.com/orbcorp/orb-kotlin/commit/58e735733d1e732a64164a9a2c0d1a9e163afcbd))
+
 ## [1.50.0](https://github.com/orbcorp/orb-kotlin/compare/v1.49.0...v1.50.0) (2026-10-29)
 
 
