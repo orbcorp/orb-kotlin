@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.52.0](https://github.com/orbcorp/orb-kotlin/compare/v1.51.0...v1.52.0) (2026-10-31)
+
+
+### Features
+
+* **api:** add void status for deleted credit blocks in CreditBlock schema ([bf1b314](https://github.com/orbcorp/orb-kotlin/commit/bf1b314b5ee7e155351f8adb6c3eb38ac89e68d5))
+
 ## [1.51.0](https://github.com/orbcorp/orb-kotlin/compare/v1.50.0...v1.51.0) (2026-10-30)
 
 
