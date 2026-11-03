@@ -23,6 +23,7 @@ import com.withorb.api.models.MetricFetchParams
 import com.withorb.api.models.MetricListPage
 import com.withorb.api.models.MetricListPageResponse
 import com.withorb.api.models.MetricListParams
+import com.withorb.api.models.MetricPublishParams
 import com.withorb.api.models.MetricUnarchiveParams
 import com.withorb.api.models.MetricUpdateParams
 
@@ -70,6 +71,13 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
     override fun fetch(params: MetricFetchParams, requestOptions: RequestOptions): BillableMetric =
         // get /metrics/{metric_id}
         withRawResponse().fetch(params, requestOptions).parse()
+
+    override fun publish(
+        params: MetricPublishParams,
+        requestOptions: RequestOptions,
+    ): BillableMetric =
+        // post /metrics/{metric_id}/publish
+        withRawResponse().publish(params, requestOptions).parse()
 
     override fun unarchive(
         params: MetricUnarchiveParams,
@@ -235,6 +243,37 @@ class MetricServiceImpl internal constructor(private val clientOptions: ClientOp
             return errorHandler.handle(response).parseable {
                 response
                     .use { fetchHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val publishHandler: Handler<BillableMetric> =
+            jsonHandler<BillableMetric>(clientOptions.jsonMapper)
+
+        override fun publish(
+            params: MetricPublishParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<BillableMetric> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("metricId", params.metricId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("metrics", params._pathParam(0), "publish")
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { publishHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()

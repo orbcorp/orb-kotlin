@@ -112,6 +112,20 @@ internal class MetricServiceTest {
     }
 
     @Test
+    fun publish() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val metricService = client.metrics()
+
+        val billableMetric = metricService.publish("metric_id")
+
+        billableMetric.validate()
+    }
+
+    @Test
     fun unarchive() {
         val client =
             OrbOkHttpClient.builder()
