@@ -673,8 +673,11 @@ private constructor(
         @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val description: JsonField<String>,
+            private val itemId: JsonField<String>,
             private val metadata: JsonField<Metadata>,
             private val name: JsonField<String>,
+            private val sql: JsonField<String>,
+            private val status: JsonField<Status>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
 
@@ -683,17 +686,28 @@ private constructor(
                 @JsonProperty("description")
                 @ExcludeMissing
                 description: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("item_id")
+                @ExcludeMissing
+                itemId: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("metadata")
                 @ExcludeMissing
                 metadata: JsonField<Metadata> = JsonMissing.of(),
                 @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-            ) : this(description, metadata, name, mutableMapOf())
+                @JsonProperty("sql") @ExcludeMissing sql: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
+            ) : this(description, itemId, metadata, name, sql, status, mutableMapOf())
 
             /**
              * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
              *   server responded with an unexpected value).
              */
             fun description(): String? = description.getNullable("description")
+
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun itemId(): String? = itemId.getNullable("item_id")
 
             /**
              * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -708,6 +722,18 @@ private constructor(
             fun name(): String? = name.getNullable("name")
 
             /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun sql(): String? = sql.getNullable("sql")
+
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun status(): Status? = status.getNullable("status")
+
+            /**
              * Returns the raw JSON value of [description].
              *
              * Unlike [description], this method doesn't throw if the JSON field has an unexpected
@@ -716,6 +742,13 @@ private constructor(
             @JsonProperty("description")
             @ExcludeMissing
             fun _description(): JsonField<String> = description
+
+            /**
+             * Returns the raw JSON value of [itemId].
+             *
+             * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
             /**
              * Returns the raw JSON value of [metadata].
@@ -733,6 +766,20 @@ private constructor(
              * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
              */
             @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+            /**
+             * Returns the raw JSON value of [sql].
+             *
+             * Unlike [sql], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("sql") @ExcludeMissing fun _sql(): JsonField<String> = sql
+
+            /**
+             * Returns the raw JSON value of [status].
+             *
+             * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
             @JsonAnySetter
             private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -758,14 +805,20 @@ private constructor(
             class Builder internal constructor() {
 
                 private var description: JsonField<String> = JsonMissing.of()
+                private var itemId: JsonField<String> = JsonMissing.of()
                 private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
+                private var sql: JsonField<String> = JsonMissing.of()
+                private var status: JsonField<Status> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(previousAttributes: PreviousAttributes) = apply {
                     description = previousAttributes.description
+                    itemId = previousAttributes.itemId
                     metadata = previousAttributes.metadata
                     name = previousAttributes.name
+                    sql = previousAttributes.sql
+                    status = previousAttributes.status
                     additionalProperties = previousAttributes.additionalProperties.toMutableMap()
                 }
 
@@ -782,6 +835,17 @@ private constructor(
                 fun description(description: JsonField<String>) = apply {
                     this.description = description
                 }
+
+                fun itemId(itemId: String?) = itemId(JsonField.ofNullable(itemId))
+
+                /**
+                 * Sets [Builder.itemId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.itemId] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                 fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
 
@@ -804,6 +868,28 @@ private constructor(
                  * supported value.
                  */
                 fun name(name: JsonField<String>) = apply { this.name = name }
+
+                fun sql(sql: String?) = sql(JsonField.ofNullable(sql))
+
+                /**
+                 * Sets [Builder.sql] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.sql] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun sql(sql: JsonField<String>) = apply { this.sql = sql }
+
+                fun status(status: Status?) = status(JsonField.ofNullable(status))
+
+                /**
+                 * Sets [Builder.status] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.status] with a well-typed [Status] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun status(status: JsonField<Status>) = apply { this.status = status }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -835,8 +921,11 @@ private constructor(
                 fun build(): PreviousAttributes =
                     PreviousAttributes(
                         description,
+                        itemId,
                         metadata,
                         name,
+                        sql,
+                        status,
                         additionalProperties.toMutableMap(),
                     )
             }
@@ -859,8 +948,11 @@ private constructor(
                 }
 
                 description()
+                itemId()
                 metadata()?.validate()
                 name()
+                sql()
+                status()?.validate()
                 validated = true
             }
 
@@ -880,8 +972,11 @@ private constructor(
              */
             internal fun validity(): Int =
                 (if (description.asKnown() == null) 0 else 1) +
+                    (if (itemId.asKnown() == null) 0 else 1) +
                     (metadata.asKnown()?.validity() ?: 0) +
-                    (if (name.asKnown() == null) 0 else 1)
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (sql.asKnown() == null) 0 else 1) +
+                    (status.asKnown()?.validity() ?: 0)
 
             class Metadata
             @JsonCreator
@@ -995,6 +1090,151 @@ private constructor(
                 override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
             }
 
+            class Status @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val ACTIVE = of("active")
+
+                    val ARCHIVED = of("archived")
+
+                    val DRAFT = of("draft")
+
+                    fun of(value: String) = Status(JsonField.of(value))
+                }
+
+                /** An enum containing [Status]'s known values. */
+                enum class Known {
+                    ACTIVE,
+                    ARCHIVED,
+                    DRAFT,
+                }
+
+                /**
+                 * An enum containing [Status]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [Status] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    ACTIVE,
+                    ARCHIVED,
+                    DRAFT,
+                    /**
+                     * An enum member indicating that [Status] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        ACTIVE -> Value.ACTIVE
+                        ARCHIVED -> Value.ARCHIVED
+                        DRAFT -> Value.DRAFT
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        ACTIVE -> Known.ACTIVE
+                        ARCHIVED -> Known.ARCHIVED
+                        DRAFT -> Known.DRAFT
+                        else -> throw OrbInvalidDataException("Unknown Status: $value")
+                    }
+
+                /**
+                 * Returns this class instance's primitive wire representation.
+                 *
+                 * This differs from the [toString] method because that method is primarily for
+                 * debugging and generally doesn't throw.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value does not have the
+                 *   expected primitive type.
+                 */
+                fun asString(): String =
+                    _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                /**
+                 * Validates that the types of all values in this object match their expected types
+                 * recursively.
+                 *
+                 * This method is _not_ forwards compatible with new types from the API for existing
+                 * fields.
+                 *
+                 * @throws OrbInvalidDataException if any value type in this object doesn't match
+                 *   its expected type.
+                 */
+                fun validate(): Status = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: OrbInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Status && value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
                     return true
@@ -1002,19 +1242,22 @@ private constructor(
 
                 return other is PreviousAttributes &&
                     description == other.description &&
+                    itemId == other.itemId &&
                     metadata == other.metadata &&
                     name == other.name &&
+                    sql == other.sql &&
+                    status == other.status &&
                     additionalProperties == other.additionalProperties
             }
 
             private val hashCode: Int by lazy {
-                Objects.hash(description, metadata, name, additionalProperties)
+                Objects.hash(description, itemId, metadata, name, sql, status, additionalProperties)
             }
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "PreviousAttributes{description=$description, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
+                "PreviousAttributes{description=$description, itemId=$itemId, metadata=$metadata, name=$name, sql=$sql, status=$status, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {

@@ -377,6 +377,7 @@ internal class UnwrapStandardWebhookEventTest {
                             BillableMetricEditedStandardWebhookEvent.Properties.PreviousAttributes
                                 .builder()
                                 .description("description")
+                                .itemId("item_id")
                                 .metadata(
                                     BillableMetricEditedStandardWebhookEvent.Properties
                                         .PreviousAttributes
@@ -386,6 +387,13 @@ internal class UnwrapStandardWebhookEventTest {
                                         .build()
                                 )
                                 .name("name")
+                                .sql("sql")
+                                .status(
+                                    BillableMetricEditedStandardWebhookEvent.Properties
+                                        .PreviousAttributes
+                                        .Status
+                                        .ACTIVE
+                                )
                                 .build()
                         )
                         .build()
@@ -537,6 +545,7 @@ internal class UnwrapStandardWebhookEventTest {
                                     .PreviousAttributes
                                     .builder()
                                     .description("description")
+                                    .itemId("item_id")
                                     .metadata(
                                         BillableMetricEditedStandardWebhookEvent.Properties
                                             .PreviousAttributes
@@ -546,6 +555,13 @@ internal class UnwrapStandardWebhookEventTest {
                                             .build()
                                     )
                                     .name("name")
+                                    .sql("sql")
+                                    .status(
+                                        BillableMetricEditedStandardWebhookEvent.Properties
+                                            .PreviousAttributes
+                                            .Status
+                                            .ACTIVE
+                                    )
                                     .build()
                             )
                             .build()

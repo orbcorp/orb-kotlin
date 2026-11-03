@@ -47,6 +47,9 @@ interface MetricServiceAsync {
      * This endpoint allows you to update the `name`, `description`, and `metadata` properties on a
      * metric. Fields left out of the request are not changed, and `name` cannot be empty. If you
      * pass `null` for the metadata value, it will clear any existing metadata for that metric.
+     *
+     * While a metric is in `draft` status, its `sql` and `item_id` can also be changed. Use
+     * [publish metric](/api-reference/metric/publish-metric) to make a draft metric active.
      */
     suspend fun update(
         metricId: String,

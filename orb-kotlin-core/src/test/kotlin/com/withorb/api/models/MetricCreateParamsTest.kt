@@ -20,6 +20,7 @@ internal class MetricCreateParamsTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+            .status(MetricCreateParams.Status.ACTIVE)
             .build()
     }
 
@@ -36,6 +37,7 @@ internal class MetricCreateParamsTest {
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
+                .status(MetricCreateParams.Status.ACTIVE)
                 .build()
 
         val body = params._body()
@@ -51,6 +53,7 @@ internal class MetricCreateParamsTest {
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
+        assertThat(body.status()).isEqualTo(MetricCreateParams.Status.ACTIVE)
     }
 
     @Test

@@ -34,6 +34,7 @@ internal class MetricServiceTest {
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
+                    .status(MetricCreateParams.Status.ACTIVE)
                     .build()
             )
 
@@ -54,12 +55,14 @@ internal class MetricServiceTest {
                 MetricUpdateParams.builder()
                     .metricId("metric_id")
                     .description("Sum of bytes downloaded in fast mode")
+                    .itemId("item_id")
                     .metadata(
                         MetricUpdateParams.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .name("Bytes downloaded")
+                    .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
                     .build()
             )
 

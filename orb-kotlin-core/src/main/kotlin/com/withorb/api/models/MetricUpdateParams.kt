@@ -22,6 +22,9 @@ import java.util.Objects
  * This endpoint allows you to update the `name`, `description`, and `metadata` properties on a
  * metric. Fields left out of the request are not changed, and `name` cannot be empty. If you pass
  * `null` for the metadata value, it will clear any existing metadata for that metric.
+ *
+ * While a metric is in `draft` status, its `sql` and `item_id` can also be changed. Use
+ * [publish metric](/api-reference/metric/publish-metric) to make a draft metric active.
  */
 class MetricUpdateParams
 private constructor(
@@ -42,6 +45,15 @@ private constructor(
     fun description(): String? = body.description()
 
     /**
+     * The id of the item to associate the metric with. Can only be changed while the metric is in
+     * `draft` status.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun itemId(): String? = body.itemId()
+
+    /**
      * User-specified key/value pairs for the resource. Individual keys can be removed by setting
      * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
      * `null`.
@@ -60,11 +72,28 @@ private constructor(
     fun name(): String? = body.name()
 
     /**
+     * A new sql string defining the metric. Can only be changed while the metric is in `draft`
+     * status and no price uses it. If the metric has parameters, the new sql must use the same
+     * ones.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun sql(): String? = body.sql()
+
+    /**
      * Returns the raw JSON value of [description].
      *
      * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _description(): JsonField<String> = body._description()
+
+    /**
+     * Returns the raw JSON value of [itemId].
+     *
+     * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _itemId(): JsonField<String> = body._itemId()
 
     /**
      * Returns the raw JSON value of [metadata].
@@ -79,6 +108,13 @@ private constructor(
      * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _name(): JsonField<String> = body._name()
+
+    /**
+     * Returns the raw JSON value of [sql].
+     *
+     * Unlike [sql], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _sql(): JsonField<String> = body._sql()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
@@ -121,8 +157,11 @@ private constructor(
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
          * - [description]
+         * - [itemId]
          * - [metadata]
          * - [name]
+         * - [sql]
+         * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
 
@@ -137,6 +176,20 @@ private constructor(
          * value.
          */
         fun description(description: JsonField<String>) = apply { body.description(description) }
+
+        /**
+         * The id of the item to associate the metric with. Can only be changed while the metric is
+         * in `draft` status.
+         */
+        fun itemId(itemId: String?) = apply { body.itemId(itemId) }
+
+        /**
+         * Sets [Builder.itemId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.itemId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun itemId(itemId: JsonField<String>) = apply { body.itemId(itemId) }
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -164,6 +217,21 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun name(name: JsonField<String>) = apply { body.name(name) }
+
+        /**
+         * A new sql string defining the metric. Can only be changed while the metric is in `draft`
+         * status and no price uses it. If the metric has parameters, the new sql must use the same
+         * ones.
+         */
+        fun sql(sql: String?) = apply { body.sql(sql) }
+
+        /**
+         * Sets [Builder.sql] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.sql] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun sql(sql: JsonField<String>) = apply { body.sql(sql) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
@@ -312,8 +380,10 @@ private constructor(
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val description: JsonField<String>,
+        private val itemId: JsonField<String>,
         private val metadata: JsonField<Metadata>,
         private val name: JsonField<String>,
+        private val sql: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -322,11 +392,13 @@ private constructor(
             @JsonProperty("description")
             @ExcludeMissing
             description: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("item_id") @ExcludeMissing itemId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("metadata")
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(description, metadata, name, mutableMapOf())
+            @JsonProperty("sql") @ExcludeMissing sql: JsonField<String> = JsonMissing.of(),
+        ) : this(description, itemId, metadata, name, sql, mutableMapOf())
 
         /**
          * A description of the metric.
@@ -335,6 +407,15 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun description(): String? = description.getNullable("description")
+
+        /**
+         * The id of the item to associate the metric with. Can only be changed while the metric is
+         * in `draft` status.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun itemId(): String? = itemId.getNullable("item_id")
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -355,6 +436,16 @@ private constructor(
         fun name(): String? = name.getNullable("name")
 
         /**
+         * A new sql string defining the metric. Can only be changed while the metric is in `draft`
+         * status and no price uses it. If the metric has parameters, the new sql must use the same
+         * ones.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun sql(): String? = sql.getNullable("sql")
+
+        /**
          * Returns the raw JSON value of [description].
          *
          * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
@@ -362,6 +453,13 @@ private constructor(
         @JsonProperty("description")
         @ExcludeMissing
         fun _description(): JsonField<String> = description
+
+        /**
+         * Returns the raw JSON value of [itemId].
+         *
+         * Unlike [itemId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
         /**
          * Returns the raw JSON value of [metadata].
@@ -376,6 +474,13 @@ private constructor(
          * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+        /**
+         * Returns the raw JSON value of [sql].
+         *
+         * Unlike [sql], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("sql") @ExcludeMissing fun _sql(): JsonField<String> = sql
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -399,14 +504,18 @@ private constructor(
         class Builder internal constructor() {
 
             private var description: JsonField<String> = JsonMissing.of()
+            private var itemId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var name: JsonField<String> = JsonMissing.of()
+            private var sql: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(body: Body) = apply {
                 description = body.description
+                itemId = body.itemId
                 metadata = body.metadata
                 name = body.name
+                sql = body.sql
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
 
@@ -423,6 +532,21 @@ private constructor(
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
+
+            /**
+             * The id of the item to associate the metric with. Can only be changed while the metric
+             * is in `draft` status.
+             */
+            fun itemId(itemId: String?) = itemId(JsonField.ofNullable(itemId))
+
+            /**
+             * Sets [Builder.itemId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.itemId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -452,6 +576,22 @@ private constructor(
              */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
+            /**
+             * A new sql string defining the metric. Can only be changed while the metric is in
+             * `draft` status and no price uses it. If the metric has parameters, the new sql must
+             * use the same ones.
+             */
+            fun sql(sql: String?) = sql(JsonField.ofNullable(sql))
+
+            /**
+             * Sets [Builder.sql] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.sql] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun sql(sql: JsonField<String>) = apply { this.sql = sql }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -477,7 +617,7 @@ private constructor(
              * Further updates to this [Builder] will not mutate the returned instance.
              */
             fun build(): Body =
-                Body(description, metadata, name, additionalProperties.toMutableMap())
+                Body(description, itemId, metadata, name, sql, additionalProperties.toMutableMap())
         }
 
         private var validated: Boolean = false
@@ -497,8 +637,10 @@ private constructor(
             }
 
             description()
+            itemId()
             metadata()?.validate()
             name()
+            sql()
             validated = true
         }
 
@@ -518,8 +660,10 @@ private constructor(
          */
         internal fun validity(): Int =
             (if (description.asKnown() == null) 0 else 1) +
+                (if (itemId.asKnown() == null) 0 else 1) +
                 (metadata.asKnown()?.validity() ?: 0) +
-                (if (name.asKnown() == null) 0 else 1)
+                (if (name.asKnown() == null) 0 else 1) +
+                (if (sql.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -528,19 +672,21 @@ private constructor(
 
             return other is Body &&
                 description == other.description &&
+                itemId == other.itemId &&
                 metadata == other.metadata &&
                 name == other.name &&
+                sql == other.sql &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(description, metadata, name, additionalProperties)
+            Objects.hash(description, itemId, metadata, name, sql, additionalProperties)
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{description=$description, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
+            "Body{description=$description, itemId=$itemId, metadata=$metadata, name=$name, sql=$sql, additionalProperties=$additionalProperties}"
     }
 
     /**

@@ -279,9 +279,9 @@ private constructor(
 
             val ACTIVE = of("active")
 
-            val ARCHIVED = of("archived")
-
             val DRAFT = of("draft")
+
+            val ARCHIVED = of("archived")
 
             fun of(value: String) = Status(JsonField.of(value))
         }
@@ -289,8 +289,8 @@ private constructor(
         /** An enum containing [Status]'s known values. */
         enum class Known {
             ACTIVE,
-            ARCHIVED,
             DRAFT,
+            ARCHIVED,
         }
 
         /**
@@ -304,8 +304,8 @@ private constructor(
          */
         enum class Value {
             ACTIVE,
-            ARCHIVED,
             DRAFT,
+            ARCHIVED,
             /** An enum member indicating that [Status] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -320,8 +320,8 @@ private constructor(
         fun value(): Value =
             when (this) {
                 ACTIVE -> Value.ACTIVE
-                ARCHIVED -> Value.ARCHIVED
                 DRAFT -> Value.DRAFT
+                ARCHIVED -> Value.ARCHIVED
                 else -> Value._UNKNOWN
             }
 
@@ -336,8 +336,8 @@ private constructor(
         fun known(): Known =
             when (this) {
                 ACTIVE -> Known.ACTIVE
-                ARCHIVED -> Known.ARCHIVED
                 DRAFT -> Known.DRAFT
+                ARCHIVED -> Known.ARCHIVED
                 else -> throw OrbInvalidDataException("Unknown Status: $value")
             }
 

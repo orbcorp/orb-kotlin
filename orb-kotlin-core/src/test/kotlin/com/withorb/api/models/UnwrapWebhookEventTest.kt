@@ -374,6 +374,7 @@ internal class UnwrapWebhookEventTest {
                         .previousAttributes(
                             BillableMetricEditedWebhookEvent.Properties.PreviousAttributes.builder()
                                 .description("description")
+                                .itemId("item_id")
                                 .metadata(
                                     BillableMetricEditedWebhookEvent.Properties.PreviousAttributes
                                         .Metadata
@@ -382,6 +383,12 @@ internal class UnwrapWebhookEventTest {
                                         .build()
                                 )
                                 .name("name")
+                                .sql("sql")
+                                .status(
+                                    BillableMetricEditedWebhookEvent.Properties.PreviousAttributes
+                                        .Status
+                                        .ACTIVE
+                                )
                                 .build()
                         )
                         .build()
@@ -530,6 +537,7 @@ internal class UnwrapWebhookEventTest {
                                 BillableMetricEditedWebhookEvent.Properties.PreviousAttributes
                                     .builder()
                                     .description("description")
+                                    .itemId("item_id")
                                     .metadata(
                                         BillableMetricEditedWebhookEvent.Properties
                                             .PreviousAttributes
@@ -539,6 +547,13 @@ internal class UnwrapWebhookEventTest {
                                             .build()
                                     )
                                     .name("name")
+                                    .sql("sql")
+                                    .status(
+                                        BillableMetricEditedWebhookEvent.Properties
+                                            .PreviousAttributes
+                                            .Status
+                                            .ACTIVE
+                                    )
                                     .build()
                             )
                             .build()

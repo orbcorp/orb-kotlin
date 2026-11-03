@@ -63,6 +63,7 @@ internal class BillableMetricEditedWebhookEventTest {
                         .previousAttributes(
                             BillableMetricEditedWebhookEvent.Properties.PreviousAttributes.builder()
                                 .description("description")
+                                .itemId("item_id")
                                 .metadata(
                                     BillableMetricEditedWebhookEvent.Properties.PreviousAttributes
                                         .Metadata
@@ -71,6 +72,12 @@ internal class BillableMetricEditedWebhookEventTest {
                                         .build()
                                 )
                                 .name("name")
+                                .sql("sql")
+                                .status(
+                                    BillableMetricEditedWebhookEvent.Properties.PreviousAttributes
+                                        .Status
+                                        .ACTIVE
+                                )
                                 .build()
                         )
                         .build()
@@ -130,6 +137,7 @@ internal class BillableMetricEditedWebhookEventTest {
                     .previousAttributes(
                         BillableMetricEditedWebhookEvent.Properties.PreviousAttributes.builder()
                             .description("description")
+                            .itemId("item_id")
                             .metadata(
                                 BillableMetricEditedWebhookEvent.Properties.PreviousAttributes
                                     .Metadata
@@ -138,6 +146,12 @@ internal class BillableMetricEditedWebhookEventTest {
                                     .build()
                             )
                             .name("name")
+                            .sql("sql")
+                            .status(
+                                BillableMetricEditedWebhookEvent.Properties.PreviousAttributes
+                                    .Status
+                                    .ACTIVE
+                            )
                             .build()
                     )
                     .build()
@@ -199,6 +213,7 @@ internal class BillableMetricEditedWebhookEventTest {
                         .previousAttributes(
                             BillableMetricEditedWebhookEvent.Properties.PreviousAttributes.builder()
                                 .description("description")
+                                .itemId("item_id")
                                 .metadata(
                                     BillableMetricEditedWebhookEvent.Properties.PreviousAttributes
                                         .Metadata
@@ -207,6 +222,12 @@ internal class BillableMetricEditedWebhookEventTest {
                                         .build()
                                 )
                                 .name("name")
+                                .sql("sql")
+                                .status(
+                                    BillableMetricEditedWebhookEvent.Properties.PreviousAttributes
+                                        .Status
+                                        .ACTIVE
+                                )
                                 .build()
                         )
                         .build()

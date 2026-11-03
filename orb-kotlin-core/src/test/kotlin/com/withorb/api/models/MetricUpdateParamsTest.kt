@@ -13,12 +13,14 @@ internal class MetricUpdateParamsTest {
         MetricUpdateParams.builder()
             .metricId("metric_id")
             .description("Sum of bytes downloaded in fast mode")
+            .itemId("item_id")
             .metadata(
                 MetricUpdateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
                     .build()
             )
             .name("Bytes downloaded")
+            .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
             .build()
     }
 
@@ -37,17 +39,20 @@ internal class MetricUpdateParamsTest {
             MetricUpdateParams.builder()
                 .metricId("metric_id")
                 .description("Sum of bytes downloaded in fast mode")
+                .itemId("item_id")
                 .metadata(
                     MetricUpdateParams.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
                 .name("Bytes downloaded")
+                .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
                 .build()
 
         val body = params._body()
 
         assertThat(body.description()).isEqualTo("Sum of bytes downloaded in fast mode")
+        assertThat(body.itemId()).isEqualTo("item_id")
         assertThat(body.metadata())
             .isEqualTo(
                 MetricUpdateParams.Metadata.builder()
@@ -55,6 +60,8 @@ internal class MetricUpdateParamsTest {
                     .build()
             )
         assertThat(body.name()).isEqualTo("Bytes downloaded")
+        assertThat(body.sql())
+            .isEqualTo("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
     }
 
     @Test
