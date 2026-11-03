@@ -19,6 +19,7 @@ internal class PlanVersionPhaseTest {
                 .durationUnit(PlanVersionPhase.DurationUnit.DAILY)
                 .name("name")
                 .order(0L)
+                .addPriceId("string")
                 .build()
 
         assertThat(planVersionPhase.id()).isEqualTo("id")
@@ -27,6 +28,7 @@ internal class PlanVersionPhaseTest {
         assertThat(planVersionPhase.durationUnit()).isEqualTo(PlanVersionPhase.DurationUnit.DAILY)
         assertThat(planVersionPhase.name()).isEqualTo("name")
         assertThat(planVersionPhase.order()).isEqualTo(0L)
+        assertThat(planVersionPhase.priceIds()).containsExactly("string")
     }
 
     @Test
@@ -40,6 +42,7 @@ internal class PlanVersionPhaseTest {
                 .durationUnit(PlanVersionPhase.DurationUnit.DAILY)
                 .name("name")
                 .order(0L)
+                .addPriceId("string")
                 .build()
 
         val roundtrippedPlanVersionPhase =

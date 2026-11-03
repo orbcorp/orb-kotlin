@@ -45,6 +45,7 @@ internal class PlanVersionTest {
                         .durationUnit(PlanVersionPhase.DurationUnit.DAILY)
                         .name("name")
                         .order(0L)
+                        .addPriceId("string")
                         .build()
                 )
                 .addPrice(
@@ -215,6 +216,7 @@ internal class PlanVersionTest {
                     .durationUnit(PlanVersionPhase.DurationUnit.DAILY)
                     .name("name")
                     .order(0L)
+                    .addPriceId("string")
                     .build()
             )
         assertThat(planVersion.prices())
@@ -388,6 +390,7 @@ internal class PlanVersionTest {
                         .durationUnit(PlanVersionPhase.DurationUnit.DAILY)
                         .name("name")
                         .order(0L)
+                        .addPriceId("string")
                         .build()
                 )
                 .addPrice(

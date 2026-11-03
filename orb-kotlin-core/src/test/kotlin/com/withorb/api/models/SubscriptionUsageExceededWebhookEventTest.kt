@@ -536,6 +536,7 @@ internal class SubscriptionUsageExceededWebhookEventTest {
                                         .minimumAmount("minimum_amount")
                                         .name("name")
                                         .order(0L)
+                                        .addPriceId("string")
                                         .build()
                                 )
                                 .addPrice(
@@ -1429,6 +1430,7 @@ internal class SubscriptionUsageExceededWebhookEventTest {
                                     .minimumAmount("minimum_amount")
                                     .name("name")
                                     .order(0L)
+                                    .addPriceId("string")
                                     .build()
                             )
                             .addPrice(
@@ -2313,6 +2315,7 @@ internal class SubscriptionUsageExceededWebhookEventTest {
                                         .minimumAmount("minimum_amount")
                                         .name("name")
                                         .order(0L)
+                                        .addPriceId("string")
                                         .build()
                                 )
                                 .addPrice(

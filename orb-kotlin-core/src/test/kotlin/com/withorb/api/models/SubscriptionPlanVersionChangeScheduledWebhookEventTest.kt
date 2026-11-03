@@ -427,6 +427,7 @@ internal class SubscriptionPlanVersionChangeScheduledWebhookEventTest {
                                         .minimumAmount("minimum_amount")
                                         .name("name")
                                         .order(0L)
+                                        .addPriceId("string")
                                         .build()
                                 )
                                 .addPrice(
@@ -1220,6 +1221,7 @@ internal class SubscriptionPlanVersionChangeScheduledWebhookEventTest {
                                     .minimumAmount("minimum_amount")
                                     .name("name")
                                     .order(0L)
+                                    .addPriceId("string")
                                     .build()
                             )
                             .addPrice(
@@ -1998,6 +2000,7 @@ internal class SubscriptionPlanVersionChangeScheduledWebhookEventTest {
                                         .minimumAmount("minimum_amount")
                                         .name("name")
                                         .order(0L)
+                                        .addPriceId("string")
                                         .build()
                                 )
                                 .addPrice(
