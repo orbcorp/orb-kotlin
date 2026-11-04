@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.53.0](https://github.com/orbcorp/orb-kotlin/compare/v1.52.0...v1.53.0) (2026-11-04)
+
+
+### Features
+
+* **api:** add price_ids to plan phases in plan responses ([f92efc6](https://github.com/orbcorp/orb-kotlin/commit/f92efc6a6a295b5f9f45ba94625b289337c02c97))
+* **api:** support draft billable metrics with SQL/item edits and publish ([bed748f](https://github.com/orbcorp/orb-kotlin/commit/bed748f4ef7a2684a991fcc987ca28fbacc982b4))
+
 ## [1.52.0](https://github.com/orbcorp/orb-kotlin/compare/v1.51.0...v1.52.0) (2026-10-31)
 
 
