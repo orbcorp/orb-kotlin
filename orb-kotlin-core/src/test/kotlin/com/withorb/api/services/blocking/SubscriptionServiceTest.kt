@@ -233,6 +233,7 @@ internal class SubscriptionServiceTest {
                     .addRemovePrice(
                         SubscriptionCreateParams.RemovePrice.builder()
                             .externalPriceId("external_price_id")
+                            .planPhaseOrder(0L)
                             .priceId("h74gfhdjvn7ujokd")
                             .build()
                     )
@@ -316,6 +317,7 @@ internal class SubscriptionServiceTest {
                                     .build()
                             )
                             .minimumAmount("1.23")
+                            .planPhaseOrder(0L)
                             .price(
                                 NewSubscriptionUnitPrice.builder()
                                     .cadence(NewSubscriptionUnitPrice.Cadence.ONE_TIME)
@@ -960,6 +962,7 @@ internal class SubscriptionServiceTest {
                     .addRemovePrice(
                         SubscriptionSchedulePlanChangeParams.RemovePrice.builder()
                             .externalPriceId("external_price_id")
+                            .planPhaseOrder(0L)
                             .priceId("h74gfhdjvn7ujokd")
                             .build()
                     )
@@ -1044,6 +1047,7 @@ internal class SubscriptionServiceTest {
                                     .build()
                             )
                             .minimumAmount("1.23")
+                            .planPhaseOrder(0L)
                             .price(
                                 NewSubscriptionUnitPrice.builder()
                                     .cadence(NewSubscriptionUnitPrice.Cadence.ONE_TIME)

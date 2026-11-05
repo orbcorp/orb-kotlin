@@ -187,6 +187,7 @@ internal class SubscriptionCreateParamsTest {
             .addRemovePrice(
                 SubscriptionCreateParams.RemovePrice.builder()
                     .externalPriceId("external_price_id")
+                    .planPhaseOrder(0L)
                     .priceId("h74gfhdjvn7ujokd")
                     .build()
             )
@@ -267,6 +268,7 @@ internal class SubscriptionCreateParamsTest {
                             .build()
                     )
                     .minimumAmount("1.23")
+                    .planPhaseOrder(0L)
                     .price(
                         NewSubscriptionUnitPrice.builder()
                             .cadence(NewSubscriptionUnitPrice.Cadence.ONE_TIME)
@@ -510,6 +512,7 @@ internal class SubscriptionCreateParamsTest {
                 .addRemovePrice(
                     SubscriptionCreateParams.RemovePrice.builder()
                         .externalPriceId("external_price_id")
+                        .planPhaseOrder(0L)
                         .priceId("h74gfhdjvn7ujokd")
                         .build()
                 )
@@ -590,6 +593,7 @@ internal class SubscriptionCreateParamsTest {
                                 .build()
                         )
                         .minimumAmount("1.23")
+                        .planPhaseOrder(0L)
                         .price(
                             NewSubscriptionUnitPrice.builder()
                                 .cadence(NewSubscriptionUnitPrice.Cadence.ONE_TIME)
@@ -836,6 +840,7 @@ internal class SubscriptionCreateParamsTest {
             .containsExactly(
                 SubscriptionCreateParams.RemovePrice.builder()
                     .externalPriceId("external_price_id")
+                    .planPhaseOrder(0L)
                     .priceId("h74gfhdjvn7ujokd")
                     .build()
             )
@@ -918,6 +923,7 @@ internal class SubscriptionCreateParamsTest {
                             .build()
                     )
                     .minimumAmount("1.23")
+                    .planPhaseOrder(0L)
                     .price(
                         NewSubscriptionUnitPrice.builder()
                             .cadence(NewSubscriptionUnitPrice.Cadence.ONE_TIME)

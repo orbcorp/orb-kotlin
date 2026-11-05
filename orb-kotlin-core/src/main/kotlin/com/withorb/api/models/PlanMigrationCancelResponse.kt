@@ -34,7 +34,9 @@ class PlanMigrationCancelResponse
 private constructor(
     private val id: JsonField<String>,
     private val effectiveTime: JsonField<EffectiveTime>,
+    private val endedAt: JsonField<OffsetDateTime>,
     private val planId: JsonField<String>,
+    private val startedAt: JsonField<OffsetDateTime>,
     private val status: JsonField<Status>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -45,9 +47,15 @@ private constructor(
         @JsonProperty("effective_time")
         @ExcludeMissing
         effectiveTime: JsonField<EffectiveTime> = JsonMissing.of(),
+        @JsonProperty("ended_at")
+        @ExcludeMissing
+        endedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("plan_id") @ExcludeMissing planId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("started_at")
+        @ExcludeMissing
+        startedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
-    ) : this(id, effectiveTime, planId, status, mutableMapOf())
+    ) : this(id, effectiveTime, endedAt, planId, startedAt, status, mutableMapOf())
 
     /**
      * Unique identifier for this plan version change.
@@ -68,12 +76,29 @@ private constructor(
     fun effectiveTime(): EffectiveTime? = effectiveTime.getNullable("effective_time")
 
     /**
+     * When the migration completed or was canceled, or null if it is still in progress.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun endedAt(): OffsetDateTime? = endedAt.getNullable("ended_at")
+
+    /**
      * The ID of the plan being migrated.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun planId(): String = planId.getRequired("plan_id")
+
+    /**
+     * When Orb began migrating the plan's subscriptions. Null if the migration has not begun, or
+     * was canceled before it began.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun startedAt(): OffsetDateTime? = startedAt.getNullable("started_at")
 
     /**
      * Current status of the migration: 'not_started', 'in_progress', 'completed', 'action_needed',
@@ -101,11 +126,27 @@ private constructor(
     fun _effectiveTime(): JsonField<EffectiveTime> = effectiveTime
 
     /**
+     * Returns the raw JSON value of [endedAt].
+     *
+     * Unlike [endedAt], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("ended_at") @ExcludeMissing fun _endedAt(): JsonField<OffsetDateTime> = endedAt
+
+    /**
      * Returns the raw JSON value of [planId].
      *
      * Unlike [planId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("plan_id") @ExcludeMissing fun _planId(): JsonField<String> = planId
+
+    /**
+     * Returns the raw JSON value of [startedAt].
+     *
+     * Unlike [startedAt], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("started_at")
+    @ExcludeMissing
+    fun _startedAt(): JsonField<OffsetDateTime> = startedAt
 
     /**
      * Returns the raw JSON value of [status].
@@ -135,7 +176,9 @@ private constructor(
          * ```kotlin
          * .id()
          * .effectiveTime()
+         * .endedAt()
          * .planId()
+         * .startedAt()
          * .status()
          * ```
          */
@@ -147,14 +190,18 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var effectiveTime: JsonField<EffectiveTime>? = null
+        private var endedAt: JsonField<OffsetDateTime>? = null
         private var planId: JsonField<String>? = null
+        private var startedAt: JsonField<OffsetDateTime>? = null
         private var status: JsonField<Status>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(planMigrationCancelResponse: PlanMigrationCancelResponse) = apply {
             id = planMigrationCancelResponse.id
             effectiveTime = planMigrationCancelResponse.effectiveTime
+            endedAt = planMigrationCancelResponse.endedAt
             planId = planMigrationCancelResponse.planId
+            startedAt = planMigrationCancelResponse.startedAt
             status = planMigrationCancelResponse.status
             additionalProperties = planMigrationCancelResponse.additionalProperties.toMutableMap()
         }
@@ -201,6 +248,18 @@ private constructor(
         fun effectiveTime(unionMember2: EffectiveTime.UnionMember2) =
             effectiveTime(EffectiveTime.ofUnionMember2(unionMember2))
 
+        /** When the migration completed or was canceled, or null if it is still in progress. */
+        fun endedAt(endedAt: OffsetDateTime?) = endedAt(JsonField.ofNullable(endedAt))
+
+        /**
+         * Sets [Builder.endedAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.endedAt] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun endedAt(endedAt: JsonField<OffsetDateTime>) = apply { this.endedAt = endedAt }
+
         /** The ID of the plan being migrated. */
         fun planId(planId: String) = planId(JsonField.of(planId))
 
@@ -211,6 +270,21 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun planId(planId: JsonField<String>) = apply { this.planId = planId }
+
+        /**
+         * When Orb began migrating the plan's subscriptions. Null if the migration has not begun,
+         * or was canceled before it began.
+         */
+        fun startedAt(startedAt: OffsetDateTime?) = startedAt(JsonField.ofNullable(startedAt))
+
+        /**
+         * Sets [Builder.startedAt] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.startedAt] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun startedAt(startedAt: JsonField<OffsetDateTime>) = apply { this.startedAt = startedAt }
 
         /**
          * Current status of the migration: 'not_started', 'in_progress', 'completed',
@@ -254,7 +328,9 @@ private constructor(
          * ```kotlin
          * .id()
          * .effectiveTime()
+         * .endedAt()
          * .planId()
+         * .startedAt()
          * .status()
          * ```
          *
@@ -264,7 +340,9 @@ private constructor(
             PlanMigrationCancelResponse(
                 checkRequired("id", id),
                 checkRequired("effectiveTime", effectiveTime),
+                checkRequired("endedAt", endedAt),
                 checkRequired("planId", planId),
+                checkRequired("startedAt", startedAt),
                 checkRequired("status", status),
                 additionalProperties.toMutableMap(),
             )
@@ -287,7 +365,9 @@ private constructor(
 
         id()
         effectiveTime()?.validate()
+        endedAt()
         planId()
+        startedAt()
         status().validate()
         validated = true
     }
@@ -308,7 +388,9 @@ private constructor(
     internal fun validity(): Int =
         (if (id.asKnown() == null) 0 else 1) +
             (effectiveTime.asKnown()?.validity() ?: 0) +
+            (if (endedAt.asKnown() == null) 0 else 1) +
             (if (planId.asKnown() == null) 0 else 1) +
+            (if (startedAt.asKnown() == null) 0 else 1) +
             (status.asKnown()?.validity() ?: 0)
 
     /**
@@ -848,17 +930,19 @@ private constructor(
         return other is PlanMigrationCancelResponse &&
             id == other.id &&
             effectiveTime == other.effectiveTime &&
+            endedAt == other.endedAt &&
             planId == other.planId &&
+            startedAt == other.startedAt &&
             status == other.status &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(id, effectiveTime, planId, status, additionalProperties)
+        Objects.hash(id, effectiveTime, endedAt, planId, startedAt, status, additionalProperties)
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PlanMigrationCancelResponse{id=$id, effectiveTime=$effectiveTime, planId=$planId, status=$status, additionalProperties=$additionalProperties}"
+        "PlanMigrationCancelResponse{id=$id, effectiveTime=$effectiveTime, endedAt=$endedAt, planId=$planId, startedAt=$startedAt, status=$status, additionalProperties=$additionalProperties}"
 }
