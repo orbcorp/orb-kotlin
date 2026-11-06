@@ -385,6 +385,13 @@ interface PriceService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price = create(PriceCreateParams.Body.ofEventOutput(eventOutput), requestOptions)
 
+    /** @see create */
+    fun create(
+        unitWithMultiplier: PriceCreateParams.Body.UnitWithMultiplier,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Price =
+        create(PriceCreateParams.Body.ofUnitWithMultiplier(unitWithMultiplier), requestOptions)
+
     /**
      * This endpoint allows you to update the `metadata` property on a price. If you pass null for
      * the metadata value, it will clear any existing metadata for that price.
@@ -908,6 +915,14 @@ interface PriceService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Price> =
             create(PriceCreateParams.Body.ofEventOutput(eventOutput), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            unitWithMultiplier: PriceCreateParams.Body.UnitWithMultiplier,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price> =
+            create(PriceCreateParams.Body.ofUnitWithMultiplier(unitWithMultiplier), requestOptions)
 
         /**
          * Returns a raw HTTP response for `put /prices/{price_id}`, but is otherwise the same as

@@ -290,6 +290,10 @@ private constructor(
         /** Alias for calling [addData] with `Price.ofEventOutput(eventOutput)`. */
         fun addData(eventOutput: Price.EventOutput) = addData(Price.ofEventOutput(eventOutput))
 
+        /** Alias for calling [addData] with `Price.ofUnitWithMultiplier(unitWithMultiplier)`. */
+        fun addData(unitWithMultiplier: Price.UnitWithMultiplier) =
+            addData(Price.ofUnitWithMultiplier(unitWithMultiplier))
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)

@@ -185,6 +185,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -503,6 +504,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -821,6 +823,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -1152,6 +1155,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -1476,6 +1480,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -1795,6 +1800,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -2127,6 +2133,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -2466,6 +2473,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -2802,6 +2810,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -3140,6 +3149,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -3469,6 +3479,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -3806,6 +3817,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -4140,6 +4152,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -4454,6 +4467,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -4774,6 +4788,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -5107,6 +5122,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -5463,6 +5479,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -5812,6 +5829,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -6128,6 +6146,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -6441,6 +6460,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -6765,6 +6785,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -7091,6 +7112,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -7428,6 +7450,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -7768,6 +7791,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -8097,6 +8121,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -8429,6 +8454,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -8768,6 +8794,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -9113,6 +9140,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -9480,6 +9508,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -9835,6 +9864,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -10162,6 +10192,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -10491,6 +10522,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -10817,6 +10849,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -11132,6 +11165,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isEqualTo(minimumComposite)
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -11445,6 +11479,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isEqualTo(percent)
         assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -11759,6 +11794,7 @@ internal class PriceTest {
         assertThat(price.minimumComposite()).isNull()
         assertThat(price.percent()).isNull()
         assertThat(price.eventOutput()).isEqualTo(eventOutput)
+        assertThat(price.unitWithMultiplier()).isNull()
     }
 
     @Test
@@ -11888,6 +11924,324 @@ internal class PriceTest {
                     )
                     .licenseType(
                         Price.EventOutput.LicenseType.builder()
+                            .id("id")
+                            .groupingKey("grouping_key")
+                            .name("name")
+                            .build()
+                    )
+                    .build()
+            )
+
+        val roundtrippedPrice =
+            jsonMapper.readValue(jsonMapper.writeValueAsString(price), jacksonTypeRef<Price>())
+
+        assertThat(roundtrippedPrice).isEqualTo(price)
+    }
+
+    @Test
+    fun ofUnitWithMultiplier() {
+        val unitWithMultiplier =
+            Price.UnitWithMultiplier.builder()
+                .id("id")
+                .billableMetric(BillableMetricTiny.builder().id("id").build())
+                .billingCycleConfiguration(
+                    BillingCycleConfiguration.builder()
+                        .duration(0L)
+                        .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
+                        .build()
+                )
+                .billingMode(Price.UnitWithMultiplier.BillingMode.IN_ADVANCE)
+                .cadence(Price.UnitWithMultiplier.Cadence.ONE_TIME)
+                .addCompositePriceFilter(
+                    Price.UnitWithMultiplier.CompositePriceFilter.builder()
+                        .field(Price.UnitWithMultiplier.CompositePriceFilter.Field.PRICE_ID)
+                        .operator(Price.UnitWithMultiplier.CompositePriceFilter.Operator.INCLUDES)
+                        .addValue("string")
+                        .build()
+                )
+                .conversionRate(0.0)
+                .unitConversionRateConfig(
+                    ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                )
+                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .creditAllocation(
+                    Allocation.builder()
+                        .allowsRollover(true)
+                        .currency("currency")
+                        .customExpiration(
+                            CustomExpiration.builder()
+                                .duration(0L)
+                                .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                .build()
+                        )
+                        .addFilter(
+                            Allocation.Filter.builder()
+                                .field(Allocation.Filter.Field.PRICE_ID)
+                                .operator(Allocation.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
+                        .licenseTypeId("license_type_id")
+                        .build()
+                )
+                .currency("currency")
+                .discount(
+                    PercentageDiscount.builder()
+                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                        .percentageDiscount(0.15)
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                        .addFilter(
+                            PercentageDiscount.Filter.builder()
+                                .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
+                        .reason("reason")
+                        .build()
+                )
+                .externalPriceId("external_price_id")
+                .fixedPriceQuantity(0.0)
+                .invoiceGroupingKey("invoice_grouping_key")
+                .invoicingCycleConfiguration(
+                    BillingCycleConfiguration.builder()
+                        .duration(0L)
+                        .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
+                        .build()
+                )
+                .item(ItemSlim.builder().id("id").name("name").build())
+                .maximum(
+                    Maximum.builder()
+                        .addAppliesToPriceId("string")
+                        .addFilter(
+                            Maximum.Filter.builder()
+                                .field(Maximum.Filter.Field.PRICE_ID)
+                                .operator(Maximum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
+                        .maximumAmount("maximum_amount")
+                        .build()
+                )
+                .maximumAmount("maximum_amount")
+                .metadata(
+                    Price.UnitWithMultiplier.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
+                .minimum(
+                    Minimum.builder()
+                        .addAppliesToPriceId("string")
+                        .addFilter(
+                            Minimum.Filter.builder()
+                                .field(Minimum.Filter.Field.PRICE_ID)
+                                .operator(Minimum.Filter.Operator.INCLUDES)
+                                .addValue("string")
+                                .build()
+                        )
+                        .minimumAmount("minimum_amount")
+                        .build()
+                )
+                .minimumAmount("minimum_amount")
+                .name("name")
+                .planPhaseOrder(0L)
+                .priceType(Price.UnitWithMultiplier.PriceType.USAGE_PRICE)
+                .replacesPriceId("replaces_price_id")
+                .unitWithMultiplierConfig(
+                    Price.UnitWithMultiplier.UnitWithMultiplierConfig.builder()
+                        .defaultDisplayName("x")
+                        .displayNameKey("x")
+                        .multiplierKey("x")
+                        .unitAmount("unit_amount")
+                        .build()
+                )
+                .dimensionalPriceConfiguration(
+                    DimensionalPriceConfiguration.builder()
+                        .addDimensionValue("string")
+                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                        .build()
+                )
+                .licenseType(
+                    Price.UnitWithMultiplier.LicenseType.builder()
+                        .id("id")
+                        .groupingKey("grouping_key")
+                        .name("name")
+                        .build()
+                )
+                .build()
+
+        val price = Price.ofUnitWithMultiplier(unitWithMultiplier)
+
+        assertThat(price.unit()).isNull()
+        assertThat(price.tiered()).isNull()
+        assertThat(price.bulk()).isNull()
+        assertThat(price.bulkWithFilters()).isNull()
+        assertThat(price.package_()).isNull()
+        assertThat(price.matrix()).isNull()
+        assertThat(price.thresholdTotalAmount()).isNull()
+        assertThat(price.tieredPackage()).isNull()
+        assertThat(price.tieredWithMinimum()).isNull()
+        assertThat(price.groupedTiered()).isNull()
+        assertThat(price.groupedTieredMatrix()).isNull()
+        assertThat(price.tieredPackageWithMinimum()).isNull()
+        assertThat(price.packageWithAllocation()).isNull()
+        assertThat(price.unitWithPercent()).isNull()
+        assertThat(price.matrixWithAllocation()).isNull()
+        assertThat(price.tieredMatrixWithAllocation()).isNull()
+        assertThat(price.matrixWithThresholdDiscounts()).isNull()
+        assertThat(price.tieredWithProration()).isNull()
+        assertThat(price.unitWithProration()).isNull()
+        assertThat(price.groupedAllocation()).isNull()
+        assertThat(price.bulkWithProration()).isNull()
+        assertThat(price.groupedWithProratedMinimum()).isNull()
+        assertThat(price.groupedWithMeteredMinimum()).isNull()
+        assertThat(price.groupedWithMinMaxThresholds()).isNull()
+        assertThat(price.matrixWithDisplayName()).isNull()
+        assertThat(price.groupedTieredPackage()).isNull()
+        assertThat(price.maxGroupTieredPackage()).isNull()
+        assertThat(price.scalableMatrixWithUnitPricing()).isNull()
+        assertThat(price.scalableMatrixWithTieredPricing()).isNull()
+        assertThat(price.cumulativeGroupedBulk()).isNull()
+        assertThat(price.cumulativeGroupedAllocation()).isNull()
+        assertThat(price.dailyCreditAllowance()).isNull()
+        assertThat(price.meteredAllowance()).isNull()
+        assertThat(price.minimumComposite()).isNull()
+        assertThat(price.percent()).isNull()
+        assertThat(price.eventOutput()).isNull()
+        assertThat(price.unitWithMultiplier()).isEqualTo(unitWithMultiplier)
+    }
+
+    @Test
+    fun ofUnitWithMultiplierRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val price =
+            Price.ofUnitWithMultiplier(
+                Price.UnitWithMultiplier.builder()
+                    .id("id")
+                    .billableMetric(BillableMetricTiny.builder().id("id").build())
+                    .billingCycleConfiguration(
+                        BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
+                            .build()
+                    )
+                    .billingMode(Price.UnitWithMultiplier.BillingMode.IN_ADVANCE)
+                    .cadence(Price.UnitWithMultiplier.Cadence.ONE_TIME)
+                    .addCompositePriceFilter(
+                        Price.UnitWithMultiplier.CompositePriceFilter.builder()
+                            .field(Price.UnitWithMultiplier.CompositePriceFilter.Field.PRICE_ID)
+                            .operator(
+                                Price.UnitWithMultiplier.CompositePriceFilter.Operator.INCLUDES
+                            )
+                            .addValue("string")
+                            .build()
+                    )
+                    .conversionRate(0.0)
+                    .unitConversionRateConfig(
+                        ConversionRateUnitConfig.builder().unitAmount("unit_amount").build()
+                    )
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .creditAllocation(
+                        Allocation.builder()
+                            .allowsRollover(true)
+                            .currency("currency")
+                            .customExpiration(
+                                CustomExpiration.builder()
+                                    .duration(0L)
+                                    .durationUnit(CustomExpiration.DurationUnit.DAY)
+                                    .build()
+                            )
+                            .addFilter(
+                                Allocation.Filter.builder()
+                                    .field(Allocation.Filter.Field.PRICE_ID)
+                                    .operator(Allocation.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
+                            .licenseTypeId("license_type_id")
+                            .build()
+                    )
+                    .currency("currency")
+                    .discount(
+                        PercentageDiscount.builder()
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .addFilter(
+                                PercentageDiscount.Filter.builder()
+                                    .field(PercentageDiscount.Filter.Field.PRICE_ID)
+                                    .operator(PercentageDiscount.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
+                            .reason("reason")
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
+                    .invoicingCycleConfiguration(
+                        BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(BillingCycleConfiguration.DurationUnit.DAY)
+                            .build()
+                    )
+                    .item(ItemSlim.builder().id("id").name("name").build())
+                    .maximum(
+                        Maximum.builder()
+                            .addAppliesToPriceId("string")
+                            .addFilter(
+                                Maximum.Filter.builder()
+                                    .field(Maximum.Filter.Field.PRICE_ID)
+                                    .operator(Maximum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
+                            .maximumAmount("maximum_amount")
+                            .build()
+                    )
+                    .maximumAmount("maximum_amount")
+                    .metadata(
+                        Price.UnitWithMultiplier.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .minimum(
+                        Minimum.builder()
+                            .addAppliesToPriceId("string")
+                            .addFilter(
+                                Minimum.Filter.builder()
+                                    .field(Minimum.Filter.Field.PRICE_ID)
+                                    .operator(Minimum.Filter.Operator.INCLUDES)
+                                    .addValue("string")
+                                    .build()
+                            )
+                            .minimumAmount("minimum_amount")
+                            .build()
+                    )
+                    .minimumAmount("minimum_amount")
+                    .name("name")
+                    .planPhaseOrder(0L)
+                    .priceType(Price.UnitWithMultiplier.PriceType.USAGE_PRICE)
+                    .replacesPriceId("replaces_price_id")
+                    .unitWithMultiplierConfig(
+                        Price.UnitWithMultiplier.UnitWithMultiplierConfig.builder()
+                            .defaultDisplayName("x")
+                            .displayNameKey("x")
+                            .multiplierKey("x")
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .dimensionalPriceConfiguration(
+                        DimensionalPriceConfiguration.builder()
+                            .addDimensionValue("string")
+                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                            .build()
+                    )
+                    .licenseType(
+                        Price.UnitWithMultiplier.LicenseType.builder()
                             .id("id")
                             .groupingKey("grouping_key")
                             .name("name")

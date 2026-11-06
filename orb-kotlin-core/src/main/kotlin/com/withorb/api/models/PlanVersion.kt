@@ -489,6 +489,10 @@ private constructor(
         /** Alias for calling [addPrice] with `Price.ofEventOutput(eventOutput)`. */
         fun addPrice(eventOutput: Price.EventOutput) = addPrice(Price.ofEventOutput(eventOutput))
 
+        /** Alias for calling [addPrice] with `Price.ofUnitWithMultiplier(unitWithMultiplier)`. */
+        fun addPrice(unitWithMultiplier: Price.UnitWithMultiplier) =
+            addPrice(Price.ofUnitWithMultiplier(unitWithMultiplier))
+
         fun version(version: Long) = version(JsonField.of(version))
 
         /**

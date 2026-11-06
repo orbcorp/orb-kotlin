@@ -338,6 +338,10 @@ private constructor(
         /** Alias for calling [price] with `Price.ofEventOutput(eventOutput)`. */
         fun price(eventOutput: Price.EventOutput) = price(Price.ofEventOutput(eventOutput))
 
+        /** Alias for calling [price] with `Price.ofUnitWithMultiplier(unitWithMultiplier)`. */
+        fun price(unitWithMultiplier: Price.UnitWithMultiplier) =
+            price(Price.ofUnitWithMultiplier(unitWithMultiplier))
+
         /** The price the cost is associated with */
         fun priceId(priceId: String) = priceId(JsonField.of(priceId))
 

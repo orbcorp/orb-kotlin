@@ -7062,6 +7062,13 @@ private constructor(
                     fun price(eventOutput: Price.EventOutput) =
                         price(Price.ofEventOutput(eventOutput))
 
+                    /**
+                     * Alias for calling [price] with
+                     * `Price.ofUnitWithMultiplier(unitWithMultiplier)`.
+                     */
+                    fun price(unitWithMultiplier: Price.UnitWithMultiplier) =
+                        price(Price.ofUnitWithMultiplier(unitWithMultiplier))
+
                     /** Either the fixed fee quantity or the usage during the service period. */
                     fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
