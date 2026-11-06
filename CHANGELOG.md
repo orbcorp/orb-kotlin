@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.54.0](https://github.com/orbcorp/orb-kotlin/compare/v1.53.0...v1.54.0) (2026-11-06)
+
+
+### Features
+
+* **api:** add plan migration started, completed, and canceled webhooks ([bdfb543](https://github.com/orbcorp/orb-kotlin/commit/bdfb5436ac4b5a5c7d486d4bd02c178651e81282))
+* **api:** add started_at and ended_at to plan migration resource ([bdfb543](https://github.com/orbcorp/orb-kotlin/commit/bdfb5436ac4b5a5c7d486d4bd02c178651e81282))
+* **api:** api update ([bdfb543](https://github.com/orbcorp/orb-kotlin/commit/bdfb5436ac4b5a5c7d486d4bd02c178651e81282))
+
 ## [1.53.0](https://github.com/orbcorp/orb-kotlin/compare/v1.52.0...v1.53.0) (2026-11-04)
 
 
