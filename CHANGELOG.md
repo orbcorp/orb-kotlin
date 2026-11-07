@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.55.0](https://github.com/orbcorp/orb-kotlin/compare/v1.54.0...v1.55.0) (2026-11-07)
+
+
+### Features
+
+* **api:** api update ([7b8be36](https://github.com/orbcorp/orb-kotlin/commit/7b8be36fc9e238f74c451362bcd30def34e8d720))
+* **api:** credit block status `void` renamed to `deleted` for deleted blocks ([7b8be36](https://github.com/orbcorp/orb-kotlin/commit/7b8be36fc9e238f74c451362bcd30def34e8d720))
+
 ## [1.54.0](https://github.com/orbcorp/orb-kotlin/compare/v1.53.0...v1.54.0) (2026-11-06)
 
 
