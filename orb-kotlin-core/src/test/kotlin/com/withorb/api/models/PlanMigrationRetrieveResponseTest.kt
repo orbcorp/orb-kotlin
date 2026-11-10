@@ -15,18 +15,21 @@ internal class PlanMigrationRetrieveResponseTest {
         val planMigrationRetrieveResponse =
             PlanMigrationRetrieveResponse.builder()
                 .id("id")
-                .effectiveTime(PlanMigrationRetrieveResponse.EffectiveTime.UnionMember2.END_OF_TERM)
+                .effectiveTime(
+                    PlanMigrationRetrieveResponse.EffectiveTime.UnionMember2.START_OF_TERM
+                )
                 .endedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .planId("plan_id")
                 .startedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(PlanMigrationRetrieveResponse.Status.NOT_STARTED)
+                .targetPlanVersionNumber(0L)
                 .build()
 
         assertThat(planMigrationRetrieveResponse.id()).isEqualTo("id")
         assertThat(planMigrationRetrieveResponse.effectiveTime())
             .isEqualTo(
                 PlanMigrationRetrieveResponse.EffectiveTime.ofUnionMember2(
-                    PlanMigrationRetrieveResponse.EffectiveTime.UnionMember2.END_OF_TERM
+                    PlanMigrationRetrieveResponse.EffectiveTime.UnionMember2.START_OF_TERM
                 )
             )
         assertThat(planMigrationRetrieveResponse.endedAt())
@@ -36,6 +39,7 @@ internal class PlanMigrationRetrieveResponseTest {
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(planMigrationRetrieveResponse.status())
             .isEqualTo(PlanMigrationRetrieveResponse.Status.NOT_STARTED)
+        assertThat(planMigrationRetrieveResponse.targetPlanVersionNumber()).isEqualTo(0L)
     }
 
     @Test
@@ -44,11 +48,14 @@ internal class PlanMigrationRetrieveResponseTest {
         val planMigrationRetrieveResponse =
             PlanMigrationRetrieveResponse.builder()
                 .id("id")
-                .effectiveTime(PlanMigrationRetrieveResponse.EffectiveTime.UnionMember2.END_OF_TERM)
+                .effectiveTime(
+                    PlanMigrationRetrieveResponse.EffectiveTime.UnionMember2.START_OF_TERM
+                )
                 .endedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .planId("plan_id")
                 .startedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(PlanMigrationRetrieveResponse.Status.NOT_STARTED)
+                .targetPlanVersionNumber(0L)
                 .build()
 
         val roundtrippedPlanMigrationRetrieveResponse =

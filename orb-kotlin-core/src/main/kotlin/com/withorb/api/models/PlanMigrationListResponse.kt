@@ -38,6 +38,7 @@ private constructor(
     private val planId: JsonField<String>,
     private val startedAt: JsonField<OffsetDateTime>,
     private val status: JsonField<Status>,
+    private val targetPlanVersionNumber: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -55,7 +56,19 @@ private constructor(
         @ExcludeMissing
         startedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
-    ) : this(id, effectiveTime, endedAt, planId, startedAt, status, mutableMapOf())
+        @JsonProperty("target_plan_version_number")
+        @ExcludeMissing
+        targetPlanVersionNumber: JsonField<Long> = JsonMissing.of(),
+    ) : this(
+        id,
+        effectiveTime,
+        endedAt,
+        planId,
+        startedAt,
+        status,
+        targetPlanVersionNumber,
+        mutableMapOf(),
+    )
 
     /**
      * Unique identifier for this plan version change.
@@ -66,9 +79,10 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
-     * When the migration takes effect. Can be a specific date/time, 'end_of_term' when scheduled to
-     * be at the end of the current billing period, or 'end_of_invoice' when scheduled to be at the
-     * start of the next invoice.
+     * When the migration takes effect. Can be a specific date/time, 'start_of_term' or
+     * 'end_of_term' when scheduled to be at the start or end of the current billing period, or
+     * 'start_of_invoice' or 'end_of_invoice' when scheduled to be at the start of the current or
+     * next invoice.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -108,6 +122,15 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun status(): Status = status.getRequired("status")
+
+    /**
+     * The plan version subscriptions are migrated to.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun targetPlanVersionNumber(): Long =
+        targetPlanVersionNumber.getRequired("target_plan_version_number")
 
     /**
      * Returns the raw JSON value of [id].
@@ -155,6 +178,16 @@ private constructor(
      */
     @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
+    /**
+     * Returns the raw JSON value of [targetPlanVersionNumber].
+     *
+     * Unlike [targetPlanVersionNumber], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @JsonProperty("target_plan_version_number")
+    @ExcludeMissing
+    fun _targetPlanVersionNumber(): JsonField<Long> = targetPlanVersionNumber
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -180,6 +213,7 @@ private constructor(
          * .planId()
          * .startedAt()
          * .status()
+         * .targetPlanVersionNumber()
          * ```
          */
         fun builder() = Builder()
@@ -194,6 +228,7 @@ private constructor(
         private var planId: JsonField<String>? = null
         private var startedAt: JsonField<OffsetDateTime>? = null
         private var status: JsonField<Status>? = null
+        private var targetPlanVersionNumber: JsonField<Long>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(planMigrationListResponse: PlanMigrationListResponse) = apply {
@@ -203,6 +238,7 @@ private constructor(
             planId = planMigrationListResponse.planId
             startedAt = planMigrationListResponse.startedAt
             status = planMigrationListResponse.status
+            targetPlanVersionNumber = planMigrationListResponse.targetPlanVersionNumber
             additionalProperties = planMigrationListResponse.additionalProperties.toMutableMap()
         }
 
@@ -218,9 +254,10 @@ private constructor(
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
-         * When the migration takes effect. Can be a specific date/time, 'end_of_term' when
-         * scheduled to be at the end of the current billing period, or 'end_of_invoice' when
-         * scheduled to be at the start of the next invoice.
+         * When the migration takes effect. Can be a specific date/time, 'start_of_term' or
+         * 'end_of_term' when scheduled to be at the start or end of the current billing period, or
+         * 'start_of_invoice' or 'end_of_invoice' when scheduled to be at the start of the current
+         * or next invoice.
          */
         fun effectiveTime(effectiveTime: EffectiveTime?) =
             effectiveTime(JsonField.ofNullable(effectiveTime))
@@ -300,6 +337,21 @@ private constructor(
          */
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
+        /** The plan version subscriptions are migrated to. */
+        fun targetPlanVersionNumber(targetPlanVersionNumber: Long) =
+            targetPlanVersionNumber(JsonField.of(targetPlanVersionNumber))
+
+        /**
+         * Sets [Builder.targetPlanVersionNumber] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.targetPlanVersionNumber] with a well-typed [Long] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun targetPlanVersionNumber(targetPlanVersionNumber: JsonField<Long>) = apply {
+            this.targetPlanVersionNumber = targetPlanVersionNumber
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -332,6 +384,7 @@ private constructor(
          * .planId()
          * .startedAt()
          * .status()
+         * .targetPlanVersionNumber()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -344,6 +397,7 @@ private constructor(
                 checkRequired("planId", planId),
                 checkRequired("startedAt", startedAt),
                 checkRequired("status", status),
+                checkRequired("targetPlanVersionNumber", targetPlanVersionNumber),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -369,6 +423,7 @@ private constructor(
         planId()
         startedAt()
         status().validate()
+        targetPlanVersionNumber()
         validated = true
     }
 
@@ -391,12 +446,14 @@ private constructor(
             (if (endedAt.asKnown() == null) 0 else 1) +
             (if (planId.asKnown() == null) 0 else 1) +
             (if (startedAt.asKnown() == null) 0 else 1) +
-            (status.asKnown()?.validity() ?: 0)
+            (status.asKnown()?.validity() ?: 0) +
+            (if (targetPlanVersionNumber.asKnown() == null) 0 else 1)
 
     /**
-     * When the migration takes effect. Can be a specific date/time, 'end_of_term' when scheduled to
-     * be at the end of the current billing period, or 'end_of_invoice' when scheduled to be at the
-     * start of the next invoice.
+     * When the migration takes effect. Can be a specific date/time, 'start_of_term' or
+     * 'end_of_term' when scheduled to be at the start or end of the current billing period, or
+     * 'start_of_invoice' or 'end_of_invoice' when scheduled to be at the start of the current or
+     * next invoice.
      */
     @JsonDeserialize(using = EffectiveTime.Deserializer::class)
     @JsonSerialize(using = EffectiveTime.Serializer::class)
@@ -642,7 +699,11 @@ private constructor(
 
             companion object {
 
+                val START_OF_TERM = of("start_of_term")
+
                 val END_OF_TERM = of("end_of_term")
+
+                val START_OF_INVOICE = of("start_of_invoice")
 
                 val END_OF_INVOICE = of("end_of_invoice")
 
@@ -651,7 +712,9 @@ private constructor(
 
             /** An enum containing [UnionMember2]'s known values. */
             enum class Known {
+                START_OF_TERM,
                 END_OF_TERM,
+                START_OF_INVOICE,
                 END_OF_INVOICE,
             }
 
@@ -665,7 +728,9 @@ private constructor(
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
+                START_OF_TERM,
                 END_OF_TERM,
+                START_OF_INVOICE,
                 END_OF_INVOICE,
                 /**
                  * An enum member indicating that [UnionMember2] was instantiated with an unknown
@@ -683,7 +748,9 @@ private constructor(
              */
             fun value(): Value =
                 when (this) {
+                    START_OF_TERM -> Value.START_OF_TERM
                     END_OF_TERM -> Value.END_OF_TERM
+                    START_OF_INVOICE -> Value.START_OF_INVOICE
                     END_OF_INVOICE -> Value.END_OF_INVOICE
                     else -> Value._UNKNOWN
                 }
@@ -699,7 +766,9 @@ private constructor(
              */
             fun known(): Known =
                 when (this) {
+                    START_OF_TERM -> Known.START_OF_TERM
                     END_OF_TERM -> Known.END_OF_TERM
+                    START_OF_INVOICE -> Known.START_OF_INVOICE
                     END_OF_INVOICE -> Known.END_OF_INVOICE
                     else -> throw OrbInvalidDataException("Unknown UnionMember2: $value")
                 }
@@ -934,15 +1003,25 @@ private constructor(
             planId == other.planId &&
             startedAt == other.startedAt &&
             status == other.status &&
+            targetPlanVersionNumber == other.targetPlanVersionNumber &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(id, effectiveTime, endedAt, planId, startedAt, status, additionalProperties)
+        Objects.hash(
+            id,
+            effectiveTime,
+            endedAt,
+            planId,
+            startedAt,
+            status,
+            targetPlanVersionNumber,
+            additionalProperties,
+        )
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PlanMigrationListResponse{id=$id, effectiveTime=$effectiveTime, endedAt=$endedAt, planId=$planId, startedAt=$startedAt, status=$status, additionalProperties=$additionalProperties}"
+        "PlanMigrationListResponse{id=$id, effectiveTime=$effectiveTime, endedAt=$endedAt, planId=$planId, startedAt=$startedAt, status=$status, targetPlanVersionNumber=$targetPlanVersionNumber, additionalProperties=$additionalProperties}"
 }

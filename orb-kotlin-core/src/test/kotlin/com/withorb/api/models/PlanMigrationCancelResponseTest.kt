@@ -15,18 +15,19 @@ internal class PlanMigrationCancelResponseTest {
         val planMigrationCancelResponse =
             PlanMigrationCancelResponse.builder()
                 .id("id")
-                .effectiveTime(PlanMigrationCancelResponse.EffectiveTime.UnionMember2.END_OF_TERM)
+                .effectiveTime(PlanMigrationCancelResponse.EffectiveTime.UnionMember2.START_OF_TERM)
                 .endedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .planId("plan_id")
                 .startedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(PlanMigrationCancelResponse.Status.NOT_STARTED)
+                .targetPlanVersionNumber(0L)
                 .build()
 
         assertThat(planMigrationCancelResponse.id()).isEqualTo("id")
         assertThat(planMigrationCancelResponse.effectiveTime())
             .isEqualTo(
                 PlanMigrationCancelResponse.EffectiveTime.ofUnionMember2(
-                    PlanMigrationCancelResponse.EffectiveTime.UnionMember2.END_OF_TERM
+                    PlanMigrationCancelResponse.EffectiveTime.UnionMember2.START_OF_TERM
                 )
             )
         assertThat(planMigrationCancelResponse.endedAt())
@@ -36,6 +37,7 @@ internal class PlanMigrationCancelResponseTest {
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(planMigrationCancelResponse.status())
             .isEqualTo(PlanMigrationCancelResponse.Status.NOT_STARTED)
+        assertThat(planMigrationCancelResponse.targetPlanVersionNumber()).isEqualTo(0L)
     }
 
     @Test
@@ -44,11 +46,12 @@ internal class PlanMigrationCancelResponseTest {
         val planMigrationCancelResponse =
             PlanMigrationCancelResponse.builder()
                 .id("id")
-                .effectiveTime(PlanMigrationCancelResponse.EffectiveTime.UnionMember2.END_OF_TERM)
+                .effectiveTime(PlanMigrationCancelResponse.EffectiveTime.UnionMember2.START_OF_TERM)
                 .endedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .planId("plan_id")
                 .startedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(PlanMigrationCancelResponse.Status.NOT_STARTED)
+                .targetPlanVersionNumber(0L)
                 .build()
 
         val roundtrippedPlanMigrationCancelResponse =

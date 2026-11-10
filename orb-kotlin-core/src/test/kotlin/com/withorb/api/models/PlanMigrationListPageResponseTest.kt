@@ -18,12 +18,13 @@ internal class PlanMigrationListPageResponseTest {
                     PlanMigrationListResponse.builder()
                         .id("id")
                         .effectiveTime(
-                            PlanMigrationListResponse.EffectiveTime.UnionMember2.END_OF_TERM
+                            PlanMigrationListResponse.EffectiveTime.UnionMember2.START_OF_TERM
                         )
                         .endedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .planId("plan_id")
                         .startedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .status(PlanMigrationListResponse.Status.NOT_STARTED)
+                        .targetPlanVersionNumber(0L)
                         .build()
                 )
                 .paginationMetadata(
@@ -35,11 +36,14 @@ internal class PlanMigrationListPageResponseTest {
             .containsExactly(
                 PlanMigrationListResponse.builder()
                     .id("id")
-                    .effectiveTime(PlanMigrationListResponse.EffectiveTime.UnionMember2.END_OF_TERM)
+                    .effectiveTime(
+                        PlanMigrationListResponse.EffectiveTime.UnionMember2.START_OF_TERM
+                    )
                     .endedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .planId("plan_id")
                     .startedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .status(PlanMigrationListResponse.Status.NOT_STARTED)
+                    .targetPlanVersionNumber(0L)
                     .build()
             )
         assertThat(planMigrationListPageResponse.paginationMetadata())
@@ -55,12 +59,13 @@ internal class PlanMigrationListPageResponseTest {
                     PlanMigrationListResponse.builder()
                         .id("id")
                         .effectiveTime(
-                            PlanMigrationListResponse.EffectiveTime.UnionMember2.END_OF_TERM
+                            PlanMigrationListResponse.EffectiveTime.UnionMember2.START_OF_TERM
                         )
                         .endedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .planId("plan_id")
                         .startedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .status(PlanMigrationListResponse.Status.NOT_STARTED)
+                        .targetPlanVersionNumber(0L)
                         .build()
                 )
                 .paginationMetadata(
