@@ -17,6 +17,7 @@ import com.withorb.api.services.blocking.ItemService
 import com.withorb.api.services.blocking.LicenseService
 import com.withorb.api.services.blocking.LicenseTypeService
 import com.withorb.api.services.blocking.MetricService
+import com.withorb.api.services.blocking.MigrationService
 import com.withorb.api.services.blocking.PlanService
 import com.withorb.api.services.blocking.PriceService
 import com.withorb.api.services.blocking.SubscriptionChangeService
@@ -157,6 +158,8 @@ interface OrbClient {
      * about how to configure prices in the [Price resource](/reference/price).
      */
     fun plans(): PlanService
+
+    fun migrations(): MigrationService
 
     /**
      * The Price resource represents a price that can be billed on a subscription, resulting in a
@@ -319,6 +322,8 @@ interface OrbClient {
          * can see more about how to configure prices in the [Price resource](/reference/price).
          */
         fun plans(): PlanService.WithRawResponse
+
+        fun migrations(): MigrationService.WithRawResponse
 
         /**
          * The Price resource represents a price that can be billed on a subscription, resulting in

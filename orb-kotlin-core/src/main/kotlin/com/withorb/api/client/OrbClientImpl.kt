@@ -32,6 +32,8 @@ import com.withorb.api.services.blocking.LicenseTypeService
 import com.withorb.api.services.blocking.LicenseTypeServiceImpl
 import com.withorb.api.services.blocking.MetricService
 import com.withorb.api.services.blocking.MetricServiceImpl
+import com.withorb.api.services.blocking.MigrationService
+import com.withorb.api.services.blocking.MigrationServiceImpl
 import com.withorb.api.services.blocking.PlanService
 import com.withorb.api.services.blocking.PlanServiceImpl
 import com.withorb.api.services.blocking.PriceService
@@ -99,6 +101,10 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
     private val metrics: MetricService by lazy { MetricServiceImpl(clientOptionsWithUserAgent) }
 
     private val plans: PlanService by lazy { PlanServiceImpl(clientOptionsWithUserAgent) }
+
+    private val migrations: MigrationService by lazy {
+        MigrationServiceImpl(clientOptionsWithUserAgent)
+    }
 
     private val prices: PriceService by lazy { PriceServiceImpl(clientOptionsWithUserAgent) }
 
@@ -230,6 +236,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
      */
     override fun plans(): PlanService = plans
 
+    override fun migrations(): MigrationService = migrations
+
     /**
      * The Price resource represents a price that can be billed on a subscription, resulting in a
      * charge on an invoice in the form of an invoice line item. Prices take a quantity and
@@ -327,6 +335,10 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
 
         private val plans: PlanService.WithRawResponse by lazy {
             PlanServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val migrations: MigrationService.WithRawResponse by lazy {
+            MigrationServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
         private val prices: PriceService.WithRawResponse by lazy {
@@ -462,6 +474,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
          * can see more about how to configure prices in the [Price resource](/reference/price).
          */
         override fun plans(): PlanService.WithRawResponse = plans
+
+        override fun migrations(): MigrationService.WithRawResponse = migrations
 
         /**
          * The Price resource represents a price that can be billed on a subscription, resulting in
