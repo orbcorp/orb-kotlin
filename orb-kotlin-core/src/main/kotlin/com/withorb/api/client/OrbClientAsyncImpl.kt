@@ -252,6 +252,11 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
      */
     override fun plans(): PlanServiceAsync = plans
 
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
     override fun migrations(): MigrationServiceAsync = migrations
 
     /**
@@ -497,6 +502,11 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
          */
         override fun plans(): PlanServiceAsync.WithRawResponse = plans
 
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
         override fun migrations(): MigrationServiceAsync.WithRawResponse = migrations
 
         /**

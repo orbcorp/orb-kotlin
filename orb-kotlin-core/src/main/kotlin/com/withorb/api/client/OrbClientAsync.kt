@@ -159,6 +159,11 @@ interface OrbClientAsync {
      */
     fun plans(): PlanServiceAsync
 
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
     fun migrations(): MigrationServiceAsync
 
     /**
@@ -323,6 +328,11 @@ interface OrbClientAsync {
          */
         fun plans(): PlanServiceAsync.WithRawResponse
 
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
         fun migrations(): MigrationServiceAsync.WithRawResponse
 
         /**

@@ -236,6 +236,11 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
      */
     override fun plans(): PlanService = plans
 
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
     override fun migrations(): MigrationService = migrations
 
     /**
@@ -475,6 +480,11 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
          */
         override fun plans(): PlanService.WithRawResponse = plans
 
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
         override fun migrations(): MigrationService.WithRawResponse = migrations
 
         /**
