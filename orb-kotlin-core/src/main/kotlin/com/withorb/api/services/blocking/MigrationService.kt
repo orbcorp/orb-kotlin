@@ -17,9 +17,9 @@ import com.withorb.api.models.MigrationRetrieveResponse
 import com.withorb.api.services.blocking.migrations.SubscriptionService
 
 /**
- * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed to by
- * a customer. Plans define the billing behavior of the subscription. You can see more about how to
- * configure prices in the [Price resource](/reference/price).
+ * A migration moves a plan's subscriptions onto one of the plan's versions. Each subscription is
+ * migrated asynchronously, either immediately or at a scheduled time, and the migration reports its
+ * overall status as it progresses.
  */
 interface MigrationService {
 
@@ -36,9 +36,9 @@ interface MigrationService {
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): MigrationService
 
     /**
-     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
-     * to by a customer. Plans define the billing behavior of the subscription. You can see more
-     * about how to configure prices in the [Price resource](/reference/price).
+     * A migration moves a plan's subscriptions onto one of the plan's versions. Each subscription
+     * is migrated asynchronously, either immediately or at a scheduled time, and the migration
+     * reports its overall status as it progresses.
      */
     fun subscriptions(): SubscriptionService
 
@@ -115,9 +115,9 @@ interface MigrationService {
         fun withOptions(modifier: (ClientOptions.Builder) -> Unit): MigrationService.WithRawResponse
 
         /**
-         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
-         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
-         * can see more about how to configure prices in the [Price resource](/reference/price).
+         * A migration moves a plan's subscriptions onto one of the plan's versions. Each
+         * subscription is migrated asynchronously, either immediately or at a scheduled time, and
+         * the migration reports its overall status as it progresses.
          */
         fun subscriptions(): SubscriptionService.WithRawResponse
 

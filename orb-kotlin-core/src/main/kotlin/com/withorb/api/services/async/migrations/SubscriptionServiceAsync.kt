@@ -10,9 +10,9 @@ import com.withorb.api.models.MigrationSubscriptionListPageAsync
 import com.withorb.api.models.MigrationSubscriptionListParams
 
 /**
- * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed to by
- * a customer. Plans define the billing behavior of the subscription. You can see more about how to
- * configure prices in the [Price resource](/reference/price).
+ * A migration moves a plan's subscriptions onto one of the plan's versions. Each subscription is
+ * migrated asynchronously, either immediately or at a scheduled time, and the migration reports its
+ * overall status as it progresses.
  */
 interface SubscriptionServiceAsync {
 
