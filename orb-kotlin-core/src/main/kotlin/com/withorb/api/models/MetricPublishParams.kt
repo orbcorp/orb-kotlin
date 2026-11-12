@@ -12,7 +12,7 @@ import java.util.Objects
 /**
  * This endpoint publishes a [metric](/core-concepts#metric) in `draft` status, making it `active`.
  * Only draft metrics can be published, and an active metric can't be moved back into `draft`, so
- * its `sql` and `item_id` can no longer be changed.
+ * its `sql` can no longer be changed.
  */
 class MetricPublishParams
 private constructor(
