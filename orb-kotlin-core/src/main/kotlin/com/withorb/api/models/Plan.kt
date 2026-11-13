@@ -47,6 +47,7 @@ private constructor(
     private val description: JsonField<String>,
     private val discount: JsonField<Discount>,
     private val externalPlanId: JsonField<String>,
+    private val hasDraft: JsonField<Boolean>,
     private val invoicingCurrency: JsonField<String>,
     private val maximum: JsonField<Maximum>,
     private val maximumAmount: JsonField<String>,
@@ -88,6 +89,7 @@ private constructor(
         @JsonProperty("external_plan_id")
         @ExcludeMissing
         externalPlanId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("has_draft") @ExcludeMissing hasDraft: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("invoicing_currency")
         @ExcludeMissing
         invoicingCurrency: JsonField<String> = JsonMissing.of(),
@@ -123,6 +125,7 @@ private constructor(
         description,
         discount,
         externalPlanId,
+        hasDraft,
         invoicingCurrency,
         maximum,
         maximumAmount,
@@ -216,6 +219,14 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun externalPlanId(): String? = externalPlanId.getNullable("external_plan_id")
+
+    /**
+     * Whether the plan has an unpublished draft version.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun hasDraft(): Boolean = hasDraft.getRequired("has_draft")
 
     /**
      * An ISO 4217 currency string for which this plan is billed in. Matches `currency` unless
@@ -410,6 +421,13 @@ private constructor(
     fun _externalPlanId(): JsonField<String> = externalPlanId
 
     /**
+     * Returns the raw JSON value of [hasDraft].
+     *
+     * Unlike [hasDraft], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("has_draft") @ExcludeMissing fun _hasDraft(): JsonField<Boolean> = hasDraft
+
+    /**
      * Returns the raw JSON value of [invoicingCurrency].
      *
      * Unlike [invoicingCurrency], this method doesn't throw if the JSON field has an unexpected
@@ -555,6 +573,7 @@ private constructor(
          * .description()
          * .discount()
          * .externalPlanId()
+         * .hasDraft()
          * .invoicingCurrency()
          * .maximum()
          * .maximumAmount()
@@ -587,6 +606,7 @@ private constructor(
         private var description: JsonField<String>? = null
         private var discount: JsonField<Discount>? = null
         private var externalPlanId: JsonField<String>? = null
+        private var hasDraft: JsonField<Boolean>? = null
         private var invoicingCurrency: JsonField<String>? = null
         private var maximum: JsonField<Maximum>? = null
         private var maximumAmount: JsonField<String>? = null
@@ -614,6 +634,7 @@ private constructor(
             description = plan.description
             discount = plan.discount
             externalPlanId = plan.externalPlanId
+            hasDraft = plan.hasDraft
             invoicingCurrency = plan.invoicingCurrency
             maximum = plan.maximum
             maximumAmount = plan.maximumAmount
@@ -906,6 +927,18 @@ private constructor(
         fun externalPlanId(externalPlanId: JsonField<String>) = apply {
             this.externalPlanId = externalPlanId
         }
+
+        /** Whether the plan has an unpublished draft version. */
+        fun hasDraft(hasDraft: Boolean) = hasDraft(JsonField.of(hasDraft))
+
+        /**
+         * Sets [Builder.hasDraft] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.hasDraft] with a well-typed [Boolean] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun hasDraft(hasDraft: JsonField<Boolean>) = apply { this.hasDraft = hasDraft }
 
         /**
          * An ISO 4217 currency string for which this plan is billed in. Matches `currency` unless
@@ -1347,6 +1380,7 @@ private constructor(
          * .description()
          * .discount()
          * .externalPlanId()
+         * .hasDraft()
          * .invoicingCurrency()
          * .maximum()
          * .maximumAmount()
@@ -1377,6 +1411,7 @@ private constructor(
                 checkRequired("description", description),
                 checkRequired("discount", discount),
                 checkRequired("externalPlanId", externalPlanId),
+                checkRequired("hasDraft", hasDraft),
                 checkRequired("invoicingCurrency", invoicingCurrency),
                 checkRequired("maximum", maximum),
                 checkRequired("maximumAmount", maximumAmount),
@@ -1420,6 +1455,7 @@ private constructor(
         description()
         discount()?.validate()
         externalPlanId()
+        hasDraft()
         invoicingCurrency()
         maximum()?.validate()
         maximumAmount()
@@ -1461,6 +1497,7 @@ private constructor(
             (if (description.asKnown() == null) 0 else 1) +
             (discount.asKnown()?.validity() ?: 0) +
             (if (externalPlanId.asKnown() == null) 0 else 1) +
+            (if (hasDraft.asKnown() == null) 0 else 1) +
             (if (invoicingCurrency.asKnown() == null) 0 else 1) +
             (maximum.asKnown()?.validity() ?: 0) +
             (if (maximumAmount.asKnown() == null) 0 else 1) +
@@ -5311,6 +5348,7 @@ private constructor(
             description == other.description &&
             discount == other.discount &&
             externalPlanId == other.externalPlanId &&
+            hasDraft == other.hasDraft &&
             invoicingCurrency == other.invoicingCurrency &&
             maximum == other.maximum &&
             maximumAmount == other.maximumAmount &&
@@ -5340,6 +5378,7 @@ private constructor(
             description,
             discount,
             externalPlanId,
+            hasDraft,
             invoicingCurrency,
             maximum,
             maximumAmount,
@@ -5361,5 +5400,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Plan{id=$id, adjustments=$adjustments, basePlan=$basePlan, basePlanId=$basePlanId, createdAt=$createdAt, currency=$currency, defaultInvoiceMemo=$defaultInvoiceMemo, description=$description, discount=$discount, externalPlanId=$externalPlanId, invoicingCurrency=$invoicingCurrency, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, name=$name, netTerms=$netTerms, planPhases=$planPhases, prices=$prices, product=$product, status=$status, trialConfig=$trialConfig, version=$version, additionalProperties=$additionalProperties}"
+        "Plan{id=$id, adjustments=$adjustments, basePlan=$basePlan, basePlanId=$basePlanId, createdAt=$createdAt, currency=$currency, defaultInvoiceMemo=$defaultInvoiceMemo, description=$description, discount=$discount, externalPlanId=$externalPlanId, hasDraft=$hasDraft, invoicingCurrency=$invoicingCurrency, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, name=$name, netTerms=$netTerms, planPhases=$planPhases, prices=$prices, product=$product, status=$status, trialConfig=$trialConfig, version=$version, additionalProperties=$additionalProperties}"
 }

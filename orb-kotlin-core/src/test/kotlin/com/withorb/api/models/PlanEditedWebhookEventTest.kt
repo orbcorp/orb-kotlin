@@ -76,6 +76,7 @@ internal class PlanEditedWebhookEventTest {
                                 .build()
                         )
                         .externalPlanId("external_plan_id")
+                        .hasDraft(true)
                         .invoicingCurrency("invoicing_currency")
                         .maximum(
                             Maximum.builder()
@@ -407,6 +408,7 @@ internal class PlanEditedWebhookEventTest {
                             .build()
                     )
                     .externalPlanId("external_plan_id")
+                    .hasDraft(true)
                     .invoicingCurrency("invoicing_currency")
                     .maximum(
                         Maximum.builder()
@@ -737,6 +739,7 @@ internal class PlanEditedWebhookEventTest {
                                 .build()
                         )
                         .externalPlanId("external_plan_id")
+                        .hasDraft(true)
                         .invoicingCurrency("invoicing_currency")
                         .maximum(
                             Maximum.builder()

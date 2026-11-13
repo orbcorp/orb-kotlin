@@ -66,6 +66,7 @@ internal class PlanTest {
                         .build()
                 )
                 .externalPlanId("external_plan_id")
+                .hasDraft(true)
                 .invoicingCurrency("invoicing_currency")
                 .maximum(
                     Maximum.builder()
@@ -362,6 +363,7 @@ internal class PlanTest {
                 )
             )
         assertThat(plan.externalPlanId()).isEqualTo("external_plan_id")
+        assertThat(plan.hasDraft()).isEqualTo(true)
         assertThat(plan.invoicingCurrency()).isEqualTo("invoicing_currency")
         assertThat(plan.maximum())
             .isEqualTo(
@@ -665,6 +667,7 @@ internal class PlanTest {
                         .build()
                 )
                 .externalPlanId("external_plan_id")
+                .hasDraft(true)
                 .invoicingCurrency("invoicing_currency")
                 .maximum(
                     Maximum.builder()
