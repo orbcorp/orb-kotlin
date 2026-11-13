@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.56.0](https://github.com/orbcorp/orb-kotlin/compare/v1.55.0...v1.56.0) (2026-11-13)
+
+
+### Features
+
+* **api:** allow changing item_id on active metrics ([09f5e45](https://github.com/orbcorp/orb-kotlin/commit/09f5e456d58b9653cde99e0d29c71d71bf252472))
+* **api:** api update ([b97be43](https://github.com/orbcorp/orb-kotlin/commit/b97be43fdebc0918d4c8d43fdd253de1e12f9a43))
+* **api:** api update ([e53e369](https://github.com/orbcorp/orb-kotlin/commit/e53e369dd25080a4cc013465fb08a64b00690af6))
+
 ## [1.55.0](https://github.com/orbcorp/orb-kotlin/compare/v1.54.0...v1.55.0) (2026-11-07)
 
 
