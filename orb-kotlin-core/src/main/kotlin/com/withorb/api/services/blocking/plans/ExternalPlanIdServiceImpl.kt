@@ -19,6 +19,8 @@ import com.withorb.api.core.prepare
 import com.withorb.api.models.Plan
 import com.withorb.api.models.PlanExternalPlanIdFetchParams
 import com.withorb.api.models.PlanExternalPlanIdUpdateParams
+import com.withorb.api.services.blocking.plans.externalPlanId.DraftService
+import com.withorb.api.services.blocking.plans.externalPlanId.DraftServiceImpl
 
 /**
  * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed to by
@@ -32,10 +34,19 @@ class ExternalPlanIdServiceImpl internal constructor(private val clientOptions: 
         WithRawResponseImpl(clientOptions)
     }
 
+    private val draft: DraftService by lazy { DraftServiceImpl(clientOptions) }
+
     override fun withRawResponse(): ExternalPlanIdService.WithRawResponse = withRawResponse
 
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ExternalPlanIdService =
         ExternalPlanIdServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
+    override fun draft(): DraftService = draft
 
     override fun update(
         params: PlanExternalPlanIdUpdateParams,
@@ -57,12 +68,23 @@ class ExternalPlanIdServiceImpl internal constructor(private val clientOptions: 
         private val errorHandler: Handler<HttpResponse> =
             errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
+        private val draft: DraftService.WithRawResponse by lazy {
+            DraftServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): ExternalPlanIdService.WithRawResponse =
             ExternalPlanIdServiceImpl.WithRawResponseImpl(
                 clientOptions.toBuilder().apply(modifier).build()
             )
+
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
+        override fun draft(): DraftService.WithRawResponse = draft
 
         private val updateHandler: Handler<Plan> = jsonHandler<Plan>(clientOptions.jsonMapper)
 

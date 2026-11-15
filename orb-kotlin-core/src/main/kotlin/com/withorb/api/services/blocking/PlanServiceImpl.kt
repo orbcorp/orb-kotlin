@@ -23,6 +23,8 @@ import com.withorb.api.models.PlanListPage
 import com.withorb.api.models.PlanListPageResponse
 import com.withorb.api.models.PlanListParams
 import com.withorb.api.models.PlanUpdateParams
+import com.withorb.api.services.blocking.plans.DraftService
+import com.withorb.api.services.blocking.plans.DraftServiceImpl
 import com.withorb.api.services.blocking.plans.ExternalPlanIdService
 import com.withorb.api.services.blocking.plans.ExternalPlanIdServiceImpl
 import com.withorb.api.services.blocking.plans.MigrationService
@@ -43,6 +45,8 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
         ExternalPlanIdServiceImpl(clientOptions)
     }
 
+    private val draft: DraftService by lazy { DraftServiceImpl(clientOptions) }
+
     private val migrations: MigrationService by lazy { MigrationServiceImpl(clientOptions) }
 
     override fun withRawResponse(): PlanService.WithRawResponse = withRawResponse
@@ -56,6 +60,13 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
      * about how to configure prices in the [Price resource](/reference/price).
      */
     override fun externalPlanId(): ExternalPlanIdService = externalPlanId
+
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
+    override fun draft(): DraftService = draft
 
     /**
      * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
@@ -90,6 +101,10 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
             ExternalPlanIdServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val draft: DraftService.WithRawResponse by lazy {
+            DraftServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val migrations: MigrationService.WithRawResponse by lazy {
             MigrationServiceImpl.WithRawResponseImpl(clientOptions)
         }
@@ -105,6 +120,13 @@ class PlanServiceImpl internal constructor(private val clientOptions: ClientOpti
          * can see more about how to configure prices in the [Price resource](/reference/price).
          */
         override fun externalPlanId(): ExternalPlanIdService.WithRawResponse = externalPlanId
+
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
+        override fun draft(): DraftService.WithRawResponse = draft
 
         /**
          * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be

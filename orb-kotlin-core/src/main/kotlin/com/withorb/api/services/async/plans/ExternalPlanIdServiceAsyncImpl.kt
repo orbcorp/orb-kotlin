@@ -19,6 +19,8 @@ import com.withorb.api.core.prepareAsync
 import com.withorb.api.models.Plan
 import com.withorb.api.models.PlanExternalPlanIdFetchParams
 import com.withorb.api.models.PlanExternalPlanIdUpdateParams
+import com.withorb.api.services.async.plans.externalPlanId.DraftServiceAsync
+import com.withorb.api.services.async.plans.externalPlanId.DraftServiceAsyncImpl
 
 /**
  * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed to by
@@ -32,12 +34,21 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPlanIdS
         WithRawResponseImpl(clientOptions)
     }
 
+    private val draft: DraftServiceAsync by lazy { DraftServiceAsyncImpl(clientOptions) }
+
     override fun withRawResponse(): ExternalPlanIdServiceAsync.WithRawResponse = withRawResponse
 
     override fun withOptions(
         modifier: (ClientOptions.Builder) -> Unit
     ): ExternalPlanIdServiceAsync =
         ExternalPlanIdServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
+    override fun draft(): DraftServiceAsync = draft
 
     override suspend fun update(
         params: PlanExternalPlanIdUpdateParams,
@@ -59,12 +70,23 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPlanIdS
         private val errorHandler: Handler<HttpResponse> =
             errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
+        private val draft: DraftServiceAsync.WithRawResponse by lazy {
+            DraftServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): ExternalPlanIdServiceAsync.WithRawResponse =
             ExternalPlanIdServiceAsyncImpl.WithRawResponseImpl(
                 clientOptions.toBuilder().apply(modifier).build()
             )
+
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
+        override fun draft(): DraftServiceAsync.WithRawResponse = draft
 
         private val updateHandler: Handler<Plan> = jsonHandler<Plan>(clientOptions.jsonMapper)
 

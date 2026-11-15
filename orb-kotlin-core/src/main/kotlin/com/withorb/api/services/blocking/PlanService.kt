@@ -12,6 +12,7 @@ import com.withorb.api.models.PlanFetchParams
 import com.withorb.api.models.PlanListPage
 import com.withorb.api.models.PlanListParams
 import com.withorb.api.models.PlanUpdateParams
+import com.withorb.api.services.blocking.plans.DraftService
 import com.withorb.api.services.blocking.plans.ExternalPlanIdService
 import com.withorb.api.services.blocking.plans.MigrationService
 
@@ -40,6 +41,13 @@ interface PlanService {
      * about how to configure prices in the [Price resource](/reference/price).
      */
     fun externalPlanId(): ExternalPlanIdService
+
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
+    fun draft(): DraftService
 
     /**
      * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
@@ -136,6 +144,13 @@ interface PlanService {
          * can see more about how to configure prices in the [Price resource](/reference/price).
          */
         fun externalPlanId(): ExternalPlanIdService.WithRawResponse
+
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
+        fun draft(): DraftService.WithRawResponse
 
         /**
          * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be

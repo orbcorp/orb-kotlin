@@ -12,6 +12,7 @@ import com.withorb.api.models.PlanFetchParams
 import com.withorb.api.models.PlanListPageAsync
 import com.withorb.api.models.PlanListParams
 import com.withorb.api.models.PlanUpdateParams
+import com.withorb.api.services.async.plans.DraftServiceAsync
 import com.withorb.api.services.async.plans.ExternalPlanIdServiceAsync
 import com.withorb.api.services.async.plans.MigrationServiceAsync
 
@@ -40,6 +41,13 @@ interface PlanServiceAsync {
      * about how to configure prices in the [Price resource](/reference/price).
      */
     fun externalPlanId(): ExternalPlanIdServiceAsync
+
+    /**
+     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
+     * to by a customer. Plans define the billing behavior of the subscription. You can see more
+     * about how to configure prices in the [Price resource](/reference/price).
+     */
+    fun draft(): DraftServiceAsync
 
     /**
      * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
@@ -139,6 +147,13 @@ interface PlanServiceAsync {
          * can see more about how to configure prices in the [Price resource](/reference/price).
          */
         fun externalPlanId(): ExternalPlanIdServiceAsync.WithRawResponse
+
+        /**
+         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
+         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
+         * can see more about how to configure prices in the [Price resource](/reference/price).
+         */
+        fun draft(): DraftServiceAsync.WithRawResponse
 
         /**
          * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
