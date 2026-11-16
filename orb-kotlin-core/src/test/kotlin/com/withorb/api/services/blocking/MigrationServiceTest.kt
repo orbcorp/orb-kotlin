@@ -36,6 +36,7 @@ internal class MigrationServiceTest {
                     .planId("plan_id")
                     .addPlanVersionNumber(0L)
                     .reason("reason")
+                    .skipGracePeriod(true)
                     .addStatus(MigrationCreateParams.Status.ACTIVE)
                     .build()
             )

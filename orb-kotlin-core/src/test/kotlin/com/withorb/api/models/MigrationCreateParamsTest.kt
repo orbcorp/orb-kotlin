@@ -23,6 +23,7 @@ internal class MigrationCreateParamsTest {
             .planId("plan_id")
             .addPlanVersionNumber(0L)
             .reason("reason")
+            .skipGracePeriod(true)
             .addStatus(MigrationCreateParams.Status.ACTIVE)
             .build()
     }
@@ -43,6 +44,7 @@ internal class MigrationCreateParamsTest {
                 .planId("plan_id")
                 .addPlanVersionNumber(0L)
                 .reason("reason")
+                .skipGracePeriod(true)
                 .addStatus(MigrationCreateParams.Status.ACTIVE)
                 .build()
 
@@ -60,6 +62,7 @@ internal class MigrationCreateParamsTest {
         assertThat(body.planId()).isEqualTo("plan_id")
         assertThat(body.planVersionNumbers()).containsExactly(0L)
         assertThat(body.reason()).isEqualTo("reason")
+        assertThat(body.skipGracePeriod()).isEqualTo(true)
         assertThat(body.statuses()).containsExactly(MigrationCreateParams.Status.ACTIVE)
     }
 

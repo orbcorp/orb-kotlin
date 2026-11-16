@@ -139,6 +139,15 @@ private constructor(
     fun reason(): String? = body.reason()
 
     /**
+     * A new migration waits 5 minutes before it changes any subscriptions, so it can be canceled.
+     * When true, it starts right away instead.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun skipGracePeriod(): Boolean? = body.skipGracePeriod()
+
+    /**
      * Migrate subscriptions with these statuses. Defaults to active subscriptions.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
@@ -234,6 +243,13 @@ private constructor(
      * Unlike [reason], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _reason(): JsonField<String> = body._reason()
+
+    /**
+     * Returns the raw JSON value of [skipGracePeriod].
+     *
+     * Unlike [skipGracePeriod], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _skipGracePeriod(): JsonField<Boolean> = body._skipGracePeriod()
 
     /**
      * Returns the raw JSON value of [statuses].
@@ -519,6 +535,25 @@ private constructor(
          */
         fun reason(reason: JsonField<String>) = apply { body.reason(reason) }
 
+        /**
+         * A new migration waits 5 minutes before it changes any subscriptions, so it can be
+         * canceled. When true, it starts right away instead.
+         */
+        fun skipGracePeriod(skipGracePeriod: Boolean) = apply {
+            body.skipGracePeriod(skipGracePeriod)
+        }
+
+        /**
+         * Sets [Builder.skipGracePeriod] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.skipGracePeriod] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun skipGracePeriod(skipGracePeriod: JsonField<Boolean>) = apply {
+            body.skipGracePeriod(skipGracePeriod)
+        }
+
         /** Migrate subscriptions with these statuses. Defaults to active subscriptions. */
         fun statuses(statuses: List<Status>) = apply { body.statuses(statuses) }
 
@@ -697,6 +732,7 @@ private constructor(
         private val planId: JsonField<String>,
         private val planVersionNumbers: JsonField<List<Long>>,
         private val reason: JsonField<String>,
+        private val skipGracePeriod: JsonField<Boolean>,
         private val statuses: JsonField<List<Status>>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
@@ -735,6 +771,9 @@ private constructor(
             @ExcludeMissing
             planVersionNumbers: JsonField<List<Long>> = JsonMissing.of(),
             @JsonProperty("reason") @ExcludeMissing reason: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("skip_grace_period")
+            @ExcludeMissing
+            skipGracePeriod: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("statuses")
             @ExcludeMissing
             statuses: JsonField<List<Status>> = JsonMissing.of(),
@@ -751,6 +790,7 @@ private constructor(
             planId,
             planVersionNumbers,
             reason,
+            skipGracePeriod,
             statuses,
             mutableMapOf(),
         )
@@ -862,6 +902,15 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun reason(): String? = reason.getNullable("reason")
+
+        /**
+         * A new migration waits 5 minutes before it changes any subscriptions, so it can be
+         * canceled. When true, it starts right away instead.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun skipGracePeriod(): Boolean? = skipGracePeriod.getNullable("skip_grace_period")
 
         /**
          * Migrate subscriptions with these statuses. Defaults to active subscriptions.
@@ -983,6 +1032,16 @@ private constructor(
         @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<String> = reason
 
         /**
+         * Returns the raw JSON value of [skipGracePeriod].
+         *
+         * Unlike [skipGracePeriod], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("skip_grace_period")
+        @ExcludeMissing
+        fun _skipGracePeriod(): JsonField<Boolean> = skipGracePeriod
+
+        /**
          * Returns the raw JSON value of [statuses].
          *
          * Unlike [statuses], this method doesn't throw if the JSON field has an unexpected type.
@@ -1032,6 +1091,7 @@ private constructor(
             private var planId: JsonField<String> = JsonMissing.of()
             private var planVersionNumbers: JsonField<MutableList<Long>>? = null
             private var reason: JsonField<String> = JsonMissing.of()
+            private var skipGracePeriod: JsonField<Boolean> = JsonMissing.of()
             private var statuses: JsonField<MutableList<Status>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -1048,6 +1108,7 @@ private constructor(
                 planId = body.planId
                 planVersionNumbers = body.planVersionNumbers.map { it.toMutableList() }
                 reason = body.reason
+                skipGracePeriod = body.skipGracePeriod
                 statuses = body.statuses.map { it.toMutableList() }
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
@@ -1288,6 +1349,24 @@ private constructor(
              */
             fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
+            /**
+             * A new migration waits 5 minutes before it changes any subscriptions, so it can be
+             * canceled. When true, it starts right away instead.
+             */
+            fun skipGracePeriod(skipGracePeriod: Boolean) =
+                skipGracePeriod(JsonField.of(skipGracePeriod))
+
+            /**
+             * Sets [Builder.skipGracePeriod] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.skipGracePeriod] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun skipGracePeriod(skipGracePeriod: JsonField<Boolean>) = apply {
+                this.skipGracePeriod = skipGracePeriod
+            }
+
             /** Migrate subscriptions with these statuses. Defaults to active subscriptions. */
             fun statuses(statuses: List<Status>) = statuses(JsonField.of(statuses))
 
@@ -1360,6 +1439,7 @@ private constructor(
                     planId,
                     (planVersionNumbers ?: JsonMissing.of()).map { it.toImmutable() },
                     reason,
+                    skipGracePeriod,
                     (statuses ?: JsonMissing.of()).map { it.toImmutable() },
                     additionalProperties.toMutableMap(),
                 )
@@ -1393,6 +1473,7 @@ private constructor(
             planId()
             planVersionNumbers()
             reason()
+            skipGracePeriod()
             statuses()?.forEach { it.validate() }
             validated = true
         }
@@ -1424,6 +1505,7 @@ private constructor(
                 (if (planId.asKnown() == null) 0 else 1) +
                 (planVersionNumbers.asKnown()?.size ?: 0) +
                 (if (reason.asKnown() == null) 0 else 1) +
+                (if (skipGracePeriod.asKnown() == null) 0 else 1) +
                 (statuses.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
         override fun equals(other: Any?): Boolean {
@@ -1444,6 +1526,7 @@ private constructor(
                 planId == other.planId &&
                 planVersionNumbers == other.planVersionNumbers &&
                 reason == other.reason &&
+                skipGracePeriod == other.skipGracePeriod &&
                 statuses == other.statuses &&
                 additionalProperties == other.additionalProperties
         }
@@ -1462,6 +1545,7 @@ private constructor(
                 planId,
                 planVersionNumbers,
                 reason,
+                skipGracePeriod,
                 statuses,
                 additionalProperties,
             )
@@ -1470,7 +1554,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{effectiveTime=$effectiveTime, targetPlanVersionNumber=$targetPlanVersionNumber, allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, canDeferBilling=$canDeferBilling, effectiveDate=$effectiveDate, excludedSubscriptionIds=$excludedSubscriptionIds, externalPlanId=$externalPlanId, inTrial=$inTrial, includedSubscriptionIds=$includedSubscriptionIds, planId=$planId, planVersionNumbers=$planVersionNumbers, reason=$reason, statuses=$statuses, additionalProperties=$additionalProperties}"
+            "Body{effectiveTime=$effectiveTime, targetPlanVersionNumber=$targetPlanVersionNumber, allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, canDeferBilling=$canDeferBilling, effectiveDate=$effectiveDate, excludedSubscriptionIds=$excludedSubscriptionIds, externalPlanId=$externalPlanId, inTrial=$inTrial, includedSubscriptionIds=$includedSubscriptionIds, planId=$planId, planVersionNumbers=$planVersionNumbers, reason=$reason, skipGracePeriod=$skipGracePeriod, statuses=$statuses, additionalProperties=$additionalProperties}"
     }
 
     /**
