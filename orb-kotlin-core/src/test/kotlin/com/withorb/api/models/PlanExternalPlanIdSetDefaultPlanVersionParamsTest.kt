@@ -5,11 +5,11 @@ package com.withorb.api.models
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class BetaExternalPlanIdSetDefaultPlanVersionParamsTest {
+internal class PlanExternalPlanIdSetDefaultPlanVersionParamsTest {
 
     @Test
     fun create() {
-        BetaExternalPlanIdSetDefaultPlanVersionParams.builder()
+        PlanExternalPlanIdSetDefaultPlanVersionParams.builder()
             .externalPlanId("external_plan_id")
             .version(0L)
             .build()
@@ -18,7 +18,7 @@ internal class BetaExternalPlanIdSetDefaultPlanVersionParamsTest {
     @Test
     fun pathParams() {
         val params =
-            BetaExternalPlanIdSetDefaultPlanVersionParams.builder()
+            PlanExternalPlanIdSetDefaultPlanVersionParams.builder()
                 .externalPlanId("external_plan_id")
                 .version(0L)
                 .build()
@@ -31,7 +31,7 @@ internal class BetaExternalPlanIdSetDefaultPlanVersionParamsTest {
     @Test
     fun body() {
         val params =
-            BetaExternalPlanIdSetDefaultPlanVersionParams.builder()
+            PlanExternalPlanIdSetDefaultPlanVersionParams.builder()
                 .externalPlanId("external_plan_id")
                 .version(0L)
                 .build()

@@ -53,7 +53,6 @@ internal class ProGuardCompatibilityTest {
         assertThat(client).isNotNull()
         assertThat(client.webhooks()).isNotNull()
         assertThat(client.topLevel()).isNotNull()
-        assertThat(client.beta()).isNotNull()
         assertThat(client.coupons()).isNotNull()
         assertThat(client.creditNotes()).isNotNull()
         assertThat(client.customers()).isNotNull()

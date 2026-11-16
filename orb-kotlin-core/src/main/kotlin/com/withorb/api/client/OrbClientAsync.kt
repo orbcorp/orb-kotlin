@@ -4,7 +4,6 @@ package com.withorb.api.client
 
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.services.async.AlertServiceAsync
-import com.withorb.api.services.async.BetaServiceAsync
 import com.withorb.api.services.async.CouponServiceAsync
 import com.withorb.api.services.async.CreditBlockServiceAsync
 import com.withorb.api.services.async.CreditNoteServiceAsync
@@ -65,13 +64,6 @@ interface OrbClientAsync {
     fun webhooks(): WebhookServiceAsync
 
     fun topLevel(): TopLevelServiceAsync
-
-    /**
-     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
-     * to by a customer. Plans define the billing behavior of the subscription. You can see more
-     * about how to configure prices in the [Price resource](/reference/price).
-     */
-    fun beta(): BetaServiceAsync
 
     /**
      * A coupon represents a reusable discount configuration that can be applied either as a fixed
@@ -234,13 +226,6 @@ interface OrbClientAsync {
         fun webhooks(): WebhookServiceAsync.WithRawResponse
 
         fun topLevel(): TopLevelServiceAsync.WithRawResponse
-
-        /**
-         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
-         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
-         * can see more about how to configure prices in the [Price resource](/reference/price).
-         */
-        fun beta(): BetaServiceAsync.WithRawResponse
 
         /**
          * A coupon represents a reusable discount configuration that can be applied either as a

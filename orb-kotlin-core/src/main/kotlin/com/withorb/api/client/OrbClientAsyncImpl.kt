@@ -6,8 +6,6 @@ import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.getPackageVersion
 import com.withorb.api.services.async.AlertServiceAsync
 import com.withorb.api.services.async.AlertServiceAsyncImpl
-import com.withorb.api.services.async.BetaServiceAsync
-import com.withorb.api.services.async.BetaServiceAsyncImpl
 import com.withorb.api.services.async.CouponServiceAsync
 import com.withorb.api.services.async.CouponServiceAsyncImpl
 import com.withorb.api.services.async.CreditBlockServiceAsync
@@ -73,8 +71,6 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
     private val topLevel: TopLevelServiceAsync by lazy {
         TopLevelServiceAsyncImpl(clientOptionsWithUserAgent)
     }
-
-    private val beta: BetaServiceAsync by lazy { BetaServiceAsyncImpl(clientOptionsWithUserAgent) }
 
     private val coupons: CouponServiceAsync by lazy {
         CouponServiceAsyncImpl(clientOptionsWithUserAgent)
@@ -158,13 +154,6 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
     override fun webhooks(): WebhookServiceAsync = webhooks
 
     override fun topLevel(): TopLevelServiceAsync = topLevel
-
-    /**
-     * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed
-     * to by a customer. Plans define the billing behavior of the subscription. You can see more
-     * about how to configure prices in the [Price resource](/reference/price).
-     */
-    override fun beta(): BetaServiceAsync = beta
 
     /**
      * A coupon represents a reusable discount configuration that can be applied either as a fixed
@@ -315,10 +304,6 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
             TopLevelServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
-        private val beta: BetaServiceAsync.WithRawResponse by lazy {
-            BetaServiceAsyncImpl.WithRawResponseImpl(clientOptions)
-        }
-
         private val coupons: CouponServiceAsync.WithRawResponse by lazy {
             CouponServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
@@ -406,13 +391,6 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
         override fun webhooks(): WebhookServiceAsync.WithRawResponse = webhooks
 
         override fun topLevel(): TopLevelServiceAsync.WithRawResponse = topLevel
-
-        /**
-         * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be
-         * subscribed to by a customer. Plans define the billing behavior of the subscription. You
-         * can see more about how to configure prices in the [Price resource](/reference/price).
-         */
-        override fun beta(): BetaServiceAsync.WithRawResponse = beta
 
         /**
          * A coupon represents a reusable discount configuration that can be applied either as a

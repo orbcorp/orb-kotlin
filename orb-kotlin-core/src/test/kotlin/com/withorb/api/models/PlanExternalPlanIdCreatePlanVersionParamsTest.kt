@@ -6,15 +6,15 @@ import com.withorb.api.core.JsonValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class BetaCreatePlanVersionParamsTest {
+internal class PlanExternalPlanIdCreatePlanVersionParamsTest {
 
     @Test
     fun create() {
-        BetaCreatePlanVersionParams.builder()
-            .planId("plan_id")
+        PlanExternalPlanIdCreatePlanVersionParams.builder()
+            .externalPlanId("external_plan_id")
             .version(0L)
             .addAddAdjustment(
-                BetaCreatePlanVersionParams.AddAdjustment.builder()
+                PlanExternalPlanIdCreatePlanVersionParams.AddAdjustment.builder()
                     .adjustment(
                         NewPercentageDiscount.builder()
                             .adjustmentType(
@@ -42,7 +42,7 @@ internal class BetaCreatePlanVersionParamsTest {
                     .build()
             )
             .addAddPrice(
-                BetaCreatePlanVersionParams.AddPrice.builder()
+                PlanExternalPlanIdCreatePlanVersionParams.AddPrice.builder()
                     .allocationPrice(
                         NewAllocationPrice.builder()
                             .amount("10.00")
@@ -73,14 +73,18 @@ internal class BetaCreatePlanVersionParamsTest {
                             .build()
                     )
                     .licenseAllocationPrice(
-                        BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.builder()
+                        PlanExternalPlanIdCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                            .builder()
                             .cadence(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Cadence
+                                PlanExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
+                                    .Cadence
                                     .ONE_TIME
                             )
                             .itemId("item_id")
                             .addLicenseAllocation(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                                PlanExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
                                     .LicenseAllocation
                                     .builder()
                                     .amount("amount")
@@ -89,7 +93,8 @@ internal class BetaCreatePlanVersionParamsTest {
                                     .build()
                             )
                             .modelType(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                                PlanExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
                                     .ModelType
                                     .UNIT
                             )
@@ -134,7 +139,9 @@ internal class BetaCreatePlanVersionParamsTest {
                             )
                             .licenseTypeId("license_type_id")
                             .metadata(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Metadata
+                                PlanExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
+                                    .Metadata
                                     .builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
@@ -199,19 +206,19 @@ internal class BetaCreatePlanVersionParamsTest {
                     .build()
             )
             .addRemoveAdjustment(
-                BetaCreatePlanVersionParams.RemoveAdjustment.builder()
+                PlanExternalPlanIdCreatePlanVersionParams.RemoveAdjustment.builder()
                     .adjustmentId("adjustment_id")
                     .planPhaseOrder(0L)
                     .build()
             )
             .addRemovePrice(
-                BetaCreatePlanVersionParams.RemovePrice.builder()
+                PlanExternalPlanIdCreatePlanVersionParams.RemovePrice.builder()
                     .priceId("price_id")
                     .planPhaseOrder(0L)
                     .build()
             )
             .addReplaceAdjustment(
-                BetaCreatePlanVersionParams.ReplaceAdjustment.builder()
+                PlanExternalPlanIdCreatePlanVersionParams.ReplaceAdjustment.builder()
                     .adjustment(
                         NewPercentageDiscount.builder()
                             .adjustmentType(
@@ -240,7 +247,7 @@ internal class BetaCreatePlanVersionParamsTest {
                     .build()
             )
             .addReplacePrice(
-                BetaCreatePlanVersionParams.ReplacePrice.builder()
+                PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice.builder()
                     .replacesPriceId("replaces_price_id")
                     .allocationPrice(
                         NewAllocationPrice.builder()
@@ -272,15 +279,19 @@ internal class BetaCreatePlanVersionParamsTest {
                             .build()
                     )
                     .licenseAllocationPrice(
-                        BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice.builder()
+                        PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                            .LicenseAllocationPrice
+                            .builder()
                             .cadence(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
                                     .Cadence
                                     .ONE_TIME
                             )
                             .itemId("item_id")
                             .addLicenseAllocation(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
                                     .LicenseAllocation
                                     .builder()
                                     .amount("amount")
@@ -289,7 +300,8 @@ internal class BetaCreatePlanVersionParamsTest {
                                     .build()
                             )
                             .modelType(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
                                     .ModelType
                                     .UNIT
                             )
@@ -334,7 +346,8 @@ internal class BetaCreatePlanVersionParamsTest {
                             )
                             .licenseTypeId("license_type_id")
                             .metadata(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
                                     .Metadata
                                     .builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -405,9 +418,13 @@ internal class BetaCreatePlanVersionParamsTest {
 
     @Test
     fun pathParams() {
-        val params = BetaCreatePlanVersionParams.builder().planId("plan_id").version(0L).build()
+        val params =
+            PlanExternalPlanIdCreatePlanVersionParams.builder()
+                .externalPlanId("external_plan_id")
+                .version(0L)
+                .build()
 
-        assertThat(params._pathParam(0)).isEqualTo("plan_id")
+        assertThat(params._pathParam(0)).isEqualTo("external_plan_id")
         // out-of-bound path param
         assertThat(params._pathParam(1)).isEqualTo("")
     }
@@ -415,11 +432,11 @@ internal class BetaCreatePlanVersionParamsTest {
     @Test
     fun body() {
         val params =
-            BetaCreatePlanVersionParams.builder()
-                .planId("plan_id")
+            PlanExternalPlanIdCreatePlanVersionParams.builder()
+                .externalPlanId("external_plan_id")
                 .version(0L)
                 .addAddAdjustment(
-                    BetaCreatePlanVersionParams.AddAdjustment.builder()
+                    PlanExternalPlanIdCreatePlanVersionParams.AddAdjustment.builder()
                         .adjustment(
                             NewPercentageDiscount.builder()
                                 .adjustmentType(
@@ -447,7 +464,7 @@ internal class BetaCreatePlanVersionParamsTest {
                         .build()
                 )
                 .addAddPrice(
-                    BetaCreatePlanVersionParams.AddPrice.builder()
+                    PlanExternalPlanIdCreatePlanVersionParams.AddPrice.builder()
                         .allocationPrice(
                             NewAllocationPrice.builder()
                                 .amount("10.00")
@@ -478,15 +495,19 @@ internal class BetaCreatePlanVersionParamsTest {
                                 .build()
                         )
                         .licenseAllocationPrice(
-                            BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.builder()
+                            PlanExternalPlanIdCreatePlanVersionParams.AddPrice
+                                .LicenseAllocationPrice
+                                .builder()
                                 .cadence(
-                                    BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                                    PlanExternalPlanIdCreatePlanVersionParams.AddPrice
+                                        .LicenseAllocationPrice
                                         .Cadence
                                         .ONE_TIME
                                 )
                                 .itemId("item_id")
                                 .addLicenseAllocation(
-                                    BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                                    PlanExternalPlanIdCreatePlanVersionParams.AddPrice
+                                        .LicenseAllocationPrice
                                         .LicenseAllocation
                                         .builder()
                                         .amount("amount")
@@ -495,7 +516,8 @@ internal class BetaCreatePlanVersionParamsTest {
                                         .build()
                                 )
                                 .modelType(
-                                    BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                                    PlanExternalPlanIdCreatePlanVersionParams.AddPrice
+                                        .LicenseAllocationPrice
                                         .ModelType
                                         .UNIT
                                 )
@@ -542,7 +564,8 @@ internal class BetaCreatePlanVersionParamsTest {
                                 )
                                 .licenseTypeId("license_type_id")
                                 .metadata(
-                                    BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                                    PlanExternalPlanIdCreatePlanVersionParams.AddPrice
+                                        .LicenseAllocationPrice
                                         .Metadata
                                         .builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -610,19 +633,19 @@ internal class BetaCreatePlanVersionParamsTest {
                         .build()
                 )
                 .addRemoveAdjustment(
-                    BetaCreatePlanVersionParams.RemoveAdjustment.builder()
+                    PlanExternalPlanIdCreatePlanVersionParams.RemoveAdjustment.builder()
                         .adjustmentId("adjustment_id")
                         .planPhaseOrder(0L)
                         .build()
                 )
                 .addRemovePrice(
-                    BetaCreatePlanVersionParams.RemovePrice.builder()
+                    PlanExternalPlanIdCreatePlanVersionParams.RemovePrice.builder()
                         .priceId("price_id")
                         .planPhaseOrder(0L)
                         .build()
                 )
                 .addReplaceAdjustment(
-                    BetaCreatePlanVersionParams.ReplaceAdjustment.builder()
+                    PlanExternalPlanIdCreatePlanVersionParams.ReplaceAdjustment.builder()
                         .adjustment(
                             NewPercentageDiscount.builder()
                                 .adjustmentType(
@@ -651,7 +674,7 @@ internal class BetaCreatePlanVersionParamsTest {
                         .build()
                 )
                 .addReplacePrice(
-                    BetaCreatePlanVersionParams.ReplacePrice.builder()
+                    PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice.builder()
                         .replacesPriceId("replaces_price_id")
                         .allocationPrice(
                             NewAllocationPrice.builder()
@@ -683,16 +706,19 @@ internal class BetaCreatePlanVersionParamsTest {
                                 .build()
                         )
                         .licenseAllocationPrice(
-                            BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                            PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                .LicenseAllocationPrice
                                 .builder()
                                 .cadence(
-                                    BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                    PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                        .LicenseAllocationPrice
                                         .Cadence
                                         .ONE_TIME
                                 )
                                 .itemId("item_id")
                                 .addLicenseAllocation(
-                                    BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                    PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                        .LicenseAllocationPrice
                                         .LicenseAllocation
                                         .builder()
                                         .amount("amount")
@@ -701,7 +727,8 @@ internal class BetaCreatePlanVersionParamsTest {
                                         .build()
                                 )
                                 .modelType(
-                                    BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                    PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                        .LicenseAllocationPrice
                                         .ModelType
                                         .UNIT
                                 )
@@ -748,7 +775,8 @@ internal class BetaCreatePlanVersionParamsTest {
                                 )
                                 .licenseTypeId("license_type_id")
                                 .metadata(
-                                    BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                    PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                        .LicenseAllocationPrice
                                         .Metadata
                                         .builder()
                                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -823,7 +851,7 @@ internal class BetaCreatePlanVersionParamsTest {
         assertThat(body.version()).isEqualTo(0L)
         assertThat(body.addAdjustments())
             .containsExactly(
-                BetaCreatePlanVersionParams.AddAdjustment.builder()
+                PlanExternalPlanIdCreatePlanVersionParams.AddAdjustment.builder()
                     .adjustment(
                         NewPercentageDiscount.builder()
                             .adjustmentType(
@@ -852,7 +880,7 @@ internal class BetaCreatePlanVersionParamsTest {
             )
         assertThat(body.addPrices())
             .containsExactly(
-                BetaCreatePlanVersionParams.AddPrice.builder()
+                PlanExternalPlanIdCreatePlanVersionParams.AddPrice.builder()
                     .allocationPrice(
                         NewAllocationPrice.builder()
                             .amount("10.00")
@@ -883,14 +911,18 @@ internal class BetaCreatePlanVersionParamsTest {
                             .build()
                     )
                     .licenseAllocationPrice(
-                        BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.builder()
+                        PlanExternalPlanIdCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                            .builder()
                             .cadence(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Cadence
+                                PlanExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
+                                    .Cadence
                                     .ONE_TIME
                             )
                             .itemId("item_id")
                             .addLicenseAllocation(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                                PlanExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
                                     .LicenseAllocation
                                     .builder()
                                     .amount("amount")
@@ -899,7 +931,8 @@ internal class BetaCreatePlanVersionParamsTest {
                                     .build()
                             )
                             .modelType(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice
+                                PlanExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
                                     .ModelType
                                     .UNIT
                             )
@@ -944,7 +977,9 @@ internal class BetaCreatePlanVersionParamsTest {
                             )
                             .licenseTypeId("license_type_id")
                             .metadata(
-                                BetaCreatePlanVersionParams.AddPrice.LicenseAllocationPrice.Metadata
+                                PlanExternalPlanIdCreatePlanVersionParams.AddPrice
+                                    .LicenseAllocationPrice
+                                    .Metadata
                                     .builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
@@ -1010,21 +1045,21 @@ internal class BetaCreatePlanVersionParamsTest {
             )
         assertThat(body.removeAdjustments())
             .containsExactly(
-                BetaCreatePlanVersionParams.RemoveAdjustment.builder()
+                PlanExternalPlanIdCreatePlanVersionParams.RemoveAdjustment.builder()
                     .adjustmentId("adjustment_id")
                     .planPhaseOrder(0L)
                     .build()
             )
         assertThat(body.removePrices())
             .containsExactly(
-                BetaCreatePlanVersionParams.RemovePrice.builder()
+                PlanExternalPlanIdCreatePlanVersionParams.RemovePrice.builder()
                     .priceId("price_id")
                     .planPhaseOrder(0L)
                     .build()
             )
         assertThat(body.replaceAdjustments())
             .containsExactly(
-                BetaCreatePlanVersionParams.ReplaceAdjustment.builder()
+                PlanExternalPlanIdCreatePlanVersionParams.ReplaceAdjustment.builder()
                     .adjustment(
                         NewPercentageDiscount.builder()
                             .adjustmentType(
@@ -1054,7 +1089,7 @@ internal class BetaCreatePlanVersionParamsTest {
             )
         assertThat(body.replacePrices())
             .containsExactly(
-                BetaCreatePlanVersionParams.ReplacePrice.builder()
+                PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice.builder()
                     .replacesPriceId("replaces_price_id")
                     .allocationPrice(
                         NewAllocationPrice.builder()
@@ -1086,15 +1121,19 @@ internal class BetaCreatePlanVersionParamsTest {
                             .build()
                     )
                     .licenseAllocationPrice(
-                        BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice.builder()
+                        PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                            .LicenseAllocationPrice
+                            .builder()
                             .cadence(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
                                     .Cadence
                                     .ONE_TIME
                             )
                             .itemId("item_id")
                             .addLicenseAllocation(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
                                     .LicenseAllocation
                                     .builder()
                                     .amount("amount")
@@ -1103,7 +1142,8 @@ internal class BetaCreatePlanVersionParamsTest {
                                     .build()
                             )
                             .modelType(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
                                     .ModelType
                                     .UNIT
                             )
@@ -1148,7 +1188,8 @@ internal class BetaCreatePlanVersionParamsTest {
                             )
                             .licenseTypeId("license_type_id")
                             .metadata(
-                                BetaCreatePlanVersionParams.ReplacePrice.LicenseAllocationPrice
+                                PlanExternalPlanIdCreatePlanVersionParams.ReplacePrice
+                                    .LicenseAllocationPrice
                                     .Metadata
                                     .builder()
                                     .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -1218,7 +1259,11 @@ internal class BetaCreatePlanVersionParamsTest {
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = BetaCreatePlanVersionParams.builder().planId("plan_id").version(0L).build()
+        val params =
+            PlanExternalPlanIdCreatePlanVersionParams.builder()
+                .externalPlanId("external_plan_id")
+                .version(0L)
+                .build()
 
         val body = params._body()
 

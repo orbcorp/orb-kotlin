@@ -18,11 +18,15 @@ import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepareAsync
 import com.withorb.api.models.Plan
 import com.withorb.api.models.PlanCreateParams
+import com.withorb.api.models.PlanCreatePlanVersionParams
 import com.withorb.api.models.PlanFetchParams
+import com.withorb.api.models.PlanFetchPlanVersionParams
 import com.withorb.api.models.PlanListPageAsync
 import com.withorb.api.models.PlanListPageResponse
 import com.withorb.api.models.PlanListParams
+import com.withorb.api.models.PlanSetDefaultPlanVersionParams
 import com.withorb.api.models.PlanUpdateParams
+import com.withorb.api.models.PlanVersion
 import com.withorb.api.services.async.plans.DraftServiceAsync
 import com.withorb.api.services.async.plans.DraftServiceAsyncImpl
 import com.withorb.api.services.async.plans.ExternalPlanIdServiceAsync
@@ -93,9 +97,30 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
         // get /plans
         withRawResponse().list(params, requestOptions).parse()
 
+    override suspend fun createPlanVersion(
+        params: PlanCreatePlanVersionParams,
+        requestOptions: RequestOptions,
+    ): PlanVersion =
+        // post /plans/{plan_id}/versions
+        withRawResponse().createPlanVersion(params, requestOptions).parse()
+
     override suspend fun fetch(params: PlanFetchParams, requestOptions: RequestOptions): Plan =
         // get /plans/{plan_id}
         withRawResponse().fetch(params, requestOptions).parse()
+
+    override suspend fun fetchPlanVersion(
+        params: PlanFetchPlanVersionParams,
+        requestOptions: RequestOptions,
+    ): PlanVersion =
+        // get /plans/{plan_id}/versions/{version}
+        withRawResponse().fetchPlanVersion(params, requestOptions).parse()
+
+    override suspend fun setDefaultPlanVersion(
+        params: PlanSetDefaultPlanVersionParams,
+        requestOptions: RequestOptions,
+    ): Plan =
+        // post /plans/{plan_id}/set_default_version
+        withRawResponse().setDefaultPlanVersion(params, requestOptions).parse()
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         PlanServiceAsync.WithRawResponse {
@@ -234,6 +259,37 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
+        private val createPlanVersionHandler: Handler<PlanVersion> =
+            jsonHandler<PlanVersion>(clientOptions.jsonMapper)
+
+        override suspend fun createPlanVersion(
+            params: PlanCreatePlanVersionParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PlanVersion> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("planId", params.planId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("plans", params._pathParam(0), "versions")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { createPlanVersionHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
         private val fetchHandler: Handler<Plan> = jsonHandler<Plan>(clientOptions.jsonMapper)
 
         override suspend fun fetch(
@@ -255,6 +311,72 @@ class PlanServiceAsyncImpl internal constructor(private val clientOptions: Clien
             return errorHandler.handle(response).parseable {
                 response
                     .use { fetchHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val fetchPlanVersionHandler: Handler<PlanVersion> =
+            jsonHandler<PlanVersion>(clientOptions.jsonMapper)
+
+        override suspend fun fetchPlanVersion(
+            params: PlanFetchPlanVersionParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PlanVersion> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("version", params.version())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments(
+                        "plans",
+                        params._pathParam(0),
+                        "versions",
+                        params._pathParam(1),
+                    )
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { fetchPlanVersionHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val setDefaultPlanVersionHandler: Handler<Plan> =
+            jsonHandler<Plan>(clientOptions.jsonMapper)
+
+        override suspend fun setDefaultPlanVersion(
+            params: PlanSetDefaultPlanVersionParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Plan> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("planId", params.planId())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("plans", params._pathParam(0), "set_default_version")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { setDefaultPlanVersionHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
