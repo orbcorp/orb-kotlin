@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.58.0](https://github.com/orbcorp/orb-kotlin/compare/v1.57.0...v1.58.0) (2026-11-17)
+
+
+### Features
+
+* **api:** add plan.migration_scheduled webhook when a plan migration is created ([cb393de](https://github.com/orbcorp/orb-kotlin/commit/cb393dee34e8ea25fa14ab022ce57ed4289acb54))
+* **api:** add skip_grace_period option to plan version migrations ([cb393de](https://github.com/orbcorp/orb-kotlin/commit/cb393dee34e8ea25fa14ab022ce57ed4289acb54))
+
 ## [1.57.0](https://github.com/orbcorp/orb-kotlin/compare/v1.56.0...v1.57.0) (2026-11-14)
 
 
