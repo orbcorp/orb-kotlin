@@ -2,14 +2,11 @@
 
 package com.withorb.api.models
 
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.withorb.api.core.Enum
-import com.withorb.api.core.JsonField
 import com.withorb.api.core.Params
+import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
-import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
@@ -35,8 +32,8 @@ private constructor(
     private val createdAtLt: OffsetDateTime?,
     private val createdAtLte: OffsetDateTime?,
     private val cursor: String?,
-    private val customerId: List<String>?,
-    private val externalCustomerId: List<String>?,
+    private val customerId: CustomerId?,
+    private val externalCustomerId: ExternalCustomerId?,
     private val externalPlanId: String?,
     private val limit: Long?,
     private val planId: String?,
@@ -59,9 +56,9 @@ private constructor(
      */
     fun cursor(): String? = cursor
 
-    fun customerId(): List<String>? = customerId
+    fun customerId(): CustomerId? = customerId
 
-    fun externalCustomerId(): List<String>? = externalCustomerId
+    fun externalCustomerId(): ExternalCustomerId? = externalCustomerId
 
     fun externalPlanId(): String? = externalPlanId
 
@@ -96,8 +93,8 @@ private constructor(
         private var createdAtLt: OffsetDateTime? = null
         private var createdAtLte: OffsetDateTime? = null
         private var cursor: String? = null
-        private var customerId: MutableList<String>? = null
-        private var externalCustomerId: MutableList<String>? = null
+        private var customerId: CustomerId? = null
+        private var externalCustomerId: ExternalCustomerId? = null
         private var externalPlanId: String? = null
         private var limit: Long? = null
         private var planId: String? = null
@@ -111,8 +108,8 @@ private constructor(
             createdAtLt = subscriptionListParams.createdAtLt
             createdAtLte = subscriptionListParams.createdAtLte
             cursor = subscriptionListParams.cursor
-            customerId = subscriptionListParams.customerId?.toMutableList()
-            externalCustomerId = subscriptionListParams.externalCustomerId?.toMutableList()
+            customerId = subscriptionListParams.customerId
+            externalCustomerId = subscriptionListParams.externalCustomerId
             externalPlanId = subscriptionListParams.externalPlanId
             limit = subscriptionListParams.limit
             planId = subscriptionListParams.planId
@@ -135,32 +132,25 @@ private constructor(
          */
         fun cursor(cursor: String?) = apply { this.cursor = cursor }
 
-        fun customerId(customerId: List<String>?) = apply {
-            this.customerId = customerId?.toMutableList()
+        fun customerId(customerId: CustomerId?) = apply { this.customerId = customerId }
+
+        /** Alias for calling [customerId] with `CustomerId.ofString(string)`. */
+        fun customerId(string: String) = customerId(CustomerId.ofString(string))
+
+        /** Alias for calling [customerId] with `CustomerId.ofStrings(strings)`. */
+        fun customerIdOfStrings(strings: List<String>) = customerId(CustomerId.ofStrings(strings))
+
+        fun externalCustomerId(externalCustomerId: ExternalCustomerId?) = apply {
+            this.externalCustomerId = externalCustomerId
         }
 
-        /**
-         * Adds a single [String] to [Builder.customerId].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addCustomerId(customerId: String) = apply {
-            this.customerId = (this.customerId ?: mutableListOf()).apply { add(customerId) }
-        }
+        /** Alias for calling [externalCustomerId] with `ExternalCustomerId.ofString(string)`. */
+        fun externalCustomerId(string: String) =
+            externalCustomerId(ExternalCustomerId.ofString(string))
 
-        fun externalCustomerId(externalCustomerId: List<String>?) = apply {
-            this.externalCustomerId = externalCustomerId?.toMutableList()
-        }
-
-        /**
-         * Adds a single [String] to [Builder.externalCustomerId].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addExternalCustomerId(externalCustomerId: String) = apply {
-            this.externalCustomerId =
-                (this.externalCustomerId ?: mutableListOf()).apply { add(externalCustomerId) }
-        }
+        /** Alias for calling [externalCustomerId] with `ExternalCustomerId.ofStrings(strings)`. */
+        fun externalCustomerIdOfStrings(strings: List<String>) =
+            externalCustomerId(ExternalCustomerId.ofStrings(strings))
 
         fun externalPlanId(externalPlanId: String?) = apply { this.externalPlanId = externalPlanId }
 
@@ -177,6 +167,21 @@ private constructor(
         fun planId(planId: String?) = apply { this.planId = planId }
 
         fun status(status: Status?) = apply { this.status = status }
+
+        /**
+         * Alias for calling [status] with
+         * `Status.ofSubscriptionStatusFilter(subscriptionStatusFilter)`.
+         */
+        fun status(subscriptionStatusFilter: SubscriptionStatusFilter) =
+            status(Status.ofSubscriptionStatusFilter(subscriptionStatusFilter))
+
+        /**
+         * Alias for calling [status] with
+         * `Status.ofSubscriptionStatusFilters(subscriptionStatusFilters)`.
+         */
+        fun statusOfSubscriptionStatusFilters(
+            subscriptionStatusFilters: List<SubscriptionStatusFilter>
+        ) = status(Status.ofSubscriptionStatusFilters(subscriptionStatusFilters))
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -288,8 +293,8 @@ private constructor(
                 createdAtLt,
                 createdAtLte,
                 cursor,
-                customerId?.toImmutable(),
-                externalCustomerId?.toImmutable(),
+                customerId,
+                externalCustomerId,
                 externalPlanId,
                 limit,
                 planId,
@@ -317,153 +322,251 @@ private constructor(
                     put("created_at[lte]", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
                 }
                 cursor?.let { put("cursor", it) }
-                customerId?.forEach { put("customer_id[]", it) }
-                externalCustomerId?.forEach { put("external_customer_id[]", it) }
+                customerId?.accept(
+                    object : CustomerId.Visitor<Unit> {
+                        override fun visitString(string: String) {
+                            put("customer_id", string)
+                        }
+
+                        override fun visitStrings(strings: List<String>) {
+                            strings.forEach { put("customer_id[]", it) }
+                        }
+                    }
+                )
+                externalCustomerId?.accept(
+                    object : ExternalCustomerId.Visitor<Unit> {
+                        override fun visitString(string: String) {
+                            put("external_customer_id", string)
+                        }
+
+                        override fun visitStrings(strings: List<String>) {
+                            strings.forEach { put("external_customer_id[]", it) }
+                        }
+                    }
+                )
                 externalPlanId?.let { put("external_plan_id", it) }
                 limit?.let { put("limit", it.toString()) }
                 planId?.let { put("plan_id", it) }
-                status?.let { put("status", it.toString()) }
+                status?.accept(
+                    object : Status.Visitor<Unit> {
+                        override fun visitSubscriptionStatusFilter(
+                            subscriptionStatusFilter: SubscriptionStatusFilter
+                        ) {
+                            put("status", subscriptionStatusFilter.toString())
+                        }
+
+                        override fun visitSubscriptionStatusFilters(
+                            subscriptionStatusFilters: List<SubscriptionStatusFilter>
+                        ) {
+                            subscriptionStatusFilters.forEach { put("status[]", it.toString()) }
+                        }
+                    }
+                )
                 putAll(additionalQueryParams)
             }
             .build()
 
-    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+    class CustomerId
+    private constructor(
+        private val string: String? = null,
+        private val strings: List<String>? = null,
+    ) {
+
+        fun string(): String? = string
+
+        fun strings(): List<String>? = strings
+
+        fun isString(): Boolean = string != null
+
+        fun isStrings(): Boolean = strings != null
+
+        fun asString(): String = string.getOrThrow("string")
+
+        fun asStrings(): List<String> = strings.getOrThrow("strings")
 
         /**
-         * Returns this class instance's raw value.
-         *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
+         * Maps this instance's current variant to a value of type [T] using the given [visitor].
          */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        companion object {
-
-            val ACTIVE = of("active")
-
-            val ENDED = of("ended")
-
-            val UPCOMING = of("upcoming")
-
-            fun of(value: String) = Status(JsonField.of(value))
-        }
-
-        /** An enum containing [Status]'s known values. */
-        enum class Known {
-            ACTIVE,
-            ENDED,
-            UPCOMING,
-        }
-
-        /**
-         * An enum containing [Status]'s known values, as well as an [_UNKNOWN] member.
-         *
-         * An instance of [Status] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
-         * - It was constructed with an arbitrary value using the [of] method.
-         */
-        enum class Value {
-            ACTIVE,
-            ENDED,
-            UPCOMING,
-            /** An enum member indicating that [Status] was instantiated with an unknown value. */
-            _UNKNOWN,
-        }
-
-        /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
-         *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
-         */
-        fun value(): Value =
-            when (this) {
-                ACTIVE -> Value.ACTIVE
-                ENDED -> Value.ENDED
-                UPCOMING -> Value.UPCOMING
-                else -> Value._UNKNOWN
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
+                string != null -> visitor.visitString(string)
+                strings != null -> visitor.visitStrings(strings)
+                else -> throw IllegalStateException("Invalid CustomerId")
             }
-
-        /**
-         * Returns an enum member corresponding to this class instance's value.
-         *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
-         *
-         * @throws OrbInvalidDataException if this class instance's value is a not a known member.
-         */
-        fun known(): Known =
-            when (this) {
-                ACTIVE -> Known.ACTIVE
-                ENDED -> Known.ENDED
-                UPCOMING -> Known.UPCOMING
-                else -> throw OrbInvalidDataException("Unknown Status: $value")
-            }
-
-        /**
-         * Returns this class instance's primitive wire representation.
-         *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
-         *
-         * @throws OrbInvalidDataException if this class instance's value does not have the expected
-         *   primitive type.
-         */
-        fun asString(): String =
-            _value().asString() ?: throw OrbInvalidDataException("Value is not a String")
-
-        private var validated: Boolean = false
-
-        /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
-         *
-         * This method is _not_ forwards compatible with new types from the API for existing fields.
-         *
-         * @throws OrbInvalidDataException if any value type in this object doesn't match its
-         *   expected type.
-         */
-        fun validate(): Status = apply {
-            if (validated) {
-                return@apply
-            }
-
-            known()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: OrbInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return other is Status && value == other.value
+            return other is CustomerId && string == other.string && strings == other.strings
         }
 
-        override fun hashCode() = value.hashCode()
+        override fun hashCode(): Int = Objects.hash(string, strings)
 
-        override fun toString() = value.toString()
+        override fun toString(): String =
+            when {
+                string != null -> "CustomerId{string=$string}"
+                strings != null -> "CustomerId{strings=$strings}"
+                else -> throw IllegalStateException("Invalid CustomerId")
+            }
+
+        companion object {
+
+            fun ofString(string: String) = CustomerId(string = string)
+
+            fun ofStrings(strings: List<String>) = CustomerId(strings = strings.toImmutable())
+        }
+
+        /**
+         * An interface that defines how to map each variant of [CustomerId] to a value of type [T].
+         */
+        interface Visitor<out T> {
+
+            fun visitString(string: String): T
+
+            fun visitStrings(strings: List<String>): T
+        }
+    }
+
+    class ExternalCustomerId
+    private constructor(
+        private val string: String? = null,
+        private val strings: List<String>? = null,
+    ) {
+
+        fun string(): String? = string
+
+        fun strings(): List<String>? = strings
+
+        fun isString(): Boolean = string != null
+
+        fun isStrings(): Boolean = strings != null
+
+        fun asString(): String = string.getOrThrow("string")
+
+        fun asStrings(): List<String> = strings.getOrThrow("strings")
+
+        /**
+         * Maps this instance's current variant to a value of type [T] using the given [visitor].
+         */
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
+                string != null -> visitor.visitString(string)
+                strings != null -> visitor.visitStrings(strings)
+                else -> throw IllegalStateException("Invalid ExternalCustomerId")
+            }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is ExternalCustomerId && string == other.string && strings == other.strings
+        }
+
+        override fun hashCode(): Int = Objects.hash(string, strings)
+
+        override fun toString(): String =
+            when {
+                string != null -> "ExternalCustomerId{string=$string}"
+                strings != null -> "ExternalCustomerId{strings=$strings}"
+                else -> throw IllegalStateException("Invalid ExternalCustomerId")
+            }
+
+        companion object {
+
+            fun ofString(string: String) = ExternalCustomerId(string = string)
+
+            fun ofStrings(strings: List<String>) =
+                ExternalCustomerId(strings = strings.toImmutable())
+        }
+
+        /**
+         * An interface that defines how to map each variant of [ExternalCustomerId] to a value of
+         * type [T].
+         */
+        interface Visitor<out T> {
+
+            fun visitString(string: String): T
+
+            fun visitStrings(strings: List<String>): T
+        }
+    }
+
+    class Status
+    private constructor(
+        private val subscriptionStatusFilter: SubscriptionStatusFilter? = null,
+        private val subscriptionStatusFilters: List<SubscriptionStatusFilter>? = null,
+    ) {
+
+        fun subscriptionStatusFilter(): SubscriptionStatusFilter? = subscriptionStatusFilter
+
+        fun subscriptionStatusFilters(): List<SubscriptionStatusFilter>? = subscriptionStatusFilters
+
+        fun isSubscriptionStatusFilter(): Boolean = subscriptionStatusFilter != null
+
+        fun isSubscriptionStatusFilters(): Boolean = subscriptionStatusFilters != null
+
+        fun asSubscriptionStatusFilter(): SubscriptionStatusFilter =
+            subscriptionStatusFilter.getOrThrow("subscriptionStatusFilter")
+
+        fun asSubscriptionStatusFilters(): List<SubscriptionStatusFilter> =
+            subscriptionStatusFilters.getOrThrow("subscriptionStatusFilters")
+
+        /**
+         * Maps this instance's current variant to a value of type [T] using the given [visitor].
+         */
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
+                subscriptionStatusFilter != null ->
+                    visitor.visitSubscriptionStatusFilter(subscriptionStatusFilter)
+                subscriptionStatusFilters != null ->
+                    visitor.visitSubscriptionStatusFilters(subscriptionStatusFilters)
+                else -> throw IllegalStateException("Invalid Status")
+            }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Status &&
+                subscriptionStatusFilter == other.subscriptionStatusFilter &&
+                subscriptionStatusFilters == other.subscriptionStatusFilters
+        }
+
+        override fun hashCode(): Int =
+            Objects.hash(subscriptionStatusFilter, subscriptionStatusFilters)
+
+        override fun toString(): String =
+            when {
+                subscriptionStatusFilter != null ->
+                    "Status{subscriptionStatusFilter=$subscriptionStatusFilter}"
+                subscriptionStatusFilters != null ->
+                    "Status{subscriptionStatusFilters=$subscriptionStatusFilters}"
+                else -> throw IllegalStateException("Invalid Status")
+            }
+
+        companion object {
+
+            fun ofSubscriptionStatusFilter(subscriptionStatusFilter: SubscriptionStatusFilter) =
+                Status(subscriptionStatusFilter = subscriptionStatusFilter)
+
+            fun ofSubscriptionStatusFilters(
+                subscriptionStatusFilters: List<SubscriptionStatusFilter>
+            ) = Status(subscriptionStatusFilters = subscriptionStatusFilters.toImmutable())
+        }
+
+        /** An interface that defines how to map each variant of [Status] to a value of type [T]. */
+        interface Visitor<out T> {
+
+            fun visitSubscriptionStatusFilter(subscriptionStatusFilter: SubscriptionStatusFilter): T
+
+            fun visitSubscriptionStatusFilters(
+                subscriptionStatusFilters: List<SubscriptionStatusFilter>
+            ): T
+        }
     }
 
     override fun equals(other: Any?): Boolean {
