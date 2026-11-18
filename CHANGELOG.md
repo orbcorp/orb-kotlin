@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.59.0](https://github.com/orbcorp/orb-kotlin/compare/v1.58.0...v1.59.0) (2026-11-18)
+
+
+### Features
+
+* **api:** api update ([8a05c8f](https://github.com/orbcorp/orb-kotlin/commit/8a05c8f6012ee231f62b5b154f97bceb73b157cb))
+* **api:** document currency handling and void examples for ledger entries ([012b986](https://github.com/orbcorp/orb-kotlin/commit/012b9862180c1de44824b50bf20ee2fdc42af6cc))
+
 ## [1.58.0](https://github.com/orbcorp/orb-kotlin/compare/v1.57.0...v1.58.0) (2026-11-17)
 
 
