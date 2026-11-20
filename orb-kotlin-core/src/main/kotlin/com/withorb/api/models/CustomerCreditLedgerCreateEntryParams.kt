@@ -1936,11 +1936,12 @@ private constructor(
                 fun memo(): String? = memo.getNullable("memo")
 
                 /**
-                 * The net terms determines the due date of the invoice. Due date is calculated
-                 * based on the invoice or issuance date, depending on the account's configured due
-                 * date calculation method. A value of '0' here represents that the invoice is due
-                 * on issue, whereas a value of '30' represents that the customer has 30 days to pay
-                 * the invoice. You must set either `net_terms` or `custom_due_date`, but not both.
+                 * The number of days until the invoice is due, counting the start date as day 1, so
+                 * net 30 from October 1 is due October 30. The account's
+                 * [due date calculation method](/invoicing/payments#configuring-net-terms-and-collection-behavior)
+                 * sets whether the start date is the invoice date or the issuance date. A value of
+                 * '0' here represents that the invoice is due on issue. You must set either
+                 * `net_terms` or `custom_due_date`, but not both.
                  *
                  * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if
                  *   the server responded with an unexpected value).
@@ -2196,12 +2197,12 @@ private constructor(
                     fun memo(memo: JsonField<String>) = apply { this.memo = memo }
 
                     /**
-                     * The net terms determines the due date of the invoice. Due date is calculated
-                     * based on the invoice or issuance date, depending on the account's configured
-                     * due date calculation method. A value of '0' here represents that the invoice
-                     * is due on issue, whereas a value of '30' represents that the customer has 30
-                     * days to pay the invoice. You must set either `net_terms` or
-                     * `custom_due_date`, but not both.
+                     * The number of days until the invoice is due, counting the start date as day
+                     * 1, so net 30 from October 1 is due October 30. The account's
+                     * [due date calculation method](/invoicing/payments#configuring-net-terms-and-collection-behavior)
+                     * sets whether the start date is the invoice date or the issuance date. A value
+                     * of '0' here represents that the invoice is due on issue. You must set either
+                     * `net_terms` or `custom_due_date`, but not both.
                      */
                     fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
 

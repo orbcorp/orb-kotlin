@@ -280,10 +280,11 @@ private constructor(
     fun name(): String = name.getRequired("name")
 
     /**
-     * Determines the difference between the invoice issue date and the due date. A value of "0"
-     * here signifies that invoices are due on issue, whereas a value of "30" means that the
-     * customer has a month to pay the invoice before its overdue. Note that individual
-     * subscriptions or invoices may set a different net terms configuration.
+     * The number of days until invoices are due, counting the start date set by the account's
+     * [due date calculation method](/invoicing/payments#configuring-net-terms-and-collection-behavior)
+     * as day 1. A value of "0" here signifies that invoices are due on issue, whereas a value of
+     * "30" means that the customer has a month to pay the invoice before its overdue. Note that
+     * individual subscriptions or invoices may set a different net terms configuration.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -1041,10 +1042,11 @@ private constructor(
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
-         * Determines the difference between the invoice issue date and the due date. A value of "0"
-         * here signifies that invoices are due on issue, whereas a value of "30" means that the
-         * customer has a month to pay the invoice before its overdue. Note that individual
-         * subscriptions or invoices may set a different net terms configuration.
+         * The number of days until invoices are due, counting the start date set by the account's
+         * [due date calculation method](/invoicing/payments#configuring-net-terms-and-collection-behavior)
+         * as day 1. A value of "0" here signifies that invoices are due on issue, whereas a value
+         * of "30" means that the customer has a month to pay the invoice before its overdue. Note
+         * that individual subscriptions or invoices may set a different net terms configuration.
          */
         fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
 

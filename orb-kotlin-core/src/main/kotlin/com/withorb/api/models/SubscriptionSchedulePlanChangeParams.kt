@@ -351,9 +351,12 @@ private constructor(
     fun invoicingThreshold(): String? = body.invoicingThreshold()
 
     /**
-     * The net terms determines the difference between the invoice date and the issue date for the
-     * invoice. If you intend the invoice to be due on issue, set this to 0. If not provided, this
-     * defaults to the value specified in the plan.
+     * The number of days until the invoice is due, counting the start date as day 1, so net 30 from
+     * October 1 is due October 30. The account's
+     * [due date calculation method](/invoicing/payments#configuring-net-terms-and-collection-behavior)
+     * sets whether the start date is the invoice date or the issuance date. If you intend the
+     * invoice to be due on issue, set this to 0. If not provided, this defaults to the value
+     * specified in the plan.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
      *   responded with an unexpected value).
@@ -1051,9 +1054,12 @@ private constructor(
         }
 
         /**
-         * The net terms determines the difference between the invoice date and the issue date for
-         * the invoice. If you intend the invoice to be due on issue, set this to 0. If not
-         * provided, this defaults to the value specified in the plan.
+         * The number of days until the invoice is due, counting the start date as day 1, so net 30
+         * from October 1 is due October 30. The account's
+         * [due date calculation method](/invoicing/payments#configuring-net-terms-and-collection-behavior)
+         * sets whether the start date is the invoice date or the issuance date. If you intend the
+         * invoice to be due on issue, set this to 0. If not provided, this defaults to the value
+         * specified in the plan.
          */
         fun netTerms(netTerms: Long?) = apply { body.netTerms(netTerms) }
 
@@ -1775,9 +1781,12 @@ private constructor(
         fun invoicingThreshold(): String? = invoicingThreshold.getNullable("invoicing_threshold")
 
         /**
-         * The net terms determines the difference between the invoice date and the issue date for
-         * the invoice. If you intend the invoice to be due on issue, set this to 0. If not
-         * provided, this defaults to the value specified in the plan.
+         * The number of days until the invoice is due, counting the start date as day 1, so net 30
+         * from October 1 is due October 30. The account's
+         * [due date calculation method](/invoicing/payments#configuring-net-terms-and-collection-behavior)
+         * sets whether the start date is the invoice date or the issuance date. If you intend the
+         * invoice to be due on issue, set this to 0. If not provided, this defaults to the value
+         * specified in the plan.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -2579,9 +2588,12 @@ private constructor(
             }
 
             /**
-             * The net terms determines the difference between the invoice date and the issue date
-             * for the invoice. If you intend the invoice to be due on issue, set this to 0. If not
-             * provided, this defaults to the value specified in the plan.
+             * The number of days until the invoice is due, counting the start date as day 1, so net
+             * 30 from October 1 is due October 30. The account's
+             * [due date calculation method](/invoicing/payments#configuring-net-terms-and-collection-behavior)
+             * sets whether the start date is the invoice date or the issuance date. If you intend
+             * the invoice to be due on issue, set this to 0. If not provided, this defaults to the
+             * value specified in the plan.
              */
             fun netTerms(netTerms: Long?) = netTerms(JsonField.ofNullable(netTerms))
 
