@@ -35,6 +35,7 @@ internal class InvoiceListSummaryResponseTest {
                         .state("state")
                         .build()
                 )
+                .billingEntityId("billing_entity_id")
                 .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                 .addCreditNote(
                     InvoiceListSummaryResponse.CreditNote.builder()
@@ -155,6 +156,7 @@ internal class InvoiceListSummaryResponseTest {
                     .state("state")
                     .build()
             )
+        assertThat(invoiceListSummaryResponse.billingEntityId()).isEqualTo("billing_entity_id")
         assertThat(invoiceListSummaryResponse.createdAt())
             .isEqualTo(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
         assertThat(invoiceListSummaryResponse.creditNotes())
@@ -304,6 +306,7 @@ internal class InvoiceListSummaryResponseTest {
                         .state("state")
                         .build()
                 )
+                .billingEntityId("billing_entity_id")
                 .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                 .addCreditNote(
                     InvoiceListSummaryResponse.CreditNote.builder()

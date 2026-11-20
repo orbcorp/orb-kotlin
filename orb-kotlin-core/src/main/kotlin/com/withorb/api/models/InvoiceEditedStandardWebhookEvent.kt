@@ -384,6 +384,7 @@ private constructor(
         private val amountDue: JsonField<String>,
         private val autoCollection: JsonField<AutoCollection>,
         private val billingAddress: JsonField<Address>,
+        private val billingEntityId: JsonField<String>,
         private val createdAt: JsonField<OffsetDateTime>,
         private val creditNotes: JsonField<List<CreditNote>>,
         private val currency: JsonField<String>,
@@ -431,6 +432,9 @@ private constructor(
             @JsonProperty("billing_address")
             @ExcludeMissing
             billingAddress: JsonField<Address> = JsonMissing.of(),
+            @JsonProperty("billing_entity_id")
+            @ExcludeMissing
+            billingEntityId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("created_at")
             @ExcludeMissing
             createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -527,6 +531,7 @@ private constructor(
             amountDue,
             autoCollection,
             billingAddress,
+            billingEntityId,
             createdAt,
             creditNotes,
             currency,
@@ -588,6 +593,14 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun billingAddress(): Address? = billingAddress.getNullable("billing_address")
+
+        /**
+         * The id of the billing entity that issues this invoice.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun billingEntityId(): String? = billingEntityId.getNullable("billing_entity_id")
 
         /**
          * The creation time of the resource in Orb.
@@ -1044,6 +1057,16 @@ private constructor(
         fun _billingAddress(): JsonField<Address> = billingAddress
 
         /**
+         * Returns the raw JSON value of [billingEntityId].
+         *
+         * Unlike [billingEntityId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("billing_entity_id")
+        @ExcludeMissing
+        fun _billingEntityId(): JsonField<String> = billingEntityId
+
+        /**
          * Returns the raw JSON value of [createdAt].
          *
          * Unlike [createdAt], this method doesn't throw if the JSON field has an unexpected type.
@@ -1361,6 +1384,7 @@ private constructor(
              * .amountDue()
              * .autoCollection()
              * .billingAddress()
+             * .billingEntityId()
              * .createdAt()
              * .creditNotes()
              * .currency()
@@ -1405,6 +1429,7 @@ private constructor(
             private var amountDue: JsonField<String>? = null
             private var autoCollection: JsonField<AutoCollection>? = null
             private var billingAddress: JsonField<Address>? = null
+            private var billingEntityId: JsonField<String>? = null
             private var createdAt: JsonField<OffsetDateTime>? = null
             private var creditNotes: JsonField<MutableList<CreditNote>>? = null
             private var currency: JsonField<String>? = null
@@ -1446,6 +1471,7 @@ private constructor(
                 amountDue = invoice.amountDue
                 autoCollection = invoice.autoCollection
                 billingAddress = invoice.billingAddress
+                billingEntityId = invoice.billingEntityId
                 createdAt = invoice.createdAt
                 creditNotes = invoice.creditNotes.map { it.toMutableList() }
                 currency = invoice.currency
@@ -1534,6 +1560,21 @@ private constructor(
              */
             fun billingAddress(billingAddress: JsonField<Address>) = apply {
                 this.billingAddress = billingAddress
+            }
+
+            /** The id of the billing entity that issues this invoice. */
+            fun billingEntityId(billingEntityId: String?) =
+                billingEntityId(JsonField.ofNullable(billingEntityId))
+
+            /**
+             * Sets [Builder.billingEntityId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingEntityId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingEntityId(billingEntityId: JsonField<String>) = apply {
+                this.billingEntityId = billingEntityId
             }
 
             /** The creation time of the resource in Orb. */
@@ -2256,6 +2297,7 @@ private constructor(
              * .amountDue()
              * .autoCollection()
              * .billingAddress()
+             * .billingEntityId()
              * .createdAt()
              * .creditNotes()
              * .currency()
@@ -2298,6 +2340,7 @@ private constructor(
                     checkRequired("amountDue", amountDue),
                     checkRequired("autoCollection", autoCollection),
                     checkRequired("billingAddress", billingAddress),
+                    checkRequired("billingEntityId", billingEntityId),
                     checkRequired("createdAt", createdAt),
                     checkRequired("creditNotes", creditNotes).map { it.toImmutable() },
                     checkRequired("currency", currency),
@@ -2356,6 +2399,7 @@ private constructor(
             amountDue()
             autoCollection().validate()
             billingAddress()?.validate()
+            billingEntityId()
             createdAt()
             creditNotes().forEach { it.validate() }
             currency()
@@ -2410,6 +2454,7 @@ private constructor(
                 (if (amountDue.asKnown() == null) 0 else 1) +
                 (autoCollection.asKnown()?.validity() ?: 0) +
                 (billingAddress.asKnown()?.validity() ?: 0) +
+                (if (billingEntityId.asKnown() == null) 0 else 1) +
                 (if (createdAt.asKnown() == null) 0 else 1) +
                 (creditNotes.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (currency.asKnown() == null) 0 else 1) +
@@ -5151,6 +5196,7 @@ private constructor(
                 amountDue == other.amountDue &&
                 autoCollection == other.autoCollection &&
                 billingAddress == other.billingAddress &&
+                billingEntityId == other.billingEntityId &&
                 createdAt == other.createdAt &&
                 creditNotes == other.creditNotes &&
                 currency == other.currency &&
@@ -5192,6 +5238,7 @@ private constructor(
                 amountDue,
                 autoCollection,
                 billingAddress,
+                billingEntityId,
                 createdAt,
                 creditNotes,
                 currency,
@@ -5231,7 +5278,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Invoice{id=$id, amountDue=$amountDue, autoCollection=$autoCollection, billingAddress=$billingAddress, createdAt=$createdAt, creditNotes=$creditNotes, currency=$currency, customer=$customer, customerBalanceTransactions=$customerBalanceTransactions, customerTaxId=$customerTaxId, dueDate=$dueDate, eligibleToIssueAt=$eligibleToIssueAt, hostedInvoiceUrl=$hostedInvoiceUrl, invoiceDate=$invoiceDate, invoiceNumber=$invoiceNumber, invoicePdf=$invoicePdf, invoiceSource=$invoiceSource, issueFailedAt=$issueFailedAt, issuedAt=$issuedAt, memo=$memo, metadata=$metadata, paidAt=$paidAt, paymentAttempts=$paymentAttempts, paymentFailedAt=$paymentFailedAt, paymentReceivedAt=$paymentReceivedAt, paymentStartedAt=$paymentStartedAt, scheduledIssueAt=$scheduledIssueAt, servicePeriodEnd=$servicePeriodEnd, servicePeriodStart=$servicePeriodStart, shippingAddress=$shippingAddress, status=$status, subscription=$subscription, syncFailedAt=$syncFailedAt, total=$total, voidedAt=$voidedAt, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
+            "Invoice{id=$id, amountDue=$amountDue, autoCollection=$autoCollection, billingAddress=$billingAddress, billingEntityId=$billingEntityId, createdAt=$createdAt, creditNotes=$creditNotes, currency=$currency, customer=$customer, customerBalanceTransactions=$customerBalanceTransactions, customerTaxId=$customerTaxId, dueDate=$dueDate, eligibleToIssueAt=$eligibleToIssueAt, hostedInvoiceUrl=$hostedInvoiceUrl, invoiceDate=$invoiceDate, invoiceNumber=$invoiceNumber, invoicePdf=$invoicePdf, invoiceSource=$invoiceSource, issueFailedAt=$issueFailedAt, issuedAt=$issuedAt, memo=$memo, metadata=$metadata, paidAt=$paidAt, paymentAttempts=$paymentAttempts, paymentFailedAt=$paymentFailedAt, paymentReceivedAt=$paymentReceivedAt, paymentStartedAt=$paymentStartedAt, scheduledIssueAt=$scheduledIssueAt, servicePeriodEnd=$servicePeriodEnd, servicePeriodStart=$servicePeriodStart, shippingAddress=$shippingAddress, status=$status, subscription=$subscription, syncFailedAt=$syncFailedAt, total=$total, voidedAt=$voidedAt, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
     }
 
     /** The serialization style this payload was rendered in, as configured on the endpoint. */

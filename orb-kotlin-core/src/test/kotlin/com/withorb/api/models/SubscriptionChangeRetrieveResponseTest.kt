@@ -69,6 +69,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .build()
                         )
                         .billingCycleDay(1L)
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .currentBillingPeriodEndDate(
                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
@@ -160,6 +161,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .build()
                                 )
                                 .automaticTaxEnabled(true)
+                                .billingEntityId("billing_entity_id")
                                 .defaultPaymentMethod(
                                     Customer.DefaultPaymentMethod.builder()
                                         .id("id")
@@ -298,9 +300,11 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .id("m2t5akQeh2obwxeU")
                                         .externalPlanId("m2t5akQeh2obwxeU")
                                         .name("Example plan")
+                                        .billingEntityId("billing_entity_id")
                                         .build()
                                 )
                                 .basePlanId("base_plan_id")
+                                .billingEntityId("billing_entity_id")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .currency("currency")
                                 .defaultInvoiceMemo("default_invoice_memo")
@@ -810,6 +814,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .addCreatedCreditNote(
                                     CreditNote.builder()
                                         .id("id")
+                                        .billingEntityId("billing_entity_id")
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditNoteNumber("credit_note_number")
                                         .creditNotePdf("credit_note_pdf")
@@ -931,6 +936,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .state("state")
                                                 .build()
                                         )
+                                        .billingEntityId("billing_entity_id")
                                         .createdAt(
                                             OffsetDateTime.parse("2022-05-01T07:01:31+00:00")
                                         )
@@ -1461,6 +1467,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .addVoidedCreditNote(
                                     CreditNote.builder()
                                         .id("id")
+                                        .billingEntityId("billing_entity_id")
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditNoteNumber("credit_note_number")
                                         .creditNotePdf("credit_note_pdf")
@@ -1580,6 +1587,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .state("state")
                                                 .build()
                                         )
+                                        .billingEntityId("billing_entity_id")
                                         .createdAt(
                                             OffsetDateTime.parse("2022-05-01T07:01:31+00:00")
                                         )
@@ -2150,6 +2158,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                         BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build()
                     )
                     .billingCycleDay(1L)
+                    .billingEntityId("billing_entity_id")
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .currentBillingPeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .currentBillingPeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -2237,6 +2246,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .build()
                             )
                             .automaticTaxEnabled(true)
+                            .billingEntityId("billing_entity_id")
                             .defaultPaymentMethod(
                                 Customer.DefaultPaymentMethod.builder()
                                     .id("id")
@@ -2375,9 +2385,11 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                     .id("m2t5akQeh2obwxeU")
                                     .externalPlanId("m2t5akQeh2obwxeU")
                                     .name("Example plan")
+                                    .billingEntityId("billing_entity_id")
                                     .build()
                             )
                             .basePlanId("base_plan_id")
+                            .billingEntityId("billing_entity_id")
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .currency("currency")
                             .defaultInvoiceMemo("default_invoice_memo")
@@ -2850,6 +2862,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                             .addCreatedCreditNote(
                                 CreditNote.builder()
                                     .id("id")
+                                    .billingEntityId("billing_entity_id")
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .creditNoteNumber("credit_note_number")
                                     .creditNotePdf("credit_note_pdf")
@@ -2968,6 +2981,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .state("state")
                                             .build()
                                     )
+                                    .billingEntityId("billing_entity_id")
                                     .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                                     .addCreditNote(
                                         ChangedSubscriptionResources.CreatedInvoice.CreditNote
@@ -3457,6 +3471,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                             .addVoidedCreditNote(
                                 CreditNote.builder()
                                     .id("id")
+                                    .billingEntityId("billing_entity_id")
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .creditNoteNumber("credit_note_number")
                                     .creditNotePdf("credit_note_pdf")
@@ -3574,6 +3589,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                             .state("state")
                                             .build()
                                     )
+                                    .billingEntityId("billing_entity_id")
                                     .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                                     .addCreditNote(
                                         Invoice.CreditNote.builder()
@@ -4113,6 +4129,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .build()
                         )
                         .billingCycleDay(1L)
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .currentBillingPeriodEndDate(
                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
@@ -4204,6 +4221,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .build()
                                 )
                                 .automaticTaxEnabled(true)
+                                .billingEntityId("billing_entity_id")
                                 .defaultPaymentMethod(
                                     Customer.DefaultPaymentMethod.builder()
                                         .id("id")
@@ -4342,9 +4360,11 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                         .id("m2t5akQeh2obwxeU")
                                         .externalPlanId("m2t5akQeh2obwxeU")
                                         .name("Example plan")
+                                        .billingEntityId("billing_entity_id")
                                         .build()
                                 )
                                 .basePlanId("base_plan_id")
+                                .billingEntityId("billing_entity_id")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .currency("currency")
                                 .defaultInvoiceMemo("default_invoice_memo")
@@ -4854,6 +4874,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .addCreatedCreditNote(
                                     CreditNote.builder()
                                         .id("id")
+                                        .billingEntityId("billing_entity_id")
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditNoteNumber("credit_note_number")
                                         .creditNotePdf("credit_note_pdf")
@@ -4975,6 +4996,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .state("state")
                                                 .build()
                                         )
+                                        .billingEntityId("billing_entity_id")
                                         .createdAt(
                                             OffsetDateTime.parse("2022-05-01T07:01:31+00:00")
                                         )
@@ -5505,6 +5527,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                 .addVoidedCreditNote(
                                     CreditNote.builder()
                                         .id("id")
+                                        .billingEntityId("billing_entity_id")
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditNoteNumber("credit_note_number")
                                         .creditNotePdf("credit_note_pdf")
@@ -5624,6 +5647,7 @@ internal class SubscriptionChangeRetrieveResponseTest {
                                                 .state("state")
                                                 .build()
                                         )
+                                        .billingEntityId("billing_entity_id")
                                         .createdAt(
                                             OffsetDateTime.parse("2022-05-01T07:01:31+00:00")
                                         )

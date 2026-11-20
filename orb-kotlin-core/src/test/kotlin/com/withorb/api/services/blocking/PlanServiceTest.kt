@@ -235,6 +235,7 @@ internal class PlanServiceTest {
                             .planPhaseOrder(0L)
                             .build()
                     )
+                    .billingEntityId("billing_entity_id")
                     .defaultInvoiceMemo("default_invoice_memo")
                     .description("description")
                     .externalPlanId("external_plan_id")
@@ -272,6 +273,7 @@ internal class PlanServiceTest {
             planService.update(
                 PlanUpdateParams.builder()
                     .planId("plan_id")
+                    .billingEntityId("billing_entity_id")
                     .description("description")
                     .externalPlanId("external_plan_id")
                     .metadata(

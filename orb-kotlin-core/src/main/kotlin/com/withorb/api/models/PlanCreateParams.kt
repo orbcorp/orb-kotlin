@@ -72,6 +72,14 @@ private constructor(
     fun adjustments(): List<Adjustment>? = body.adjustments()
 
     /**
+     * The Orb ID of the active billing entity to set as this plan's default entity.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun billingEntityId(): String? = body.billingEntityId()
+
+    /**
      * Free-form text which is available on the invoice PDF and the Orb invoice portal.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
@@ -160,6 +168,13 @@ private constructor(
      * Unlike [adjustments], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _adjustments(): JsonField<List<Adjustment>> = body._adjustments()
+
+    /**
+     * Returns the raw JSON value of [billingEntityId].
+     *
+     * Unlike [billingEntityId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _billingEntityId(): JsonField<String> = body._billingEntityId()
 
     /**
      * Returns the raw JSON value of [defaultInvoiceMemo].
@@ -258,7 +273,7 @@ private constructor(
          * - [name]
          * - [prices]
          * - [adjustments]
-         * - [defaultInvoiceMemo]
+         * - [billingEntityId]
          * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
@@ -329,6 +344,22 @@ private constructor(
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
         fun addAdjustment(adjustment: Adjustment) = apply { body.addAdjustment(adjustment) }
+
+        /** The Orb ID of the active billing entity to set as this plan's default entity. */
+        fun billingEntityId(billingEntityId: String?) = apply {
+            body.billingEntityId(billingEntityId)
+        }
+
+        /**
+         * Sets [Builder.billingEntityId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billingEntityId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun billingEntityId(billingEntityId: JsonField<String>) = apply {
+            body.billingEntityId(billingEntityId)
+        }
 
         /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
         fun defaultInvoiceMemo(defaultInvoiceMemo: String?) = apply {
@@ -597,6 +628,7 @@ private constructor(
         private val name: JsonField<String>,
         private val prices: JsonField<List<Price>>,
         private val adjustments: JsonField<List<Adjustment>>,
+        private val billingEntityId: JsonField<String>,
         private val defaultInvoiceMemo: JsonField<String>,
         private val description: JsonField<String>,
         private val externalPlanId: JsonField<String>,
@@ -619,6 +651,9 @@ private constructor(
             @JsonProperty("adjustments")
             @ExcludeMissing
             adjustments: JsonField<List<Adjustment>> = JsonMissing.of(),
+            @JsonProperty("billing_entity_id")
+            @ExcludeMissing
+            billingEntityId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("default_invoice_memo")
             @ExcludeMissing
             defaultInvoiceMemo: JsonField<String> = JsonMissing.of(),
@@ -641,6 +676,7 @@ private constructor(
             name,
             prices,
             adjustments,
+            billingEntityId,
             defaultInvoiceMemo,
             description,
             externalPlanId,
@@ -682,6 +718,14 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun adjustments(): List<Adjustment>? = adjustments.getNullable("adjustments")
+
+        /**
+         * The Orb ID of the active billing entity to set as this plan's default entity.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun billingEntityId(): String? = billingEntityId.getNullable("billing_entity_id")
 
         /**
          * Free-form text which is available on the invoice PDF and the Orb invoice portal.
@@ -776,6 +820,16 @@ private constructor(
         fun _adjustments(): JsonField<List<Adjustment>> = adjustments
 
         /**
+         * Returns the raw JSON value of [billingEntityId].
+         *
+         * Unlike [billingEntityId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("billing_entity_id")
+        @ExcludeMissing
+        fun _billingEntityId(): JsonField<String> = billingEntityId
+
+        /**
          * Returns the raw JSON value of [defaultInvoiceMemo].
          *
          * Unlike [defaultInvoiceMemo], this method doesn't throw if the JSON field has an
@@ -868,6 +922,7 @@ private constructor(
             private var name: JsonField<String>? = null
             private var prices: JsonField<MutableList<Price>>? = null
             private var adjustments: JsonField<MutableList<Adjustment>>? = null
+            private var billingEntityId: JsonField<String> = JsonMissing.of()
             private var defaultInvoiceMemo: JsonField<String> = JsonMissing.of()
             private var description: JsonField<String> = JsonMissing.of()
             private var externalPlanId: JsonField<String> = JsonMissing.of()
@@ -882,6 +937,7 @@ private constructor(
                 name = body.name
                 prices = body.prices.map { it.toMutableList() }
                 adjustments = body.adjustments.map { it.toMutableList() }
+                billingEntityId = body.billingEntityId
                 defaultInvoiceMemo = body.defaultInvoiceMemo
                 description = body.description
                 externalPlanId = body.externalPlanId
@@ -972,6 +1028,21 @@ private constructor(
                     (adjustments ?: JsonField.of(mutableListOf())).also {
                         checkKnown("adjustments", it).add(adjustment)
                     }
+            }
+
+            /** The Orb ID of the active billing entity to set as this plan's default entity. */
+            fun billingEntityId(billingEntityId: String?) =
+                billingEntityId(JsonField.ofNullable(billingEntityId))
+
+            /**
+             * Sets [Builder.billingEntityId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingEntityId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingEntityId(billingEntityId: JsonField<String>) = apply {
+                this.billingEntityId = billingEntityId
             }
 
             /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
@@ -1142,6 +1213,7 @@ private constructor(
                     checkRequired("name", name),
                     checkRequired("prices", prices).map { it.toImmutable() },
                     (adjustments ?: JsonMissing.of()).map { it.toImmutable() },
+                    billingEntityId,
                     defaultInvoiceMemo,
                     description,
                     externalPlanId,
@@ -1173,6 +1245,7 @@ private constructor(
             name()
             prices().forEach { it.validate() }
             adjustments()?.forEach { it.validate() }
+            billingEntityId()
             defaultInvoiceMemo()
             description()
             externalPlanId()
@@ -1202,6 +1275,7 @@ private constructor(
                 (if (name.asKnown() == null) 0 else 1) +
                 (prices.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (adjustments.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (billingEntityId.asKnown() == null) 0 else 1) +
                 (if (defaultInvoiceMemo.asKnown() == null) 0 else 1) +
                 (if (description.asKnown() == null) 0 else 1) +
                 (if (externalPlanId.asKnown() == null) 0 else 1) +
@@ -1220,6 +1294,7 @@ private constructor(
                 name == other.name &&
                 prices == other.prices &&
                 adjustments == other.adjustments &&
+                billingEntityId == other.billingEntityId &&
                 defaultInvoiceMemo == other.defaultInvoiceMemo &&
                 description == other.description &&
                 externalPlanId == other.externalPlanId &&
@@ -1236,6 +1311,7 @@ private constructor(
                 name,
                 prices,
                 adjustments,
+                billingEntityId,
                 defaultInvoiceMemo,
                 description,
                 externalPlanId,
@@ -1250,7 +1326,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{currency=$currency, name=$name, prices=$prices, adjustments=$adjustments, defaultInvoiceMemo=$defaultInvoiceMemo, description=$description, externalPlanId=$externalPlanId, metadata=$metadata, netTerms=$netTerms, planPhases=$planPhases, status=$status, additionalProperties=$additionalProperties}"
+            "Body{currency=$currency, name=$name, prices=$prices, adjustments=$adjustments, billingEntityId=$billingEntityId, defaultInvoiceMemo=$defaultInvoiceMemo, description=$description, externalPlanId=$externalPlanId, metadata=$metadata, netTerms=$netTerms, planPhases=$planPhases, status=$status, additionalProperties=$additionalProperties}"
     }
 
     class Price

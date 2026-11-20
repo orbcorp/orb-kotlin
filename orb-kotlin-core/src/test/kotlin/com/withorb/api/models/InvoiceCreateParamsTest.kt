@@ -33,6 +33,7 @@ internal class InvoiceCreateParamsTest {
                     .build()
             )
             .autoCollection(true)
+            .billingEntityId("billing_entity_id")
             .customerId("4khy3nwzktxv7")
             .discount(
                 PercentageDiscount.builder()
@@ -51,6 +52,7 @@ internal class InvoiceCreateParamsTest {
                     .build()
             )
             .dueDate(LocalDate.parse("2025-09-22"))
+            .externalBillingEntityId("external_billing_entity_id")
             .externalCustomerId("external-customer-id")
             .memo("An optional memo for my invoice.")
             .metadata(
@@ -87,6 +89,7 @@ internal class InvoiceCreateParamsTest {
                         .build()
                 )
                 .autoCollection(true)
+                .billingEntityId("billing_entity_id")
                 .customerId("4khy3nwzktxv7")
                 .discount(
                     PercentageDiscount.builder()
@@ -105,6 +108,7 @@ internal class InvoiceCreateParamsTest {
                         .build()
                 )
                 .dueDate(LocalDate.parse("2025-09-22"))
+                .externalBillingEntityId("external_billing_entity_id")
                 .externalCustomerId("external-customer-id")
                 .memo("An optional memo for my invoice.")
                 .metadata(
@@ -139,6 +143,7 @@ internal class InvoiceCreateParamsTest {
                     .build()
             )
         assertThat(body.autoCollection()).isEqualTo(true)
+        assertThat(body.billingEntityId()).isEqualTo("billing_entity_id")
         assertThat(body.customerId()).isEqualTo("4khy3nwzktxv7")
         assertThat(body.discount())
             .isEqualTo(
@@ -161,6 +166,7 @@ internal class InvoiceCreateParamsTest {
             )
         assertThat(body.dueDate())
             .isEqualTo(InvoiceCreateParams.DueDate.ofDate(LocalDate.parse("2025-09-22")))
+        assertThat(body.externalBillingEntityId()).isEqualTo("external_billing_entity_id")
         assertThat(body.externalCustomerId()).isEqualTo("external-customer-id")
         assertThat(body.memo()).isEqualTo("An optional memo for my invoice.")
         assertThat(body.metadata())

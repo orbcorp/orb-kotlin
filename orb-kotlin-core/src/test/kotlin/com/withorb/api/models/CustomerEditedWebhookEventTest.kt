@@ -100,6 +100,7 @@ internal class CustomerEditedWebhookEventTest {
                                 .build()
                         )
                         .automaticTaxEnabled(true)
+                        .billingEntityId("billing_entity_id")
                         .defaultPaymentMethod(
                             Customer.DefaultPaymentMethod.builder()
                                 .id("id")
@@ -149,6 +150,7 @@ internal class CustomerEditedWebhookEventTest {
                                         .state("state")
                                         .build()
                                 )
+                                .billingEntityId("billing_entity_id")
                                 .defaultPaymentMethodId("default_payment_method_id")
                                 .email("email")
                                 .emailDelivery(true)
@@ -273,6 +275,7 @@ internal class CustomerEditedWebhookEventTest {
                             .build()
                     )
                     .automaticTaxEnabled(true)
+                    .billingEntityId("billing_entity_id")
                     .defaultPaymentMethod(
                         Customer.DefaultPaymentMethod.builder()
                             .id("id")
@@ -321,6 +324,7 @@ internal class CustomerEditedWebhookEventTest {
                                     .state("state")
                                     .build()
                             )
+                            .billingEntityId("billing_entity_id")
                             .defaultPaymentMethodId("default_payment_method_id")
                             .email("email")
                             .emailDelivery(true)
@@ -449,6 +453,7 @@ internal class CustomerEditedWebhookEventTest {
                                 .build()
                         )
                         .automaticTaxEnabled(true)
+                        .billingEntityId("billing_entity_id")
                         .defaultPaymentMethod(
                             Customer.DefaultPaymentMethod.builder()
                                 .id("id")
@@ -498,6 +503,7 @@ internal class CustomerEditedWebhookEventTest {
                                         .state("state")
                                         .build()
                                 )
+                                .billingEntityId("billing_entity_id")
                                 .defaultPaymentMethodId("default_payment_method_id")
                                 .email("email")
                                 .emailDelivery(true)

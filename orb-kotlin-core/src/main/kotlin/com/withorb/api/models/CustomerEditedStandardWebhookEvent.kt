@@ -699,6 +699,7 @@ private constructor(
         private constructor(
             private val autoCollection: JsonField<Boolean>,
             private val billingAddress: JsonField<Address>,
+            private val billingEntityId: JsonField<String>,
             private val defaultPaymentMethodId: JsonField<String>,
             private val email: JsonField<String>,
             private val emailDelivery: JsonField<Boolean>,
@@ -720,6 +721,9 @@ private constructor(
                 @JsonProperty("billing_address")
                 @ExcludeMissing
                 billingAddress: JsonField<Address> = JsonMissing.of(),
+                @JsonProperty("billing_entity_id")
+                @ExcludeMissing
+                billingEntityId: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("default_payment_method_id")
                 @ExcludeMissing
                 defaultPaymentMethodId: JsonField<String> = JsonMissing.of(),
@@ -749,6 +753,7 @@ private constructor(
             ) : this(
                 autoCollection,
                 billingAddress,
+                billingEntityId,
                 defaultPaymentMethodId,
                 email,
                 emailDelivery,
@@ -773,6 +778,12 @@ private constructor(
              *   server responded with an unexpected value).
              */
             fun billingAddress(): Address? = billingAddress.getNullable("billing_address")
+
+            /**
+             * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+             *   server responded with an unexpected value).
+             */
+            fun billingEntityId(): String? = billingEntityId.getNullable("billing_entity_id")
 
             /**
              * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1007,6 +1018,16 @@ private constructor(
             fun _billingAddress(): JsonField<Address> = billingAddress
 
             /**
+             * Returns the raw JSON value of [billingEntityId].
+             *
+             * Unlike [billingEntityId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("billing_entity_id")
+            @ExcludeMissing
+            fun _billingEntityId(): JsonField<String> = billingEntityId
+
+            /**
              * Returns the raw JSON value of [defaultPaymentMethodId].
              *
              * Unlike [defaultPaymentMethodId], this method doesn't throw if the JSON field has an
@@ -1122,6 +1143,7 @@ private constructor(
 
                 private var autoCollection: JsonField<Boolean> = JsonMissing.of()
                 private var billingAddress: JsonField<Address> = JsonMissing.of()
+                private var billingEntityId: JsonField<String> = JsonMissing.of()
                 private var defaultPaymentMethodId: JsonField<String> = JsonMissing.of()
                 private var email: JsonField<String> = JsonMissing.of()
                 private var emailDelivery: JsonField<Boolean> = JsonMissing.of()
@@ -1137,6 +1159,7 @@ private constructor(
                 internal fun from(previousAttributes: PreviousAttributes) = apply {
                     autoCollection = previousAttributes.autoCollection
                     billingAddress = previousAttributes.billingAddress
+                    billingEntityId = previousAttributes.billingEntityId
                     defaultPaymentMethodId = previousAttributes.defaultPaymentMethodId
                     email = previousAttributes.email
                     emailDelivery = previousAttributes.emailDelivery
@@ -1184,6 +1207,20 @@ private constructor(
                  */
                 fun billingAddress(billingAddress: JsonField<Address>) = apply {
                     this.billingAddress = billingAddress
+                }
+
+                fun billingEntityId(billingEntityId: String?) =
+                    billingEntityId(JsonField.ofNullable(billingEntityId))
+
+                /**
+                 * Sets [Builder.billingEntityId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.billingEntityId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun billingEntityId(billingEntityId: JsonField<String>) = apply {
+                    this.billingEntityId = billingEntityId
                 }
 
                 fun defaultPaymentMethodId(defaultPaymentMethodId: String?) =
@@ -1503,6 +1540,7 @@ private constructor(
                     PreviousAttributes(
                         autoCollection,
                         billingAddress,
+                        billingEntityId,
                         defaultPaymentMethodId,
                         email,
                         emailDelivery,
@@ -1536,6 +1574,7 @@ private constructor(
 
                 autoCollection()
                 billingAddress()?.validate()
+                billingEntityId()
                 defaultPaymentMethodId()
                 email()
                 emailDelivery()
@@ -1566,6 +1605,7 @@ private constructor(
             internal fun validity(): Int =
                 (if (autoCollection.asKnown() == null) 0 else 1) +
                     (billingAddress.asKnown()?.validity() ?: 0) +
+                    (if (billingEntityId.asKnown() == null) 0 else 1) +
                     (if (defaultPaymentMethodId.asKnown() == null) 0 else 1) +
                     (if (email.asKnown() == null) 0 else 1) +
                     (if (emailDelivery.asKnown() == null) 0 else 1) +
@@ -1697,6 +1737,7 @@ private constructor(
                 return other is PreviousAttributes &&
                     autoCollection == other.autoCollection &&
                     billingAddress == other.billingAddress &&
+                    billingEntityId == other.billingEntityId &&
                     defaultPaymentMethodId == other.defaultPaymentMethodId &&
                     email == other.email &&
                     emailDelivery == other.emailDelivery &&
@@ -1714,6 +1755,7 @@ private constructor(
                 Objects.hash(
                     autoCollection,
                     billingAddress,
+                    billingEntityId,
                     defaultPaymentMethodId,
                     email,
                     emailDelivery,
@@ -1731,7 +1773,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "PreviousAttributes{autoCollection=$autoCollection, billingAddress=$billingAddress, defaultPaymentMethodId=$defaultPaymentMethodId, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, shippingAddress=$shippingAddress, taxId=$taxId, additionalProperties=$additionalProperties}"
+                "PreviousAttributes{autoCollection=$autoCollection, billingAddress=$billingAddress, billingEntityId=$billingEntityId, defaultPaymentMethodId=$defaultPaymentMethodId, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, shippingAddress=$shippingAddress, taxId=$taxId, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {

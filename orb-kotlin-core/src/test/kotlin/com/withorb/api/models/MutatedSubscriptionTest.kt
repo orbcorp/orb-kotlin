@@ -57,6 +57,7 @@ internal class MutatedSubscriptionTest {
                     BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build()
                 )
                 .billingCycleDay(1L)
+                .billingEntityId("billing_entity_id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .currentBillingPeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .currentBillingPeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -143,6 +144,7 @@ internal class MutatedSubscriptionTest {
                                 .build()
                         )
                         .automaticTaxEnabled(true)
+                        .billingEntityId("billing_entity_id")
                         .defaultPaymentMethod(
                             Customer.DefaultPaymentMethod.builder()
                                 .id("id")
@@ -275,9 +277,11 @@ internal class MutatedSubscriptionTest {
                                 .id("m2t5akQeh2obwxeU")
                                 .externalPlanId("m2t5akQeh2obwxeU")
                                 .name("Example plan")
+                                .billingEntityId("billing_entity_id")
                                 .build()
                         )
                         .basePlanId("base_plan_id")
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .currency("currency")
                         .defaultInvoiceMemo("default_invoice_memo")
@@ -730,6 +734,7 @@ internal class MutatedSubscriptionTest {
                         .addCreatedCreditNote(
                             CreditNote.builder()
                                 .id("id")
+                                .billingEntityId("billing_entity_id")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .creditNoteNumber("credit_note_number")
                                 .creditNotePdf("credit_note_pdf")
@@ -846,6 +851,7 @@ internal class MutatedSubscriptionTest {
                                         .state("state")
                                         .build()
                                 )
+                                .billingEntityId("billing_entity_id")
                                 .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                                 .addCreditNote(
                                     ChangedSubscriptionResources.CreatedInvoice.CreditNote.builder()
@@ -1283,6 +1289,7 @@ internal class MutatedSubscriptionTest {
                         .addVoidedCreditNote(
                             CreditNote.builder()
                                 .id("id")
+                                .billingEntityId("billing_entity_id")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .creditNoteNumber("credit_note_number")
                                 .creditNotePdf("credit_note_pdf")
@@ -1398,6 +1405,7 @@ internal class MutatedSubscriptionTest {
                                         .state("state")
                                         .build()
                                 )
+                                .billingEntityId("billing_entity_id")
                                 .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                                 .addCreditNote(
                                     Invoice.CreditNote.builder()
@@ -1858,6 +1866,7 @@ internal class MutatedSubscriptionTest {
         assertThat(mutatedSubscription.billingCycleAnchorConfiguration())
             .isEqualTo(BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build())
         assertThat(mutatedSubscription.billingCycleDay()).isEqualTo(1L)
+        assertThat(mutatedSubscription.billingEntityId()).isEqualTo("billing_entity_id")
         assertThat(mutatedSubscription.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(mutatedSubscription.currentBillingPeriodEndDate())
@@ -1947,6 +1956,7 @@ internal class MutatedSubscriptionTest {
                             .build()
                     )
                     .automaticTaxEnabled(true)
+                    .billingEntityId("billing_entity_id")
                     .defaultPaymentMethod(
                         Customer.DefaultPaymentMethod.builder()
                             .id("id")
@@ -2083,9 +2093,11 @@ internal class MutatedSubscriptionTest {
                             .id("m2t5akQeh2obwxeU")
                             .externalPlanId("m2t5akQeh2obwxeU")
                             .name("Example plan")
+                            .billingEntityId("billing_entity_id")
                             .build()
                     )
                     .basePlanId("base_plan_id")
+                    .billingEntityId("billing_entity_id")
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .currency("currency")
                     .defaultInvoiceMemo("default_invoice_memo")
@@ -2529,6 +2541,7 @@ internal class MutatedSubscriptionTest {
                     .addCreatedCreditNote(
                         CreditNote.builder()
                             .id("id")
+                            .billingEntityId("billing_entity_id")
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .creditNoteNumber("credit_note_number")
                             .creditNotePdf("credit_note_pdf")
@@ -2639,6 +2652,7 @@ internal class MutatedSubscriptionTest {
                                     .state("state")
                                     .build()
                             )
+                            .billingEntityId("billing_entity_id")
                             .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                             .addCreditNote(
                                 ChangedSubscriptionResources.CreatedInvoice.CreditNote.builder()
@@ -3048,6 +3062,7 @@ internal class MutatedSubscriptionTest {
                     .addVoidedCreditNote(
                         CreditNote.builder()
                             .id("id")
+                            .billingEntityId("billing_entity_id")
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .creditNoteNumber("credit_note_number")
                             .creditNotePdf("credit_note_pdf")
@@ -3158,6 +3173,7 @@ internal class MutatedSubscriptionTest {
                                     .state("state")
                                     .build()
                             )
+                            .billingEntityId("billing_entity_id")
                             .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                             .addCreditNote(
                                 Invoice.CreditNote.builder()
@@ -3597,6 +3613,7 @@ internal class MutatedSubscriptionTest {
                     BillingCycleAnchorConfiguration.builder().day(1L).month(1L).year(0L).build()
                 )
                 .billingCycleDay(1L)
+                .billingEntityId("billing_entity_id")
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .currentBillingPeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .currentBillingPeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -3683,6 +3700,7 @@ internal class MutatedSubscriptionTest {
                                 .build()
                         )
                         .automaticTaxEnabled(true)
+                        .billingEntityId("billing_entity_id")
                         .defaultPaymentMethod(
                             Customer.DefaultPaymentMethod.builder()
                                 .id("id")
@@ -3815,9 +3833,11 @@ internal class MutatedSubscriptionTest {
                                 .id("m2t5akQeh2obwxeU")
                                 .externalPlanId("m2t5akQeh2obwxeU")
                                 .name("Example plan")
+                                .billingEntityId("billing_entity_id")
                                 .build()
                         )
                         .basePlanId("base_plan_id")
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .currency("currency")
                         .defaultInvoiceMemo("default_invoice_memo")
@@ -4270,6 +4290,7 @@ internal class MutatedSubscriptionTest {
                         .addCreatedCreditNote(
                             CreditNote.builder()
                                 .id("id")
+                                .billingEntityId("billing_entity_id")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .creditNoteNumber("credit_note_number")
                                 .creditNotePdf("credit_note_pdf")
@@ -4386,6 +4407,7 @@ internal class MutatedSubscriptionTest {
                                         .state("state")
                                         .build()
                                 )
+                                .billingEntityId("billing_entity_id")
                                 .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                                 .addCreditNote(
                                     ChangedSubscriptionResources.CreatedInvoice.CreditNote.builder()
@@ -4823,6 +4845,7 @@ internal class MutatedSubscriptionTest {
                         .addVoidedCreditNote(
                             CreditNote.builder()
                                 .id("id")
+                                .billingEntityId("billing_entity_id")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .creditNoteNumber("credit_note_number")
                                 .creditNotePdf("credit_note_pdf")
@@ -4938,6 +4961,7 @@ internal class MutatedSubscriptionTest {
                                         .state("state")
                                         .build()
                                 )
+                                .billingEntityId("billing_entity_id")
                                 .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                                 .addCreditNote(
                                     Invoice.CreditNote.builder()

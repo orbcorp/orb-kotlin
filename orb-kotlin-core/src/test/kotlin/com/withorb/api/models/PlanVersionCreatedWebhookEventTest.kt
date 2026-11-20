@@ -22,6 +22,7 @@ internal class PlanVersionCreatedWebhookEventTest {
                         .id("m2t5akQeh2obwxeU")
                         .externalPlanId("m2t5akQeh2obwxeU")
                         .name("Example plan")
+                        .billingEntityId("billing_entity_id")
                         .build()
                 )
                 .properties(
@@ -44,6 +45,7 @@ internal class PlanVersionCreatedWebhookEventTest {
                     .id("m2t5akQeh2obwxeU")
                     .externalPlanId("m2t5akQeh2obwxeU")
                     .name("Example plan")
+                    .billingEntityId("billing_entity_id")
                     .build()
             )
         assertThat(planVersionCreatedWebhookEvent.properties())
@@ -70,6 +72,7 @@ internal class PlanVersionCreatedWebhookEventTest {
                         .id("m2t5akQeh2obwxeU")
                         .externalPlanId("m2t5akQeh2obwxeU")
                         .name("Example plan")
+                        .billingEntityId("billing_entity_id")
                         .build()
                 )
                 .properties(

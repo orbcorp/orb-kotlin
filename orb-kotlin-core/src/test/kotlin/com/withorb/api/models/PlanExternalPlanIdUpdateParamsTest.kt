@@ -12,6 +12,7 @@ internal class PlanExternalPlanIdUpdateParamsTest {
     fun create() {
         PlanExternalPlanIdUpdateParams.builder()
             .otherExternalPlanId("external_plan_id")
+            .billingEntityId("billing_entity_id")
             .description("description")
             .externalPlanId("external_plan_id")
             .metadata(
@@ -38,6 +39,7 @@ internal class PlanExternalPlanIdUpdateParamsTest {
         val params =
             PlanExternalPlanIdUpdateParams.builder()
                 .otherExternalPlanId("external_plan_id")
+                .billingEntityId("billing_entity_id")
                 .description("description")
                 .externalPlanId("external_plan_id")
                 .metadata(
@@ -50,6 +52,7 @@ internal class PlanExternalPlanIdUpdateParamsTest {
 
         val body = params._body()
 
+        assertThat(body.billingEntityId()).isEqualTo("billing_entity_id")
         assertThat(body.description()).isEqualTo("description")
         assertThat(body.externalPlanId()).isEqualTo("external_plan_id")
         assertThat(body.metadata())

@@ -100,6 +100,7 @@ internal class CustomerCreditBalanceDepletedWebhookEventTest {
                                 .build()
                         )
                         .automaticTaxEnabled(true)
+                        .billingEntityId("billing_entity_id")
                         .defaultPaymentMethod(
                             Customer.DefaultPaymentMethod.builder()
                                 .id("id")
@@ -166,6 +167,7 @@ internal class CustomerCreditBalanceDepletedWebhookEventTest {
                                         .externalPlanId("m2t5akQeh2obwxeU")
                                         .name("Example plan")
                                         .planVersion("plan_version")
+                                        .billingEntityId("billing_entity_id")
                                         .build()
                                 )
                                 .subscription(
@@ -347,6 +349,7 @@ internal class CustomerCreditBalanceDepletedWebhookEventTest {
                             .build()
                     )
                     .automaticTaxEnabled(true)
+                    .billingEntityId("billing_entity_id")
                     .defaultPaymentMethod(
                         Customer.DefaultPaymentMethod.builder()
                             .id("id")
@@ -412,6 +415,7 @@ internal class CustomerCreditBalanceDepletedWebhookEventTest {
                                     .externalPlanId("m2t5akQeh2obwxeU")
                                     .name("Example plan")
                                     .planVersion("plan_version")
+                                    .billingEntityId("billing_entity_id")
                                     .build()
                             )
                             .subscription(
@@ -597,6 +601,7 @@ internal class CustomerCreditBalanceDepletedWebhookEventTest {
                                 .build()
                         )
                         .automaticTaxEnabled(true)
+                        .billingEntityId("billing_entity_id")
                         .defaultPaymentMethod(
                             Customer.DefaultPaymentMethod.builder()
                                 .id("id")
@@ -663,6 +668,7 @@ internal class CustomerCreditBalanceDepletedWebhookEventTest {
                                         .externalPlanId("m2t5akQeh2obwxeU")
                                         .name("Example plan")
                                         .planVersion("plan_version")
+                                        .billingEntityId("billing_entity_id")
                                         .build()
                                 )
                                 .subscription(

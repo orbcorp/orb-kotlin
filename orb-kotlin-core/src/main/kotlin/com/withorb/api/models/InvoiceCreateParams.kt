@@ -76,6 +76,15 @@ private constructor(
     fun autoCollection(): Boolean? = body.autoCollection()
 
     /**
+     * The id of the active billing entity that issues this invoice. If not specified, falls back to
+     * the customer's billing entity.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun billingEntityId(): String? = body.billingEntityId()
+
+    /**
      * The id of the `Customer` to create this invoice for. One of `customer_id` and
      * `external_customer_id` are required.
      *
@@ -100,6 +109,14 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun dueDate(): DueDate? = body.dueDate()
+
+    /**
+     * The external id of the active billing entity that issues this invoice.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun externalBillingEntityId(): String? = body.externalBillingEntityId()
 
     /**
      * The `external_customer_id` of the `Customer` to create this invoice for. One of `customer_id`
@@ -181,6 +198,13 @@ private constructor(
     fun _autoCollection(): JsonField<Boolean> = body._autoCollection()
 
     /**
+     * Returns the raw JSON value of [billingEntityId].
+     *
+     * Unlike [billingEntityId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _billingEntityId(): JsonField<String> = body._billingEntityId()
+
+    /**
      * Returns the raw JSON value of [customerId].
      *
      * Unlike [customerId], this method doesn't throw if the JSON field has an unexpected type.
@@ -200,6 +224,14 @@ private constructor(
      * Unlike [dueDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _dueDate(): JsonField<DueDate> = body._dueDate()
+
+    /**
+     * Returns the raw JSON value of [externalBillingEntityId].
+     *
+     * Unlike [externalBillingEntityId], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    fun _externalBillingEntityId(): JsonField<String> = body._externalBillingEntityId()
 
     /**
      * Returns the raw JSON value of [externalCustomerId].
@@ -284,7 +316,7 @@ private constructor(
          * - [invoiceDate]
          * - [lineItems]
          * - [autoCollection]
-         * - [customerId]
+         * - [billingEntityId]
          * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
@@ -361,6 +393,25 @@ private constructor(
          */
         fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
             body.autoCollection(autoCollection)
+        }
+
+        /**
+         * The id of the active billing entity that issues this invoice. If not specified, falls
+         * back to the customer's billing entity.
+         */
+        fun billingEntityId(billingEntityId: String?) = apply {
+            body.billingEntityId(billingEntityId)
+        }
+
+        /**
+         * Sets [Builder.billingEntityId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billingEntityId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun billingEntityId(billingEntityId: JsonField<String>) = apply {
+            body.billingEntityId(billingEntityId)
         }
 
         /**
@@ -473,6 +524,22 @@ private constructor(
 
         /** Alias for calling [dueDate] with `DueDate.ofDateTime(dateTime)`. */
         fun dueDate(dateTime: OffsetDateTime) = apply { body.dueDate(dateTime) }
+
+        /** The external id of the active billing entity that issues this invoice. */
+        fun externalBillingEntityId(externalBillingEntityId: String?) = apply {
+            body.externalBillingEntityId(externalBillingEntityId)
+        }
+
+        /**
+         * Sets [Builder.externalBillingEntityId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalBillingEntityId] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun externalBillingEntityId(externalBillingEntityId: JsonField<String>) = apply {
+            body.externalBillingEntityId(externalBillingEntityId)
+        }
 
         /**
          * The `external_customer_id` of the `Customer` to create this invoice for. One of
@@ -718,9 +785,11 @@ private constructor(
         private val invoiceDate: JsonField<OffsetDateTime>,
         private val lineItems: JsonField<List<LineItem>>,
         private val autoCollection: JsonField<Boolean>,
+        private val billingEntityId: JsonField<String>,
         private val customerId: JsonField<String>,
         private val discount: JsonField<Discount>,
         private val dueDate: JsonField<DueDate>,
+        private val externalBillingEntityId: JsonField<String>,
         private val externalCustomerId: JsonField<String>,
         private val memo: JsonField<String>,
         private val metadata: JsonField<Metadata>,
@@ -743,6 +812,9 @@ private constructor(
             @JsonProperty("auto_collection")
             @ExcludeMissing
             autoCollection: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("billing_entity_id")
+            @ExcludeMissing
+            billingEntityId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("customer_id")
             @ExcludeMissing
             customerId: JsonField<String> = JsonMissing.of(),
@@ -752,6 +824,9 @@ private constructor(
             @JsonProperty("due_date")
             @ExcludeMissing
             dueDate: JsonField<DueDate> = JsonMissing.of(),
+            @JsonProperty("external_billing_entity_id")
+            @ExcludeMissing
+            externalBillingEntityId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             externalCustomerId: JsonField<String> = JsonMissing.of(),
@@ -768,9 +843,11 @@ private constructor(
             invoiceDate,
             lineItems,
             autoCollection,
+            billingEntityId,
             customerId,
             discount,
             dueDate,
+            externalBillingEntityId,
             externalCustomerId,
             memo,
             metadata,
@@ -814,6 +891,15 @@ private constructor(
         fun autoCollection(): Boolean? = autoCollection.getNullable("auto_collection")
 
         /**
+         * The id of the active billing entity that issues this invoice. If not specified, falls
+         * back to the customer's billing entity.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun billingEntityId(): String? = billingEntityId.getNullable("billing_entity_id")
+
+        /**
          * The id of the `Customer` to create this invoice for. One of `customer_id` and
          * `external_customer_id` are required.
          *
@@ -838,6 +924,15 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun dueDate(): DueDate? = dueDate.getNullable("due_date")
+
+        /**
+         * The external id of the active billing entity that issues this invoice.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun externalBillingEntityId(): String? =
+            externalBillingEntityId.getNullable("external_billing_entity_id")
 
         /**
          * The `external_customer_id` of the `Customer` to create this invoice for. One of
@@ -926,6 +1021,16 @@ private constructor(
         fun _autoCollection(): JsonField<Boolean> = autoCollection
 
         /**
+         * Returns the raw JSON value of [billingEntityId].
+         *
+         * Unlike [billingEntityId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("billing_entity_id")
+        @ExcludeMissing
+        fun _billingEntityId(): JsonField<String> = billingEntityId
+
+        /**
          * Returns the raw JSON value of [customerId].
          *
          * Unlike [customerId], this method doesn't throw if the JSON field has an unexpected type.
@@ -947,6 +1052,16 @@ private constructor(
          * Unlike [dueDate], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("due_date") @ExcludeMissing fun _dueDate(): JsonField<DueDate> = dueDate
+
+        /**
+         * Returns the raw JSON value of [externalBillingEntityId].
+         *
+         * Unlike [externalBillingEntityId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("external_billing_entity_id")
+        @ExcludeMissing
+        fun _externalBillingEntityId(): JsonField<String> = externalBillingEntityId
 
         /**
          * Returns the raw JSON value of [externalCustomerId].
@@ -1023,9 +1138,11 @@ private constructor(
             private var invoiceDate: JsonField<OffsetDateTime>? = null
             private var lineItems: JsonField<MutableList<LineItem>>? = null
             private var autoCollection: JsonField<Boolean> = JsonMissing.of()
+            private var billingEntityId: JsonField<String> = JsonMissing.of()
             private var customerId: JsonField<String> = JsonMissing.of()
             private var discount: JsonField<Discount> = JsonMissing.of()
             private var dueDate: JsonField<DueDate> = JsonMissing.of()
+            private var externalBillingEntityId: JsonField<String> = JsonMissing.of()
             private var externalCustomerId: JsonField<String> = JsonMissing.of()
             private var memo: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
@@ -1038,9 +1155,11 @@ private constructor(
                 invoiceDate = body.invoiceDate
                 lineItems = body.lineItems.map { it.toMutableList() }
                 autoCollection = body.autoCollection
+                billingEntityId = body.billingEntityId
                 customerId = body.customerId
                 discount = body.discount
                 dueDate = body.dueDate
+                externalBillingEntityId = body.externalBillingEntityId
                 externalCustomerId = body.externalCustomerId
                 memo = body.memo
                 metadata = body.metadata
@@ -1131,6 +1250,24 @@ private constructor(
              */
             fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
                 this.autoCollection = autoCollection
+            }
+
+            /**
+             * The id of the active billing entity that issues this invoice. If not specified, falls
+             * back to the customer's billing entity.
+             */
+            fun billingEntityId(billingEntityId: String?) =
+                billingEntityId(JsonField.ofNullable(billingEntityId))
+
+            /**
+             * Sets [Builder.billingEntityId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingEntityId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingEntityId(billingEntityId: JsonField<String>) = apply {
+                this.billingEntityId = billingEntityId
             }
 
             /**
@@ -1261,6 +1398,21 @@ private constructor(
 
             /** Alias for calling [dueDate] with `DueDate.ofDateTime(dateTime)`. */
             fun dueDate(dateTime: OffsetDateTime) = dueDate(DueDate.ofDateTime(dateTime))
+
+            /** The external id of the active billing entity that issues this invoice. */
+            fun externalBillingEntityId(externalBillingEntityId: String?) =
+                externalBillingEntityId(JsonField.ofNullable(externalBillingEntityId))
+
+            /**
+             * Sets [Builder.externalBillingEntityId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalBillingEntityId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun externalBillingEntityId(externalBillingEntityId: JsonField<String>) = apply {
+                this.externalBillingEntityId = externalBillingEntityId
+            }
 
             /**
              * The `external_customer_id` of the `Customer` to create this invoice for. One of
@@ -1394,9 +1546,11 @@ private constructor(
                     checkRequired("invoiceDate", invoiceDate),
                     checkRequired("lineItems", lineItems).map { it.toImmutable() },
                     autoCollection,
+                    billingEntityId,
                     customerId,
                     discount,
                     dueDate,
+                    externalBillingEntityId,
                     externalCustomerId,
                     memo,
                     metadata,
@@ -1426,9 +1580,11 @@ private constructor(
             invoiceDate()
             lineItems().forEach { it.validate() }
             autoCollection()
+            billingEntityId()
             customerId()
             discount()?.validate()
             dueDate()?.validate()
+            externalBillingEntityId()
             externalCustomerId()
             memo()
             metadata()?.validate()
@@ -1456,9 +1612,11 @@ private constructor(
                 (if (invoiceDate.asKnown() == null) 0 else 1) +
                 (lineItems.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                 (if (autoCollection.asKnown() == null) 0 else 1) +
+                (if (billingEntityId.asKnown() == null) 0 else 1) +
                 (if (customerId.asKnown() == null) 0 else 1) +
                 (discount.asKnown()?.validity() ?: 0) +
                 (dueDate.asKnown()?.validity() ?: 0) +
+                (if (externalBillingEntityId.asKnown() == null) 0 else 1) +
                 (if (externalCustomerId.asKnown() == null) 0 else 1) +
                 (if (memo.asKnown() == null) 0 else 1) +
                 (metadata.asKnown()?.validity() ?: 0) +
@@ -1475,9 +1633,11 @@ private constructor(
                 invoiceDate == other.invoiceDate &&
                 lineItems == other.lineItems &&
                 autoCollection == other.autoCollection &&
+                billingEntityId == other.billingEntityId &&
                 customerId == other.customerId &&
                 discount == other.discount &&
                 dueDate == other.dueDate &&
+                externalBillingEntityId == other.externalBillingEntityId &&
                 externalCustomerId == other.externalCustomerId &&
                 memo == other.memo &&
                 metadata == other.metadata &&
@@ -1492,9 +1652,11 @@ private constructor(
                 invoiceDate,
                 lineItems,
                 autoCollection,
+                billingEntityId,
                 customerId,
                 discount,
                 dueDate,
+                externalBillingEntityId,
                 externalCustomerId,
                 memo,
                 metadata,
@@ -1507,7 +1669,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, autoCollection=$autoCollection, customerId=$customerId, discount=$discount, dueDate=$dueDate, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, netTerms=$netTerms, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
+            "Body{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, autoCollection=$autoCollection, billingEntityId=$billingEntityId, customerId=$customerId, discount=$discount, dueDate=$dueDate, externalBillingEntityId=$externalBillingEntityId, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, netTerms=$netTerms, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
     }
 
     class LineItem

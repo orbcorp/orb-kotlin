@@ -52,9 +52,11 @@ internal class PlanEditedWebhookEventTest {
                                 .id("m2t5akQeh2obwxeU")
                                 .externalPlanId("m2t5akQeh2obwxeU")
                                 .name("Example plan")
+                                .billingEntityId("billing_entity_id")
                                 .build()
                         )
                         .basePlanId("base_plan_id")
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .currency("currency")
                         .defaultInvoiceMemo("default_invoice_memo")
@@ -327,6 +329,7 @@ internal class PlanEditedWebhookEventTest {
                     PlanEditedWebhookEvent.Properties.builder()
                         .previousAttributes(
                             PlanEditedWebhookEvent.Properties.PreviousAttributes.builder()
+                                .billingEntityId("billing_entity_id")
                                 .description("description")
                                 .externalPlanId("external_plan_id")
                                 .metadata(
@@ -384,9 +387,11 @@ internal class PlanEditedWebhookEventTest {
                             .id("m2t5akQeh2obwxeU")
                             .externalPlanId("m2t5akQeh2obwxeU")
                             .name("Example plan")
+                            .billingEntityId("billing_entity_id")
                             .build()
                     )
                     .basePlanId("base_plan_id")
+                    .billingEntityId("billing_entity_id")
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .currency("currency")
                     .defaultInvoiceMemo("default_invoice_memo")
@@ -654,6 +659,7 @@ internal class PlanEditedWebhookEventTest {
                 PlanEditedWebhookEvent.Properties.builder()
                     .previousAttributes(
                         PlanEditedWebhookEvent.Properties.PreviousAttributes.builder()
+                            .billingEntityId("billing_entity_id")
                             .description("description")
                             .externalPlanId("external_plan_id")
                             .metadata(
@@ -715,9 +721,11 @@ internal class PlanEditedWebhookEventTest {
                                 .id("m2t5akQeh2obwxeU")
                                 .externalPlanId("m2t5akQeh2obwxeU")
                                 .name("Example plan")
+                                .billingEntityId("billing_entity_id")
                                 .build()
                         )
                         .basePlanId("base_plan_id")
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .currency("currency")
                         .defaultInvoiceMemo("default_invoice_memo")
@@ -990,6 +998,7 @@ internal class PlanEditedWebhookEventTest {
                     PlanEditedWebhookEvent.Properties.builder()
                         .previousAttributes(
                             PlanEditedWebhookEvent.Properties.PreviousAttributes.builder()
+                                .billingEntityId("billing_entity_id")
                                 .description("description")
                                 .externalPlanId("external_plan_id")
                                 .metadata(

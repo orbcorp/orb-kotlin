@@ -36,6 +36,7 @@ internal class ExternalPlanIdServiceTest {
             externalPlanIdService.update(
                 PlanExternalPlanIdUpdateParams.builder()
                     .otherExternalPlanId("external_plan_id")
+                    .billingEntityId("billing_entity_id")
                     .description("description")
                     .externalPlanId("external_plan_id")
                     .metadata(

@@ -57,6 +57,7 @@ internal class SubscriptionLicenseBalanceThresholdReachedStandardWebhookEventTes
                                         .externalPlanId("m2t5akQeh2obwxeU")
                                         .name("Example plan")
                                         .planVersion("plan_version")
+                                        .billingEntityId("billing_entity_id")
                                         .build()
                                 )
                                 .subscription(
@@ -178,6 +179,7 @@ internal class SubscriptionLicenseBalanceThresholdReachedStandardWebhookEventTes
                                 .id("m2t5akQeh2obwxeU")
                                 .externalPlanId("m2t5akQeh2obwxeU")
                                 .name("Example plan")
+                                .billingEntityId("billing_entity_id")
                                 .build()
                         )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -239,6 +241,7 @@ internal class SubscriptionLicenseBalanceThresholdReachedStandardWebhookEventTes
                                     .externalPlanId("m2t5akQeh2obwxeU")
                                     .name("Example plan")
                                     .planVersion("plan_version")
+                                    .billingEntityId("billing_entity_id")
                                     .build()
                             )
                             .subscription(
@@ -359,6 +362,7 @@ internal class SubscriptionLicenseBalanceThresholdReachedStandardWebhookEventTes
                             .id("m2t5akQeh2obwxeU")
                             .externalPlanId("m2t5akQeh2obwxeU")
                             .name("Example plan")
+                            .billingEntityId("billing_entity_id")
                             .build()
                     )
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -424,6 +428,7 @@ internal class SubscriptionLicenseBalanceThresholdReachedStandardWebhookEventTes
                                         .externalPlanId("m2t5akQeh2obwxeU")
                                         .name("Example plan")
                                         .planVersion("plan_version")
+                                        .billingEntityId("billing_entity_id")
                                         .build()
                                 )
                                 .subscription(
@@ -545,6 +550,7 @@ internal class SubscriptionLicenseBalanceThresholdReachedStandardWebhookEventTes
                                 .id("m2t5akQeh2obwxeU")
                                 .externalPlanId("m2t5akQeh2obwxeU")
                                 .name("Example plan")
+                                .billingEntityId("billing_entity_id")
                                 .build()
                         )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

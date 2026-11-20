@@ -42,6 +42,7 @@ internal class InvoiceDunningScheduleResetStandardWebhookEventTest {
                                 .state("state")
                                 .build()
                         )
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                         .addCreditNote(
                             InvoiceDunningScheduleResetStandardWebhookEvent.Invoice.CreditNote
@@ -224,6 +225,7 @@ internal class InvoiceDunningScheduleResetStandardWebhookEventTest {
                             .state("state")
                             .build()
                     )
+                    .billingEntityId("billing_entity_id")
                     .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                     .addCreditNote(
                         InvoiceDunningScheduleResetStandardWebhookEvent.Invoice.CreditNote.builder()
@@ -407,6 +409,7 @@ internal class InvoiceDunningScheduleResetStandardWebhookEventTest {
                                 .state("state")
                                 .build()
                         )
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                         .addCreditNote(
                             InvoiceDunningScheduleResetStandardWebhookEvent.Invoice.CreditNote

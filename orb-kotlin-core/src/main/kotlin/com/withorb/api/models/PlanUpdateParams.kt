@@ -35,6 +35,15 @@ private constructor(
     fun planId(): String? = planId
 
     /**
+     * The Orb ID of the active billing entity to set as this plan's default entity. Pass `null` to
+     * clear it.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun billingEntityId(): String? = body.billingEntityId()
+
+    /**
      * An optional user-defined description of the plan.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
@@ -68,6 +77,13 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun name(): String? = body.name()
+
+    /**
+     * Returns the raw JSON value of [billingEntityId].
+     *
+     * Unlike [billingEntityId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _billingEntityId(): JsonField<String> = body._billingEntityId()
 
     /**
      * Returns the raw JSON value of [description].
@@ -137,12 +153,33 @@ private constructor(
          *
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [billingEntityId]
          * - [description]
          * - [externalPlanId]
          * - [metadata]
          * - [name]
+         * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
+         * The Orb ID of the active billing entity to set as this plan's default entity. Pass `null`
+         * to clear it.
+         */
+        fun billingEntityId(billingEntityId: String?) = apply {
+            body.billingEntityId(billingEntityId)
+        }
+
+        /**
+         * Sets [Builder.billingEntityId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billingEntityId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun billingEntityId(billingEntityId: JsonField<String>) = apply {
+            body.billingEntityId(billingEntityId)
+        }
 
         /** An optional user-defined description of the plan. */
         fun description(description: String?) = apply { body.description(description) }
@@ -347,6 +384,7 @@ private constructor(
     class Body
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
+        private val billingEntityId: JsonField<String>,
         private val description: JsonField<String>,
         private val externalPlanId: JsonField<String>,
         private val metadata: JsonField<Metadata>,
@@ -356,6 +394,9 @@ private constructor(
 
         @JsonCreator
         private constructor(
+            @JsonProperty("billing_entity_id")
+            @ExcludeMissing
+            billingEntityId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("description")
             @ExcludeMissing
             description: JsonField<String> = JsonMissing.of(),
@@ -366,7 +407,16 @@ private constructor(
             @ExcludeMissing
             metadata: JsonField<Metadata> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(description, externalPlanId, metadata, name, mutableMapOf())
+        ) : this(billingEntityId, description, externalPlanId, metadata, name, mutableMapOf())
+
+        /**
+         * The Orb ID of the active billing entity to set as this plan's default entity. Pass `null`
+         * to clear it.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun billingEntityId(): String? = billingEntityId.getNullable("billing_entity_id")
 
         /**
          * An optional user-defined description of the plan.
@@ -403,6 +453,16 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun name(): String? = name.getNullable("name")
+
+        /**
+         * Returns the raw JSON value of [billingEntityId].
+         *
+         * Unlike [billingEntityId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("billing_entity_id")
+        @ExcludeMissing
+        fun _billingEntityId(): JsonField<String> = billingEntityId
 
         /**
          * Returns the raw JSON value of [description].
@@ -458,6 +518,7 @@ private constructor(
         /** A builder for [Body]. */
         class Builder internal constructor() {
 
+            private var billingEntityId: JsonField<String> = JsonMissing.of()
             private var description: JsonField<String> = JsonMissing.of()
             private var externalPlanId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
@@ -465,11 +526,30 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(body: Body) = apply {
+                billingEntityId = body.billingEntityId
                 description = body.description
                 externalPlanId = body.externalPlanId
                 metadata = body.metadata
                 name = body.name
                 additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * The Orb ID of the active billing entity to set as this plan's default entity. Pass
+             * `null` to clear it.
+             */
+            fun billingEntityId(billingEntityId: String?) =
+                billingEntityId(JsonField.ofNullable(billingEntityId))
+
+            /**
+             * Sets [Builder.billingEntityId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingEntityId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingEntityId(billingEntityId: JsonField<String>) = apply {
+                this.billingEntityId = billingEntityId
             }
 
             /** An optional user-defined description of the plan. */
@@ -559,6 +639,7 @@ private constructor(
              */
             fun build(): Body =
                 Body(
+                    billingEntityId,
                     description,
                     externalPlanId,
                     metadata,
@@ -583,6 +664,7 @@ private constructor(
                 return@apply
             }
 
+            billingEntityId()
             description()
             externalPlanId()
             metadata()?.validate()
@@ -605,7 +687,8 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            (if (description.asKnown() == null) 0 else 1) +
+            (if (billingEntityId.asKnown() == null) 0 else 1) +
+                (if (description.asKnown() == null) 0 else 1) +
                 (if (externalPlanId.asKnown() == null) 0 else 1) +
                 (metadata.asKnown()?.validity() ?: 0) +
                 (if (name.asKnown() == null) 0 else 1)
@@ -616,6 +699,7 @@ private constructor(
             }
 
             return other is Body &&
+                billingEntityId == other.billingEntityId &&
                 description == other.description &&
                 externalPlanId == other.externalPlanId &&
                 metadata == other.metadata &&
@@ -624,13 +708,20 @@ private constructor(
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(description, externalPlanId, metadata, name, additionalProperties)
+            Objects.hash(
+                billingEntityId,
+                description,
+                externalPlanId,
+                metadata,
+                name,
+                additionalProperties,
+            )
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{description=$description, externalPlanId=$externalPlanId, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
+            "Body{billingEntityId=$billingEntityId, description=$description, externalPlanId=$externalPlanId, metadata=$metadata, name=$name, additionalProperties=$additionalProperties}"
     }
 
     /**

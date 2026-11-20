@@ -331,6 +331,16 @@ private constructor(
         body.billingCycleAnchorConfiguration()
 
     /**
+     * The id of the active billing entity that issues this subscription's invoices. If not
+     * specified, falls back to the customer's billing entity, then the plan's, then the account's
+     * default. This cannot be changed after creation.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun billingEntityId(): String? = body.billingEntityId()
+
+    /**
      * Redemption code to be used for this subscription. If the coupon cannot be found by its
      * redemption code, or cannot be redeemed, an error response will be returned and the
      * subscription creation or plan change will not be scheduled.
@@ -375,6 +385,14 @@ private constructor(
      *   responded with an unexpected value).
      */
     fun endDate(): OffsetDateTime? = body.endDate()
+
+    /**
+     * The external id of the active billing entity that issues this subscription's invoices.
+     *
+     * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
+     *   responded with an unexpected value).
+     */
+    fun externalBillingEntityId(): String? = body.externalBillingEntityId()
 
     /**
      * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the server
@@ -613,6 +631,13 @@ private constructor(
         body._billingCycleAnchorConfiguration()
 
     /**
+     * Returns the raw JSON value of [billingEntityId].
+     *
+     * Unlike [billingEntityId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _billingEntityId(): JsonField<String> = body._billingEntityId()
+
+    /**
      * Returns the raw JSON value of [couponRedemptionCode].
      *
      * Unlike [couponRedemptionCode], this method doesn't throw if the JSON field has an unexpected
@@ -657,6 +682,14 @@ private constructor(
      * Unlike [endDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _endDate(): JsonField<OffsetDateTime> = body._endDate()
+
+    /**
+     * Returns the raw JSON value of [externalBillingEntityId].
+     *
+     * Unlike [externalBillingEntityId], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    fun _externalBillingEntityId(): JsonField<String> = body._externalBillingEntityId()
 
     /**
      * Returns the raw JSON value of [externalCustomerId].
@@ -1014,6 +1047,26 @@ private constructor(
         ) = apply { body.billingCycleAnchorConfiguration(billingCycleAnchorConfiguration) }
 
         /**
+         * The id of the active billing entity that issues this subscription's invoices. If not
+         * specified, falls back to the customer's billing entity, then the plan's, then the
+         * account's default. This cannot be changed after creation.
+         */
+        fun billingEntityId(billingEntityId: String?) = apply {
+            body.billingEntityId(billingEntityId)
+        }
+
+        /**
+         * Sets [Builder.billingEntityId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billingEntityId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun billingEntityId(billingEntityId: JsonField<String>) = apply {
+            body.billingEntityId(billingEntityId)
+        }
+
+        /**
          * Redemption code to be used for this subscription. If the coupon cannot be found by its
          * redemption code, or cannot be redeemed, an error response will be returned and the
          * subscription creation or plan change will not be scheduled.
@@ -1113,6 +1166,24 @@ private constructor(
          * supported value.
          */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { body.endDate(endDate) }
+
+        /**
+         * The external id of the active billing entity that issues this subscription's invoices.
+         */
+        fun externalBillingEntityId(externalBillingEntityId: String?) = apply {
+            body.externalBillingEntityId(externalBillingEntityId)
+        }
+
+        /**
+         * Sets [Builder.externalBillingEntityId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalBillingEntityId] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun externalBillingEntityId(externalBillingEntityId: JsonField<String>) = apply {
+            body.externalBillingEntityId(externalBillingEntityId)
+        }
 
         fun externalCustomerId(externalCustomerId: String?) = apply {
             body.externalCustomerId(externalCustomerId)
@@ -1712,12 +1783,14 @@ private constructor(
         private val autoIssuance: JsonField<Boolean>,
         private val awsRegion: JsonField<String>,
         private val billingCycleAnchorConfiguration: JsonField<BillingCycleAnchorConfiguration>,
+        private val billingEntityId: JsonField<String>,
         private val couponRedemptionCode: JsonField<String>,
         private val creditsOverageRate: JsonField<Double>,
         private val currency: JsonField<String>,
         private val customerId: JsonField<String>,
         private val defaultInvoiceMemo: JsonField<String>,
         private val endDate: JsonField<OffsetDateTime>,
+        private val externalBillingEntityId: JsonField<String>,
         private val externalCustomerId: JsonField<String>,
         private val externalMarketplace: JsonField<ExternalMarketplace>,
         private val externalMarketplaceReportingId: JsonField<String>,
@@ -1766,6 +1839,9 @@ private constructor(
             @ExcludeMissing
             billingCycleAnchorConfiguration: JsonField<BillingCycleAnchorConfiguration> =
                 JsonMissing.of(),
+            @JsonProperty("billing_entity_id")
+            @ExcludeMissing
+            billingEntityId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("coupon_redemption_code")
             @ExcludeMissing
             couponRedemptionCode: JsonField<String> = JsonMissing.of(),
@@ -1784,6 +1860,9 @@ private constructor(
             @JsonProperty("end_date")
             @ExcludeMissing
             endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("external_billing_entity_id")
+            @ExcludeMissing
+            externalBillingEntityId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("external_customer_id")
             @ExcludeMissing
             externalCustomerId: JsonField<String> = JsonMissing.of(),
@@ -1847,12 +1926,14 @@ private constructor(
             autoIssuance,
             awsRegion,
             billingCycleAnchorConfiguration,
+            billingEntityId,
             couponRedemptionCode,
             creditsOverageRate,
             currency,
             customerId,
             defaultInvoiceMemo,
             endDate,
+            externalBillingEntityId,
             externalCustomerId,
             externalMarketplace,
             externalMarketplaceReportingId,
@@ -1939,6 +2020,16 @@ private constructor(
             billingCycleAnchorConfiguration.getNullable("billing_cycle_anchor_configuration")
 
         /**
+         * The id of the active billing entity that issues this subscription's invoices. If not
+         * specified, falls back to the customer's billing entity, then the plan's, then the
+         * account's default. This cannot be changed after creation.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun billingEntityId(): String? = billingEntityId.getNullable("billing_entity_id")
+
+        /**
          * Redemption code to be used for this subscription. If the coupon cannot be found by its
          * redemption code, or cannot be redeemed, an error response will be returned and the
          * subscription creation or plan change will not be scheduled.
@@ -1985,6 +2076,15 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
+
+        /**
+         * The external id of the active billing entity that issues this subscription's invoices.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun externalBillingEntityId(): String? =
+            externalBillingEntityId.getNullable("external_billing_entity_id")
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -2248,6 +2348,16 @@ private constructor(
             billingCycleAnchorConfiguration
 
         /**
+         * Returns the raw JSON value of [billingEntityId].
+         *
+         * Unlike [billingEntityId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("billing_entity_id")
+        @ExcludeMissing
+        fun _billingEntityId(): JsonField<String> = billingEntityId
+
+        /**
          * Returns the raw JSON value of [couponRedemptionCode].
          *
          * Unlike [couponRedemptionCode], this method doesn't throw if the JSON field has an
@@ -2302,6 +2412,16 @@ private constructor(
         @JsonProperty("end_date")
         @ExcludeMissing
         fun _endDate(): JsonField<OffsetDateTime> = endDate
+
+        /**
+         * Returns the raw JSON value of [externalBillingEntityId].
+         *
+         * Unlike [externalBillingEntityId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("external_billing_entity_id")
+        @ExcludeMissing
+        fun _externalBillingEntityId(): JsonField<String> = externalBillingEntityId
 
         /**
          * Returns the raw JSON value of [externalCustomerId].
@@ -2531,12 +2651,14 @@ private constructor(
             private var billingCycleAnchorConfiguration:
                 JsonField<BillingCycleAnchorConfiguration> =
                 JsonMissing.of()
+            private var billingEntityId: JsonField<String> = JsonMissing.of()
             private var couponRedemptionCode: JsonField<String> = JsonMissing.of()
             private var creditsOverageRate: JsonField<Double> = JsonMissing.of()
             private var currency: JsonField<String> = JsonMissing.of()
             private var customerId: JsonField<String> = JsonMissing.of()
             private var defaultInvoiceMemo: JsonField<String> = JsonMissing.of()
             private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var externalBillingEntityId: JsonField<String> = JsonMissing.of()
             private var externalCustomerId: JsonField<String> = JsonMissing.of()
             private var externalMarketplace: JsonField<ExternalMarketplace> = JsonMissing.of()
             private var externalMarketplaceReportingId: JsonField<String> = JsonMissing.of()
@@ -2568,12 +2690,14 @@ private constructor(
                 autoIssuance = body.autoIssuance
                 awsRegion = body.awsRegion
                 billingCycleAnchorConfiguration = body.billingCycleAnchorConfiguration
+                billingEntityId = body.billingEntityId
                 couponRedemptionCode = body.couponRedemptionCode
                 creditsOverageRate = body.creditsOverageRate
                 currency = body.currency
                 customerId = body.customerId
                 defaultInvoiceMemo = body.defaultInvoiceMemo
                 endDate = body.endDate
+                externalBillingEntityId = body.externalBillingEntityId
                 externalCustomerId = body.externalCustomerId
                 externalMarketplace = body.externalMarketplace
                 externalMarketplaceReportingId = body.externalMarketplaceReportingId
@@ -2762,6 +2886,25 @@ private constructor(
             ) = apply { this.billingCycleAnchorConfiguration = billingCycleAnchorConfiguration }
 
             /**
+             * The id of the active billing entity that issues this subscription's invoices. If not
+             * specified, falls back to the customer's billing entity, then the plan's, then the
+             * account's default. This cannot be changed after creation.
+             */
+            fun billingEntityId(billingEntityId: String?) =
+                billingEntityId(JsonField.ofNullable(billingEntityId))
+
+            /**
+             * Sets [Builder.billingEntityId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingEntityId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingEntityId(billingEntityId: JsonField<String>) = apply {
+                this.billingEntityId = billingEntityId
+            }
+
+            /**
              * Redemption code to be used for this subscription. If the coupon cannot be found by
              * its redemption code, or cannot be redeemed, an error response will be returned and
              * the subscription creation or plan change will not be scheduled.
@@ -2859,6 +3002,24 @@ private constructor(
              * supported value.
              */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
+            /**
+             * The external id of the active billing entity that issues this subscription's
+             * invoices.
+             */
+            fun externalBillingEntityId(externalBillingEntityId: String?) =
+                externalBillingEntityId(JsonField.ofNullable(externalBillingEntityId))
+
+            /**
+             * Sets [Builder.externalBillingEntityId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalBillingEntityId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun externalBillingEntityId(externalBillingEntityId: JsonField<String>) = apply {
+                this.externalBillingEntityId = externalBillingEntityId
+            }
 
             fun externalCustomerId(externalCustomerId: String?) =
                 externalCustomerId(JsonField.ofNullable(externalCustomerId))
@@ -3361,12 +3522,14 @@ private constructor(
                     autoIssuance,
                     awsRegion,
                     billingCycleAnchorConfiguration,
+                    billingEntityId,
                     couponRedemptionCode,
                     creditsOverageRate,
                     currency,
                     customerId,
                     defaultInvoiceMemo,
                     endDate,
+                    externalBillingEntityId,
                     externalCustomerId,
                     externalMarketplace,
                     externalMarketplaceReportingId,
@@ -3415,12 +3578,14 @@ private constructor(
             autoIssuance()
             awsRegion()
             billingCycleAnchorConfiguration()?.validate()
+            billingEntityId()
             couponRedemptionCode()
             creditsOverageRate()
             currency()
             customerId()
             defaultInvoiceMemo()
             endDate()
+            externalBillingEntityId()
             externalCustomerId()
             externalMarketplace()?.validate()
             externalMarketplaceReportingId()
@@ -3467,12 +3632,14 @@ private constructor(
                 (if (autoIssuance.asKnown() == null) 0 else 1) +
                 (if (awsRegion.asKnown() == null) 0 else 1) +
                 (billingCycleAnchorConfiguration.asKnown()?.validity() ?: 0) +
+                (if (billingEntityId.asKnown() == null) 0 else 1) +
                 (if (couponRedemptionCode.asKnown() == null) 0 else 1) +
                 (if (creditsOverageRate.asKnown() == null) 0 else 1) +
                 (if (currency.asKnown() == null) 0 else 1) +
                 (if (customerId.asKnown() == null) 0 else 1) +
                 (if (defaultInvoiceMemo.asKnown() == null) 0 else 1) +
                 (if (endDate.asKnown() == null) 0 else 1) +
+                (if (externalBillingEntityId.asKnown() == null) 0 else 1) +
                 (if (externalCustomerId.asKnown() == null) 0 else 1) +
                 (externalMarketplace.asKnown()?.validity() ?: 0) +
                 (if (externalMarketplaceReportingId.asKnown() == null) 0 else 1) +
@@ -3509,12 +3676,14 @@ private constructor(
                 autoIssuance == other.autoIssuance &&
                 awsRegion == other.awsRegion &&
                 billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration &&
+                billingEntityId == other.billingEntityId &&
                 couponRedemptionCode == other.couponRedemptionCode &&
                 creditsOverageRate == other.creditsOverageRate &&
                 currency == other.currency &&
                 customerId == other.customerId &&
                 defaultInvoiceMemo == other.defaultInvoiceMemo &&
                 endDate == other.endDate &&
+                externalBillingEntityId == other.externalBillingEntityId &&
                 externalCustomerId == other.externalCustomerId &&
                 externalMarketplace == other.externalMarketplace &&
                 externalMarketplaceReportingId == other.externalMarketplaceReportingId &&
@@ -3548,12 +3717,14 @@ private constructor(
                 autoIssuance,
                 awsRegion,
                 billingCycleAnchorConfiguration,
+                billingEntityId,
                 couponRedemptionCode,
                 creditsOverageRate,
                 currency,
                 customerId,
                 defaultInvoiceMemo,
                 endDate,
+                externalBillingEntityId,
                 externalCustomerId,
                 externalMarketplace,
                 externalMarketplaceReportingId,
@@ -3582,7 +3753,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, autoIssuance=$autoIssuance, awsRegion=$awsRegion, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, currency=$currency, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, filter=$filter, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, name=$name, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, startDate=$startDate, trialDurationDays=$trialDurationDays, usageCustomerIds=$usageCustomerIds, additionalProperties=$additionalProperties}"
+            "Body{addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, autoIssuance=$autoIssuance, awsRegion=$awsRegion, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, billingEntityId=$billingEntityId, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, currency=$currency, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalBillingEntityId=$externalBillingEntityId, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, filter=$filter, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, name=$name, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, startDate=$startDate, trialDurationDays=$trialDurationDays, usageCustomerIds=$usageCustomerIds, additionalProperties=$additionalProperties}"
     }
 
     class AddAdjustment

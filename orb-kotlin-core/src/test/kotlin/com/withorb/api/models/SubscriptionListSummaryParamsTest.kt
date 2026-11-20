@@ -12,6 +12,7 @@ internal class SubscriptionListSummaryParamsTest {
     @Test
     fun create() {
         SubscriptionListSummaryParams.builder()
+            .billingEntityId("billing_entity_id")
             .createdAtGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .createdAtGte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .createdAtLt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -30,6 +31,7 @@ internal class SubscriptionListSummaryParamsTest {
     fun queryParams() {
         val params =
             SubscriptionListSummaryParams.builder()
+                .billingEntityId("billing_entity_id")
                 .createdAtGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .createdAtGte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .createdAtLt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -48,6 +50,7 @@ internal class SubscriptionListSummaryParamsTest {
         assertThat(queryParams)
             .isEqualTo(
                 QueryParams.builder()
+                    .put("billing_entity_id", "billing_entity_id")
                     .put("created_at[gt]", "2019-12-27T18:11:19.117Z")
                     .put("created_at[gte]", "2019-12-27T18:11:19.117Z")
                     .put("created_at[lt]", "2019-12-27T18:11:19.117Z")

@@ -75,6 +75,7 @@ internal class ServiceParamsTest {
                         .state("state")
                         .build()
                 )
+                .billingEntityId("billing_entity_id")
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")

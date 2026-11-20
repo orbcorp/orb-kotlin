@@ -42,6 +42,7 @@ internal class CreditNoteAccountingSyncFailedWebhookEventTest {
                 .creditNote(
                     CreditNote.builder()
                         .id("id")
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditNoteNumber("credit_note_number")
                         .creditNotePdf("credit_note_pdf")
@@ -167,6 +168,7 @@ internal class CreditNoteAccountingSyncFailedWebhookEventTest {
             .isEqualTo(
                 CreditNote.builder()
                     .id("id")
+                    .billingEntityId("billing_entity_id")
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditNoteNumber("credit_note_number")
                     .creditNotePdf("credit_note_pdf")
@@ -296,6 +298,7 @@ internal class CreditNoteAccountingSyncFailedWebhookEventTest {
                 .creditNote(
                     CreditNote.builder()
                         .id("id")
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditNoteNumber("credit_note_number")
                         .creditNotePdf("credit_note_pdf")

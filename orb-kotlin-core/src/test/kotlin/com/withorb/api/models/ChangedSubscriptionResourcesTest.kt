@@ -18,6 +18,7 @@ internal class ChangedSubscriptionResourcesTest {
                 .addCreatedCreditNote(
                     CreditNote.builder()
                         .id("id")
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditNoteNumber("credit_note_number")
                         .creditNotePdf("credit_note_pdf")
@@ -126,6 +127,7 @@ internal class ChangedSubscriptionResourcesTest {
                                 .state("state")
                                 .build()
                         )
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                         .addCreditNote(
                             ChangedSubscriptionResources.CreatedInvoice.CreditNote.builder()
@@ -522,6 +524,7 @@ internal class ChangedSubscriptionResourcesTest {
                 .addVoidedCreditNote(
                     CreditNote.builder()
                         .id("id")
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditNoteNumber("credit_note_number")
                         .creditNotePdf("credit_note_pdf")
@@ -630,6 +633,7 @@ internal class ChangedSubscriptionResourcesTest {
                                 .state("state")
                                 .build()
                         )
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                         .addCreditNote(
                             Invoice.CreditNote.builder()
@@ -1013,6 +1017,7 @@ internal class ChangedSubscriptionResourcesTest {
             .containsExactly(
                 CreditNote.builder()
                     .id("id")
+                    .billingEntityId("billing_entity_id")
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditNoteNumber("credit_note_number")
                     .creditNotePdf("credit_note_pdf")
@@ -1118,6 +1123,7 @@ internal class ChangedSubscriptionResourcesTest {
                             .state("state")
                             .build()
                     )
+                    .billingEntityId("billing_entity_id")
                     .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                     .addCreditNote(
                         ChangedSubscriptionResources.CreatedInvoice.CreditNote.builder()
@@ -1500,6 +1506,7 @@ internal class ChangedSubscriptionResourcesTest {
             .containsExactly(
                 CreditNote.builder()
                     .id("id")
+                    .billingEntityId("billing_entity_id")
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .creditNoteNumber("credit_note_number")
                     .creditNotePdf("credit_note_pdf")
@@ -1605,6 +1612,7 @@ internal class ChangedSubscriptionResourcesTest {
                             .state("state")
                             .build()
                     )
+                    .billingEntityId("billing_entity_id")
                     .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                     .addCreditNote(
                         Invoice.CreditNote.builder()
@@ -1975,6 +1983,7 @@ internal class ChangedSubscriptionResourcesTest {
                 .addCreatedCreditNote(
                     CreditNote.builder()
                         .id("id")
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditNoteNumber("credit_note_number")
                         .creditNotePdf("credit_note_pdf")
@@ -2083,6 +2092,7 @@ internal class ChangedSubscriptionResourcesTest {
                                 .state("state")
                                 .build()
                         )
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                         .addCreditNote(
                             ChangedSubscriptionResources.CreatedInvoice.CreditNote.builder()
@@ -2479,6 +2489,7 @@ internal class ChangedSubscriptionResourcesTest {
                 .addVoidedCreditNote(
                     CreditNote.builder()
                         .id("id")
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditNoteNumber("credit_note_number")
                         .creditNotePdf("credit_note_pdf")
@@ -2587,6 +2598,7 @@ internal class ChangedSubscriptionResourcesTest {
                                 .state("state")
                                 .build()
                         )
+                        .billingEntityId("billing_entity_id")
                         .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                         .addCreditNote(
                             Invoice.CreditNote.builder()

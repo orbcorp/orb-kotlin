@@ -984,6 +984,7 @@ private constructor(
         private val externalPlanId: JsonField<String>,
         private val name: JsonField<String>,
         private val planVersion: JsonField<String>,
+        private val billingEntityId: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -997,7 +998,10 @@ private constructor(
             @JsonProperty("plan_version")
             @ExcludeMissing
             planVersion: JsonField<String> = JsonMissing.of(),
-        ) : this(id, externalPlanId, name, planVersion, mutableMapOf())
+            @JsonProperty("billing_entity_id")
+            @ExcludeMissing
+            billingEntityId: JsonField<String> = JsonMissing.of(),
+        ) : this(id, externalPlanId, name, planVersion, billingEntityId, mutableMapOf())
 
         /**
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1026,6 +1030,14 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun planVersion(): String = planVersion.getRequired("plan_version")
+
+        /**
+         * The id of the default billing entity of this plan.
+         *
+         * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun billingEntityId(): String? = billingEntityId.getNullable("billing_entity_id")
 
         /**
          * Returns the raw JSON value of [id].
@@ -1059,6 +1071,16 @@ private constructor(
         @JsonProperty("plan_version")
         @ExcludeMissing
         fun _planVersion(): JsonField<String> = planVersion
+
+        /**
+         * Returns the raw JSON value of [billingEntityId].
+         *
+         * Unlike [billingEntityId], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("billing_entity_id")
+        @ExcludeMissing
+        fun _billingEntityId(): JsonField<String> = billingEntityId
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -1095,6 +1117,7 @@ private constructor(
             private var externalPlanId: JsonField<String>? = null
             private var name: JsonField<String>? = null
             private var planVersion: JsonField<String>? = null
+            private var billingEntityId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(plan: Plan) = apply {
@@ -1102,6 +1125,7 @@ private constructor(
                 externalPlanId = plan.externalPlanId
                 name = plan.name
                 planVersion = plan.planVersion
+                billingEntityId = plan.billingEntityId
                 additionalProperties = plan.additionalProperties.toMutableMap()
             }
 
@@ -1159,6 +1183,21 @@ private constructor(
                 this.planVersion = planVersion
             }
 
+            /** The id of the default billing entity of this plan. */
+            fun billingEntityId(billingEntityId: String?) =
+                billingEntityId(JsonField.ofNullable(billingEntityId))
+
+            /**
+             * Sets [Builder.billingEntityId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingEntityId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingEntityId(billingEntityId: JsonField<String>) = apply {
+                this.billingEntityId = billingEntityId
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -1199,6 +1238,7 @@ private constructor(
                     checkRequired("externalPlanId", externalPlanId),
                     checkRequired("name", name),
                     checkRequired("planVersion", planVersion),
+                    billingEntityId,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1223,6 +1263,7 @@ private constructor(
             externalPlanId()
             name()
             planVersion()
+            billingEntityId()
             validated = true
         }
 
@@ -1244,7 +1285,8 @@ private constructor(
             (if (id.asKnown() == null) 0 else 1) +
                 (if (externalPlanId.asKnown() == null) 0 else 1) +
                 (if (name.asKnown() == null) 0 else 1) +
-                (if (planVersion.asKnown() == null) 0 else 1)
+                (if (planVersion.asKnown() == null) 0 else 1) +
+                (if (billingEntityId.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1256,17 +1298,25 @@ private constructor(
                 externalPlanId == other.externalPlanId &&
                 name == other.name &&
                 planVersion == other.planVersion &&
+                billingEntityId == other.billingEntityId &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(id, externalPlanId, name, planVersion, additionalProperties)
+            Objects.hash(
+                id,
+                externalPlanId,
+                name,
+                planVersion,
+                billingEntityId,
+                additionalProperties,
+            )
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Plan{id=$id, externalPlanId=$externalPlanId, name=$name, planVersion=$planVersion, additionalProperties=$additionalProperties}"
+            "Plan{id=$id, externalPlanId=$externalPlanId, name=$name, planVersion=$planVersion, billingEntityId=$billingEntityId, additionalProperties=$additionalProperties}"
     }
 
     /** The type of alert. This must be a valid alert type. */
