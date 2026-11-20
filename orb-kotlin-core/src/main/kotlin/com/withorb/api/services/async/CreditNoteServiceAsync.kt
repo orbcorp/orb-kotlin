@@ -59,9 +59,8 @@ interface CreditNoteServiceAsync {
     ): CreditNote
 
     /**
-     * Get a paginated list of CreditNotes. Users can also filter by customer_id, subscription_id,
-     * or external_customer_id. The credit notes will be returned in reverse chronological order by
-     * `creation_time`.
+     * Get a paginated list of CreditNotes. The credit notes will be returned in reverse
+     * chronological order by `creation_time`.
      */
     suspend fun list(
         params: CreditNoteListParams = CreditNoteListParams.none(),
