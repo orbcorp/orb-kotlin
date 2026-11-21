@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.60.0](https://github.com/orbcorp/orb-kotlin/compare/v1.59.0...v1.60.0) (2026-11-21)
+
+
+### Features
+
+* **api:** api update ([44dabe8](https://github.com/orbcorp/orb-kotlin/commit/44dabe8e6f6e5d92ddd16cbdb0a05ca225e7f2a2))
+* **api:** api update ([f385f88](https://github.com/orbcorp/orb-kotlin/commit/f385f8852d08ef39f47c6bb5cd8e52308a8b91d5))
+* **api:** clarify net_terms day counting, with start date as day 1 ([f385f88](https://github.com/orbcorp/orb-kotlin/commit/f385f8852d08ef39f47c6bb5cd8e52308a8b91d5))
+* **api:** Remove unsupported filters from list credit notes description ([d1ad6fa](https://github.com/orbcorp/orb-kotlin/commit/d1ad6fa1dcb78760c366fda4cc1a112d3cd84643))
+
 ## [1.59.0](https://github.com/orbcorp/orb-kotlin/compare/v1.58.0...v1.59.0) (2026-11-18)
 
 
