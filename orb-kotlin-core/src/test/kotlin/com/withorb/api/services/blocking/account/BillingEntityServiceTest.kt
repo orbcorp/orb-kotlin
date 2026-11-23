@@ -41,12 +41,7 @@ internal class BillingEntityServiceTest {
                     .externalBillingEntityId("x")
                     .invoiceSettings(
                         AccountBillingEntityCreateParams.InvoiceSettings.builder()
-                            .autoCollection(true)
-                            .automaticTaxEnabled(true)
-                            .emailDelivery(true)
-                            .manualIssuance(true)
                             .memo("memo")
-                            .netTerms(0L)
                             .build()
                     )
                     .addTaxRegistration(
@@ -88,12 +83,7 @@ internal class BillingEntityServiceTest {
                     .defaultPaymentGatewayConnectionId("default_payment_gateway_connection_id")
                     .invoiceSettings(
                         AccountBillingEntityUpdateParams.InvoiceSettings.builder()
-                            .autoCollection(true)
-                            .automaticTaxEnabled(true)
-                            .emailDelivery(true)
-                            .manualIssuance(true)
                             .memo("memo")
-                            .netTerms(0L)
                             .build()
                     )
                     .legalName("x")
@@ -245,12 +235,7 @@ internal class BillingEntityServiceTest {
                     .defaultPaymentGatewayConnectionId("default_payment_gateway_connection_id")
                     .invoiceSettings(
                         AccountBillingEntityUpdateByExternalIdParams.InvoiceSettings.builder()
-                            .autoCollection(true)
-                            .automaticTaxEnabled(true)
-                            .emailDelivery(true)
-                            .manualIssuance(true)
                             .memo("memo")
-                            .netTerms(0L)
                             .build()
                     )
                     .legalName("x")

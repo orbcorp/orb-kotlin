@@ -24,14 +24,7 @@ internal class AccountBillingEntityCreateParamsTest {
             .name("x")
             .externalBillingEntityId("x")
             .invoiceSettings(
-                AccountBillingEntityCreateParams.InvoiceSettings.builder()
-                    .autoCollection(true)
-                    .automaticTaxEnabled(true)
-                    .emailDelivery(true)
-                    .manualIssuance(true)
-                    .memo("memo")
-                    .netTerms(0L)
-                    .build()
+                AccountBillingEntityCreateParams.InvoiceSettings.builder().memo("memo").build()
             )
             .addTaxRegistration(
                 AccountBillingEntityCreateParams.TaxRegistration.builder()
@@ -61,14 +54,7 @@ internal class AccountBillingEntityCreateParamsTest {
                 .name("x")
                 .externalBillingEntityId("x")
                 .invoiceSettings(
-                    AccountBillingEntityCreateParams.InvoiceSettings.builder()
-                        .autoCollection(true)
-                        .automaticTaxEnabled(true)
-                        .emailDelivery(true)
-                        .manualIssuance(true)
-                        .memo("memo")
-                        .netTerms(0L)
-                        .build()
+                    AccountBillingEntityCreateParams.InvoiceSettings.builder().memo("memo").build()
                 )
                 .addTaxRegistration(
                     AccountBillingEntityCreateParams.TaxRegistration.builder()
@@ -97,14 +83,7 @@ internal class AccountBillingEntityCreateParamsTest {
         assertThat(body.externalBillingEntityId()).isEqualTo("x")
         assertThat(body.invoiceSettings())
             .isEqualTo(
-                AccountBillingEntityCreateParams.InvoiceSettings.builder()
-                    .autoCollection(true)
-                    .automaticTaxEnabled(true)
-                    .emailDelivery(true)
-                    .manualIssuance(true)
-                    .memo("memo")
-                    .netTerms(0L)
-                    .build()
+                AccountBillingEntityCreateParams.InvoiceSettings.builder().memo("memo").build()
             )
         assertThat(body.taxRegistrations())
             .containsExactly(
