@@ -39,6 +39,8 @@ import com.withorb.api.services.blocking.customers.CostService
 import com.withorb.api.services.blocking.customers.CostServiceImpl
 import com.withorb.api.services.blocking.customers.CreditService
 import com.withorb.api.services.blocking.customers.CreditServiceImpl
+import com.withorb.api.services.blocking.customers.PaymentGatewayConnectionService
+import com.withorb.api.services.blocking.customers.PaymentGatewayConnectionServiceImpl
 
 /**
  * A customer is a buyer of your products, and the other party to the billing relationship.
@@ -71,6 +73,10 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
 
     private val balanceTransactions: BalanceTransactionService by lazy {
         BalanceTransactionServiceImpl(clientOptions)
+    }
+
+    private val paymentGatewayConnections: PaymentGatewayConnectionService by lazy {
+        PaymentGatewayConnectionServiceImpl(clientOptions)
     }
 
     override fun withRawResponse(): CustomerService.WithRawResponse = withRawResponse
@@ -123,6 +129,27 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
      * timezone parameter influences within Orb.
      */
     override fun balanceTransactions(): BalanceTransactionService = balanceTransactions
+
+    /**
+     * A customer is a buyer of your products, and the other party to the billing relationship.
+     *
+     * In Orb, customers are assigned system generated identifiers automatically, but it's often
+     * desirable to have these match existing identifiers in your system. To avoid having to
+     * denormalize Orb ID information, you can pass in an `external_customer_id` with your own
+     * identifier. See [Customer ID Aliases](/events-and-metrics/customer-aliases) for further
+     * information about how these aliases work in Orb.
+     *
+     * In addition to having an identifier in your system, a customer may exist in a payment
+     * provider solution like Stripe. Use the `payment_provider_id` and the `payment_provider` enum
+     * field to express this mapping.
+     *
+     * A customer also has a timezone (from the standard
+     * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your account's
+     * timezone. See [Timezone localization](/essentials/timezones) for information on what this
+     * timezone parameter influences within Orb.
+     */
+    override fun paymentGatewayConnections(): PaymentGatewayConnectionService =
+        paymentGatewayConnections
 
     override fun create(params: CustomerCreateParams, requestOptions: RequestOptions): Customer =
         // post /customers
@@ -211,6 +238,11 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
             BalanceTransactionServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val paymentGatewayConnections:
+            PaymentGatewayConnectionService.WithRawResponse by lazy {
+            PaymentGatewayConnectionServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): CustomerService.WithRawResponse =
@@ -264,6 +296,27 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
          */
         override fun balanceTransactions(): BalanceTransactionService.WithRawResponse =
             balanceTransactions
+
+        /**
+         * A customer is a buyer of your products, and the other party to the billing relationship.
+         *
+         * In Orb, customers are assigned system generated identifiers automatically, but it's often
+         * desirable to have these match existing identifiers in your system. To avoid having to
+         * denormalize Orb ID information, you can pass in an `external_customer_id` with your own
+         * identifier. See [Customer ID Aliases](/events-and-metrics/customer-aliases) for further
+         * information about how these aliases work in Orb.
+         *
+         * In addition to having an identifier in your system, a customer may exist in a payment
+         * provider solution like Stripe. Use the `payment_provider_id` and the `payment_provider`
+         * enum field to express this mapping.
+         *
+         * A customer also has a timezone (from the standard
+         * [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your
+         * account's timezone. See [Timezone localization](/essentials/timezones) for information on
+         * what this timezone parameter influences within Orb.
+         */
+        override fun paymentGatewayConnections(): PaymentGatewayConnectionService.WithRawResponse =
+            paymentGatewayConnections
 
         private val createHandler: Handler<Customer> =
             jsonHandler<Customer>(clientOptions.jsonMapper)

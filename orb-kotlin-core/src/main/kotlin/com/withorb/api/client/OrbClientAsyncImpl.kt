@@ -4,6 +4,8 @@ package com.withorb.api.client
 
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.getPackageVersion
+import com.withorb.api.services.async.AccountServiceAsync
+import com.withorb.api.services.async.AccountServiceAsyncImpl
 import com.withorb.api.services.async.AlertServiceAsync
 import com.withorb.api.services.async.AlertServiceAsyncImpl
 import com.withorb.api.services.async.CouponServiceAsync
@@ -78,6 +80,10 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
 
     private val creditNotes: CreditNoteServiceAsync by lazy {
         CreditNoteServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
+    private val account: AccountServiceAsync by lazy {
+        AccountServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
     private val customers: CustomerServiceAsync by lazy {
@@ -168,6 +174,8 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
      * to a particular invoice.
      */
     override fun creditNotes(): CreditNoteServiceAsync = creditNotes
+
+    override fun account(): AccountServiceAsync = account
 
     /**
      * A customer is a buyer of your products, and the other party to the billing relationship.
@@ -312,6 +320,10 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
             CreditNoteServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val account: AccountServiceAsync.WithRawResponse by lazy {
+            AccountServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val customers: CustomerServiceAsync.WithRawResponse by lazy {
             CustomerServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
@@ -405,6 +417,8 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
          * applied to a particular invoice.
          */
         override fun creditNotes(): CreditNoteServiceAsync.WithRawResponse = creditNotes
+
+        override fun account(): AccountServiceAsync.WithRawResponse = account
 
         /**
          * A customer is a buyer of your products, and the other party to the billing relationship.

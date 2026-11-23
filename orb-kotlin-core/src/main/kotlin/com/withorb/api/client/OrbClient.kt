@@ -3,6 +3,7 @@
 package com.withorb.api.client
 
 import com.withorb.api.core.ClientOptions
+import com.withorb.api.services.blocking.AccountService
 import com.withorb.api.services.blocking.AlertService
 import com.withorb.api.services.blocking.CouponService
 import com.withorb.api.services.blocking.CreditBlockService
@@ -78,6 +79,8 @@ interface OrbClient {
      * to a particular invoice.
      */
     fun creditNotes(): CreditNoteService
+
+    fun account(): AccountService
 
     /**
      * A customer is a buyer of your products, and the other party to the billing relationship.
@@ -240,6 +243,8 @@ interface OrbClient {
          * applied to a particular invoice.
          */
         fun creditNotes(): CreditNoteService.WithRawResponse
+
+        fun account(): AccountService.WithRawResponse
 
         /**
          * A customer is a buyer of your products, and the other party to the billing relationship.

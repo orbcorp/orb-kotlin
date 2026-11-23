@@ -55,6 +55,7 @@ internal class ProGuardCompatibilityTest {
         assertThat(client.topLevel()).isNotNull()
         assertThat(client.coupons()).isNotNull()
         assertThat(client.creditNotes()).isNotNull()
+        assertThat(client.account()).isNotNull()
         assertThat(client.customers()).isNotNull()
         assertThat(client.events()).isNotNull()
         assertThat(client.invoiceLineItems()).isNotNull()

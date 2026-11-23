@@ -4,6 +4,8 @@ package com.withorb.api.client
 
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.getPackageVersion
+import com.withorb.api.services.blocking.AccountService
+import com.withorb.api.services.blocking.AccountServiceImpl
 import com.withorb.api.services.blocking.AlertService
 import com.withorb.api.services.blocking.AlertServiceImpl
 import com.withorb.api.services.blocking.CouponService
@@ -75,6 +77,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
     private val creditNotes: CreditNoteService by lazy {
         CreditNoteServiceImpl(clientOptionsWithUserAgent)
     }
+
+    private val account: AccountService by lazy { AccountServiceImpl(clientOptionsWithUserAgent) }
 
     private val customers: CustomerService by lazy {
         CustomerServiceImpl(clientOptionsWithUserAgent)
@@ -152,6 +156,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
      * to a particular invoice.
      */
     override fun creditNotes(): CreditNoteService = creditNotes
+
+    override fun account(): AccountService = account
 
     /**
      * A customer is a buyer of your products, and the other party to the billing relationship.
@@ -295,6 +301,10 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
             CreditNoteServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val account: AccountService.WithRawResponse by lazy {
+            AccountServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val customers: CustomerService.WithRawResponse by lazy {
             CustomerServiceImpl.WithRawResponseImpl(clientOptions)
         }
@@ -385,6 +395,8 @@ class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
          * applied to a particular invoice.
          */
         override fun creditNotes(): CreditNoteService.WithRawResponse = creditNotes
+
+        override fun account(): AccountService.WithRawResponse = account
 
         /**
          * A customer is a buyer of your products, and the other party to the billing relationship.
