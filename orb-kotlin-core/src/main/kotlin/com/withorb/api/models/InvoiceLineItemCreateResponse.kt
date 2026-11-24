@@ -120,7 +120,11 @@ private constructor(
 
     /**
      * The line amount after any adjustments and before overage conversion, credits and partial
-     * invoicing.
+     * invoicing. Unlike `subtotal` and `amount`, this is not rounded to the currency's precision,
+     * so it matches the `adjusted_subtotal` in data exports. To find the effect of adjustments, use
+     * `adjustments` rather than the difference between `subtotal` and `adjusted_subtotal`. Each
+     * adjustment amount is rounded to the currency's precision, so a sub-cent adjustment can show
+     * as zero.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -239,7 +243,7 @@ private constructor(
     fun subLineItems(): List<SubLineItem> = subLineItems.getRequired("sub_line_items")
 
     /**
-     * The line amount before any adjustments.
+     * The line amount before any adjustments, rounded to the invoicing currency's precision.
      *
      * @throws OrbInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -500,7 +504,11 @@ private constructor(
 
         /**
          * The line amount after any adjustments and before overage conversion, credits and partial
-         * invoicing.
+         * invoicing. Unlike `subtotal` and `amount`, this is not rounded to the currency's
+         * precision, so it matches the `adjusted_subtotal` in data exports. To find the effect of
+         * adjustments, use `adjustments` rather than the difference between `subtotal` and
+         * `adjusted_subtotal`. Each adjustment amount is rounded to the currency's precision, so a
+         * sub-cent adjustment can show as zero.
          */
         fun adjustedSubtotal(adjustedSubtotal: String) =
             adjustedSubtotal(JsonField.of(adjustedSubtotal))
@@ -925,7 +933,9 @@ private constructor(
         /** Alias for calling [addSubLineItem] with `SubLineItem.ofNull(null_)`. */
         fun addSubLineItem(null_: OtherSubLineItem) = addSubLineItem(SubLineItem.ofNull(null_))
 
-        /** The line amount before any adjustments. */
+        /**
+         * The line amount before any adjustments, rounded to the invoicing currency's precision.
+         */
         fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
 
         /**
