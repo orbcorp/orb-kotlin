@@ -1529,7 +1529,9 @@ private constructor(
         fun value(): String = value.getRequired("value")
 
         /**
-         * The jurisdiction the registration applies to. If null, it applies to every customer.
+         * The jurisdiction the registration applies to. If null, it applies to every customer. A
+         * Canadian provincial registration (`CA PST-BC`, `CA PST-MB`, `CA PST-SK`, `CA QST`) only
+         * applies to customers in its province, whatever this field holds.
          *
          * @throws OrbInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1624,6 +1626,8 @@ private constructor(
 
             /**
              * The jurisdiction the registration applies to. If null, it applies to every customer.
+             * A Canadian provincial registration (`CA PST-BC`, `CA PST-MB`, `CA PST-SK`, `CA QST`)
+             * only applies to customers in its province, whatever this field holds.
              */
             fun appliesTo(appliesTo: String?) = appliesTo(JsonField.ofNullable(appliesTo))
 
